@@ -6,9 +6,9 @@
 
 ## 1. 先确认能做什么
 
-目前仓库只有设计和指南，没有解释器、安装包、黑盒测试、基准或应用。文中的程序是按契约编写的设计示例，不代表功能已实现。开始开发前先查看 [todo](../docs/development/todo.md) 和 [开发记录](../docs/development/development-log.md)，并核对实际代码；当前下一项是 P00-01。
+目前仓库已有 P00 包、CLI 和宿主基础设施测试；尚无语言执行器、ZZY 黑盒测试、基准或应用。文中的程序是按契约编写的设计示例，不代表功能已实现。开始开发前先查看 [todo](../docs/development/todo.md) 和 [开发记录](../docs/development/development-log.md)，并核对实际代码；P00 完成后下一项是 P01-01。
 
-解释器计划使用 Python，核心优先采用标准库。受支持的 Python 版本、操作系统、Unicode 数据版本及安装命令需在 P00 按真实环境确定。没有依赖清单时不要凭空执行安装命令；GUI 和后续 Web 等可选依赖不应成为普通 CLI/check 的前提。
+解释器使用 Python，核心运行只依赖标准库。P00 已验证 CPython 3.12.14、Windows 11、Unicode 15.0.0；实际运行和安装命令见项目 README。没有依赖清单时不要凭空执行安装命令；GUI 和后续 Web 等可选依赖不应成为普通 CLI/check 的前提。
 
 计划中的目录分工：
 
@@ -18,7 +18,7 @@
 - `benchmarks/`：等价 ZZY/Python 程序、驱动与原始测量结果。
 - `apps/zzy-campus/`：默认校园任务管家应用。
 
-上述目录尚未建立。已有文档位置见 [项目 README](../README.md)。
+上述根目录已建立；当前只有 P00 基础、宿主测试、源码读取样例和目录说明，校园应用子目录及语言功能仍待实现。已有文档位置见 [项目 README](../README.md)。
 
 ## 2. 编写第一份程序
 

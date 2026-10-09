@@ -264,7 +264,7 @@ RUNNING 成功变 READY，普通错误变 FAILED。执行配额、取消和宿�
 
 集中维护错误码：`E101` 词法、`E102` 转义、`E103` 语法；`E201` 类型、`E202` 调用、`E203` 写入、`E204` 下标、`E205` 除零、`E206` 遍历修改、`E207` 匹配未覆盖、`E208` 数值范围、`E209` Lazy 循环、`E210` 断言、`E211` 资源、`E212` 状态机初始状态、`E213` 量纲不兼容、`E214` sketch 操作状态（扩展启用时）；`E301` 声明、`E302` 名称、`E303` 模块、`E304` 控制流、`E305` 状态机定义、`E306` 单位名称、`E307` 查询作用域/纯性；`E401` CLI/源码 I/O。资源限额在前端触发退出 2，在执行阶段触发退出 1；测试汇总失败仍退出 1。错误码必须与覆盖表一致，不直接显示 Python traceback。
 
-拟议 `--diagnostic-format json` 输出带 `schema_version`、`kind`、`code`、`file`、`span`、`message`、`notes` 的 stderr 记录。span 使用原文位置；调试值不得出现随机对象地址。观察记录用不同 kind，不能和错误混淆。该选项当前不可运行。
+拟议 `--diagnostic-format json` 输出带 `schema_version`、`kind`、`code`、`file`、`span`、`message`、`notes` 的 stderr 记录。span 使用原文位置；调试值不得出现随机对象地址。观察记录用不同 kind，不能和错误混淆。该选项已用于 P00 基础 CLI；语言诊断待后续阶段接入。
 
 具体格式、首错停止、BOM/CRLF 坐标、无源码的 null span 和四类错误样例见 [diagnostics.md](diagnostics.md)。取消不冒充 E211；未分类的内部实现缺陷使用 internal_error 记录，按发生阶段退出 2/1，不吞成普通 Result。默认资源数值、配置指纹、容量/取消清理和测试超时见 [resources.md](../runtime/resources.md)。以上补充不改变 EBNF；标准库 v0.6.1 增加 data.kind 供应用检查外部数据，不改变查询白名单。
 
@@ -272,7 +272,7 @@ RUNNING 成功变 READY，普通错误变 FAILED。执行配额、取消和宿�
 
 每条公开规则在 [test-coverage.md](../development/test-coverage.md) 中对应正常、边界和错误场景。优化前后检查结果、stdout/stderr、错误码、发生位置、求值次数及共享引用语义；新引擎不能仅凭“最终数值一样”通过。
 
-当前只有契约和验证计划，没有解释器测试、性能数据或已实现创新。文档静态检查只能说明文档格式和交叉引用有效。
+当前已有 P00 基础设施测试，但没有语言执行器测试、性能数据或已实现的语言创新。文档静态检查只能说明文档格式和交叉引用有效。
 
 ## 12. 已选核心机制：状态机与数量
 

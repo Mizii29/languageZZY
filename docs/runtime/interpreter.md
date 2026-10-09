@@ -1,6 +1,6 @@
 # ZZY 解释器实现流程
 
-作者：赵梓伊｜更新：2026-10-09｜状态：v0.6 语法实现路线，尚未编写解释器
+作者：赵梓伊｜更新：2026-10-09｜状态：v0.6 语法实现路线；P00 基础已实现，解释链待 P01
 
 当前语法以 [syntax.md](../language/syntax.md) 为准，整体方案见 [design详细版.md](../design详细版.md)，库以 [stdlib.md](../language/stdlib.md) 为准；优化与后端扩展见 [performance.md](performance.md)。本文回答“先写什么、每一步产生什么、怎样证明做对了”，不把规划中的代码和命令当成已有功能。Web 为可选扩展，完整 CLI 应用不依赖 Web 或 VM。
 

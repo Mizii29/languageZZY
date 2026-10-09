@@ -164,3 +164,23 @@ Git 提交：真实标识 / 未提交
 - AI 技能检查：采用 skill-creator 的项目技能格式，name/description 元信息和相对引用已核对。尝试执行其 quick_validate.py 时缺少 PyYAML，尝试安装到临时目录也未取得可用发行包，因此未宣称官方脚本通过；另按该脚本约束检查本文件的简单前置信息、名称、长度、占位符与围栏。
 - 保留核对：修订与临时字节快照比较，未触碰其余正式契约；requirement SHA-256 仍为 B099C19FC339CE1DC1AAB7E9D6C8126A9C5C9ACE3D31B969A0623DF90F521D2B。临时验证脚本和快照不加入仓库，未修改全局技能目录或注册 AI 工具。
 - 验证边界：无解释器可供运行，未执行拟议 ZZY CLI、黑盒、GUI 或性能测试；指南存在不表示 P06 已完成。Git 未提交，下一项仍为 P00-01。
+
+## 2026-10-09：P00 基础设施实现与验收
+
+- 用户任务：接手项目并仅完成 P00，保留语法、库接口、requirement 和既有修改；实际验收后建立本地提交，不推送、不改写历史。
+- 接手事实：根目录已有 23 份 Markdown，尚无 Python 实现；Git main 工作区干净，已有设计提交 `58543cd46aa1ace082f23e39ce692ac7ae732daf`（docs: add initial ZZY language design and development guides），并非旧日志中的“无提交”。保留该设计提交作为本轮骨架的父提交。
+- 环境：终端调用 python/py 均提示命令不存在；找到本机 bundled Python `C:\Users\13691\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe`。实际 CPython `3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]`，Unicode `15.0.0`，平台 `Windows-11-10.0.26200-SP0`，Git `2.50.0.windows.1`，setuptools `84.0.0`，宿主十进制数字上限 `4300`。项目配置暂限定 Python 3.12.14，不声明其他 Python/OS 已验证。
+- 阅读：项目 SKILL、README、requirement、roadmap、todo、最新记录，以及 syntax/stdlib、interpreter、resources、diagnostics、sketch 的类型/接口/GUI 边界、test-coverage。核对 io.print 单参数换行、输入 EOF 为 Null、严格 Bool、普通数除法/下标、默认字段每次求值、从左到右求值及首错停止；现有契约已经说明这些行为，没有新增或改名语法/标准库。
+- 文件：建立 zzy 包、pyproject.toml、忽略规则、tests、examples、benchmarks、apps。实现 CLI help/version/info/source-info、Source/SourceLoader、Diagnostic/Span、ResourcePolicy/ResourceMeter/Reservation、取消/资源中止信号、Output 和不加载 GUI 的原生元数据注册结构。没有创建占位 Lexer/Parser/AST 执行器或返回假成功的 run/check/test。
+- CLI 范围：info 返回环境、完整有效资源值与 SHA-256 指纹；source-info 真实读取并计算同一字节快照摘要，明确输出 syntax_checked=false。它们是 P00 开发工具，语言 run/check/test 按 P01 后续接通；未实现命令当前报 E401/2。帮助/版本不加载配置。根 README 已给出实际 Python 路径、虚拟环境、源码运行和可选安装方法。
+- 资源：采用 default-v1 的全部 22 个核心键，校验配置版本、字段、重复键、非正值、Bool、非整数、UTF-8 和 64 KiB 文件上限。实现支持的配置整数范围为 1..sys.maxsize；允许单项高于总量，二者共同生效。指纹覆盖补齐默认值和宿主十进制限制，默认有效转换限额 4096；没有关闭宿主限制。默认指纹 `2e654aef52d3267bfecf0768bef9faee1eed942a329001ec455aee951c858bd2`。
+- 源码与路径：增量读取限制单文件/总量，规范路径去重，同一准备会话保持字节快照，UTF-8 开头去一个 BOM，保留 CRLF/原文码点坐标与 EOF 零宽 span。入口/配置相对进程工作目录，importer 参数相对导入文件，不 chdir；use 语句本身未实现。
+- 诊断与清理：统一文本/UTF-8 JSON Lines，缺文件/坏配置位置为 null，用户错误、资源中止、取消和内部缺陷分开。预留在全部检查后原子计费，失败/退出释放；输出按 UTF-8 字节检查，最终诊断独立预留至多 4 KiB、完整 JSON、只写一次。前端/执行资源信号分别为退出 2/1，取消出口 130；内部缺陷使用 internal_error，不冒充 E201。
+- 实际测试：用 bundled Python 执行 `-m unittest discover -s tests -v`，33/33 通过（4.976 秒），无跳过；再通过 `-m venv --without-pip .venv` 建立独立环境，`.venv/Scripts/python.exe -m unittest discover -s tests -v` 33/33 通过（8.447 秒）。覆盖真实 CLI 子进程、中文/空格路径、UTF-8 管道、坏参数/缺文件/配置、源码 BOM/CRLF/补充平面字符/Tab/EOF、22 项计量接口的小限额 L-1/L/L+1、失败后计数与句柄释放。执行阶段资源出口在宿主层测试，未称 ZZY 程序运行成功。
+- 默认容量实测：单文件 2 MiB 的 L-1/L/L+1，源码总量 16 MiB 等于/超过上限，stdout 1 MiB 的 L-1/L/L+1；配置 64 KiB 的 L-1/L/L+1。另验最终诊断在长 Unicode 消息/路径下不超过 4 KiB，JSON 可解析、stderr 耗尽仍可报告。取消/MemoryError/RecursionError/内部缺陷通过真实 CLI 异常边界故障注入，不等同于真实终端按键验收。
+- 包验证：使用 bundled Python 的 `-m pip wheel . --no-deps --no-build-isolation --no-index --wheel-dir dist` 离线构建成功；随后用其 pip 的 `--python .venv/Scripts/python.exe install --no-index --no-deps dist/zzy_language-0.0.1-py3-none-any.whl` 安装成功。`.venv/Scripts/python.exe -I -m zzy --help`（排除源码目录导入）与 `.venv/Scripts/zzy.exe --version` 均退出 0。源码读取样例实际输出 143 字节、68 码点、3 行、syntax_checked=false。
+- 静态复核：27 份 Markdown、257 个本地链接有效，围栏闭合；70 项任务 ID 唯一，先勾选已验收的 P00-01/02/03，P00-04 等提交后再勾选。EBNF 与父提交逐字一致，stdlib/sketch 未修改；requirement 原始字节 SHA-256 仍为 `B099C19FC339CE1DC1AAB7E9D6C8126A9C5C9ACE3D31B969A0623DF90F521D2B`。git diff --check 通过，.venv、wheel/build/egg-info、__pycache__ 已忽略，不纳入提交。
+- 过程记录：两次文档 apply_patch 因只匹配了段落中的部分文本而被拒绝，均未写入；改按完整段落或精确子串替换后成功。编码测试发现前的代码复核将 SourceLoader 对 RuntimeError 的处理收窄，避免把宿主 RecursionError 误报 E401；对应资源兜底/清理测试通过。没有失败测试或跳过项被记作成功。
+- 验证边界：没有 Lexer、Parser、Resolver、执行器、标准库实现、ZZY 黑盒/性能/应用/GUI；所有运行时对象引用环、缓存、未来 AST/值分配点仍需后续阶段接入和验证。元数据注册不包含可调用 sketch 实现。真实终端 Ctrl+C、其他 Python/OS 尚未验证；不宣称完整沙箱或 P06 验收完成。
+- 本轮未发现需要修改语法、公开标准库接口或交付范围的契约矛盾；修正的是旧 Git/能力快照，新增 P00 工具命令及配置实现范围已在 README/resources 明示。下一阶段为 P01-01（Token、固定符号和注释扫描），本轮到 P00 为止。
+- Git 提交标识将在骨架提交建立后追加，避免预写不存在的哈希。

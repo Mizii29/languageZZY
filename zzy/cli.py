@@ -1,0 +1,108 @@
+"""P00 entry points. No run/check/test command exists before P01."""
+
+import argparse
+import json
+import platform
+import sys
+import unicodedata
+
+from . import __version__
+from .diagnostics import (Cancelled, Diagnostic, DiagnosticError, Phase,
+                          ResourceExceeded, display_path)
+from .output import Output
+from .resources import ResourceMeter, ResourcePolicy
+from .source import SourceLoader
+
+
+class ArgumentParser(argparse.ArgumentParser):
+    def error(self, message):
+        raise DiagnosticError(Diagnostic(message, "E401"))
+
+    def _print_message(self, message, file=None):
+        if message:
+            self.output.write(message)
+
+
+def _parser(output: Output) -> ArgumentParser:
+    common = argparse.ArgumentParser(add_help=False, argument_default=argparse.SUPPRESS)
+    common.add_argument("--limits", metavar="JSON", help="资源策略覆盖文件（最多 64 KiB）")
+    common.add_argument("--diagnostic-format", choices=("text", "json"), help="stderr 诊断格式")
+    parser = ArgumentParser(prog="zzy", parents=[common],
+                            description="ZZY P00 基础设施；尚不支持执行或检查 ZZY 程序。",
+                            allow_abbrev=False)
+    parser.output = output
+    parser.add_argument("--version", action="version", version=f"ZZY {__version__} (P00)")
+    commands = parser.add_subparsers(dest="command", required=True)
+    for name, help in (("info", "输出宿主环境、生效策略及指纹"),
+                       ("source-info", "读取 UTF-8 源码并输出摘要，不做语法检查")):
+        subparser = commands.add_parser(name, parents=[common], help=help, allow_abbrev=False)
+        subparser.output = output
+        if name == "source-info":
+            subparser.add_argument("file", help="相对当前工作目录的源码路径")
+    return parser
+
+
+def _requested_format(argv: list[str]) -> str:
+    # Select JSON even when full argument parsing fails; stop at the literal separator.
+    format = "text"
+    for index, arg in enumerate(argv):
+        if arg == "--":
+            break
+        if arg.startswith("--diagnostic-format="):
+            value = arg.partition("=")[2]
+        elif arg == "--diagnostic-format" and index + 1 < len(argv):
+            value = argv[index + 1]
+        else:
+            continue
+        if value in {"json", "text"}:
+            format = value
+    return format
+
+
+def main(argv: list[str] | None = None) -> int:
+    argv = list(sys.argv[1:] if argv is None else argv)
+    for stream in (sys.stdin, sys.stdout, sys.stderr):
+        if hasattr(stream, "reconfigure"):
+            stream.reconfigure(encoding="utf-8", errors="strict" if stream is sys.stdin
+                               else "backslashreplace", newline="\n")
+    output = Output(sys.stdout, sys.stderr, ResourceMeter(ResourcePolicy(), Phase.FRONTEND),
+                    _requested_format(argv))
+    try:
+        args = _parser(output).parse_args(argv)
+        policy = ResourcePolicy.from_file(args.limits) if hasattr(args, "limits") else ResourcePolicy()
+        output.meter = ResourceMeter(policy, Phase.FRONTEND)
+        output.format = getattr(args, "diagnostic_format", output.format)
+        if args.command == "info":
+            result = {
+                "zzy_version": __version__, "stage": "P00",
+                "python_implementation": platform.python_implementation(),
+                "python_version": sys.version, "python_executable": sys.executable,
+                "unicode_version": unicodedata.unidata_version,
+                "platform": platform.platform(),
+                "resource_policy": policy.effective_record(),
+                "resource_fingerprint": policy.fingerprint,
+            }
+        else:
+            with SourceLoader(output.meter) as loader:
+                source = loader.read(args.file)
+                result = {"file": display_path(source.path), "bytes": len(source.raw),
+                          "codepoints": len(source.text), "lines": len(source.line_starts),
+                          "sha256": source.sha256, "syntax_checked": False,
+                          "resource_fingerprint": policy.fingerprint}
+        output.write(json.dumps(result, ensure_ascii=False, separators=(",", ":")) + "\n")
+        return 0
+    except DiagnosticError as error:
+        output.failure(error.diagnostic)
+        return error.exit_code
+    except ResourceExceeded as error:
+        output.final(error.diagnostic)
+        return error.exit_code
+    except (KeyboardInterrupt, Cancelled):
+        output.final(Diagnostic("操作已取消", kind="cancelled"))
+        return 130
+    except (MemoryError, RecursionError) as error:
+        output.final(Diagnostic(f"宿主资源不足：{type(error).__name__}", "E211"))
+        return output.meter.phase.value
+    except Exception as error:
+        output.final(Diagnostic(f"解释器内部问题：{type(error).__name__}", kind="internal_error"))
+        return output.meter.phase.value

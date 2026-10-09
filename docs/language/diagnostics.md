@@ -1,6 +1,6 @@
 # ZZY 诊断格式与错误示例
 
-更新：2026-10-09｜diagnostic schema_version：1｜状态：待实现；以下均为期望输出，不是运行记录
+更新：2026-10-09｜diagnostic schema_version：1｜状态：P00 格式/源码坐标/CLI 错误出口已实现；下列语言错误示例仍为期望输出
 
 错误码和退出码以 [syntax.md](syntax.md) 为准，资源细则见 [resources.md](../runtime/resources.md)。本文件确定人和 Agent 可依赖的定位方式；不新增语言语法。
 
@@ -8,7 +8,7 @@
 
 默认文本首行为 `文件:行:列: 错误码 消息`，随后可显示源码片段、定位标记和修复建议。诊断写 stderr，正常程序输出写 stdout。建议不自动修改源码；修复提示不能抹掉原始错误原因。
 
-`--diagnostic-format json` 拟输出 UTF-8 JSON Lines：每行一个完整 JSON 对象，不在 stderr 混入文本标题、颜色代码或 Python traceback。字段固定为 schema_version、kind、code、file、span、message、notes；kind 为 error、trace、cancelled 或 internal_error，非 error 的 code 为 null。观察 `(@_@)` 使用 trace。notes 为字符串数组；错误码/位置/结构为稳定接口，消息和建议文字可改进，普通黑盒不对所有中文措辞做精确匹配。
+`--diagnostic-format json` 输出 UTF-8 JSON Lines：每行一个完整 JSON 对象，不在 stderr 混入文本标题、颜色代码或 Python traceback。字段固定为 schema_version、kind、code、file、span、message、notes；kind 为 error、trace、cancelled 或 internal_error，非 error 的 code 为 null。观察 `(@_@)` 使用 trace。notes 为字符串数组；错误码/位置/结构为稳定接口，消息和建议文字可改进，普通黑盒不对所有中文措辞做精确匹配。P00 仅接入 info/source-info，语言错误与观察语句仍待后续实现。
 
 CLI 明确设置标准流的 UTF-8 编解码及约定换行行为，不依赖 Windows 控制台代码页猜测；重定向到管道也保持相同协议。预算不足时裁剪可选源码片段/notes 和消息内容，保留完整合法 JSON 记录；文件名异常长仍无法容纳时使用 file=null，并在短消息中说明定位被省略，不能输出半条记录。中断/内部缺陷没有 code 时，文本格式也不硬造错误码。
 
