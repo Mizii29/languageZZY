@@ -190,3 +190,24 @@ Git 提交：真实标识 / 未提交
 - 已建立骨架提交 `b9e78fe9cc023e9a95b5cffb673a11b50f6a9f34`：`feat: establish P00 CLI and interpreter foundations`；父提交为已有设计 `58543cd46aa1ace082f23e39ce692ac7ae732daf`。提交前逐项核对 34 个纳入文件，确认没有 requirement、stdlib/sketch、环境目录、构建产物或缓存，暂存差异检查通过。
 - Git 操作首次受沙箱 .git 只读限制，无法创建 index.lock；按用户已授权的本地提交范围申请工具提权后正常暂存和提交，无自动审核拒绝、无推送、无历史改写。提交后工作区核对干净。
 - 在真实提交成功后勾选 P00-04，P00 四项全部完成，其余 66 项保持未完成；本段与 todo 的提交证据作为单独交接记录提交。本轮到此结束，下一项 P01-01。
+
+## 2026-10-10：P01-01 词法扫描与 CLI 黑盒
+
+- 用户任务：选择最早依赖已满足的未完成代码任务，完成该项或可独立验证子步骤后结束；P01 起通过真实 CLI、独立 .zzy 和外部清单验收，不提前使用 spec。
+- 接手核对：读取 skills/zzy/SKILL.md、todo 交接栏、最新开发记录和当前代码；实际分支为 feature，跟踪 origin/feature，HEAD 为 `62a6056b27867c6362ba82f30307f7e0fe2351d6`，工作区干净。保持该分支，不按旧日志切回 main。项目 .venv 可用，CPython 3.12.14 / Unicode 15.0.0 / Windows 11 与 P00 一致。
+- 任务选择：P00 四项已经完成，最早可执行项是 P01-01。按 syntax 第 2—4 节、interpreter 第 3 节、resources、diagnostics、roadmap 与 LEX-01/02/03、STR-01 覆盖要求实现；不开展 P01-02 的 AST/执行。
+- 实现：新增 tokens.py/lexer.py，按首字符分流及最长匹配登记全部固定关键字、预置类型、颜文字和运算符。Token 保存 Source/原文半开偏移，数字保留原文，字符串带解码值/raw 标记；Unicode 名字使用固定长度 isidentifier 判定，不归一化，裸保留名为 RESERVED_NAME，孤立 zzyend 为 E101。
+- 注释/字符串：单行到行末/EOF，多行不嵌套，按左右 Unicode 标识符延续字符检查第一个完整 zzyend；引号和注释标记在多行正文内不改变模式。普通字符串一次解码全部 [OoO] 转义，raw 跳过空白/注释后必须接双引号字符串；字符串内不识别注释，未闭合/物理换行/raw 缺字符串为 E101，错误转义为 E102，保留原始源码位置。
+- 资源：每文件非 EOF Token 生成前检查数量；逐步限制 ASCII 数字位数（含前导零）和解码字符串码点；长名字/字符串/注释内设置取消检查。前端超限 E211/2，EOF 和注释不消耗 Token 配额。AST/源码嵌套、整数实际转换/位数、运行时对象计量仍留给后续对应分配层。
+- CLI 与版本：增加 `python -m zzy lex FILE`，成功输出带 schema_version/kind/lexeme/value/raw/span 的 Token JSON Lines，以 EOF 结束；完整扫描失败时 stdout 为空。输出超限可能留下此前完整记录，但必须非零退出。lex 不解析、不执行，不能替代 check；run/check/test 仍未注册。包版本变为 0.1.0a1，语言 v0.6/标准库 v0.6.1 不变。
+- 测试文件：新增 tests/lex/inputs 的 62 份独立 .zzy 和 cases.json；期望按契约显式维护，没有用待测 Lexer 导出快照。成功逐项比较完整 Token/值/位置，失败比较错误码、文件、span、退出码及可选消息片段。含普通程序词法输入、正常边界探针和独立非法源码，未把故意不满足语句语法的词法探针称作可执行程序。三份 BOM/CRLF 用例通过 .gitattributes 保留原始字节。
+- 辅助器：test_lexer_cli.py 启动真实子进程，并行有界捕获两条管道，默认每例 10 秒/每流 1 MiB；超额、超时、坏清单/空清单均失败。当前 lex 不执行用户代码、不产生子进程树；这不是 P01-04/P06 的完整执行/spec 运行器。另有宿主测试验证计量、取消、长输入的边界检查次数和捕获器失败行为。
+- 实际命令与最终结果：`.venv/Scripts/python.exe -X utf8 -m unittest discover -s tests -v`，101/101 通过，22.732 秒，无跳过；包含原有 33 项、62 个新词法 CLI 用例、5 项词法宿主测试及 1 项捕获器测试。固定符号/最长匹配、全部转义/raw、两种注释、Unicode/不归一化、BOM/CRLF/Tab/EOF、数字默认 4095/4096/4097 和 Token 默认 249999/250000/250001 均得到真实验证。
+- 示例实测：`.venv/Scripts/python.exe -m zzy lex examples/lexer.zzy` 退出 0，30 个 Token（含 EOF），普通字符串得到实际换行，raw 保留字面 [OoO]n；没有执行 io.print。`.venv/Scripts/python.exe -m zzy lex tests/lex/inputs/unclosed-comment.zzy --diagnostic-format json` 退出 2、E101，span 从第 1 行第 1 列到第 12 列，stdout 为空。
+- 失败与修复记录：首次准备外部清单时手写 beta 偏移不对，生成脚本断言停止，核对原文后修正；第一轮 60 项中有一项 # 列号期望少算 1（实际第 15 列），根据文件字符位置修正；新增输出预算场景后的 101 项中一项误要求源码 file，而输出预算诊断应为 CLI 的 file/span=null，清单显式注明 null 并保留其他完整校验。之后 101 项全通过，没有删用例、跳过或以静态检查冒充运行成功。首轮宿主测试输出受终端编码影响，后续测试命令加 -X utf8；CLI 自身 UTF-8 管道断言始终通过。
+- 长输入测量：对已读取 Source，仅计宿主 Lexer.scan，每档 5 次中位数；标识符 10000/20000/40000 码点为 2.563/4.612/9.256 ms，多行注释 10000/20000/40000 个 zzyending 候选为 14.023/33.765/73.562 ms。另用宿主测试检查边界判定次数不超过线性上界。这是本机前端增长探针，不是 P07 等价 ZZY/Python 业务基准或性能优势结论。
+- 打包实测：bundled Python 执行 `-m pip wheel . --no-deps --no-build-isolation --no-index --wheel-dir dist` 成功生成 0.1.0a1 wheel；使用其 pip 的 `--python .venv/Scripts/python.exe install --no-index --no-deps dist/zzy_language-0.1.0a1-py3-none-any.whl` 更新项目虚拟环境成功。安装后 `.venv/Scripts/python.exe -I -m zzy lex <examples/lexer.zzy 的绝对路径>` 退出 0、30 个 Token，`.venv/Scripts/zzy.exe --version` 输出 0.1.0a1 (P01 lexer)。仅更新项目虚拟环境，未改系统 Python。
+- 文档与保留：更新 README、词法/测试说明、SKILL/guide 状态、resources/diagnostics 与开发导航；28 份 Markdown 的 263 个本地链接有效，围栏闭合。syntax/stdlib/sketch 与接手提交内容一致，requirement 原始字节 SHA-256 仍为 `B099C19FC339CE1DC1AAB7E9D6C8126A9C5C9ACE3D31B969A0623DF90F521D2B`；git diff --check 通过。构建/虚拟环境/缓存保持忽略。
+- 完成与交接：P01-01 满足词法完成标志并勾选；70 项中仅 P00 四项及 P01-01 共 5 项完成。P01 整体尚不能输出程序结果 5 或诊断缺分号，P01-02/03/04/05 均不勾选。下一项 P01-02：建立最小 AST、声明/赋值、加法、字符串与打印，复用当前词法与位置；本轮结束，不提前实现 spec、运行器全功能或后续阶段。
+- Git：本轮基于 feature 的 62a6056；实现、测试与本记录组成一个本地提交，提交标识以 Git 历史及本轮交接报告为准，不推送、不改写既有历史。
+- 提交前补充检查：首次 git diff --cached --check 将三份刻意保留的 CRLF 样例中的 CR 报作行尾空白；在这三条 .gitattributes 中显式设置 cr-at-eol，同时保留 blank-at-eol/blank-at-eof/space-before-tab 检查，未改变测试输入字节。

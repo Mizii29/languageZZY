@@ -39,7 +39,8 @@ class CliTests(unittest.TestCase):
         return record
 
     def test_help_and_version(self):
-        for args in (("--help",), ("source-info", "--help"), ("info", "--help"), ("--version",)):
+        for args in (("--help",), ("source-info", "--help"), ("info", "--help"),
+                     ("lex", "--help"), ("--version",)):
             result = self.cli(*args)
             self.assertEqual(result.returncode, 0)
             self.assertTrue(result.stdout.decode("utf-8"))
@@ -49,7 +50,7 @@ class CliTests(unittest.TestCase):
         result = self.cli("info")
         self.assertEqual(result.returncode, 0)
         record = json.loads(result.stdout)
-        self.assertEqual(record["stage"], "P00")
+        self.assertEqual(record["stage"], "P01-01")
         self.assertEqual(record["python_implementation"], "CPython")
         self.assertEqual(record["resource_policy"]["limits"]["numeric_digits"], 4096)
 

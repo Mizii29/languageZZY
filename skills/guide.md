@@ -1,12 +1,12 @@
 # ZZY 语言开发指南
 
-更新：2026-10-09｜语法 v0.6、标准库 v0.6.1｜当前为开发前指南，示例未运行
+更新：2026-10-10｜语法 v0.6、标准库 v0.6.1｜当前为开发前指南，示例未运行
 
 本指南说明怎样编写 ZZY 程序，以及怎样参与解释器开发。语法速查见 [syntax.md](syntax.md)，完整规则和接口分别以 [语法契约](../docs/language/syntax.md)、[标准库契约](../docs/language/stdlib.md) 为准。AI 接手入口是 [zzy/SKILL.md](zzy/SKILL.md)。
 
 ## 1. 先确认能做什么
 
-目前仓库已有 P00 包、CLI 和宿主基础设施测试；尚无语言执行器、ZZY 黑盒测试、基准或应用。文中的程序是按契约编写的设计示例，不代表功能已实现。开始开发前先查看 [todo](../docs/development/todo.md) 和 [开发记录](../docs/development/development-log.md)，并核对实际代码；P00 完成后下一项是 P01-01。
+目前仓库已有 P00 基础、P01-01 Lexer 和词法 CLI 黑盒；尚无语言执行器、完整语言黑盒、基准或应用。可用 lex 检查 Token，不能把它当作 run/check。文中的程序是按契约编写的设计示例，不代表功能已实现。开始开发前先查看 [todo](../docs/development/todo.md) 和 [开发记录](../docs/development/development-log.md)，并核对实际代码；当前下一项是 P01-02。
 
 解释器使用 Python，核心运行只依赖标准库。P00 已验证 CPython 3.12.14、Windows 11、Unicode 15.0.0；实际运行和安装命令见项目 README。没有依赖清单时不要凭空执行安装命令；GUI 和后续 Web 等可选依赖不应成为普通 CLI/check 的前提。
 

@@ -1,0 +1,8 @@
+zzysay: 词法扫描示例，尚不执行。
+(zno) answer := 1 + 4;
+zzysayalot:
+这里的 (zif?:)、引号和 [OoO]n 都是注释正文。
+zzyend
+io.print(answer);
+io.print("梓伊[OoO]n你好");
+io.print((raw)"[OoO]n 保持原样");

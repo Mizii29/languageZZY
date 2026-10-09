@@ -1,3 +1,3 @@
-"""ZZY interpreter foundations; language execution starts in P01."""
+"""ZZY foundations and lexer; AST execution is not yet implemented."""
 
-__version__ = "0.0.1"
+__version__ = "0.1.0a1"

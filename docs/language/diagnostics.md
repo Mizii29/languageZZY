@@ -1,6 +1,6 @@
 # ZZY 诊断格式与错误示例
 
-更新：2026-10-09｜diagnostic schema_version：1｜状态：P00 格式/源码坐标/CLI 错误出口已实现；下列语言错误示例仍为期望输出
+更新：2026-10-10｜diagnostic schema_version：1｜状态：基础格式与 P01-01 词法诊断已实现；名称、类型、单位等后续诊断仍为期望输出
 
 错误码和退出码以 [syntax.md](syntax.md) 为准，资源细则见 [resources.md](../runtime/resources.md)。本文件确定人和 Agent 可依赖的定位方式；不新增语言语法。
 
@@ -8,7 +8,7 @@
 
 默认文本首行为 `文件:行:列: 错误码 消息`，随后可显示源码片段、定位标记和修复建议。诊断写 stderr，正常程序输出写 stdout。建议不自动修改源码；修复提示不能抹掉原始错误原因。
 
-`--diagnostic-format json` 输出 UTF-8 JSON Lines：每行一个完整 JSON 对象，不在 stderr 混入文本标题、颜色代码或 Python traceback。字段固定为 schema_version、kind、code、file、span、message、notes；kind 为 error、trace、cancelled 或 internal_error，非 error 的 code 为 null。观察 `(@_@)` 使用 trace。notes 为字符串数组；错误码/位置/结构为稳定接口，消息和建议文字可改进，普通黑盒不对所有中文措辞做精确匹配。P00 仅接入 info/source-info，语言错误与观察语句仍待后续实现。
+`--diagnostic-format json` 输出 UTF-8 JSON Lines：每行一个完整 JSON 对象，不在 stderr 混入文本标题、颜色代码或 Python traceback。字段固定为 schema_version、kind、code、file、span、message、notes；kind 为 error、trace、cancelled 或 internal_error，非 error 的 code 为 null。观察 `(@_@)` 使用 trace。notes 为字符串数组；错误码/位置/结构为稳定接口，消息和建议文字可改进，普通黑盒不对所有中文措辞做精确匹配。当前接入 info/source-info/lex；lex 支持 E101/E102/E211，语法/名称/运行错误与观察语句仍待后续实现。
 
 CLI 明确设置标准流的 UTF-8 编解码及约定换行行为，不依赖 Windows 控制台代码页猜测；重定向到管道也保持相同协议。预算不足时裁剪可选源码片段/notes 和消息内容，保留完整合法 JSON 记录；文件名异常长仍无法容纳时使用 file=null，并在短消息中说明定位被省略，不能输出半条记录。中断/内部缺陷没有 code 时，文本格式也不硬造错误码。
 
@@ -19,6 +19,8 @@ file 为诊断对应文件路径：CLI 默认输出相对进程工作目录的�
 P01 基线采用首个错误即停止：源码词法、语法、名称/静态检查均先于执行；运行错误中止当前 run。未执行分支的运行时类型错误不提前报告。将来多错误恢复另列能力，不许为了输出更多错误执行 check 中的用户表达式。
 
 定位选择：未声明名称指向标识符；未闭合字符串/注释指向起始标记；二元类型/量纲错误指向运算符；参数/字段注解不符指向对应值表达式。跨函数错误保留最内层主位置，并在 notes 补调用位置；Lazy 缓存错误保留首次主位置并补当前 wake 位置，不复制整份源码到记录里。
+
+P01-01 的 lex 开发入口约定：未闭合/含物理换行的字符串为 E101，主位置是起始双引号；raw 后缺字符串为 E101，主位置是完整 `(raw)`；错误转义 E102 指向完整 `[OoO]` 及存在的非法后缀，不吞掉结束引号。词法扫描失败前不输出 Token；输出阶段的资源错误可能保留此前完整 Token 记录，但退出码仍为 2。Token 输出格式见 [项目 README](../../README.md)，它不表示完成语法检查或执行。
 
 ## 2. 四个独立的非法程序
 

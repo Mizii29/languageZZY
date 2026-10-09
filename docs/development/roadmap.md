@@ -1,6 +1,6 @@
 # ZZY 开发阶段与交付计划
 
-作者：赵梓伊｜更新：2026-10-09｜状态：P00 基础设施已实现；任务验收状态见 todo
+作者：赵梓伊｜更新：2026-10-10｜状态：P00 与 P01-01 词法扫描已实现；P01 阶段尚未完成，任务状态见 todo
 
 本文维护开发顺序、依赖、产出与完成标准。任务完成状态只写在 [todo.md](todo.md)，真实操作与验证只写在 [development-log.md](development-log.md)。整体方案见 [设计详细版](../design详细版.md)，内部实现步骤见 [interpreter.md](../runtime/interpreter.md)，创新取舍见 [innovation.md](../features/innovation.md)。
 
@@ -258,7 +258,7 @@ python -m zzy test tests/
 
 ```text
 zzy/                       已建立 P00 基础；解释链后续实现
-tests/                     已建立 P00 宿主测试；ZZY 黑盒后续实现
+tests/                     已有宿主与词法 CLI 黑盒；执行黑盒后续实现
 examples/                  已建立源码读取样例；可执行示例待 P01
 benchmarks/                已建立目录说明；配对脚本/results 待 P07
 apps/zzy-campus/           默认 ZZY CLI 应用，待建立

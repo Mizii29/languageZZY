@@ -1,6 +1,6 @@
 # ZZY 解释器实现流程
 
-作者：赵梓伊｜更新：2026-10-09｜状态：v0.6 语法实现路线；P00 基础已实现，解释链待 P01
+作者：赵梓伊｜更新：2026-10-10｜状态：v0.6 语法实现路线；P00 与 Lexer 已实现，AST 执行链待 P01-02/03
 
 当前语法以 [syntax.md](../language/syntax.md) 为准，整体方案见 [design详细版.md](../design详细版.md)，库以 [stdlib.md](../language/stdlib.md) 为准；优化与后端扩展见 [performance.md](performance.md)。本文回答“先写什么、每一步产生什么、怎样证明做对了”，不把规划中的代码和命令当成已有功能。Web 为可选扩展，完整 CLI 应用不依赖 Web 或 VM。
 
@@ -164,6 +164,8 @@ MUTABLE_DECL  IDENT(total)  COLON  TYPE_INT  INIT  INTEGER(0)  SEMICOLON
 注释扫描只前进不回退，正文不生成 Token；多行的每次 zzyend 候选检查左右 Unicode 标识符边界，匹配失败从该候选之后继续，避免反复扫描相同正文。保留换行与原文 span，注释当空白处理，不把两侧词项拼接。单行 EOF 合法，多行 EOF 未闭合和正常源码中的裸 zzyend 为 E101；按 syntax 契约覆盖前缀、行内结束、字符串和未闭合场景。
 
 完成标志：能正确区分颜文字、数组、括号与字符串；错误转义、未闭合字符串和非法字符有固定诊断。每项都通过实际源码文件验证。
+
+P01-01 已按上述边界实现 `tokens.py`/`lexer.py`，通过 `python -m zzy lex 文件.zzy` 查看真实 Token；外部清单见 [词法黑盒说明](../../tests/lex/README.md)。Token 保留 Source 及半开偏移，只有字符串附解码值和 raw 标记；数字仍保留原文，普通数/Quantity 转换留给准备层。固定符号按首字符分流并最长匹配；每文件非 EOF Token 数、数字位数、解码字符串长度在扫描过程中检查。源码嵌套及 AST 深度属于下一项 Parser，不以 lex 代替语法分析。
 
 **可增加的选择与性能：**
 
