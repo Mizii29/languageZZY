@@ -1,6 +1,6 @@
 # ZZY 开发阶段与交付计划
 
-作者：赵梓伊｜更新：2026-10-10｜状态：P00/P01 最小执行链已完成，任务状态见 todo
+作者：赵梓伊｜更新：2026-10-11｜状态：P00—P02 已完成阶段验收，任务状态见 todo
 
 本文维护开发顺序、依赖、产出与完成标准。任务完成状态只写在 [todo.md](todo.md)，真实操作与验证只写在 [development-log.md](development-log.md)。整体方案见 [设计详细版](../design详细版.md)，内部实现步骤见 [interpreter.md](../runtime/interpreter.md)，创新取舍见 [innovation.md](../features/innovation.md)。
 
@@ -248,7 +248,7 @@ E 不自动替换 P09。若以后选小画室作为作业应用，须另外用�
 
 ## 9. 拟议命令与后续文件位置
 
-run/check 已在 P01 最小子集实现；test 仍为后续接口约定，当前使用 python -X utf8 -m tests.blackbox 验证。
+run/check 已扩展到 P02 数据与控制流；test 仍为后续接口约定，当前使用 python -X utf8 -m tests.blackbox 验证。
 
 ```text
 python -m zzy run examples/hello.zzy
@@ -257,7 +257,7 @@ python -m zzy test tests/
 ```
 
 ```text
-zzy/                       已有基础、Lexer 与 P01-02 最小解释链
+zzy/                       已有基础、Lexer 与 P02 数据/控制解释链
 tests/                     已有宿主及统一 lex/run/check CLI 黑盒
 examples/                  已有读取/词法样例及可执行 hello.zzy
 benchmarks/                已建立目录说明；配对脚本/results 待 P07
@@ -276,10 +276,10 @@ skills/                    已有使用文档，示例待运行验证
   zzy/SKILL.md              AI 指南，按任务引用 docs
 ```
 
-当前真实目录见 [项目 README](../../README.md)，正式文档导航见 [docs README](../README.md)。语言执行代码、可执行示例、性能报告与交付索引仍为规划；P00 基础设施和已有指南不代表 P06 运行验收完成。
+当前真实目录见 [项目 README](../../README.md)，正式文档导航见 [docs README](../README.md)。P02 语言执行代码和 hello/grades 可执行示例已存在；性能报告与交付索引仍为规划；P00 基础设施和已有指南不代表 P06 运行验收完成。
 
 ## 10. 接手与完成状态
 
-先核对实际仓库，再执行 **P00 → P01**，目标是让第一份 `.zzy` 文件能够输出正确结果并通过首批黑盒测试。完成后更新待办、运行说明和开发记录，按依赖继续后续阶段；在产生可运行基线前，先不投入字节码或大型 Web 扩展。
+先核对实际仓库和 P02 验收记录，再执行 **P03-01** 用户函数，按依赖完成函数、作用域与闭包。每阶段继续更新待办、运行说明和记录；字节码和大型 Web 扩展仍不提前实施。
 
 当前共 70 项代码任务，完成状态以 todo 为唯一清单；P00 宿主基础设施与后续语言实现分别验收，不提前完成 P01 或 P06。

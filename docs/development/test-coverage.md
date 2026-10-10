@@ -1,8 +1,10 @@
 # ZZY 黑盒覆盖与验收计划
 
-更新：2026-10-10｜状态：P01 已有统一 lex/run/check 外部黑盒；其余语言语义覆盖仍待实现，验收见 tests/README.md 与开发记录
+更新：2026-10-11｜状态：P01/P02 已有统一 lex/run/check 外部黑盒；其余阶段覆盖仍待实现，验收见 tests/README.md 与开发记录
 
 本文件将 [syntax.md](../language/syntax.md) 与 [stdlib.md](../language/stdlib.md) 的可观察规则映射到测试类别。它不是测试集或通过报告；实际用例需用 `.zzy` 编写并通过真实 CLI 一键运行。
+
+P02 实际映射见 [tests/p02/README.md](../../tests/p02/README.md)：279 个 run/check 期望覆盖 EXPR、BIND/CTRL 的非函数部分、ARRAY、SHAPE、输入及本阶段资源边界。ARRAY-02 的异常/取消清理、版本与配额原子性使用宿主测试补充。未实现的跨函数跳转、闭包、回调/缓存、JSON、模块和特色语法仍是待验证计划，不将整张矩阵视为已通过。
 
 ## 1. 核心覆盖矩阵
 
@@ -50,7 +52,7 @@ ARRAY-02 致命异常后同一上下文的计数清理也由原生层/后续公�
 
 ## 2. 运行器与外部期望
 
-P01 当前外部入口为 `python -X utf8 -m tests.blackbox`，整合 lex/run/check 清单、校验、进程捕获与报告，具体字段见 [tests/README.md](../../tests/README.md)。未来的 `python -m zzy test tests/` 与 spec 尚未实现；下列完整能力按后续阶段补齐。正常 spec、固定输出程序、非法源码分别保存；非法源码不混入会一次性解析的正常 spec 文件。
+当前外部入口为 `python -X utf8 -m tests.blackbox`，整合 lex/run/check 清单、校验、进程捕获与报告，具体字段见 [tests/README.md](../../tests/README.md)。未来的 `python -m zzy test tests/` 与 spec 尚未实现；下列完整能力按后续阶段补齐。正常 spec、固定输出程序、非法源码分别保存；非法源码不混入会一次性解析的正常 spec 文件。
 
 外部 JSON 清单至少记录：用例 ID、`.zzy` 路径、运行模式、stdin、stdout 期望、stderr 错误码/位置或确定性文字、退出码、超时和工作目录。比较文本只统一 LF/CRLF，不随意 strip 空白或忽略额外输出；JSON 诊断按结构比对，路径采用清单约定的相对定位，避免机器绝对路径影响可移植性。
 

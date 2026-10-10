@@ -1,4 +1,4 @@
-"""P01 external-manifest runner; all language behavior goes through a subprocess."""
+"""External-manifest runner; all language behavior goes through a subprocess."""
 
 import argparse
 import json
@@ -17,7 +17,7 @@ from zzy.resources import ResourcePolicy
 
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_MANIFESTS = tuple(ROOT / f"tests/{name}/cases.json" for name in ("lex", "run", "check"))
+DEFAULT_MANIFESTS = tuple(ROOT / f"tests/{name}/cases.json" for name in ("lex", "run", "check", "p02"))
 
 
 def _pairs(items):
@@ -181,7 +181,7 @@ def suite(path):
 
 
 def main(argv=None):
-    parser = argparse.ArgumentParser(description="P01 lex/run/check external black-box tests (no spec)")
+    parser = argparse.ArgumentParser(description="ZZY lex/run/check external black-box tests (no spec)")
     parser.add_argument("manifests", nargs="*", type=Path)
     parser.add_argument("--report", type=Path, help="write commands, counts and effective resource policies as JSON")
     args = parser.parse_args(argv)

@@ -1,0 +1,1 @@
+(shape) S {x;} (zno) xs := [S::{x:1}]; io.print((array.pop(xs) (with) {x:2}).x); io.print(len(xs));

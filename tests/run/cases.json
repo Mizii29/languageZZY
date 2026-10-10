@@ -735,17 +735,8 @@
       "file": "tests/run/inputs/unsupported-float.zzy",
       "cwd": ".",
       "timeout_seconds": 10,
-      "exit_code": 2,
+      "exit_code": 0,
       "stdout": "",
-      "diagnostic": {
-        "code": "E103",
-        "span": [
-          1,
-          1,
-          1,
-          4
-        ]
-      },
       "mode": "run",
       "stdin": ""
     },
@@ -754,17 +745,8 @@
       "file": "tests/run/inputs/unsupported-bool.zzy",
       "cwd": ".",
       "timeout_seconds": 10,
-      "exit_code": 2,
+      "exit_code": 0,
       "stdout": "",
-      "diagnostic": {
-        "code": "E103",
-        "span": [
-          1,
-          1,
-          1,
-          7
-        ]
-      },
       "mode": "run",
       "stdin": ""
     },
@@ -773,17 +755,8 @@
       "file": "tests/run/inputs/unsupported-array.zzy",
       "cwd": ".",
       "timeout_seconds": 10,
-      "exit_code": 2,
+      "exit_code": 0,
       "stdout": "",
-      "diagnostic": {
-        "code": "E103",
-        "span": [
-          1,
-          1,
-          1,
-          2
-        ]
-      },
       "mode": "run",
       "stdin": ""
     },
@@ -792,17 +765,8 @@
       "file": "tests/run/inputs/unsupported-minus.zzy",
       "cwd": ".",
       "timeout_seconds": 10,
-      "exit_code": 2,
+      "exit_code": 0,
       "stdout": "",
-      "diagnostic": {
-        "code": "E103",
-        "span": [
-          1,
-          1,
-          1,
-          2
-        ]
-      },
       "mode": "run",
       "stdin": ""
     },
@@ -811,17 +775,8 @@
       "file": "tests/run/inputs/unsupported-block.zzy",
       "cwd": ".",
       "timeout_seconds": 10,
-      "exit_code": 2,
+      "exit_code": 0,
       "stdout": "",
-      "diagnostic": {
-        "code": "E103",
-        "span": [
-          1,
-          1,
-          1,
-          2
-        ]
-      },
       "mode": "run",
       "stdin": ""
     },
@@ -830,19 +785,19 @@
       "file": "tests/run/inputs/unsupported-annotation.zzy",
       "cwd": ".",
       "timeout_seconds": 10,
-      "exit_code": 2,
+      "exit_code": 1,
       "stdout": "",
+      "mode": "run",
+      "stdin": "",
       "diagnostic": {
-        "code": "E103",
+        "code": "E201",
         "span": [
           1,
-          10,
+          21,
           1,
-          17
+          22
         ]
-      },
-      "mode": "run",
-      "stdin": ""
+      }
     },
     {
       "id": "unsupported-spec",

@@ -1,0 +1,3 @@
+io.print(len(range(5,0,-2))); io.print(len(range(0,5,-1))); io.print(len(4..<2));
+io.print(len(0..<999999999999999999999999999999));
+io.print((0..<2) == range(0,2,1)); io.print((2..<1) == (3..<1));

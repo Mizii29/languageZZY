@@ -1,0 +1,3 @@
+(shape) S {a := io.print("default-a"); b := io.print("default-b"); c := io.print("default-c");}
+(zno) s := S::{b:io.print("explicit-b"),a:io.print("explicit-a")};
+(zno) t := s (with) {b:io.print("update-b"),a:io.print("update-a")}; io.print(t.c);

@@ -245,3 +245,22 @@ Git 提交：真实标识 / 未提交
 - 保留与交接：syntax/stdlib/sketch 正式契约本轮未改，requirement SHA-256 仍为 B099C19FC339CE1DC1AAB7E9D6C8126A9C5C9ACE3D31B969A0623DF90F521D2B。只新增勾选 P01-03/04/05，P01 整体完成；70 项中完成 9 项。下一项 P02-01：数值、Bool、Null、比较及逻辑短路，仍用外部 run/check 清单，不提前依赖 spec；真实终端 Ctrl+C、其他平台及完整运行器能力未声称完成。
 - Git：实现、用例、统一运行器和本记录组成一个 P01 阶段验收本地提交；提交标识以 Git 历史及本轮报告为准。提交前检查暂存清单、空白与文档/用例对应关系，不纳入 wheel、报告、缓存或虚拟环境，不推送、不改写历史。
 - 暂存前保护检查补充：直接把 Git blob 字节与工作区 syntax 文件比较时，因 Git LF/工作区 CRLF 产生断言失败；随后按仓库过滤规则用 git hash-object --path 与 HEAD 对象比较，syntax/stdlib/sketch 均一致，未改这些文件。requirement 仍单独按原始字节 SHA-256 验证。最终暂存 40 个文件，git diff --cached --check 通过，无漏暂存或意外新文件。
+
+
+## 2026-10-11：P02-01—05 连续实现与阶段验收（10 月 10 日接手）
+
+- 起点与范围：按 skills/zzy/SKILL.md、todo 交接、最新日志读取 syntax/stdlib、interpreter/resources/diagnostics、roadmap/test-coverage。feature 与 origin/feature 均在 f3f11e3，工作区干净；实际 CPython 3.12.14（MSC v.1944 AMD64）、Windows 11 10.0.26200、Unicode 15.0.0，使用项目 .venv。用户授权完成全部 P02 并验收、本地提交，本轮未进入 P03、未推送。
+- P02-01：Parser 扩展优先级及 Bool/Null/Float、一元/二元运算，禁止未分组比较链。运行时严格区分 Bool/Int，Int/Float 混合算术、精确数学比较、负数向下整除/取余、有限 Float 与除零诊断均接入；and/or 严格 Bool 且短路，不执行被跳过的打印、输入或数组修改。
+- P02-02：增加块、if/elif/else、while/for、半开 Range、break/continue。prepare 以词法声明身份绑定名字，拒绝同块重复、初始化自引用（不回退外层）和循环外跳转；运行时每次块/每轮循环建立独立绑定，for 变量只读。Range 保留边界，长度不展开数组，String 按码点索引/遍历。完整函数/槽位/闭包留 P03，未将这些前置工作勾作 P03 完成。
+- P02-03：values.Array 统一 push/pop/replace 入口；别名共享载荷，浅 copy 新建外层，替换更新内容版本，增删更新双版本。活动遍历计数覆盖嵌套遍历，最后一轮及随后即将 break 也在增删前 E206；允许替换，后续迭代读取新值，finally 在错误/取消/内存异常时清理计数。赋值先保存实际容器/下标、检查可写性，再求右侧，写入前重查，覆盖右侧 pop 导致旧下标失效。
+- P02-04：顶层 shape 定义、名义注解、字段写入及浅层 with。构造先检查字段清单，再按源码顺序求显式值/检查类型，然后按声明顺序求默认值。默认表达式按定义处词法身份查绑定；数组字面每实例新建、外部数组默认共享。with 原值只求一次，不重跑默认值，未替换字段共享引用。缺/重复/额外构造字段 E203、未知访问字段 E302、类型 E201，位置与测试清单一致。
+- P02-05：注册基础原生函数元数据和实际实现 io.input、len、str、range、array.copy/push/pop（保留 io.print）。输入提示先 flush，UTF-8 严格读取，原样保留 [OoO]、剥离一组 LF/CRLF，空行与 EOF 不混淆；读取失败 E401、资源失败 E211，不伪装 EOF。其他 stdlib 接口如 array.sum 仍明确 E302，不写成可用。新增 examples/grades.zzy，成绩统计/菜单业务由 ZZY 执行；姓名与 1 输入得到科目数 4、总分 344、平均分 86.0、最高分 100、及格科目 4，退出与 EOF 另有固定期望。
+- 资源与隔离：Float/数组/结构/Range、块/循环绑定和原生引用纳入计量；数组增删容量检查在写入前，别名不重复计载荷，配额不足先回收不可达环，退出统一释放预留。Int 正负加减精确探测宽度；乘积上界可能误拒绝时回退分块精确探测。Int 转文字先检查数字/文本与载荷预算。调试显示有界收集、根复合值深度为 1、循环路径显示 <cycle>，不泄露对象地址；同一 Program 重跑的数组/结构/输入隔离由宿主测试验证。这是逻辑资源计量，不是进程 RSS 保证。
+- 测试与失败修复：新增 tests/p02 的 279 个外部期望（139 run、140 check）和 10 项宿主测试。保留 P01 全部 260 例，迁移六类原“不支持”期望：Float/Bool/负号/数组/块现在成功；Float 注解赋 Int 的 run 改 E201、check 成功，spec 仍拒绝。首轮旧回归 12 个失败均对应这些能力变化；新增 209 例首轮有 7 处定位差异，修正运算符/下标定位并将单一类型原生实参指向值表达式，复测 209/209。581 项扩展回归发现迁移用例列号手写偏 1，按原文修正；随后 599/599 通过。验收补修 CRLF 在内容上限处的处理、value_depth 根容器计数、保守乘积预算回退、结构字段误套 Array 容量上限，以及 str(Int) 先预留后转换，并加入相应边界。
+- 验证辅助失败也如实保留：初次清单生成脚本引号冲突未生成用例，修正后执行；误写 io_bytes 配置键被运行器收集校验拒绝，改用契约现有 io_payload_bytes。第一次读取隔离 Python 包路径受宿主默认编码影响而解码失败；改为 -I -X utf8 后完成比对，没有把该失败当作安装验证成功。
+- 最终完整回归命令：`.venv/Scripts/python.exe -X utf8 -m unittest discover -s tests -q`，605/605 通过、131.198 秒、退出 0，无跳过（539 个真实 CLI 期望 + 66 个宿主/运行器测试）。已有 P00/P01 功能未见回归；运行器的空/坏清单、错误答案/诊断、超时、输出超额和启动失败测试仍会明确失败，不能以空收集报成功。
+- 独立黑盒命令：`.venv/Scripts/python.exe -X utf8 -m tests.blackbox --report dist/p02-blackbox-report.json`，539/539 通过、109.961 秒、退出 0。实际 lex 62、run 232、check 245，报告逐项 passed 与 observed_exit_code 符合外部期望，包含 36 种有效资源策略指纹。报告保持忽略、可重建。check 专用程序含输入、无限循环、结构默认副作用、数组修改和除零，在运行预算仅 1 时仍双流为空；不构造 Interpreter 的原有宿主检查保留。
+- 发布验证：版本升为 0.2.0a1，info.stage=P02。bundled Python 执行 `-m pip wheel . --no-deps --no-build-isolation --no-index --wheel-dir dist` 成功，再用其 pip 的 `--python .venv/Scripts/python.exe install --no-index --no-deps dist/zzy_language-0.2.0a1-py3-none-any.whl` 离线安装。`.venv/Scripts/zzy.exe --version` 输出 0.2.0a1 (P02 interpreter)。从 dist 工作目录以 `.venv/Scripts/python.exe -I -m zzy run/check <绝对路径> --diagnostic-format json` 验证 13 条成绩菜单、短路、默认新建/共享、活动遍历与零执行 check 用例，均符合固定输出/退出码；16 个安装 Python 源文件与工作区逐字节一致。
+- 文档和契约：更新 README、skills 指南/SKILL、能力状态、覆盖映射、examples/tests 说明、资源与诊断实施细节。修复指南中“只有文档/数组仍不支持”等过时描述；syntax/stdlib 只修改当前实现状态与验证状态，语法、EBNF、库签名与行为不变。29 份 Markdown、275 个本地链接与围栏检查通过，静态结果不替代运行证据。requirement 原始字节 SHA-256 仍为 B099C19FC339CE1DC1AAB7E9D6C8126A9C5C9ACE3D31B969A0623DF90F521D2B。
+- 完成标准与边界：roadmap 的成绩/菜单运行、短路跳过副作用、shape 新数组默认与外部数组共享全部有 CLI 证据。P02-01—05 均勾选，70 项完成 14 项；没有已知未修复的本阶段失败。其他 Python/OS、真实终端 Ctrl+C、派生进程树/GUI 回收、函数/闭包/跨函数跳转、回调/数组校验缓存、完整 RESOURCE/CLI 和 P06 覆盖仍未验证或待实现，不据本阶段测试推断完成。下一项 P03-01。
+- Git：实现、独立源码/期望、测试、指南和本记录组成一个本地 P02 阶段提交，标识以 Git 历史和本轮最终报告为准。提交前核对纳入文件、git diff --check、requirement 哈希；不纳入 .venv、wheel、临时生成脚本或报告，不自动推送、不改写历史。

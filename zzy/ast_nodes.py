@@ -1,7 +1,8 @@
-"""Immutable P01 syntax tree. Tokens retain the original diagnostic positions."""
+"""Immutable syntax tree. Tokens retain the original diagnostic positions."""
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Mapping
+from types import MappingProxyType
 
 from .tokens import Token
 
@@ -26,3 +27,6 @@ class Program:
     root: Node
     # Prepared literals are separate from the immutable syntax tree and runtime.
     integers: Mapping[int, int]
+
+    references: Mapping[int, object] = field(default_factory=lambda: MappingProxyType({}))
+    annotations: Mapping[int, object] = field(default_factory=lambda: MappingProxyType({}))

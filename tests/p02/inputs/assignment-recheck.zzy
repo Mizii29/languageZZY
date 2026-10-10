@@ -1,0 +1,2 @@
+(zno) a := [[10,20]]; (zno) alias := a[0]; (zno) indices := [0];
+a[array.pop(indices)][1] <- array.pop(alias); io.print("bad");

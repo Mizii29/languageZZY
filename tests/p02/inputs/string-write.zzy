@@ -1,0 +1,1 @@
+(zno) a := "x"; a[0] <- io.print("bad");

@@ -1,0 +1,2 @@
+(zno) a := [[10,20]]; (zno) old := a[0]; (zno) indices := [0];
+a[array.pop(indices)][0] <- array.pop(a); io.print(len(indices)); io.print(len(a)); io.print(old[0] == old);

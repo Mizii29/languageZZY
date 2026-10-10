@@ -1,0 +1,4 @@
+(zno) a := [1,2,3]; (zno) alias := a;
+(for) item (in) a {alias[1] <- 8; io.print(item);}
+(for) item (in) a {(for) inner (in) alias {(break);} (continue);}
+array.push(a,4); (for) item (in) a {(break);} io.print(array.pop(a)); io.print(a);

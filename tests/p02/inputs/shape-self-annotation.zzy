@@ -1,0 +1,1 @@
+(shape) Node {next: Node;} (zno) n := Node::{next:(null)};

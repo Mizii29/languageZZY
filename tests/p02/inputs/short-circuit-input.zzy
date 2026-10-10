@@ -1,0 +1,1 @@
+(false) (and) io.input("bad"); (true) (or) io.input("bad"); io.print(io.input(""));

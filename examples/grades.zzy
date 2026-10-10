@@ -1,0 +1,30 @@
+zzysay: P02 成绩统计：输入姓名与菜单项，成绩保存在结构/数组中。
+(shape) Student {
+    name: (String);
+    scores: (Array) := [];
+}
+(zno) name := io.input("姓名: ");
+(zif?:) name == (null) {
+    io.print("输入结束");
+} (zzyf:) {
+    (zno) student := Student::{name: name, scores: [82, 95, 67, 100]};
+    (zno) choice := io.input("输入 1 查看统计，其他输入退出: ");
+    (zif?:) choice == "1" {
+        (zyes) total := 0;
+        (zyes) passed := 0;
+        (zyes) maximum := student.scores[0];
+        (for) score (in) student.scores {
+            total <- total + score;
+            (zif?:) score >= 60 { passed <- passed + 1; }
+            (zif?:) score > maximum { maximum <- score; }
+        }
+        io.print("学生: " + student.name);
+        io.print("科目数: " + str(len(student.scores)));
+        io.print("总分: " + str(total));
+        io.print("平均分: " + str(total / len(student.scores)));
+        io.print("最高分: " + str(maximum));
+        io.print("及格科目: " + str(passed));
+    } (zzyf:) {
+        io.print("已退出");
+    }
+}

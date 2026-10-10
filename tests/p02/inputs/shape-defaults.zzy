@@ -1,0 +1,5 @@
+(zno) external := [];
+(shape) S {fresh: (Array) := []; shared: (Array) := external;}
+(zno) a := S::{}; (zno) b := S::{}; array.push(a.fresh,1); array.push(a.shared,2);
+io.print(a.fresh); io.print(b.fresh); io.print(b.shared); io.print(a.fresh == b.fresh); io.print(a.shared == b.shared);
+(zno) copy := a (with) {}; io.print(copy == a); io.print(copy.fresh == a.fresh);

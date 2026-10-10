@@ -1,0 +1,1 @@
+io.print(io.input("姓名: ")); io.print(io.input("空行: ")); io.print(io.input("末行: ")); io.print(io.input("EOF: "));

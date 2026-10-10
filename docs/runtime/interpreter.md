@@ -1,12 +1,12 @@
 # ZZY 解释器实现流程
 
-作者：赵梓伊｜更新：2026-10-10｜状态：v0.6 语法实现路线；P00/P01 最小执行链与非执行 check 已实现
+作者：赵梓伊｜更新：2026-10-11｜状态：v0.6 语法实现路线；P00—P02 数据/控制流与非执行 check 已实现
 
 当前语法以 [syntax.md](../language/syntax.md) 为准，整体方案见 [design详细版.md](../design详细版.md)，库以 [stdlib.md](../language/stdlib.md) 为准；优化与后端扩展见 [performance.md](performance.md)。本文回答“先写什么、每一步产生什么、怎样证明做对了”，不把规划中的代码和命令当成已有功能。Web 为可选扩展，完整 CLI 应用不依赖 Web 或 VM。
 
 本文的“第几步”按部件说明完整架构，不是要求一次写完一个部件再开始执行。实际依赖以 [roadmap.md](../development/roadmap.md) 为准：P01 用最小 Lexer/Parser/名字表/执行器跑通输出，P02 补数据与控制流，P03 完善 Resolver、槽位与闭包，P04/P05 补特色和库；P06/P07/P09 完成测试、性能和应用。VM 按 P10 的热点证据选择，Web 属于 P09 之后的可选 P08。
 
-P01-02 实际实现为 ast_nodes.py、parser.py、prepare.py、interpreter.py：不可变节点保留 Token 位置与完整表达式范围，prepare 完成整个文件的顶层名称检查和 Int 字面转换，Interpreter 建立新的绑定表并树遍历执行。当前只支持 README 所列最小子集和 io.print；run 执行、check 完成 prepare 后直接返回，二者前端一致；check 不构造 Interpreter。调用保持普通表达式语义，不把 io.print 硬编码成特殊语句。完整 Resolver/槽位/闭包仍按 P03 推进。
+当前实现为 ast_nodes.py、parser.py、prepare.py、values.py、interpreter.py：不可变 AST 保留 Token 与完整表达式范围；prepare 解析整个文件，按词法声明身份解析块/循环和 shape 默认表达式，检查控制流位置并准备 Int/Float 字面。每次 Interpreter.run 建立独立执行状态；Array 经统一写入口计量并维护版本/活动遍历计数。shape 默认值按定义处绑定身份每次构造求值，with 只浅复制字段。check 完成 prepare 后直接返回，不构造 Interpreter。P03 将实现用户函数、完整 Resolver/局部槽位/闭包；当前词法身份表不是已完成该阶段。
 
 阅读方式：每一步先看“形象理解”，再看实现细节，最后看“选择与性能”。先理解它做什么，再决定要不要优化。表中的性能收益是待验证的方向，不是已经测出的提升。
 

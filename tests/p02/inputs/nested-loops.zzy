@@ -1,0 +1,3 @@
+(for) i (in) 0..<2 {(for) j (in) 0..<3 {(zif?:) j == 1 {(break);} io.print(i * 10 + j);}}
+(zno) x := 1; {(zno) x := 2; io.print(x);} io.print(x);
+(for) i (in) 0..<2 {(zyes) fresh := 0; fresh <- fresh + 1; io.print(fresh);}

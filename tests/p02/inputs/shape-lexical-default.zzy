@@ -1,0 +1,3 @@
+(zyes) external := [1]; (shape) S {field := external;}
+{(zno) external := [99]; io.print(S::{}.field);} external <- [2]; io.print(S::{}.field);
+(shape) Empty {} io.print(Empty::{} == Empty::{}); (zno) Alias := S; io.print(Alias::{}.field);

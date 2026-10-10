@@ -1,0 +1,2 @@
+(zno) a: (Float) := 1.5; (zno) b: (Bool) := (true); (zno) n: (Null) := (null);
+(zno) xs: (Array) := [a,b,n]; (zno) r: (Range) := 0..<2; io.print(xs); io.print(len(r));

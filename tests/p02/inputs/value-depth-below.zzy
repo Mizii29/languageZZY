@@ -1,0 +1,1 @@
+(zyes) a := 0; (for) i (in) 0..<63 {a <- [a];} io.print(a);

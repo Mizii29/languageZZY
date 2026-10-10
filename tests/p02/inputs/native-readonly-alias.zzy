@@ -1,0 +1,1 @@
+(zno) a := array; a.push <- io.print("bad");

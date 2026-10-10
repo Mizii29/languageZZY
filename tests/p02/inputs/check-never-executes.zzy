@@ -1,0 +1,2 @@
+io.input("bad"); (while) (true) {io.print("bad");}
+(shape) S {x := io.print("bad");} (zno) s := S::{}; (zno) a := []; array.push(a,1); 1/0;
