@@ -1,0 +1,1 @@
+(zno) result: (Null) := io.print("first"); io.print(result);

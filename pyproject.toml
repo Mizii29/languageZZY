@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "zzy-language"
-version = "0.1.0a1"
+version = "0.1.0a2"
 description = "ZZY language: CLI foundations and v0.6 lexer"
 readme = "README.md"
 requires-python = "==3.12.14"

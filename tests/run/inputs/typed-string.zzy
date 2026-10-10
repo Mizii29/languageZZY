@@ -1,0 +1,1 @@
+(zyes) x: (String) := "a"; x <- x + "b"; io.print(x);

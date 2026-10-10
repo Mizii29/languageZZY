@@ -40,7 +40,7 @@ class CliTests(unittest.TestCase):
 
     def test_help_and_version(self):
         for args in (("--help",), ("source-info", "--help"), ("info", "--help"),
-                     ("lex", "--help"), ("--version",)):
+                     ("lex", "--help"), ("run", "--help"), ("--version",)):
             result = self.cli(*args)
             self.assertEqual(result.returncode, 0)
             self.assertTrue(result.stdout.decode("utf-8"))
@@ -50,7 +50,7 @@ class CliTests(unittest.TestCase):
         result = self.cli("info")
         self.assertEqual(result.returncode, 0)
         record = json.loads(result.stdout)
-        self.assertEqual(record["stage"], "P01-01")
+        self.assertEqual(record["stage"], "P01-02")
         self.assertEqual(record["python_implementation"], "CPython")
         self.assertEqual(record["resource_policy"]["limits"]["numeric_digits"], 4096)
 
@@ -73,7 +73,7 @@ class CliTests(unittest.TestCase):
             self.assertIsNone(record["span"])
 
     def test_cli_errors_and_unimplemented_commands_fail(self):
-        for args in ((), ("run", self.file), ("check", self.file), ("test", "tests"),
+        for args in ((), ("run",), ("check", self.file), ("test", "tests"),
                      ("source-info",), ("--unknown",), ("info", "--diagnostic-format", "invalid")):
             record = self.error(self.cli(*args, "--diagnostic-format=json"))
             self.assertIsNone(record["file"])

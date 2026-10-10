@@ -1,0 +1,3 @@
+zzysayalot: ignored zzyend
+(zno) x := 1 zzysay: line
++ 2; io.print(x);

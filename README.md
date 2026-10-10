@@ -2,7 +2,7 @@
 
 ZZY 是赵梓伊在程序设计实践课程中设计的通用脚本语言，计划使用 Python 实现解释器，用 ZZY 编写测试、性能脚本和完整应用。
 
-**当前状态：P00 与 P01-01 词法扫描已实现，语言执行尚未实现。** 包版本 0.1.0a1；核心语法 v0.6、标准库设计 v0.6.1。CLI、源码、资源/诊断基础及 Lexer 已有真实测试，其中词法使用独立 `.zzy` 文件与外部期望清单通过 CLI 验证。Parser、AST 执行器、完整语言黑盒、性能报告和应用仍待后续阶段。
+**当前状态：P00、P01-01 和 P01-02 已实现，最小程序可以运行。** 包版本 0.1.0a2；核心语法 v0.6、标准库设计 v0.6.1。已有 Lexer、最小 Parser/AST、顶层名字检查、树遍历执行器和 `run`，通过独立 `.zzy` 与外部清单验证。`check/test`、后续语法、完整语言黑盒、性能报告和应用仍待实现；P01 整体尚未完成。
 
 ## 项目特色
 
@@ -29,9 +29,9 @@ ZZY 是赵梓伊在程序设计实践课程中设计的通用脚本语言，计�
 ```text
 README.md                 项目介绍
 pyproject.toml            包配置，核心无第三方运行依赖
-zzy/                      CLI、Token/Lexer、源码、诊断、资源及原生元数据基础
-tests/                    宿主测试与 lex CLI 的 .zzy 文件/外部清单
-examples/                 源码读取与词法样例（不执行）
+zzy/                      CLI、Lexer/Parser/AST、准备/执行、源码、诊断和资源基础
+tests/                    宿主测试及 lex/run CLI 的 .zzy 文件/外部清单
+examples/                 读取/词法样例与可执行的 hello.zzy
 benchmarks/               基准目录说明；P07 实现
 apps/                     应用目录说明；P09 实现
 docs/                     权威契约、设计、实施计划和验证记录
@@ -43,7 +43,7 @@ skills/                   面向使用者和 AI 的文档
     SKILL.md              AI 工作入口，按需查阅 docs
 ```
 
-当前不创建空 Parser/执行器，也不提供返回假成功的 run/check/test。
+当前 `run` 只执行下述已实现子集；不支持的语法明确拒绝，`check/test` 尚未注册。
 
 ## 现在可以运行的命令
 
@@ -52,12 +52,19 @@ skills/                   面向使用者和 AI 的文档
 ```text
 python -m zzy --help
 python -m zzy info
+python -m zzy run examples/hello.zzy
 python -m zzy source-info examples/source-sample.zzy
 python -m zzy source-info missing.zzy --diagnostic-format json
 python -m zzy lex examples/lexer.zzy
 python -m zzy lex tests/lex/inputs/unclosed-comment.zzy --diagnostic-format json
 python -X utf8 -m unittest discover -s tests -v
 ```
+
+`run examples/hello.zzy` 实际输出 `5` 并退出 0。当前支持非负十进制 Int、普通/raw String、括号分组、左结合 `+`、`(zno)/(zyes)` 声明、名称赋值和普通函数调用。唯一可调用标准库为 `io.print(value)`（一参、换行、返回 Null）；允许保存 io/print 的别名，命名空间字段只读。可选注解支持 `(Int)/(String)/(Null)/(Function)`，初始化/赋值时检查实际类型。
+
+整个文件先完成词法、语法和顶层先声明后使用检查，再执行；重复声明 E301、未知/自引用名字 E302、缺分号等 E103 均退出 2。执行时混合加法/注解不符 E201、调用错误 E202、只读写入 E203 退出 1。调用按被调用对象、各实参从左到右求值后检查参数；只读赋值在右侧副作用前拒绝。未注解的可变绑定可以改变值类型。错误不回滚此前输出。
+
+Float、Bool/Null 字面量、一元正负、其他运算符、块/分支/循环、数组、用户函数、spec 和其余标准库仍不支持；用到这些语法会明确报 E103，而不是按完整语言执行。Null 当前仅来自 io.print 返回值。执行用例及已测资源边界见 [tests/run/README.md](tests/run/README.md)。
 
 `source-info` 仅做有界 UTF-8 读取，输出字节数、码点数、行数和同一字节快照的 SHA-256；`syntax_checked` 固定为 false，不代表语法检查或执行成功。空文件计 1 行，末尾换行后保留空行。缺文件、非法 UTF-8 和参数错误为 E401/退出 2；前端资源超限为 E211/退出 2。`info` 输出完整宿主版本、Unicode/平台、生效资源配置和指纹。
 
@@ -80,15 +87,14 @@ $zzyPython = 'C:\Users\13691\.cache\codex-runtimes\codex-primary-runtime\depende
 
 `--limits limits.json` 和 `--diagnostic-format text|json` 可放在命令前后。配置键、单位与默认值见 [资源契约](docs/runtime/resources.md)；未知/重复字段、Bool、非正整数、坏版本、超过 64 KiB 的配置均拒绝。`info` 中的指纹覆盖补齐默认后的全部有效值和宿主十进制上限。帮助/版本直接显示，不加载配置文件。
 
-CLI 文件参数和配置路径相对进程工作目录；不会自动切换目录。源码加载器为后续 use 保留相对导入文件的路径接口，当前未实现 use 分析。标准流使用 UTF-8、输出 LF；[诊断](docs/language/diagnostics.md) 提供文本/JSON Lines。内部执行阶段 E211/退出 1 和取消/130 的出口已测试，但尚无 ZZY 执行循环；真实终端 Ctrl+C 验收留到执行链建立后。
+CLI 文件参数和配置路径相对进程工作目录；不会自动切换目录。源码加载器为后续 use 保留相对导入文件的路径接口，当前未实现 use 分析。标准流使用 UTF-8、输出 LF；[诊断](docs/language/diagnostics.md) 提供文本/JSON Lines。前端 E211/退出 2、执行 E211/退出 1 已通过 CLI 验证；取消出口及执行清理通过宿主注入测试，真实终端 Ctrl+C 尚未验收。
 
 ## 运行方式与交付目标
 
-下面是**待实现的 CLI 约定**，现在不能作为可运行命令使用；示例路径也待建立：
+下面是**待实现的 CLI 约定**，现在不能作为可运行命令使用：
 
 ```text
 python -m zzy check examples/hello.zzy
-python -m zzy run examples/hello.zzy
 python -m zzy test tests/
 ```
 

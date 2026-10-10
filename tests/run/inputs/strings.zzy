@@ -1,0 +1,2 @@
+(zno) a := "中😀";
+io.print(a + "[OoO]n" + (raw)"[OoO]n");

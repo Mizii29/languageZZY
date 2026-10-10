@@ -211,3 +211,20 @@ Git 提交：真实标识 / 未提交
 - 完成与交接：P01-01 满足词法完成标志并勾选；70 项中仅 P00 四项及 P01-01 共 5 项完成。P01 整体尚不能输出程序结果 5 或诊断缺分号，P01-02/03/04/05 均不勾选。下一项 P01-02：建立最小 AST、声明/赋值、加法、字符串与打印，复用当前词法与位置；本轮结束，不提前实现 spec、运行器全功能或后续阶段。
 - Git：本轮基于 feature 的 62a6056；实现、测试与本记录组成一个本地提交，提交标识以 Git 历史及本轮交接报告为准，不推送、不改写既有历史。
 - 提交前补充检查：首次 git diff --cached --check 将三份刻意保留的 CRLF 样例中的 CR 报作行尾空白；在这三条 .gitattributes 中显式设置 cr-at-eol，同时保留 blank-at-eol/blank-at-eof/space-before-tab 检查，未改变测试输入字节。
+
+## 2026-10-10：P01-02 最小 AST 与真实执行
+
+- 接手核对：按项目 SKILL、todo 交接和最新开发记录读取 syntax/stdlib、interpreter/resources/diagnostics、roadmap/test-coverage。实际起点为 feature 的 6bb7dbe，工作区干净、相对 origin/feature ahead 1；CPython 3.12.14 / Windows 11 10.0.26200 / Unicode 15.0.0 与此前一致，PATH 仍无 python/py，使用 .venv/Scripts/python.exe。没有把已写设计当成已实现功能。
+- 本轮实现：新增 ast_nodes.py、parser.py、prepare.py、interpreter.py。不可变 AST 保存定位 Token、完整表达式范围和深度；Parser 支持最小声明/赋值/分组/加法/普通调用，缺分号、括号和非法目标明确 E103。prepare 先完成整文件顶层名称检查及 Int 字面转换，不运行表达式；重复声明 E301、自引用/前向未知名 E302 均先于任何输出。运行时用简单绑定表树遍历，无 eval/exec、无 VM、无任意 Python 属性访问。
+- 可观察语义：非负 Int 加法、String 拼接及 Lexer 的一次转义解码；zno 禁止重新绑定、zyes 允许，未注解绑定可变更类型。Int/String/Null/Function 注解在初始化/重新绑定时检查。io.print 是登记的普通一参函数，可保存函数/命名空间别名，返回 Null。调用先求 callee、再逐个实参、最后验证可调用性及个数；只读赋值在 RHS 副作用前拒绝。运行错误不回滚已有 stdout。负号/其他数值与 Bool/Null 字面量、块/控制流等仍待 P02，函数/完整作用域待 P03。
+- CLI 范围决定：为按用户要求做真实 P01 黑盒，本项接入既定 run FILE 入口，没有增加临时同义命令；P01-03 的 check 未注册、不勾选。run 前端错误退出 2，执行错误退出 1，成功 0；复用 UTF-8、JSON/text 诊断和全局异常出口。包版本升为 0.1.0a2，语法/库版本不变。
+- 资源：AST 节点创建前检查总数和最长父子边数，源码括号嵌套独立检查；Int 字面转换受 numeric_digits 和 integer_bits 约束。执行前检查拼接大小/整数加法精确位数；Int/String 载荷、io/print 对象、绑定/实参槽、格式化临时文本接入预留。别名共享载荷，无引用替换值及时释放；上下文退出时统一释放残留预留，异常 traceback 保持存活也不保留预算。当前仅无环标量/只读命名空间，未声称容器、闭包、引用环及缓存已验证。
+- 测试：新增 tests/run/inputs 的 93 个独立 .zzy、外部 cases.json 与 test_run_cli.py，真实子进程执行，不依赖 spec；期望手写，位置按输入原文核对，不从被测实现生成输出快照。覆盖正常程序、先声明后使用、类型/调用/写入错误和副作用顺序、显式未支持语法、默认 4096 位整数输出、AST/文本/位数/输出/在用载荷/引用槽边界。6 个宿主测试覆盖 AST 范围/结合性、Program 复用、跨字节加法位数、取消及异常/超额清理。捕获器复用现有有界进程辅助器，空清单/重复 ID/超时/输出超额不能成功；当前子集不启动子进程，完整进程树回收仍属 P06。
+- 真实失败与修复：第一批清单的 EOF 列号及超深 AST 主位置期望有误，按源码与节点位置核对修正后 79 项通过。复核补充 raw 表达式完整范围、整数格式化共存临时文本预算后，新增 raw 注解错误用例手写列号差 1；按文件中 (raw) 至字符串末尾原文范围修正为 [19,29)。所有用例保留，无跳过或删除失败场景。
+- 回归命令与结果：`.venv/Scripts/python.exe -X utf8 -m unittest discover -s tests -v` 在首次扩展后 197/197 通过（41.703 秒）；完成复核修正后 `.venv/Scripts/python.exe -X utf8 -m unittest discover -s tests -q` 最终 200/200 通过（46.971 秒），无跳过，包含原有 101 项、93 个新执行黑盒及 6 个宿主测试。没有用 compileall 或静态检查代替实际执行。
+- 示例命令与结果：`.venv/Scripts/python.exe -m zzy run examples/hello.zzy` 输出 `5`、退出 0；`... -m zzy run tests/run/inputs/missing-semicolon.zzy --diagnostic-format json` stdout 空、E103/退出 2，EOF span 为第 2 行第 13 列零宽。混合加法、只读赋值和调用顺序的退出码/已有输出由外部清单逐项验证。
+- 打包：bundled Python 执行 `-m pip wheel . --no-deps --no-build-isolation --no-index --wheel-dir dist` 成功生成 zzy_language-0.1.0a2-py3-none-any.whl；再执行其 pip 的 `--python .venv/Scripts/python.exe install --no-index --no-deps dist/zzy_language-0.1.0a2-py3-none-any.whl` 成功升级项目虚拟环境。`.venv/Scripts/python.exe -I -m zzy run <examples/hello.zzy 的绝对路径>` 输出 5，`.venv/Scripts/zzy.exe --version` 输出 0.1.0a2 (P01 interpreter)。未联网安装，未修改系统 Python。
+- 文档：同步 README、SKILL/guide、导航、测试/示例说明、资源/诊断与实施文档；syntax/stdlib 只更新实现状态，不改规则或版本，sketch 未改。文档本地链接和围栏检查通过（27 份 Markdown，264 个本地链接）；requirement 原始字节 SHA-256 保持 B099C19FC339CE1DC1AAB7E9D6C8126A9C5C9ACE3D31B969A0623DF90F521D2B。git diff --check 通过，venv/build/dist/cache 保持忽略。
+- 验收与下一项：只勾选 P01-02；70 项代码任务中 6 项完成。P01 完成标准中的输出 5、非法字符/未闭合串/错误转义/缺分号定位已有实际验证，但 check 零执行仍缺，P01 整体未完成。下一项 P01-03：复用 prepare 接通 check，补 run/check 的入口与无副作用黑盒；不开始 P02 或 spec。
+- Git：本轮代码、93 份源程序、外部期望、宿主测试和文档一起形成有意义的本地提交；提交标识以 Git 历史及本轮报告为准。提交前核对纳入文件，不纳入构建产物，不推送、不改写历史。
+- 提交前补充：首次检查暂存区时发现 4 个新增 Python 文件末尾多一个空行，已删除并重新检查；未改运行逻辑。暂存清单为 121 个文件，93 份 run 源程序与外部清单一一对应，未纳入 requirement/sketch、构建产物或虚拟环境。

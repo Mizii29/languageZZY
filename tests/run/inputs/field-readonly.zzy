@@ -1,0 +1,1 @@
+(zno) console := io; console.print <- io.print("wrong");

@@ -1,10 +1,12 @@
 # ZZY 解释器实现流程
 
-作者：赵梓伊｜更新：2026-10-10｜状态：v0.6 语法实现路线；P00 与 Lexer 已实现，AST 执行链待 P01-02/03
+作者：赵梓伊｜更新：2026-10-10｜状态：v0.6 语法实现路线；P00、Lexer 与 P01-02 最小 AST 执行已实现；check 待 P01-03
 
 当前语法以 [syntax.md](../language/syntax.md) 为准，整体方案见 [design详细版.md](../design详细版.md)，库以 [stdlib.md](../language/stdlib.md) 为准；优化与后端扩展见 [performance.md](performance.md)。本文回答“先写什么、每一步产生什么、怎样证明做对了”，不把规划中的代码和命令当成已有功能。Web 为可选扩展，完整 CLI 应用不依赖 Web 或 VM。
 
 本文的“第几步”按部件说明完整架构，不是要求一次写完一个部件再开始执行。实际依赖以 [roadmap.md](../development/roadmap.md) 为准：P01 用最小 Lexer/Parser/名字表/执行器跑通输出，P02 补数据与控制流，P03 完善 Resolver、槽位与闭包，P04/P05 补特色和库；P06/P07/P09 完成测试、性能和应用。VM 按 P10 的热点证据选择，Web 属于 P09 之后的可选 P08。
+
+P01-02 实际实现为 ast_nodes.py、parser.py、prepare.py、interpreter.py：不可变节点保留 Token 位置与完整表达式范围，prepare 完成整个文件的顶层名称检查和 Int 字面转换，Interpreter 建立新的绑定表并树遍历执行。当前只支持 README 所列最小子集和 io.print；run 已接通用于黑盒，check 尚未注册。调用保持普通表达式语义，不把 io.print 硬编码成特殊语句。完整 Resolver/槽位/闭包仍按 P03 推进。
 
 阅读方式：每一步先看“形象理解”，再看实现细节，最后看“选择与性能”。先理解它做什么，再决定要不要优化。表中的性能收益是待验证的方向，不是已经测出的提升。
 
@@ -165,7 +167,7 @@ MUTABLE_DECL  IDENT(total)  COLON  TYPE_INT  INIT  INTEGER(0)  SEMICOLON
 
 完成标志：能正确区分颜文字、数组、括号与字符串；错误转义、未闭合字符串和非法字符有固定诊断。每项都通过实际源码文件验证。
 
-P01-01 已按上述边界实现 `tokens.py`/`lexer.py`，通过 `python -m zzy lex 文件.zzy` 查看真实 Token；外部清单见 [词法黑盒说明](../../tests/lex/README.md)。Token 保留 Source 及半开偏移，只有字符串附解码值和 raw 标记；数字仍保留原文，普通数/Quantity 转换留给准备层。固定符号按首字符分流并最长匹配；每文件非 EOF Token 数、数字位数、解码字符串长度在扫描过程中检查。源码嵌套及 AST 深度属于下一项 Parser，不以 lex 代替语法分析。
+P01-01 已按上述边界实现 `tokens.py`/`lexer.py`，通过 `python -m zzy lex 文件.zzy` 查看真实 Token；外部清单见 [词法黑盒说明](../../tests/lex/README.md)。Token 保留 Source 及半开偏移，只有字符串附解码值和 raw 标记；数字仍保留原文，普通数/Quantity 转换留给准备层。固定符号按首字符分流并最长匹配；每文件非 EOF Token 数、数字位数、解码字符串长度在扫描过程中检查。源码嵌套及 AST 深度现已由 P01-02 Parser 检查，不以 lex 代替语法分析。
 
 **可增加的选择与性能：**
 

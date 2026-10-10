@@ -1,0 +1,1 @@
+(zno) x := 1; io.print("before"); x <- io.print("wrong");

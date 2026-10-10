@@ -1,6 +1,6 @@
 # ZZY 黑盒覆盖与验收计划
 
-更新：2026-10-10｜状态：P01-01 已有词法 CLI 用例；其他语言语义覆盖仍待实现，验收见 tests/README.md 与开发记录
+更新：2026-10-10｜状态：P01-01/02 已有词法与最小执行 CLI 用例；其余语言语义覆盖仍待实现，验收见 tests/README.md 与开发记录
 
 本文件将 [syntax.md](../language/syntax.md) 与 [stdlib.md](../language/stdlib.md) 的可观察规则映射到测试类别。它不是测试集或通过报告；实际用例需用 `.zzy` 编写并通过真实 CLI 一键运行。
 

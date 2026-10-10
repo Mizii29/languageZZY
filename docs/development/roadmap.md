@@ -1,6 +1,6 @@
 # ZZY 开发阶段与交付计划
 
-作者：赵梓伊｜更新：2026-10-10｜状态：P00 与 P01-01 词法扫描已实现；P01 阶段尚未完成，任务状态见 todo
+作者：赵梓伊｜更新：2026-10-10｜状态：P00、P01-01 词法与 P01-02 最小执行已实现；P01 阶段尚未完成，任务状态见 todo
 
 本文维护开发顺序、依赖、产出与完成标准。任务完成状态只写在 [todo.md](todo.md)，真实操作与验证只写在 [development-log.md](development-log.md)。整体方案见 [设计详细版](../design详细版.md)，内部实现步骤见 [interpreter.md](../runtime/interpreter.md)，创新取舍见 [innovation.md](../features/innovation.md)。
 
@@ -8,7 +8,7 @@
 
 ZZY 是赵梓伊设计的、用 Python 编写解释器的通用脚本语言。必须完成的作业包括：基本语言功能、ZZY 黑盒自动测试、与 Python 的性能比较、给人和 Agent 的指南、不少于 200 行的 ZZY 应用、真实 Git 历史和系统介绍 PPT。详细要求见 [requirement.md](../requirement.md)。
 
-截至本文建立时，仓库只有设计文档，没有解释器、测试程序、基准结果或应用代码；本地 Git 已初始化，但还没有提交。2026-10-09 开始 P00 时已核实设计提交 58543cd，工作区干净；当前已有包、CLI、资源/诊断基础与宿主测试，尚无语言执行器、ZZY 黑盒、基准或应用。接手时仍须重新检查文件与 Git。
+截至本文建立时，仓库只有设计文档，没有解释器、测试程序、基准结果或应用代码；本地 Git 已初始化，但还没有提交。2026-10-09 开始 P00 时已核实设计提交 58543cd，工作区干净；当前已有包、CLI、资源/诊断基础、最小 AST 执行和 lex/run 黑盒，尚无 check、完整语言、基准或应用。接手时仍须重新检查文件与 Git。
 
 开始前按以下顺序阅读：
 
@@ -19,7 +19,7 @@ ZZY 是赵梓伊设计的、用 Python 编写解释器的通用脚本语言。�
 5. [performance.md](../runtime/performance.md) 与 [innovation.md](../features/innovation.md)：优化与扩展方向。
 6. [development-log.md](development-log.md)：查看最近完成的工作、失败和下一步。
 
-[design详细版.md](../design详细版.md) 已同步当前写法，负责归纳完整设计与理由。语法和库接口分别集中在 syntax/stdlib，其他文档不得另建冲突版本；用户新指示优先。覆盖矩阵见 [test-coverage.md](test-coverage.md)，目前只有验证设计，没有测试实现。
+[design详细版.md](../design详细版.md) 已同步当前写法，负责归纳完整设计与理由。语法和库接口分别集中在 syntax/stdlib，其他文档不得另建冲突版本；用户新指示优先。覆盖矩阵见 [test-coverage.md](test-coverage.md)，已实现子集的测试见 tests/README.md，矩阵其余项仍为验证设计。
 
 ## 2. 固定约定：后续 Agent 不要随意改名
 
@@ -257,9 +257,9 @@ python -m zzy test tests/
 ```
 
 ```text
-zzy/                       已建立 P00 基础；解释链后续实现
-tests/                     已有宿主与词法 CLI 黑盒；执行黑盒后续实现
-examples/                  已建立源码读取样例；可执行示例待 P01
+zzy/                       已有基础、Lexer 与 P01-02 最小解释链
+tests/                     已有宿主及 lex/run CLI 黑盒；check 待接入
+examples/                  已有读取/词法样例及可执行 hello.zzy
 benchmarks/                已建立目录说明；配对脚本/results 待 P07
 apps/zzy-campus/           默认 ZZY CLI 应用，待建立
 apps/zzy-sketch/           若选绘图应用时建立

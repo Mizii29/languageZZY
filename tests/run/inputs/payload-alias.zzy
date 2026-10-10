@@ -1,0 +1,1 @@
+(zno) x := "ab"; (zno) y := x; y;

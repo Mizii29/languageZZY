@@ -1,4 +1,4 @@
-"""Infrastructure and lexical inspection; run/check/test are not implemented."""
+"""Infrastructure, lexical inspection and execution of the P01 subset."""
 
 import argparse
 import json
@@ -11,6 +11,8 @@ from .diagnostics import (Cancelled, Diagnostic, DiagnosticError, Phase,
                           ResourceExceeded, display_path)
 from .output import Output
 from .lexer import Lexer
+from .prepare import prepare
+from .interpreter import Interpreter
 from .resources import ResourceMeter, ResourcePolicy
 from .source import SourceLoader
 
@@ -29,17 +31,18 @@ def _parser(output: Output) -> ArgumentParser:
     common.add_argument("--limits", metavar="JSON", help="资源策略覆盖文件（最多 64 KiB）")
     common.add_argument("--diagnostic-format", choices=("text", "json"), help="stderr 诊断格式")
     parser = ArgumentParser(prog="zzy", parents=[common],
-                            description="ZZY 基础设施与词法扫描；尚不支持执行或完整语法检查。",
+                            description="ZZY P01：词法扫描及最小 AST 执行；check/test 尚未实现。",
                             allow_abbrev=False)
     parser.output = output
-    parser.add_argument("--version", action="version", version=f"ZZY {__version__} (P01 lexer)")
+    parser.add_argument("--version", action="version", version=f"ZZY {__version__} (P01 interpreter)")
     commands = parser.add_subparsers(dest="command", required=True)
     for name, help in (("info", "输出宿主环境、生效策略及指纹"),
                        ("source-info", "读取 UTF-8 源码并输出摘要，不做语法检查"),
-                       ("lex", "扫描词法并输出 Token JSON Lines；不解析、不执行")):
+                       ("lex", "扫描词法并输出 Token JSON Lines；不解析、不执行"),
+                       ("run", "执行 P01 子集：声明、赋值、Int/String 加法和 io.print")):
         subparser = commands.add_parser(name, parents=[common], help=help, allow_abbrev=False)
         subparser.output = output
-        if name in {"source-info", "lex"}:
+        if name in {"source-info", "lex", "run"}:
             subparser.add_argument("file", help="相对当前工作目录的源码路径")
     return parser
 
@@ -76,7 +79,7 @@ def main(argv: list[str] | None = None) -> int:
         output.format = getattr(args, "diagnostic_format", output.format)
         if args.command == "info":
             result = {
-                "zzy_version": __version__, "stage": "P01-01",
+                "zzy_version": __version__, "stage": "P01-02",
                 "python_implementation": platform.python_implementation(),
                 "python_version": sys.version, "python_executable": sys.executable,
                 "unicode_version": unicodedata.unidata_version,
@@ -87,6 +90,10 @@ def main(argv: list[str] | None = None) -> int:
         else:
             with SourceLoader(output.meter) as loader:
                 source = loader.read(args.file)
+                if args.command == "run":
+                    program = prepare(source, output.meter)
+                    Interpreter(program, output).run()
+                    return 0
                 if args.command == "lex":
                     # Finish scanning first: lexical failure emits no token prefix.
                     # Each output record is budgeted; later output exhaustion may
