@@ -11,7 +11,7 @@ description: 在 ZZY 课程项目中编写或审查 .zzy 程序、实现解释�
 
 先读 [文档导航](../../docs/README.md)、[任务状态与交接栏](../../docs/development/todo.md) 和 [开发记录的最新条目](../../docs/development/development-log.md)，再核对实际文件。不要把历史记录中的旧计数或下一步当作当前事实。
 
-截至 2026-10-10，P00、P01-01 Token/Lexer 与 P01-02 最小 AST/树遍历执行已实现，包版本 0.1.0a2；lex/run CLI 使用独立 .zzy 与外部清单验证，不依赖 spec。run 支持 Int/String、声明赋值、加法、分组和 io.print，详细边界见根 README。核心语法 v0.6、标准库 v0.6.1 的规则不变；check/test、其他语法与库、完整黑盒及性能结果仍待实现，下一项 P01-03。后续接手时重新验证该状态；不要因为本文件写了接口或命令，就报告它们可用。
+截至 2026-10-10，P00/P01 最小执行链已完成，包版本 0.1.0a3；lex/run/check 通过独立 .zzy 与外部清单验证，统一入口为 python -X utf8 -m tests.blackbox，不依赖 spec。run 支持 Int/String、声明赋值、加法、分组和 io.print；check 完成前端后零执行，详细边界见根 README。语法 v0.6/标准库 v0.6.1 规则不变；zzy test、P02 起的其他语法与库、完整黑盒及性能结果仍待实现，下一项 P02-01。后续接手时重新验证该状态；不要因为本文件写了接口或命令，就报告它们可用。
 
 遵循用户任务范围与适用的仓库指示。只整理文档时不启动实现；只要求审查时不扩展成语言重设计。作业约束查 [requirement](../../docs/requirement.md)，保留原文。
 

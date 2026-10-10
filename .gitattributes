@@ -2,3 +2,5 @@
 tests/lex/inputs/bom-crlf.zzy -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
 tests/lex/inputs/comments-crlf.zzy -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
 tests/lex/inputs/physical-crlf.zzy -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+tests/check/inputs/bom-crlf.zzy -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+tests/check/inputs/bom-crlf-name.zzy -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol

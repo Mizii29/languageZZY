@@ -228,3 +228,20 @@ Git 提交：真实标识 / 未提交
 - 验收与下一项：只勾选 P01-02；70 项代码任务中 6 项完成。P01 完成标准中的输出 5、非法字符/未闭合串/错误转义/缺分号定位已有实际验证，但 check 零执行仍缺，P01 整体未完成。下一项 P01-03：复用 prepare 接通 check，补 run/check 的入口与无副作用黑盒；不开始 P02 或 spec。
 - Git：本轮代码、93 份源程序、外部期望、宿主测试和文档一起形成有意义的本地提交；提交标识以 Git 历史及本轮报告为准。提交前核对纳入文件，不纳入构建产物，不推送、不改写历史。
 - 提交前补充：首次检查暂存区时发现 4 个新增 Python 文件末尾多一个空行，已删除并重新检查；未改运行逻辑。暂存清单为 121 个文件，93 份 run 源程序与外部清单一一对应，未纳入 requirement/sketch、构建产物或虚拟环境。
+
+## 2026-10-10：P01-03 至 P01-05，非执行检查与 P01 整体验收
+
+- 授权与核对：用户要求按同样标准从 P01-03 连续完成整个 P01，故本轮覆盖 03/04/05 后结束，不进入 P02。重新读取项目 SKILL、todo 交接/最新日志，按索引核对 syntax/stdlib、interpreter/resources/diagnostics、roadmap 与 test-coverage。真实起点为 feature 的 8c42467，工作区干净、相对 origin/feature ahead 2；宿主仍为项目 .venv 的 CPython 3.12.14 / Windows 11 10.0.26200 / Unicode 15.0.0。没有用户未提交修改。
+- P01-03：CLI 注册 check FILE，与 run 共用 SourceLoader 和 prepare；只有 run 构造 Interpreter 并切到执行阶段。check 成功时两个输出流为空、退出 0；词法/语法/名称/字面值准备及前端配额错误仍退出 2。一般运算、io.print、运行时类型/调用/可写性与执行预算不提前触发；未实现语法仍拒绝。新增 105 个外部 check 期望，其中 93 项复用 run 的独立源码但保存独立期望，另覆盖极小执行预算、后段名字错误、源码/Token 配额、诊断样例、BOM/CRLF/Tab、中文空格路径、cwd 和缺文件。两份 CRLF 源码由 .gitattributes 保留字节。
+- P01-03 验证：`.venv/Scripts/python.exe -X utf8 -m unittest tests.test_check_cli -q`，105/105 通过、19.686 秒。扩展 test_cli 验证 run/check 的缺文件/非法 UTF-8、参数前后顺序、-- 后以连字符开头的中文空格路径、同一前端错误 text/JSON 一致；另在真实 prepare 路径上断言 check 从不构造 Interpreter。没有把运行时类型错误在 check 中报出当成静态检查能力。
+- P01-04：新增 tests/blackbox.py 作为统一外部运行器，tests/process.py 负责新进程及有界 I/O，原 lex/run 测试适配器改为复用同一实现。三份清单显式记录 mode/stdin，旧 155 项 lex/run 的 Token、输出、诊断、限额和退出期望逐项与 HEAD 对比保持一致，没有删改已有答案。按路径稳定排序；每例新进程，stdout/stderr 并行读取，独立容量、超时、临时 stdin 和资源配置均明确。
+- 运行器失败语义：坏/空清单、重复键/ID、缺字段、非法类型/模式/限额、启动失败、输出/错误位置不符、超时和输出超额均失败，整体返回 1。可选 --report 保存版本、数量、命令、原始期望、实际退出码、失败详情、生效策略和指纹；写报告失败也失败。清单是外部固定期望，不使用 spec，也不通过解释器生成答案。不是未来 zzy test 或完整语言黑盒，运行器在仓库 tests 中而非发行包内。
+- 捕获器复核：原 read(4096) 可能在子进程只写少量超额数据后等待时延迟检测，改为 read1(4096)；用“写 32 字节、flush 后等待，捕获限额 16”的真实进程验证立即按超额失败。补双管道各 100000 字节与 UTF-8 stdin、stderr 独立上限、超时后进程/管道回收；当前 P01 子集不产生子进程树，派生进程/GUI 清理仍留 P06。`.venv/Scripts/python.exe -X utf8 -m unittest tests.test_blackbox_runner tests.test_cli -v`，20/20 通过、8.913 秒。故意错误的答案/清单/超时是运行器反向测试，不是跳过或掩盖语言测试失败。
+- 完整回归：`.venv/Scripts/python.exe -X utf8 -m unittest discover -s tests -q`，316/316 通过、62.959 秒、无跳过；其中 260 个外部 CLI 用例和 56 个宿主/入口/运行器测试。原 P00/P01-01/02 行为未见回归，本轮没有未修复的测试失败。
+- 独立总验收：`.venv/Scripts/python.exe -X utf8 -m tests.blackbox --report dist/p01-blackbox-report.json`，260/260 通过、52.020 秒、退出 0。含 lex 62、run 93、check 105；报告中每例 observed_exit_code 与外部期望一致，26 种有效资源策略/指纹。报告属于可重建产物，保持忽略、不纳入 Git。
+- P01-05 发布验证：包升至 0.1.0a3，info.stage 为 P01。bundled Python 执行 `-m pip wheel . --no-deps --no-build-isolation --no-index --wheel-dir dist` 成功，再用其 pip 的 `--python .venv/Scripts/python.exe install --no-index --no-deps dist/zzy_language-0.1.0a3-py3-none-any.whl` 安装成功，仅修改项目虚拟环境、未联网安装依赖。`.venv/Scripts/zzy.exe --version` 输出 0.1.0a3 (P01 interpreter)。
+- roadmap 完成标准实测：使用安装包的 `.venv/Scripts/python.exe -I -m zzy run <hello.zzy 绝对路径>` 输出 `5\n`、stderr 空、退出 0；同样的 check 命令双流为空、退出 0。再以 run/check 分别运行 lexical-before-effects、unclosed-string、bad-escape、missing-semicolon 四份独立错误源码，均 stdout 空/退出 2，错误码分别 E101/E101/E102/E103；半开 span 分别为第 1 行 [20,21)、[10,11)、[11,17) 和第 2 行 [13,13)。安装包也通过这些检查，没有只验证工作区导入。
+- 使用说明：更新 README、SKILL/guide、导航、测试/示例说明、资源/诊断和实施文档。修正文档陈旧状态：roadmap 第 9 节原把 run/check 也称为未实现；guide 完整函数/spec 设计示例原引用 hello.zzy 却期望 15，与实际最小 hello 输出 5 混淆，现明确使用未来 total-up-to.zzy 设计示例，未改任何语言规则。文档静态验证为 28 份 Markdown、270 个有效本地链接、围栏闭合，仅作为文档检查，不能替代上述真实执行。
+- 保留与交接：syntax/stdlib/sketch 正式契约本轮未改，requirement SHA-256 仍为 B099C19FC339CE1DC1AAB7E9D6C8126A9C5C9ACE3D31B969A0623DF90F521D2B。只新增勾选 P01-03/04/05，P01 整体完成；70 项中完成 9 项。下一项 P02-01：数值、Bool、Null、比较及逻辑短路，仍用外部 run/check 清单，不提前依赖 spec；真实终端 Ctrl+C、其他平台及完整运行器能力未声称完成。
+- Git：实现、用例、统一运行器和本记录组成一个 P01 阶段验收本地提交；提交标识以 Git 历史及本轮报告为准。提交前检查暂存清单、空白与文档/用例对应关系，不纳入 wheel、报告、缓存或虚拟环境，不推送、不改写历史。
+- 暂存前保护检查补充：直接把 Git blob 字节与工作区 syntax 文件比较时，因 Git LF/工作区 CRLF 产生断言失败；随后按仓库过滤规则用 git hash-object --path 与 HEAD 对象比较，syntax/stdlib/sketch 均一致，未改这些文件。requirement 仍单独按原始字节 SHA-256 验证。最终暂存 40 个文件，git diff --cached --check 通过，无漏暂存或意外新文件。

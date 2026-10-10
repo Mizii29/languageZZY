@@ -1,6 +1,6 @@
 # ZZY 开发阶段与交付计划
 
-作者：赵梓伊｜更新：2026-10-10｜状态：P00、P01-01 词法与 P01-02 最小执行已实现；P01 阶段尚未完成，任务状态见 todo
+作者：赵梓伊｜更新：2026-10-10｜状态：P00/P01 最小执行链已完成，任务状态见 todo
 
 本文维护开发顺序、依赖、产出与完成标准。任务完成状态只写在 [todo.md](todo.md)，真实操作与验证只写在 [development-log.md](development-log.md)。整体方案见 [设计详细版](../design详细版.md)，内部实现步骤见 [interpreter.md](../runtime/interpreter.md)，创新取舍见 [innovation.md](../features/innovation.md)。
 
@@ -8,7 +8,7 @@
 
 ZZY 是赵梓伊设计的、用 Python 编写解释器的通用脚本语言。必须完成的作业包括：基本语言功能、ZZY 黑盒自动测试、与 Python 的性能比较、给人和 Agent 的指南、不少于 200 行的 ZZY 应用、真实 Git 历史和系统介绍 PPT。详细要求见 [requirement.md](../requirement.md)。
 
-截至本文建立时，仓库只有设计文档，没有解释器、测试程序、基准结果或应用代码；本地 Git 已初始化，但还没有提交。2026-10-09 开始 P00 时已核实设计提交 58543cd，工作区干净；当前已有包、CLI、资源/诊断基础、最小 AST 执行和 lex/run 黑盒，尚无 check、完整语言、基准或应用。接手时仍须重新检查文件与 Git。
+截至本文建立时，仓库只有设计文档，没有解释器、测试程序、基准结果或应用代码；本地 Git 已初始化，但还没有提交。2026-10-09 开始 P00 时已核实设计提交 58543cd，工作区干净；当前已有包、CLI、资源/诊断基础、最小 AST 执行和 lex/run/check 黑盒，尚无完整语言、基准或应用。接手时仍须重新检查文件与 Git。
 
 开始前按以下顺序阅读：
 
@@ -248,7 +248,7 @@ E 不自动替换 P09。若以后选小画室作为作业应用，须另外用�
 
 ## 9. 拟议命令与后续文件位置
 
-以下命令是接口约定，现在尚未实现；开发时实现后才在运行说明中标记可用。
+run/check 已在 P01 最小子集实现；test 仍为后续接口约定，当前使用 python -X utf8 -m tests.blackbox 验证。
 
 ```text
 python -m zzy run examples/hello.zzy
@@ -258,7 +258,7 @@ python -m zzy test tests/
 
 ```text
 zzy/                       已有基础、Lexer 与 P01-02 最小解释链
-tests/                     已有宿主及 lex/run CLI 黑盒；check 待接入
+tests/                     已有宿主及统一 lex/run/check CLI 黑盒
 examples/                  已有读取/词法样例及可执行 hello.zzy
 benchmarks/                已建立目录说明；配对脚本/results 待 P07
 apps/zzy-campus/           默认 ZZY CLI 应用，待建立

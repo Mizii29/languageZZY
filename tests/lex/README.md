@@ -4,7 +4,7 @@
 
 [cases.json](cases.json) 是独立维护的外部期望清单，每例指定 `.zzy` 路径、工作目录、超时、退出码，可覆盖资源配置。成功 tokens 的每项按 `[kind, lexeme, value, raw, [起行, 起列, 终行, 终列]]` 保存，包含 EOF；失败保存错误码、位置及可选消息片段，不依赖完整消息措辞。输出资源错误不对应源码，file/span 可为 null。
 
-用例通过真实 `python -m zzy lex` 子进程执行，不导入 Lexer 来生成期望。stdout/stderr 分别检查，双管道有界捕获；超额、超时、启动失败、空清单或坏清单均失败。lex 不执行用户程序、不创建派生进程；该辅助器仅负责词法用例，P01-04/P06 的 run/check/spec 收集、执行隔离和派生进程树清理仍未完成。
+用例通过真实 `python -m zzy lex` 子进程执行，不导入 Lexer 来生成期望。stdout/stderr 分别检查，双管道有界捕获；超额、超时、启动失败、空清单或坏清单均失败。lex 不执行用户程序、不创建派生进程；P01-04 已将 lex/run/check 统一至 tests.blackbox 与 tests.process。spec 和派生进程树清理仍待后续阶段，见 [共同运行器说明](../README.md)。
 
 覆盖固定关键字/类型/颜文字、最长符号、Unicode 标识符不归一化、数字原文、普通/raw 字符串、全部转义、两种注释/结束词边界、BOM/CRLF/Tab/EOF、非法字符和首错、数字/Token/解码字符串限额。`fixed-symbols`、`operators`、`numbers-retain-text` 等是词法探针，故意不满足完整语法，不能作为已验证可执行的程序。非法源码各自独立，不与正常输入合并。
 

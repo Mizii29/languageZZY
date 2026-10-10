@@ -40,7 +40,7 @@ class CliTests(unittest.TestCase):
 
     def test_help_and_version(self):
         for args in (("--help",), ("source-info", "--help"), ("info", "--help"),
-                     ("lex", "--help"), ("run", "--help"), ("--version",)):
+                     ("lex", "--help"), ("run", "--help"), ("check", "--help"), ("--version",)):
             result = self.cli(*args)
             self.assertEqual(result.returncode, 0)
             self.assertTrue(result.stdout.decode("utf-8"))
@@ -50,7 +50,7 @@ class CliTests(unittest.TestCase):
         result = self.cli("info")
         self.assertEqual(result.returncode, 0)
         record = json.loads(result.stdout)
-        self.assertEqual(record["stage"], "P01-02")
+        self.assertEqual(record["stage"], "P01")
         self.assertEqual(record["python_implementation"], "CPython")
         self.assertEqual(record["resource_policy"]["limits"]["numeric_digits"], 4096)
 
@@ -66,14 +66,52 @@ class CliTests(unittest.TestCase):
         self.assertNotIn(b"\r\n", result.stdout)
 
     def test_missing_file_and_invalid_utf8(self):
-        for name in ("missing.zzy", "bad.zzy"):
-            (self.directory / "bad.zzy").write_bytes(b"\xff")
-            record = self.error(self.cli("source-info", name, "--diagnostic-format", "json", cwd=self.directory))
-            self.assertEqual(record["file"], name)
-            self.assertIsNone(record["span"])
+        for mode in ("source-info", "run", "check"):
+            for name in ("missing.zzy", "bad.zzy"):
+                (self.directory / "bad.zzy").write_bytes(b"\xff")
+                record = self.error(self.cli(mode, name, "--diagnostic-format", "json", cwd=self.directory))
+                self.assertEqual(record["file"], name)
+                self.assertIsNone(record["span"])
+
+    def test_run_check_cwd_options_and_literal_separator(self):
+        file = self.directory / "-中文 空格.zzy"
+        file.write_text('io.print("中😀");', encoding="utf-8")
+        config = self.directory / "limits.json"
+        config.write_text('{"policy_version":1,"limits":{"stdout_bytes":8}}', encoding="utf-8")
+        for mode in ("run", "check"):
+            for args in (("--limits", config.name, "--diagnostic-format=json", mode, "--", file.name),
+                         (mode, "--limits", config.name, "--diagnostic-format=json", "--", file.name)):
+                result = self.cli(*args, cwd=self.directory)
+                self.assertEqual(result.returncode, 0, result.stderr)
+                self.assertEqual(result.stderr, b"")
+                self.assertEqual(result.stdout, "中😀\n".encode("utf-8") if mode == "run" else b"")
+
+    def test_check_never_constructs_interpreter(self):
+        self.file.write_text('io.print(1 + "bad");', encoding="utf-8")
+        stdout, stderr = io.StringIO(), io.StringIO()
+        with contextlib.redirect_stdout(stdout), contextlib.redirect_stderr(stderr):
+            with patch("zzy.cli.Interpreter", side_effect=AssertionError("check executed")) as execute:
+                self.assertEqual(main(["check", str(self.file)]), 0)
+                execute.assert_not_called()
+        self.assertEqual((stdout.getvalue(), stderr.getvalue()), ("", ""))
+
+    def test_run_check_frontend_diagnostics_match_in_both_formats(self):
+        self.file.write_bytes(b"\xef\xbb\xbf" + 'io.print("😀");\r\n\tio.print(未声明);'.encode("utf-8"))
+        for format in ("text", "json"):
+            results = [self.cli(mode, self.file.name, "--diagnostic-format", format, cwd=self.directory)
+                       for mode in ("run", "check")]
+            self.assertEqual(results[0].stderr, results[1].stderr)
+            for result in results:
+                self.assertEqual((result.returncode, result.stdout), (2, b""))
+                if format == "json":
+                    record = json.loads(result.stderr)
+                    self.assertEqual(record["span"], {"start": {"line": 2, "column": 11},
+                                                     "end": {"line": 2, "column": 14}})
+                else:
+                    self.assertIn(f"{self.file.name}:2:11: E302".encode("utf-8"), result.stderr)
 
     def test_cli_errors_and_unimplemented_commands_fail(self):
-        for args in ((), ("run",), ("check", self.file), ("test", "tests"),
+        for args in ((), ("run",), ("check",), ("test", "tests"),
                      ("source-info",), ("--unknown",), ("info", "--diagnostic-format", "invalid")):
             record = self.error(self.cli(*args, "--diagnostic-format=json"))
             self.assertIsNone(record["file"])

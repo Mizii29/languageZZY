@@ -38,7 +38,7 @@ KiB 为 1,024 字节，MiB 为 1,048,576 字节。容量允许等于上限，尝
 
 ## 2. 配置与失败处理
 
-P00 的宿主配置已建立 `ResourcePolicy`，默认采用此表。CLI 参数为 `--limits <json文件>`，只在入口读取，不允许 ZZY 程序修改。配置使用 `policy_version: 1` 和 `limits` 对象；仅覆盖已知键，未列键沿用默认。只接受正 Int（排除 Bool），未知字段、重复键、未知版本、非整数、0/负值和不支持的组合报 E401、退出 2。文件最多 64 KiB，不递归包含其他配置，不隐式读取环境变量。当前可用于 info/source-info/lex/run；check/test 留待后续阶段。
+P00 的宿主配置已建立 `ResourcePolicy`，默认采用此表。CLI 参数为 `--limits <json文件>`，只在入口读取，不允许 ZZY 程序修改。配置使用 `policy_version: 1` 和 `limits` 对象；仅覆盖已知键，未列键沿用默认。只接受正 Int（排除 Bool），未知字段、重复键、未知版本、非整数、0/负值和不支持的组合报 E401、退出 2。文件最多 64 KiB，不递归包含其他配置，不隐式读取环境变量。当前可用于 info/source-info/lex/run/check；test 留待后续阶段。check 仅消耗前端预算，不分配运行上下文、不触发运行期容量检查。
 
 P00 配置使用严格 UTF-8 JSON（不带 BOM），顶层两个字段均必需；每个覆盖值支持 `1..sys.maxsize`，本次 64 位宿主为 `1..9223372036854775807`。这是配置表示范围，不保证实际机器能分配相应内存。生效指纹为 `effective_record()` 的键排序、紧凑 UTF-8 JSON 的 SHA-256，包含 policy_version、profile、limits、host_decimal_digits 和 effective_decimal_digits；可通过 `python -m zzy info` 取得。
 

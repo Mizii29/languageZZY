@@ -8,4 +8,4 @@ python -m zzy source-info examples/source-sample.zzy
 
 该命令不切词、不检查语法、不执行程序。P01-02 已加入 [hello.zzy](hello.zzy)：执行 `python -m zzy run examples/hello.zzy` 输出 `5` 并退出 0。
 
-P01-01 的 [lexer.zzy](lexer.zzy) 可执行 `python -m zzy lex examples/lexer.zzy` 查看 Token、解码字符串和原文位置。只验证词法，不会打印程序中的值；现在可用 run 执行已支持子集；check 尚未实现。
+P01-01 的 [lexer.zzy](lexer.zzy) 可执行 `python -m zzy lex examples/lexer.zzy` 查看 Token、解码字符串和原文位置。只验证词法，不会打印程序中的值；现在可用 run 执行已支持子集；check 已接入，执行 `python -m zzy check examples/hello.zzy` 无输出、退出 0。

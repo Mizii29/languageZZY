@@ -6,7 +6,7 @@
 
 ## 1. 先确认能做什么
 
-目前已实现 P00、P01-01 Lexer 和 P01-02 最小 AST 执行。可用 `python -m zzy run examples/hello.zzy` 得到 5；支持 Int/String、声明/赋值、加法、分组、io.print，其他能力边界见根 README。lex 只检查 Token，check/test 尚未实现。本文其余完整语言示例仍是设计示例，不能据此假定可运行。开始前查看 [todo](../docs/development/todo.md) 和 [开发记录](../docs/development/development-log.md)，并核对代码；下一项 P01-03。
+目前已完成 P00/P01 最小执行链。可用 `python -m zzy run examples/hello.zzy` 得到 5；支持 Int/String、声明/赋值、加法、分组、io.print，其他能力边界见根 README。lex 只检查 Token，check 完成前端后不执行；zzy test/spec 尚未实现，使用 `python -X utf8 -m tests.blackbox` 运行外部黑盒。本文其余完整语言示例仍是设计示例，不能据此假定可运行。开始前查看 [todo](../docs/development/todo.md) 和 [开发记录](../docs/development/development-log.md)，并核对代码；下一项 P02-01。
 
 解释器使用 Python，核心运行只依赖标准库。P00 已验证 CPython 3.12.14、Windows 11、Unicode 15.0.0；实际运行和安装命令见项目 README。没有依赖清单时不要凭空执行安装命令；GUI 和后续 Web 等可选依赖不应成为普通 CLI/check 的前提。
 
@@ -41,17 +41,17 @@ io.print(total_up_to(5));
 }
 ```
 
-先检查语法和名字，再运行程序，最后运行测试。以下是拟议 CLI，当前不能执行；最终参数以实现后的帮助与验收结果为准：
+先检查语法和名字，再运行程序，最后运行测试。上面含函数、循环和 spec 的完整设计示例仍待 P02—P04，下面的 total-up-to.zzy 文件也待建立。当前可运行的 hello.zzy 只输出 5，不能与本节未来输出 15 的程序混淆：
 
 ```text
-python -m zzy check examples/hello.zzy
-python -m zzy run examples/hello.zzy
+python -m zzy check examples/total-up-to.zzy
+python -m zzy run examples/total-up-to.zzy
 python -m zzy test examples/
 ```
 
-按契约，check 不打印；run 的预期 stdout 为 `15` 加换行，跳过 spec 的执行；test 会在每例独立环境重新初始化公共部分，顶层打印也属于初始化行为。为避免测试噪声，正式库模块只放定义，交互启动放入口文件。
+对于上述完整设计示例，按契约 check 不打印；未来 run 的预期 stdout 为 `15` 加换行，跳过 spec 的执行；test 会在每例独立环境重新初始化公共部分，顶层打印也属于初始化行为。为避免测试噪声，正式库模块只放定义，交互启动放入口文件。
 
-check 仍检查 spec 内语法和名字，并读取依赖源码，但不执行用户初始化、结构默认值、Lazy、查询或 GUI。测试未收集到用例不能算成功。诊断和退出码详见 [diagnostics](../docs/language/diagnostics.md)。
+未来完整 check 还会检查 spec 内语法和名字，并读取依赖源码，但不执行用户初始化、结构默认值、Lazy、查询或 GUI。测试未收集到用例不能算成功。诊断和退出码详见 [diagnostics](../docs/language/diagnostics.md)。
 
 ## 3. 从需求到 ZZY 程序
 
