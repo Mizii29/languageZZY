@@ -264,3 +264,25 @@ Git 提交：真实标识 / 未提交
 - 文档和契约：更新 README、skills 指南/SKILL、能力状态、覆盖映射、examples/tests 说明、资源与诊断实施细节。修复指南中“只有文档/数组仍不支持”等过时描述；syntax/stdlib 只修改当前实现状态与验证状态，语法、EBNF、库签名与行为不变。29 份 Markdown、275 个本地链接与围栏检查通过，静态结果不替代运行证据。requirement 原始字节 SHA-256 仍为 B099C19FC339CE1DC1AAB7E9D6C8126A9C5C9ACE3D31B969A0623DF90F521D2B。
 - 完成标准与边界：roadmap 的成绩/菜单运行、短路跳过副作用、shape 新数组默认与外部数组共享全部有 CLI 证据。P02-01—05 均勾选，70 项完成 14 项；没有已知未修复的本阶段失败。其他 Python/OS、真实终端 Ctrl+C、派生进程树/GUI 回收、函数/闭包/跨函数跳转、回调/数组校验缓存、完整 RESOURCE/CLI 和 P06 覆盖仍未验证或待实现，不据本阶段测试推断完成。下一项 P03-01。
 - Git：实现、独立源码/期望、测试、指南和本记录组成一个本地 P02 阶段提交，标识以 Git 历史和本轮最终报告为准。提交前核对纳入文件、git diff --check、requirement 哈希；不纳入 .venv、wheel、临时生成脚本或报告，不自动推送、不改写历史。
+
+
+## 2026-10-11：P03 函数、局部槽位与闭包实现及阶段验收
+
+- 用户任务：连续完成全部 P03，并按 roadmap/todo/正式契约/test-coverage 验收；直接修复本阶段问题，补真实测试及文档，创建本地阶段提交后结束，不推送或改写历史。
+- 接手核对：先读 skills/zzy/SKILL.md、交接和最新记录，再读 README、requirement、roadmap、syntax 函数/绑定/控制流、interpreter、resources、diagnostics、stdlib 及覆盖矩阵。实际工作区干净，feature 与 origin/feature 同在 `550fe5615f200914a44ed4221abb00d59935406b`；没有 AGENTS.md。实际 .venv 为 CPython 3.12.14 / MSC 1944 AMD64 / Windows 11 10.0.26200 / Unicode 15.0.0，PATH 没有 python/py，未把旧文档当作已实现 P03。
+- 实现：Parser 接入固定位置参数、可选注解、具名/单表达式匿名函数、return；新增 resolver.py，按声明位置处理名称、参数可变性、遮蔽、自递归/前向引用及函数控制流边界。普通局部直接进入固定 Frame 槽位，只有可变捕获使用 Cell；不可变捕获保留原值/容器别名，多层捕获逐层传递，块/循环每次创建独立绑定。只读 Program 保存布局，运行时 Frame/Cell/闭包不进入 Program。具名函数自身引用单独连接，逃逸闭包仍可引用它。
+- 调用与类型：保持先 callee、全部 args 左到右，再检查调用性/数量/注解；错误停止后续求值且不回滚此前副作用。注解按定义环境解析，函数创建时保存名义类型身份；参数重绑、捕获写入和显式/隐式返回仍校验，隐式返回 Null。未声明互递归、初始化自引用、非法 return 和跨函数 break/continue 在执行前拒绝。
+- 执行与资源：继续 Python AST 树遍历，用户调用经生成器交给显式调用栈，不使用字节码或提高宿主递归限额掩盖问题。Frame/自身引用、捕获/类型引用、Cell 内容和函数对象进入既有计量。默认 63/64/65 调用层数及 syntax_depth=64 与 call_depth=64 组合有 CLI 证据，原生调用不计 ZZY 层数；退出/返回/异常清理局部、活动遍历与预留。
+- 验收修复一：低配额探针发现驱动器保留已结束 CallRequest 和已丢弃返回闭包，使本应只占 4 个对象的后续数组分配请求第 5 个对象。改为及时清空请求并消费返回交接容器；新增 discarded-return-release、discarded-callee-release 与 live-return-not-released，证明死值释放且活值不提前释放。
+- 验收修复二：普通函数诊断已有调用 notes，但资源中止跨函数传播缺少 notes。现 E211 也保留最内层主位置并追加调用位置，同时保留 ResourceExceeded/AbortSignal 类别，不吞成普通语言错误。新 resource-call-notes 的真实 run/check 与嵌套资源失败清理测试通过。
+- 测试与独立期望：新增 tests/p03 的 118 个独立输入、cases.json 的 234 项期望（115 run、119 check），外加 examples/functions.zzy 纳入同一清单；正常用例都有 check 对照，四个 check 专用输入包含无限循环、I/O、无效运行时注解及递归。固定答案和源码位置独立维护，未从解释器导出快照，未依赖 spec。10 项宿主测试补普通槽位/实际共享 Cell、只读布局、Program/Interpreter 复用、输入隔离、闭包环回收、调用/活动遍历在诊断/取消/MemoryError/资源失败后清理、Frame 分配失败和返回范围。P02 的 unsupported-function 两项迁移为成功，原有其他 537 项期望未改变。
+- 运行器验收：增加可选诊断 notes 的严格清单校验与比对。通过返回结果故障注入确认执行数不足、跳过、未产生观察结果和零收集不能报成功；真实空/坏清单、错误答案/诊断、超时、输出超额、启动失败与进程退出测试继续保留。最终报告同时要求非空、执行数量一致、无跳过、实际观察结果和 unittest 成功，不用 wasSuccessful 单独判断空运行。
+- 过程与真实失败：运行时初稿把 yield from 放进列表推导，第一次导入测试报 SyntaxError，改成显式参数循环后原 16 项运行时测试通过。临时 for 捕获探针把区间误写成 0..3，按既有契约改为 0..<3；未改语法迁就探针。首轮 199 黑盒为 198 通过、1 个调用 notes 列号期望错误；首轮 10 宿主为 9 通过、1 个返回范围手算偏一列。按原文坐标核对后修正，230 项黑盒与 26 项运行时宿主通过。资源 notes 新用例也曾手算加号列号错误，改按固定源码字符位置计算后两项通过。没有删除/跳过失败用例，没有把这些初次失败记作通过。
+- 完整回归：添加资源 notes 前，849 项 unittest 通过（187.185 秒），771 项独立黑盒通过（161.027 秒）。最终源码与新增用例定稿后执行 `.venv/Scripts/python.exe -X utf8 -m unittest discover -s tests -q`：851/851 通过、181.085 秒、退出 0、无跳过；其中 773 项 CLI + 78 项宿主/运行器。独立执行 `.venv/Scripts/python.exe -X utf8 -m tests.blackbox --report dist/p03-blackbox-report.json`：773/773 通过、161.782 秒、退出 0，lex 62/run 347/check 364，48 种有效资源指纹。两套入口覆盖有重合，不累加成不同用例数；最终报告逐项观察值与期望一致。
+- 发布实测：版本 0.3.0a1，info.stage=P03。bundled Python 的 `-m pip wheel . --no-deps --no-build-isolation --no-index --wheel-dir dist` 离线构建成功，使用 `-m pip --python .venv/Scripts/python.exe install --force-reinstall --no-index --no-deps dist/zzy_language-0.3.0a1-py3-none-any.whl` 安装最终代码。`dist/verify_p03_install.py` 从 dist 工作目录用 `.venv/Scripts/python.exe -I -X utf8 -m zzy run/check <绝对源码路径> --diagnostic-format json` 验证 22 条函数/闭包、逐轮绑定、深调用、类型/前向引用错误、资源 notes 与 check 零执行用例；17 个安装 Python 源文件与工作区逐字节一致。zzy.exe --version 输出 0.3.0a1 (P03 interpreter)。报告、wheel 与临时脚本保持忽略。
+- 指南与契约：更新根 README、skills/AI 入口、实现路线、诊断/资源说明、测试覆盖映射和示例入口。syntax 只更改能力/验证状态，2—10 节语法语义与父提交逐字一致，stdlib 原文不变，requirement 原始 SHA-256 仍为 B099C19FC339CE1DC1AAB7E9D6C8126A9C5C9ACE3D31B969A0623DF90F521D2B。
+- 阶段边界说明：roadmap P03 与 todo P03-03 提到 Lazy 捕获，而 P04-02 才引入 Lazy 语法/状态/唤醒。本轮完成可复用的传递捕获布局与共享 Cell 基础，在两处明确分工；Lazy AST 的捕获接入和运行验证保留 P04-02，当前 Lazy 仍拒绝，没有宣称可用或取消后续义务。未修改语言规则或新增公开库接口。
+- 验收结论：roadmap 的递归/闭包正确、多次调用独立、跨函数跳转非法、槽位迁移后旧黑盒回归均有真实证据；P03-01—04 完成，70 项代码任务完成 18 项。无已知未修复的本阶段失败。其他 Python/OS、真实终端 Ctrl+C、模块/跨文件调用、Lazy/spec、库回调、GUI/派生进程树、完整 RESOURCE/CLI 与性能比较明确未验证或待实现，不以本阶段结果替代 P04/P05/P06。
+- Git：本轮实现、独立源码/清单、宿主测试、指南和记录组成一个本地 P03 阶段提交，基于 feature 的 550fe56。提交标识以实际 Git 历史和最终报告为准；核对纳入文件、忽略产物、requirement 哈希及 git diff --check 后提交，不推送、不改写历史。下一项 P04-01，本轮到 P03 验收结束。
+
+- 提交前静态复核：30 份 Markdown 的围栏和 281 个本地链接有效；70 个任务 ID 唯一、18 项完成。最终黑盒报告的 773 个逐项 passed/observed_exit_code 与期望一致，48 种资源指纹；git diff --check 通过。静态检查仅作一致性证据，不替代上述运行结果。

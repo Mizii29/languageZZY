@@ -6,7 +6,7 @@
 
 ## 1. 先确认能做什么
 
-目前已实现 P00—P02，版本 0.2.0a1。`python -m zzy run examples/hello.zzy` 输出 5；`python -m zzy run examples/grades.zzy` 可交互运行成绩菜单。数值、Bool/Null、数组、shape/with、分支循环与基础 I/O 的能力见根 README；用户函数/闭包、特色语法和其他库仍待实现。check 只做前端准备，不执行输入、循环或默认值；zzy test/spec 尚未实现，测试使用 `python -X utf8 -m tests.blackbox`。本文其他完整语言示例未逐一运行，不能据此假定可用。接手先核对 [todo](../docs/development/todo.md)、[开发记录](../docs/development/development-log.md)、代码和 Git；下一项 P03-01。
+目前已实现 P00—P03，版本 0.3.0a1。`python -m zzy run examples/hello.zzy` 输出 5；`python -m zzy run examples/grades.zzy` 可交互运行成绩菜单。数值、Bool/Null、数组、shape/with、分支循环与基础 I/O 的能力见根 README；用户函数/闭包已实现，特色语法和其他库仍待实现。check 只做前端准备，不执行输入、循环或默认值；zzy test/spec 尚未实现，测试使用 `python -X utf8 -m tests.blackbox`。本文其他完整语言示例未逐一运行，不能据此假定可用。接手先核对 [todo](../docs/development/todo.md)、[开发记录](../docs/development/development-log.md)、代码和 Git；下一项 P04-01。
 
 解释器使用 Python，核心运行只依赖标准库。P00 已验证 CPython 3.12.14、Windows 11、Unicode 15.0.0；实际运行和安装命令见项目 README。没有依赖清单时不要凭空执行安装命令；GUI 和后续 Web 等可选依赖不应成为普通 CLI/check 的前提。
 
@@ -18,11 +18,11 @@
 - `benchmarks/`：等价 ZZY/Python 程序、驱动与原始测量结果。
 - `apps/zzy-campus/`：默认校园任务管家应用。
 
-上述根目录已建立；当前已有 P02 数据/控制解释器、宿主与 CLI 测试、hello/grades 示例；校园应用子目录及后续语言功能仍待实现。已有文档位置见 [项目 README](../README.md)。
+上述根目录已建立；当前已有 P03 函数/闭包及数据/控制解释器、宿主与 CLI 测试、hello/grades/functions 示例；校园应用子目录及后续语言功能仍待实现。已有文档位置见 [项目 README](../README.md)。
 
 ## 2. 编写第一份程序
 
-解释器实现后，可将下列完整示例保存为 `examples/hello.zzy`。这是单文件示例，不依赖其他示例中的定义。
+下面是包含 P04 spec 的完整设计示例，计划保存为 `examples/total-up-to.zzy`。当前函数/循环部分已支持；现在可直接运行的函数示例见 [functions.zzy](../examples/functions.zzy)，不要用此段覆盖已有 hello.zzy。
 
 ```zzy
 (addnew) total_up_to(limit: (Int)) -> (Int) {
@@ -41,7 +41,7 @@ io.print(total_up_to(5));
 }
 ```
 
-先检查语法和名字，再运行程序，最后运行测试。上面含函数、循环和 spec 的完整设计示例仍待 P03—P04，下面的 total-up-to.zzy 文件也待建立。当前可运行的 hello.zzy 只输出 5，不能与本节未来输出 15 的程序混淆：
+先检查语法和名字，再运行程序，最后运行测试。上面完整设计示例中的 spec 仍待 P04，下面的 total-up-to.zzy 文件也待建立。当前可运行的 hello.zzy 只输出 5，不能与本节未来输出 15 的程序混淆：
 
 ```text
 python -m zzy check examples/total-up-to.zzy
@@ -127,7 +127,7 @@ zno、array.copy 和 with 都不是深冻结/深复制。为实现撤销，应�
 
 执行顺序以 [roadmap](../docs/development/roadmap.md) 为准，具体部件见 [interpreter](../docs/runtime/interpreter.md)。核心主线是 P00 → P01 → P02 → P03 → P04 → P05 → P06，再完成 P07 测量、P09 应用和 P11 交付；分支依赖见阶段表，不把文档讲解顺序当作开发依赖。
 
-后续先核对仓库和环境，再从 P03 用户函数扩展当前 AST/Resolver/树遍历执行，保留全部 CLI 回归。不要先建 VM，或一次性实现所有扩展。E 在 P05/P06 后分阶段推进；Web/Python 互联 P08 在 P09 后可选，P10 优化依据测量决定。
+后续先核对仓库和环境，再从 P04 Result/匹配扩展当前 AST/Resolver/树遍历执行，保留全部 CLI 回归。不要先建 VM，或一次性实现所有扩展。E 在 P05/P06 后分阶段推进；Web/Python 互联 P08 在 P09 后可选，P10 优化依据测量决定。
 
 每个实现任务按以下过程收尾：
 

@@ -1,15 +1,17 @@
-"""P02 AST tree-walk execution with lexical bindings and owned values."""
+"""AST tree walking with slotted frames and an explicit user-call stack."""
 
-from contextlib import contextmanager
+from contextlib import contextmanager, nullcontext
+from dataclasses import replace
 import gc
 import math
 import operator
 import sys
 from weakref import WeakSet
 
-from .diagnostics import Diagnostic, DiagnosticError, Phase, display_path
+from .diagnostics import Diagnostic, DiagnosticError, Phase, ResourceExceeded, display_path
 from .native.metadata import Extension, MetadataRegistry, NativeFunction
-from .values import Array, Binding, LoopSignal, NULL, Value, boolean
+from .values import (Array, Binding, CallRequest, Cell, Closure, Frame, LoopSignal,
+                     NULL, ReturnSignal, Value, boolean)
 
 
 FUNCTIONS = {
@@ -42,6 +44,8 @@ class Interpreter:
         self.scopes = [self.bindings]
         self.slots = []
         self.reservations = WeakSet()
+        self.frame = None
+        self.call_depth = 0
 
     def error(self, node, code, message):
         raise DiagnosticError(Diagnostic(message, code, self.file, node.token.span), Phase.EXECUTION)
@@ -75,9 +79,10 @@ class Interpreter:
         try:
             self.slots.append(self.reserve(self.program.root, runtime_objects=2, runtime_slots=2))
             self.bindings["io"] = Binding(Value("Namespace", {"print": Value("Function", PRINT)}), False)
-            for statement in self.program.root.children:
-                self.statement(statement)
+            self.drive(self.execute_program())
         finally:
+            self.frame = None
+            self.call_depth = 0
             self.bindings.clear()
             self.scopes[:] = [self.bindings]
             for reservation in self.slots:
@@ -86,6 +91,115 @@ class Interpreter:
             for reservation in list(self.reservations):
                 reservation.release()
             self.reservations.clear()
+
+    def execute_program(self):
+        for statement in self.program.root.children:
+            (yield from self.statement(statement))
+
+    def drive(self, generator):
+        # Suspended AST walks do not consume the host's recursive call stack.
+        # Each user call gets a separate generator and an accounted local frame.
+        stack, value, failure = [generator], None, None
+        try:
+            while stack:
+                try:
+                    request = stack[-1].throw(failure) if failure is not None else stack[-1].send(value)
+                except StopIteration as stopped:
+                    stack.pop()
+                    value, failure = [stopped.value], None
+                except BaseException as error:
+                    stack.pop()
+                    value, failure = None, error
+                else:
+                    if not isinstance(request, CallRequest):
+                        raise AssertionError("unknown execution request")
+                    stack.append(self.execute_user(request))
+                    request = None
+                    value, failure = None, None
+            if failure is not None:
+                raise failure
+            return value[0] if value else None
+        finally:
+            for active in reversed(stack):
+                active.close()
+
+    def raw_reference(self, reference, node):
+        if reference.kind == "global":
+            return self.lookup(reference.key, node)
+        if reference.kind == "self":
+            return self.frame.function
+        if reference.kind == "local":
+            return self.frame.locals[reference.key]
+        return self.frame.function.data.captures[reference.key]
+
+    def read_reference(self, reference, node):
+        value = self.raw_reference(reference, node)
+        return value.value if isinstance(value, Binding) else value
+
+    def define(self, symbol, value, annotation, node):
+        info = self.program.symbols[symbol]
+        stored = Cell(value, annotation, self.reserve(node, runtime_slots=1)) if info.cell else value
+        if info.owner is not None:
+            self.frame.locals[info.slot] = stored
+            self.frame.annotations[info.slot] = annotation
+        else:
+            self.scopes[-1][symbol] = stored if info.cell else Binding(value, info.mutable, annotation)
+
+    def make_function(self, node):
+        plan = self.program.functions[id(node)]
+        # One slot for each captured reference, plus any nominal type references.
+        parameter_types = tuple(self.annotation(p.data, p) for p in node.children[:-1])
+        return_type = self.annotation(node.data, node)
+        type_slots = sum(isinstance(t, Value) for t in (*parameter_types, return_type))
+        function = Value("Function", None, self.reserve(node, runtime_objects=1,
+                           runtime_slots=len(plan.captures) + type_slots))
+        captures = []
+        for capture in plan.captures:
+            raw = self.raw_reference(capture.source, node)
+            captures.append(raw if isinstance(raw, Cell) else raw.value if isinstance(raw, Binding) else raw)
+        function.data = Closure(node, plan, tuple(captures), parameter_types, return_type)
+        return function
+
+    def execute_user(self, request):
+        function, arguments, call = request.function, request.arguments, request.node
+        closure = function.data
+        self.check("call_depth", self.call_depth + 1, call)
+        previous = self.frame
+        try:
+            # Argument expressions have all completed before any type check.
+            for annotation, value, expression in zip(closure.parameter_types, arguments, call.children[1:]):
+                self.typecheck(annotation, value, expression)
+            with self.reserve(call, runtime_slots=len(closure.plan.locals) + 1):
+                frame = Frame(function)
+                self.frame = frame
+                self.call_depth += 1
+                try:
+                    for parameter, value, annotation in zip(closure.parameters, arguments, closure.parameter_types):
+                        self.define(id(parameter), value, annotation, parameter)
+                    value, site, implicit = NULL, closure.node, True
+                    try:
+                        if closure.node.kind == "lambda":
+                            value = (yield from self.evaluate(closure.node.children[-1]))
+                            site, implicit = closure.node.children[-1], False
+                        else:
+                            (yield from self.block(closure.node.children[-1]))
+                    except ReturnSignal as returned:
+                        value, site, implicit = returned.value, returned.node, False
+                    self.typecheck(closure.return_type, value, site, token_only=implicit)
+                    return value
+                finally:
+                    frame.clear()
+                    self.frame = previous
+                    self.call_depth -= 1
+        except (DiagnosticError, ResourceExceeded) as error:
+            position = call.token.span.start
+            note = f"调用 {closure.name}：{self.file}:{position.line}:{position.column}"
+            diagnostic = replace(error.diagnostic, notes=(*error.diagnostic.notes, note))
+            if isinstance(error, ResourceExceeded):
+                # Keep quota aborts outside ordinary language-error handlers.
+                error.diagnostic = diagnostic
+                raise
+            raise DiagnosticError(diagnostic, error.phase) from None
 
     def lookup(self, symbol, node):
         for scope in reversed(self.scopes):
@@ -115,9 +229,21 @@ class Interpreter:
             self.slots = old_slots
 
     def block(self, node, initial=None):
-        with self.scope(initial):
-            for statement in node.children:
-                self.statement(statement)
+        if self.frame is None:
+            with self.scope(initial):
+                for statement in node.children:
+                    (yield from self.statement(statement))
+        else:
+            frame = self.frame
+            try:
+                for symbol, binding in (initial or {}).items():
+                    self.define(symbol, binding.value, binding.annotation, node)
+                for statement in node.children:
+                    (yield from self.statement(statement))
+            finally:
+                for index in frame.function.data.plan.blocks[id(node)]:
+                    frame.locals[index] = None
+                    frame.annotations[index] = None
 
     def annotation(self, token, node):
         if token is None:
@@ -126,35 +252,51 @@ class Interpreter:
         if isinstance(resolved, str):
             return resolved
         symbol, fields = resolved
-        value = self.lookup(symbol, node).value
+        value = self.read_reference(symbol, node)
         for name in fields:
             value = self.field(value, name, node)
         if value.kind != "Definition":
             self.error(node, "E201", "类型注解需要结构定义")
         return value
 
-    def typecheck(self, annotation, value, node):
+    def typecheck(self, annotation, value, node, *, token_only=False):
         valid = (annotation is None or
                  isinstance(annotation, str) and value.kind == annotation or
                  isinstance(annotation, Value) and value.kind == "Shape" and value.data[0] is annotation)
         if not valid:
             name = annotation if isinstance(annotation, str) else annotation.data[0].token.lexeme
             raise DiagnosticError(Diagnostic(f"注解要求 {name}，实际为 {value.kind}",
-                                             "E201", self.file, node.span), Phase.EXECUTION)
+                                             "E201", self.file, node.token.span if token_only else node.span), Phase.EXECUTION)
 
     def statement(self, node):
         self.meter.cancellation.check()
-        if node.kind == "binding":
+        if node.kind == "function":
+            slot = self.reserve(node, runtime_slots=1) if self.frame is None else None
+            try:
+                self.define(id(node), self.make_function(node), None, node)
+                if slot:
+                    self.slots.append(slot)
+            except BaseException:
+                if slot:
+                    slot.release()
+                raise
+        elif node.kind == "return":
+            expression = node.children[0] if node.children else node
+            value = (yield from self.evaluate(expression)) if node.children else NULL
+            raise ReturnSignal(value, expression)
+        elif node.kind == "binding":
             mutable, annotation = node.data
-            slot = self.reserve(node, runtime_slots=1)
+            slot = self.reserve(node, runtime_slots=1) if self.frame is None else None
             try:
                 kind = self.annotation(annotation, node)
-                value = self.evaluate(node.children[0])
+                value = (yield from self.evaluate(node.children[0]))
                 self.typecheck(kind, value, node.children[0])
-                self.scopes[-1][id(node)] = Binding(value, mutable, kind)
-                self.slots.append(slot)
+                self.define(id(node), value, kind, node)
+                if slot:
+                    self.slots.append(slot)
             except BaseException:
-                slot.release()
+                if slot:
+                    slot.release()
                 raise
         elif node.kind == "shape":
             definition = Value("Definition", None, self.reserve(node, runtime_objects=1))
@@ -168,55 +310,61 @@ class Interpreter:
         elif node.kind == "assignment":
             target, expression = node.children
             if target.kind == "name":
-                binding = self.lookup(self.program.references[id(target)], target)
-                if not binding.mutable:
+                reference = self.program.references[id(target)]
+                raw = self.raw_reference(reference, target)
+                info = self.program.symbols.get(reference.symbol)
+                if info is None or not info.mutable:
                     self.error(target, "E203", f"名称 {target.data} 不允许重新绑定")
-                value = self.evaluate(expression)
-                self.typecheck(binding.annotation, value, expression)
-                binding.value = value
+                annotation = raw.annotation if isinstance(raw, Binding) else self.frame.annotations[reference.key]
+                value = (yield from self.evaluate(expression))
+                self.typecheck(annotation, value, expression)
+                if isinstance(raw, Binding):
+                    raw.value = value
+                else:
+                    self.frame.locals[reference.key] = value
             elif target.kind == "field":
-                owner = self.evaluate(target.children[0])
+                owner = (yield from self.evaluate(target.children[0]))
                 self.field(owner, target.data, target, write=True)
-                value = self.evaluate(expression)
+                value = (yield from self.evaluate(expression))
                 self.typecheck(owner.data[0].data[1][target.data], value, expression)
                 owner.data[1][target.data] = value
             else:
-                owner = self.evaluate(target.children[0])
-                index = self.evaluate(target.children[1])
+                owner = (yield from self.evaluate(target.children[0]))
+                index = (yield from self.evaluate(target.children[1]))
                 self.index(owner, index, target, write=True)
-                value = self.evaluate(expression)
+                value = (yield from self.evaluate(expression))
                 owner.replace(index.data, value, self, target)
         elif node.kind == "block":
-            self.block(node)
+            (yield from self.block(node))
         elif node.kind == "if":
             for index in range(0, len(node.children), 2):
                 child = node.children[index]
                 if child.kind == "block":
-                    self.block(child)
+                    (yield from self.block(child))
                     break
-                if self.condition(self.evaluate(child), child):
-                    self.block(node.children[index + 1])
+                if self.condition((yield from self.evaluate(child)), child):
+                    (yield from self.block(node.children[index + 1]))
                     break
         elif node.kind == "while":
-            while self.condition(self.evaluate(node.children[0]), node.children[0]):
+            while self.condition((yield from self.evaluate(node.children[0])), node.children[0]):
                 try:
-                    self.block(node.children[1])
+                    (yield from self.block(node.children[1]))
                 except LoopSignal as signal:
                     if signal.kind == "break":
                         break
         elif node.kind == "for":
-            self.for_loop(node)
+            (yield from self.for_loop(node))
         elif node.kind in {"break", "continue"}:
             raise LoopSignal(node.kind)
         else:
-            self.evaluate(node.children[0])
+            (yield from self.evaluate(node.children[0]))
 
     def condition(self, value, node):
         self.typecheck("Bool", value, node)
         return value.data
 
     def for_loop(self, node):
-        iterable = self.evaluate(node.children[0])
+        iterable = (yield from self.evaluate(node.children[0]))
         if iterable.kind not in {"Array", "String", "Range"}:
             self.error(node, "E201", "for 需要 Array、String 或 Range")
         if iterable.kind == "Array":
@@ -229,11 +377,11 @@ class Interpreter:
                 iterator = iterable.data
             for item in iterator:
                 self.meter.cancellation.check()
-                with self.reserve(node, runtime_slots=1):
+                with self.reserve(node, runtime_slots=1) if self.frame is None else nullcontext():
                     value = item if iterable.kind == "Array" else self.scalar(
                         "String" if iterable.kind == "String" else "Int", item, node)
                     try:
-                        self.block(node.children[1], {id(node): Binding(value, False)})
+                        (yield from self.block(node.children[1], {id(node): Binding(value, False)}))
                     except LoopSignal as signal:
                         if signal.kind == "break":
                             break
@@ -273,6 +421,8 @@ class Interpreter:
     def evaluate(self, node):
         self.meter.cancellation.check()
         kind = node.kind
+        if kind == "lambda":
+            return self.make_function(node)
         if kind in {"integer", "float"}:
             return self.scalar("Int" if kind == "integer" else "Float", self.program.integers[id(node)], node)
         if kind == "string":
@@ -282,24 +432,24 @@ class Interpreter:
         if kind == "null":
             return NULL
         if kind == "name":
-            return self.lookup(self.program.references[id(node)], node).value
+            return self.read_reference(self.program.references[id(node)], node)
         if kind == "group":
-            return self.evaluate(node.children[0])
+            return (yield from self.evaluate(node.children[0]))
         if kind == "field":
-            return self.field(self.evaluate(node.children[0]), node.data, node)
+            return self.field((yield from self.evaluate(node.children[0])), node.data, node)
         if kind == "index":
-            owner = self.evaluate(node.children[0])
-            return self.index(owner, self.evaluate(node.children[1]), node)
+            owner = (yield from self.evaluate(node.children[0]))
+            return self.index(owner, (yield from self.evaluate(node.children[1])), node)
         if kind == "array":
             self.check("container_items", len(node.children), node)
             value = Array(self, node)
             for child in node.children:
-                value.push(self.evaluate(child), self, child)
+                value.push((yield from self.evaluate(child)), self, child)
             return value
         if kind in {"construct", "with"}:
-            return self.construct(node)
+            return (yield from self.construct(node))
         if kind == "unary":
-            value = self.evaluate(node.children[0])
+            value = (yield from self.evaluate(node.children[0]))
             if node.token.kind == "NOT":
                 if value.kind != "Bool":
                     self.error(node, "E201", "not 需要 Bool")
@@ -312,28 +462,35 @@ class Interpreter:
             reservation = self.reserve(node, runtime_payload_bytes=size)
             return Value(value.kind, -value.data, reservation)
         if kind in {"add", "binary"}:
-            left = self.evaluate(node.children[0])
+            left = (yield from self.evaluate(node.children[0]))
             operation = node.token.kind
             if operation in {"AND", "OR"}:
                 test = self.condition(left, node.children[0])
                 if operation == "AND" and not test or operation == "OR" and test:
                     return boolean(test)
-                return boolean(self.condition(self.evaluate(node.children[1]), node.children[1]))
-            right = self.evaluate(node.children[1])
+                return boolean(self.condition((yield from self.evaluate(node.children[1])), node.children[1]))
+            right = (yield from self.evaluate(node.children[1]))
             return self.binary(operation, left, right, node)
         if kind == "call":
-            function = self.evaluate(node.children[0])
+            function = (yield from self.evaluate(node.children[0]))
             with self.reserve(node, runtime_slots=len(node.children) - 1):
-                arguments = [self.evaluate(arg) for arg in node.children[1:]]
+                arguments = []
+                for arg in node.children[1:]:
+                    arguments.append((yield from self.evaluate(arg)))
                 if function.kind != "Function":
                     self.error(node, "E202", "此值不可调用")
                 if len(arguments) != len(function.data.parameters):
                     self.error(node, "E202", f"{function.data.name} 参数数量不符")
+                if isinstance(function.data, Closure):
+                    # Consume the handoff box before resuming AST evaluation.
+                    # The driver must not retain discarded results until the next call.
+                    result = yield CallRequest(function, arguments, node)
+                    return result.pop()
                 return self.call(function.data.name, arguments, node)
         raise AssertionError(f"unknown expression node: {kind}")
 
     def construct(self, node):
-        base = self.evaluate(node.children[0])
+        base = (yield from self.evaluate(node.children[0]))
         expected = "Shape" if node.kind == "with" else "Definition"
         if base.kind != expected:
             self.error(node, "E201", "构造需要结构定义；with 需要结构实例")
@@ -354,7 +511,7 @@ class Interpreter:
         fields = {name: NULL for name in types}
         result.data = (definition, fields)
         for field in node.children[1:]:
-            value = self.evaluate(field.children[0])
+            value = (yield from self.evaluate(field.children[0]))
             self.typecheck(types[field.data], value, field.children[0])
             fields[field.data] = value
         for field in declaration.children:
@@ -363,7 +520,7 @@ class Interpreter:
                 if node.kind == "with":
                     fields[name] = base.data[1][name]
                 else:
-                    value = self.evaluate(field.children[0])
+                    value = (yield from self.evaluate(field.children[0]))
                     self.typecheck(types[name], value, field.children[0])
                     fields[name] = value
         return result

@@ -1,0 +1,1 @@
+(addnew) f() {} (zno) g := f; io.print([f==g,f==((addnew) () => 0),f!=1]);

@@ -2,7 +2,7 @@
 
 ZZY 是赵梓伊在程序设计实践课程中设计的通用脚本语言，计划使用 Python 实现解释器，用 ZZY 编写测试、性能脚本和完整应用。
 
-**当前状态：P00—P02 已实现，P02 验收结果见开发记录。** 包版本 0.2.0a1；核心语法 v0.6、标准库契约 v0.6.1。Python AST 树遍历解释器支持基础数据、控制流、数组、结构与基础 I/O；`run/check` 共用前端。539 个外部 CLI 用例使用独立 `.zzy` 和期望清单，不依赖 spec。用户函数/闭包从 P03 开始；`zzy test`、特色语法、其余库、性能报告和完整应用尚未实现。
+**当前状态：P00—P03 已实现，P03 验收结果见开发记录。** 包版本 0.3.0a1；核心语法 v0.6、标准库契约 v0.6.1。Python AST 树遍历解释器支持函数/闭包、基础数据、控制流、数组、结构与基础 I/O；`run/check` 共用前端。773 个外部 CLI 用例使用独立 `.zzy` 和期望清单，不依赖 spec。`zzy test`、特色语法、其余库、性能报告和完整应用尚未实现。
 
 ## 项目特色
 
@@ -31,7 +31,7 @@ README.md                 项目介绍
 pyproject.toml            包配置，核心无第三方运行依赖
 zzy/                      CLI、Lexer/Parser/AST、准备/执行、源码、诊断和资源基础
 tests/                    宿主测试及 lex/run/check 的 .zzy 外部清单和统一运行器
-examples/                 读取/词法样例、hello.zzy 与 grades.zzy 成绩菜单
+examples/                 读取/词法样例、hello.zzy 、grades.zzy 成绩菜单与 functions.zzy 函数示例
 benchmarks/               基准目录说明；P07 实现
 apps/                     应用目录说明；P09 实现
 docs/                     权威契约、设计、实施计划和验证记录
@@ -64,21 +64,24 @@ python -X utf8 -m unittest discover -s tests -v
 
 `run examples/hello.zzy` 输出 `5`。`python -m zzy run examples/grades.zzy` 运行 P02 成绩菜单：输入姓名，再输入 `1`，固定四门成绩的总分为 344、平均分 86.0、最高分 100；其他菜单输入退出，姓名输入 EOF 输出“输入结束”。业务计算、循环与分支都在 ZZY 中。
 
+`python -m zzy run examples/functions.zzy` 输出 `720`、`[1, 2, 11]`、`[0, 1, 2]`，演示自递归、独立计数器和逐轮闭包。函数注解的定义身份在函数创建时确定；具名函数隐式返回 Null，返回注解仍检查。错误保留发生处源码范围，并在 notes 中追加内到外调用位置。
+
 当前已实现：
 
 - Int、有限 Float、String/raw、Bool、Null，四则运算、Int 向下整除/取余、严格比较和 Bool 短路。大 Int 与 Float 比较保留数学精度；Bool 不隐式充当 Int。比较链必须显式分组。
 - 声明、赋值、块作用域、遮蔽、条件、while/for、半开 Range、break/continue；每轮 for 是新的只读绑定。
 - Array 字面、索引、替换、浅复制、push/pop；别名共享，活动遍历期间先拒绝增删，允许替换并读取后续元素的新值。数组的结构/内容版本由统一写入口维护。
 - 顶层 shape、名义类型注解、显式字段、每次构造求默认值、字段写入、浅层 with。默认 `[]` 每实例新建，默认外部数组保持共享；with 不重跑默认值。
+- 具名/匿名函数、高阶调用、return、自递归、可选参数/返回注解、词法闭包。每次调用使用独立局部槽位；可变捕获共享 Cell，不可变捕获保留对象别名，逐轮绑定独立。尚未声明的相互递归报 E302，跨函数 break/continue 报 E304。
 - 基础库仅有 `io.print/input`、`len/str/range`、`array.copy/push/pop`。len 接受 Array/String/Range；str 接受基础标量。io.input 输出并 flush 提示，去掉一组 LF/CRLF，空行为 String，EOF 为 Null；输入不经过 ZZY 字符串转义。完整 Map/Quantity 等类型及其他 stdlib 接口按后续阶段实现。
 
 普通运算从左到右，调用先求被调用对象及全部实参，再检查可调用性/数量。赋值先定位并检查目标可写性，再求右侧，写入前重新检查下标/类型。zno 禁止重新绑定但不冻结容器；错误不回滚此前副作用。可选注解支持 `(Int)/(Float)/(String)/(Bool)/(Null)/(Array)/(Range)/(Function)` 及已定义 shape 的身份。
 
 `check FILE` 完成整文件词法、语法、词法名称、控制流位置及数字字面准备，成功双流为空、退出 0。它不建立执行器，不计算表达式、不调用输入输出、不运行循环、构造或结构默认值。运行时类型/调用/写入错误不提前报出，因此 check 成功不保证 run 成功。未知/自引用名称 E302、重复声明 E301、非法控制流 E304、语法 E103 在执行前退出 2；运行时类型 E201、调用 E202、写入 E203、下标 E204、除零 E205、活动遍历修改 E206、数值范围 E208 退出 1。结构构造/with 字段清单错误使用 E203，字段访问不存在使用 E302。容量错误统一 E211，依发生阶段退出 2/1。
 
-用户函数、return、spec、模块、Result/Lazy、管道、查询、Machine/Quantity、GUI 等仍明确拒绝或报告接口尚未实现。完整语言设计示例不能作为已实现能力清单。执行覆盖见 [P02 验收](tests/p02/README.md)。
+spec、模块、Result/Lazy、管道、查询、Machine/Quantity、GUI 等仍明确拒绝或报告接口尚未实现。完整语言设计示例不能作为已实现能力清单。执行覆盖见 [P03 验收](tests/p03/README.md)。
 
-`python -X utf8 -m tests.blackbox` 运行 539 个外部用例；失败、超时、输出超额及空/坏清单返回 1。清单、可选 JSON 报告和资源指纹见 [测试说明](tests/README.md)。
+`python -X utf8 -m tests.blackbox` 运行 773 个外部用例；失败、超时、输出超额及空/坏清单返回 1。清单、可选 JSON 报告和资源指纹见 [测试说明](tests/README.md)。
 
 `source-info` 仅做有界 UTF-8 读取，输出字节数、码点数、行数和同一字节快照的 SHA-256；`syntax_checked` 固定为 false，不代表语法检查或执行成功。空文件计 1 行，末尾换行后保留空行。缺文件、非法 UTF-8 和参数错误为 E401/退出 2；前端资源超限为 E211/退出 2。`info` 输出完整宿主版本、Unicode/平台、生效资源配置和指纹。
 

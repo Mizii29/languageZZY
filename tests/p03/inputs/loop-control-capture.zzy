@@ -1,0 +1,2 @@
+(addnew) build() {(zno) fs := []; (for) i (in) 0..<5 {(zno) f := (addnew) () => i; array.push(fs,f); (zif?:) i == 2 {(break);} (continue);} (return) fs;}
+(zno) fs := build(); io.print([fs[0](),fs[1](),fs[2]()]);

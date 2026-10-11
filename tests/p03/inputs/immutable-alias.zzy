@@ -1,0 +1,2 @@
+(addnew) f() {(zno) a := [1]; (return) [(addnew) () => a,a];}
+(zno) pair := f(); pair[1][0] <- 7; io.print(pair[0]() == pair[1]); io.print(pair[0]());

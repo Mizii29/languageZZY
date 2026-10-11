@@ -74,3 +74,54 @@ class Array(Value):
 class LoopSignal(BaseException):
     def __init__(self, kind):
         self.kind = kind
+
+
+class Cell(Binding):
+    """Shared storage allocated only for a captured mutable binding."""
+    def __init__(self, value, annotation, reservation):
+        super().__init__(value, True, annotation)
+        self.reservation = reservation
+
+    def __del__(self):
+        self.reservation.release()
+
+
+@dataclass(frozen=True)
+class Closure:
+    node: object
+    plan: object
+    captures: tuple
+    parameter_types: tuple
+    return_type: object
+
+    @property
+    def name(self):
+        return self.node.token.lexeme if self.node.kind == "function" else "<anonymous>"
+
+    @property
+    def parameters(self):
+        return self.node.children[:-1]
+
+
+class Frame:
+    """Direct local slots; only selected entries contain Cells."""
+    def __init__(self, function):
+        self.function = function
+        self.locals = [None] * len(function.data.plan.locals)
+        self.annotations = [None] * len(self.locals)
+
+    def clear(self):
+        self.locals.clear()
+        self.annotations.clear()
+
+
+class ReturnSignal(BaseException):
+    def __init__(self, value, node):
+        self.value, self.node = value, node
+
+
+@dataclass(frozen=True)
+class CallRequest:
+    function: Value
+    arguments: list
+    node: object

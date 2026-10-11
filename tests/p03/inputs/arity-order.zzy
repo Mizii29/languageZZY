@@ -1,0 +1,2 @@
+(addnew) f(x) {io.print("body");}
+f(io.print("a"),io.print("b"));

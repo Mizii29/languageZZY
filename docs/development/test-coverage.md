@@ -1,10 +1,12 @@
 # ZZY 黑盒覆盖与验收计划
 
-更新：2026-10-11｜状态：P01/P02 已有统一 lex/run/check 外部黑盒；其余阶段覆盖仍待实现，验收见 tests/README.md 与开发记录
+更新：2026-10-11｜状态：P01—P03 已有统一 lex/run/check 外部黑盒；其余阶段覆盖仍待实现，验收见 tests/README.md 与开发记录
 
 本文件将 [syntax.md](../language/syntax.md) 与 [stdlib.md](../language/stdlib.md) 的可观察规则映射到测试类别。它不是测试集或通过报告；实际用例需用 `.zzy` 编写并通过真实 CLI 一键运行。
 
-P02 实际映射见 [tests/p02/README.md](../../tests/p02/README.md)：279 个 run/check 期望覆盖 EXPR、BIND/CTRL 的非函数部分、ARRAY、SHAPE、输入及本阶段资源边界。ARRAY-02 的异常/取消清理、版本与配额原子性使用宿主测试补充。未实现的跨函数跳转、闭包、回调/缓存、JSON、模块和特色语法仍是待验证计划，不将整张矩阵视为已通过。
+P02 实际映射见 [tests/p02/README.md](../../tests/p02/README.md)：279 个 run/check 期望覆盖 EXPR、BIND/CTRL 的非函数部分、ARRAY、SHAPE、输入及本阶段资源边界。ARRAY-02 的异常/取消清理、版本与配额原子性使用宿主测试补充。未实现的库回调/缓存、JSON、模块和特色语法仍是待验证计划，不将整张矩阵视为已通过。
+
+P03 实际映射见 [tests/p03/README.md](../../tests/p03/README.md)：234 个 run/check 期望覆盖 FN-01、BIND-01、CTRL-01 的函数部分及调用顺序、参数/返回注解、名义身份、错误位置、check 零执行和调用/槽位/对象资源边界。10 个运行时宿主测试验证布局、复用隔离、引用环与失败清理；运行器另补 2 项防假成功/notes 测试。Lazy/模块/跨文件调用及完整 RESOURCE-01/02 仍待后续阶段。
 
 ## 1. 核心覆盖矩阵
 

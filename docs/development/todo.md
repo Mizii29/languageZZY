@@ -1,6 +1,6 @@
 # ZZY 开发待办
 
-建立：2026-10-03｜当前阶段：P02 已完成｜下一项：P03-01
+建立：2026-10-03｜当前阶段：P03 已完成｜下一项：P04-01
 
 本文件是任务状态的唯一清单；详细流程见 [roadmap.md](roadmap.md)，执行证据见 [development-log.md](development-log.md)。接手时根据实际仓库修正状态，不按日期猜测完成情况。
 
@@ -19,7 +19,7 @@
 - [x] v0.6 语法契约、标准库契约与黑盒覆盖计划已编写；详细设计已统一当前语法。
 - [x] 用户已选 A/C/D，query 和 machine-units 细化查询/状态机/数量设计；B 未采纳。
 - [x] 用户已选 E，sketch 完整绘图契约、E1—E4 实施与覆盖计划已写入；其余新增场景未采用。
-- [x] 根目录项目 README 与 skills 语法参考、人用指南、AI SKILL 及导航已建立；示例尚未运行验证。
+- [x] 根目录项目 README 与 skills 语法参考、人用指南、AI SKILL 及导航已建立；hello/grades/functions 已验证，其他完整契约示例未逐一运行。
 
 以上勾选表示文档存在，不表示解释器、测试或性能提升已经完成。
 
@@ -48,10 +48,12 @@
 
 ## P03：函数和名称解析（依赖 P02）
 
-- [ ] P03-01 完成具名/匿名函数、调用、返回和自递归。
-- [ ] P03-02 完成作用域、遮蔽、未声明名字及控制流检查。
-- [ ] P03-03 完成局部槽位、闭包/Lazy 捕获 Cell、每轮独立绑定和类型约束。
-- [ ] P03-04 验证调用隔离、闭包、递归和非法跨函数跳转，提交函数版本。
+- [x] P03-01 完成具名/匿名函数、调用、返回和自递归。
+- [x] P03-02 完成作用域、遮蔽、未声明名字及控制流检查。
+- [x] P03-03 完成局部槽位、闭包/Lazy 捕获 Cell、每轮独立绑定和类型约束。
+- [x] P03-04 验证调用隔离、闭包、递归和非法跨函数跳转，提交函数版本。
+
+P03-03 的 Lazy 部分是共享捕获布局/Cell 基础；Lazy AST 的捕获分析接入、状态和唤醒在 P04-02 实现并验收，当前 Lazy 仍不支持。此边界与 roadmap 的 P03/P04 分工一致，不将 Lazy 运行能力提前勾选。
 
 ## P04：特色功能（依赖 P03）
 
@@ -140,13 +142,14 @@ P10 各候选相互独立，不要求全部完成；P11 不以全部勾选为前
 
 ## 交接栏
 
-最后更新：2026-10-11。P00—P02 已完成，包版本 0.2.0a1；语法 v0.6/标准库 v0.6.1 的规则不变。本轮已连续实现 P02-01—05 并完成阶段验收，未进入 P03。
+最后更新：2026-10-11。P00—P03 已完成，包版本 0.3.0a1；语法 v0.6/标准库 v0.6.1 的规则不变。本轮连续完成 P03-01—04 并验收，未进入 P04。
 
-- 当前进行中任务：无。70 项代码任务完成 14 项（P00 四项、P01 五项、P02 五项）。
-- 下一项：P03-01，具名/匿名函数、调用、返回和自递归。按 syntax/interpreter/diagnostics/resources 继续；保留本轮词法身份绑定、作用域隔离和全部 run/check 回归，不提前依赖 spec。完整 Resolver/局部槽位/闭包与跨函数控制流仍属 P03。
-- 当前入口：run 支持基础数值/String/Bool/Null、声明赋值/块、条件循环/Range、数组、shape/with；基础库仅 io.print/input、len/str/range、array.copy/push/pop。check 共用 prepare，不建立执行器，不运行输入、循环、默认值或一般表达式。后续接口仍明确拒绝，完整能力见根 README。
-- 最近验证：`.venv/Scripts/python.exe -X utf8 -m unittest discover -s tests -q` 605/605 通过、无跳过；独立 `-m tests.blackbox --report dist/p02-blackbox-report.json` 539/539（lex 62、run 232、check 245），36 种资源指纹。报告可重建且保持忽略；P02 新增 279 个外部用例、10 个宿主测试，映射见 tests/p02/README.md。
-- 发布验证：0.2.0a1 wheel 离线构建/安装成功；13 条安装包隔离 CLI 用例通过，16 个安装源文件与工作区逐字节一致。成绩菜单正常/退出/EOF、短路、默认数组新建/共享均有真实输出证据。
-- 已知失败或阻塞：本阶段无已知未修复失败。其他 Python/OS、真实终端 Ctrl+C、GUI/派生进程树回收、完整 RESOURCE/CLI 矩阵仍未验证；用户函数/闭包、map/filter/校验缓存及特色语法尚未实现。PATH 无 python/py，继续使用 .venv/Scripts/python.exe。
-- Git：基于 feature 的 f3f11e3，创建本地 P02 阶段提交，标识以最新 Git 历史和本轮报告为准；未推送或改写历史。requirement 原始 SHA-256 仍为 B099C19FC339CE1DC1AAB7E9D6C8126A9C5C9ACE3D31B969A0623DF90F521D2B。
+- 当前进行中任务：无。70 项代码任务完成 18 项（P00 四项、P01 五项、P02 五项、P03 四项）。
+- 下一项：P04-01，Result、匹配与后缀失败传播。先读 syntax/interpreter/diagnostics/resources 及对应 test-coverage；P04-02 的 Lazy 必须接入已有传递捕获分析和共享 Cell，NEW 唤醒与函数共用调用深度，不能仅实现缓存而遗漏捕获。继续保留全部 CLI 回归，spec 实现前使用外部清单。
+- 当前入口：run 支持基础数值/String/Bool/Null、声明赋值/块、条件循环/Range、数组、shape/with、具名/匿名函数、return、自递归、高阶调用、类型注解、局部槽位与闭包。库仍仅 io.print/input、len/str/range、array.copy/push/pop。check 共用 prepare/resolver，不建立执行器，不运行函数、注解值检查、输入、循环、默认值或一般表达式。
+- 最近验证：`.venv/Scripts/python.exe -X utf8 -m unittest discover -s tests -q` 851/851 通过、181.085 秒、无跳过；独立 `-m tests.blackbox --report dist/p03-blackbox-report.json` 773/773 通过、161.782 秒（lex 62、run 347、check 364），48 种资源指纹。两条命令均退出 0；前者含后者的外部用例，不累计成不同测试数量。
+- 本阶段证据：新增 234 个外部 CLI 用例、10 个运行时宿主测试、2 个运行器防假成功/notes 测试；118 个独立输入及 functions 示例，映射见 tests/p03/README.md。原有 539 项中仅 unsupported-function 的两个期望按已支持函数迁移为成功，其余保持不变。
+- 发布验证：0.3.0a1 wheel 离线构建/安装成功；22 条安装包隔离 CLI 检查通过，17 个安装 Python 文件与工作区逐字节一致。functions 示例输出 720、[1, 2, 11]、[0, 1, 2]。
+- 已知失败或阻塞：本阶段无已知未修复失败。其他 Python/OS、真实终端 Ctrl+C、GUI/派生进程树回收、跨文件/模块调用、Lazy/spec、库回调与完整 RESOURCE/CLI 矩阵仍未验证或待实现。PATH 无 python/py，继续使用 .venv/Scripts/python.exe。
+- Git：基于 feature 的 550fe56，建立本地 P03 阶段提交，标识以 Git 历史和本轮最终报告为准；未推送或改写历史。requirement 原始 SHA-256 仍为 B099C19FC339CE1DC1AAB7E9D6C8126A9C5C9ACE3D31B969A0623DF90F521D2B。
 - 扩展决定：E 已选择，基础完成后按四阶段实现；P08/P10 未实施，其余新增场景未采用。

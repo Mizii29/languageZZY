@@ -1,0 +1,2 @@
+(addnew) f(x: (Int)) {(addnew) inc() {x <- x+1; (return) x;} (return) inc;}
+(zno) a := f(3); io.print([a(),a()]);

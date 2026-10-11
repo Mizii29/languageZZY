@@ -1,0 +1,1 @@
+(addnew) outer(x: (Int)) {(addnew) f() {x <- "bad";} (return) f;} outer(1)();

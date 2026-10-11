@@ -1,0 +1,1 @@
+(addnew) bad() {io.print("bad"); (return) (true);} io.print([(true) (or) bad(),(false) (and) bad()]);

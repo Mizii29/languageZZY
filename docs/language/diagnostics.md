@@ -1,6 +1,6 @@
 # ZZY 诊断格式与错误示例
 
-更新：2026-10-11｜diagnostic schema_version：1｜状态：基础格式、词法与 P02 数据/控制流诊断已实现；函数/单位等仍为期望输出
+更新：2026-10-11｜diagnostic schema_version：1｜状态：基础格式、词法、P02 数据/控制流及 P03 函数诊断已实现；单位等仍为期望输出
 
 错误码和退出码以 [syntax.md](syntax.md) 为准，资源细则见 [resources.md](../runtime/resources.md)。本文件确定人和 Agent 可依赖的定位方式；不新增语言语法。
 
@@ -8,7 +8,7 @@
 
 默认文本首行为 `文件:行:列: 错误码 消息`，随后可显示源码片段、定位标记和修复建议。诊断写 stderr，正常程序输出写 stdout。建议不自动修改源码；修复提示不能抹掉原始错误原因。
 
-`--diagnostic-format json` 输出 UTF-8 JSON Lines：每行一个完整 JSON 对象，不在 stderr 混入文本标题、颜色代码或 Python traceback。字段固定为 schema_version、kind、code、file、span、message、notes；kind 为 error、trace、cancelled 或 internal_error，非 error 的 code 为 null。观察 `(@_@)` 使用 trace。notes 为字符串数组；错误码/位置/结构为稳定接口，消息和建议文字可改进，普通黑盒不对所有中文措辞做精确匹配。当前接入 info/source-info/lex/run/check；lex 支持 E101/E102/E211，run 增加最小语法 E103、顶层名称 E301/E302、执行类型/调用/写入 E201/E202/E203。P02 增加 E204/E205/E206/E208 和前端 E304；构造/with 字段清单错误 E203，未知字段访问 E302。input/range/array 的单一类型实参不符指向对应值表达式，len/str 的不支持类别指向调用左括号，下标错误指向左方括号，结构字段注解不符指向值表达式。观察语句与其余阶段能力仍待实现。
+`--diagnostic-format json` 输出 UTF-8 JSON Lines：每行一个完整 JSON 对象，不在 stderr 混入文本标题、颜色代码或 Python traceback。字段固定为 schema_version、kind、code、file、span、message、notes；kind 为 error、trace、cancelled 或 internal_error，非 error 的 code 为 null。观察 `(@_@)` 使用 trace。notes 为字符串数组；错误码/位置/结构为稳定接口，消息和建议文字可改进，普通黑盒不对所有中文措辞做精确匹配。当前接入 info/source-info/lex/run/check；lex 支持 E101/E102/E211，run 增加最小语法 E103、顶层名称 E301/E302、执行类型/调用/写入 E201/E202/E203。P02 增加 E204/E205/E206/E208 和前端 E304；构造/with 字段清单错误 E203，未知字段访问 E302。input/range/array 的单一类型实参不符指向对应值表达式，len/str 的不支持类别指向调用左括号，下标错误指向左方括号，结构字段注解不符指向值表达式。P03 参数/显式返回注解失败指向值表达式，裸 return 失败指向 return Token，隐式返回失败指向函数名；用户调用从内到外补充调用左括号位置 notes，E211 资源中止保留原信号类别及主位置。观察语句与其余阶段能力仍待实现。
 
 CLI 明确设置标准流的 UTF-8 编解码及约定换行行为，不依赖 Windows 控制台代码页猜测；重定向到管道也保持相同协议。预算不足时裁剪可选源码片段/notes 和消息内容，保留完整合法 JSON 记录；文件名异常长仍无法容纳时使用 file=null，并在短消息中说明定位被省略，不能输出半条记录。中断/内部缺陷没有 code 时，文本格式也不硬造错误码。
 

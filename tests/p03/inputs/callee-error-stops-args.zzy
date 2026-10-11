@@ -1,0 +1,2 @@
+(zno) a := [];
+a[0](io.print("bad"));

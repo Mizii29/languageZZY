@@ -1,0 +1,1 @@
+(addnew) f() {io.print(len([1]));} f();

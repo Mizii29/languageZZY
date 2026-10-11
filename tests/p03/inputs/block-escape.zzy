@@ -1,0 +1,1 @@
+(zyes) f := (null); {(zyes) x := 1; (addnew) g() {x <- x+1; (return) x;} f <- g;} io.print([f(),f()]);

@@ -1,0 +1,2 @@
+(addnew) mark(x) {io.print(x); (return) x;}
+7(mark(1),mark(2));

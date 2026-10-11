@@ -1,0 +1,1 @@
+(addnew) apply(f,x) {(return) f(x);} io.print(apply(len,[1,2]));

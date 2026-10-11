@@ -1,0 +1,1 @@
+(zno) x := 7; (addnew) f() {(return) x;} (addnew) g(x) {(return) f();} io.print(g(9));

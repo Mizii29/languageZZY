@@ -1,0 +1,1 @@
+(addnew) f() {(for) i (in) 0..<2 {(continue);} (while) (true) {(break);} (return) 9;} (for) i (in) 0..<3 {io.print([i,f()]);}

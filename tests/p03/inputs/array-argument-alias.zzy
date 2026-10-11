@@ -1,0 +1,2 @@
+(addnew) f(a: (Array)) {a[0] <- 8; a <- []; (return) a;}
+(zno) a := [1]; io.print(f(a)); io.print(a);

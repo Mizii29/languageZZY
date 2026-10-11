@@ -1,0 +1,2 @@
+(zno) f := (addnew) (x) => x + 2 * 3;
+io.print([f(1), ((addnew) (x) => x == 2)(2)]);

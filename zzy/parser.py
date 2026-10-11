@@ -1,4 +1,4 @@
-"""Bounded recursive descent and precedence parsing for P02."""
+"""Bounded recursive descent and precedence parsing for P03."""
 
 from .ast_nodes import Node
 from .diagnostics import Diagnostic, DiagnosticError, display_path
@@ -76,7 +76,35 @@ class Parser:
         finally:
             self.nesting -= 1
 
+    def function(self, named):
+        keyword = self.expect("FUNCTION", "(addnew)")
+        name = self.expect("IDENT", "函数名称") if named else keyword
+        self.expect("LEFT_PAREN", "左括号 (")
+        parameters = []
+        if self.current.kind != "RIGHT_PAREN":
+            while True:
+                parameter = self.expect("IDENT", "参数名称")
+                annotation = self.annotation() if self.accept("COLON") else None
+                parameters.append(self.node("parameter", parameter, data=annotation))
+                if not self.accept("COMMA") or self.current.kind == "RIGHT_PAREN":
+                    break
+        self.expect("RIGHT_PAREN", "右括号 )")
+        annotation = self.annotation() if named and self.accept("ARROW") else None
+        if named:
+            body = self.block()
+        else:
+            self.expect("FAT_ARROW", "匿名函数的 =>")
+            body = self.nested(keyword)
+        return self.node("function" if named else "lambda", name, (*parameters, body), annotation)
+
     def statement(self):
+        if self.current.kind == "FUNCTION" and self.tokens[self.index + 1].kind == "IDENT":
+            return self.function(named=True)
+        if self.current.kind == "RETURN":
+            token = self.advance()
+            values = () if self.current.kind == "SEMICOLON" else (self.expression(),)
+            self.expect("SEMICOLON", "分号 ;")
+            return self.node("return", token, values)
         if self.current.kind == "LEFT_BRACE":
             return self.block()
         if self.current.kind in {"IMMUTABLE_DECL", "MUTABLE_DECL"}:
@@ -227,6 +255,8 @@ class Parser:
         return args
 
     def primary(self):
+        if self.current.kind == "FUNCTION":
+            return self.function(named=False)
         token = self.advance()
         kinds = {"INTEGER": "integer", "FLOAT": "float", "STRING": "string", "IDENT": "name",
                  "TRUE": "bool", "FALSE": "bool", "NULL": "null"}

@@ -1,0 +1,1 @@
+(zno) T := 1; (addnew) f(x:T) -> T {io.print("bad"); (return) 1/0;} (shape) S {x:=f(io.input("bad"));} (zno) s:=S::{};

@@ -1,0 +1,3 @@
+(shape) S {}
+(addnew) outer(T) {(addnew) f(T: T) -> T {(return) T;} (return) f;}
+io.print(outer(S)(S::{}));

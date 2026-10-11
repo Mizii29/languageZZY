@@ -17,7 +17,7 @@ from zzy.resources import ResourcePolicy
 
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_MANIFESTS = tuple(ROOT / f"tests/{name}/cases.json" for name in ("lex", "run", "check", "p02"))
+DEFAULT_MANIFESTS = tuple(ROOT / f"tests/{name}/cases.json" for name in ("lex", "run", "check", "p02", "p03"))
 
 
 def _pairs(items):
@@ -95,10 +95,13 @@ def load_cases(path):
         else:
             diagnostic = case.get("diagnostic")
             if (type(diagnostic) is not dict or not {"code", "span"} <= diagnostic.keys()
-                    or diagnostic.keys() - {"code", "span", "file", "message_contains"}
+                    or diagnostic.keys() - {"code", "span", "file", "message_contains", "notes"}
                     or not isinstance(diagnostic["code"], str)
                     or not re.fullmatch(r"E\d{3}", diagnostic["code"])):
                 raise ValueError("failure requires a structured diagnostic")
+            if "notes" in diagnostic and (not isinstance(diagnostic["notes"], list)
+                    or not all(type(note) is str for note in diagnostic["notes"])):
+                raise ValueError("invalid diagnostic notes")
             if diagnostic["span"] is not None:
                 _span(diagnostic["span"])
             for key in ("file", "message_contains"):
@@ -165,6 +168,8 @@ class BlackboxCase(unittest.TestCase):
         self.assertIsInstance(record["message"], str)
         self.assertIsInstance(record["notes"], list)
         self.assertTrue(all(isinstance(note, str) for note in record["notes"]))
+        if "notes" in expected:
+            self.assertEqual(record["notes"], expected["notes"])
         if "message_contains" in expected:
             self.assertIn(expected["message_contains"], record["message"])
 
@@ -200,6 +205,10 @@ def main(argv=None):
     except KeyboardInterrupt:
         print("Black-box run cancelled; not a passing result", file=sys.stderr)
         return 1
+    passed = (bool(tests) and result.testsRun == len(tests) and result.wasSuccessful()
+              and not result.skipped and all(test.observed_status is not None for test in tests))
+    if not passed and result.wasSuccessful():
+        print("Collection/execution incomplete or skipped; not a passing result", file=sys.stderr)
     if args.report:
         failures = {test.id(): details for test, details in result.errors + result.failures}
         records = []
@@ -213,12 +222,12 @@ def main(argv=None):
                             "resource_fingerprint": policy.fingerprint})
         try:
             args.report.write_text(json.dumps({"zzy_version": __version__, "tests_run": result.testsRun,
-                                              "passed": result.wasSuccessful(), "cases": records},
+                                              "passed": passed, "cases": records},
                                              ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
         except OSError as error:
             print(f"Report failed: {error}", file=sys.stderr)
             return 1
-    return 0 if result.wasSuccessful() else 1
+    return 0 if passed else 1
 
 
 if __name__ == "__main__":

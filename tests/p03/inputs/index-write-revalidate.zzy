@@ -1,0 +1,1 @@
+(zno) a:=[1]; (addnew) shrink() {array.pop(a); (return) 9;} a[0]<-shrink();

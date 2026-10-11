@@ -1,0 +1,1 @@
+(addnew) f(x:(Int)) -> (Int) {(return) "bad";} f(io.input("bad"));

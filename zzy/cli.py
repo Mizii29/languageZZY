@@ -1,4 +1,4 @@
-"""Infrastructure, lexical inspection and execution of the P02 subset."""
+"""Infrastructure, lexical inspection and execution of the P03 subset."""
 
 import argparse
 import json
@@ -31,16 +31,16 @@ def _parser(output: Output) -> ArgumentParser:
     common.add_argument("--limits", metavar="JSON", help="资源策略覆盖文件（最多 64 KiB）")
     common.add_argument("--diagnostic-format", choices=("text", "json"), help="stderr 诊断格式")
     parser = ArgumentParser(prog="zzy", parents=[common],
-                            description="ZZY P02：数据、控制流、数组、结构及非执行检查；test 尚未实现。",
+                            description="ZZY P03：函数、闭包、数据与控制流及非执行检查；test 尚未实现。",
                             allow_abbrev=False)
     parser.output = output
-    parser.add_argument("--version", action="version", version=f"ZZY {__version__} (P02 interpreter)")
+    parser.add_argument("--version", action="version", version=f"ZZY {__version__} (P03 interpreter)")
     commands = parser.add_subparsers(dest="command", required=True)
     for name, help in (("info", "输出宿主环境、生效策略及指纹"),
                        ("source-info", "读取 UTF-8 源码并输出摘要，不做语法检查"),
                        ("lex", "扫描词法并输出 Token JSON Lines；不解析、不执行"),
-                       ("run", "执行 P02：数值、数组、结构、分支循环和基础 I/O"),
-                       ("check", "检查 P02 子集的词法、语法和名称；不执行程序")):
+                       ("run", "执行 P03：函数、闭包、数组、结构、分支循环和基础 I/O"),
+                       ("check", "检查 P03 子集的词法、语法和名称；不执行程序")):
         subparser = commands.add_parser(name, parents=[common], help=help, allow_abbrev=False)
         subparser.output = output
         if name in {"source-info", "lex", "run", "check"}:
@@ -80,7 +80,7 @@ def main(argv: list[str] | None = None) -> int:
         output.format = getattr(args, "diagnostic_format", output.format)
         if args.command == "info":
             result = {
-                "zzy_version": __version__, "stage": "P02",
+                "zzy_version": __version__, "stage": "P03",
                 "python_implementation": platform.python_implementation(),
                 "python_version": sys.version, "python_executable": sys.executable,
                 "unicode_version": unicodedata.unidata_version,

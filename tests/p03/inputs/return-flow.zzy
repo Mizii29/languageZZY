@@ -1,0 +1,2 @@
+(addnew) f() {(for) x (in) [1,2] {(while) (true) {{(return) x;}}} io.print("unreachable");}
+io.print(f());

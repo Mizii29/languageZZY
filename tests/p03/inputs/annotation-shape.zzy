@@ -1,0 +1,3 @@
+(shape) S {n: (Int);}
+(addnew) outer() {(zno) T := S; (addnew) f(x: T) -> T {(return) x;} (return) f;}
+(zno) s := S::{n:4}; io.print(outer()(s)==s);

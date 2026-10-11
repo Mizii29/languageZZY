@@ -1,0 +1,3225 @@
+{
+  "schema_version": 1,
+  "cases": [
+    {
+      "id": "p03-factorial",
+      "file": "tests/p03/inputs/factorial.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "[1, 120, 40320]\n"
+    },
+    {
+      "id": "p03-factorial",
+      "file": "tests/p03/inputs/factorial.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p03-fibonacci",
+      "file": "tests/p03/inputs/fibonacci.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "[0, 1, 55]\n"
+    },
+    {
+      "id": "p03-fibonacci",
+      "file": "tests/p03/inputs/fibonacci.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p03-higher-order",
+      "file": "tests/p03/inputs/higher-order.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "5\n10\n"
+    },
+    {
+      "id": "p03-higher-order",
+      "file": "tests/p03/inputs/higher-order.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p03-lambda-precedence",
+      "file": "tests/p03/inputs/lambda-precedence.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "[7, true]\n"
+    },
+    {
+      "id": "p03-lambda-precedence",
+      "file": "tests/p03/inputs/lambda-precedence.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p03-null-returns",
+      "file": "tests/p03/inputs/null-returns.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "[null, null, null]\n"
+    },
+    {
+      "id": "p03-null-returns",
+      "file": "tests/p03/inputs/null-returns.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p03-return-flow",
+      "file": "tests/p03/inputs/return-flow.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "1\n"
+    },
+    {
+      "id": "p03-return-flow",
+      "file": "tests/p03/inputs/return-flow.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p03-parameter-rebind",
+      "file": "tests/p03/inputs/parameter-rebind.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "[10, 3, 7]\n"
+    },
+    {
+      "id": "p03-parameter-rebind",
+      "file": "tests/p03/inputs/parameter-rebind.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p03-local-isolation",
+      "file": "tests/p03/inputs/local-isolation.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "[1, 1, 1]\n"
+    },
+    {
+      "id": "p03-local-isolation",
+      "file": "tests/p03/inputs/local-isolation.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p03-shared-cell",
+      "file": "tests/p03/inputs/shared-cell.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "[1, 1, 2, 10, 11, 2]\n"
+    },
+    {
+      "id": "p03-shared-cell",
+      "file": "tests/p03/inputs/shared-cell.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p03-captured-parameter",
+      "file": "tests/p03/inputs/captured-parameter.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "[4, 5]\n"
+    },
+    {
+      "id": "p03-captured-parameter",
+      "file": "tests/p03/inputs/captured-parameter.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p03-transitive-cell",
+      "file": "tests/p03/inputs/transitive-cell.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "[1, 2, 3]\n"
+    },
+    {
+      "id": "p03-transitive-cell",
+      "file": "tests/p03/inputs/transitive-cell.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p03-transitive-value",
+      "file": "tests/p03/inputs/transitive-value.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "9\n"
+    },
+    {
+      "id": "p03-transitive-value",
+      "file": "tests/p03/inputs/transitive-value.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p03-late-update",
+      "file": "tests/p03/inputs/late-update.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "8\n"
+    },
+    {
+      "id": "p03-late-update",
+      "file": "tests/p03/inputs/late-update.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p03-immutable-alias",
+      "file": "tests/p03/inputs/immutable-alias.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "true\n[7]\n"
+    },
+    {
+      "id": "p03-immutable-alias",
+      "file": "tests/p03/inputs/immutable-alias.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p03-array-argument-alias",
+      "file": "tests/p03/inputs/array-argument-alias.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "[]\n[8]\n"
+    },
+    {
+      "id": "p03-array-argument-alias",
+      "file": "tests/p03/inputs/array-argument-alias.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p03-block-escape",
+      "file": "tests/p03/inputs/block-escape.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "[2, 3]\n"
+    },
+    {
+      "id": "p03-block-escape",
+      "file": "tests/p03/inputs/block-escape.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p03-local-block-escape",
+      "file": "tests/p03/inputs/local-block-escape.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "3\n"
+    },
+    {
+      "id": "p03-local-block-escape",
+      "file": "tests/p03/inputs/local-block-escape.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p03-for-capture-global",
+      "file": "tests/p03/inputs/for-capture-global.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "[0, 1, 2]\n"
+    },
+    {
+      "id": "p03-for-capture-global",
+      "file": "tests/p03/inputs/for-capture-global.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p03-for-capture-local",
+      "file": "tests/p03/inputs/for-capture-local.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "[0, 1, 2]\n"
+    },
+    {
+      "id": "p03-for-capture-local",
+      "file": "tests/p03/inputs/for-capture-local.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p03-while-capture",
+      "file": "tests/p03/inputs/while-capture.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "[10, 11, 12, 20]\n"
+    },
+    {
+      "id": "p03-while-capture",
+      "file": "tests/p03/inputs/while-capture.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p03-loop-control-capture",
+      "file": "tests/p03/inputs/loop-control-capture.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "[0, 1, 2]\n"
+    },
+    {
+      "id": "p03-loop-control-capture",
+      "file": "tests/p03/inputs/loop-control-capture.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p03-nested-self-escape",
+      "file": "tests/p03/inputs/nested-self-escape.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "true\n"
+    },
+    {
+      "id": "p03-nested-self-escape",
+      "file": "tests/p03/inputs/nested-self-escape.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p03-nested-recursion",
+      "file": "tests/p03/inputs/nested-recursion.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "[11, 11]\n"
+    },
+    {
+      "id": "p03-nested-recursion",
+      "file": "tests/p03/inputs/nested-recursion.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p03-declared-mutual",
+      "file": "tests/p03/inputs/declared-mutual.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "[true, true, false]\n"
+    },
+    {
+      "id": "p03-declared-mutual",
+      "file": "tests/p03/inputs/declared-mutual.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p03-lambda-recursion",
+      "file": "tests/p03/inputs/lambda-recursion.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "true\n"
+    },
+    {
+      "id": "p03-lambda-recursion",
+      "file": "tests/p03/inputs/lambda-recursion.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p03-function-identity",
+      "file": "tests/p03/inputs/function-identity.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "[true, false, true]\n"
+    },
+    {
+      "id": "p03-function-identity",
+      "file": "tests/p03/inputs/function-identity.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p03-shadow-lexical",
+      "file": "tests/p03/inputs/shadow-lexical.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "7\n"
+    },
+    {
+      "id": "p03-shadow-lexical",
+      "file": "tests/p03/inputs/shadow-lexical.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p03-parameter-shadow",
+      "file": "tests/p03/inputs/parameter-shadow.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "7\n9\n"
+    },
+    {
+      "id": "p03-parameter-shadow",
+      "file": "tests/p03/inputs/parameter-shadow.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p03-annotation-shape",
+      "file": "tests/p03/inputs/annotation-shape.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "true\n"
+    },
+    {
+      "id": "p03-annotation-shape",
+      "file": "tests/p03/inputs/annotation-shape.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p03-annotation-environment",
+      "file": "tests/p03/inputs/annotation-environment.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "S::{}\n"
+    },
+    {
+      "id": "p03-annotation-environment",
+      "file": "tests/p03/inputs/annotation-environment.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p03-annotation-definition-snapshot",
+      "file": "tests/p03/inputs/annotation-definition-snapshot.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "S::{}\n"
+    },
+    {
+      "id": "p03-annotation-definition-snapshot",
+      "file": "tests/p03/inputs/annotation-definition-snapshot.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p03-shape-default-call",
+      "file": "tests/p03/inputs/shape-default-call.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "[1, 2, 2, 2]\n"
+    },
+    {
+      "id": "p03-shape-default-call",
+      "file": "tests/p03/inputs/shape-default-call.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p03-return-releases-iteration",
+      "file": "tests/p03/inputs/return-releases-iteration.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "1\n[1, 2]\n"
+    },
+    {
+      "id": "p03-return-releases-iteration",
+      "file": "tests/p03/inputs/return-releases-iteration.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p03-caller-loop",
+      "file": "tests/p03/inputs/caller-loop.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "[0, 9]\n[1, 9]\n[2, 9]\n"
+    },
+    {
+      "id": "p03-caller-loop",
+      "file": "tests/p03/inputs/caller-loop.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p03-evaluation-order",
+      "file": "tests/p03/inputs/evaluation-order.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "callee\n1\n2\n3\n"
+    },
+    {
+      "id": "p03-evaluation-order",
+      "file": "tests/p03/inputs/evaluation-order.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p03-bad-callee-order",
+      "file": "tests/p03/inputs/bad-callee-order.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 1,
+      "stdout": "1\n2\n",
+      "diagnostic": {
+        "code": "E202",
+        "span": [
+          2,
+          2,
+          2,
+          3
+        ]
+      }
+    },
+    {
+      "id": "p03-bad-callee-order",
+      "file": "tests/p03/inputs/bad-callee-order.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p03-arity-order",
+      "file": "tests/p03/inputs/arity-order.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 1,
+      "stdout": "a\nb\n",
+      "diagnostic": {
+        "code": "E202",
+        "span": [
+          2,
+          2,
+          2,
+          3
+        ]
+      }
+    },
+    {
+      "id": "p03-arity-order",
+      "file": "tests/p03/inputs/arity-order.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p03-missing-argument",
+      "file": "tests/p03/inputs/missing-argument.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E202",
+        "span": [
+          2,
+          2,
+          2,
+          3
+        ]
+      }
+    },
+    {
+      "id": "p03-missing-argument",
+      "file": "tests/p03/inputs/missing-argument.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p03-type-order",
+      "file": "tests/p03/inputs/type-order.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 1,
+      "stdout": "a\nb\n",
+      "diagnostic": {
+        "code": "E201",
+        "span": [
+          2,
+          3,
+          2,
+          16
+        ]
+      }
+    },
+    {
+      "id": "p03-type-order",
+      "file": "tests/p03/inputs/type-order.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p03-callee-error-stops-args",
+      "file": "tests/p03/inputs/callee-error-stops-args.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E204",
+        "span": [
+          2,
+          2,
+          2,
+          3
+        ]
+      }
+    },
+    {
+      "id": "p03-callee-error-stops-args",
+      "file": "tests/p03/inputs/callee-error-stops-args.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p03-arg-error-stops-rest",
+      "file": "tests/p03/inputs/arg-error-stops-rest.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E205",
+        "span": [
+          2,
+          4,
+          2,
+          5
+        ]
+      }
+    },
+    {
+      "id": "p03-arg-error-stops-rest",
+      "file": "tests/p03/inputs/arg-error-stops-rest.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p03-return-type",
+      "file": "tests/p03/inputs/return-type.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E201",
+        "span": [
+          1,
+          33,
+          1,
+          38
+        ]
+      }
+    },
+    {
+      "id": "p03-return-type",
+      "file": "tests/p03/inputs/return-type.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p03-return-bare-type",
+      "file": "tests/p03/inputs/return-bare-type.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E201",
+        "span": [
+          1,
+          24,
+          1,
+          32
+        ]
+      }
+    },
+    {
+      "id": "p03-return-bare-type",
+      "file": "tests/p03/inputs/return-bare-type.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p03-return-implicit-type",
+      "file": "tests/p03/inputs/return-implicit-type.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E201",
+        "span": [
+          1,
+          10,
+          1,
+          11
+        ]
+      }
+    },
+    {
+      "id": "p03-return-implicit-type",
+      "file": "tests/p03/inputs/return-implicit-type.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p03-parameter-type",
+      "file": "tests/p03/inputs/parameter-type.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E201",
+        "span": [
+          1,
+          29,
+          1,
+          30
+        ]
+      }
+    },
+    {
+      "id": "p03-parameter-type",
+      "file": "tests/p03/inputs/parameter-type.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p03-parameter-bool",
+      "file": "tests/p03/inputs/parameter-bool.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E201",
+        "span": [
+          1,
+          27,
+          1,
+          33
+        ]
+      }
+    },
+    {
+      "id": "p03-parameter-bool",
+      "file": "tests/p03/inputs/parameter-bool.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p03-parameter-write-type",
+      "file": "tests/p03/inputs/parameter-write-type.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E201",
+        "span": [
+          1,
+          28,
+          1,
+          33
+        ]
+      }
+    },
+    {
+      "id": "p03-parameter-write-type",
+      "file": "tests/p03/inputs/parameter-write-type.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p03-captured-write-type",
+      "file": "tests/p03/inputs/captured-write-type.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E201",
+        "span": [
+          1,
+          46,
+          1,
+          51
+        ]
+      }
+    },
+    {
+      "id": "p03-captured-write-type",
+      "file": "tests/p03/inputs/captured-write-type.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p03-shape-argument-type",
+      "file": "tests/p03/inputs/shape-argument-type.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E201",
+        "span": [
+          1,
+          48,
+          1,
+          53
+        ]
+      }
+    },
+    {
+      "id": "p03-shape-argument-type",
+      "file": "tests/p03/inputs/shape-argument-type.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p03-shape-return-type",
+      "file": "tests/p03/inputs/shape-return-type.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E201",
+        "span": [
+          1,
+          55,
+          1,
+          60
+        ]
+      }
+    },
+    {
+      "id": "p03-shape-return-type",
+      "file": "tests/p03/inputs/shape-return-type.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p03-bad-annotation-value",
+      "file": "tests/p03/inputs/bad-annotation-value.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E201",
+        "span": [
+          1,
+          26,
+          1,
+          27
+        ]
+      }
+    },
+    {
+      "id": "p03-bad-annotation-value",
+      "file": "tests/p03/inputs/bad-annotation-value.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p03-function-write",
+      "file": "tests/p03/inputs/function-write.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E203",
+        "span": [
+          2,
+          1,
+          2,
+          2
+        ]
+      }
+    },
+    {
+      "id": "p03-function-write",
+      "file": "tests/p03/inputs/function-write.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p03-captured-immutable-write",
+      "file": "tests/p03/inputs/captured-immutable-write.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E203",
+        "span": [
+          1,
+          47,
+          1,
+          48
+        ]
+      }
+    },
+    {
+      "id": "p03-captured-immutable-write",
+      "file": "tests/p03/inputs/captured-immutable-write.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p03-loop-binding-write",
+      "file": "tests/p03/inputs/loop-binding-write.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E203",
+        "span": [
+          1,
+          51,
+          1,
+          52
+        ]
+      }
+    },
+    {
+      "id": "p03-loop-binding-write",
+      "file": "tests/p03/inputs/loop-binding-write.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p03-array-active-call",
+      "file": "tests/p03/inputs/array-active-call.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E206",
+        "span": [
+          1,
+          31,
+          1,
+          32
+        ]
+      }
+    },
+    {
+      "id": "p03-array-active-call",
+      "file": "tests/p03/inputs/array-active-call.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p03-return-outside",
+      "file": "tests/p03/inputs/return-outside.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E304",
+        "span": [
+          1,
+          1,
+          1,
+          9
+        ]
+      }
+    },
+    {
+      "id": "p03-return-outside",
+      "file": "tests/p03/inputs/return-outside.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E304",
+        "span": [
+          1,
+          1,
+          1,
+          9
+        ]
+      }
+    },
+    {
+      "id": "p03-return-in-block",
+      "file": "tests/p03/inputs/return-in-block.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E304",
+        "span": [
+          1,
+          2,
+          1,
+          10
+        ]
+      }
+    },
+    {
+      "id": "p03-return-in-block",
+      "file": "tests/p03/inputs/return-in-block.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E304",
+        "span": [
+          1,
+          2,
+          1,
+          10
+        ]
+      }
+    },
+    {
+      "id": "p03-cross-break",
+      "file": "tests/p03/inputs/cross-break.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E304",
+        "span": [
+          1,
+          31,
+          1,
+          38
+        ]
+      }
+    },
+    {
+      "id": "p03-cross-break",
+      "file": "tests/p03/inputs/cross-break.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E304",
+        "span": [
+          1,
+          31,
+          1,
+          38
+        ]
+      }
+    },
+    {
+      "id": "p03-cross-continue",
+      "file": "tests/p03/inputs/cross-continue.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E304",
+        "span": [
+          1,
+          33,
+          1,
+          43
+        ]
+      }
+    },
+    {
+      "id": "p03-cross-continue",
+      "file": "tests/p03/inputs/cross-continue.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E304",
+        "span": [
+          1,
+          33,
+          1,
+          43
+        ]
+      }
+    },
+    {
+      "id": "p03-nested-cross-break",
+      "file": "tests/p03/inputs/nested-cross-break.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E304",
+        "span": [
+          1,
+          45,
+          1,
+          52
+        ]
+      }
+    },
+    {
+      "id": "p03-nested-cross-break",
+      "file": "tests/p03/inputs/nested-cross-break.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E304",
+        "span": [
+          1,
+          45,
+          1,
+          52
+        ]
+      }
+    },
+    {
+      "id": "p03-forward-mutual",
+      "file": "tests/p03/inputs/forward-mutual.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E302",
+        "span": [
+          1,
+          24,
+          1,
+          25
+        ]
+      }
+    },
+    {
+      "id": "p03-forward-mutual",
+      "file": "tests/p03/inputs/forward-mutual.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E302",
+        "span": [
+          1,
+          24,
+          1,
+          25
+        ]
+      }
+    },
+    {
+      "id": "p03-forward-variable",
+      "file": "tests/p03/inputs/forward-variable.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E302",
+        "span": [
+          1,
+          24,
+          1,
+          25
+        ]
+      }
+    },
+    {
+      "id": "p03-forward-variable",
+      "file": "tests/p03/inputs/forward-variable.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E302",
+        "span": [
+          1,
+          24,
+          1,
+          25
+        ]
+      }
+    },
+    {
+      "id": "p03-lambda-self-init",
+      "file": "tests/p03/inputs/lambda-self-init.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E302",
+        "span": [
+          1,
+          27,
+          1,
+          28
+        ]
+      }
+    },
+    {
+      "id": "p03-lambda-self-init",
+      "file": "tests/p03/inputs/lambda-self-init.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E302",
+        "span": [
+          1,
+          27,
+          1,
+          28
+        ]
+      }
+    },
+    {
+      "id": "p03-shadow-self-init",
+      "file": "tests/p03/inputs/shadow-self-init.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E302",
+        "span": [
+          1,
+          55,
+          1,
+          56
+        ]
+      }
+    },
+    {
+      "id": "p03-shadow-self-init",
+      "file": "tests/p03/inputs/shadow-self-init.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E302",
+        "span": [
+          1,
+          55,
+          1,
+          56
+        ]
+      }
+    },
+    {
+      "id": "p03-function-self-annotation",
+      "file": "tests/p03/inputs/function-self-annotation.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E302",
+        "span": [
+          1,
+          14,
+          1,
+          15
+        ]
+      }
+    },
+    {
+      "id": "p03-function-self-annotation",
+      "file": "tests/p03/inputs/function-self-annotation.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E302",
+        "span": [
+          1,
+          14,
+          1,
+          15
+        ]
+      }
+    },
+    {
+      "id": "p03-unknown-dead-body",
+      "file": "tests/p03/inputs/unknown-dead-body.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E302",
+        "span": [
+          1,
+          25,
+          1,
+          32
+        ]
+      }
+    },
+    {
+      "id": "p03-unknown-dead-body",
+      "file": "tests/p03/inputs/unknown-dead-body.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E302",
+        "span": [
+          1,
+          25,
+          1,
+          32
+        ]
+      }
+    },
+    {
+      "id": "p03-duplicate-parameter",
+      "file": "tests/p03/inputs/duplicate-parameter.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E301",
+        "span": [
+          1,
+          14,
+          1,
+          15
+        ]
+      }
+    },
+    {
+      "id": "p03-duplicate-parameter",
+      "file": "tests/p03/inputs/duplicate-parameter.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E301",
+        "span": [
+          1,
+          14,
+          1,
+          15
+        ]
+      }
+    },
+    {
+      "id": "p03-lambda-duplicate",
+      "file": "tests/p03/inputs/lambda-duplicate.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E301",
+        "span": [
+          1,
+          24,
+          1,
+          25
+        ]
+      }
+    },
+    {
+      "id": "p03-lambda-duplicate",
+      "file": "tests/p03/inputs/lambda-duplicate.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E301",
+        "span": [
+          1,
+          24,
+          1,
+          25
+        ]
+      }
+    },
+    {
+      "id": "p03-duplicate-parameter-local",
+      "file": "tests/p03/inputs/duplicate-parameter-local.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E301",
+        "span": [
+          1,
+          22,
+          1,
+          23
+        ]
+      }
+    },
+    {
+      "id": "p03-duplicate-parameter-local",
+      "file": "tests/p03/inputs/duplicate-parameter-local.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E301",
+        "span": [
+          1,
+          22,
+          1,
+          23
+        ]
+      }
+    },
+    {
+      "id": "p03-duplicate-function",
+      "file": "tests/p03/inputs/duplicate-function.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E301",
+        "span": [
+          1,
+          26,
+          1,
+          27
+        ]
+      }
+    },
+    {
+      "id": "p03-duplicate-function",
+      "file": "tests/p03/inputs/duplicate-function.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E301",
+        "span": [
+          1,
+          26,
+          1,
+          27
+        ]
+      }
+    },
+    {
+      "id": "p03-duplicate-function-local",
+      "file": "tests/p03/inputs/duplicate-function-local.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E301",
+        "span": [
+          1,
+          38,
+          1,
+          39
+        ]
+      }
+    },
+    {
+      "id": "p03-duplicate-function-local",
+      "file": "tests/p03/inputs/duplicate-function-local.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E301",
+        "span": [
+          1,
+          38,
+          1,
+          39
+        ]
+      }
+    },
+    {
+      "id": "p03-function-reserved",
+      "file": "tests/p03/inputs/function-reserved.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E301",
+        "span": [
+          1,
+          10,
+          1,
+          12
+        ]
+      }
+    },
+    {
+      "id": "p03-function-reserved",
+      "file": "tests/p03/inputs/function-reserved.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E301",
+        "span": [
+          1,
+          10,
+          1,
+          12
+        ]
+      }
+    },
+    {
+      "id": "p03-local-shape",
+      "file": "tests/p03/inputs/local-shape.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E103",
+        "span": [
+          1,
+          23,
+          1,
+          24
+        ]
+      }
+    },
+    {
+      "id": "p03-local-shape",
+      "file": "tests/p03/inputs/local-shape.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E103",
+        "span": [
+          1,
+          23,
+          1,
+          24
+        ]
+      }
+    },
+    {
+      "id": "p03-function-extra-semicolon",
+      "file": "tests/p03/inputs/function-extra-semicolon.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E103",
+        "span": [
+          1,
+          16,
+          1,
+          17
+        ]
+      }
+    },
+    {
+      "id": "p03-function-extra-semicolon",
+      "file": "tests/p03/inputs/function-extra-semicolon.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E103",
+        "span": [
+          1,
+          16,
+          1,
+          17
+        ]
+      }
+    },
+    {
+      "id": "p03-default-parameter",
+      "file": "tests/p03/inputs/default-parameter.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E103",
+        "span": [
+          1,
+          13,
+          1,
+          15
+        ]
+      }
+    },
+    {
+      "id": "p03-default-parameter",
+      "file": "tests/p03/inputs/default-parameter.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E103",
+        "span": [
+          1,
+          13,
+          1,
+          15
+        ]
+      }
+    },
+    {
+      "id": "p03-lambda-return-annotation",
+      "file": "tests/p03/inputs/lambda-return-annotation.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E103",
+        "span": [
+          1,
+          24,
+          1,
+          26
+        ]
+      }
+    },
+    {
+      "id": "p03-lambda-return-annotation",
+      "file": "tests/p03/inputs/lambda-return-annotation.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E103",
+        "span": [
+          1,
+          24,
+          1,
+          26
+        ]
+      }
+    },
+    {
+      "id": "p03-lambda-block",
+      "file": "tests/p03/inputs/lambda-block.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E103",
+        "span": [
+          1,
+          27,
+          1,
+          28
+        ]
+      }
+    },
+    {
+      "id": "p03-lambda-block",
+      "file": "tests/p03/inputs/lambda-block.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E103",
+        "span": [
+          1,
+          27,
+          1,
+          28
+        ]
+      }
+    },
+    {
+      "id": "p03-missing-arrow",
+      "file": "tests/p03/inputs/missing-arrow.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E103",
+        "span": [
+          1,
+          24,
+          1,
+          25
+        ]
+      }
+    },
+    {
+      "id": "p03-missing-arrow",
+      "file": "tests/p03/inputs/missing-arrow.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E103",
+        "span": [
+          1,
+          24,
+          1,
+          25
+        ]
+      }
+    },
+    {
+      "id": "p03-parameter-leading-comma",
+      "file": "tests/p03/inputs/parameter-leading-comma.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E103",
+        "span": [
+          1,
+          12,
+          1,
+          13
+        ]
+      }
+    },
+    {
+      "id": "p03-parameter-leading-comma",
+      "file": "tests/p03/inputs/parameter-leading-comma.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E103",
+        "span": [
+          1,
+          12,
+          1,
+          13
+        ]
+      }
+    },
+    {
+      "id": "p03-parameter-double-comma",
+      "file": "tests/p03/inputs/parameter-double-comma.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E103",
+        "span": [
+          1,
+          14,
+          1,
+          15
+        ]
+      }
+    },
+    {
+      "id": "p03-parameter-double-comma",
+      "file": "tests/p03/inputs/parameter-double-comma.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E103",
+        "span": [
+          1,
+          14,
+          1,
+          15
+        ]
+      }
+    },
+    {
+      "id": "p03-missing-return-semicolon",
+      "file": "tests/p03/inputs/missing-return-semicolon.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E103",
+        "span": [
+          1,
+          25,
+          1,
+          26
+        ]
+      }
+    },
+    {
+      "id": "p03-missing-return-semicolon",
+      "file": "tests/p03/inputs/missing-return-semicolon.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E103",
+        "span": [
+          1,
+          25,
+          1,
+          26
+        ]
+      }
+    },
+    {
+      "id": "p03-parameter-scope-leak",
+      "file": "tests/p03/inputs/parameter-scope-leak.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E302",
+        "span": [
+          1,
+          18,
+          1,
+          19
+        ]
+      }
+    },
+    {
+      "id": "p03-parameter-scope-leak",
+      "file": "tests/p03/inputs/parameter-scope-leak.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E302",
+        "span": [
+          1,
+          18,
+          1,
+          19
+        ]
+      }
+    },
+    {
+      "id": "p03-local-scope-leak",
+      "file": "tests/p03/inputs/local-scope-leak.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E302",
+        "span": [
+          1,
+          30,
+          1,
+          31
+        ]
+      }
+    },
+    {
+      "id": "p03-local-scope-leak",
+      "file": "tests/p03/inputs/local-scope-leak.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E302",
+        "span": [
+          1,
+          30,
+          1,
+          31
+        ]
+      }
+    },
+    {
+      "id": "p03-depth-63",
+      "file": "tests/p03/inputs/depth-63.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p03-depth-63",
+      "file": "tests/p03/inputs/depth-63.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p03-depth-64",
+      "file": "tests/p03/inputs/depth-64.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p03-depth-64",
+      "file": "tests/p03/inputs/depth-64.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p03-depth-65",
+      "file": "tests/p03/inputs/depth-65.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E211",
+        "span": [
+          1,
+          55,
+          1,
+          56
+        ]
+      }
+    },
+    {
+      "id": "p03-depth-65",
+      "file": "tests/p03/inputs/depth-65.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p03-depth-small-1",
+      "file": "tests/p03/inputs/depth-small-1.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E211",
+        "span": [
+          1,
+          44,
+          1,
+          45
+        ]
+      },
+      "limits": {
+        "call_depth": 1
+      }
+    },
+    {
+      "id": "p03-depth-small-1",
+      "file": "tests/p03/inputs/depth-small-1.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "call_depth": 1
+      }
+    },
+    {
+      "id": "p03-depth-small-2",
+      "file": "tests/p03/inputs/depth-small-2.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "call_depth": 2
+      }
+    },
+    {
+      "id": "p03-depth-small-2",
+      "file": "tests/p03/inputs/depth-small-2.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "call_depth": 2
+      }
+    },
+    {
+      "id": "p03-depth-small-3",
+      "file": "tests/p03/inputs/depth-small-3.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "call_depth": 3
+      }
+    },
+    {
+      "id": "p03-depth-small-3",
+      "file": "tests/p03/inputs/depth-small-3.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "call_depth": 3
+      }
+    },
+    {
+      "id": "p03-deep-ast-calls",
+      "file": "tests/p03/inputs/deep-ast-calls.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "0\n"
+    },
+    {
+      "id": "p03-deep-ast-calls",
+      "file": "tests/p03/inputs/deep-ast-calls.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p03-native-depth",
+      "file": "tests/p03/inputs/native-depth.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "1\n",
+      "limits": {
+        "call_depth": 1
+      }
+    },
+    {
+      "id": "p03-native-depth",
+      "file": "tests/p03/inputs/native-depth.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "call_depth": 1
+      }
+    },
+    {
+      "id": "p03-frame-slots-3",
+      "file": "tests/p03/inputs/frame-slots-3.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E211",
+        "span": [
+          1,
+          18,
+          1,
+          19
+        ]
+      },
+      "limits": {
+        "runtime_slots": 3
+      }
+    },
+    {
+      "id": "p03-frame-slots-3",
+      "file": "tests/p03/inputs/frame-slots-3.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "runtime_slots": 3
+      }
+    },
+    {
+      "id": "p03-frame-slots-4",
+      "file": "tests/p03/inputs/frame-slots-4.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "runtime_slots": 4
+      }
+    },
+    {
+      "id": "p03-frame-slots-4",
+      "file": "tests/p03/inputs/frame-slots-4.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "runtime_slots": 4
+      }
+    },
+    {
+      "id": "p03-frame-slots-5",
+      "file": "tests/p03/inputs/frame-slots-5.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "runtime_slots": 5
+      }
+    },
+    {
+      "id": "p03-frame-slots-5",
+      "file": "tests/p03/inputs/frame-slots-5.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "runtime_slots": 5
+      }
+    },
+    {
+      "id": "p03-function-objects-2",
+      "file": "tests/p03/inputs/function-objects-2.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E211",
+        "span": [
+          1,
+          10,
+          1,
+          11
+        ]
+      },
+      "limits": {
+        "runtime_objects": 2
+      }
+    },
+    {
+      "id": "p03-function-objects-2",
+      "file": "tests/p03/inputs/function-objects-2.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "runtime_objects": 2
+      }
+    },
+    {
+      "id": "p03-function-objects-3",
+      "file": "tests/p03/inputs/function-objects-3.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "runtime_objects": 3
+      }
+    },
+    {
+      "id": "p03-function-objects-3",
+      "file": "tests/p03/inputs/function-objects-3.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "runtime_objects": 3
+      }
+    },
+    {
+      "id": "p03-function-objects-4",
+      "file": "tests/p03/inputs/function-objects-4.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "runtime_objects": 4
+      }
+    },
+    {
+      "id": "p03-function-objects-4",
+      "file": "tests/p03/inputs/function-objects-4.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "runtime_objects": 4
+      }
+    },
+    {
+      "id": "p03-check-no-function-execution",
+      "file": "tests/p03/inputs/check-no-function-execution.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p03-check-no-types-or-defaults",
+      "file": "tests/p03/inputs/check-no-types-or-defaults.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p03-check-unused-recursion",
+      "file": "tests/p03/inputs/check-unused-recursion.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p03-call-notes",
+      "file": "tests/p03/inputs/call-notes.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E205",
+        "span": [
+          1,
+          29,
+          1,
+          30
+        ],
+        "notes": [
+          "调用 inner：tests/p03/inputs/call-notes.zzy:2:33",
+          "调用 outer：tests/p03/inputs/call-notes.zzy:3:6"
+        ]
+      }
+    },
+    {
+      "id": "p03-call-notes",
+      "file": "tests/p03/inputs/call-notes.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p03-discarded-return-release",
+      "file": "tests/p03/inputs/discarded-return-release.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "runtime_objects": 4
+      }
+    },
+    {
+      "id": "p03-discarded-return-release",
+      "file": "tests/p03/inputs/discarded-return-release.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "runtime_objects": 4
+      }
+    },
+    {
+      "id": "p03-discarded-callee-release",
+      "file": "tests/p03/inputs/discarded-callee-release.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "runtime_objects": 3
+      }
+    },
+    {
+      "id": "p03-discarded-callee-release",
+      "file": "tests/p03/inputs/discarded-callee-release.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "runtime_objects": 3
+      }
+    },
+    {
+      "id": "p03-live-return-not-released",
+      "file": "tests/p03/inputs/live-return-not-released.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E211",
+        "span": [
+          1,
+          72,
+          1,
+          73
+        ]
+      },
+      "limits": {
+        "runtime_objects": 4
+      }
+    },
+    {
+      "id": "p03-live-return-not-released",
+      "file": "tests/p03/inputs/live-return-not-released.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "runtime_objects": 4
+      }
+    },
+    {
+      "id": "p03-cell-slots-6",
+      "file": "tests/p03/inputs/cell-slots-6.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E211",
+        "span": [
+          1,
+          42,
+          1,
+          43
+        ]
+      },
+      "limits": {
+        "runtime_slots": 6
+      }
+    },
+    {
+      "id": "p03-cell-slots-6",
+      "file": "tests/p03/inputs/cell-slots-6.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "runtime_slots": 6
+      }
+    },
+    {
+      "id": "p03-cell-slots-7",
+      "file": "tests/p03/inputs/cell-slots-7.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "runtime_slots": 7
+      }
+    },
+    {
+      "id": "p03-cell-slots-7",
+      "file": "tests/p03/inputs/cell-slots-7.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "runtime_slots": 7
+      }
+    },
+    {
+      "id": "p03-cell-slots-8",
+      "file": "tests/p03/inputs/cell-slots-8.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "runtime_slots": 8
+      }
+    },
+    {
+      "id": "p03-cell-slots-8",
+      "file": "tests/p03/inputs/cell-slots-8.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "runtime_slots": 8
+      }
+    },
+    {
+      "id": "p03-immutable-capture-slots",
+      "file": "tests/p03/inputs/immutable-capture-slots.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "runtime_slots": 6
+      }
+    },
+    {
+      "id": "p03-immutable-capture-slots",
+      "file": "tests/p03/inputs/immutable-capture-slots.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "runtime_slots": 6
+      }
+    },
+    {
+      "id": "p03-callee-fixed-before-args",
+      "file": "tests/p03/inputs/callee-fixed-before-args.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "old\nnew\n"
+    },
+    {
+      "id": "p03-callee-fixed-before-args",
+      "file": "tests/p03/inputs/callee-fixed-before-args.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p03-index-write-revalidate",
+      "file": "tests/p03/inputs/index-write-revalidate.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E204",
+        "span": [
+          1,
+          62,
+          1,
+          63
+        ]
+      }
+    },
+    {
+      "id": "p03-index-write-revalidate",
+      "file": "tests/p03/inputs/index-write-revalidate.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p03-assignment-location-once",
+      "file": "tests/p03/inputs/assignment-location-once.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "index\n[[9], [2]]\n"
+    },
+    {
+      "id": "p03-assignment-location-once",
+      "file": "tests/p03/inputs/assignment-location-once.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p03-parameter-outer-types",
+      "file": "tests/p03/inputs/parameter-outer-types.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "[[a, 1], true, x, 3, 3]\n"
+    },
+    {
+      "id": "p03-parameter-outer-types",
+      "file": "tests/p03/inputs/parameter-outer-types.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p03-native-higher-order",
+      "file": "tests/p03/inputs/native-higher-order.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "2\n"
+    },
+    {
+      "id": "p03-native-higher-order",
+      "file": "tests/p03/inputs/native-higher-order.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p03-short-circuit-function",
+      "file": "tests/p03/inputs/short-circuit-function.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "[true, false]\n"
+    },
+    {
+      "id": "p03-short-circuit-function",
+      "file": "tests/p03/inputs/short-circuit-function.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p03-new-array-each-call",
+      "file": "tests/p03/inputs/new-array-each-call.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "[[1], [], false]\n"
+    },
+    {
+      "id": "p03-new-array-each-call",
+      "file": "tests/p03/inputs/new-array-each-call.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p03-named-function-each-iteration",
+      "file": "tests/p03/inputs/named-function-each-iteration.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "[0, 1, false]\n"
+    },
+    {
+      "id": "p03-named-function-each-iteration",
+      "file": "tests/p03/inputs/named-function-each-iteration.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p03-check-types-not-run",
+      "file": "tests/p03/inputs/check-types-not-run.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p03-functions-example",
+      "file": "examples/functions.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "720\n[1, 2, 11]\n[0, 1, 2]\n"
+    },
+    {
+      "id": "p03-functions-example",
+      "file": "examples/functions.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p03-resource-call-notes",
+      "file": "tests/p03/inputs/resource-call-notes.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 1,
+      "stdout": "",
+      "limits": {
+        "text_codepoints": 4
+      },
+      "diagnostic": {
+        "code": "E211",
+        "span": [
+          1,
+          30,
+          1,
+          31
+        ],
+        "notes": [
+          "调用 f：tests/p03/inputs/resource-call-notes.zzy:2:2"
+        ]
+      }
+    },
+    {
+      "id": "p03-resource-call-notes",
+      "file": "tests/p03/inputs/resource-call-notes.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "text_codepoints": 4
+      }
+    }
+  ]
+}

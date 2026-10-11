@@ -26,7 +26,37 @@ class Node:
 class Program:
     root: Node
     # Prepared literals are separate from the immutable syntax tree and runtime.
-    integers: Mapping[int, int]
+    integers: Mapping[int, int | float]
 
     references: Mapping[int, object] = field(default_factory=lambda: MappingProxyType({}))
     annotations: Mapping[int, object] = field(default_factory=lambda: MappingProxyType({}))
+    symbols: Mapping[int, "Symbol"] = field(default_factory=lambda: MappingProxyType({}))
+    functions: Mapping[int, "FunctionPlan"] = field(default_factory=lambda: MappingProxyType({}))
+
+
+@dataclass(frozen=True, slots=True)
+class Reference:
+    kind: str
+    key: int | str
+    symbol: int | str
+
+
+@dataclass(frozen=True, slots=True)
+class Symbol:
+    owner: int | None
+    slot: int | None
+    mutable: bool
+    cell: bool = False
+
+
+@dataclass(frozen=True, slots=True)
+class Capture:
+    source: Reference
+    symbol: int
+
+
+@dataclass(frozen=True, slots=True)
+class FunctionPlan:
+    locals: tuple[int, ...]
+    captures: tuple[Capture, ...]
+    blocks: Mapping[int, tuple[int, ...]]

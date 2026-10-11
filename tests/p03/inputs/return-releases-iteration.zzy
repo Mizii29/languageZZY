@@ -1,0 +1,1 @@
+(zno) a := [1]; (addnew) f() {(for) x (in) a {(return) x;}} io.print(f()); array.push(a,2); io.print(a);

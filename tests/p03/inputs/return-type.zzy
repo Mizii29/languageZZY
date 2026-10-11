@@ -1,0 +1,1 @@
+(addnew) f() -> (Int) {(return) "bad";} f();

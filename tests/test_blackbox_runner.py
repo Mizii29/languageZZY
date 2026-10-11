@@ -135,3 +135,27 @@ class RunnerTests(unittest.TestCase):
             result = subprocess.run([sys.executable, "-X", "utf8", "-m", "tests.blackbox", str(self.path)],
                                     cwd=ROOT, capture_output=True, timeout=10)
             self.assertEqual(result.returncode, expected, result.stderr)
+
+    def test_zero_collection_incomplete_execution_and_skips_never_pass(self):
+        self.write([self.case])
+        report = Path(self.temp.name) / "incomplete.json"
+        for count, skipped in ((0, []), (1, [('case', 'skip')]), (1, [])):
+            result = unittest.TestResult()
+            result.testsRun, result.skipped = count, skipped
+            with patch('tests.blackbox.unittest.TextTestRunner.run', return_value=result):
+                self.assertEqual(self.run_manifest('--report', report)[0], 1)
+            self.assertFalse(json.loads(report.read_text(encoding='utf-8'))['passed'])
+        with patch('tests.blackbox.load_cases', return_value=[]):
+            self.assertEqual(self.run_manifest('--report', report)[0], 1)
+        self.assertFalse(json.loads(report.read_text(encoding='utf-8'))['passed'])
+
+    def test_diagnostic_notes_are_validated_and_compared(self):
+        case = copy.deepcopy(next(c for c in load_cases(ROOT / 'tests/p03/cases.json')
+                                  if c['id'] == 'p03-call-notes' and c['mode'] == 'run'))
+        case['diagnostic']['notes'] = ['wrong call location']
+        self.write([case])
+        self.assertEqual(self.run_manifest()[0], 1)
+        for notes in ('wrong type', [1]):
+            case['diagnostic']['notes'] = notes
+            self.write([case])
+            self.assertEqual(self.run_manifest()[0], 1)

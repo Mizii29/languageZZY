@@ -1,0 +1,1 @@
+(addnew) outer() {(for) i (in) [1] {(addnew) f() {i <- 9;} f();}} outer();

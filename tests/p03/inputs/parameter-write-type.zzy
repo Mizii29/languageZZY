@@ -1,0 +1,1 @@
+(addnew) f(x: (Int)) {x <- "bad";} f(1);

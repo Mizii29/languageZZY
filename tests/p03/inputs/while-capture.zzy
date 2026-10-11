@@ -1,0 +1,2 @@
+(addnew) build() {(zno) fs := []; (zyes) i := 0; (while) i < 3 {(zyes) x := i; (addnew) f() {x <- x+10; (return) x;} array.push(fs,f); i <- i+1;} (return) fs;}
+(zno) fs := build(); io.print([fs[0](),fs[1](),fs[2](),fs[0]()]);

@@ -1,0 +1,4 @@
+(addnew) a() {}
+(addnew) b() -> (Null) {(return);}
+(addnew) c() -> (Null) {(return) (null);}
+io.print([a(),b(),c()]);
