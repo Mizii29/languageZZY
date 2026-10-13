@@ -1,0 +1,1 @@
+(addnew) make(n){(return)(zzz)(n);}(zno)a:=make(2);(zno)b:=make(7);io.print([wake(a),wake(b),wake(a)]);

@@ -1,0 +1,6 @@
+(machine) M {a -- "go" --> b;}
+(zno)x:=(zzz)(io.input("lazy"));
+(spec) "no" {(o_o)(false);}
+(zno)p:=M("bad");
+(while)(true){}
+[0] ?> {(take):1/0;(yield):1/0;};

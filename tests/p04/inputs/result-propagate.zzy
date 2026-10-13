@@ -1,0 +1,1 @@
+(addnew) f(r)->(Result){(zno) x:=r?; io.print("after");(return)(^_^)(x+1);} io.print(f((^_^)(2)));io.print(f((T_T)("bad")));

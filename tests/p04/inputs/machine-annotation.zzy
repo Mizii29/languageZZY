@@ -1,0 +1,2 @@
+(machine) M {a -- "go" --> b;b -- "go" --> a;b -- "stay" --> b;}
+(zno)p:(Machine):=M("a");(zno)q:M:=p;io.print(p==q);

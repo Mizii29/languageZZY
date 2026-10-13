@@ -1,7 +1,8 @@
-"""Infrastructure, lexical inspection and execution of the P03 subset."""
+"""Infrastructure, lexical inspection and execution of the P04 subset."""
 
 import argparse
 import json
+import math
 import platform
 import sys
 import unicodedata
@@ -31,20 +32,23 @@ def _parser(output: Output) -> ArgumentParser:
     common.add_argument("--limits", metavar="JSON", help="资源策略覆盖文件（最多 64 KiB）")
     common.add_argument("--diagnostic-format", choices=("text", "json"), help="stderr 诊断格式")
     parser = ArgumentParser(prog="zzy", parents=[common],
-                            description="ZZY P03：函数、闭包、数据与控制流及非执行检查；test 尚未实现。",
+                            description="ZZY P04：函数与特色语法、非执行检查和隔离 spec 测试。",
                             allow_abbrev=False)
     parser.output = output
-    parser.add_argument("--version", action="version", version=f"ZZY {__version__} (P03 interpreter)")
+    parser.add_argument("--version", action="version", version=f"ZZY {__version__} (P04 interpreter)")
     commands = parser.add_subparsers(dest="command", required=True)
     for name, help in (("info", "输出宿主环境、生效策略及指纹"),
                        ("source-info", "读取 UTF-8 源码并输出摘要，不做语法检查"),
                        ("lex", "扫描词法并输出 Token JSON Lines；不解析、不执行"),
-                       ("run", "执行 P03：函数、闭包、数组、结构、分支循环和基础 I/O"),
-                       ("check", "检查 P03 子集的词法、语法和名称；不执行程序")):
+                       ("run", "执行 P04：函数、特色语法、数据、控制流与基础 I/O"),
+                       ("check", "检查 P04 子集的词法、语法和名称；不执行程序"),
+                       ("test", "收集并隔离运行 spec，空收集/失败/超时非成功")):
         subparser = commands.add_parser(name, parents=[common], help=help, allow_abbrev=False)
         subparser.output = output
-        if name in {"source-info", "lex", "run", "check"}:
+        if name in {"source-info", "lex", "run", "check", "test"}:
             subparser.add_argument("file", help="相对当前工作目录的源码路径")
+        if name == "test":
+            subparser.add_argument("--timeout", type=float, default=10, help="每个 spec 超时秒数，默认 10")
     return parser
 
 
@@ -78,9 +82,14 @@ def main(argv: list[str] | None = None) -> int:
         policy = ResourcePolicy.from_file(args.limits) if hasattr(args, "limits") else ResourcePolicy()
         output.meter = ResourceMeter(policy, Phase.FRONTEND)
         output.format = getattr(args, "diagnostic_format", output.format)
+        if args.command == "test":
+            if not math.isfinite(args.timeout) or args.timeout <= 0:
+                raise DiagnosticError(Diagnostic("timeout 必须为有限正数", "E401"))
+            from .spec_runner import run_specs
+            return run_specs(args.file, output, policy, args.timeout)
         if args.command == "info":
             result = {
-                "zzy_version": __version__, "stage": "P03",
+                "zzy_version": __version__, "stage": "P04",
                 "python_implementation": platform.python_implementation(),
                 "python_version": sys.version, "python_executable": sys.executable,
                 "unicode_version": unicodedata.unidata_version,

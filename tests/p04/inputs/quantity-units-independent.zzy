@@ -1,0 +1,1 @@
+(zno)s:=4;(zno)m:="different";(zno)q:(Quantity):=1 :: s;io.print(str(q));io.print(s);

@@ -1,0 +1,1 @@
+(addnew) f()->(Result){(for) i (in) 0..<3 {(zif?:) i==1 {(T_T)("stop")?;} io.print(i);} (return)(^_^)(0);}io.print(f());

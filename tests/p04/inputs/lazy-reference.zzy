@@ -1,0 +1,1 @@
+(zno) a:=[];(zno)v:=(zzz)(a);(zno)b:=wake(v);array.push(b,4);io.print(wake(v)==a);io.print(wake(v));

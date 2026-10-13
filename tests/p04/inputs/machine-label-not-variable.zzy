@@ -1,0 +1,1 @@
+(zno)a:=8;(zno)b:=9;(machine) M {a -- "go" --> b;}io.print(M("a")<<"go");io.print(a);

@@ -1,0 +1,1 @@
+(zno)a:=[[2,"a"],[1,"b"],[2,"c"],[1,"d"]];io.print(a ?> {(order):@[0];(yield):@[1];});io.print(a ?> {(order):@[0] (desc);(yield):@[1];});

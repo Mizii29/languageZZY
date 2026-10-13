@@ -1,0 +1,1 @@
+io.print([0,1] ?> {(keep):@!=0;(order):1/@;(yield):@;});

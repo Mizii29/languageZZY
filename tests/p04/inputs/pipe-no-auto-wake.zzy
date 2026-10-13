@@ -1,0 +1,1 @@
+(addnew) f(x){(return)x;}(zno)v:=(zzz)(1/0);io.print((v ~> f(@))==v);

@@ -28,6 +28,8 @@ class Program:
     # Prepared literals are separate from the immutable syntax tree and runtime.
     integers: Mapping[int, int | float]
 
+    quantities: Mapping[int, object] = field(default_factory=lambda: MappingProxyType({}))
+    machines: Mapping[int, object] = field(default_factory=lambda: MappingProxyType({}))
     references: Mapping[int, object] = field(default_factory=lambda: MappingProxyType({}))
     annotations: Mapping[int, object] = field(default_factory=lambda: MappingProxyType({}))
     symbols: Mapping[int, "Symbol"] = field(default_factory=lambda: MappingProxyType({}))

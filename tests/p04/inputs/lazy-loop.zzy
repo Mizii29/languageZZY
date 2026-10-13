@@ -1,0 +1,1 @@
+(zno) a:=[];(for) i (in) 0..<3 {array.push(a,(zzz)(i));}io.print([wake(a[0]),wake(a[1]),wake(a[2])]);

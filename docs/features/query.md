@@ -1,6 +1,6 @@
 # ZZY 集合查询契约
 
-更新：2026-10-08｜版本：v0.6｜状态：用户已选择 A，正式设计目标；解释器尚未实现
+更新：2026-10-08｜版本：v0.6｜状态：P04 核心已实现；len/str 可用，P05 纯库与模块尚未实现，实测见 tests/p04
 
 本文细化 [syntax.md](../language/syntax.md) 的集合查询，C/D 规则见 [machine-units.md](machine-units.md)，已选 E 绘图扩展见 [sketch.md](sketch.md)。B（自动依赖刷新）未选择；其他新增场景和动漫/游戏主题未纳入。
 

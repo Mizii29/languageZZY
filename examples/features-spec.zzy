@@ -1,0 +1,22 @@
+zzysay: 每个 spec 重新执行初始化，Array、Cell、Lazy、Machine 均独立。
+(machine) Progress { todo -- "start" --> doing; }
+(zno) progress := Progress("todo");
+(zno) values := [];
+(zyes) calls := 0;
+(addnew) count() { calls <- calls + 1; (return) calls; }
+(zno) cached := (zzz)(count());
+(spec) "lazy and machine" {
+    (o_o) calls == 0;
+    (o_o) wake(cached) == 1;
+    (o_o) wake(cached) == 1;
+    (o_o) calls == 1;
+    array.push(values, 1);
+    (o_o) (progress << "start") == (^_^)("doing");
+}
+(spec) "fresh state and exact quantities" {
+    (o_o) len(values) == 0;
+    (o_o) calls == 0;
+    (o_o) progress.state == "todo";
+    (o_o) 0.1::s + 0.2::s == 0.3::s;
+    (o_o) ([2, 1] ?> {(order): @; (yield): @;})[0] == 1;
+}

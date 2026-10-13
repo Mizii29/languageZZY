@@ -1,6 +1,6 @@
 # ZZY 标准库接口契约
 
-更新：2026-10-11｜标准库版本：v0.6.1｜核心语法：v0.6｜状态：P02 已实现 io.print/input、len/str/range、array.copy/push/pop 的当前类型子集；其余待实现，不是完整可用 API 清单
+更新：2026-10-11｜标准库版本：v0.6.1｜核心语法：v0.6｜状态：P04 已实现 io.print/input、len/str/range/wake、array.copy/push/pop 的当前类型子集，str 支持 Quantity；unit 及其余库待 P05，不是完整可用 API 清单
 
 语言规则见 [syntax.md](syntax.md)。下面集中规定 P01—P05 的拟议公开接口，消除旧示例的裸 `print`、`push`、`safe_int` 等名称。类型标签是说明，不引入新语法；`A` 表示任意合法 ZZY 值，`Result<A>` 仅描述载荷，源码不支持泛型。
 

@@ -1,6 +1,6 @@
 # ZZY 开发待办
 
-建立：2026-10-03｜当前阶段：P03 已完成｜下一项：P04-01
+建立：2026-10-03｜当前阶段：P04 已完成｜下一项：P05-01
 
 本文件是任务状态的唯一清单；详细流程见 [roadmap.md](roadmap.md)，执行证据见 [development-log.md](development-log.md)。接手时根据实际仓库修正状态，不按日期猜测完成情况。
 
@@ -19,7 +19,7 @@
 - [x] v0.6 语法契约、标准库契约与黑盒覆盖计划已编写；详细设计已统一当前语法。
 - [x] 用户已选 A/C/D，query 和 machine-units 细化查询/状态机/数量设计；B 未采纳。
 - [x] 用户已选 E，sketch 完整绘图契约、E1—E4 实施与覆盖计划已写入；其余新增场景未采用。
-- [x] 根目录项目 README 与 skills 语法参考、人用指南、AI SKILL 及导航已建立；hello/grades/functions 已验证，其他完整契约示例未逐一运行。
+- [x] 根目录项目 README 与 skills 语法参考、人用指南、AI SKILL 及导航已建立；hello/grades/functions/features/features-spec 已验证，其他完整契约示例未逐一运行。
 
 以上勾选表示文档存在，不表示解释器、测试或性能提升已经完成。
 
@@ -57,14 +57,14 @@ P03-03 的 Lazy 部分是共享捕获布局/Cell 基础；Lazy AST 的捕获分�
 
 ## P04：特色功能（依赖 P03）
 
-- [ ] P04-01 完成颜文字 Result、匹配和后缀失败传播。
-- [ ] P04-02 完成 Lazy 状态、缓存值/错误和循环唤醒检测。
-- [ ] P04-03 完成管道与唯一插槽，验证左侧只求值一次。
-- [ ] P04-04 完成断言、观察和 spec 测试块及测试状态隔离。
-- [ ] P04-06 完成状态机定义、独立实例、只读 state、Result 发送、别名/冻结及 MACHINE-01/02；在 P04-05 验收前完成。
-- [ ] P04-07 完成数量字面、精确有理数、量纲运算/相等/规范显示及 UNIT-01/02；在 P04-05 验收前完成。
-- [ ] P04-08 完成查询 AST、当前项/纯调用绑定检查、浅快照、分阶段执行/稳定排序与 QUERY-01/02/03；在 P04-05 验收前完成，核心用例不依赖 P05 库。
-- [ ] P04-05 运行全部特色边界测试并提交，更新特色示例状态。
+- [x] P04-01 完成颜文字 Result、匹配和后缀失败传播。
+- [x] P04-02 完成 Lazy 状态、缓存值/错误和循环唤醒检测。
+- [x] P04-03 完成管道与唯一插槽，验证左侧只求值一次。
+- [x] P04-04 完成断言、观察和 spec 测试块及测试状态隔离。
+- [x] P04-06 完成状态机定义、独立实例、只读 state、Result 发送、别名/冻结及 MACHINE-01/02 的 P04 核心（模块导出/JSON 留 P05）；在 P04-05 验收前完成。
+- [x] P04-07 完成数量字面、精确有理数、量纲运算/相等/规范显示及 UNIT-01/02 的 P04 核心（unit 库/JSON 留 P05）；在 P04-05 验收前完成。
+- [x] P04-08 完成查询 AST、当前项/纯调用绑定检查、浅快照、分阶段执行/稳定排序与 QUERY-01/02/03；在 P04-05 验收前完成，核心用例不依赖 P05 库。
+- [x] P04-05 运行全部特色边界测试并提交，更新特色示例状态。
 
 ## P05：库和模块（依赖 P04）
 
@@ -142,14 +142,14 @@ P10 各候选相互独立，不要求全部完成；P11 不以全部勾选为前
 
 ## 交接栏
 
-最后更新：2026-10-11。P00—P03 已完成，包版本 0.3.0a1；语法 v0.6/标准库 v0.6.1 的规则不变。本轮连续完成 P03-01—04 并验收，未进入 P04。
+最后更新：2026-10-13。P00—P04 已完成，包版本 0.4.0a1；语法 v0.6/标准库 v0.6.1 的规则不变。本轮完成 P04-01—08 并验收，没有进入 P05。
 
-- 当前进行中任务：无。70 项代码任务完成 18 项（P00 四项、P01 五项、P02 五项、P03 四项）。
-- 下一项：P04-01，Result、匹配与后缀失败传播。先读 syntax/interpreter/diagnostics/resources 及对应 test-coverage；P04-02 的 Lazy 必须接入已有传递捕获分析和共享 Cell，NEW 唤醒与函数共用调用深度，不能仅实现缓存而遗漏捕获。继续保留全部 CLI 回归，spec 实现前使用外部清单。
-- 当前入口：run 支持基础数值/String/Bool/Null、声明赋值/块、条件循环/Range、数组、shape/with、具名/匿名函数、return、自递归、高阶调用、类型注解、局部槽位与闭包。库仍仅 io.print/input、len/str/range、array.copy/push/pop。check 共用 prepare/resolver，不建立执行器，不运行函数、注解值检查、输入、循环、默认值或一般表达式。
-- 最近验证：`.venv/Scripts/python.exe -X utf8 -m unittest discover -s tests -q` 851/851 通过、181.085 秒、无跳过；独立 `-m tests.blackbox --report dist/p03-blackbox-report.json` 773/773 通过、161.782 秒（lex 62、run 347、check 364），48 种资源指纹。两条命令均退出 0；前者含后者的外部用例，不累计成不同测试数量。
-- 本阶段证据：新增 234 个外部 CLI 用例、10 个运行时宿主测试、2 个运行器防假成功/notes 测试；118 个独立输入及 functions 示例，映射见 tests/p03/README.md。原有 539 项中仅 unsupported-function 的两个期望按已支持函数迁移为成功，其余保持不变。
-- 发布验证：0.3.0a1 wheel 离线构建/安装成功；22 条安装包隔离 CLI 检查通过，17 个安装 Python 文件与工作区逐字节一致。functions 示例输出 720、[1, 2, 11]、[0, 1, 2]。
-- 已知失败或阻塞：本阶段无已知未修复失败。其他 Python/OS、真实终端 Ctrl+C、GUI/派生进程树回收、跨文件/模块调用、Lazy/spec、库回调与完整 RESOURCE/CLI 矩阵仍未验证或待实现。PATH 无 python/py，继续使用 .venv/Scripts/python.exe。
-- Git：基于 feature 的 550fe56，建立本地 P03 阶段提交，标识以 Git 历史和本轮最终报告为准；未推送或改写历史。requirement 原始 SHA-256 仍为 B099C19FC339CE1DC1AAB7E9D6C8126A9C5C9ACE3D31B969A0623DF90F521D2B。
+- 当前进行中任务：无。70 项代码任务完成 26 项（P00 四项、P01 五项、P02 五项、P03 四项、P04 八项）。
+- 下一项：P05-01，统一宿主注册表、参数校验、结果及错误转换。先读 stdlib/interpreter/resources 与对应 test-coverage，复用 Result/Lazy/Machine/Quantity/查询实现；unit 库、模块导出、Map/JSON/文件以及查询新增纯库接口仍待 P05。
+- 当前入口：run 支持基础数据/控制流/数组/shape/with/函数/闭包及全部 P04 核心特色；基础调用为 io.print/input、len/str/range/wake、array.copy/push/pop，str 支持 Quantity。check 只前端准备，不执行输入、函数、默认值、状态转换、Lazy 或查询。test FILE_OR_DIR 每例独立进程、公共初始化、私有临时目录和空 stdin，默认超时 10 秒；空收集/收集失败/用例失败/超时均非成功。
+- 最近完整回归：`.venv/Scripts/python.exe -X utf8 -m unittest discover -s tests -q` 1192/1192 通过、338.965 秒、退出 0、无跳过（1090 外部 CLI + 102 宿主/运行器）。独立 `-m tests.blackbox --report dist/p04-blackbox-report.json` 1090/1090 通过、377.647 秒、退出 0；两个入口覆盖重合，不累加数量。
+- 本阶段证据：157 个独立输入与两个示例组成 317 个外部期望（run 158/check 159）；12 项运行时宿主和 12 项 spec/trace/运行器测试。映射见 tests/p04/README.md。旧 unsupported-spec 的两项期望迁移为成功，其他原有外部期望不变。
+- 发布验证：0.4.0a1 wheel 离线构建/安装，27 条隔离 CLI 检查及两个 spec 通过，22 个安装 Python 文件与工作区逐字节相同。features 与 features-spec 命令真实运行通过。
+- 已知失败或阻塞：本阶段无已知未修复失败。其他 Python/OS、真实终端 Ctrl+C、模块/文件库/JSON、公开共享上下文冻结、GUI/派生进程树、完整默认容量 RESOURCE/CLI 矩阵与性能仍未验证或待实现。PATH 无 python/py，继续使用 .venv/Scripts/python.exe。
+- Git：基于 feature 的 f1d57fa，建立本地 P04 阶段提交，标识以 Git 历史与最终报告为准；未推送或改写历史。requirement 原始 SHA-256 仍为 B099C19FC339CE1DC1AAB7E9D6C8126A9C5C9ACE3D31B969A0623DF90F521D2B。
 - 扩展决定：E 已选择，基础完成后按四阶段实现；P08/P10 未实施，其余新增场景未采用。

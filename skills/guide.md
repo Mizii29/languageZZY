@@ -1,12 +1,12 @@
 # ZZY 语言开发指南
 
-更新：2026-10-11｜语法 v0.6、标准库 v0.6.1｜完整语言指南；最小可运行示例见根 README
+更新：2026-10-13｜语法 v0.6、标准库 v0.6.1｜完整语言指南；最小可运行示例见根 README
 
 本指南说明怎样编写 ZZY 程序，以及怎样参与解释器开发。语法速查见 [syntax.md](syntax.md)，完整规则和接口分别以 [语法契约](../docs/language/syntax.md)、[标准库契约](../docs/language/stdlib.md) 为准。AI 接手入口是 [zzy/SKILL.md](zzy/SKILL.md)。
 
 ## 1. 先确认能做什么
 
-目前已实现 P00—P03，版本 0.3.0a1。`python -m zzy run examples/hello.zzy` 输出 5；`python -m zzy run examples/grades.zzy` 可交互运行成绩菜单。数值、Bool/Null、数组、shape/with、分支循环与基础 I/O 的能力见根 README；用户函数/闭包已实现，特色语法和其他库仍待实现。check 只做前端准备，不执行输入、循环或默认值；zzy test/spec 尚未实现，测试使用 `python -X utf8 -m tests.blackbox`。本文其他完整语言示例未逐一运行，不能据此假定可用。接手先核对 [todo](../docs/development/todo.md)、[开发记录](../docs/development/development-log.md)、代码和 Git；下一项 P04-01。
+P00—P04 已实现，版本 0.4.0a1；Result/匹配/传播、Lazy、管道、状态机、精确数量、集合查询和隔离 spec 已接通。模块、unit 库及其他完整标准库仍待 P05，GUI/性能/应用仍待后续阶段。使用 `python -m zzy run examples/features.zzy` 和 `python -m zzy test examples/features-spec.zzy` 运行特色示例；独立外部期望仍由 `python -X utf8 -m tests.blackbox` 验证。check 不执行用户表达式。本文依赖后续库/模块的示例尚未逐一运行；下一项 P05-01，接手先核对 todo、最新开发记录和 Git。
 
 解释器使用 Python，核心运行只依赖标准库。P00 已验证 CPython 3.12.14、Windows 11、Unicode 15.0.0；实际运行和安装命令见项目 README。没有依赖清单时不要凭空执行安装命令；GUI 和后续 Web 等可选依赖不应成为普通 CLI/check 的前提。
 
@@ -18,7 +18,7 @@
 - `benchmarks/`：等价 ZZY/Python 程序、驱动与原始测量结果。
 - `apps/zzy-campus/`：默认校园任务管家应用。
 
-上述根目录已建立；当前已有 P03 函数/闭包及数据/控制解释器、宿主与 CLI 测试、hello/grades/functions 示例；校园应用子目录及后续语言功能仍待实现。已有文档位置见 [项目 README](../README.md)。
+上述根目录已建立；当前已有 P04 特色语法及此前解释器、宿主与 CLI 测试、hello/grades/functions/features/features-spec 示例；校园应用子目录及后续语言功能仍待实现。已有文档位置见 [项目 README](../README.md)。
 
 ## 2. 编写第一份程序
 

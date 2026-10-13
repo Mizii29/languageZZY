@@ -50,7 +50,7 @@ class CliTests(unittest.TestCase):
         result = self.cli("info")
         self.assertEqual(result.returncode, 0)
         record = json.loads(result.stdout)
-        self.assertEqual(record["stage"], "P03")
+        self.assertEqual(record["stage"], "P04")
         self.assertEqual(record["python_implementation"], "CPython")
         self.assertEqual(record["resource_policy"]["limits"]["numeric_digits"], 4096)
 
@@ -111,7 +111,7 @@ class CliTests(unittest.TestCase):
                     self.assertIn(f"{self.file.name}:2:11: E302".encode("utf-8"), result.stderr)
 
     def test_cli_errors_and_unimplemented_commands_fail(self):
-        for args in ((), ("run",), ("check",), ("test", "tests"),
+        for args in ((), ("run",), ("check",), ("test",),
                      ("source-info",), ("--unknown",), ("info", "--diagnostic-format", "invalid")):
             record = self.error(self.cli(*args, "--diagnostic-format=json"))
             self.assertIsNone(record["file"])

@@ -1,0 +1,1 @@
+(for) v (in) [(true),1,1.5,"a",(null),-2] {(?_?) v {(true)=>{io.print("bool");}1.0=>{io.print("one");}1.5=>{io.print("float");}"a"=>{io.print("text");}(null)=>{io.print("null");}-2=>{io.print("negative");}}}

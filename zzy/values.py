@@ -38,6 +38,8 @@ class Array(Value):
         self.structural_version = self.content_version = 0
 
     def writable(self, runtime, node):
+        if getattr(self, "frozen", False):
+            runtime.error(node, "E203", "冻结数组只读")
         if self.active:
             runtime.error(node, "E206", "活动遍历期间不能增删或重排数组")
 
@@ -65,6 +67,8 @@ class Array(Value):
         return value
 
     def replace(self, index, value, runtime, node):
+        if getattr(self, "frozen", False):
+            runtime.error(node, "E203", "冻结数组只读")
         if index < 0 or index >= len(self.data):
             runtime.error(node, "E204", "数组下标越界")
         self.data[index] = value
@@ -125,3 +129,27 @@ class CallRequest:
     function: Value
     arguments: list
     node: object
+
+
+@dataclass(frozen=True)
+class WakeRequest:
+    value: Value
+    node: object
+
+
+def freeze(value, runtime, node):
+    """Internal recursive freezing boundary; no new public language interface."""
+    pending, seen = [(value, 0)], set()
+    while pending:
+        item, depth = pending.pop()
+        if id(item) in seen:
+            continue
+        seen.add(id(item))
+        if item.kind == "Result":
+            runtime.check("value_depth", depth + 1, node)
+            pending.append((item.data[1], depth + 1))
+        if item.kind in {"Array", "Shape", "Machine"}:
+            runtime.check("value_depth", depth + 1, node)
+            item.frozen = True
+            children = item.data if item.kind == "Array" else item.data[1].values() if item.kind == "Shape" else ()
+            pending.extend((child, depth + 1) for child in children)

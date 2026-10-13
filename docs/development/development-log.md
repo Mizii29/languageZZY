@@ -286,3 +286,26 @@ Git 提交：真实标识 / 未提交
 - Git：本轮实现、独立源码/清单、宿主测试、指南和记录组成一个本地 P03 阶段提交，基于 feature 的 550fe56。提交标识以实际 Git 历史和最终报告为准；核对纳入文件、忽略产物、requirement 哈希及 git diff --check 后提交，不推送、不改写历史。下一项 P04-01，本轮到 P03 验收结束。
 
 - 提交前静态复核：30 份 Markdown 的围栏和 281 个本地链接有效；70 个任务 ID 唯一、18 项完成。最终黑盒报告的 773 个逐项 passed/observed_exit_code 与期望一致，48 种资源指纹；git diff --check 通过。静态检查仅作一致性证据，不替代上述运行结果。
+
+## 2026-10-13：P04 全部特色语法、隔离 spec 与阶段验收
+
+- 用户任务：连续完成全部 P04，对照 roadmap/todo/正式契约/test-coverage 验收实现、成功/失败/边界用例和指南，创建本地阶段提交后结束；不推送、不改写历史。
+- 接手核对：读取 skills/zzy/SKILL.md、todo 交接、最新日志及 syntax/stdlib/interpreter/resources/diagnostics/query/machine-units/roadmap/test-coverage。工作区初始干净，feature 与 origin/feature 均为 f1d57fadf9b6aede6a907cd1e73a94782a5f918b。实际 .venv 为 CPython 3.12.14、MSC 1944 AMD64、Windows 11 10.0.26200、Unicode 15.0.0，PATH 无 python/py；沿用 .venv/Scripts/python.exe。没有 AGENTS.md，不把历史能力说明当作当前实现证据。
+- P04-01/03：Parser/Resolver/执行器接通 Result、常量/标签/兜底匹配及显式 Result 具名函数的后缀 ?。匹配目标只求一次、载荷分支局部只读、失败传播停止后续副作用；重复相等常量/标签、错误上下文和无覆盖均有诊断。管道先源、再被调用对象、再其他实参，唯一直接 @ 插槽，不自动解包或唤醒。
+- P04-02：Lazy 使用已有传递捕获分析、共享 Cell 和显式调用栈。NEW 首次求值读取当时绑定，缓存值保留对象别名；普通错误缓存原诊断，FAILED 再次 wake 补当前调用位置。循环唤醒 E209；取消、ResourceExceeded 和宿主中止恢复 NEW，不永久缓存，Frame/深度/预留清理。宿主测试直接验证同一 Lazy 的失败复用与中止后重试，未伪造语言可以捕获致命诊断。
+- P04-06/07：只读 Program 保存状态图和精确 Fraction 字面，运行时创建独立 Machine；只读 state、名义注解、失败固定消息与状态不变，成功先分配 Result 后提交状态。内部递归冻结覆盖 Array/Shape/Result 中实例及循环引用；公开模块/共享上下文接口未宣称完成。Quantity 原文字面精确，运行时 Float 按实际二进制值，量纲运算/相等/规范显示不降级；分母、中间乘积、交叉约分和指数相邻限额有独立 CLI 与 Fraction 对照。
+- P04-08：查询 Resolver 检查条目顺序、@ 作用域、允许 AST 与真实 len/str 绑定，遮蔽/别名/动态/用户调用拒绝。执行输入一次、浅快照、take 一次、全部 keep、全部键、稳定 asc/desc、最终投影；take=0 不跳过筛选/排序错误。大 Int/Float 不先转换 Float 比较，Quantity 键检查同量纲。对象保持别名，结果是新 Array，每次调用重算，错误保留原位置及输入下标说明，结束恢复当前项。排序键在投影前清空，快照/索引/键缓冲和结果受预算。
+- P04-04：断言检查 Bool，false 为 E210；trace 求值一次并向 stderr 写结构化位置和值，不隐式 wake。run 跳过 spec 执行但仍前端检查；test FILE_OR_DIR 按路径收集，全部准备成功后逐例新进程执行公共初始化及单独测试体。收集使用同批字节快照，总量受 source_total_bytes/module_count 约束；每例独立 cwd/TMP/TEMP/空 stdin 和策略。默认超时 10 秒，可设有限正数；父进程汇总 passed/failed/timed_out/collection_errors，空收集/坏源码/启动失败/坏输出/超时/输出超额非成功。复用有界进程捕获到 zzy/process.py，原测试兼容导入，保留进程回收回归。
+- 阶段边界核对：todo P04-06/07 的 MACHINE-01/02、UNIT-01/02 引用的是完整覆盖类别，其中模块导出、unit.make/format、JSON 拒绝和文件库隔离依赖 P05；machine-units 第 3 节和 roadmap P05 明确其实施顺序。P04 完成核心状态/精确数量/显示及内部冻结，不提前把 unit 命名空间注册为可用；todo/覆盖映射明确本阶段子集，不修改语法/库签名或取消后续验证义务。
+- 过程失败与修复：初版通配模式误按 IDENT 处理，223 项黑盒首轮发现 WILDCARD Token 不匹配，修复 Parser。测试稿另有 Lazy 注解拼写、缺失右花括号、管道 callable 未分组错误，依据既有 EBNF 修正输入；未放宽语法。spec 测试把 EOF 误预期为失败 Result、Lazy 显示误写大写，依据既有 Null 规则及显示实现修正。扩展用例三个失败来自两处原文范围标记（下标左方括号和匿名函数关键字），按固定源码坐标修正。首次完整回归 1095 项有四个失败：旧 unsupported-spec 两项及当时已加载的两个 spec 期望；没有删除或跳过失败用例。
+- 测试落地：tests/p04 包含 157 个独立 .zzy 输入，连同两个 examples 共 317 项外部 run/check 期望（158 run、159 check）。正常/失败均检查 stdout、退出码及结构化诊断位置；check 专用源含输入、非法构造、无限循环和除零，双流为空。另有 12 项运行时宿主和 12 项 spec/trace/运行器测试，验证缓存/清理/顺序/别名/上下文隔离/冻结/原子性及防假成功。旧 unsupported-spec 源保留，仅将两项期望改成已支持时的成功；其余旧外部期望不变。
+- 最终完整回归：`.venv/Scripts/python.exe -X utf8 -m unittest discover -s tests -q`：1192/1192 通过，338.965 秒，退出 0，无跳过；其中 1090 项外部 CLI 和 102 项宿主/运行器。定稿前新增宿主集中检查 `-m unittest tests.test_p04_runtime tests.test_p04_spec -q`：24/24，12.462 秒。外部用例已包含在 unittest 总数中，不把两入口相加为不同用例数。
+- 示例实际运行：`-m zzy run examples/features.zzy` 输出 doing、两次 5::m*s^-1、[6, 4, 2]、(T_T)(invalid transition: doing -- missing)，退出 0；`-m zzy test examples/features-spec.zzy --diagnostic-format json` 汇总 tests=2/passed=2/failed=0/timed_out=0/collection_errors=0，退出 0。例子覆盖全部 P04 特色且不依赖 P05 库。
+- 离线发布验证：包升级 0.4.0a1，info.stage=P04。bundled Python `-m pip wheel . --no-deps --no-build-isolation --no-index --wheel-dir dist` 成功，随后 `-m pip --python .venv/Scripts/python.exe install --force-reinstall --no-index --no-deps dist/zzy_language-0.4.0a1-py3-none-any.whl` 成功。`.venv/Scripts/python.exe -X utf8 dist/verify_p04_install.py` 从 dist 用 -I 隔离启动安装包：27 条 run/check 检查及两个 spec 通过，22 个 Python 文件与工作区逐字节相同；zzy.exe --version 为 0.4.0a1 (P04 interpreter)。wheel/临时脚本/报告均留忽略目录。
+- 指南与契约：更新 README、skills 导航/指南/AI 入口、设计状态、诊断/资源/运行器说明、特色专题状态和覆盖映射。syntax 第 2—10 节、stdlib 第 1 节起接口正文、query 正文与阶段父提交一致；machine-units 仅更新实现状态，不改变正式规则。requirement 原文 SHA-256 仍为 B099C19FC339CE1DC1AAB7E9D6C8126A9C5C9ACE3D31B969A0623DF90F521D2B。
+- 未验证：其他 Python/OS、真实终端 Ctrl+C、模块/跨文件/文件库/JSON、公开共享上下文冻结、GUI/派生进程树、完整默认大容量 RESOURCE/CLI 矩阵与性能比较。P05/P06/后续扩展均保持未完成，不据本阶段核心验收推断通过。
+
+- 最终独立黑盒：`.venv/Scripts/python.exe -X utf8 -m tests.blackbox --report dist/p04-blackbox-report.json`：1090/1090 通过、377.647 秒、退出 0。报告逐项 passed、observed_exit_code 与外部期望一致，计数为 lex 62/run 505/check 523；53 种有效资源指纹。
+- 验收结论：roadmap 的特色示例可运行、失败有原文位置、副作用/边界/状态隔离有真实证据；P04 八项全部完成，70 项代码任务完成 26 项。没有已知未修复的本阶段失败，下一项 P05-01。当前版本仅完成所列 P04 核心，不扩展到 P05 实现。
+- 提交前一致性：33 份 Markdown 围栏配对、285 个本地链接有效，70 个任务 ID 唯一，git diff --check 通过；静态检查只作一致性证据，不替代真实运行。确认 requirement 哈希及正式接口/语法正文不变。
+- Git：将本轮实现、独立源码/期望、宿主测试、指南和真实日志纳入本地 P04 阶段提交。提交标识见实际 Git 历史和最终报告；不纳入 dist/.venv/wheel/临时生成脚本/报告，不自动推送、不改写历史。

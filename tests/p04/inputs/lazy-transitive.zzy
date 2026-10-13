@@ -1,0 +1,1 @@
+(addnew) make(){(zyes)n:=3;(zno) f:=(addnew)()=> (zzz)((zzz)(n));n<-9;(return)f;}io.print(wake(wake(make()())));

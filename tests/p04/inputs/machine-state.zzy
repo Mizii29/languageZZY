@@ -1,0 +1,2 @@
+(machine) M {a -- "go" --> b;b -- "go" --> a;b -- "stay" --> b;}
+(zno)p:=M("a");(zno)q:=p;(zno)other:=M("a");io.print(p<<"go");io.print(q.state);io.print(other.state);io.print(p<<"bad");io.print(p.state);io.print(p<<"stay");io.print(p<<"go");io.print(p==q);io.print(p==other);

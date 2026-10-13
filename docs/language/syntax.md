@@ -1,6 +1,6 @@
 # ZZY 语法与语义契约
 
-作者：赵梓伊｜更新：2026-10-09｜语法契约版本：v0.6｜状态：完整契约待实现，P00—P03 子集见根 README；本文不是运行成功的证明
+作者：赵梓伊｜更新：2026-10-09｜语法契约版本：v0.6｜状态：完整契约待实现，P00—P04 子集见根 README；本文不是运行成功的证明
 
 本文是解释器、测试、示例和 Agent 使用的统一规则来源。[语法参考](../../skills/syntax.md) 按编程场景解释规则，[design详细版.md](../design详细版.md) 归纳完整设计，[stdlib.md](stdlib.md) 定义库接口；[machine-units.md](../features/machine-units.md) 细化已选状态机和数量机制，[query.md](../features/query.md) 细化已选集合查询，[sketch.md](../features/sketch.md) 定义已选画笔扩展。作业约束始终以只读的 [requirement.md](../requirement.md) 为准。实现不足时标注未支持，不能通过修改契约伪装测试通过。
 
@@ -9,7 +9,7 @@
 | 范围 | 内容 | 落地阶段 | 当前状态 |
 |---|---|---|---|
 | 核心语言 | 基本值、声明赋值、数组结构、I/O、分支循环、函数 | P01—P03 | P00—P03 已实现；范围及验证见根 README |
-| ZZY 特色 | Result、匹配、`?`、Lazy、管道、断言、观察、spec、状态机、带单位数值、集合查询 | P04 | 未实现 |
+| ZZY 特色 | Result、匹配、`?`、Lazy、管道、断言、观察、spec、状态机、带单位数值、集合查询 | P04 | 已实现；验证范围见 tests/p04 |
 | 库与模块 | 批量库、文件/JSON/Map、模块 | P05 | 未实现 |
 | 画笔扩展（E，已选） | sketch 原生类型、绘图/图层、撤销/回放、项目和函数导出 | P05/P06 后 E1—E4 | 未实现 |
 | 后端扩展 | HTTP/JSON、Python 嵌入、数据库、请求隔离 | P08，可选 | 未实现 |
@@ -272,7 +272,7 @@ RUNNING 成功变 READY，普通错误变 FAILED。执行配额、取消和宿�
 
 每条公开规则在 [test-coverage.md](../development/test-coverage.md) 中对应正常、边界和错误场景。优化前后检查结果、stdout/stderr、错误码、发生位置、求值次数及共享引用语义；新引擎不能仅凭“最终数值一样”通过。
 
-当前已有 P00—P03 宿主及真实语言 CLI 测试；映射和证据见 test-coverage 与 development-log。特色语法、完整语言覆盖与性能数据尚未完成；文档静态检查不能代替运行证据。
+当前已有 P00—P04 宿主及真实语言 CLI 测试；映射和证据见 test-coverage 与 development-log。P04 特色语法已有独立 CLI 和宿主证据；完整语言覆盖与性能数据尚未完成；文档静态检查不能代替运行证据。
 
 ## 12. 已选核心机制：状态机与数量
 

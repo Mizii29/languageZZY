@@ -4,13 +4,14 @@ from dataclasses import replace
 import math
 from types import MappingProxyType
 
+from .quantities import UNITS, literal
 from .ast_nodes import Capture, FunctionPlan, Program, Reference, Symbol
 from .diagnostics import Diagnostic, DiagnosticError, display_path
 
 
 BUILTIN_NAMES = frozenset({"io", "array", "text", "math", "data", "unit", "sketch",
                            "len", "str", "range", "wake"})
-IMPLEMENTED_NAMES = frozenset({"io", "array", "len", "str", "range"})
+IMPLEMENTED_NAMES = frozenset({"io", "array", "len", "str", "range", "wake"})
 
 
 class FunctionContext:
@@ -26,6 +27,7 @@ class Resolver:
         self.scopes = [{name: name for name in IMPLEMENTED_NAMES}]
         self.integers, self.references, self.annotations = {}, {}, {}
         self.symbols, self.functions = {}, {}
+        self.quantities, self.machines = {}, {}
         self.function = None
         self.loops = 0
 
@@ -79,12 +81,14 @@ class Resolver:
         else:
             self.annotations[id(annotation)] = annotation.lexeme[1:-1]
 
-    def block(self, node, loop=None, parameters=()):
+    def block(self, node, loop=None, parameters=(), payload=None):
         context = self.function
         self.scopes.append({})
         try:
             for parameter in parameters:
                 self.declare(parameter, mutable=True, initialized=True)
+            if payload:
+                self.declare(payload, initialized=True)
             if loop:
                 self.declare(loop, initialized=True)
             for child in node.children:
@@ -101,7 +105,8 @@ class Resolver:
         # Type names belong to the declaration environment, not its parameters.
         for parameter in node.children[:-1]:
             self.annotation(parameter.data)
-        self.annotation(node.data)
+        if node.kind != "lazy":
+            self.annotation(node.data)
         if node.kind == "function":
             self.scopes[-1][node.token.lexeme] = id(node)
         previous, loops = self.function, self.loops
@@ -133,6 +138,44 @@ class Resolver:
         elif node.kind == "function":
             self.declare(node)
             self.resolve_function(node)
+        elif node.kind == "machine":
+            if len(self.scopes) != 1:
+                self.error(node.token, "E103", "machine 仅允许文件顶层")
+            self.declare(node, initialized=True)
+            edges, states = {}, set()
+            if not node.children:
+                self.error(node.token, "E305", "状态机至少需要一条边")
+            for edge in node.children:
+                start, event, end = edge.data
+                if not event or (start, event) in edges:
+                    self.error(edge.token, "E305", "空事件或重复转换")
+                edges[start, event] = end
+                states.update((start, end))
+            self.machines[id(node)] = (MappingProxyType(edges), frozenset(states))
+        elif node.kind == "spec":
+            if len(self.scopes) != 1 or self.function is not None:
+                self.error(node.token, "E103", "spec 仅允许文件顶层")
+            self.block(node.children[0])
+        elif node.kind == "match":
+            self.expression(node.children[0])
+            patterns, tags, wildcard = [], set(), False
+            for arm in node.children[1:]:
+                pattern, body = arm.children
+                if wildcard:
+                    self.error(pattern.token, "E103", "兜底模式必须最后且唯一")
+                if pattern.kind == "wildcard":
+                    wildcard = True
+                elif pattern.kind == "payload_pattern":
+                    if pattern.data in tags:
+                        self.error(pattern.token, "E103", "重复 Result 标签")
+                    tags.add(pattern.data)
+                else:
+                    self.expression(pattern.children[0])
+                    key = self.pattern_key(pattern.children[0])
+                    if key in patterns:
+                        self.error(pattern.token, "E103", "重复相等常量模式")
+                    patterns.append(key)
+                self.block(body, payload=pattern if pattern.kind == "payload_pattern" else None)
         elif node.kind == "return":
             if self.function is None:
                 self.error(node.token, "E304", "return 只能位于函数内")
@@ -176,12 +219,78 @@ class Resolver:
             for child in node.children:
                 self.expression(child)
 
-    def expression(self, expression):
+    def pattern_key(self, node):
+        if node.kind == "unary":
+            category, value = self.pattern_key(node.children[0])
+            return category, -value if node.token.kind == "MINUS" else value
+        if node.kind in {"integer", "float"}:
+            return "number", self.integers[id(node)]
+        return node.kind, node.data
+
+    def expression(self, expression, current=False, pure=False):
         pending = [expression]
         while pending:
             node = pending.pop()
             self.meter.cancellation.check()
-            if node.kind == "lambda":
+            if pure:
+                allowed = {"integer", "float", "string", "bool", "null", "quantity", "name", "current",
+                           "group", "field", "index", "array", "unary", "add", "binary", "call"}
+                if node.kind not in allowed:
+                    self.error(node.token, "E307", "查询条目包含不允许的表达式")
+                if node.kind == "call":
+                    callee = node.children[0]
+                    while callee.kind == "group":
+                        callee = callee.children[0]
+                    if callee.kind == "name":
+                        ref = self.lookup(callee.token)
+                        valid = ref.symbol in {"len", "str"}
+                    elif callee.kind == "field" and callee.children[0].kind == "name":
+                        ref = self.lookup(callee.children[0].token)
+                        valid = False
+                    else:
+                        valid = False
+                        base = callee
+                        while base.kind in {"field", "group"}:
+                            base = base.children[0]
+                        if base.kind == "name":
+                            self.lookup(base.token)
+                    if not valid:
+                        self.error(callee.token, "E307", "查询只允许白名单的实际原生绑定调用")
+            if node.kind == "current":
+                if not current:
+                    self.error(node.token, "E307", "@ 仅用于查询当前项或管道直接插槽")
+                continue
+            if node.kind == "query":
+                self.expression(node.children[0])
+                for clause in node.children[1:]:
+                    self.expression(clause.children[0], current=clause.kind != "take", pure=True)
+                continue
+            if node.kind == "pipe":
+                source, call = node.children
+                self.expression(source)
+                slots = [arg for arg in call.children[1:] if arg.kind == "current"]
+                if len(slots) != 1:
+                    self.error(node.token, "E103", "管道必须有且仅有一个直接 @ 参数")
+                for child in call.children:
+                    if child in slots:
+                        continue
+                    scan = [child]
+                    while scan:
+                        item = scan.pop()
+                        if item.kind == "current":
+                            self.error(item.token, "E307", "管道其余表达式不允许 @")
+                        scan.extend(item.children)
+                    self.expression(child)
+                continue
+            if node.kind == "propagate":
+                fn = self.function.node if self.function else None
+                if fn is None or fn.kind != "function" or getattr(fn.data, "kind", None) != "TYPE_RESULT":
+                    self.error(node.token, "E304", "? 仅允许显式 Result 具名函数")
+            if node.kind == "quantity":
+                if node.data.lexeme not in UNITS:
+                    self.error(node.data, "E306", "未知单位")
+                self.quantities[id(node)] = literal(node.token, node.data.lexeme, self.meter, self.file)
+            if node.kind in {"lambda", "lazy"}:
                 self.resolve_function(node)
                 continue
             if node.kind == "name":
@@ -200,6 +309,7 @@ class Resolver:
     def resolve(self):
         for statement in self.root.children:
             self.statement(statement)
-        return Program(self.root, MappingProxyType(self.integers), MappingProxyType(self.references),
-                       MappingProxyType(self.annotations), MappingProxyType(self.symbols),
-                       MappingProxyType(self.functions))
+        return Program(self.root, MappingProxyType(self.integers),
+                       quantities=MappingProxyType(self.quantities), machines=MappingProxyType(self.machines),
+                       references=MappingProxyType(self.references), annotations=MappingProxyType(self.annotations),
+                       symbols=MappingProxyType(self.symbols), functions=MappingProxyType(self.functions))

@@ -1,0 +1,1 @@
+(zno) a:=[];(zno) r:=(^_^)(a);(?_?) r {(^_^)(v)=>{array.push(v,2);} _=>{}} io.print(a);

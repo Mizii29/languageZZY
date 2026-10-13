@@ -1,0 +1,1 @@
+(shape) S {v:(Int);}(zno)s:=S::{v:1};(zno)a:=[s] ?> {(yield):@;};a[0].v<-7;io.print(s.v);

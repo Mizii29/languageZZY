@@ -1,0 +1,29 @@
+zzysay: P04 独立特色示例，无 P05 库依赖。
+(machine) Progress {
+    todo -- "start" --> doing;
+    doing -- "finish" --> done;
+}
+(addnew) start(p) -> (Result) {
+    (zno) state := (p << "start")?;
+    (return) (^_^)(state);
+}
+(zno) progress := Progress("todo");
+(?_?) start(progress) {
+    (^_^)(state) => { io.print(state); }
+    (T_T)(message) => { io.print(message); }
+}
+(zyes) calls := 0;
+(addnew) calculate() { calls <- calls + 1; (return) 10::m / 2::s; }
+(zno) speed := (zzz)(calculate());
+io.print(wake(speed));
+io.print(wake(speed));
+(o_o) calls == 1;
+(addnew) show(value) { io.print(value); }
+[3, 1, 2, 1] ?> {
+    (keep): @ > 0;
+    (order): @ (desc);
+    (take): 3;
+    (yield): @ * 2;
+} ~> show(@);
+(o_o) 0.1::s + 0.2::s == 0.3::s;
+io.print(progress << "missing");

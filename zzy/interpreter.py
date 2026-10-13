@@ -8,10 +8,12 @@ import operator
 import sys
 from weakref import WeakSet
 
+from .features import Features
+from . import quantities
 from .diagnostics import Diagnostic, DiagnosticError, Phase, ResourceExceeded, display_path
 from .native.metadata import Extension, MetadataRegistry, NativeFunction
 from .values import (Array, Binding, CallRequest, Cell, Closure, Frame, LoopSignal,
-                     NULL, ReturnSignal, Value, boolean)
+                     NULL, ReturnSignal, Value, WakeRequest, boolean)
 
 
 FUNCTIONS = {
@@ -22,19 +24,20 @@ FUNCTIONS = {
     "array.pop": NativeFunction("array.pop", ("values",), "value", ("mutation",), ("E201", "E202", "E204", "E206")),
     "len": NativeFunction("len", ("value",), "Int", (), ("E201", "E202", "E211")),
     "str": NativeFunction("str", ("value",), "String", (), ("E201", "E202", "E211")),
+    "wake": NativeFunction("wake", ("value",), "value", ("lazy",), ("E201", "E202", "E209", "E211")),
     "range": NativeFunction("range", ("start", "stop", "step"), "Range", (), ("E201", "E202", "E208", "E211")),
 }
-for name in ("len", "str", "range"):
+for name in ("len", "str", "range", "wake"):
     old = FUNCTIONS[name]
     FUNCTIONS[name] = NativeFunction("core." + name, old.parameters, old.returns, old.effects, old.errors)
 PRINT = FUNCTIONS["io.print"]
 REGISTRY = MetadataRegistry()
 for namespace in ("io", "array", "core"):
-    REGISTRY.register(Extension(namespace, "p02-v1", functions=tuple(
+    REGISTRY.register(Extension(namespace, "p04-v1", functions=tuple(
         value for name, value in FUNCTIONS.items() if value.name.startswith(namespace + "."))))
 
 
-class Interpreter:
+class Interpreter(Features):
     def __init__(self, program, output, stdin=None):
         self.program, self.output = program, output
         self.stdin = sys.stdin if stdin is None else stdin
@@ -46,6 +49,8 @@ class Interpreter:
         self.reservations = WeakSet()
         self.frame = None
         self.call_depth = 0
+        self.current_item = None
+        self.selected_spec = None
 
     def error(self, node, code, message):
         raise DiagnosticError(Diagnostic(message, code, self.file, node.token.span), Phase.EXECUTION)
@@ -94,7 +99,10 @@ class Interpreter:
 
     def execute_program(self):
         for statement in self.program.root.children:
-            (yield from self.statement(statement))
+            if statement.kind != "spec":
+                (yield from self.statement(statement))
+        if self.selected_spec is not None:
+            yield from self.block(self.selected_spec.children[0])
 
     def drive(self, generator):
         # Suspended AST walks do not consume the host's recursive call stack.
@@ -111,9 +119,9 @@ class Interpreter:
                     stack.pop()
                     value, failure = None, error
                 else:
-                    if not isinstance(request, CallRequest):
+                    if not isinstance(request, (CallRequest, WakeRequest)):
                         raise AssertionError("unknown execution request")
-                    stack.append(self.execute_user(request))
+                    stack.append(self.execute_lazy(request) if isinstance(request, WakeRequest) else self.execute_user(request))
                     request = None
                     value, failure = None, None
             if failure is not None:
@@ -149,7 +157,7 @@ class Interpreter:
         plan = self.program.functions[id(node)]
         # One slot for each captured reference, plus any nominal type references.
         parameter_types = tuple(self.annotation(p.data, p) for p in node.children[:-1])
-        return_type = self.annotation(node.data, node)
+        return_type = None if node.kind == "lazy" else self.annotation(node.data, node)
         type_slots = sum(isinstance(t, Value) for t in (*parameter_types, return_type))
         function = Value("Function", None, self.reserve(node, runtime_objects=1,
                            runtime_slots=len(plan.captures) + type_slots))
@@ -255,14 +263,14 @@ class Interpreter:
         value = self.read_reference(symbol, node)
         for name in fields:
             value = self.field(value, name, node)
-        if value.kind != "Definition":
+        if value.kind not in {"Definition", "MachineDefinition"}:
             self.error(node, "E201", "类型注解需要结构定义")
         return value
 
     def typecheck(self, annotation, value, node, *, token_only=False):
         valid = (annotation is None or
                  isinstance(annotation, str) and value.kind == annotation or
-                 isinstance(annotation, Value) and value.kind == "Shape" and value.data[0] is annotation)
+                 isinstance(annotation, Value) and value.kind in {"Shape", "Machine"} and value.data[0] is annotation)
         if not valid:
             name = annotation if isinstance(annotation, str) else annotation.data[0].token.lexeme
             raise DiagnosticError(Diagnostic(f"注解要求 {name}，实际为 {value.kind}",
@@ -270,7 +278,23 @@ class Interpreter:
 
     def statement(self, node):
         self.meter.cancellation.check()
-        if node.kind == "function":
+        if node.kind == "match":
+            yield from self.match(node)
+        elif node.kind in {"assert", "trace"}:
+            value = yield from self.evaluate(node.children[0])
+            if node.kind == "trace":
+                self.trace(value, node)
+            else:
+                self.typecheck("Bool", value, node.children[0])
+                if not value.data:
+                    self.error(node, "E210", "断言失败")
+        elif node.kind == "machine":
+            edges, states = self.program.machines[id(node)]
+            value = Value("MachineDefinition", (node, edges, states), self.reserve(node, runtime_objects=1))
+            slot = self.reserve(node, runtime_slots=1)
+            self.scopes[-1][id(node)] = Binding(value, False)
+            self.slots.append(slot)
+        elif node.kind == "function":
             slot = self.reserve(node, runtime_slots=1) if self.frame is None else None
             try:
                 self.define(id(node), self.make_function(node), None, node)
@@ -390,11 +414,19 @@ class Interpreter:
                 iterable.active -= 1
 
     def field(self, owner, name, node, write=False):
+        if write and getattr(owner, "frozen", False):
+            self.error(node, "E203", "冻结对象只读")
+        if owner.kind == "Machine":
+            if name != "state":
+                self.error(node, "E204", "状态机不存在该属性")
+            if write:
+                self.error(node, "E203", "state 只读")
+            return owner.data[1]
         if owner.kind == "Namespace":
             if write:
                 self.error(node, "E203", "命名空间字段只读")
             if name not in owner.data:
-                namespace = "io" if owner is self.bindings["io"].value else "array"
+                namespace = next(name for name in ("io", "array") if name in self.bindings and owner is self.bindings[name].value)
                 qualified = namespace + "." + name
                 if qualified not in FUNCTIONS:
                     self.error(node, "E302", f"字段 {name} 尚未实现或不存在")
@@ -421,6 +453,40 @@ class Interpreter:
     def evaluate(self, node):
         self.meter.cancellation.check()
         kind = node.kind
+        if kind == "current":
+            return self.current_item
+        if kind == "query":
+            return (yield from self.query_value(node))
+        if kind == "pipe":
+            value = yield from self.evaluate(node.children[0])
+            call = node.children[1]
+            function = yield from self.evaluate(call.children[0])
+            with self.reserve(call, runtime_slots=len(call.children) - 1):
+                arguments = []
+                for arg in call.children[1:]:
+                    arguments.append(value if arg.kind == "current" else (yield from self.evaluate(arg)))
+                return (yield from self.call_value(function, arguments, call))
+        if kind == "quantity":
+            number, dimensions = self.program.quantities[id(node)]
+            return quantities.value(self, number, dimensions, node)
+        if kind == "result":
+            payload = yield from self.evaluate(node.children[0])
+            return self.result(node.data == "SUCCESS", payload, node.children[0])
+        if kind == "propagate":
+            value = yield from self.evaluate(node.children[0])
+            self.typecheck("Result", value, node.children[0])
+            if not value.data[0]:
+                raise ReturnSignal(value, node)
+            return value.data[1]
+        if kind == "send":
+            left = yield from self.evaluate(node.children[0])
+            right = yield from self.evaluate(node.children[1])
+            return self.send(left, right, node)
+        if kind == "lazy":
+            value = self.make_function(node)
+            value.kind, value.state, value.cached = "Lazy", "NEW", None
+            value.owners.append(self.reserve(node, runtime_slots=1))
+            return value
         if kind == "lambda":
             return self.make_function(node)
         if kind in {"integer", "float"}:
@@ -454,6 +520,9 @@ class Interpreter:
                 if value.kind != "Bool":
                     self.error(node, "E201", "not 需要 Bool")
                 return boolean(not value.data)
+            if value.kind == "Quantity" and node.token.kind in {"PLUS", "MINUS"}:
+                number, dimensions = value.data
+                return quantities.value(self, number if node.token.kind == "PLUS" else -number, dimensions, node)
             if value.kind not in {"Int", "Float"}:
                 self.error(node, "E201", "一元正负号需要普通数值")
             if node.token.kind == "PLUS":
@@ -477,16 +546,7 @@ class Interpreter:
                 arguments = []
                 for arg in node.children[1:]:
                     arguments.append((yield from self.evaluate(arg)))
-                if function.kind != "Function":
-                    self.error(node, "E202", "此值不可调用")
-                if len(arguments) != len(function.data.parameters):
-                    self.error(node, "E202", f"{function.data.name} 参数数量不符")
-                if isinstance(function.data, Closure):
-                    # Consume the handoff box before resuming AST evaluation.
-                    # The driver must not retain discarded results until the next call.
-                    result = yield CallRequest(function, arguments, node)
-                    return result.pop()
-                return self.call(function.data.name, arguments, node)
+                return (yield from self.call_value(function, arguments, node))
         raise AssertionError(f"unknown expression node: {kind}")
 
     def construct(self, node):
@@ -536,6 +596,21 @@ class Interpreter:
         return Value("Range", tuple(args), self.reserve(node, runtime_objects=1, runtime_slots=3))
 
     def binary(self, operation, left, right, node):
+        if operation in {"EQUAL", "NOT_EQUAL"}:
+            depth = 0
+            while left.kind == right.kind == "Result":
+                depth += 1
+                self.check("value_depth", depth, node)
+                if left.data[0] != right.data[0]:
+                    return boolean(operation == "NOT_EQUAL")
+                left, right = left.data[1], right.data[1]
+            if left.kind == right.kind == "Quantity":
+                equal = left.data == right.data
+                return boolean(equal if operation == "EQUAL" else not equal)
+        elif "Quantity" in {left.kind, right.kind}:
+            if operation not in {"PLUS", "MINUS", "MULTIPLY", "DIVIDE", "LESS", "LESS_EQUAL", "GREATER", "GREATER_EQUAL"} or any(v.kind not in {"Int", "Float", "Quantity"} for v in (left, right)):
+                self.error(node, "E201", "数量不支持此运算或类型")
+            return quantities.calculate(self, operation, left, right, node)
         numeric = left.kind in {"Int", "Float"} and right.kind in {"Int", "Float"}
         if operation in {"EQUAL", "NOT_EQUAL"}:
             if numeric or left.kind == right.kind and left.kind in {"String", "Bool", "Null"}:
@@ -673,7 +748,7 @@ class Interpreter:
                 length = len(value.data)
             return self.scalar("Int", length, node)
         if name == "str":
-            if value.kind not in {"Int", "Float", "String", "Bool", "Null"}:
+            if value.kind not in {"Int", "Float", "String", "Bool", "Null", "Quantity"}:
                 self.error(node, "E201", "str 仅接受基础标量")
             if value.kind == "String":
                 return value
@@ -745,6 +820,8 @@ class Interpreter:
         raise AssertionError("Int formatting requires a reserved text value")
 
     def text_value(self, value, node):
+        if value.kind == "Quantity":
+            return quantities.text(self, value, node)
         if value.kind != "Int":
             return self.scalar("String", self.scalar_text(value, node), node)
         with self.reserve(node, runtime_payload_bytes=(value.data.bit_length() + 7) // 8):
@@ -780,6 +857,14 @@ class Interpreter:
                 append(formatted.data)
             elif item.kind in {"Float", "String", "Bool", "Null"}:
                 append(self.scalar_text(item, node))
+            elif item.kind == "Quantity":
+                append(quantities.text(self, item, node).data)
+            elif item.kind == "Lazy":
+                append(f"<lazy {item.state}>")
+            elif item.kind == "MachineDefinition":
+                append("<machine " + item.data[0].token.lexeme + ">")
+            elif item.kind == "Machine":
+                append("<machine " + item.data[0].data[0].token.lexeme + ": " + item.data[1].data + ">")
             elif item.kind == "Function":
                 append(f"<function {item.data.name}>")
             elif item.kind == "Namespace":
@@ -790,7 +875,11 @@ class Interpreter:
                 self.check("value_depth", depth + 1, node)
                 active.add(id(item))
                 try:
-                    if item.kind == "Array":
+                    if item.kind == "Result":
+                        append("(^_^)(" if item.data[0] else "(T_T)(")
+                        visit(item.data[1], depth + 1)
+                        append(")")
+                    elif item.kind == "Array":
                         append("[")
                         for index, child in enumerate(item.data):
                             if index:

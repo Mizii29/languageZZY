@@ -804,17 +804,8 @@
       "file": "tests/run/inputs/unsupported-spec.zzy",
       "cwd": ".",
       "timeout_seconds": 10,
-      "exit_code": 2,
+      "exit_code": 0,
       "stdout": "",
-      "diagnostic": {
-        "code": "E103",
-        "span": [
-          1,
-          1,
-          1,
-          7
-        ]
-      },
       "mode": "run",
       "stdin": ""
     },

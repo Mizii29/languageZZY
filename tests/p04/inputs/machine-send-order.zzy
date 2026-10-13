@@ -1,0 +1,2 @@
+(machine) M {a -- "go" --> b;b -- "go" --> a;b -- "stay" --> b;}
+(zno)p:=M("a");(addnew) left(){io.print("left");(return)p;}(addnew) right(){io.print("right");(return)"go";}io.print(left()<<right());
