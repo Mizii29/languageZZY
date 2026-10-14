@@ -368,3 +368,14 @@ Git 提交：真实标识 / 未提交
 - 真实失败：首轮小规模验证172条中63条失败，原因是B07误写!、B08使用保留名machine，以及Python Windows CRLF期望。修正为(not)、toggle与语言各自精确换行。未修改语言规则或把失败算成功；初始报告留dist/p07-equivalence-initial。
 - 验证命令：.venv/Scripts/python.exe -X utf8 -m benchmarks.run --verify-only --output dist/p07-equivalence：172条全部成功，退出0，副本保存benchmarks/results/equivalence。-m unittest tests.test_p07_benchmarks -q：6/6、7.576秒、退出0（含18个真实配对CLI和9个check，及批内小规模状态验证）；git diff --check通过。资源失败、超时、错答案、空/坏清单和MAD统计均有测试；check双流为空。
 - P07-01已完成，P07-02—04保持未勾选。先建立工具本地提交固定版本，再正式采集默认策略基线；尚无优化或性能结论。运行时源码未改，保留P06版本号。下一步为三档基线后独立剖析。
+
+
+## 2026-10-14：P07-02 固定默认策略基线
+
+- 基准工具提交36e511e；新增字节证据属性时曾误覆盖旧BOM/CRLF规则，发现后以c8f615f完整补回，夹具字节未改，不改写历史。基线记录的启动修订为36e511e；采样期间只修正Git属性、补充审计/报告等工具，27个解释器Python源码的结束哈希与开始快照完全一致，均为P06执行代码。
+- 正式命令：.venv/Scripts/python.exe -X utf8 -m benchmarks.run --output benchmarks/results/baseline。B01—B09各三档，默认资源指纹不变，GC开启，种子20261008交错语言/范围；3次预热、15次样本，短任务按记录批次数复位。全部原始记录、生成输入、版本/环境、顺序、资源配置和MAD统计保存于该目录，不覆盖。
+- 结果：1644条记录；108个预检组合中96成功、12超时；受配对门禁影响24项明确未测量，余84项完成252条预热及1260条正式样本。正式样本1259成功、1次B04/100000 ZZY stages请求超时。运行退出1，正确保留失败；不以删样本或提高默认30秒上限冒充全通过。B02/B03/B05/B07/B08/B09的100000档ZZY两个范围均预检超时；未把整请求超时解释为纯执行超时。
+- 环境：Windows11 26200、CPython3.12.14、Unicode15.0；Intel Core Ultra5 125H，18逻辑处理器，物理内存25196617728字节。CIM查询在沙箱内返回null，原环境文件保留；另存hardware-supplement.json，依据Windows注册表与GlobalMemoryStatusEx补齐。后续环境收集加入相同后备读取。
+- .venv/Scripts/python.exe -X utf8 -m benchmarks.audit benchmarks/results/baseline：evidence_complete=true，records=1644，equivalence_jobs=108，measured_jobs=84，sample_records=1260，failure_records=37，all_workloads_passed=false；审计成功不改判超时。新审计检查生成字节、哈希、环境关联、索引/次数和由原始样本重算的汇总。
+- -m unittest tests.test_p07_benchmarks -v：9/9、8.747秒、退出0；补快照启动器实际选中版本、缺失记录/改动输入拒绝和不对缺样本计算比值。-m benchmarks.report --baseline benchmarks/results/baseline --output docs/runtime/performance-report.md 已生成真实基线表格；尚无优化结论。
+- P07-01/02完成，P07-03/04保持未勾选。先保存此基线提交，再独立运行cProfile。最大规模失败、其他平台、峰值RSS、长期Program缓存与其他查询/单位负载仍未验证；用户docs/manual-tests继续保留且不纳入。

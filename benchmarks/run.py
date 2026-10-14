@@ -34,6 +34,21 @@ def environment():
             '@{cpu=$c.Name; logical_processors=$m.NumberOfLogicalProcessors; memory_bytes=$m.TotalPhysicalMemory} | ConvertTo-Json -Compress'],
             capture_output=True,text=True,timeout=30)
         machine = json.loads(inventory.stdout) if inventory.returncode==0 else {'inventory_error':inventory.stderr}
+        if not all(machine.get(key) for key in ('cpu','logical_processors','memory_bytes')):
+            import ctypes
+            import winreg
+            class Memory(ctypes.Structure):
+                _fields_=[('length',ctypes.c_ulong),('load',ctypes.c_ulong),
+                    *[(key,ctypes.c_ulonglong) for key in ('total_physical','available_physical',
+                      'total_page','available_page','total_virtual','available_virtual','available_extended')]]
+            memory=Memory()
+            memory.length=ctypes.sizeof(memory)
+            if not ctypes.windll.kernel32.GlobalMemoryStatusEx(ctypes.byref(memory)):
+                raise ctypes.WinError()
+            with winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE,r'HARDWARE\DESCRIPTION\System\CentralProcessor\0') as key:
+                cpu=winreg.QueryValueEx(key,'ProcessorNameString')[0]
+            machine=dict(cpu=cpu,logical_processors=os.cpu_count(),memory_bytes=memory.total_physical,
+                         source='Windows registry and GlobalMemoryStatusEx; CIM unavailable')
     return dict(timestamp=datetime.now(timezone.utc).isoformat(),python=sys.version,
         implementation=platform.python_implementation(),executable=sys.executable,
         unicode=unicodedata.unidata_version,os=platform.platform(),machine=machine,

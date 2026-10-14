@@ -1,0 +1,15 @@
+(zno) n := 1000;
+(shape) Task { id: (Int); done: (Bool); priority: (Int); }
+(zno) tasks := [];
+(for) i (in) 0..<n {
+    array.push(tasks, Task::{id: i, done: i % 3 == 0, priority: i % 5});
+}
+(addnew) bench() {
+    (return) tasks ?> {
+        (keep): (not) @.done;
+        (order): @.priority (desc);
+        (take): 10;
+        (yield): @.id;
+    };
+}
+io.print(bench());

@@ -9,6 +9,9 @@ import unittest
 from unittest.mock import patch
 
 from benchmarks.common import BASE, ROOT, expected, load_manifest, source, validate
+from benchmarks.audit import audit
+from benchmarks.compare import launch
+from benchmarks.report import cell, ratio
 from benchmarks.reference import CheckedArray, Machine, query, quantity_add
 from benchmarks.run import collect, summarize
 from benchmarks.worker import sample
@@ -90,6 +93,7 @@ class BenchmarkTests(unittest.TestCase):
 
     def test_wrong_answer_sort_mutation_timeout_and_error_are_failures(self):
         with self.assertRaises(AssertionError):validate('B01',10,44)
+        with self.assertRaises(AssertionError):validate('B01',2,True)
         with self.assertRaises(AssertionError):validate('B05',10,list(range(10)),list(range(10)))
         path=self.directory/'bad.py'
         path.write_text('print(999)')
@@ -109,6 +113,46 @@ class BenchmarkTests(unittest.TestCase):
         rows.append(dict(rows[0],phase='warmup',elapsed_ns=999))
         result=summarize(rows)['statistics'][0]
         self.assertEqual((result['samples'],result['median_ns'],result['mad_ns']),(3,2,1))
+
+    def test_saved_evidence_audit_rejects_missing_records_and_modified_inputs(self):
+        import shutil
+        copied=self.directory/'evidence'
+        shutil.copytree(BASE/'results'/'equivalence',copied)
+        self.assertTrue(audit(copied)['evidence_complete'])
+        raw=copied/'raw.jsonl'
+        original=raw.read_bytes()
+        raw.write_bytes(b'\n'.join(original.splitlines()[:-1])+b'\n')
+        with self.assertRaises(ValueError):audit(copied)
+        raw.write_bytes(original)
+        file=copied/'inputs'/'B01-10.zzy'
+        file.write_bytes(file.read_bytes()+b'\n')
+        with self.assertRaises(ValueError):audit(copied)
+
+    def test_version_launcher_uses_snapshot_not_workspace_runtime(self):
+        import shutil
+        runtime=self.directory/'runtime'
+        shutil.copytree(ROOT/'zzy',runtime/'zzy',ignore=shutil.ignore_patterns('__pycache__'))
+        path=self.directory/'B01.zzy'
+        path.write_bytes(source(self.cases[0],'zzy',10))
+        cmd=launch(runtime,'stages','B01',10,path)
+        status,stdout,stderr=run_bounded(cmd,cwd=ROOT,env=os.environ.copy(),timeout=10)
+        self.assertEqual(status,0,stderr)
+        self.assertEqual(json.loads(stdout)['status'],'ok')
+        # A copied runtime defect must be observed; accidentally loading the
+        # workspace would make this subprocess pass and invalidate comparisons.
+        file=runtime/'zzy/interpreter.py'
+        file.write_bytes(file.read_bytes()+b'\nraise RuntimeError("snapshot selected")\n')
+        status,stdout,stderr=run_bounded(cmd,cwd=ROOT,env=os.environ.copy(),timeout=10)
+        self.assertNotEqual(status,0)
+        self.assertIn(b'snapshot selected',stderr)
+
+    def test_report_does_not_compare_censored_or_missing_samples(self):
+        complete=dict(samples=15,median_ns=200,mad_ns=10)
+        partial=dict(complete,samples=14,median_ns=100)
+        self.assertEqual(ratio(complete,partial),'不比较')
+        self.assertEqual(ratio(complete,None),'不比较')
+        self.assertEqual(cell(None),'未测')
+        self.assertEqual(ratio(complete,dict(complete,median_ns=100)),'2.00')
 
 
 if __name__=='__main__':unittest.main()

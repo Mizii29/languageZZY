@@ -1,0 +1,8 @@
+{
+  "cpu": "Intel(R) Core(TM) Ultra 5 125H",
+  "logical_processors": 18,
+  "memory_bytes": 25196617728,
+  "platform": "Windows-11-10.0.26200-SP0",
+  "source": "Windows CPU registry and GlobalMemoryStatusEx; CIM returned null in sandbox",
+  "revision": "c8f615f; benchmark runtime unchanged from 36e511e"
+}
