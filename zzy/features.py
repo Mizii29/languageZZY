@@ -15,7 +15,7 @@ class Features:
 
     def trace(self, value, node):
         formatted = self.debug_text(value, node)
-        self.output.diagnostic(Diagnostic(formatted.data, file=self.file, span=node.children[0].span,
+        self.output.diagnostic(Diagnostic(formatted.data, file=self.location(node), span=node.children[0].span,
                                           kind="trace"))
 
     def match(self, node):
@@ -57,16 +57,17 @@ class Features:
         if isinstance(function.data, Closure):
             handoff = yield CallRequest(function, arguments, node)
             return handoff.pop()
+        self.validate_native(function.data, arguments, node)
         if function.data.name == "core.wake":
             self.typecheck("Lazy", arguments[0], node.children[1])
             handoff = yield WakeRequest(arguments[0], node)
             return handoff.pop()
-        return self.call(function.data.name, arguments, node)
+        return (yield from self.native_call(function.data.name, arguments, node))
 
     def execute_lazy(self, request):
         value, node = request.value, request.node
         position = node.token.span.start
-        note = f"wake：{self.file}:{position.line}:{position.column}"
+        note = f"wake：{self.location(node)}:{position.line}:{position.column}"
         if value.state == "READY":
             return value.cached
         if value.state == "FAILED":

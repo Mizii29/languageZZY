@@ -1,0 +1,1 @@
+io.print(text.trim(""));io.print(text.split("",","));io.print(text.replace("x","y",""));io.print(text.contains("","x"));io.print(data.keys(data.map()));io.print([math.abs(0),math.abs(-0.0)]);

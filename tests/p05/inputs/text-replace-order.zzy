@@ -1,0 +1,1 @@
+io.print(text.replace("ab","X","abab"));

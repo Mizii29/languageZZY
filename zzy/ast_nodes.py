@@ -30,6 +30,8 @@ class Program:
 
     quantities: Mapping[int, object] = field(default_factory=lambda: MappingProxyType({}))
     machines: Mapping[int, object] = field(default_factory=lambda: MappingProxyType({}))
+    modules: Mapping[int, Node] = field(default_factory=lambda: MappingProxyType({}))
+    sources: Mapping[str, object] = field(default_factory=lambda: MappingProxyType({}))
     references: Mapping[int, object] = field(default_factory=lambda: MappingProxyType({}))
     annotations: Mapping[int, object] = field(default_factory=lambda: MappingProxyType({}))
     symbols: Mapping[int, "Symbol"] = field(default_factory=lambda: MappingProxyType({}))

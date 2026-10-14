@@ -1,0 +1,1 @@
+(machine) M {a -- "x" --> a;}(shape) S {v;}(zno)s:=S::{v:M("a")};(?_?)data.stringify(s){(T_T)(m)=>{io.print("rejected");}_=>{}}

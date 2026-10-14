@@ -1,0 +1,10 @@
+(addnew) total_up_to(limit: (Int)) -> (Int) {
+    (zyes) total := 0;
+    (for) number (in) 1..<(limit + 1) { total <- total + number; }
+    (return) total;
+}
+io.print(total_up_to(5));
+(spec) "累加正常值与空区间" {
+    (o_o) total_up_to(5) == 15;
+    (o_o) total_up_to(0) == 0;
+}

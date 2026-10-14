@@ -75,6 +75,25 @@ class Array(Value):
         self.content_version += 1
 
 
+class Map(Value):
+    def __init__(self, runtime, node):
+        super().__init__("Map", {}, runtime.reserve(node, runtime_objects=1))
+        self.keys = {}
+        self.structural_version = self.content_version = 0
+
+    def set(self, key, value, runtime, node):
+        if getattr(self, "frozen", False):
+            runtime.error(node, "E203", "冻结 Map 只读")
+        if key.data not in self.data:
+            runtime.check("container_items", len(self.data) + 1, node)
+            owner = runtime.reserve(node, runtime_slots=2)
+            self.owners.append(owner)
+            self.keys[key.data] = key
+            self.structural_version += 1
+        self.data[key.data] = value
+        self.content_version += 1
+
+
 class LoopSignal(BaseException):
     def __init__(self, kind):
         self.kind = kind
@@ -148,8 +167,8 @@ def freeze(value, runtime, node):
         if item.kind == "Result":
             runtime.check("value_depth", depth + 1, node)
             pending.append((item.data[1], depth + 1))
-        if item.kind in {"Array", "Shape", "Machine"}:
+        if item.kind in {"Array", "Map", "Shape", "Machine"}:
             runtime.check("value_depth", depth + 1, node)
             item.frozen = True
-            children = item.data if item.kind == "Array" else item.data[1].values() if item.kind == "Shape" else ()
+            children = item.data if item.kind == "Array" else item.data.values() if item.kind == "Map" else item.data[1].values() if item.kind == "Shape" else ()
             pending.extend((child, depth + 1) for child in children)

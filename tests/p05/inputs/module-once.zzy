@@ -1,0 +1,1 @@
+(use) "../modules/counter.zzy" (as) a;(use) "../modules/./counter.zzy" (as) b;io.print([a==b,a.S==b.S,a.M==b.M,a.next(),b.next(),a.cached(),b.cached()]);io.print(a.S::{});io.print(a.query([-2,1,3]));io.print(a.M("a") << "go");

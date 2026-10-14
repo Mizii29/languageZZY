@@ -1,0 +1,1 @@
+(use) "../modules/counter.zzy" (as) m;m.lazy;

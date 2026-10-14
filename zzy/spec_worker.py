@@ -1,5 +1,7 @@
 """Private subprocess entry point for one spec, using a collected byte snapshot."""
+import base64
 import json
+import os
 from pathlib import Path
 import sys
 
@@ -8,7 +10,7 @@ from .interpreter import Interpreter
 from .output import Output
 from .prepare import prepare
 from .resources import ResourcePolicy, ResourceMeter
-from .source import Source, SourceLoader
+from .source import Source, SnapshotLoader
 
 
 def main():
@@ -18,10 +20,11 @@ def main():
     policy = ResourcePolicy.from_file(config)
     output = Output(sys.stdout, sys.stderr, ResourceMeter(policy, Phase.FRONTEND), "json")
     try:
-        with SourceLoader(output.meter) as loader:
-            loaded = loader.read(snapshot)
-            source = Source.from_bytes(Path(original), loaded.raw)
-            program = prepare(source, output.meter)
+        bundle = json.loads(Path(snapshot).read_text(encoding="utf-8"))
+        sources = {os.path.normcase(path): Source.from_bytes(Path(path), base64.b64decode(raw)) for path, raw in bundle["sources"]}
+        with SnapshotLoader(output.meter, sources, bundle["aliases"]) as loader:
+            source = loader.read(original)
+            program = prepare(source, output.meter, loader)
         spec = [node for node in program.root.children if node.kind == "spec"][int(index)]
         runtime = Interpreter(program, output)
         runtime.selected_spec = spec

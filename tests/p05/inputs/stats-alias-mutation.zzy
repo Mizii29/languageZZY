@@ -1,0 +1,1 @@
+(zno)a:=[1];io.print(array.stats(a).sum);(zno)b:=a;b[0]<-"bad";array.sum(a);

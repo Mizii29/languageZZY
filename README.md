@@ -1,8 +1,8 @@
 # ZZY 语言
 
-ZZY 是赵梓伊在程序设计实践课程中设计的通用脚本语言，计划使用 Python 实现解释器，用 ZZY 编写测试、性能脚本和完整应用。
+ZZY 是赵梓伊在程序设计实践课程中设计的通用脚本语言，使用 Python 实现解释器，用 ZZY 编写测试、性能脚本和完整应用。
 
-**当前状态：P00—P04 已实现，版本 0.4.0a1；Result/匹配/传播、Lazy、管道、状态机、精确数量、集合查询和隔离 spec 已接通。模块、unit 库及其他完整标准库仍待 P05，GUI/性能/应用仍待后续阶段。** 核心语法 v0.6、标准库契约 v0.6.1 不变。Python AST 树遍历；run/check/test 共用前端准备。1090 项独立外部 CLI 期望与宿主状态/运行器测试覆盖当前能力，阶段证据见开发记录。
+**当前状态：P00—P05 已实现，版本 0.5.0a1；核心语法、io/array/text/math/data/unit 标准库、Map/严格 JSON、原子文件保存及模块已接通。GUI、性能测量和完整应用仍待后续阶段。** 核心语法 v0.6、标准库契约 v0.6.1 不变。Python AST 树遍历；run/check/test 共用前端准备。1459 项独立外部 CLI 期望与宿主状态/运行器测试覆盖当前能力，阶段证据见开发记录。
 
 ## 项目特色
 
@@ -31,7 +31,7 @@ README.md                 项目介绍
 pyproject.toml            包配置，核心无第三方运行依赖
 zzy/                      CLI、Lexer/Parser/AST、准备/执行、源码、诊断和资源基础
 tests/                    宿主测试及 lex/run/check 的 .zzy 外部清单和统一运行器
-examples/                 读取/词法样例、hello.zzy 、grades.zzy 成绩菜单与 functions.zzy 函数示例及 features/features-spec 特色示例
+examples/                 读取/词法样例、hello.zzy 、grades.zzy 成绩菜单与 functions.zzy 函数示例及 features/features-spec 特色示例与 library/ 模块/库示例
 benchmarks/               基准目录说明；P07 实现
 apps/                     应用目录说明；P09 实现
 docs/                     权威契约、设计、实施计划和验证记录
@@ -43,7 +43,7 @@ skills/                   面向使用者和 AI 的文档
     SKILL.md              AI 工作入口，按需查阅 docs
 ```
 
-当前 `run/check` 只处理下述已实现子集；不支持的语法明确拒绝，`zzy test` 已注册为隔离 spec 运行器。
+当前 `run/check` 支持 v0.6 核心语法与 P05 标准库/模块；扩展接口按各自阶段开放，`zzy test` 已注册为隔离 spec 运行器。
 
 ## 现在可以运行的命令
 
@@ -81,13 +81,23 @@ python -X utf8 -m unittest discover -s tests -v
 
 `check FILE` 完成整文件词法、语法、词法名称、控制流位置及数字字面准备，成功双流为空、退出 0。它不建立执行器，不计算表达式、不调用输入输出、不运行循环、构造或结构默认值。运行时类型/调用/写入错误不提前报出，因此 check 成功不保证 run 成功。未知/自引用名称 E302、重复声明 E301、非法控制流 E304、语法 E103 在执行前退出 2；运行时类型 E201、调用 E202、写入 E203、下标 E204、除零 E205、活动遍历修改 E206、数值范围 E208 退出 1。结构构造/with 字段清单错误使用 E203，字段访问不存在使用 E302。容量错误统一 E211，依发生阶段退出 2/1。
 
-Result 的失败载荷必须 String；匹配载荷只在分支内有效，`?` 仅用于显式 Result 具名函数。Lazy 首次 wake 读取当前捕获值，缓存值/普通错误；资源中止和取消清理为 NEW。管道只接受一个直接 @ 参数，顺序为源、被调用对象、其余参数、调用。状态机成功先准备 Result 再改状态，失败保持状态；Quantity 使用精确有理数及量纲，不退化为 Float。查询只允许纯 AST 和实际 len/str 绑定，依次执行输入、take、全部 keep、全部键、稳定排序、投影；take=0 也不跳过前序校验。详见 [P04 验收映射](tests/p04/README.md)。
+Result 的失败载荷必须 String；匹配载荷只在分支内有效，`?` 仅用于显式 Result 具名函数。Lazy 首次 wake 读取当前捕获值，缓存值/普通错误；资源中止和取消清理为 NEW。管道只接受一个直接 @ 参数，顺序为源、被调用对象、其余参数、调用。状态机成功先准备 Result 再改状态，失败保持状态；Quantity 使用精确有理数及量纲，不退化为 Float。查询只允许纯 AST 和 stdlib 固定白名单中的实际原生绑定，依次执行输入、take、全部 keep、全部键、稳定排序、投影；take=0 也不跳过前序校验。详见 [P04 验收映射](tests/p04/README.md)。
 
 `test FILE_OR_DIR [--timeout SECONDS]` 按路径收集 `.zzy`，先全部检查，再为每个顶层 spec 新建子进程，重新执行公共初始化，单独执行该 spec。默认每例 10 秒，独立工作/临时目录及空 stdin（EOF）；run 跳过 spec，check 仍检查其名字。stdout 保留程序输出，末行 JSON 汇总 tests/passed/failed/timed_out/collection_errors；stderr 保留错误与 trace。空收集、收集错误、失败、超时均退出 1；非法参数退出 2。有收集错误时不执行任何初始化。对非法源码使用外部清单，不要 `test tests/` 混收负例。
 
-模块、Map/JSON/文件库、unit.make/format、GUI 尚未实现。文档中依赖这些接口的完整示例不视为可运行。
+P05 的完整核心标准库见 [stdlib](docs/language/stdlib.md)，模块与库示例见 [library/main.zzy](examples/library/main.zzy)，失败/边界证据见 [P05 测试映射](tests/p05/README.md)。`array.sum/stats` 只接受 Int；`sorted` 返回新数组；`map/filter` 共用语言调用与活动遍历规则。JSON 不自动解包 Result/Lazy，不接受 Machine/Quantity，格式错误返回失败 Result，资源错误保持 E211。
 
-`python -X utf8 -m tests.blackbox` 运行 1090 个外部用例；失败、超时、输出超额及空/坏清单返回 1。清单、可选 JSON 报告和资源指纹见 [测试说明](tests/README.md)。
+从项目根目录运行（本机将 python 换为 `.venv/Scripts/python.exe`）：
+
+```text
+python -m zzy check examples/library/main.zzy
+python -m zzy run examples/library/main.zzy
+python -m zzy test examples/library/spec.zzy
+```
+
+`use` 路径相对导入文件，普通文件路径相对进程工作目录。模块仅导出顶层具名函数、shape 和 machine 定义；同一上下文规范路径相同只初始化一次。每次 run/spec 创建独立模块状态；spec 使用整个依赖图的收集快照。`check` 递归检查依赖，不初始化模块或执行文件操作。`io.write_atomic` 独占创建同目录临时文件，写入并关闭后替换；预期 I/O 失败为 Result，未替换前保持旧文件，不承诺断电持久化。
+
+`python -X utf8 -m tests.blackbox` 运行 1459 个外部用例；失败、超时、输出超额及空/坏清单返回 1。清单、可选 JSON 报告和资源指纹见 [测试说明](tests/README.md)。
 
 `source-info` 仅做有界 UTF-8 读取，输出字节数、码点数、行数和同一字节快照的 SHA-256；`syntax_checked` 固定为 false，不代表语法检查或执行成功。空文件计 1 行，末尾换行后保留空行。缺文件、非法 UTF-8 和参数错误为 E401/退出 2；前端资源超限为 E211/退出 2。`info` 输出完整宿主版本、Unicode/平台、生效资源配置和指纹。
 
@@ -110,15 +120,11 @@ $zzyPython = 'C:\Users\13691\.cache\codex-runtimes\codex-primary-runtime\depende
 
 `--limits limits.json` 和 `--diagnostic-format text|json` 可放在命令前后。配置键、单位与默认值见 [资源契约](docs/runtime/resources.md)；未知/重复字段、Bool、非正整数、坏版本、超过 64 KiB 的配置均拒绝。`info` 中的指纹覆盖补齐默认后的全部有效值和宿主十进制上限。帮助/版本直接显示，不加载配置文件。
 
-CLI 文件参数和配置路径相对调用者工作目录；run/check 不切换目录，test 的 worker 使用私有临时目录。源码加载器为后续 use 保留相对导入文件的路径接口，当前未实现 use 分析。标准流使用 UTF-8、输出 LF；[诊断](docs/language/diagnostics.md) 提供文本/JSON Lines。前端 E211/退出 2、执行 E211/退出 1 已通过 CLI 验证；取消出口及执行清理通过宿主注入测试，真实终端 Ctrl+C 尚未验收。
+CLI 文件参数和配置路径相对调用者工作目录；run/check 不切换目录，test 的 worker 使用私有临时目录。模块加载器使用规范绝对路径去重，诊断保留实际出错依赖文件的位置。标准流使用 UTF-8、输出 LF；[诊断](docs/language/diagnostics.md) 提供文本/JSON Lines。前端 E211/退出 2、执行 E211/退出 1 已通过 CLI 验证；取消出口及执行清理通过宿主注入测试，真实终端 Ctrl+C 尚未验收。
 
 ## 运行方式与交付目标
 
-下面是**待实现的 spec/语言测试 CLI 约定**，现在不能作为可运行命令使用：
-
-```text
-python -m zzy test tests/
-```
+语言内测试入口已可用，例如 `python -m zzy test examples/library/spec.zzy`。外部负例仍用 tests.blackbox，不能对含故意错误源码的整个 tests/ 执行 zzy test。
 
 Web、NumPy 和字节码 VM 属于可选后续工作。P00 的资源计量接口不等于所有未来值/AST/缓存都已接入限额，当前验证范围见 [测试说明](tests/README.md) 与 [开发记录](docs/development/development-log.md)。
 

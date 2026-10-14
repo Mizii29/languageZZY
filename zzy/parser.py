@@ -54,7 +54,7 @@ class Parser:
     def annotation(self):
         token = self.current
         if token.kind in {"TYPE_INT", "TYPE_FLOAT", "TYPE_STRING", "TYPE_BOOL",
-                          "TYPE_NULL", "TYPE_ARRAY", "TYPE_FUNCTION", "TYPE_RANGE",
+                          "TYPE_NULL", "TYPE_MAP", "TYPE_ARRAY", "TYPE_FUNCTION", "TYPE_RANGE",
                           "TYPE_RESULT", "TYPE_LAZY", "TYPE_MACHINE", "TYPE_QUANTITY"}:
             return self.advance()
         if token.kind == "IDENT":
@@ -138,6 +138,13 @@ class Parser:
         return self.node("query", token, (source, *clauses), end=closing.end)
 
     def statement(self):
+        if self.current.kind == "USE":
+            self.advance()
+            path = self.expect("STRING", "模块路径字符串")
+            self.expect("AS", "(as)")
+            alias = self.expect("IDENT", "模块别名")
+            self.expect("SEMICOLON", "分号 ;")
+            return self.node("use", alias, data=path)
         if self.current.kind in {"ASSERT", "TRACE"}:
             token = self.advance()
             value = self.expression()

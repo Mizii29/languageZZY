@@ -1,0 +1,1 @@
+(use) "../modules/left.zzy" (as) l;(use) "../modules/right.zzy" (as) r;io.print([l.next(),r.next()]);

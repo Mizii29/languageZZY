@@ -1,8 +1,8 @@
 # ZZY 标准库接口契约
 
-更新：2026-10-11｜标准库版本：v0.6.1｜核心语法：v0.6｜状态：P04 已实现 io.print/input、len/str/range/wake、array.copy/push/pop 的当前类型子集，str 支持 Quantity；unit 及其余库待 P05，不是完整可用 API 清单
+更新：2026-10-14｜标准库版本：v0.6.1｜核心语法：v0.6｜状态：P05 已实现本文核心接口，证据见 tests/p05；sketch/Web/db/num 扩展仍待各自阶段
 
-语言规则见 [syntax.md](syntax.md)。下面集中规定 P01—P05 的拟议公开接口，消除旧示例的裸 `print`、`push`、`safe_int` 等名称。类型标签是说明，不引入新语法；`A` 表示任意合法 ZZY 值，`Result<A>` 仅描述载荷，源码不支持泛型。
+语言规则见 [syntax.md](syntax.md)。下面集中规定 P01—P05 的公开接口，消除旧示例的裸 `print`、`push`、`safe_int` 等名称。类型标签是说明，不引入新语法；`A` 表示任意合法 ZZY 值，`Result<A>` 仅描述载荷，源码不支持泛型。
 
 ## 1. 调用与错误约定
 
@@ -26,7 +26,7 @@
 
 `io.write_text` 不承诺原子持久化；CLI 应用可优先使用拟议 `io.write_atomic`，将唯一临时文件的独占创建、写入、关闭和替换封装在宿主，失败清理临时文件。不能先“检查文件不存在”再普通覆盖创建，以免竞争；并发成功保存采用最后一次替换胜出，不承诺业务级事务。
 
-低层拟议 `io.replace_file(source, target)` 仍在 P05 实现，参数为 String，成功 Result<Null>、文件操作失败为失败 Result；调用者须先关闭完整源文件。同目录临时文件方案不承诺断电后已落盘，replace 跨文件系统不承诺成功。应用测试覆盖写入/关闭/替换失败保留旧文件、并发临时文件不互相覆盖；类型/资源错误不吞成 I/O Result。
+低层 `io.replace_file(source, target)` 已在 P05 实现，参数为 String，成功 Result<Null>、文件操作失败为失败 Result；调用者须先关闭完整源文件。同目录临时文件方案不承诺断电后已落盘，replace 跨文件系统不承诺成功。应用测试覆盖写入/关闭/替换失败保留旧文件、并发临时文件不互相覆盖；类型/资源错误不吞成 I/O Result。
 
 输入/输出或源码运行资源超限为执行错误，不能假装 EOF 或正常文件失败。整数转文字受宿主长度限制时转换为明确 `E211`；不要全局关闭 Python 的资源限制来掩盖问题。
 
@@ -100,7 +100,7 @@ Web 需要另列 Request/Response、路由、状态码、Content-Type、JSON 校
 
 新库先补接口契约、ZZY 黑盒用例和示例，再发布能力清单。NumPy 固定宽度数值不能替代核心 Int；可选库需自己的溢出、转换、依赖版本和公平基准说明。
 
-## 7. 单位库（待 P05 实现）
+## 7. 单位库（P05 已实现）
 
 量纲、倍率、精确值和显示规则以 [machine-units.md](../features/machine-units.md) 为准；不自行添加复合单位字符串解析或丢精度的取值接口。
 
@@ -115,7 +115,7 @@ Web 需要另列 Request/Response、路由、状态码、Content-Type、JSON 校
 
 ## 8. v0.6 查询的原生纯调用名单
 
-[query.md](../features/query.md) 的条目可调用 `len`、`str`、`math.abs`、`text.trim`、`text.contains`、`unit.make`、`unit.format`，接口签名/类型/错误保持本文件既有规则；库尚未实现时不能使用。注册表标记固定函数身份、ABI 和纯性，Resolver 依据实际绑定核对名单；遮蔽后的同名用户函数、动态函数、任意扩展的 pure 标记不能放行。
+[query.md](../features/query.md) 的条目可调用 `len`、`str`、`math.abs`、`text.trim`、`text.contains`、`unit.make`、`unit.format`，接口签名/类型/错误保持本文件既有规则；P05 已实现这些核心接口。注册表标记固定函数身份、ABI 和纯性，Resolver 依据实际绑定核对名单；遮蔽后的同名用户函数、动态函数、任意扩展的 pure 标记不能放行。
 
 纯性只表示无用户可见修改/I/O/隐式唤醒，资源与类型错误仍传播。查询不自动批量调用这些函数，不绕过检查；新增白名单函数须另补契约和 QUERY-03 验证。
 

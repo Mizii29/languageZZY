@@ -1,0 +1,1 @@
+(?_?) data.parse("{[OoO]qa[OoO]q:1,[OoO]qa[OoO]q:2}") {(^_^)(v)=>{io.print("wrong");}(T_T)(message)=>{io.print("rejected");}}

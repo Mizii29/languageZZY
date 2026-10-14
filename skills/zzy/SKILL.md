@@ -11,7 +11,7 @@ description: 在 ZZY 课程项目中编写或审查 .zzy 程序、实现解释�
 
 先读 [文档导航](../../docs/README.md)、[任务状态与交接栏](../../docs/development/todo.md) 和 [开发记录的最新条目](../../docs/development/development-log.md)，再核对实际文件。不要把历史记录中的旧计数或下一步当作当前事实。
 
-截至 2026-10-13，P00—P04 已实现，版本 0.4.0a1；Result/匹配/传播、Lazy、管道、状态机、精确数量、集合查询和隔离 spec 已接通。模块、unit 库及其他完整标准库仍待 P05，GUI/性能/应用仍待后续阶段。check 仅做前端准备，不执行用户表达式；test 对每个 spec 启动独立进程。统一外部黑盒入口仍为 python -X utf8 -m tests.blackbox，使用独立 .zzy 与期望清单。下一项 P05-01；先核对 README、todo、最新记录、代码和 Git。语法 v0.6/标准库 v0.6.1 规则不变。
+截至 2026-10-14，P00—P05 已实现，版本 0.5.0a1；核心语法、io/array/text/math/data/unit 标准库、Map/严格 JSON、原子文件保存及模块已接通。GUI、性能测量和完整应用仍待后续阶段。check 仅做前端准备，不执行用户表达式；test 对每个 spec 启动独立进程。统一外部黑盒入口仍为 python -X utf8 -m tests.blackbox，使用独立 .zzy 与期望清单。下一项 P06-01；先核对 README、todo、最新记录、代码和 Git。语法 v0.6/标准库 v0.6.1 规则不变。
 
 遵循用户任务范围与适用的仓库指示。只整理文档时不启动实现；只要求审查时不扩展成语言重设计。作业约束查 [requirement](../../docs/requirement.md)，保留原文。
 

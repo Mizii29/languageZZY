@@ -1,6 +1,6 @@
 # ZZY 开发待办
 
-建立：2026-10-03｜当前阶段：P04 已完成｜下一项：P05-01
+建立：2026-10-03｜当前阶段：P05 已完成｜下一项：P06-01
 
 本文件是任务状态的唯一清单；详细流程见 [roadmap.md](roadmap.md)，执行证据见 [development-log.md](development-log.md)。接手时根据实际仓库修正状态，不按日期猜测完成情况。
 
@@ -68,10 +68,10 @@ P03-03 的 Lazy 部分是共享捕获布局/Cell 基础；Lazy AST 的捕获分�
 
 ## P05：库和模块（依赖 P04）
 
-- [ ] P05-01 建立宿主注册表、参数校验、结果及错误转换。
-- [ ] P05-02 按 stdlib v0.6.1 完成整数批量库、空统计、严格 JSON/Map、data.kind、unit.make/format、文件读写/替换及 write_atomic 独占临时文件封装；拒绝序列化 Machine/Quantity。
-- [ ] P05-03 完成模块导入、函数/结构/状态机定义导出、复用与循环导入诊断；验证查询封装函数导出，实例按上下文隔离。
-- [ ] P05-04 编写标准库参考，验证别名、回调和修改规则，提交库版本。
+- [x] P05-01 建立宿主注册表、参数校验、结果及错误转换。
+- [x] P05-02 按 stdlib v0.6.1 完成整数批量库、空统计、严格 JSON/Map、data.kind、unit.make/format、文件读写/替换及 write_atomic 独占临时文件封装；拒绝序列化 Machine/Quantity。
+- [x] P05-03 完成模块导入、函数/结构/状态机定义导出、复用与循环导入诊断；验证查询封装函数导出，实例按上下文隔离。
+- [x] P05-04 编写标准库参考，验证别名、回调和修改规则，提交库版本。
 
 ## P06：测试与开发指南（依赖 P05）
 
@@ -142,14 +142,14 @@ P10 各候选相互独立，不要求全部完成；P11 不以全部勾选为前
 
 ## 交接栏
 
-最后更新：2026-10-13。P00—P04 已完成，包版本 0.4.0a1；语法 v0.6/标准库 v0.6.1 的规则不变。本轮完成 P04-01—08 并验收，没有进入 P05。
+最后更新：2026-10-14。P00—P05 已完成，包版本 0.5.0a1；语法 v0.6/标准库 v0.6.1 规则不变。本轮完成 P05-01—04 并验收，没有进入 P06 实施。
 
-- 当前进行中任务：无。70 项代码任务完成 26 项（P00 四项、P01 五项、P02 五项、P03 四项、P04 八项）。
-- 下一项：P05-01，统一宿主注册表、参数校验、结果及错误转换。先读 stdlib/interpreter/resources 与对应 test-coverage，复用 Result/Lazy/Machine/Quantity/查询实现；unit 库、模块导出、Map/JSON/文件以及查询新增纯库接口仍待 P05。
-- 当前入口：run 支持基础数据/控制流/数组/shape/with/函数/闭包及全部 P04 核心特色；基础调用为 io.print/input、len/str/range/wake、array.copy/push/pop，str 支持 Quantity。check 只前端准备，不执行输入、函数、默认值、状态转换、Lazy 或查询。test FILE_OR_DIR 每例独立进程、公共初始化、私有临时目录和空 stdin，默认超时 10 秒；空收集/收集失败/用例失败/超时均非成功。
-- 最近完整回归：`.venv/Scripts/python.exe -X utf8 -m unittest discover -s tests -q` 1192/1192 通过、338.965 秒、退出 0、无跳过（1090 外部 CLI + 102 宿主/运行器）。独立 `-m tests.blackbox --report dist/p04-blackbox-report.json` 1090/1090 通过、377.647 秒、退出 0；两个入口覆盖重合，不累加数量。
-- 本阶段证据：157 个独立输入与两个示例组成 317 个外部期望（run 158/check 159）；12 项运行时宿主和 12 项 spec/trace/运行器测试。映射见 tests/p04/README.md。旧 unsupported-spec 的两项期望迁移为成功，其他原有外部期望不变。
-- 发布验证：0.4.0a1 wheel 离线构建/安装，27 条隔离 CLI 检查及两个 spec 通过，22 个安装 Python 文件与工作区逐字节相同。features 与 features-spec 命令真实运行通过。
-- 已知失败或阻塞：本阶段无已知未修复失败。其他 Python/OS、真实终端 Ctrl+C、模块/文件库/JSON、公开共享上下文冻结、GUI/派生进程树、完整默认容量 RESOURCE/CLI 矩阵与性能仍未验证或待实现。PATH 无 python/py，继续使用 .venv/Scripts/python.exe。
-- Git：基于 feature 的 f1d57fa，建立本地 P04 阶段提交，标识以 Git 历史与最终报告为准；未推送或改写历史。requirement 原始 SHA-256 仍为 B099C19FC339CE1DC1AAB7E9D6C8126A9C5C9ACE3D31B969A0623DF90F521D2B。
-- 扩展决定：E 已选择，基础完成后按四阶段实现；P08/P10 未实施，其余新增场景未采用。
+- 当前进行中任务：无。70 项代码任务完成 30 项（P00 四项、P01 五项、P02 五项、P03 四项、P04 八项、P05 四项）。
+- 下一项：P06-01，按 test-coverage 补完整 ZZY 正常/边界/错误矩阵与变形关系测试，逐项核对现有证据，不能把 P05 验收当作整个 P06 完成。先读 SKILL、此交接、最新日志，再核对代码、Git、契约和当前测试计数。
+- 当前入口：run 支持 v0.6 核心语法、io/array/text/math/data/unit 核心标准库、Map/严格 JSON 与 use/as 模块；query 使用固定原生白名单。check 递归准备整个依赖图，不执行用户代码或 IO。test 每个 spec 独立进程/模块/全局/Lazy/工作目录/空 stdin，使用收集时整个依赖图的源码快照；空收集、收集错误、失败、超时非成功。
+- 最终完整回归：`.venv/Scripts/python.exe -X utf8 -m unittest discover -s tests -q` 1579/1579 通过、330.212 秒、退出 0、无跳过（1459 外部 CLI + 120 集成/宿主/运行器）。独立 `-m tests.blackbox --report dist/p05-blackbox-report.json` 1459/1459 通过、301.240 秒、退出 0；两入口覆盖重合，不累加计数。
+- P05 证据：182 个独立输入、8 个模块夹具与三个真实示例，共 369 项外部期望（run 184/check 185），另有 18 项集成/宿主检查。映射见 tests/p05/README.md。原 P02 的 array.sum([]) 用例仅将 run 从“未实现”迁移为成功，其他旧外部期望不变。
+- 发布验证：0.5.0a1 wheel 离线构建/安装，39 条隔离 CLI 检查与两个 library spec 通过，26 个安装 Python 文件与工作区逐字节一致。examples/library/spec.zzy 两例与 total-up-to.zzy 一例通过；run/check 固定输出已纳入清单。
+- 已知失败或阻塞：本阶段没有已知未修复失败。其他 Python/OS、真实终端 Ctrl+C、全部指南片段、完整默认容量 RESOURCE/CLI 矩阵、长期 Program 缓存/淘汰、公开 Web 共享冻结、GUI/派生进程树与性能仍未验证或待实现。PATH 无 python/py，继续用 .venv/Scripts/python.exe。
+- Git：基于 feature 的 b5406c9 建立本地 P05 阶段提交，标识以实际历史与最终报告为准；不推送、不改写历史。requirement SHA-256 仍为 B099C19FC339CE1DC1AAB7E9D6C8126A9C5C9ACE3D31B969A0623DF90F521D2B；syntax 第 2—10 节语法语义正文不变。
+- 扩展决定：E 已选择，完成 P06 后按四阶段推进；P08/P10 未实施，其余新增场景未采用。

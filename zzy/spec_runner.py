@@ -1,4 +1,5 @@
 """Collect before execution; each spec owns its process, cwd, input and limits."""
+import base64
 import json
 import os
 from pathlib import Path
@@ -24,12 +25,13 @@ def run_specs(path, output, policy, timeout):
             meter = ResourceMeter(policy, Phase.FRONTEND)
             with SourceLoader(meter) as loader:
                 source = loader.read(file)
-                collection.consume("source_total_bytes", len(source.raw), file=display_path(file))
-                collection.consume("module_count", 1, file=display_path(file))
-                program = prepare(source, meter)
+                program = prepare(source, meter, loader)
+                for dependency in program.sources.values():
+                    collection.consume("source_total_bytes", len(dependency.raw), file=display_path(file))
+                    collection.consume("module_count", 1, file=display_path(file))
             specs = [node for node in program.root.children if node.kind == "spec"]
             for index, spec in enumerate(specs):
-                jobs.append((source.path, source.raw, index, spec.data))
+                jobs.append((source.path, program, index, spec.data))
         except (DiagnosticError, ResourceExceeded) as error:
             output.failure(error.diagnostic)
             collected_errors += 1
@@ -39,11 +41,18 @@ def run_specs(path, output, policy, timeout):
     passed = failed = timed_out = 0
     # A collection error prevents all initialization, including in valid files.
     if not collected_errors:
-        for original, raw, index, name in jobs:
+        for original, program, index, name in jobs:
             with tempfile.TemporaryDirectory(prefix="ZZY spec ") as directory:
                 root = Path(directory)
                 snapshot, config = root / "snapshot.zzy", root / "limits.json"
-                snapshot.write_bytes(raw)
+                aliases = {}
+                for root_node in (program.root, *program.modules.values()):
+                    for statement in root_node.children:
+                        if statement.kind == "use":
+                            candidate = Path(statement.token.source.path).parent / statement.data.value
+                            aliases[os.path.normcase(os.path.abspath(candidate))] = os.path.normcase(str(program.modules[id(statement)].token.source.path))
+                bundle = {"sources": [[str(s.path), base64.b64encode(s.raw).decode("ascii")] for s in program.sources.values()], "aliases": aliases}
+                snapshot.write_text(json.dumps(bundle, ensure_ascii=False), encoding="utf-8")
                 config.write_text(json.dumps({"policy_version": 1, "limits": dict(policy.limits)}), encoding="utf-8")
                 env = dict(os.environ, PYTHONPATH=str(Path(__file__).resolve().parents[1]),
                            PYTHONIOENCODING="utf-8", TMP=directory, TEMP=directory)
@@ -58,7 +67,7 @@ def run_specs(path, output, policy, timeout):
                         coordinates = record["span"]
                         span = Span(Position(**coordinates["start"]), Position(**coordinates["end"])) if coordinates else None
                         # Worker cwd is private; public paths remain relative to caller.
-                        file = display_path(original) if record["file"] else None
+                        file = display_path((root / record["file"]).resolve()) if record["file"] else None
                         diagnostic = Diagnostic(record["message"], record["code"], file, span,
                                                 tuple(record["notes"]), record["kind"])
                         output.diagnostic(diagnostic)

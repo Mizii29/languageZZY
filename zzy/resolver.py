@@ -4,6 +4,7 @@ from dataclasses import replace
 import math
 from types import MappingProxyType
 
+from .native.catalog import NAMESPACES, PURE_CALLS
 from .quantities import UNITS, literal
 from .ast_nodes import Capture, FunctionPlan, Program, Reference, Symbol
 from .diagnostics import Diagnostic, DiagnosticError, display_path
@@ -11,7 +12,7 @@ from .diagnostics import Diagnostic, DiagnosticError, display_path
 
 BUILTIN_NAMES = frozenset({"io", "array", "text", "math", "data", "unit", "sketch",
                            "len", "str", "range", "wake"})
-IMPLEMENTED_NAMES = frozenset({"io", "array", "len", "str", "range", "wake"})
+IMPLEMENTED_NAMES = frozenset({*NAMESPACES, "len", "str", "range", "wake"})
 
 
 class FunctionContext:
@@ -138,6 +139,10 @@ class Resolver:
         elif node.kind == "function":
             self.declare(node)
             self.resolve_function(node)
+        elif node.kind == "use":
+            if len(self.scopes) != 1 or self.function is not None:
+                self.error(node.token, "E103", "use 仅允许文件顶层")
+            self.declare(node, initialized=True)
         elif node.kind == "machine":
             if len(self.scopes) != 1:
                 self.error(node.token, "E103", "machine 仅允许文件顶层")
@@ -244,9 +249,14 @@ class Resolver:
                     if callee.kind == "name":
                         ref = self.lookup(callee.token)
                         valid = ref.symbol in {"len", "str"}
-                    elif callee.kind == "field" and callee.children[0].kind == "name":
-                        ref = self.lookup(callee.children[0].token)
+                    elif callee.kind == "field":
+                        base = callee.children[0]
+                        while base.kind == "group":
+                            base = base.children[0]
                         valid = False
+                        if base.kind == "name":
+                            ref = self.lookup(base.token)
+                            valid = (isinstance(ref.symbol, str) and ref.symbol + "." + callee.data in PURE_CALLS)
                     else:
                         valid = False
                         base = callee

@@ -1,6 +1,6 @@
 # ZZY 解释器实现流程
 
-作者：赵梓伊｜更新：2026-10-13｜状态：v0.6 语法实现路线；P00—P04 函数/闭包、数据/控制流与非执行 check 已实现
+作者：赵梓伊｜更新：2026-10-13｜状态：v0.6 语法实现路线；P00—P05 核心语法、标准库、模块与非执行 check 已实现
 
 当前语法以 [syntax.md](../language/syntax.md) 为准，整体方案见 [design详细版.md](../design详细版.md)，库以 [stdlib.md](../language/stdlib.md) 为准；优化与后端扩展见 [performance.md](performance.md)。本文回答“先写什么、每一步产生什么、怎样证明做对了”，不把规划中的代码和命令当成已有功能。Web 为可选扩展，完整 CLI 应用不依赖 Web 或 VM。
 
@@ -48,6 +48,8 @@ total <- total + 2;
 | 优化 | 简化重复动作 | 减少按名字寻找和多层节点分派 |
 
 这段程序不会自行输出；加入 `io.print(total);` 才会显示 `3`。通常一次运行只读和解析一次源码，之后循环执行已经准备好的程序表示。
+
+P05 增加 native/catalog、library、json_codec、files：封闭注册表提供 ABI、外层类型、返回、直接错误、效果和纯性；回调/wake 另标记传播用户错误。Function 仍通过统一调用驱动，map/filter 的活动遍历计数在 finally 归零。prepare 保存整个依赖图的只读 AST/源码快照，Interpreter.modules 只缓存本次运行实例；spec worker 从整个图的收集字节准备，不重新读用户文件。未实现长期 Program 缓存或优化，不宣称缓存淘汰已有验证。
 
 ## 1. 路线：先得到正确结果，再优化执行
 

@@ -19,6 +19,9 @@ class NativeFunction:
     returns: str
     effects: tuple[str, ...]
     errors: tuple[str, ...]
+    argument_types: tuple[tuple[str, ...], ...] = ()
+    pure: bool = False
+    propagates_errors: bool = False
 
 
 @dataclass(frozen=True)

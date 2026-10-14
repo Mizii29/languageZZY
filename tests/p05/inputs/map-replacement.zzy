@@ -1,0 +1,1 @@
+(zno)a:=[1,2,3];(addnew) f(x){a[2]<-9;(return)x;}io.print(array.map(a,f));io.print(a);

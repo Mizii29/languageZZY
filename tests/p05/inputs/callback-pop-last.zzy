@@ -1,0 +1,1 @@
+(zno)a:=[1];(addnew) f(x){array.pop(a);(return)x;}array.filter(a,f);

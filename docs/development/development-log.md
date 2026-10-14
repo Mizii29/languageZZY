@@ -309,3 +309,26 @@ Git 提交：真实标识 / 未提交
 - 验收结论：roadmap 的特色示例可运行、失败有原文位置、副作用/边界/状态隔离有真实证据；P04 八项全部完成，70 项代码任务完成 26 项。没有已知未修复的本阶段失败，下一项 P05-01。当前版本仅完成所列 P04 核心，不扩展到 P05 实现。
 - 提交前一致性：33 份 Markdown 围栏配对、285 个本地链接有效，70 个任务 ID 唯一，git diff --check 通过；静态检查只作一致性证据，不替代真实运行。确认 requirement 哈希及正式接口/语法正文不变。
 - Git：将本轮实现、独立源码/期望、宿主测试、指南和真实日志纳入本地 P04 阶段提交。提交标识见实际 Git 历史和最终报告；不纳入 dist/.venv/wheel/临时生成脚本/报告，不自动推送、不改写历史。
+
+
+## 2026-10-14：P05 全部标准库、模块与阶段验收
+
+- 用户任务：连续完成 P05-01—04，并对照 roadmap/todo/正式契约/test-coverage 验收实现、失败/边界/别名/顺序/隔离、check 零执行与运行器防假成功；更新文档和本地阶段提交后结束，不推送或改写历史。
+- 接手核对：读取项目 SKILL、todo 交接、P04 最新记录和 syntax/stdlib/interpreter/resources/diagnostics/query/machine-units/roadmap/test-coverage。初始工作区干净，feature 与 origin/feature 均为 b5406c94d96119875de968e2b8ac3664732d5a6d。真实环境仍为 .venv 的 CPython 3.12.14、MSC 1944 AMD64、Windows 11 10.0.26200、Unicode 15.0.0；PATH 无 python/py。没有 AGENTS.md。以当前文件和 Git 为准，未直接沿用记忆里的分支领先状态。
+- P05-01：建立 native/catalog 的封闭注册表，35 个原生函数及 array.Stats 原生类型；记录 ABI、签名、外层类型、返回、直接错误、效果、固定纯性和回调/wake 的错误传播。参数数量/外层类型在工作前校验，Bool 不作为 Int；只对预期 IO/JSON 格式失败转换 Result，资源、取消和 MemoryError 不吞掉。原有调用/Cell/配额机制保持，未开放 Python 属性或新增公开接口。
+- P05-02：完成整数 sum/stats、稳定 sorted、map/filter、text/math、Map/严格 JSON、data.kind、unit.make/format 和文件接口。stats 空值 min/max 为 Null，每次返回新名义结构；sorted 新数组保留引用顺序，回调经统一驱动并以 finally 清理活动计数。Map 保留插入顺序，覆盖不重排，keys 为新数组，递归冻结覆盖嵌套 Machine。JSON 区分 Int/Float/Bool，拒绝重复解码键、NaN/Infinity/溢出、孤立代理码点、循环和不支持的值；共享但无环引用可重复编码，不隐式 wake/解包。Float 单位构造保留实际二进制值，format 精确分数。
+- 文件边界：UTF-8 严格读取、BOM 作为普通文本保留；字节/码点在读取过程中检查。普通 write_text 与独占同目录临时文件的 write_atomic 分开；成功值在文件修改前分配，atomic 完整写入/关闭后 os.replace。测试注入写入/关闭/替换失败和取消/资源/内存中止，旧文件不变且临时文件清理；两次交错写入同时持有不同临时文件。replace_file 使用明确源/目标，不承诺跨文件系统成功或断电落盘。
+- P05-03：Parser/Resolver/prepare 接通 use/as；规范路径递归准备、依赖总字节/数量/深度限制、循环导入 E303，运行时每上下文只初始化一次，导出顶层具名函数/shape/machine 定义，变量和导入别名不自动导出。所有绑定/捕获按词法身份归本次运行，Program 只保存只读 AST/源码图。跨文件错误使用实际节点源码及调用 notes。spec 保存完整依赖图的收集字节，worker 从快照准备，每例独立模块/全局/Lazy/工作目录/TMP/TEMP/stdin；收集后依赖被删除仍执行原图，新 prepare 则读取新内容。未引入长期 Program 缓存或 VM 优化。
+- P05-04 与指南：核心 stdlib 标记可用，新增 examples/library/helpers.zzy、main.zzy、spec.zzy 与 total-up-to.zzy；更新 README、skills/AI 入口、实现与资源/诊断说明、能力状态、测试映射。查询固定白名单按实际原生身份判断，分组不改变绑定身份，遮蔽、别名、动态调用和 data.kind 不能放行。正式 syntax 第 2—10 节与父提交逐字一致，stdlib 仅更正实现状态说明，保留签名与规则。
+- 审计修复：统一校验一度改变 len/str 旧诊断位置，全量回归发现后恢复为调用左括号，未改旧期望掩盖回归。整数文本转换改为逐步受限累加，分配前检查位数/临时空间；JSON 字符串先验证转义/代理对并计真实解码长度，再分配，补 67/68/69 字节边界以防过于保守的缓冲估算误拒绝合法输入。排序/文本/文件及 JSON 临时空间接入预算，取消/宿主中止保持原信号。
+- 测试落地：tests/p05 的 182 个独立输入和 8 个模块夹具，加 3 个真实示例，形成 369 项外部期望（184 run、185 check）；另有 18 项集成/宿主检查，文件与 spec 通过真实 CLI/worker 验证，失败注入补无法由 ZZY 捕获的宿主边界。P02 的 array.sum([]) 原“未实现”用例只迁移 run 为成功，保留源码；其余旧外部期望不变。未删除失败用例、跳过测试或用空收集冒充通过。
+- 过程真实失败：初稿 array.Stats 使用错误 Token 构造参数，后续机械替换又造成一次导入错误，均修复后再执行；组合测试的字符串转义、模块夹具的函数前向引用、machine send 拼写和 spec 断言拼写均按既有语法修正，未放宽规则。模块初轮 283 项有 23 个失败，修正前向引用与原文坐标后剩 3 个夹具/坐标失败，修正后 305 项通过。第一轮全量 1491 项有 5 个失败（len/str 位置两项、sum 旧未实现期望一项、已加载的嵌套 use 旧坐标两项），逐项修复；不是最终通过结果。
+- 过程中验证：早期既有 38 项运行时与 12 项 spec 测试通过；P05 专项 373 项通过（71.123 秒），P02 279 项通过（52.002 秒）。扩充 JSON 审计后 373 项专项再次通过（75.827 秒），新增 14 项 JSON 临界/非法转义用例通过（2.721 秒）。定稿前一次全量 1565 项通过（319.915 秒），最终清单新增 14 项后另做最终全量验收。各轮计数按当时真实清单记录，不相加成独立覆盖数量。
+- 示例执行：`-m zzy test examples/library/spec.zzy --diagnostic-format json` 为 tests=2/passed=2；`-m zzy test examples/total-up-to.zzy --diagnostic-format json` 为 tests=1/passed=1，并打印公共初始化的 15，均退出 0。run/check 的固定 stdout 与错误另外纳入外部清单。
+- 离线发布：0.5.0a1、info.stage=P05。bundled Python 的 `-m pip wheel . --no-deps --no-build-isolation --no-index --wheel-dir dist` 构建成功；`-m pip --python .venv/Scripts/python.exe install --force-reinstall --no-index --no-deps dist/zzy_language-0.5.0a1-py3-none-any.whl` 安装成功。`dist/verify_p05_install.py` 在 dist 下以 -I 隔离运行，39 条 CLI 检查和两个 library spec 通过，26 个安装 Python 文件与工作区逐字节一致；zzy.exe --version 输出 0.5.0a1 (P05 interpreter)。隔离验证初选清单有一个 ID 拼写错误导致只选到 37 条，补充所选 ID 集合必须全收集的断言并纠正后重跑 39 条，未把遗漏条目算通过。
+- 未验证边界：其他 Python/OS、真实终端 Ctrl+C、全部指南片段、完整默认容量 RESOURCE/CLI 矩阵、长期缓存/淘汰、公开 Web 共享冻结、GUI/派生进程树和性能收益。P06 及后续任务不提前勾选。本机的逻辑资源预算与注入故障证据不等同 RSS 上界、操作系统杀进程后保证诊断或断电持久化。
+
+- 最终全量验收：`.venv/Scripts/python.exe -X utf8 -m unittest discover -s tests -q`：1579/1579 通过，330.212 秒，退出 0，无跳过；其中 1459 项外部 CLI、120 项集成/宿主/运行器。独立 `-m tests.blackbox --report dist/p05-blackbox-report.json`：1459/1459 通过，301.240 秒，退出 0；报告逐项 passed/observed_exit_code 与期望一致，lex=62、run=689、check=708，57 种有效资源指纹。两入口覆盖重合，不累加计数。
+- 验收结论：roadmap 的手写循环/库结果一致、排序不改变源和模块/测试状态隔离均有实际证据，P05-01—04 全部完成；70 项代码任务完成 30 项。没有已知未修复的本阶段失败，下一项 P06-01，本轮到 P05 结束。
+- 提交核对：34 份 Markdown 围栏和 298 个本地链接有效；requirement 原始 SHA-256 仍为 B099C19FC339CE1DC1AAB7E9D6C8126A9C5C9ACE3D31B969A0623DF90F521D2B；syntax 第 2—10 节原文未变，git diff --check 通过。静态检查仅作一致性证据，不替代真实运行。
+- Git：将本轮代码、独立源码/期望、集成测试、实际示例、指南和日志纳入本地 P05 阶段提交，基于 feature 的 b5406c9；提交标识见实际 Git 历史及最终报告。dist/.venv/wheel/临时生成脚本与机器相关报告保持忽略，不推送、不改写历史。

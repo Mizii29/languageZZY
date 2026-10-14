@@ -1,0 +1,32 @@
+(use) "helpers.zzy" (as) lib;
+(zno) scores := [81, 59, 92];
+
+(spec) "库与逐项计算一致" {
+    (zyes) total := 0;
+    (for) score (in) scores { total <- total + score; }
+    (o_o) array.sum(scores) == total;
+    (o_o) array.stats(scores).sum == 232;
+    (o_o) array.sorted(scores)[0] == 59;
+    (o_o) scores[0] == 81;
+}
+
+(spec) "JSON 和文件独立往返" {
+    (?_?) lib.encode_scores(scores) {
+        (^_^)(encoded) => {
+            (o_o) io.write_atomic("report.json", encoded) == (^_^)((null));
+            (?_?) io.read_text("report.json") {
+                (^_^)(text) => {
+                    (?_?) data.parse(text) {
+                        (^_^)(report) => {
+                            (o_o) data.kind(report) == "map";
+                            (o_o) data.get(data.get(report, "stats"), "sum") == 232;
+                        }
+                        (T_T)(message) => { io.print(message); (o_o) (false); }
+                    }
+                }
+                (T_T)(message) => { io.print(message); (o_o) (false); }
+            }
+        }
+        (T_T)(message) => { io.print(message); (o_o) (false); }
+    }
+}

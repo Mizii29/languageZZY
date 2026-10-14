@@ -1,0 +1,1 @@
+io.print("must not execute");(use) "../modules/syntax.zzy" (as) m;

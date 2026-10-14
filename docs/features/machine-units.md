@@ -1,6 +1,6 @@
 # ZZY 新特色：状态机与带单位数值
 
-更新：2026-10-08｜版本：v0.6｜状态：P04 核心已实现；unit 库、模块导出、JSON 边界留 P05
+更新：2026-10-08｜版本：v0.6｜状态：P04 核心及 P05 unit 库、模块定义导出、JSON 拒绝边界已实现
 
 本文细化 [syntax.md](../language/syntax.md) 中的两项正式设计，库接口见 [stdlib.md](../language/stdlib.md)。A（集合查询）已在 v0.6 采用，规则见 [query.md](query.md)；B（自动依赖刷新）仍未选择。核心示例验证见 tests/p04；下文依赖 unit 库/模块的示例仍是 P05 目标。
 

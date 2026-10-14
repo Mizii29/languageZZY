@@ -104,3 +104,26 @@ class SourceLoader:
 
     def __exit__(self, *exc):
         self.close()
+
+
+class SnapshotLoader(SourceLoader):
+    """Resolve imports only from the already collected dependency graph."""
+    def __init__(self, meter, sources, aliases):
+        super().__init__(meter)
+        self.snapshots, self.aliases = sources, aliases
+
+    def read(self, path, *, importer=None, import_depth=1):
+        candidate = Path(importer).parent / path if importer is not None and not Path(path).is_absolute() else Path(path)
+        key = os.path.normcase(os.path.abspath(candidate))
+        key = self.aliases.get(key, key)
+        self.meter.check("import_depth", import_depth, file=display_path(candidate))
+        if key in self._sources:
+            return self._sources[key]
+        if key not in self.snapshots:
+            raise DiagnosticError(Diagnostic("导入不在收集快照中", "E303", display_path(candidate)))
+        source = self.snapshots[key]
+        self.meter.check("source_file_bytes", len(source.raw), file=display_path(candidate))
+        owner = self.meter.reserve(source_total_bytes=len(source.raw), module_count=1, file=display_path(candidate))
+        self._reservations.append(owner)
+        self._sources[key] = source
+        return source

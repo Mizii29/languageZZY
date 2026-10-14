@@ -1,0 +1,1 @@
+io.print(data.parse("[OoO]q\ud83d\ude00[OoO]q"));

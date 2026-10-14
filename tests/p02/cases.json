@@ -3696,17 +3696,8 @@
       "cwd": ".",
       "stdin": "",
       "timeout_seconds": 10,
-      "exit_code": 1,
-      "stdout": "",
-      "diagnostic": {
-        "code": "E302",
-        "span": [
-          1,
-          7,
-          1,
-          10
-        ]
-      }
+      "exit_code": 0,
+      "stdout": ""
     },
     {
       "id": "p02-unimplemented-library",

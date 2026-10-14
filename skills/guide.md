@@ -1,12 +1,12 @@
 # ZZY 语言开发指南
 
-更新：2026-10-13｜语法 v0.6、标准库 v0.6.1｜完整语言指南；最小可运行示例见根 README
+更新：2026-10-14｜语法 v0.6、标准库 v0.6.1｜完整语言指南；最小可运行示例见根 README
 
 本指南说明怎样编写 ZZY 程序，以及怎样参与解释器开发。语法速查见 [syntax.md](syntax.md)，完整规则和接口分别以 [语法契约](../docs/language/syntax.md)、[标准库契约](../docs/language/stdlib.md) 为准。AI 接手入口是 [zzy/SKILL.md](zzy/SKILL.md)。
 
 ## 1. 先确认能做什么
 
-P00—P04 已实现，版本 0.4.0a1；Result/匹配/传播、Lazy、管道、状态机、精确数量、集合查询和隔离 spec 已接通。模块、unit 库及其他完整标准库仍待 P05，GUI/性能/应用仍待后续阶段。使用 `python -m zzy run examples/features.zzy` 和 `python -m zzy test examples/features-spec.zzy` 运行特色示例；独立外部期望仍由 `python -X utf8 -m tests.blackbox` 验证。check 不执行用户表达式。本文依赖后续库/模块的示例尚未逐一运行；下一项 P05-01，接手先核对 todo、最新开发记录和 Git。
+P00—P05 已实现，版本 0.5.0a1；核心语法、io/array/text/math/data/unit 标准库、Map/严格 JSON、原子文件保存及模块已接通。GUI、性能测量和完整应用仍待后续阶段。使用 `python -m zzy run examples/features.zzy` 和 `python -m zzy test examples/features-spec.zzy` 运行特色示例；独立外部期望仍由 `python -X utf8 -m tests.blackbox` 验证。check 不执行用户表达式。本文完整片段未逐一运行；已验证的库/模块例子见 examples/library/；下一项 P06-01，接手先核对 todo、最新开发记录和 Git。
 
 解释器使用 Python，核心运行只依赖标准库。P00 已验证 CPython 3.12.14、Windows 11、Unicode 15.0.0；实际运行和安装命令见项目 README。没有依赖清单时不要凭空执行安装命令；GUI 和后续 Web 等可选依赖不应成为普通 CLI/check 的前提。
 
@@ -18,11 +18,11 @@ P00—P04 已实现，版本 0.4.0a1；Result/匹配/传播、Lazy、管道、�
 - `benchmarks/`：等价 ZZY/Python 程序、驱动与原始测量结果。
 - `apps/zzy-campus/`：默认校园任务管家应用。
 
-上述根目录已建立；当前已有 P04 特色语法及此前解释器、宿主与 CLI 测试、hello/grades/functions/features/features-spec 示例；校园应用子目录及后续语言功能仍待实现。已有文档位置见 [项目 README](../README.md)。
+上述根目录已建立；当前已有 P05 库/模块与 P04 特色语法及此前解释器、宿主与 CLI 测试、hello/grades/functions/features/features-spec 示例；校园应用子目录及后续语言功能仍待实现。已有文档位置见 [项目 README](../README.md)。
 
 ## 2. 编写第一份程序
 
-下面是包含 P04 spec 的完整设计示例，计划保存为 `examples/total-up-to.zzy`。当前函数/循环部分已支持；现在可直接运行的函数示例见 [functions.zzy](../examples/functions.zzy)，不要用此段覆盖已有 hello.zzy。
+下面示例已保存并验证为 `examples/total-up-to.zzy`。其他函数示例见 [functions.zzy](../examples/functions.zzy)，不要用此段覆盖已有 hello.zzy。
 
 ```zzy
 (addnew) total_up_to(limit: (Int)) -> (Int) {
@@ -41,17 +41,17 @@ io.print(total_up_to(5));
 }
 ```
 
-先检查语法和名字，再运行程序，最后运行测试。上面完整设计示例中的 spec 仍待 P04，下面的 total-up-to.zzy 文件也待建立。当前可运行的 hello.zzy 只输出 5，不能与本节未来输出 15 的程序混淆：
+先检查语法和名字，再运行程序，最后运行测试。total-up-to.zzy 的 check/run/test 均已验证；hello.zzy 输出 5，本节程序输出 15：
 
 ```text
 python -m zzy check examples/total-up-to.zzy
 python -m zzy run examples/total-up-to.zzy
-python -m zzy test examples/
+python -m zzy test examples/total-up-to.zzy
 ```
 
-对于上述完整设计示例，按契约 check 不打印；未来 run 的预期 stdout 为 `15` 加换行，跳过 spec 的执行；test 会在每例独立环境重新初始化公共部分，顶层打印也属于初始化行为。为避免测试噪声，正式库模块只放定义，交互启动放入口文件。
+对于上述示例，check 不打印；run 的预期 stdout 为 `15` 加换行，跳过 spec 的执行；test 会在每例独立环境重新初始化公共部分，顶层打印也属于初始化行为。为避免测试噪声，正式库模块只放定义，交互启动放入口文件。
 
-未来完整 check 还会检查 spec 内语法和名字，并读取依赖源码，但不执行用户初始化、结构默认值、Lazy、查询或 GUI。测试未收集到用例不能算成功。诊断和退出码详见 [diagnostics](../docs/language/diagnostics.md)。
+check 检查 spec 内语法和名字，并读取依赖源码，但不执行用户初始化、结构默认值、Lazy、查询或 GUI。测试未收集到用例不能算成功。诊断和退出码详见 [diagnostics](../docs/language/diagnostics.md)。
 
 ## 3. 从需求到 ZZY 程序
 
@@ -127,7 +127,7 @@ zno、array.copy 和 with 都不是深冻结/深复制。为实现撤销，应�
 
 执行顺序以 [roadmap](../docs/development/roadmap.md) 为准，具体部件见 [interpreter](../docs/runtime/interpreter.md)。核心主线是 P00 → P01 → P02 → P03 → P04 → P05 → P06，再完成 P07 测量、P09 应用和 P11 交付；分支依赖见阶段表，不把文档讲解顺序当作开发依赖。
 
-后续先核对仓库和环境，再从 P04 Result/匹配扩展当前 AST/Resolver/树遍历执行，保留全部 CLI 回归。不要先建 VM，或一次性实现所有扩展。E 在 P05/P06 后分阶段推进；Web/Python 互联 P08 在 P09 后可选，P10 优化依据测量决定。
+后续先核对仓库和环境，再从 P06-01 扩充完整黑盒与指南验收，保留全部 CLI 回归。不要先建 VM，或一次性实现所有扩展。E 在 P05/P06 后分阶段推进；Web/Python 互联 P08 在 P09 后可选，P10 优化依据测量决定。
 
 每个实现任务按以下过程收尾：
 
@@ -146,3 +146,16 @@ zno、array.copy 和 with 都不是深冻结/深复制。为实现撤销，应�
 默认应用是校园任务管家，业务用 ZZY 编写，Python 只提供通用宿主能力。实际 ZZY 源码至少 200 行，建议有效代码也达到要求，不靠注释和重复代码凑数。绘图演示不自动替代该交付物，变更应用主题时仍须满足作业要求。
 
 最终按 [requirement](../docs/requirement.md) 核对八项交付物：语法规则、解释器源代码、ZZY 黑盒测试集、性能报告、开发及 AI 指南、应用源代码及 Agent 开发记录、所有工作的 Git 历史、系统介绍 PPT。本文和 SKILL 目前只是指南草稿；P06 仍须实际运行示例，并验证他人或 Agent 能仅依靠指南完成任务。
+
+
+## P05 库与模块的已验证用法
+
+完整签名、参数顺序和错误以 [stdlib](../docs/language/stdlib.md) 为准。可运行的多文件示例为 [library/main.zzy](../examples/library/main.zzy)，依赖同目录 [helpers.zzy](../examples/library/helpers.zzy)，测试为 [spec.zzy](../examples/library/spec.zzy)。从根目录执行 `python -m zzy run examples/library/main.zzy`；模块路径相对 main.zzy，不依赖当前工作目录。普通文件路径仍相对工作目录，spec 每例有私有目录，示例 report.json 随该目录清理。
+
+Map 使用 data.map/has/get/set/keys；get 缺键为 E204，显式 Null 值仍算存在。JSON parse 的成功值先用 data.kind 分类，再访问成员；失败 Result 用匹配分支处理。保存可先 data.stringify，成功后 io.write_atomic；类型/资源诊断不会自动变为可恢复 Result。write_text 是普通覆盖，只有 write_atomic 提供临时文件关闭后替换的旧文件保护。
+
+sum/stats 逐项检查 Int，Bool/Float 不混入；stats 的 min/max 空值为 Null。sorted 稳定且不修改源；map/filter 从左到右调用一次，允许替换输入元素，禁止通过任何别名增删活动输入。回调错误停止处理，不能拿到部分结果。结构、Map 和数组的赋值仍共享引用，copy/with 只浅复制。
+
+查询白名单固定为 len/str、math.abs、text.trim/contains、unit.make/format；不可把库别名、动态函数或 data.kind 放进查询条目。普通具名函数可以封装整个查询并通过模块导出。unit.format 使用精确分数；unit.make(Float, unit) 保留该 Float 的实际二进制值。
+
+宿主注册元数据、失败注入、模块/文件/spec 隔离的证据索引见 [P05 测试映射](../tests/p05/README.md)。完整指南逐段执行与完整 RESOURCE/CLI 矩阵留到 P06；本次没有验证 GUI、其他操作系统或性能收益。

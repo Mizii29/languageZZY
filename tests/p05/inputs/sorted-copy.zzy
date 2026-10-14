@@ -1,0 +1,1 @@
+(zno)a:=[3,1,2,1];io.print(array.sorted(a));io.print(a);io.print(array.sorted(["中","a","A"]));io.print(array.sorted([])==array.sorted([]));

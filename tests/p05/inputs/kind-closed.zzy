@@ -1,0 +1,1 @@
+(shape) S {}(machine) M {a -- "x" --> a;}io.print(array.map([(null),(true),1,1.0,"x",[],data.map(),S::{},S,M,M("a"),1::s,(^_^)(1),(zzz)(1/0),len,range(0,2,1),io],data.kind));

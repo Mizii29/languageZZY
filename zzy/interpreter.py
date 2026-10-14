@@ -11,33 +11,17 @@ from weakref import WeakSet
 from .features import Features
 from . import quantities
 from .diagnostics import Diagnostic, DiagnosticError, Phase, ResourceExceeded, display_path
-from .native.metadata import Extension, MetadataRegistry, NativeFunction
+from .native.metadata import NativeFunction
 from .values import (Array, Binding, CallRequest, Cell, Closure, Frame, LoopSignal,
                      NULL, ReturnSignal, Value, WakeRequest, boolean)
 
 
-FUNCTIONS = {
-    "io.print": NativeFunction("io.print", ("value",), "Null", ("stdout",), ("E202", "E211")),
-    "io.input": NativeFunction("io.input", ("prompt",), "String|Null", ("stdin", "stdout"), ("E201", "E202", "E211", "E401")),
-    "array.copy": NativeFunction("array.copy", ("values",), "Array", (), ("E201", "E202", "E211")),
-    "array.push": NativeFunction("array.push", ("values", "value"), "Null", ("mutation",), ("E201", "E202", "E206", "E211")),
-    "array.pop": NativeFunction("array.pop", ("values",), "value", ("mutation",), ("E201", "E202", "E204", "E206")),
-    "len": NativeFunction("len", ("value",), "Int", (), ("E201", "E202", "E211")),
-    "str": NativeFunction("str", ("value",), "String", (), ("E201", "E202", "E211")),
-    "wake": NativeFunction("wake", ("value",), "value", ("lazy",), ("E201", "E202", "E209", "E211")),
-    "range": NativeFunction("range", ("start", "stop", "step"), "Range", (), ("E201", "E202", "E208", "E211")),
-}
-for name in ("len", "str", "range", "wake"):
-    old = FUNCTIONS[name]
-    FUNCTIONS[name] = NativeFunction("core." + name, old.parameters, old.returns, old.effects, old.errors)
+from .native.catalog import FUNCTIONS, REGISTRY, NAMESPACES
+from .native.library import Library
 PRINT = FUNCTIONS["io.print"]
-REGISTRY = MetadataRegistry()
-for namespace in ("io", "array", "core"):
-    REGISTRY.register(Extension(namespace, "p04-v1", functions=tuple(
-        value for name, value in FUNCTIONS.items() if value.name.startswith(namespace + "."))))
 
 
-class Interpreter(Features):
+class Interpreter(Features, Library):
     def __init__(self, program, output, stdin=None):
         self.program, self.output = program, output
         self.stdin = sys.stdin if stdin is None else stdin
@@ -51,18 +35,22 @@ class Interpreter(Features):
         self.call_depth = 0
         self.current_item = None
         self.selected_spec = None
+        self.modules = {}
+
+    def location(self, node):
+        return display_path(node.token.source.path)
 
     def error(self, node, code, message):
-        raise DiagnosticError(Diagnostic(message, code, self.file, node.token.span), Phase.EXECUTION)
+        raise DiagnosticError(Diagnostic(message, code, self.location(node), node.token.span), Phase.EXECUTION)
 
     def check(self, key, count, node):
-        self.meter.check(key, count, file=self.file, span=node.token.span)
+        self.meter.check(key, count, file=self.location(node), span=node.token.span)
 
     def reserve(self, node, **amounts):
         # A dead container cycle must not keep a live-value quota occupied.
         if any(self.meter.used(key) + n > self.meter.policy.limits[key] for key, n in amounts.items()):
             gc.collect()
-        reservation = self.meter.reserve(file=self.file, span=node.token.span, **amounts)
+        reservation = self.meter.reserve(file=self.location(node), span=node.token.span, **amounts)
         self.reservations.add(reservation)
         return reservation
 
@@ -84,10 +72,12 @@ class Interpreter(Features):
         try:
             self.slots.append(self.reserve(self.program.root, runtime_objects=2, runtime_slots=2))
             self.bindings["io"] = Binding(Value("Namespace", {"print": Value("Function", PRINT)}), False)
+            self.bindings["io"].value.namespace = "io"
             self.drive(self.execute_program())
         finally:
             self.frame = None
             self.call_depth = 0
+            self.modules.clear()
             self.bindings.clear()
             self.scopes[:] = [self.bindings]
             for reservation in self.slots:
@@ -201,7 +191,7 @@ class Interpreter(Features):
                     self.call_depth -= 1
         except (DiagnosticError, ResourceExceeded) as error:
             position = call.token.span.start
-            note = f"调用 {closure.name}：{self.file}:{position.line}:{position.column}"
+            note = f"调用 {closure.name}：{self.location(call)}:{position.line}:{position.column}"
             diagnostic = replace(error.diagnostic, notes=(*error.diagnostic.notes, note))
             if isinstance(error, ResourceExceeded):
                 # Keep quota aborts outside ordinary language-error handlers.
@@ -215,7 +205,9 @@ class Interpreter(Features):
                 return scope[symbol]
         if isinstance(symbol, str):
             reservation = self.reserve(node, runtime_objects=1, runtime_slots=1)
-            value = Value("Namespace", {}) if symbol == "array" else Value("Function", FUNCTIONS[symbol])
+            value = Value("Namespace", {}) if symbol in NAMESPACES else Value("Function", FUNCTIONS[symbol])
+            if value.kind == "Namespace":
+                value.namespace = symbol
             value.reservation = reservation
             self.bindings[symbol] = Binding(value, False)
             return self.bindings[symbol]
@@ -274,11 +266,23 @@ class Interpreter(Features):
         if not valid:
             name = annotation if isinstance(annotation, str) else annotation.data[0].token.lexeme
             raise DiagnosticError(Diagnostic(f"注解要求 {name}，实际为 {value.kind}",
-                                             "E201", self.file, node.token.span if token_only else node.span), Phase.EXECUTION)
+                                             "E201", self.location(node), node.token.span if token_only else node.span), Phase.EXECUTION)
 
     def statement(self, node):
         self.meter.cancellation.check()
-        if node.kind == "match":
+        if node.kind == "use":
+            root = self.program.modules[id(node)]
+            if id(root) not in self.modules:
+                exports = [n for n in root.children if n.kind in {"function", "shape", "machine"}]
+                module = Value("Module", {}, self.reserve(node, runtime_objects=1, runtime_slots=len(exports)))
+                self.modules[id(root)] = module
+                for statement in root.children:
+                    if statement.kind != "spec":
+                        yield from self.statement(statement)
+                module.data.update((n.token.lexeme, self.bindings[id(n)].value) for n in exports)
+            self.bindings[id(node)] = Binding(self.modules[id(root)], False)
+            self.slots.append(self.reserve(node, runtime_slots=1))
+        elif node.kind == "match":
             yield from self.match(node)
         elif node.kind in {"assert", "trace"}:
             value = yield from self.evaluate(node.children[0])
@@ -422,11 +426,20 @@ class Interpreter(Features):
             if write:
                 self.error(node, "E203", "state 只读")
             return owner.data[1]
+        if owner.kind == "Module":
+            if write:
+                self.error(node, "E203", "模块导出只读")
+            if name not in owner.data:
+                self.error(node, "E303", f"模块没有导出 {name}")
+            return owner.data[name]
         if owner.kind == "Namespace":
             if write:
                 self.error(node, "E203", "命名空间字段只读")
             if name not in owner.data:
-                namespace = next(name for name in ("io", "array") if name in self.bindings and owner is self.bindings[name].value)
+                namespace = owner.namespace
+                if namespace == "array" and name == "Stats":
+                    owner.data[name] = self.stats_definition(node)
+                    return owner.data[name]
                 qualified = namespace + "." + name
                 if qualified not in FUNCTIONS:
                     self.error(node, "E302", f"字段 {name} 尚未实现或不存在")
@@ -739,7 +752,7 @@ class Interpreter(Features):
             return self.make_range(args, node)
         value = args[0]
         if name == "len":
-            if value.kind not in {"String", "Array", "Range"}:
+            if value.kind not in {"String", "Array", "Map", "Range"}:
                 self.error(node, "E201", "len 需要 Array、String 或 Range")
             if value.kind == "Range":
                 start, stop, step = (item.data for item in value.data)
@@ -867,8 +880,10 @@ class Interpreter(Features):
                 append("<machine " + item.data[0].data[0].token.lexeme + ": " + item.data[1].data + ">")
             elif item.kind == "Function":
                 append(f"<function {item.data.name}>")
+            elif item.kind == "Module":
+                append("<module>")
             elif item.kind == "Namespace":
-                append("<module io>" if item is self.bindings["io"].value else "<module array>")
+                append("<module " + item.namespace + ">")
             elif item.kind == "Definition":
                 append("<shape " + item.data[0].token.lexeme + ">")
             else:
@@ -879,6 +894,14 @@ class Interpreter(Features):
                         append("(^_^)(" if item.data[0] else "(T_T)(")
                         visit(item.data[1], depth + 1)
                         append(")")
+                    elif item.kind == "Map":
+                        append("{")
+                        for index, (key, child) in enumerate(item.data.items()):
+                            if index:
+                                append(", ")
+                            append(key + ": ")
+                            visit(child, depth + 1)
+                        append("}")
                     elif item.kind == "Array":
                         append("[")
                         for index, child in enumerate(item.data):
@@ -952,7 +975,7 @@ class Interpreter(Features):
         elif value.kind == "Function":
             text = f"<function {value.data.name}>"
         elif value.kind == "Namespace":
-            text = "<module io>" if value is self.bindings["io"].value else "<module array>"
+            text = "<module " + value.namespace + ">"
         else:
             formatted = self.debug_text(value, node)
             text = formatted.data

@@ -1,0 +1,1 @@
+(zno)a:=[-3,7,9,0];(zno)s:=array.stats(a);io.print([s.count,s.sum,s.min,s.max]);a[0]<-8;io.print(s.min);io.print(array.stats(a).min);

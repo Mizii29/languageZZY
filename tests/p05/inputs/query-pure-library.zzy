@@ -1,0 +1,1 @@
+io.print([" x ","a"] ?> {(keep):text.contains(text.trim(@),"x");(yield):text.trim(@);});io.print([-2,1] ?> {(order):math.abs(@);(yield):unit.format(unit.make(@,"s"),"ms");});

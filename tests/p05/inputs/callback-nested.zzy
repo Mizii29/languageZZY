@@ -1,0 +1,1 @@
+(zno)a:=[1,2];(addnew) f(x){(return)array.sum(array.map(a,(addnew)(y)=>y+x));}io.print(array.map(a,f));
