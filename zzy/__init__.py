@@ -1,3 +1,3 @@
-"""ZZY foundations and lexer; AST execution is not yet implemented."""
+"""ZZY core language and AST tree-walk interpreter."""
 
 __version__ = "0.6.0a1"

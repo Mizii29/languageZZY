@@ -2,7 +2,7 @@
 
 ZZY 是赵梓伊在程序设计实践课程中设计的通用脚本语言，使用 Python 实现解释器，用 ZZY 编写测试、性能脚本和完整应用。
 
-**当前状态：P00—P06 已实现，版本 0.6.0a1；核心语法、io/array/text/math/data/unit 标准库、Map/严格 JSON、原子文件保存及模块已接通。GUI、性能测量和完整应用仍待后续阶段。** 核心语法 v0.6、标准库契约 v0.6.1 不变。Python AST 树遍历；run/check/test 共用前端准备。1588 项独立外部 CLI 期望与宿主状态/运行器测试覆盖当前能力，阶段证据见开发记录。
+**当前状态：P00—P07 已完成，运行时版本仍为 0.6.0a1；核心语法、io/array/text/math/data/unit 标准库、Map/严格 JSON、原子文件保存及模块已接通。B01—B09 性能基线与一项已验证优化已有实测；GUI 和完整应用仍待后续阶段。** 核心语法 v0.6、标准库契约 v0.6.1 不变。Python AST 树遍历；run/check/test 共用前端准备。1588 项独立外部 CLI 期望与宿主状态/运行器测试覆盖当前能力，阶段证据见开发记录。
 
 ## 项目特色
 
@@ -32,7 +32,7 @@ pyproject.toml            包配置，核心无第三方运行依赖
 zzy/                      CLI、Lexer/Parser/AST、准备/执行、源码、诊断和资源基础
 tests/                    宿主测试及 lex/run/check 的 .zzy 外部清单和统一运行器
 examples/                 读取/词法样例、hello.zzy 、grades.zzy 成绩菜单与 functions.zzy 函数示例及 features/features-spec 特色示例与 library/ 模块/库示例
-benchmarks/               基准目录说明；P07 实现
+benchmarks/               B01—B09 配对程序、原始数据、剖析与交错复测工具
 apps/                     应用目录说明；P09 实现
 docs/                     权威契约、设计、实施计划和验证记录
 skills/                   面向使用者和 AI 的文档
@@ -135,3 +135,12 @@ Web、NumPy 和字节码 VM 属于可选后续工作。P00 的资源计量接口
 ## P06 一键验收与已验证指南
 
 `python -X utf8 -m tests` 运行全部 CLI、spec 和宿主回归，空收集/跳过/少执行/失败均返回非零；`--report dist/p06-all-tests.json` 保存计数、环境与默认策略指纹（目录需存在）。外部黑盒仍可单独运行。映射、15 个指南片段、9 个变形 spec、资源验证范围见 [P06 验收](tests/p06/README.md)；真实 Agent 练习见 [分钟汇总](examples/agent-practice/README.md)。Windows 11 的真实 Ctrl+C/run/test、派生进程树回收和临时目录清理已经专项验证；其他平台及未测大容量范围明确列在验收页。GUI/Web/长期 Program 缓存仍未实现，不由本阶段完成推断可用。
+
+
+## P07 性能实测
+
+[性能报告](docs/runtime/performance-report.md) 和 [复现说明](benchmarks/README.md) 保存完整 CLI、准备、初始化、纯执行与清理的边界。基线先固定，再单独剖析与优化；默认资源配置未放宽。基线1644条记录含1260条正式样本（1259成功、1超时），另有12预检超时和24配对未测量，不把失败当作0ms。
+
+路径显示的重复计算是已测热点；执行上下文内复用显示路径、cwd改变时失效，未缓存用户值或Program。B01/B04在n=10000的两版交错复测中，纯执行中位数分别加快3.38/3.33倍、完整CLI加快2.22/2.29倍；准备和清理没有一致收益，完整数据及局限见报告。基线中ZZY仍慢于Python，没有承诺跨任务、平台或所有规模的统一加速。
+
+优化后的完整回归为1744/1744（含原1588条外部CLI），无失败/跳过；两版性能复测152条记录全成功。运行时版本号保留0.6.0a1，具体性能版本按Git提交区分。下一项P09-01；公开嵌入/长期Program缓存、GUI和完整应用并未因P07完成而实现。

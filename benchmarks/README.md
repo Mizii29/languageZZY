@@ -1,6 +1,6 @@
 # 性能基准目录
 
-P07 按 [性能契约](../docs/runtime/performance.md) 建立 B01—B09 的配对程序、独立答案和内部测量驱动。运行时仍为 P06 的 0.6.0a1；测量工具不是公开嵌入 API。阶段进度以 todo 和实际记录为准。
+P07 按 [性能契约](../docs/runtime/performance.md) 建立 B01—B09 的配对程序、独立答案和内部测量驱动。运行时仍为 P06 的 0.6.0a1；测量工具不是公开嵌入 API。已完成实测见 [性能报告](../docs/runtime/performance-report.md)，阶段进度以 todo 和实际记录为准。
 
 在项目根目录使用 CPython 3.12.14：
 
@@ -28,3 +28,21 @@ P07 按 [性能契约](../docs/runtime/performance.md) 建立 B01—B09 的配�
 比较边界：B01—B03 是基础同算法；B04—B05 是检查后的库任务，Python 独立包装共享资源策略/计量器，B04 排除 Bool 并对每个非负部分和使用同样的位宽探测、临时/结果预算。该包装只为固定非负输入实现，不冒充完整 ZZY 标准库。B05 完整校验和复制，均稳定排序。B07 同快照、全部筛选、全部键、稳定比较排序、截取/投影；B08 同转移查表、Result 创建/匹配和状态更新；B09 同精确 Fraction、gcd 交叉乘法、量纲和中间位数检查。Python 不模拟 AST 分派、变量槽、每个 ZZY Value 的对象预算；这部分语言运行成本属于对照差异。B07/B09 不是“全资源运行时开销相同”的库微基准。B09 固定小操作数均在默认限制内，Python 检查中间整数的方式不构成任意恶意大数的公开安全接口。
 
 `environment.json` 保存系统/CPU/物理内存、Python/Unicode/包版本、Git/脏状态、GC、资源配置及指纹、计时器；`tracked.diff` 保存跟踪文件差异。`raw.jsonl` 按真实顺序逐条 flush，包含命令、阶段、索引、结果、时间或失败；`summary.json` 提供中位数、最小/最大值、MAD、实际样本数与失败列表。新进程不是冷页缓存；逻辑资源预算不是 RSS。剖析和内存探针须另跑，不混入速度样本。
+
+
+附加复现工具（均从项目根目录运行，输出目录须为新目录）：
+
+```powershell
+& ./.venv/Scripts/python.exe -X utf8 -m benchmarks.audit benchmarks/results/baseline
+& ./.venv/Scripts/python.exe -X utf8 -m benchmarks.compare --before 05e972b --after 03c3ea7 --cases B01 B04 --n 10000 --output benchmarks/results/location-comparison-new
+& ./.venv/Scripts/python.exe -X utf8 -m benchmarks.profile --inputs benchmarks/results/baseline/inputs --case B01 --n 1000 --output benchmarks/results/profile-new
+& ./.venv/Scripts/python.exe -X utf8 -m benchmarks.profile --inputs benchmarks/results/baseline/inputs --case B07 --n 1000 --memory --output benchmarks/results/memory-new
+& ./.venv/Scripts/python.exe -X utf8 -m benchmarks.stdio_probe --comparison benchmarks/results/location-comparison --output benchmarks/results/stdin-new
+& ./.venv/Scripts/python.exe -X utf8 -m benchmarks.report --baseline benchmarks/results/baseline --comparison benchmarks/results/location-comparison --output dist/p07-tables.md
+```
+
+compare从本地Git提取两版源码，核对资源实现及生效配置，保存源码快照/哈希；两版使用相同的`-I`/runpy启动器与同一输入，按种子交错3次预热/15次样本。该启动器与首轮基线的直接`-m zzy`不同，优化比仅由同一次compare实验计算。这里只复测B01/B04的n=10000，不泛化到所有规模。基准驱动没有自动优化用户算法。
+
+profile和tracemalloc输出是独立诊断，不能当速度样本；后者不是峰值RSS。stdio_probe对4096/65536/1048576字符分别执行一次，保存完整结果或30秒超时，是功能/截止时间探针，不计算统计加速比。audit返回0仅说明证据结构完整；基线run或stdin探针中有超时则仍返回1。report只重建数据表；正式报告末尾的验收分析另根据剖析与回归记录编写。
+
+本次资源配置始终默认。初版基线的100000档部分请求超时，另有B04一次正式样本超时，不能据已完成样本宣称整个规模通过；详情在原始记录和报告中。硬件CIM查询的null原记录保留，hardware-supplement.json记录同机Windows注册表/内存API的补充证据。driver-entrypoints.json只补充实际内部调用名，不修改原始清单快照或样本。

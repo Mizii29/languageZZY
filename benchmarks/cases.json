@@ -60,7 +60,16 @@
         "host_decimal_digits": 4300,
         "effective_decimal_digits": 4096
       },
-      "resource_fingerprint": "2e654aef52d3267bfecf0768bef9faee1eed942a329001ec455aee951c858bd2"
+      "resource_fingerprint": "2e654aef52d3267bfecf0768bef9faee1eed942a329001ec455aee951c858bd2",
+      "internal_entrypoints": {
+        "zzy_prepare": "zzy.prepare.prepare(Source.from_bytes(path, raw), meter)",
+        "zzy_initialize": "Interpreter.run -> SampleInterpreter.execute_program -> statement",
+        "zzy_execute": "Interpreter.drive -> evaluate(original bench() call) -> execute_user",
+        "python_prepare": "compile(raw, filename, exec)",
+        "python_initialize": "exec(code, fresh namespace)",
+        "python_execute": "namespace[bench]()",
+        "scope_note": "internal measurement only; no public P08 embedding API"
+      }
     },
     {
       "id": "B02",
@@ -120,7 +129,16 @@
         "host_decimal_digits": 4300,
         "effective_decimal_digits": 4096
       },
-      "resource_fingerprint": "2e654aef52d3267bfecf0768bef9faee1eed942a329001ec455aee951c858bd2"
+      "resource_fingerprint": "2e654aef52d3267bfecf0768bef9faee1eed942a329001ec455aee951c858bd2",
+      "internal_entrypoints": {
+        "zzy_prepare": "zzy.prepare.prepare(Source.from_bytes(path, raw), meter)",
+        "zzy_initialize": "Interpreter.run -> SampleInterpreter.execute_program -> statement",
+        "zzy_execute": "Interpreter.drive -> evaluate(original bench() call) -> execute_user",
+        "python_prepare": "compile(raw, filename, exec)",
+        "python_initialize": "exec(code, fresh namespace)",
+        "python_execute": "namespace[bench]()",
+        "scope_note": "internal measurement only; no public P08 embedding API"
+      }
     },
     {
       "id": "B03",
@@ -180,7 +198,16 @@
         "host_decimal_digits": 4300,
         "effective_decimal_digits": 4096
       },
-      "resource_fingerprint": "2e654aef52d3267bfecf0768bef9faee1eed942a329001ec455aee951c858bd2"
+      "resource_fingerprint": "2e654aef52d3267bfecf0768bef9faee1eed942a329001ec455aee951c858bd2",
+      "internal_entrypoints": {
+        "zzy_prepare": "zzy.prepare.prepare(Source.from_bytes(path, raw), meter)",
+        "zzy_initialize": "Interpreter.run -> SampleInterpreter.execute_program -> statement",
+        "zzy_execute": "Interpreter.drive -> evaluate(original bench() call) -> execute_user",
+        "python_prepare": "compile(raw, filename, exec)",
+        "python_initialize": "exec(code, fresh namespace)",
+        "python_execute": "namespace[bench]()",
+        "scope_note": "internal measurement only; no public P08 embedding API"
+      }
     },
     {
       "id": "B04",
@@ -240,7 +267,16 @@
         "host_decimal_digits": 4300,
         "effective_decimal_digits": 4096
       },
-      "resource_fingerprint": "2e654aef52d3267bfecf0768bef9faee1eed942a329001ec455aee951c858bd2"
+      "resource_fingerprint": "2e654aef52d3267bfecf0768bef9faee1eed942a329001ec455aee951c858bd2",
+      "internal_entrypoints": {
+        "zzy_prepare": "zzy.prepare.prepare(Source.from_bytes(path, raw), meter)",
+        "zzy_initialize": "Interpreter.run -> SampleInterpreter.execute_program -> statement",
+        "zzy_execute": "Interpreter.drive -> evaluate(original bench() call) -> execute_user",
+        "python_prepare": "compile(raw, filename, exec)",
+        "python_initialize": "exec(code, fresh namespace)",
+        "python_execute": "namespace[bench]()",
+        "scope_note": "internal measurement only; no public P08 embedding API"
+      }
     },
     {
       "id": "B05",
@@ -300,7 +336,16 @@
         "host_decimal_digits": 4300,
         "effective_decimal_digits": 4096
       },
-      "resource_fingerprint": "2e654aef52d3267bfecf0768bef9faee1eed942a329001ec455aee951c858bd2"
+      "resource_fingerprint": "2e654aef52d3267bfecf0768bef9faee1eed942a329001ec455aee951c858bd2",
+      "internal_entrypoints": {
+        "zzy_prepare": "zzy.prepare.prepare(Source.from_bytes(path, raw), meter)",
+        "zzy_initialize": "Interpreter.run -> SampleInterpreter.execute_program -> statement",
+        "zzy_execute": "Interpreter.drive -> evaluate(original bench() call) -> execute_user",
+        "python_prepare": "compile(raw, filename, exec)",
+        "python_initialize": "exec(code, fresh namespace)",
+        "python_execute": "namespace[bench]()",
+        "scope_note": "internal measurement only; no public P08 embedding API"
+      }
     },
     {
       "id": "B06",
@@ -360,7 +405,16 @@
         "host_decimal_digits": 4300,
         "effective_decimal_digits": 4096
       },
-      "resource_fingerprint": "2e654aef52d3267bfecf0768bef9faee1eed942a329001ec455aee951c858bd2"
+      "resource_fingerprint": "2e654aef52d3267bfecf0768bef9faee1eed942a329001ec455aee951c858bd2",
+      "internal_entrypoints": {
+        "zzy_prepare": "zzy.prepare.prepare(Source.from_bytes(path, raw), meter)",
+        "zzy_initialize": "Interpreter.run -> SampleInterpreter.execute_program -> statement",
+        "zzy_execute": "Interpreter.drive -> evaluate(original bench() call) -> execute_user",
+        "python_prepare": "compile(raw, filename, exec)",
+        "python_initialize": "exec(code, fresh namespace)",
+        "python_execute": "namespace[bench]()",
+        "scope_note": "internal measurement only; no public P08 embedding API"
+      }
     },
     {
       "id": "B07",
@@ -420,7 +474,16 @@
         "host_decimal_digits": 4300,
         "effective_decimal_digits": 4096
       },
-      "resource_fingerprint": "2e654aef52d3267bfecf0768bef9faee1eed942a329001ec455aee951c858bd2"
+      "resource_fingerprint": "2e654aef52d3267bfecf0768bef9faee1eed942a329001ec455aee951c858bd2",
+      "internal_entrypoints": {
+        "zzy_prepare": "zzy.prepare.prepare(Source.from_bytes(path, raw), meter)",
+        "zzy_initialize": "Interpreter.run -> SampleInterpreter.execute_program -> statement",
+        "zzy_execute": "Interpreter.drive -> evaluate(original bench() call) -> execute_user",
+        "python_prepare": "compile(raw, filename, exec)",
+        "python_initialize": "exec(code, fresh namespace)",
+        "python_execute": "namespace[bench]()",
+        "scope_note": "internal measurement only; no public P08 embedding API"
+      }
     },
     {
       "id": "B08",
@@ -480,7 +543,16 @@
         "host_decimal_digits": 4300,
         "effective_decimal_digits": 4096
       },
-      "resource_fingerprint": "2e654aef52d3267bfecf0768bef9faee1eed942a329001ec455aee951c858bd2"
+      "resource_fingerprint": "2e654aef52d3267bfecf0768bef9faee1eed942a329001ec455aee951c858bd2",
+      "internal_entrypoints": {
+        "zzy_prepare": "zzy.prepare.prepare(Source.from_bytes(path, raw), meter)",
+        "zzy_initialize": "Interpreter.run -> SampleInterpreter.execute_program -> statement",
+        "zzy_execute": "Interpreter.drive -> evaluate(original bench() call) -> execute_user",
+        "python_prepare": "compile(raw, filename, exec)",
+        "python_initialize": "exec(code, fresh namespace)",
+        "python_execute": "namespace[bench]()",
+        "scope_note": "internal measurement only; no public P08 embedding API"
+      }
     },
     {
       "id": "B09",
@@ -540,7 +612,16 @@
         "host_decimal_digits": 4300,
         "effective_decimal_digits": 4096
       },
-      "resource_fingerprint": "2e654aef52d3267bfecf0768bef9faee1eed942a329001ec455aee951c858bd2"
+      "resource_fingerprint": "2e654aef52d3267bfecf0768bef9faee1eed942a329001ec455aee951c858bd2",
+      "internal_entrypoints": {
+        "zzy_prepare": "zzy.prepare.prepare(Source.from_bytes(path, raw), meter)",
+        "zzy_initialize": "Interpreter.run -> SampleInterpreter.execute_program -> statement",
+        "zzy_execute": "Interpreter.drive -> evaluate(original bench() call) -> execute_user",
+        "python_prepare": "compile(raw, filename, exec)",
+        "python_initialize": "exec(code, fresh namespace)",
+        "python_execute": "namespace[bench]()",
+        "scope_note": "internal measurement only; no public P08 embedding API"
+      }
     }
   ]
 }

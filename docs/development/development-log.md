@@ -390,3 +390,21 @@ Git 提交：真实标识 / 未提交
 - .venv/Scripts/python.exe -X utf8 -m tests --report benchmarks/results/regression/all-tests.json：1744/1744、汇总计时579.844秒、退出0，failures/errors/skipped/expected_failures全0；其中包含原有1588条外部CLI清单。只跑一次最终完整回归，未把额外宿主/基准调用与1588相加。
 - 资源配置、正式语法/库规则未改；requirement SHA-256保持B099C19FC339CE1DC1AAB7E9D6C8126A9C5C9ACE3D31B969A0623DF90F521D2B。运行时包版本仍0.6.0a1，用Git提交明确区分性能版本。
 - 下一步固定此优化源码提交，使用before=05e972b与after实际提交的隔离快照，同一输入/启动器交错测B01/B04、n=10000，3预热/15样本；尚未宣称有速度收益，P07-03/04保持未完成。
+
+
+## 2026-10-14：P07-03/04 复测、真实性能报告与阶段验收
+
+- 优化源码先固定为03c3ea7，再实际执行 `.venv/Scripts/python.exe -X utf8 -m benchmarks.compare --before 05e972b --after 03c3ea7 --cases B01 B04 --n 10000 --output benchmarks/results/location-comparison`。两版各27个源码文件从Git提取并保存哈希，资源实现及生效配置相同，同一输入/隔离启动器，种子交错，3预热/15样本、batch=1。152条记录全部成功（8预检/24预热/120正式），退出0；顺序、完整索引、源码哈希和重新计算的统计再次核对通过。不是用优化后工作区冒充旧版本。
+- 真实收益：B01 execute 中位数1319.508→390.084ms（3.383倍），B04为425.355→127.860ms（3.327倍）；CLI分别1624.206→731.050ms（2.222倍）、1806.195→790.311ms（2.285倍）。离散程度及min/max保存在原始数据/汇总；B04 prepare约慢9.1%、cleanup约慢6.8%，不声称所有阶段改善，也未对小幅变化作统计显著性检验。只测这两个任务的n=10000，不推断优化后完整九项矩阵或跨平台结果。
+- 独立优化后剖析：`-m benchmarks.profile --inputs benchmarks/results/baseline/inputs --case B01 --n 1000 --output benchmarks/results/profile-after-B01`，完整答案正确。display_path调用8020→8，location累计从0.290917到0.012898秒；剖析样本不混入正式计时，不由其耗时计算速度加速比。
+- 内存探针：`-m benchmarks.profile --inputs benchmarks/results/baseline/inputs --case B07 --n 1000 --memory --output benchmarks/results/memory-B07`，结果正确，tracemalloc峰值2596070字节、当前119668字节。范围为整个sample及额外前端探针，仅Python被跟踪分配，不是RSS/原生内存或默认最大容量。
+- P06大stdin遗留探针：`-m benchmarks.stdio_probe --comparison benchmarks/results/location-comparison --output benchmarks/results/stdin-probe`，4096/65536/1048576字符各版各一次。旧版1MiB在30.086秒超时，优化版11.135秒完成且长度正确；另四次成功。命令退出1，真实保留旧版失败；这是单次期限/正确性探针，不给统计加速比，不延长超时伪造旧版成功。
+- 正式报告：`-m benchmarks.report --baseline benchmarks/results/baseline --comparison benchmarks/results/location-comparison --output docs/runtime/performance-report.md`重建实际表格，随后追加基于剖析/回归的人工验收分析、命令和未测范围。报告区分ZZY/Python基础算法、等价库、ZZY优化前后及机制成本。完整可比较基线ZZY均较慢，不承诺比Python快。1260正式基线样本有1超时、另12预检超时及24配对未测量，未删除或填0；审计结构成功不代表这些工作量通过。
+- 最终证据审计：`-m benchmarks.audit benchmarks/results/baseline`退出0，1644记录/108预检组合/84测量组合/1260正式记录/37失败或门禁记录，evidence_complete=true、all_workloads_passed=false。当前cases只补内部函数名称，原基线清单及环境保持不动，新增driver-entrypoints.json说明；硬件null原值亦保留，Windows读取的补充数据单列。
+- 代码回归以此前1744/1744完整结果为准，功能逻辑自03c3ea7后未再修改；定稿只纠正zzy/__init__.py过期模块说明及清单/文档。最终 `-m unittest tests.test_p07_locations tests.test_p07_benchmarks tests.test_p06_guides -q`：16/16、12.700秒、退出0，包含真实双语言CLI/check与指南验证，不是只跑静态检查。
+- 本地包同步：bundled Python `-m pip wheel . --no-deps --no-build-isolation --no-index --no-cache-dir --wheel-dir dist`、`-m pip --python .venv/Scripts/python.exe install --force-reinstall --no-index --no-deps dist/zzy_language-0.6.0a1-py3-none-any.whl`成功。wheel SHA256为b2e5301515ec801ab30b6d6740f8bc533f35584bf1663f630e3454c80b7bb3a2。之后在dist工作目录用`-I -X utf8 -m zzy`执行九个n=10程序的run/check共18/18，逐字节输出/退出码正确，27个安装源码与工作区逐字节一致；报告dist/p07-install-validation.json。保持0.6.0a1，以Git区别性能修订，不把旧wheel当新实现。
+- 文档/范围：同步README、导航、roadmap、todo、test-coverage、SKILL与资源/运行时/性能说明。requirement原始SHA256不变，syntax/stdlib整个文件与P06提交一致。38份跟踪Markdown围栏配对、446个本地链接有效；70个代码任务ID唯一、39已完成。`-m compileall -q zzy benchmarks tests`和`git diff --check`通过；这些只作静态补充，不替代运行证据。
+- 验收结论：P07-01—04达到roadmap标准。等价性先验、基线、热点证据、单项优化、真实回归、交错复测及有退化/超时说明的报告均已交付。其他OS/Python、优化后完整B01—B09矩阵、超时规模完整分布、查询其他参数/失败事件性能、增长分母压力、最大默认实分配和RSS未验证。长期Program缓存、VM/NumPy、公开嵌入、GUI和完整应用没有新增实现。
+- Git：基于test的d085c94，本轮依次建立36e511e（工具）、c8f615f（恢复既有字节属性）、05e972b（基线）、03c3ea7（热点优化）及最终验收提交。核对纳入的配对脚本/原始证据/测试/说明；用户docs/manual-tests/保持未跟踪、不纳入，dist/.venv/构建产物保持忽略。只本地提交，不推送或改写历史；最终提交标识以Git历史及本轮报告为准。下一项P09-01，本轮在P07验收结束。
+
+- 暂存后补充核对：字节保留的Windows原始JSON含CRLF，首次cached diff检查将CR识别为尾部空白；pstats原文另有末尾空行。仅给benchmarks/results追加cr-at-eol，并对profile.txt允许工具自带的末尾空行，仍检查真正的行尾空格；不重写原始证据字节或哈希。重新核对暂存区通过。

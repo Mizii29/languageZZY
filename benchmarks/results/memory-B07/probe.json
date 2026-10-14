@@ -1,0 +1,17 @@
+{
+  "case": "B07",
+  "n": 1000,
+  "revision": "03c3ea7bf5c8798b7e1ed728f09fa5806d4ff659",
+  "git_status": "?? benchmarks/results/location-comparison/\n?? benchmarks/results/profile-after-B01/\n?? docs/manual-tests/",
+  "source_sha256": "a643c04bee80fe7104856c1e19597c5b4df1edc0175b33a570c0b98a9fc552a3",
+  "source": "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\benchmarks\\results\\baseline\\inputs\\B07-1000.zzy",
+  "resource_fingerprint": "2e654aef52d3267bfecf0768bef9faee1eed942a329001ec455aee951c858bd2",
+  "tool": "tracemalloc",
+  "timings_not_performance_samples": true,
+  "scope": "sample: read, prepare, fresh initialization, real task, validate, cleanup and frontend probe",
+  "current_python_bytes": 119668,
+  "peak_python_bytes": 2596070,
+  "limitation": "Python traced allocations only; not native allocations or process RSS",
+  "result_check": true,
+  "result_hash": "55f09729cf1db4c50b8ffa3e66d52bf539836c1472ff7a510177cabf28d21f37"
+}

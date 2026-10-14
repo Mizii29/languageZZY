@@ -264,13 +264,13 @@ python -m zzy test tests/
 zzy/                       已有基础、Lexer 与 P02 数据/控制解释链
 tests/                     已有宿主及统一 lex/run/check CLI 黑盒
 examples/                  已有读取/词法样例及可执行 hello.zzy
-benchmarks/                已建立目录说明；配对脚本/results 待 P07
+benchmarks/                已有B01—B09配对脚本、基线、剖析与复测results
 apps/zzy-campus/           默认 ZZY CLI 应用，待建立
 apps/zzy-sketch/           若选绘图应用时建立
 docs/                      已有设计文档
   language/                正式语法、库与诊断契约
   features/                创新与已选扩展
-  runtime/                 实现、性能；后续 performance-report
+  runtime/                 实现、性能契约与实际 performance-report
   development/             阶段、任务、覆盖、记录；后续 submission
 README.md                  已有项目介绍
 skills/                    P06 已逐段验证的使用文档与 AI 路由
@@ -280,10 +280,10 @@ skills/                    P06 已逐段验证的使用文档与 AI 路由
   zzy/SKILL.md              AI 指南，按任务引用 docs
 ```
 
-当前真实目录见 [项目 README](../../README.md)，正式文档导航见 [docs README](../README.md)。P00—P06 的解释器、核心库/模块、测试和指南已存在；P06 的真实证据与未验证范围见 tests/p06。性能报告、完整应用与交付索引仍为后续任务。
+当前真实目录见 [项目 README](../../README.md)，正式文档导航见 [docs README](../README.md)。P00—P07 的解释器、核心库/模块、测试、指南与性能报告已存在；P06语义证据见tests/p06，P07实测/超时/未测范围见performance-report。完整应用与交付索引仍为后续任务。
 
 ## 10. 接手与完成状态
 
-先核对实际仓库和 P06 验收记录，再执行 **P07-01** B01—B09 配对脚本与固定答案，保留本阶段完整回归。每阶段继续更新待办、运行说明和记录；字节码和大型 Web 扩展仍不提前实施。
+先核对实际仓库、P07验收记录及性能报告，再执行 **P09-01** 校园任务CLI应用，保留已有完整回归。每阶段继续更新待办、运行说明和记录；字节码和大型 Web 扩展仍不提前实施。
 
-当前共 70 项代码任务，完成状态以 todo 为唯一清单；当前 P00—P06 完成状态以实际验收记录为据，不提前勾选 P07、E 或完整应用。
+当前共 70 项代码任务，完成状态以 todo 为唯一清单；当前P00—P07完成状态以实际验收记录为据，不提前勾选E或完整应用。

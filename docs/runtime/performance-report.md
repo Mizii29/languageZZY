@@ -124,6 +124,28 @@ prepare：ZZY 包含解码/行索引/哈希及正式 prepare；Python 为 compil
 | gate | B09/100000 | zzy | stages | not_measured | 1 |
 | sample | B04/100000 | zzy | stages | timeout | 1 |
 
+## 优化前后：独立交错实验
+
+before：`05e972b9b819fa0e3b42a5cf04cfb02945c99083`；after：`03c3ea7bf5c8798b7e1ed728f09fa5806d4ff659`。
+两版从 Git 取出独立运行时快照，使用同一隔离启动器、同一份生成输入和相同有效资源配置，版本/范围按同一种子交错；3 次预热、15 次样本、batch=1。这里的 CLI 包含两边相同的 runpy 隔离启动器，不能与上表直接相除。
+加速比为 `T_before / T_after`，大于 1 才更快；没有完整样本则不计算。此实验只支持所列工作量的优化结论，未重新测全部 B01—B09 或优化后与 Python 的完整矩阵。
+
+| 任务/n | 范围 | before | after | before/after |
+|---|---|---:|---:|---:|
+| B01/10000 | cli_total | 1624.2060 ± 36.2182 (15) | 731.0496 ± 20.8496 (15) | 2.22 |
+| B01/10000 | prepare | 2.4950 ± 0.1262 (15) | 2.4927 ± 0.2324 (15) | 1.00 |
+| B01/10000 | initialize | 0.1747 ± 0.0130 (15) | 0.1287 ± 0.0071 (15) | 1.36 |
+| B01/10000 | execute | 1319.5084 ± 88.2161 (15) | 390.0842 ± 20.5037 (15) | 3.38 |
+| B01/10000 | cleanup | 0.0268 ± 0.0016 (15) | 0.0273 ± 0.0019 (15) | 0.98 |
+| B04/10000 | cli_total | 1806.1949 ± 34.5393 (15) | 790.3112 ± 24.4130 (15) | 2.29 |
+| B04/10000 | prepare | 2.2635 ± 0.1430 (15) | 2.4685 ± 0.1689 (15) | 0.92 |
+| B04/10000 | initialize | 1014.5116 ± 46.2795 (15) | 343.4818 ± 18.5739 (15) | 2.95 |
+| B04/10000 | execute | 425.3547 ± 18.2476 (15) | 127.8597 ± 5.8050 (15) | 3.33 |
+| B04/10000 | cleanup | 8.0460 ± 0.5259 (15) | 8.5944 ± 0.7628 (15) | 0.94 |
+
+对照记录完整：True；失败记录：0。
+[对照环境/源码版本](../../benchmarks/results/location-comparison/environment.json) · [对照原始样本](../../benchmarks/results/location-comparison/raw.jsonl) · [对照统计](../../benchmarks/results/location-comparison/summary.json)
+
 ## 复现命令
 
 从项目根目录执行；输出目录必须不存在。基线需检出记录中的基准提交（执行源码与 P06 d085c94 相同），或使用相同运行时快照；在当前优化后的版本直接跑基线命令会产生新的优化版测量，不能冒充原基线。不要覆盖历史数据。
@@ -136,3 +158,44 @@ prepare：ZZY 包含解码/行索引/哈希及正式 prepare；Python 为 compil
 ```
 
 run 返回 1 表示存在已记录的失败/超时/门禁未通过；audit 返回成功只代表证据结构完整，不把这些工作量改判为通过。测试及剖析命令、优化决策和未验证范围见后续验收记录。
+
+## 验收分析与优化决策
+
+本次达到 roadmap 的 P07 完成标准：B01—B09 配对工作量先检查输入、算法、答案和计时边界，再尝试三档测量；基线先保存为 `05e972b`，优化代码为 `03c3ea7`，原始失败、离散程度和可复现命令均保留。完成标准不要求 ZZY 更快，也不将超时改判为成功。完整样本可比较的基线任务均是 ZZY 较慢；不同任务不能合成一个语言总排名。
+
+基线共有 1644 条记录：108 个预检组合中 96 成功、12 超时；24 项配对范围停止正式计时；其余 84 项产生 252 条预热和 1260 条正式样本，正式样本 1259 成功、1 超时。B04/100000 stages 的 14 个成功样本已受超时截断，因此不计算对照比值。未完成最大规模并不意味着错答案或资源限额失败；本次记录的原因是整个子进程请求超时。
+
+独立 cProfile 显示 location 累计占 B01/B04/B09 剖析时间的 64.9%/64.6%/70.1%，主要耗在 Windows 相对路径转换。只优化这一项：Interpreter 缓存本次上下文的诊断显示路径，每次检测 cwd，改变即失效，run 结束清空。缓存只随固定源码路径数量增长；不缓存 Program、用户值、错误或执行结果，不减少类型、资源或取消检查。B01 同负载的 display_path 调用从 8020 降至 8。累计占比嵌套，不能相加；剖析耗时也不能充当正式加速比。
+
+证据：[B01 优化前](../../benchmarks/results/profile-before-B01/probe.json)、[B04 优化前](../../benchmarks/results/profile-before-B04/probe.json)、[B09 优化前](../../benchmarks/results/profile-before-B09/probe.json)、[B01 优化后](../../benchmarks/results/profile-after-B01/probe.json)。同目录保留 pstats 与可读调用统计。
+
+隔离版本对照只测 B01/B04 的 n=10000：8 次预检、24 次预热、120 次正式测量，152 条全成功。B01/B04 execute 中位数分别从 1319.508/425.355 ms 降至 390.084/127.860 ms，加速比 3.383/3.327；CLI 加速比 2.222/2.285。B04 prepare 从 2.264 到 2.469 ms（约慢 9.1%），cleanup 从 8.046 到 8.594 ms（约慢 6.8%），没有宣称所有阶段改善；这些小幅变化未作统计显著性检验。Python 的小任务尤其 B06 受计时调用和 batch=1000 上限影响，实际批次可能未达到目标100ms；原始批次公开，不夸大极短任务比值的精度。
+
+功能回归命令 `python -X utf8 -m tests --report benchmarks/results/regression/all-tests.json` 实际收集并执行 **1744/1744**，579.844秒，退出0，失败/错误/跳过/expected failure全0，含1588条既有外部CLI。新增测试验证 cwd 改变后的错误文件/行列、同一 Program 的上下文隔离和退出清理；基准测试还验证批内复位、完整输出、空清单、错答案/超时、证据缺失和拒绝对不完整样本计算比值。check 仍不执行用户代码。[完整回归报告](../../benchmarks/results/regression/all-tests.json)
+
+## 内存、输入与环境补充
+
+B07/n1000 单独 tracemalloc 测得峰值 **2596070 字节**，结果核对通过。范围包含整个 sample 的准备、初始化、任务、校验、清理和前端探针；只是 Python 被跟踪分配，不是 RSS、原生内存或最大默认容量证明，不与速度样本混用。[内存探针](../../benchmarks/results/memory-B07/probe.json)
+
+为核对 P06 遗留的逐字符 stdin 问题，使用同一快照启动器各执行一次4096/65536/1048576字符输入，检查实际长度。旧版1MiB输入30.086秒后超时，优化版11.135秒完成且答案正确；另外四次均成功。探针因旧版超时退出1，如实保留。这是单次期限/正确性检查，不计算统计加速比，也不等同所有默认stdin边界已验收。[输入探针](../../benchmarks/results/stdin-probe/probe.json)
+
+初始环境文件的 CIM 硬件字段为 null，另存 [硬件补充](../../benchmarks/results/baseline/hardware-supplement.json)：Intel Core Ultra 5 125H、18逻辑处理器、物理内存25196617728字节；读取来自Windows注册表及GlobalMemoryStatusEx。原始环境不覆盖。当前清单补列内部驱动入口；基线当时的清单仍保留，入口名称另见 [基线说明补充](../../benchmarks/results/baseline/driver-entrypoints.json)。资源默认指纹不变，30秒是基准请求期限而非新语言规则。
+
+## 其余复现命令与未验证范围
+
+以下从根目录使用现有 `.venv`；输出目录须不存在。剖析当前检出版本，复现旧版剖析时须检出对应提交；compare 自行读取指定 Git 快照。首次基线工具提交为36e511e，其运行时与P06相同；05e972b保留完整基线和审计工具。所有正式测量不同时运行功能测试或剖析。
+
+```powershell
+& ./.venv/Scripts/python.exe -X utf8 -m benchmarks.compare --before 05e972b --after 03c3ea7 --cases B01 B04 --n 10000 --output benchmarks/results/location-comparison-new
+& ./.venv/Scripts/python.exe -X utf8 -m benchmarks.profile --inputs benchmarks/results/baseline/inputs --case B01 --n 1000 --output benchmarks/results/profile-B01-new
+& ./.venv/Scripts/python.exe -X utf8 -m benchmarks.profile --inputs benchmarks/results/baseline/inputs --case B04 --n 1000 --output benchmarks/results/profile-B04-new
+& ./.venv/Scripts/python.exe -X utf8 -m benchmarks.profile --inputs benchmarks/results/baseline/inputs --case B09 --n 1000 --output benchmarks/results/profile-B09-new
+& ./.venv/Scripts/python.exe -X utf8 -m benchmarks.profile --inputs benchmarks/results/baseline/inputs --case B07 --n 1000 --memory --output benchmarks/results/memory-B07-new
+& ./.venv/Scripts/python.exe -X utf8 -m benchmarks.stdio_probe --comparison benchmarks/results/location-comparison --output benchmarks/results/stdin-probe-new
+& ./.venv/Scripts/python.exe -X utf8 -m tests --report dist/p07-regression-new.json
+& ./.venv/Scripts/python.exe -X utf8 -m benchmarks.report --baseline benchmarks/results/baseline --comparison benchmarks/results/location-comparison --output dist/p07-tables-new.md
+```
+
+report 只重建统计表，人工验收分析单独保留于本报告，不能用重新生成的表覆盖本文件。compare 本次退出0；stdio_probe 因旧版1MiB超时退出1；profile 各项结果验证通过。现有0.6.0a1包版本不区分优化，必须同时记录Git修订和源码哈希。
+
+明确未验证：其他操作系统/Python、优化后全部B01—B09三档与Python的完整矩阵、失败大规模的完整耗时分布、不同查询选择率/take值的性能、失败状态机事件性能、增长分母的Quantity压力、默认最大对象/槽位实分配和RSS上界。没有长期Program缓存、VM、NumPy、公开Python嵌入、GUI或完整应用的新实现。下一项为 **P09-01**，按 campus-app 契约确定完整CLI应用结构和验收流程。
