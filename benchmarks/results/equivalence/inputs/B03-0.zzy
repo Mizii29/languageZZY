@@ -1,0 +1,9 @@
+(zno) n := 0;
+(zno) numbers := [];
+(for) i (in) 0..<n { array.push(numbers, i); }
+(addnew) bench() {
+    (zyes) total := 0;
+    (for) number (in) numbers { total <- total + number; }
+    (return) total;
+}
+io.print(bench());

@@ -358,3 +358,13 @@ Git 提交：真实标识 / 未提交
 - 验收结论：33条核心规则无未解释空缺，全部现有黑盒通过，15个指南代码块有实际执行记录，公开能力和计划接口分开；P06-01—05全部完成，70项代码任务完成35项。未测范围已明确，未把最大默认实分配或其他平台写成通过。下一项P07-01，本轮在P06结束。
 - 提交前核对：37份Markdown围栏配对、420个本地链接有效；70个任务ID唯一、35个完成；compileall与git diff --check通过；requirement原始哈希及syntax第2节起正文保持。纳入的文件为代码/配置、测试与独立期望、可运行指南/Agent练习和真实日志；构建产物、临时目录、机器报告及venv忽略。
 - Git：基于feature的f8092d4创建本地阶段提交，主题为“feat: complete P06 acceptance and process cleanup”；提交标识见实际Git历史及最终报告。不推送，不改写历史。
+
+
+## 2026-10-14：P07-01 配对工作量与内部测量驱动
+
+- 接手核对：实际分支 test、HEAD d085c94，已有用户未跟踪 docs/manual-tests/ 保留；P06 全部勾选，与本地最终报告1733/1733、663.875秒和1588外部清单一致。使用 CPython 3.12.14/Unicode15.0，默认策略指纹不变。未因文档记录而声称本次重新跑过 P06 全量。
+- 已按 performance 3.4/3.5 建立 B01—B09 双语言可运行源码、n=10独立答案、三档清单及生成器。内部驱动复用 prepare/Interpreter.run/drive/evaluate，计时分 read/prepare/initialize/execute/validate/cleanup 与完整 CLI；另存词法/解析/绑定探针。每次新初态，GC开启，短任务批量上限与真实次数公开，无公开嵌入 API 或长期缓存。
+- 等价性：B01/B02同while加法/真实调用；B03同已有数组手写遍历；B04同非Bool Int逐项部分和及资源检查；B05同校验/稳定排序/新数组并查全序列、频数、原数组和稳定引用；B07同快照/全筛选/全键/稳定排序/截取；B08同查表/Result/状态更新；B09同精确Fraction/gcd和量纲检查。Python不模拟AST/变量槽等语言成本，检查包装边界已明确。
+- 真实失败：首轮小规模验证172条中63条失败，原因是B07误写!、B08使用保留名machine，以及Python Windows CRLF期望。修正为(not)、toggle与语言各自精确换行。未修改语言规则或把失败算成功；初始报告留dist/p07-equivalence-initial。
+- 验证命令：.venv/Scripts/python.exe -X utf8 -m benchmarks.run --verify-only --output dist/p07-equivalence：172条全部成功，退出0，副本保存benchmarks/results/equivalence。-m unittest tests.test_p07_benchmarks -q：6/6、7.576秒、退出0（含18个真实配对CLI和9个check，及批内小规模状态验证）；git diff --check通过。资源失败、超时、错答案、空/坏清单和MAD统计均有测试；check双流为空。
+- P07-01已完成，P07-02—04保持未勾选。先建立工具本地提交固定版本，再正式采集默认策略基线；尚无优化或性能结论。运行时源码未改，保留P06版本号。下一步为三档基线后独立剖析。

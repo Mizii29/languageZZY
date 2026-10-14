@@ -1,0 +1,14 @@
+(addnew) bench() {
+    (zno) value0 := 0;
+    (zno) value1 := 1;
+    (zno) value2 := 2;
+    (zno) value3 := 3;
+    (zno) value4 := 4;
+    (zno) value5 := 5;
+    (zno) value6 := 6;
+    (zno) value7 := 7;
+    (zno) value8 := 8;
+    (zno) value9 := 9;
+    (return) value9;
+}
+io.print(bench());

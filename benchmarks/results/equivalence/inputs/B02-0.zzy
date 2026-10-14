@@ -1,0 +1,9 @@
+(zno) n := 0;
+(addnew) inc(x) { (return) x + 1; }
+(addnew) bench() {
+    (zyes) i := 0;
+    (zyes) total := 0;
+    (while) i < n { total <- total + inc(i); i <- i + 1; }
+    (return) total;
+}
+io.print(bench());

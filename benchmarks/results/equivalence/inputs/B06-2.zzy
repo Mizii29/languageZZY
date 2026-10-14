@@ -1,0 +1,6 @@
+(addnew) bench() {
+    (zno) value0 := 0;
+    (zno) value1 := 1;
+    (return) value1;
+}
+io.print(bench());

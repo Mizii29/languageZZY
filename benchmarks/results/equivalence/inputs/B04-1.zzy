@@ -1,0 +1,5 @@
+(zno) n := 1;
+(zno) numbers := [];
+(for) i (in) 0..<n { array.push(numbers, i); }
+(addnew) bench() { (return) array.sum(numbers); }
+io.print(bench());
