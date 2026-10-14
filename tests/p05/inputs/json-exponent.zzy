@@ -1,0 +1,1 @@
+io.print(data.parse("1e2"));io.print(data.parse("-0"));

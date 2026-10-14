@@ -1,0 +1,2 @@
+(addnew) outer() {(zyes) x := 0; (addnew) middle() {(addnew) inner() {x <- x+1; (return) x;} (return) inner;} (return) middle;}
+(zno) m := outer(); (zno) a := m(); (zno) b := m(); io.print([a(),b(),a()]);

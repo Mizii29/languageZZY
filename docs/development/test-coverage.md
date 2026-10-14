@@ -1,8 +1,18 @@
 # ZZY 黑盒覆盖与验收计划
 
-更新：2026-10-09｜状态：用例设计，全部未实现、未执行
+更新：2026-10-14｜状态：P06 核心矩阵已落实为实际映射及回归；优化/GUI/应用等后续阶段仍待实现，证据与未测范围见 tests/p06 和开发记录
 
 本文件将 [syntax.md](../language/syntax.md) 与 [stdlib.md](../language/stdlib.md) 的可观察规则映射到测试类别。它不是测试集或通过报告；实际用例需用 `.zzy` 编写并通过真实 CLI 一键运行。
+
+P02 实际映射见 [tests/p02/README.md](../../tests/p02/README.md)：279 个 run/check 期望覆盖 EXPR、BIND/CTRL 的非函数部分、ARRAY、SHAPE、输入及本阶段资源边界。ARRAY-02 的异常/取消清理、版本与配额原子性使用宿主测试补充。库回调、JSON 和模块的 P05 证据见下文，缓存仍是待验证计划，不将整张矩阵视为已通过。
+
+P03 实际映射见 [tests/p03/README.md](../../tests/p03/README.md)：234 个 run/check 期望覆盖 FN-01、BIND-01、CTRL-01 的函数部分及调用顺序、参数/返回注解、名义身份、错误位置、check 零执行和调用/槽位/对象资源边界。10 个运行时宿主测试验证布局、复用隔离、引用环与失败清理；运行器另补 2 项防假成功/notes 测试。Lazy 的 P04 证据见下文；模块/跨文件调用的 P05 证据见下文，完整 RESOURCE-01/02 仍待后续阶段。
+
+P04 实际映射见 [tests/p04/README.md](../../tests/p04/README.md)：317 项独立 run/check 期望、12 项运行时宿主和 12 项 spec/trace/运行器测试。覆盖 RES/LAZY/PIPE、MACHINE/UNIT/QUERY 的核心及 TEST 状态隔离；UNIT-02 的 unit 库/JSON、MACHINE 模块导出和 TEST 模块/文件库隔离依赖 P05，未宣称完成整张矩阵。
+
+P05 实际映射见 [tests/p05/README.md](../../tests/p05/README.md)：369 项独立 run/check 期望与 18 项集成/宿主检查，覆盖完整核心库、Map/严格 JSON、单位库、导出定义与查询封装、文件失败保护、模块与 spec 的状态/源码快照隔离。补 MOD-01、LIB-01、JSON-01/02、QUERY-03 与 TEST/CLI 跨文件部分；完整默认容量矩阵、全部指南和真实终端中断仍留 P06，缓存优化与可选扩展不算本阶段完成。
+
+P06 当前汇总见 [tests/p06/README.md](../../tests/p06/README.md)：33 条核心规则逐项列出实际正常/边界/错误用例，九组变形 spec、15 个指南片段、真实 Ctrl+C/进程树、20 个生效限额的小配置相邻边界及关键默认边界。最大默认容器/对象/槽/载荷压力、其他 OS、缓存优化未验证；历史段落只描述当时范围，现状以此映射及最新日志为准。
 
 ## 1. 核心覆盖矩阵
 
@@ -50,7 +60,7 @@ ARRAY-02 致命异常后同一上下文的计数清理也由原生层/后续公�
 
 ## 2. 运行器与外部期望
 
-拟议入口仍是 `python -m zzy test tests/`，当前不存在可执行模块。正常 spec、固定输出程序、非法源码分别保存；非法源码不混入会一次性解析的正常 spec 文件。
+当前外部入口为 `python -X utf8 -m tests.blackbox`，整合 lex/run/check 清单、校验、进程捕获与报告，具体字段见 [tests/README.md](../../tests/README.md)。`python -m zzy test examples/features-spec.zzy` 已实现；不要以 test tests/ 混收预期非法程序；下列完整能力按后续阶段补齐。正常 spec、固定输出程序、非法源码分别保存；非法源码不混入会一次性解析的正常 spec 文件。
 
 外部 JSON 清单至少记录：用例 ID、`.zzy` 路径、运行模式、stdin、stdout 期望、stderr 错误码/位置或确定性文字、退出码、超时和工作目录。比较文本只统一 LF/CRLF，不随意 strip 空白或忽略额外输出；JSON 诊断按结构比对，路径采用清单约定的相对定位，避免机器绝对路径影响可移植性。
 
@@ -108,3 +118,8 @@ ZZY 黑盒核对状态、解析后的导出几何和项目内容，不能以 Dra
 默认应用按 [campus-app.md](campus-app.md) 实施 APP-01—03：格式/类型/ID 校验、坏文件不覆盖、加载提交原子性、未保存提醒、撤销/重做、ID 耗尽与历史容量。数据错误由 ZZY 校验函数返回业务 Result；宿主故障注入只帮助验证 I/O 失败，不能代写校验逻辑。真实 .zzy 应用及外部磁盘/输出期望都需要存在后才算通过。
 
 P07 的 B01—B09 与 [performance.md](../runtime/performance.md) 第 3.4/3.5 节对应。先比对完整正确结果，再计时；检查每样本复位、批内初态、版本/资源策略一致和失败未被删除。基准驱动用核心内部入口，不以 P08 尚未实施为由缺少纯执行测量；Python 样本生成/数学核对只验证期望数据，不证明 ZZY 性能或语义正确。
+
+
+P07实际证据：配对源码与独立固定答案位于benchmarks/zzy、python、expected-small.json，三档原始样本及失败矩阵见 [性能报告](../runtime/performance-report.md)。tests/test_p07_benchmarks.py的9项测试覆盖18个真实配对CLI、9个不执行代码的check、空/小规模及批内复位、完整排序与输入未变、非法类型/部分和超限、错答案/超时/空清单、原始证据缺失/输入改动、实际运行时快照选择及缺样本不计算比值。tests/test_p07_locations.py的2项测试验证cwd变化后的文件/行列与跨运行器状态隔离和失败释放。优化后完整1744/1744通过（含原1588外部清单），无跳过或expected failure。
+
+性能失败不冒充功能通过：基线12个大规模预检超时、24个配对未测量，正式样本中1个整请求超时均保留；这些规模的未完成结果明确未验证。性能计时与cProfile/tracemalloc及一次性stdin探针分开，不把P08接口、Program缓存或所有默认最大容量压力写成已实现/已测。

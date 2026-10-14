@@ -1,0 +1,1 @@
+(machine) M {a -- "stay" --> a;}(zno)p:=M("a");io.print(p<<"stay");io.print(p.state);

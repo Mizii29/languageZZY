@@ -1,0 +1,2 @@
+(addnew) f(a,b) {}
+f(1/0,io.print("bad"));

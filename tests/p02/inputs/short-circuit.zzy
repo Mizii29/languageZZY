@@ -1,0 +1,3 @@
+io.print((false) (and) io.print("bad")); io.print((true) (or) io.print("bad"));
+io.print((false) (and) (1 / 0 == 0)); io.print((true) (or) (1 / 0 == 0));
+(zno) a := []; io.print((true) (or) array.push(a, 1)); io.print(len(a));

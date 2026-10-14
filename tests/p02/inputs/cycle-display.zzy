@@ -1,0 +1,1 @@
+(zno) a := [0]; a[0] <- a; io.print(a); (shape) S {x;} (zno) s := S::{x:(null)}; s.x <- s; io.print(s);

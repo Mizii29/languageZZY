@@ -1,0 +1,1 @@
+(zyes)n:=2;(zno)v:=(zzz)(n);io.print(wake(v));n<-7;io.print(wake(v));

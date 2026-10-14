@@ -1,0 +1,1 @@
+(zyes) f := (null); f <- (addnew) (n) => n == 0 (or) f(n-1); io.print(f(5));

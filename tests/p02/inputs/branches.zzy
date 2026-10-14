@@ -1,0 +1,3 @@
+(zif?:) (true) {io.print("if");} (zzif?:) io.print("bad") {} (zzyf:) {io.print("bad");}
+(zif?:) (false) {} (zzif?:) (false) {} (zzif?:) (true) {io.print("elif");} (zzyf:) {}
+(zif?:) (false) {} (zzyf:) {io.print("else");} (zif?:) (false) {1/0;}

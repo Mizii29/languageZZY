@@ -1,0 +1,1 @@
+(zyes) odd := (null); (addnew) even(n) {(zif?:) n == 0 {(return) (true);} (return) odd(n-1);} odd <- (addnew) (n) => n != 0 (and) even(n-1); io.print([even(8),odd(9),even(7)]);

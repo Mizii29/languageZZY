@@ -1,0 +1,1 @@
+io.read_text("nonexistent");io.write_atomic("must-not-create", "x");data.parse("[");array.map([1],(addnew)(x)=>1/0);

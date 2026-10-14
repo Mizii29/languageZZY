@@ -2,7 +2,7 @@
 
 ZZY 是用 Python 构建解释器的自定义脚本语言，面向数组/结构处理、CLI 工具、数据查询和绘图扩展。完整项目介绍见 [根目录 README](../README.md)。本目录与 `docs` 同级，收录使用者和 AI 编写 ZZY 程序所需的文档。
 
-更新：2026-10-09。文档依据核心语法 v0.6、标准库 v0.6.1；解释器和示例尚未实现、运行。当前可用于学习、审查设计或准备代码草稿，不能当成已经发布的软件手册。
+更新：2026-10-14。文档依据核心语法 v0.6、标准库 v0.6.1。P00—P07 已有解释器、真实 CLI 验证及性能报告，已实现接口以 [根 README](../README.md) 为准；hello/grades/functions/features/features-spec/total-up-to 与 library/ 是可执行示例。语法参考 13 段、人用指南 2 段已逐段验收，映射见 [P06](../tests/p06/README.md)；GUI/Web 仍不可用。
 
 | 文件 | 内容 | 适合谁 |
 |---|---|---|
@@ -24,4 +24,4 @@ AI 文档不复制整套设计：请让 Agent 先读取 `skills/zzy/SKILL.md`，
 
 正式语法以 [docs/language/syntax.md](../docs/language/syntax.md) 为准，库签名以 [stdlib.md](../docs/language/stdlib.md) 为准，扩展规则以各专题为准。`skills/syntax.md` 是面向编程者的规则参考，完整 EBNF 留在正式契约中维护。
 
-修改规则时同步相关指南与示例；实现后给示例补真实验证记录。当前的 70 项代码任务仍以 [todo.md](../docs/development/todo.md) 为唯一状态清单，创建这些文档不提前完成 P06 的运行验收。
+修改规则时同步相关指南与示例；实现后给示例补真实验证记录。当前的 70 项代码任务仍以 [todo.md](../docs/development/todo.md) 为唯一状态清单，语义验证记录见 P06 验收页，P07实测见 [性能报告](../docs/runtime/performance-report.md)，文档存在本身不是运行成功证据。

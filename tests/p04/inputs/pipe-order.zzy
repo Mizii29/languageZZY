@@ -1,0 +1,1 @@
+(addnew) mark(x){io.print(x);(return)x;}(addnew) f(a,b,c){io.print([a,b,c]);(return)b;}(addnew) target(){io.print("callee");(return)f;}io.print(mark(2) ~> (target())(mark(1),@,mark(3)));

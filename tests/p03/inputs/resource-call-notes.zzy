@@ -1,0 +1,2 @@
+(addnew) f() {(return) "abcd"+"efgh";}
+f();

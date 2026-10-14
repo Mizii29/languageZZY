@@ -1,0 +1,5 @@
+(addnew) fact(n: (Int)) -> (Int) {
+ (zif?:) n == 0 {(return) 1;}
+ (return) n * fact(n-1);
+}
+io.print([fact(0), fact(5), fact(8)]);

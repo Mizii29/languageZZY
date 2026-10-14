@@ -1,0 +1,3 @@
+(shape) S {n: (Int); xs: (Array) := [];}
+(zno) a: S := S::{n:1}; (zno) b: S := a (with) {n:2}; b.n <- 3; array.push(b.xs,9);
+io.print(a.n); io.print(b.n); io.print(a.xs); io.print((a (with) {n:4} (with) {n:5}).n);

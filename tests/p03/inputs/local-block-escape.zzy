@@ -1,0 +1,1 @@
+(addnew) outer() {(zyes) f := (null); {(zyes) x := 3; f <- (addnew) () => x;} (return) f;} io.print(outer()());

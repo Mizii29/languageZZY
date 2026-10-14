@@ -1,0 +1,1 @@
+(?_?) data.parse("[1,]") {(^_^)(v)=>{io.print("wrong");}(T_T)(message)=>{io.print("rejected");}}

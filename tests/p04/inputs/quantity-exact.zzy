@@ -1,0 +1,1 @@
+io.print(0.1::s+0.2::s==0.3::s);io.print([1::s==1000::ms,1::km==100000::cm,1::h==60::min]);io.print(10::m/2::s);io.print(1::s/3);io.print(1::m/50::cm);io.print(-2::s);io.print(2/1::s);

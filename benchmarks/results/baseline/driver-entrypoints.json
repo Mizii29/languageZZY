@@ -1,0 +1,12 @@
+{
+  "note": "Supplementary explicit entrypoint names; original cases snapshot and samples remain unchanged.",
+  "entrypoints": {
+    "zzy_prepare": "zzy.prepare.prepare(Source.from_bytes(path, raw), meter)",
+    "zzy_initialize": "Interpreter.run -> SampleInterpreter.execute_program -> statement",
+    "zzy_execute": "Interpreter.drive -> evaluate(original bench() call) -> execute_user",
+    "python_prepare": "compile(raw, filename, exec)",
+    "python_initialize": "exec(code, fresh namespace)",
+    "python_execute": "namespace[bench]()",
+    "scope_note": "internal measurement only; no public P08 embedding API"
+  }
+}

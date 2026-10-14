@@ -1,0 +1,1 @@
+(zno) x: (Int) := io.print("side effect"); x <- "wrong"; 1(2, 3);

@@ -1,0 +1,1 @@
+(zno)a:=[-3,7,9,0];(zyes)n:=0;(for)v(in)a{n<-n+v;}io.print([n,array.sum(a),array.sum([])]);io.print(a);

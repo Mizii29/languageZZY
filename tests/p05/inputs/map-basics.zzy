@@ -1,0 +1,1 @@
+(zno)m:(Map):=data.map();data.set(m,"a",(null));data.set(m,"b",2);data.set(m,"a",3);io.print([len(m),data.has(m,"a"),data.has(m,"c"),data.get(m,"a")]);(zno)k:=data.keys(m);array.push(k,"c");io.print(data.keys(m));io.print(m);

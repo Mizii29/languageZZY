@@ -1,0 +1,1 @@
+(zno)a:=[[1],[2]];(zno)b:=array.filter(a,(addnew)(x)=>x[0]==1);array.push(b[0],3);io.print(a);

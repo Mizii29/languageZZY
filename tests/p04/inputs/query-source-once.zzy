@@ -1,0 +1,1 @@
+(zyes)n:=0;(addnew) f(){n<-n+1;(return)[2,1];}io.print(f() ?> {(yield):@;});io.print(n);

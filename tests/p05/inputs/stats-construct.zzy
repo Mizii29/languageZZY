@@ -1,0 +1,1 @@
+(zno)s:=array.Stats::{count:1,sum:5,min:5,max:5};io.print(s);io.print(s (with) {sum:6});

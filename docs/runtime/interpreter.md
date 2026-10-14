@@ -1,10 +1,14 @@
 # ZZY 解释器实现流程
 
-作者：赵梓伊｜更新：2026-10-09｜状态：v0.6 语法实现路线，尚未编写解释器
+作者：赵梓伊｜更新：2026-10-14｜状态：v0.6 树遍历实现；P00—P06 核心语法、库/模块、非执行 check 及测试/指南已验收
 
 当前语法以 [syntax.md](../language/syntax.md) 为准，整体方案见 [design详细版.md](../design详细版.md)，库以 [stdlib.md](../language/stdlib.md) 为准；优化与后端扩展见 [performance.md](performance.md)。本文回答“先写什么、每一步产生什么、怎样证明做对了”，不把规划中的代码和命令当成已有功能。Web 为可选扩展，完整 CLI 应用不依赖 Web 或 VM。
 
 本文的“第几步”按部件说明完整架构，不是要求一次写完一个部件再开始执行。实际依赖以 [roadmap.md](../development/roadmap.md) 为准：P01 用最小 Lexer/Parser/名字表/执行器跑通输出，P02 补数据与控制流，P03 完善 Resolver、槽位与闭包，P04/P05 补特色和库；P06/P07/P09 完成测试、性能和应用。VM 按 P10 的热点证据选择，Web 属于 P09 之后的可选 P08。
+
+当前实现为 ast_nodes.py、parser.py、resolver.py、prepare.py、values.py、interpreter.py：不可变 AST 保留 Token 与完整表达式范围；prepare 解析整个文件，按词法声明身份解析块/循环和 shape 默认表达式，检查控制流位置并准备 Int/Float 字面。每次 Interpreter.run 建立独立执行状态；Array 经统一写入口计量并维护版本/活动遍历计数。shape 默认值按定义处绑定身份每次构造求值，with 只浅复制字段。check 完成 prepare 后直接返回，不构造 Interpreter。P03 已实现函数 Resolver、局部槽位、传递捕获和共享 Cell。函数计划只保存只读符号/槽位布局；实际闭包、Cell 和 Frame 在各次运行创建。AST 递归求值遇到用户调用时交给显式调用栈，避免宿主栈深度代替 call_depth；不生成字节码。调用结果用可清空的交接容器传递，驱动器及时丢弃请求/结果引用，避免已丢弃值继续占用逻辑配额。
+
+P04 新增 features.py 与 quantities.py：只读 Program 保存机器图和精确数量字面；Result/匹配、管道、查询和 Lazy 共用 AST 执行链。Lazy 沿用函数捕获分析与共享 Cell，NEW wake 进入显式调用栈，READY/FAILED 读取缓存。查询依次保存快照、求 take、完整筛选、准备并稳定排序键、投影；纯性由 Resolver 的固定原生绑定检查。spec_runner/spec_worker 使用收集时字节快照，每个 spec 独立进程/临时目录/输入，运行公共初始化与唯一测试体；check 不构造运行时。
 
 阅读方式：每一步先看“形象理解”，再看实现细节，最后看“选择与性能”。先理解它做什么，再决定要不要优化。表中的性能收益是待验证的方向，不是已经测出的提升。
 
@@ -44,6 +48,10 @@ total <- total + 2;
 | 优化 | 简化重复动作 | 减少按名字寻找和多层节点分派 |
 
 这段程序不会自行输出；加入 `io.print(total);` 才会显示 `3`。通常一次运行只读和解析一次源码，之后循环执行已经准备好的程序表示。
+
+P05 增加 native/catalog、library、json_codec、files：封闭注册表提供 ABI、外层类型、返回、直接错误、效果和纯性；回调/wake 另标记传播用户错误。Function 仍通过统一调用驱动，map/filter 的活动遍历计数在 finally 归零。prepare 保存整个依赖图的只读 AST/源码快照，Interpreter.modules 只缓存本次运行实例；spec worker 从整个图的收集字节准备，不重新读用户文件。未实现长期 Program 缓存或优化，不宣称缓存淘汰已有验证。
+
+P06 一键入口为 `python -X utf8 -m tests`，覆盖实际 CLI 清单、spec、指南和生命周期。process.py 在 Windows 以挂起启动、Job 归属、恢复线程的顺序防止后代提前逃离；退出先终止 Job、等待 active process 归零，再关闭管道和临时资源。CLI 在附着 Windows 控制台时清除继承的 ignore-Ctrl+C 标志，真实控制台 run/test 已验证 cancelled/130。POSIX 进程组分支尚无本机运行证据；映射与未测范围见 [P06](../../tests/p06/README.md)。
 
 ## 1. 路线：先得到正确结果，再优化执行
 
@@ -98,7 +106,7 @@ examples/
 benchmarks/
 ```
 
-拟议命令：
+CLI 约定（run/check 已实现最小子集，test 待实现）：
 
 ```text
 python -m zzy run examples/hello.zzy
@@ -164,6 +172,8 @@ MUTABLE_DECL  IDENT(total)  COLON  TYPE_INT  INIT  INTEGER(0)  SEMICOLON
 注释扫描只前进不回退，正文不生成 Token；多行的每次 zzyend 候选检查左右 Unicode 标识符边界，匹配失败从该候选之后继续，避免反复扫描相同正文。保留换行与原文 span，注释当空白处理，不把两侧词项拼接。单行 EOF 合法，多行 EOF 未闭合和正常源码中的裸 zzyend 为 E101；按 syntax 契约覆盖前缀、行内结束、字符串和未闭合场景。
 
 完成标志：能正确区分颜文字、数组、括号与字符串；错误转义、未闭合字符串和非法字符有固定诊断。每项都通过实际源码文件验证。
+
+P01-01 已按上述边界实现 `tokens.py`/`lexer.py`，通过 `python -m zzy lex 文件.zzy` 查看真实 Token；外部清单见 [词法黑盒说明](../../tests/lex/README.md)。Token 保留 Source 及半开偏移，只有字符串附解码值和 raw 标记；数字仍保留原文，普通数/Quantity 转换留给准备层。固定符号按首字符分流并最长匹配；每文件非 EOF Token 数、数字位数、解码字符串长度在扫描过程中检查。源码嵌套及 AST 深度现已由 P01-02 Parser 检查，不以 lex 代替语法分析。
 
 **可增加的选择与性能：**
 
@@ -565,3 +575,10 @@ P04-08 的核心验收不依赖 P05 库；P05 对齐原生纯函数元数据，�
 无窗口绘图文档是模型；路径/状态指令、历史、Drawing 与 SVG/项目/函数导出共用模型。大路径批量进入宿主，历史保存增量与共享只读路径块，回放读取已发生记录，不重跑 ZZY。函数导出生成普通 Result 函数和私有 Lazy 图案缓存，通过同一真实前端校验。
 
 图形入口主线程拥有 Tk，唯一 ZZY 执行线程拥有上下文，通过有界消息交换；回调只在 show 派发边界顺序执行。关闭/取消独立于满队列，批量操作检查取消，清理草稿、定时器、句柄和等待。默认 run/test/check 不加载 GUI；GUI 完成不能代替 headless 黑盒或同工作量性能证据。
+
+
+## P07 已测优化与内部测量入口
+
+benchmarks/worker.py 使用正式 prepare、Interpreter.run/drive/evaluate 路径，独立计量读取、准备、输入/上下文初始化、bench调用、校验和清理。它是内部基准驱动，不是P08公开嵌入接口；完整CLI另起子进程测量。报告与范围见 [performance-report.md](performance-report.md)。
+
+cProfile证据表明重复构造显示路径是当前Windows工作量的热点；Interpreter.location现在按源码路径保存上下文内的显示字符串，cwd变化即清空，run结束清空。该元数据不保存用户值/异常或Program，不跨上下文共享，不跳过资源/类型/取消检查。真实错误行列、输入回调改变cwd、Program/运行器复用和1744项全量回归均已验证。只有B01/B04的n=10000优化前后做了15样本交错比较；其他优化、规模及平台不能据此宣称收益。

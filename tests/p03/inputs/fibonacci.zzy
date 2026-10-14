@@ -1,0 +1,2 @@
+(addnew) fib(n) {(zif?:) n < 2 {(return) n;} (return) fib(n-1)+fib(n-2);}
+io.print([fib(0),fib(1),fib(10)]);

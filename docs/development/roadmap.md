@@ -1,6 +1,6 @@
 # ZZY 开发阶段与交付计划
 
-作者：赵梓伊｜更新：2026-10-09｜状态：只有设计文档，代码开发尚未开始
+作者：赵梓伊｜更新：2026-10-14｜状态：P00—P05 已完成阶段验收，任务状态见 todo
 
 本文维护开发顺序、依赖、产出与完成标准。任务完成状态只写在 [todo.md](todo.md)，真实操作与验证只写在 [development-log.md](development-log.md)。整体方案见 [设计详细版](../design详细版.md)，内部实现步骤见 [interpreter.md](../runtime/interpreter.md)，创新取舍见 [innovation.md](../features/innovation.md)。
 
@@ -8,7 +8,7 @@
 
 ZZY 是赵梓伊设计的、用 Python 编写解释器的通用脚本语言。必须完成的作业包括：基本语言功能、ZZY 黑盒自动测试、与 Python 的性能比较、给人和 Agent 的指南、不少于 200 行的 ZZY 应用、真实 Git 历史和系统介绍 PPT。详细要求见 [requirement.md](../requirement.md)。
 
-截至本文建立时，仓库只有设计文档，没有解释器、测试程序、基准结果或应用代码；本地 Git 已初始化，但还没有提交。接手时重新检查文件与 Git，不能把这条快照当成永久状态。
+截至本文建立时，仓库只有设计文档，没有解释器、测试程序、基准结果或应用代码；本地 Git 已初始化，但还没有提交。2026-10-09 开始 P00 时已核实设计提交 58543cd，工作区干净；当前已有包、CLI、资源/诊断基础、最小 AST 执行和 lex/run/check 黑盒，尚无完整语言、基准或应用。接手时仍须重新检查文件与 Git。
 
 开始前按以下顺序阅读：
 
@@ -19,7 +19,7 @@ ZZY 是赵梓伊设计的、用 Python 编写解释器的通用脚本语言。�
 5. [performance.md](../runtime/performance.md) 与 [innovation.md](../features/innovation.md)：优化与扩展方向。
 6. [development-log.md](development-log.md)：查看最近完成的工作、失败和下一步。
 
-[design详细版.md](../design详细版.md) 已同步当前写法，负责归纳完整设计与理由。语法和库接口分别集中在 syntax/stdlib，其他文档不得另建冲突版本；用户新指示优先。覆盖矩阵见 [test-coverage.md](test-coverage.md)，目前只有验证设计，没有测试实现。
+[design详细版.md](../design详细版.md) 已同步当前写法，负责归纳完整设计与理由。语法和库接口分别集中在 syntax/stdlib，其他文档不得另建冲突版本；用户新指示优先。覆盖矩阵见 [test-coverage.md](test-coverage.md)，已实现子集的测试见 tests/README.md，矩阵其余项仍为验证设计。
 
 ## 2. 固定约定：后续 Agent 不要随意改名
 
@@ -119,6 +119,8 @@ P01 起同步写测试，P06 是补齐覆盖而不是第一次测试。所有新
 - 检查实参个数、返回类型、局部变量隔离和闭包共享修改。
 - 第一版按现有约定支持自递归，不支持未经预声明的相互递归。
 
+**阶段边界澄清（P03 验收）：** 上述 Lazy 捕获指 P03 建立与函数共用的捕获布局/Cell 基础；Lazy 语法、捕获分析接入、状态与唤醒执行在 P04-02 实现并验证。P03 不宣称 Lazy 可用，也不免除 P04 的捕获义务。
+
 **完成标准：** 递归与闭包例子正确，多次调用不串变量；函数内不能跳出调用者的循环。迁移槽位后原有黑盒测试仍通过。
 
 ### P04：实现 ZZY 的特色和测试语法
@@ -134,6 +136,8 @@ P01 起同步写测试，P06 是补齐覆盖而不是第一次测试。所有新
 - 增加求值次数、失败提前返回、Lazy 不自动刷新和循环唤醒等测试。
 
 **完成标准：** 特色示例可运行，失败有源码位置；不能只有成功例子而缺少副作用和边界验证。
+
+**P04 范围核对：** MACHINE/UNIT/QUERY/TEST 覆盖类别包含后续阶段接口。本阶段验收核心、内部冻结、状态/临时目录/stdin 隔离；unit 库、模块导出、JSON 和文件库隔离留 P05/P06，不能据 P04 完成标记推断这些接口可用。
 
 ### P05：提供宿主库和模块
 
@@ -248,7 +252,7 @@ E 不自动替换 P09。若以后选小画室作为作业应用，须另外用�
 
 ## 9. 拟议命令与后续文件位置
 
-以下命令是接口约定，现在尚未实现；开发时实现后才在运行说明中标记可用。
+run/check 已扩展到 P02 数据与控制流；test 仍为后续接口约定，当前使用 python -X utf8 -m tests.blackbox 验证。
 
 ```text
 python -m zzy run examples/hello.zzy
@@ -257,29 +261,29 @@ python -m zzy test tests/
 ```
 
 ```text
-zzy/                       解释器与受控宿主接口，待建立
-tests/                     ZZY 黑盒程序、输入/期望清单，待建立
-examples/                  指南中真实验证的示例，待建立
-benchmarks/                配对脚本、测量工具、results，待建立
+zzy/                       已有基础、Lexer 与 P02 数据/控制解释链
+tests/                     已有宿主及统一 lex/run/check CLI 黑盒
+examples/                  已有读取/词法样例及可执行 hello.zzy
+benchmarks/                已有B01—B09配对脚本、基线、剖析与复测results
 apps/zzy-campus/           默认 ZZY CLI 应用，待建立
 apps/zzy-sketch/           若选绘图应用时建立
 docs/                      已有设计文档
   language/                正式语法、库与诊断契约
   features/                创新与已选扩展
-  runtime/                 实现、性能；后续 performance-report
+  runtime/                 实现、性能契约与实际 performance-report
   development/             阶段、任务、覆盖、记录；后续 submission
 README.md                  已有项目介绍
-skills/                    已有使用文档，示例待运行验证
+skills/                    P06 已逐段验证的使用文档与 AI 路由
   README.md                导航与使用方式
   syntax.md                人用语法规则参考
   guide.md                 人用开发指南
   zzy/SKILL.md              AI 指南，按任务引用 docs
 ```
 
-当前真实目录见 [项目 README](../../README.md)，正式文档导航见 [docs README](../README.md)。上述代码、示例、性能报告与交付索引仍为规划；已有指南不代表 P06 运行验收完成。
+当前真实目录见 [项目 README](../../README.md)，正式文档导航见 [docs README](../README.md)。P00—P07 的解释器、核心库/模块、测试、指南与性能报告已存在；P06语义证据见tests/p06，P07实测/超时/未测范围见performance-report。完整应用与交付索引仍为后续任务。
 
 ## 10. 接手与完成状态
 
-先核对实际仓库，再执行 **P00 → P01**，目标是让第一份 `.zzy` 文件能够输出正确结果并通过首批黑盒测试。完成后更新待办、运行说明和开发记录，按依赖继续后续阶段；在产生可运行基线前，先不投入字节码或大型 Web 扩展。
+先核对实际仓库、P07验收记录及性能报告，再执行 **P09-01** 校园任务CLI应用，保留已有完整回归。每阶段继续更新待办、运行说明和记录；字节码和大型 Web 扩展仍不提前实施。
 
-当前共 70 项代码任务，全部未完成；已有文档成果与实现状态分别记录。最近文档整理不改变 P00 起点，也不提前完成任何阶段。
+当前共 70 项代码任务，完成状态以 todo 为唯一清单；当前P00—P07完成状态以实际验收记录为据，不提前勾选E或完整应用。

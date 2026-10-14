@@ -1,0 +1,111 @@
+zzysay: Fixed answers precede metamorphic comparisons; no Python oracle calls.
+(shape) Item { key: (Int); name: (String); nested: (Array) := []; }
+(machine) Cycle { a -- "next" --> b; b -- "next" --> a; }
+(addnew) json_roundtrip(value) -> (Result) {
+    (zno) encoded := data.stringify(value)?;
+    (return) data.parse(encoded);
+}
+(spec) "sum copy permutation and empty" {
+    (zno) values := [9, -4, 0, 9];
+    (o_o) array.sum(values) == 14;
+    (o_o) array.sum(array.copy(values)) == 14;
+    (o_o) array.sum([9, 9, 0, -4]) == array.sum(values);
+    (o_o) array.sum([]) == 0;
+    io.print("sum:ok");
+}
+(spec) "stats independent loop and empty" {
+    (zno) values := [9, -4, 0, 9];
+    (zyes) total := 0; (zyes) count := 0; (zyes) low := values[0]; (zyes) high := values[0];
+    (for) value (in) values {
+        total <- total + value; count <- count + 1;
+        (zif?:) value < low { low <- value; }
+        (zif?:) value > high { high <- value; }
+    }
+    (zno) stats := array.stats(values);
+    (o_o) stats.sum == 14; (o_o) stats.count == 4;
+    (o_o) stats.min == -4; (o_o) stats.max == 9;
+    (o_o) stats.sum == total; (o_o) stats.count == count;
+    (o_o) stats.min == low; (o_o) stats.max == high;
+    (zno) empty := array.stats([]);
+    (o_o) empty.count == 0; (o_o) empty.sum == 0;
+    (o_o) empty.min == (null); (o_o) empty.max == (null);
+    io.print("stats:ok");
+}
+(spec) "with equivalence shallow alias and no default replay" {
+    (zno) first := Item::{key: 1, name: "old"};
+    (zno) alias := first;
+    (zno) updated := first (with) {key: 2};
+    (zno) manual := Item::{key: first.key, name: first.name, nested: first.nested};
+    manual.key <- 2;
+    (o_o) updated.key == manual.key; (o_o) updated.name == manual.name;
+    (o_o) updated != first; (o_o) alias.key == 1;
+    (o_o) updated.nested == first.nested;
+    array.push(updated.nested, 7); (o_o) alias.nested[0] == 7;
+    io.print("with:ok");
+}
+(spec) "JSON roundtrip structural contents not identity" {
+    (zno) shared := [1, (null), (true), "中😀"];
+    (zno) root := data.map(); data.set(root, "a", shared); data.set(root, "b", shared);
+    (?_?) json_roundtrip(root) {
+        (^_^)(decoded) => {
+            (o_o) decoded != root;
+            (o_o) data.stringify(decoded) == data.stringify(root);
+            (o_o) data.get(decoded, "a") != data.get(decoded, "b");
+            (o_o) data.get(decoded, "a")[3] == "中😀";
+        }
+        (T_T)(message) => {(o_o)(false);}
+    }
+    io.print("json:ok");
+}
+(spec) "Quantity conversions exact roundtrip" {
+    (zno) duration := 2::s + 500::ms;
+    (o_o) duration == unit.make(2500, "ms");
+    (o_o) unit.format(duration, "s") == "5/2::s";
+    (o_o) unit.format(unit.make(2500, "ms"), "ms") == "2500::ms";
+    (o_o) 1::km / 1000::one == 1::m;
+    io.print("unit:ok");
+}
+(spec) "Machine invalid unchanged and independent cycles" {
+    (zno) first := Cycle("a"); (zno) second := Cycle("a"); (zno) alias := first;
+    (?_?) first << "missing" {(T_T)(why)=>{} _=>{(o_o)(false);}}
+    (o_o) first.state == "a";
+    (o_o) (first << "next") == (^_^)("b");
+    (o_o) alias.state == "b"; (o_o) second.state == "a";
+    (o_o) (first << "next") == (^_^)("a");
+    io.print("machine:ok");
+}
+(spec) "query matches staged stable insertion reference" {
+    (zno) values := [Item::{key:2,name:"a"}, Item::{key:1,name:"b"}, Item::{key:2,name:"c"}, Item::{key:0,name:"d"}];
+    (zno) reference := [];
+    (for) item (in) values {
+        (zif?:) item.key > 0 {
+            array.push(reference, item);
+            (zyes) i := len(reference)-1;
+            (while) i > 0 (and) reference[i-1].key < item.key {
+                reference[i] <- reference[i-1]; i <- i-1;
+            }
+            reference[i] <- item;
+        }
+    }
+    (zno) result := values ?> {(keep): @.key > 0; (order): @.key (desc); (take): 3; (yield): @;};
+    (o_o) len(result) == 3;
+    (o_o) result[0].name == "a"; (o_o) result[1].name == "c"; (o_o) result[2].name == "b";
+    (for) i (in) 0..<3 {(o_o) result[i] == reference[i];}
+    (o_o) (values ?> {(take):0; (yield):@;}) != result;
+    io.print("query:ok");
+}
+(spec) "pipeline direct pure equality and source once" {
+    (zyes) calls := 0;
+    (addnew) source() {calls <- calls + 1; (return) [1,2,3];}
+    (zno) piped := source() ~> array.sum(@) ~> math.abs(@);
+    (o_o) calls == 1; (o_o) piped == 6;
+    (o_o) piped == math.abs(array.sum([1,2,3]));
+    io.print("pipe:ok");
+}
+(spec) "sorted idempotent and source intact" {
+    (zno) values := [3,1,3,-1]; (zno) sorted := array.sorted(values);
+    (o_o) values[0] == 3; (o_o) sorted[0] == -1;
+    (o_o) data.stringify(sorted) == data.stringify(array.sorted(sorted));
+    (o_o) array.sum(sorted) == 6;
+    io.print("sort:ok");
+}

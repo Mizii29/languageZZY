@@ -1,0 +1,1 @@
+io.print(array.map([-1,2],math.abs));

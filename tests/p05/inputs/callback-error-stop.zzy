@@ -1,0 +1,1 @@
+(addnew) f(x){io.print(x);(return)1/x;}array.map([2,0,3],f);

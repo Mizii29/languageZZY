@@ -1,0 +1,1 @@
+(zyes) x := 1; x <- "text"; io.print(x);

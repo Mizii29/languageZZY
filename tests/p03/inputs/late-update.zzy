@@ -1,0 +1,1 @@
+(zyes) x := 1; (zno) f := (addnew) () => x; x <- 8; io.print(f());

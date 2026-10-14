@@ -1,0 +1,1241 @@
+{
+  "schema_version": 1,
+  "cases": [
+    {
+      "id": "basic",
+      "file": "tests/lex/inputs/basic.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "tokens": [
+        ["IMMUTABLE_DECL", "(zno)", null, false, [1, 1, 1, 6]],
+        ["IDENT", "total", null, false, [1, 7, 1, 12]],
+        ["INIT", ":=", null, false, [1, 13, 1, 15]],
+        ["INTEGER", "1", null, false, [1, 16, 1, 17]],
+        ["PLUS", "+", null, false, [1, 18, 1, 19]],
+        ["INTEGER", "4", null, false, [1, 20, 1, 21]],
+        ["SEMICOLON", ";", null, false, [1, 21, 1, 22]],
+        ["IDENT", "io", null, false, [2, 1, 2, 3]],
+        ["DOT", ".", null, false, [2, 3, 2, 4]],
+        ["IDENT", "print", null, false, [2, 4, 2, 9]],
+        ["LEFT_PAREN", "(", null, false, [2, 9, 2, 10]],
+        ["IDENT", "total", null, false, [2, 10, 2, 15]],
+        ["RIGHT_PAREN", ")", null, false, [2, 15, 2, 16]],
+        ["SEMICOLON", ";", null, false, [2, 16, 2, 17]],
+        ["EOF", "", null, false, [3, 1, 3, 1]]
+      ],
+      "mode": "lex",
+      "stdin": ""
+    },
+    {
+      "id": "fixed-symbols",
+      "file": "tests/lex/inputs/fixed-symbols.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "tokens": [
+        ["IMMUTABLE_DECL", "(zno)", null, false, [1, 1, 1, 6]],
+        ["MUTABLE_DECL", "(zyes)", null, false, [1, 7, 1, 13]],
+        ["FUNCTION", "(addnew)", null, false, [1, 14, 1, 22]],
+        ["RETURN", "(return)", null, false, [1, 23, 1, 31]],
+        ["IF", "(zif?:)", null, false, [1, 32, 1, 39]],
+        ["ELIF", "(zzif?:)", null, false, [1, 40, 1, 48]],
+        ["ELSE", "(zzyf:)", null, false, [1, 49, 1, 56]],
+        ["FOR", "(for)", null, false, [1, 57, 1, 62]],
+        ["IN", "(in)", null, false, [1, 63, 1, 67]],
+        ["WHILE", "(while)", null, false, [1, 68, 1, 75]],
+        ["BREAK", "(break)", null, false, [1, 76, 1, 83]],
+        ["CONTINUE", "(continue)", null, false, [1, 84, 1, 94]],
+        ["SHAPE", "(shape)", null, false, [1, 95, 1, 102]],
+        ["MACHINE", "(machine)", null, false, [1, 103, 1, 112]],
+        ["WITH", "(with)", null, false, [1, 113, 1, 119]],
+        ["AND", "(and)", null, false, [1, 120, 1, 125]],
+        ["OR", "(or)", null, false, [1, 126, 1, 130]],
+        ["NOT", "(not)", null, false, [1, 131, 1, 136]],
+        ["TRUE", "(true)", null, false, [1, 137, 1, 143]],
+        ["FALSE", "(false)", null, false, [1, 144, 1, 151]],
+        ["NULL", "(null)", null, false, [1, 152, 1, 158]],
+        ["RAW", "(raw)", null, false, [1, 159, 1, 164]],
+        ["STRING", "\"\"", "", true, [1, 165, 1, 167]],
+        ["LAZY", "(zzz)", null, false, [1, 168, 1, 173]],
+        ["SPEC", "(spec)", null, false, [1, 174, 1, 180]],
+        ["USE", "(use)", null, false, [1, 181, 1, 186]],
+        ["AS", "(as)", null, false, [1, 187, 1, 191]],
+        ["KEEP", "(keep)", null, false, [1, 192, 1, 198]],
+        ["ORDER", "(order)", null, false, [1, 199, 1, 206]],
+        ["TAKE", "(take)", null, false, [1, 207, 1, 213]],
+        ["YIELD", "(yield)", null, false, [1, 214, 1, 221]],
+        ["ASC", "(asc)", null, false, [1, 222, 1, 227]],
+        ["DESC", "(desc)", null, false, [1, 228, 1, 234]],
+        ["TYPE_INT", "(Int)", null, false, [1, 235, 1, 240]],
+        ["TYPE_FLOAT", "(Float)", null, false, [1, 241, 1, 248]],
+        ["TYPE_STRING", "(String)", null, false, [1, 249, 1, 257]],
+        ["TYPE_BOOL", "(Bool)", null, false, [1, 258, 1, 264]],
+        ["TYPE_NULL", "(Null)", null, false, [1, 265, 1, 271]],
+        ["TYPE_ARRAY", "(Array)", null, false, [1, 272, 1, 279]],
+        ["TYPE_MAP", "(Map)", null, false, [1, 280, 1, 285]],
+        ["TYPE_FUNCTION", "(Function)", null, false, [1, 286, 1, 296]],
+        ["TYPE_RESULT", "(Result)", null, false, [1, 297, 1, 305]],
+        ["TYPE_LAZY", "(Lazy)", null, false, [1, 306, 1, 312]],
+        ["TYPE_RANGE", "(Range)", null, false, [1, 313, 1, 320]],
+        ["TYPE_MACHINE", "(Machine)", null, false, [1, 321, 1, 330]],
+        ["TYPE_QUANTITY", "(Quantity)", null, false, [1, 331, 1, 341]],
+        ["SUCCESS", "(^_^)", null, false, [1, 342, 1, 347]],
+        ["FAILURE", "(T_T)", null, false, [1, 348, 1, 353]],
+        ["MATCH", "(?_?)", null, false, [1, 354, 1, 359]],
+        ["ASSERT", "(o_o)", null, false, [1, 360, 1, 365]],
+        ["TRACE", "(@_@)", null, false, [1, 366, 1, 371]],
+        ["EOF", "", null, false, [2, 1, 2, 1]]
+      ],
+      "mode": "lex",
+      "stdin": ""
+    },
+    {
+      "id": "operators",
+      "file": "tests/lex/inputs/operators.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "tokens": [
+        ["STATE_ARROW", "-->", null, false, [1, 1, 1, 4]],
+        ["STATE_EDGE", "--", null, false, [1, 5, 1, 7]],
+        ["ARROW", "->", null, false, [1, 8, 1, 10]],
+        ["MINUS", "-", null, false, [1, 11, 1, 12]],
+        ["SEND", "<<", null, false, [1, 13, 1, 15]],
+        ["LESS", "<", null, false, [1, 16, 1, 17]],
+        ["QUERY", "?>", null, false, [1, 18, 1, 20]],
+        ["QUESTION", "?", null, false, [1, 21, 1, 22]],
+        ["INIT", ":=", null, false, [1, 23, 1, 25]],
+        ["ASSIGN", "<-", null, false, [1, 26, 1, 28]],
+        ["DOUBLE_COLON", "::", null, false, [1, 29, 1, 31]],
+        ["FAT_ARROW", "=>", null, false, [1, 32, 1, 34]],
+        ["INTERVAL", "..<", null, false, [1, 35, 1, 38]],
+        ["PIPE", "~>", null, false, [1, 39, 1, 41]],
+        ["FLOOR_DIVIDE", "//", null, false, [1, 42, 1, 44]],
+        ["DIVIDE", "/", null, false, [1, 45, 1, 46]],
+        ["LESS_EQUAL", "<=", null, false, [1, 47, 1, 49]],
+        ["GREATER_EQUAL", ">=", null, false, [1, 50, 1, 52]],
+        ["GREATER", ">", null, false, [1, 53, 1, 54]],
+        ["EQUAL", "==", null, false, [1, 55, 1, 57]],
+        ["NOT_EQUAL", "!=", null, false, [1, 58, 1, 60]],
+        ["LEFT_PAREN", "(", null, false, [1, 61, 1, 62]],
+        ["RIGHT_PAREN", ")", null, false, [1, 63, 1, 64]],
+        ["LEFT_BRACKET", "[", null, false, [1, 65, 1, 66]],
+        ["RIGHT_BRACKET", "]", null, false, [1, 67, 1, 68]],
+        ["LEFT_BRACE", "{", null, false, [1, 69, 1, 70]],
+        ["RIGHT_BRACE", "}", null, false, [1, 71, 1, 72]],
+        ["SEMICOLON", ";", null, false, [1, 73, 1, 74]],
+        ["COLON", ":", null, false, [1, 75, 1, 76]],
+        ["COMMA", ",", null, false, [1, 77, 1, 78]],
+        ["DOT", ".", null, false, [1, 79, 1, 80]],
+        ["AT", "@", null, false, [1, 81, 1, 82]],
+        ["PLUS", "+", null, false, [1, 83, 1, 84]],
+        ["MULTIPLY", "*", null, false, [1, 85, 1, 86]],
+        ["REMAINDER", "%", null, false, [1, 87, 1, 88]],
+        ["EOF", "", null, false, [2, 1, 2, 1]]
+      ],
+      "mode": "lex",
+      "stdin": ""
+    },
+    {
+      "id": "adjacent-operators",
+      "file": "tests/lex/inputs/adjacent-operators.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "tokens": [
+        ["STATE_EDGE", "--", null, false, [1, 1, 1, 3]],
+        ["IDENT", "x", null, false, [1, 3, 1, 4]],
+        ["SEMICOLON", ";", null, false, [1, 4, 1, 5]],
+        ["MINUS", "-", null, false, [1, 6, 1, 7]],
+        ["LEFT_PAREN", "(", null, false, [1, 7, 1, 8]],
+        ["MINUS", "-", null, false, [1, 8, 1, 9]],
+        ["IDENT", "x", null, false, [1, 9, 1, 10]],
+        ["RIGHT_PAREN", ")", null, false, [1, 10, 1, 11]],
+        ["SEMICOLON", ";", null, false, [1, 11, 1, 12]],
+        ["MINUS", "-", null, false, [1, 13, 1, 14]],
+        ["MINUS", "-", null, false, [1, 15, 1, 16]],
+        ["IDENT", "x", null, false, [1, 17, 1, 18]],
+        ["SEMICOLON", ";", null, false, [1, 18, 1, 19]],
+        ["INTEGER", "0", null, false, [1, 20, 1, 21]],
+        ["INTERVAL", "..<", null, false, [1, 21, 1, 24]],
+        ["INTEGER", "5", null, false, [1, 24, 1, 25]],
+        ["SEMICOLON", ";", null, false, [1, 25, 1, 26]],
+        ["INTEGER", "2", null, false, [1, 27, 1, 28]],
+        ["DOUBLE_COLON", "::", null, false, [1, 28, 1, 30]],
+        ["IDENT", "s", null, false, [1, 30, 1, 31]],
+        ["SEMICOLON", ";", null, false, [1, 31, 1, 32]],
+        ["FLOAT", "0.10", null, false, [1, 33, 1, 37]],
+        ["DOUBLE_COLON", "::", null, false, [1, 37, 1, 39]],
+        ["IDENT", "s", null, false, [1, 39, 1, 40]],
+        ["SEMICOLON", ";", null, false, [1, 40, 1, 41]],
+        ["IDENT", "T", null, false, [1, 42, 1, 43]],
+        ["DOUBLE_COLON", "::", null, false, [1, 43, 1, 45]],
+        ["LEFT_BRACE", "{", null, false, [1, 45, 1, 46]],
+        ["IDENT", "x", null, false, [1, 46, 1, 47]],
+        ["COLON", ":", null, false, [1, 47, 1, 48]],
+        ["INTEGER", "1", null, false, [1, 48, 1, 49]],
+        ["RIGHT_BRACE", "}", null, false, [1, 49, 1, 50]],
+        ["SEMICOLON", ";", null, false, [1, 50, 1, 51]],
+        ["EOF", "", null, false, [1, 51, 1, 51]]
+      ],
+      "mode": "lex",
+      "stdin": ""
+    },
+    {
+      "id": "identifier-spelling",
+      "file": "tests/lex/inputs/identifier-spelling.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "tokens": [
+        ["IDENT", "总分", null, false, [1, 1, 1, 3]],
+        ["IDENT", "K", null, false, [1, 4, 1, 5]],
+        ["IDENT", "K", null, false, [1, 6, 1, 7]],
+        ["IDENT", "é", null, false, [1, 8, 1, 9]],
+        ["IDENT", "é", null, false, [1, 10, 1, 12]],
+        ["IDENT", "x９", null, false, [1, 13, 1, 15]],
+        ["WILDCARD", "_", null, false, [1, 16, 1, 17]],
+        ["IDENT", "wake", null, false, [1, 18, 1, 22]],
+        ["IDENT", "len", null, false, [1, 23, 1, 26]],
+        ["IDENT", "str", null, false, [1, 27, 1, 30]],
+        ["IDENT", "range", null, false, [1, 31, 1, 36]],
+        ["IDENT", "io", null, false, [1, 37, 1, 39]],
+        ["IDENT", "sketch", null, false, [1, 40, 1, 46]],
+        ["RESERVED_NAME", "zno", null, false, [1, 47, 1, 50]],
+        ["RESERVED_NAME", "Int", null, false, [1, 51, 1, 54]],
+        ["RESERVED_NAME", "zzysay", null, false, [1, 55, 1, 61]],
+        ["RESERVED_NAME", "zzysayalot", null, false, [1, 62, 1, 72]],
+        ["IDENT", "myzzysay", null, false, [1, 73, 1, 81]],
+        ["COLON", ":", null, false, [1, 81, 1, 82]],
+        ["EOF", "", null, false, [1, 82, 1, 82]]
+      ],
+      "mode": "lex",
+      "stdin": ""
+    },
+    {
+      "id": "not-keyword-aliases",
+      "file": "tests/lex/inputs/not-keyword-aliases.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "tokens": [
+        ["LEFT_PAREN", "(", null, false, [1, 1, 1, 2]],
+        ["IDENT", "let", null, false, [1, 2, 1, 5]],
+        ["RIGHT_PAREN", ")", null, false, [1, 5, 1, 6]],
+        ["LEFT_PAREN", "(", null, false, [1, 7, 1, 8]],
+        ["RESERVED_NAME", "zno", null, false, [1, 8, 1, 11]],
+        ["RIGHT_PAREN", ")", null, false, [1, 12, 1, 13]],
+        ["LEFT_PAREN", "(", null, false, [1, 14, 1, 15]],
+        ["RESERVED_NAME", "zyes", null, false, [1, 16, 1, 20]],
+        ["RIGHT_PAREN", ")", null, false, [1, 20, 1, 21]],
+        ["LEFT_PAREN", "(", null, false, [1, 22, 1, 23]],
+        ["IDENT", "ZNO", null, false, [1, 23, 1, 26]],
+        ["RIGHT_PAREN", ")", null, false, [1, 26, 1, 27]],
+        ["LEFT_PAREN", "(", null, false, [1, 28, 1, 29]],
+        ["EOF", "", null, false, [1, 55, 1, 55]]
+      ],
+      "mode": "lex",
+      "stdin": ""
+    },
+    {
+      "id": "strings",
+      "file": "tests/lex/inputs/strings.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "tokens": [
+        ["STRING", "\"A[OoO]nB\"", "A\nB", false, [1, 1, 1, 11]],
+        ["STRING", "\"[OoO]t[OoO]r[OoO]q[OoO]b\"", "\t\r\"\\", false, [1, 12, 1, 38]],
+        ["STRING", "\"[OoO][OoO]n\"", "[OoO]n", false, [1, 39, 1, 52]],
+        ["STRING", "\"[Oo\"", "[Oo", false, [1, 53, 1, 58]],
+        ["STRING", "\"https://x/a\\n\"", "https://x/a\\n", false, [1, 59, 1, 74]],
+        ["STRING", "\"zzysay: zzysayalot: zzyend (zif?:)\"", "zzysay: zzysayalot: zzyend (zif?:)", false, [1, 75, 1, 111]],
+        ["STRING", "\"😀中文\"", "😀中文", false, [1, 112, 1, 117]],
+        ["EOF", "", null, false, [2, 1, 2, 1]]
+      ],
+      "mode": "lex",
+      "stdin": ""
+    },
+    {
+      "id": "raw-comment-gap",
+      "file": "tests/lex/inputs/raw-comment-gap.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "tokens": [
+        ["RAW", "(raw)", null, false, [1, 1, 1, 6]],
+        ["STRING", "\"[OoO]x\\n\"", "[OoO]x\\n", true, [2, 28, 2, 38]],
+        ["SEMICOLON", ";", null, false, [2, 38, 2, 39]],
+        ["EOF", "", null, false, [2, 39, 2, 39]]
+      ],
+      "mode": "lex",
+      "stdin": ""
+    },
+    {
+      "id": "raw-markers",
+      "file": "tests/lex/inputs/raw-markers.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "tokens": [
+        ["RAW", "(raw)", null, false, [1, 1, 1, 6]],
+        ["STRING", "\"zzysay: zzysayalot: zzyend [OoO]q\"", "zzysay: zzysayalot: zzyend [OoO]q", true, [1, 6, 1, 41]],
+        ["SEMICOLON", ";", null, false, [1, 41, 1, 42]],
+        ["EOF", "", null, false, [1, 42, 1, 42]]
+      ],
+      "mode": "lex",
+      "stdin": ""
+    },
+    {
+      "id": "single-comment-eof",
+      "file": "tests/lex/inputs/single-comment-eof.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "tokens": [
+        ["EOF", "", null, false, [1, 25, 1, 25]]
+      ],
+      "mode": "lex",
+      "stdin": ""
+    },
+    {
+      "id": "comment-does-not-join",
+      "file": "tests/lex/inputs/comment-does-not-join.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "tokens": [
+        ["IDENT", "alpha", null, false, [1, 1, 1, 6]],
+        ["IDENT", "beta", null, false, [1, 41, 1, 45]],
+        ["SEMICOLON", ";", null, false, [1, 45, 1, 46]],
+        ["EOF", "", null, false, [1, 46, 1, 46]]
+      ],
+      "mode": "lex",
+      "stdin": ""
+    },
+    {
+      "id": "end-boundaries",
+      "file": "tests/lex/inputs/end-boundaries.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "tokens": [
+        ["IDENT", "x", null, false, [1, 73, 1, 74]],
+        ["SEMICOLON", ";", null, false, [1, 74, 1, 75]],
+        ["EOF", "", null, false, [1, 75, 1, 75]]
+      ],
+      "mode": "lex",
+      "stdin": ""
+    },
+    {
+      "id": "comment-not-nested",
+      "file": "tests/lex/inputs/comment-not-nested.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "tokens": [
+        ["TRUE", "(true)", null, false, [1, 52, 1, 58]],
+        ["SEMICOLON", ";", null, false, [1, 58, 1, 59]],
+        ["EOF", "", null, false, [1, 59, 1, 59]]
+      ],
+      "mode": "lex",
+      "stdin": ""
+    },
+    {
+      "id": "quoted-end",
+      "file": "tests/lex/inputs/quoted-end.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "tokens": [
+        ["STRING", "\"ok\"", "ok", false, [1, 20, 1, 24]],
+        ["SEMICOLON", ";", null, false, [1, 24, 1, 25]],
+        ["EOF", "", null, false, [1, 25, 1, 25]]
+      ],
+      "mode": "lex",
+      "stdin": ""
+    },
+    {
+      "id": "empty-comment",
+      "file": "tests/lex/inputs/empty-comment.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "tokens": [
+        ["INTEGER", "1", null, false, [1, 19, 1, 20]],
+        ["SEMICOLON", ";", null, false, [1, 20, 1, 21]],
+        ["EOF", "", null, false, [1, 21, 1, 21]]
+      ],
+      "mode": "lex",
+      "stdin": ""
+    },
+    {
+      "id": "bom-crlf",
+      "file": "tests/lex/inputs/bom-crlf.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "tokens": [
+        ["IMMUTABLE_DECL", "(zno)", null, false, [2, 2, 2, 7]],
+        ["IDENT", "名", null, false, [2, 8, 2, 9]],
+        ["INIT", ":=", null, false, [2, 10, 2, 12]],
+        ["STRING", "\"😀[OoO]n\"", "😀\n", false, [2, 13, 2, 22]],
+        ["SEMICOLON", ";", null, false, [2, 22, 2, 23]],
+        ["EOF", "", null, false, [3, 1, 3, 1]]
+      ],
+      "mode": "lex",
+      "stdin": ""
+    },
+    {
+      "id": "comments-crlf",
+      "file": "tests/lex/inputs/comments-crlf.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "tokens": [
+        ["INTEGER", "42", null, false, [5, 1, 5, 3]],
+        ["SEMICOLON", ";", null, false, [5, 3, 5, 4]],
+        ["EOF", "", null, false, [5, 4, 5, 4]]
+      ],
+      "mode": "lex",
+      "stdin": ""
+    },
+    {
+      "id": "中文 空格",
+      "file": "tests/lex/inputs/中文 空格.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "tokens": [
+        ["MUTABLE_DECL", "(zyes)", null, false, [1, 1, 1, 7]],
+        ["IDENT", "中文", null, false, [1, 8, 1, 10]],
+        ["INIT", ":=", null, false, [1, 11, 1, 13]],
+        ["LEFT_BRACKET", "[", null, false, [1, 14, 1, 15]],
+        ["INTEGER", "1", null, false, [1, 15, 1, 16]],
+        ["COMMA", ",", null, false, [1, 16, 1, 17]],
+        ["INTEGER", "2", null, false, [1, 17, 1, 18]],
+        ["RIGHT_BRACKET", "]", null, false, [1, 18, 1, 19]],
+        ["SEMICOLON", ";", null, false, [1, 19, 1, 20]],
+        ["EOF", "", null, false, [1, 20, 1, 20]]
+      ],
+      "mode": "lex",
+      "stdin": ""
+    },
+    {
+      "id": "empty",
+      "file": "tests/lex/inputs/empty.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "tokens": [
+        ["EOF", "", null, false, [1, 1, 1, 1]]
+      ],
+      "mode": "lex",
+      "stdin": ""
+    },
+    {
+      "id": "numbers-retain-text",
+      "file": "tests/lex/inputs/numbers-retain-text.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "tokens": [
+        ["INTEGER", "00012", null, false, [1, 1, 1, 6]],
+        ["FLOAT", "1.20", null, false, [1, 7, 1, 11]],
+        ["INTEGER", "1", null, false, [1, 12, 1, 13]],
+        ["IDENT", "e3", null, false, [1, 13, 1, 15]],
+        ["INTEGER", "0", null, false, [1, 16, 1, 17]],
+        ["IDENT", "xFF", null, false, [1, 17, 1, 20]],
+        ["INTEGER", "1", null, false, [1, 21, 1, 22]],
+        ["IDENT", "_000", null, false, [1, 22, 1, 26]],
+        ["DOT", ".", null, false, [1, 27, 1, 28]],
+        ["INTEGER", "5", null, false, [1, 28, 1, 29]],
+        ["INTEGER", "1", null, false, [1, 30, 1, 31]],
+        ["DOT", ".", null, false, [1, 31, 1, 32]],
+        ["EOF", "", null, false, [1, 32, 1, 32]]
+      ],
+      "mode": "lex",
+      "stdin": ""
+    },
+    {
+      "id": "hash-is-illegal",
+      "file": "tests/lex/inputs/hash-is-illegal.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "diagnostic": {
+        "code": "E101",
+        "span": [
+          1,
+          15,
+          1,
+          16
+        ]
+      },
+      "mode": "lex",
+      "stdin": "",
+      "stdout": ""
+    },
+    {
+      "id": "bare-end",
+      "file": "tests/lex/inputs/bare-end.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "diagnostic": {
+        "code": "E101",
+        "span": [
+          1,
+          2,
+          1,
+          8
+        ]
+      },
+      "mode": "lex",
+      "stdin": "",
+      "stdout": ""
+    },
+    {
+      "id": "unclosed-comment",
+      "file": "tests/lex/inputs/unclosed-comment.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "diagnostic": {
+        "code": "E101",
+        "span": [
+          1,
+          1,
+          1,
+          12
+        ]
+      },
+      "mode": "lex",
+      "stdin": "",
+      "stdout": ""
+    },
+    {
+      "id": "bad-escape",
+      "file": "tests/lex/inputs/bad-escape.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "diagnostic": {
+        "code": "E102",
+        "span": [
+          1,
+          5,
+          1,
+          11
+        ]
+      },
+      "mode": "lex",
+      "stdin": "",
+      "stdout": ""
+    },
+    {
+      "id": "dangling-escape-quote",
+      "file": "tests/lex/inputs/dangling-escape-quote.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "diagnostic": {
+        "code": "E102",
+        "span": [
+          1,
+          2,
+          1,
+          7
+        ]
+      },
+      "mode": "lex",
+      "stdin": "",
+      "stdout": ""
+    },
+    {
+      "id": "dangling-escape-eof",
+      "file": "tests/lex/inputs/dangling-escape-eof.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "diagnostic": {
+        "code": "E102",
+        "span": [
+          1,
+          2,
+          1,
+          7
+        ]
+      },
+      "mode": "lex",
+      "stdin": "",
+      "stdout": ""
+    },
+    {
+      "id": "unterminated-string",
+      "file": "tests/lex/inputs/unterminated-string.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "diagnostic": {
+        "code": "E101",
+        "span": [
+          1,
+          1,
+          1,
+          2
+        ]
+      },
+      "mode": "lex",
+      "stdin": "",
+      "stdout": ""
+    },
+    {
+      "id": "physical-newline",
+      "file": "tests/lex/inputs/physical-newline.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "diagnostic": {
+        "code": "E101",
+        "span": [
+          1,
+          1,
+          1,
+          2
+        ]
+      },
+      "mode": "lex",
+      "stdin": "",
+      "stdout": ""
+    },
+    {
+      "id": "physical-crlf",
+      "file": "tests/lex/inputs/physical-crlf.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "diagnostic": {
+        "code": "E101",
+        "span": [
+          1,
+          1,
+          1,
+          2
+        ]
+      },
+      "mode": "lex",
+      "stdin": "",
+      "stdout": ""
+    },
+    {
+      "id": "raw-newline",
+      "file": "tests/lex/inputs/raw-newline.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "diagnostic": {
+        "code": "E101",
+        "span": [
+          1,
+          6,
+          1,
+          7
+        ]
+      },
+      "mode": "lex",
+      "stdin": "",
+      "stdout": ""
+    },
+    {
+      "id": "raw-missing",
+      "file": "tests/lex/inputs/raw-missing.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "diagnostic": {
+        "code": "E101",
+        "span": [
+          1,
+          1,
+          1,
+          6
+        ]
+      },
+      "mode": "lex",
+      "stdin": "",
+      "stdout": ""
+    },
+    {
+      "id": "raw-wrong-next",
+      "file": "tests/lex/inputs/raw-wrong-next.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "diagnostic": {
+        "code": "E101",
+        "span": [
+          1,
+          1,
+          1,
+          6
+        ]
+      },
+      "mode": "lex",
+      "stdin": "",
+      "stdout": ""
+    },
+    {
+      "id": "raw-unclosed-comment",
+      "file": "tests/lex/inputs/raw-unclosed-comment.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "diagnostic": {
+        "code": "E101",
+        "span": [
+          1,
+          7,
+          1,
+          18
+        ]
+      },
+      "mode": "lex",
+      "stdin": "",
+      "stdout": ""
+    },
+    {
+      "id": "fullwidth-parenthesis",
+      "file": "tests/lex/inputs/fullwidth-parenthesis.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "diagnostic": {
+        "code": "E101",
+        "span": [
+          1,
+          1,
+          1,
+          2
+        ]
+      },
+      "mode": "lex",
+      "stdin": "",
+      "stdout": ""
+    },
+    {
+      "id": "non-ascii-digit",
+      "file": "tests/lex/inputs/non-ascii-digit.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "diagnostic": {
+        "code": "E101",
+        "span": [
+          1,
+          1,
+          1,
+          2
+        ]
+      },
+      "mode": "lex",
+      "stdin": "",
+      "stdout": ""
+    },
+    {
+      "id": "invalid-equals",
+      "file": "tests/lex/inputs/invalid-equals.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "diagnostic": {
+        "code": "E101",
+        "span": [
+          1,
+          3,
+          1,
+          4
+        ]
+      },
+      "mode": "lex",
+      "stdin": "",
+      "stdout": ""
+    },
+    {
+      "id": "first-error-only",
+      "file": "tests/lex/inputs/first-error-only.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "diagnostic": {
+        "code": "E101",
+        "span": [
+          1,
+          1,
+          1,
+          2
+        ]
+      },
+      "mode": "lex",
+      "stdin": "",
+      "stdout": ""
+    },
+    {
+      "id": "digits-2",
+      "file": "tests/lex/inputs/digits-2.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "limits": {
+        "numeric_digits": 3
+      },
+      "tokens": [
+        ["INTEGER", "00", null, false, [1, 1, 1, 3]],
+        ["SEMICOLON", ";", null, false, [1, 3, 1, 4]],
+        ["EOF", "", null, false, [1, 4, 1, 4]]
+      ],
+      "mode": "lex",
+      "stdin": ""
+    },
+    {
+      "id": "digits-3",
+      "file": "tests/lex/inputs/digits-3.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "limits": {
+        "numeric_digits": 3
+      },
+      "tokens": [
+        ["INTEGER", "000", null, false, [1, 1, 1, 4]],
+        ["SEMICOLON", ";", null, false, [1, 4, 1, 5]],
+        ["EOF", "", null, false, [1, 5, 1, 5]]
+      ],
+      "mode": "lex",
+      "stdin": ""
+    },
+    {
+      "id": "digits-4",
+      "file": "tests/lex/inputs/digits-4.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "diagnostic": {
+        "code": "E211",
+        "span": [
+          1,
+          1,
+          1,
+          5
+        ],
+        "message_contains": "numeric_digits"
+      },
+      "limits": {
+        "numeric_digits": 3
+      },
+      "mode": "lex",
+      "stdin": "",
+      "stdout": ""
+    },
+    {
+      "id": "float-digits-limit",
+      "file": "tests/lex/inputs/float-digits-limit.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "limits": {
+        "numeric_digits": 3
+      },
+      "tokens": [
+        ["FLOAT", "0.00", null, false, [1, 1, 1, 5]],
+        ["SEMICOLON", ";", null, false, [1, 5, 1, 6]],
+        ["EOF", "", null, false, [1, 6, 1, 6]]
+      ],
+      "mode": "lex",
+      "stdin": ""
+    },
+    {
+      "id": "float-digits-over",
+      "file": "tests/lex/inputs/float-digits-over.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "diagnostic": {
+        "code": "E211",
+        "span": [
+          1,
+          1,
+          1,
+          6
+        ],
+        "message_contains": "numeric_digits"
+      },
+      "limits": {
+        "numeric_digits": 3
+      },
+      "mode": "lex",
+      "stdin": "",
+      "stdout": ""
+    },
+    {
+      "id": "default-digits-4095",
+      "file": "tests/lex/inputs/default-digits-4095.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "tokens": [
+        ["INTEGER", "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000", null, false, [1, 1, 1, 4096]],
+        ["SEMICOLON", ";", null, false, [1, 4096, 1, 4097]],
+        ["EOF", "", null, false, [1, 4097, 1, 4097]]
+      ],
+      "mode": "lex",
+      "stdin": ""
+    },
+    {
+      "id": "default-digits-4096",
+      "file": "tests/lex/inputs/default-digits-4096.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "tokens": [
+        ["INTEGER", "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000", null, false, [1, 1, 1, 4097]],
+        ["SEMICOLON", ";", null, false, [1, 4097, 1, 4098]],
+        ["EOF", "", null, false, [1, 4098, 1, 4098]]
+      ],
+      "mode": "lex",
+      "stdin": ""
+    },
+    {
+      "id": "default-digits-4097",
+      "file": "tests/lex/inputs/default-digits-4097.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "diagnostic": {
+        "code": "E211",
+        "span": [
+          1,
+          1,
+          1,
+          4098
+        ],
+        "message_contains": "numeric_digits"
+      },
+      "mode": "lex",
+      "stdin": "",
+      "stdout": ""
+    },
+    {
+      "id": "tokens-under",
+      "file": "tests/lex/inputs/tokens-under.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "limits": {
+        "tokens_per_file": 2
+      },
+      "tokens": [
+        ["IDENT", "x", null, false, [1, 1, 1, 2]],
+        ["EOF", "", null, false, [1, 2, 1, 2]]
+      ],
+      "mode": "lex",
+      "stdin": ""
+    },
+    {
+      "id": "tokens-limit",
+      "file": "tests/lex/inputs/tokens-limit.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "limits": {
+        "tokens_per_file": 2
+      },
+      "tokens": [
+        ["IDENT", "x", null, false, [1, 1, 1, 2]],
+        ["SEMICOLON", ";", null, false, [1, 2, 1, 3]],
+        ["EOF", "", null, false, [1, 3, 1, 3]]
+      ],
+      "mode": "lex",
+      "stdin": ""
+    },
+    {
+      "id": "tokens-over",
+      "file": "tests/lex/inputs/tokens-over.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "diagnostic": {
+        "code": "E211",
+        "span": [
+          1,
+          3,
+          1,
+          4
+        ],
+        "message_contains": "tokens_per_file"
+      },
+      "limits": {
+        "tokens_per_file": 2
+      },
+      "mode": "lex",
+      "stdin": "",
+      "stdout": ""
+    },
+    {
+      "id": "comments-not-tokens",
+      "file": "tests/lex/inputs/comments-not-tokens.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "limits": {
+        "tokens_per_file": 1
+      },
+      "tokens": [
+        ["IDENT", "x", null, false, [1, 26, 1, 27]],
+        ["EOF", "", null, false, [1, 40, 1, 40]]
+      ],
+      "mode": "lex",
+      "stdin": ""
+    },
+    {
+      "id": "text-2",
+      "file": "tests/lex/inputs/text-2.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "limits": {
+        "text_codepoints": 3
+      },
+      "tokens": [
+        ["STRING", "\"中中\"", "中中", false, [1, 1, 1, 5]],
+        ["SEMICOLON", ";", null, false, [1, 5, 1, 6]],
+        ["EOF", "", null, false, [1, 6, 1, 6]]
+      ],
+      "mode": "lex",
+      "stdin": ""
+    },
+    {
+      "id": "text-3",
+      "file": "tests/lex/inputs/text-3.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "limits": {
+        "text_codepoints": 3
+      },
+      "tokens": [
+        ["STRING", "\"中中中\"", "中中中", false, [1, 1, 1, 6]],
+        ["SEMICOLON", ";", null, false, [1, 6, 1, 7]],
+        ["EOF", "", null, false, [1, 7, 1, 7]]
+      ],
+      "mode": "lex",
+      "stdin": ""
+    },
+    {
+      "id": "text-4",
+      "file": "tests/lex/inputs/text-4.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "diagnostic": {
+        "code": "E211",
+        "span": [
+          1,
+          1,
+          1,
+          6
+        ],
+        "message_contains": "text_codepoints"
+      },
+      "limits": {
+        "text_codepoints": 3
+      },
+      "mode": "lex",
+      "stdin": "",
+      "stdout": ""
+    },
+    {
+      "id": "decoded-text-limit",
+      "file": "tests/lex/inputs/decoded-text-limit.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "limits": {
+        "text_codepoints": 5
+      },
+      "tokens": [
+        ["STRING", "\"[OoO][OoO]\"", "[OoO]", false, [1, 1, 1, 13]],
+        ["SEMICOLON", ";", null, false, [1, 13, 1, 14]],
+        ["EOF", "", null, false, [1, 14, 1, 14]]
+      ],
+      "mode": "lex",
+      "stdin": ""
+    },
+    {
+      "id": "decoded-text-over",
+      "file": "tests/lex/inputs/decoded-text-over.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "diagnostic": {
+        "code": "E211",
+        "span": [
+          1,
+          1,
+          1,
+          13
+        ],
+        "message_contains": "text_codepoints"
+      },
+      "limits": {
+        "text_codepoints": 5
+      },
+      "mode": "lex",
+      "stdin": "",
+      "stdout": ""
+    },
+    {
+      "id": "comment-prefix-names",
+      "file": "tests/lex/inputs/comment-prefix-names.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "tokens": [
+        ["IDENT", "myzzysay", null, false, [1, 1, 1, 9]],
+        ["COLON", ":", null, false, [1, 9, 1, 10]],
+        ["IDENT", "xzzysayalot", null, false, [1, 11, 1, 22]],
+        ["COLON", ":", null, false, [1, 22, 1, 23]],
+        ["RESERVED_NAME", "zzysay", null, false, [1, 24, 1, 30]],
+        ["COLON", ":", null, false, [1, 31, 1, 32]],
+        ["RESERVED_NAME", "zzysayalot", null, false, [1, 33, 1, 43]],
+        ["COLON", ":", null, false, [1, 44, 1, 45]],
+        ["IDENT", "zzyending", null, false, [1, 46, 1, 55]],
+        ["IDENT", "my_zzyend", null, false, [1, 56, 1, 65]],
+        ["IDENT", "zzyend中文", null, false, [1, 66, 1, 74]],
+        ["SEMICOLON", ";", null, false, [1, 74, 1, 75]],
+        ["EOF", "", null, false, [1, 75, 1, 75]]
+      ],
+      "mode": "lex",
+      "stdin": ""
+    },
+    {
+      "id": "single-comment-after-token",
+      "file": "tests/lex/inputs/single-comment-after-token.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "tokens": [
+        ["INTEGER", "1", null, false, [1, 1, 1, 2]],
+        ["SEMICOLON", ";", null, false, [1, 2, 1, 3]],
+        ["EOF", "", null, false, [1, 21, 1, 21]]
+      ],
+      "mode": "lex",
+      "stdin": ""
+    },
+    {
+      "id": "backslash-not-escape",
+      "file": "tests/lex/inputs/backslash-not-escape.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "tokens": [
+        ["STRING", "\"a\\\"", "a\\", false, [1, 1, 1, 5]],
+        ["IDENT", "rest", null, false, [1, 5, 1, 9]],
+        ["SEMICOLON", ";", null, false, [1, 9, 1, 10]],
+        ["EOF", "", null, false, [1, 10, 1, 10]]
+      ],
+      "mode": "lex",
+      "stdin": ""
+    },
+    {
+      "id": "escape-marker-outside-string",
+      "file": "tests/lex/inputs/escape-marker-outside-string.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "tokens": [
+        ["LEFT_BRACKET", "[", null, false, [1, 1, 1, 2]],
+        ["IDENT", "OoO", null, false, [1, 2, 1, 5]],
+        ["RIGHT_BRACKET", "]", null, false, [1, 5, 1, 6]],
+        ["SEMICOLON", ";", null, false, [1, 6, 1, 7]],
+        ["EOF", "", null, false, [1, 7, 1, 7]]
+      ],
+      "mode": "lex",
+      "stdin": ""
+    },
+    {
+      "id": "second-bom",
+      "file": "tests/lex/inputs/second-bom.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "diagnostic": {
+        "code": "E101",
+        "span": [
+          1,
+          1,
+          1,
+          2
+        ]
+      },
+      "mode": "lex",
+      "stdin": "",
+      "stdout": ""
+    },
+    {
+      "id": "unicode-error-position",
+      "file": "tests/lex/inputs/unicode-error-position.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "diagnostic": {
+        "code": "E101",
+        "span": [
+          1,
+          5,
+          1,
+          6
+        ]
+      },
+      "mode": "lex",
+      "stdin": "",
+      "stdout": ""
+    },
+    {
+      "id": "raw-quote-closes",
+      "file": "tests/lex/inputs/raw-quote-closes.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "tokens": [
+        ["RAW", "(raw)", null, false, [1, 1, 1, 6]],
+        ["STRING", "\"[OoO]q\"", "[OoO]q", true, [1, 6, 1, 14]],
+        ["IDENT", "name", null, false, [1, 14, 1, 18]],
+        ["SEMICOLON", ";", null, false, [1, 18, 1, 19]],
+        ["EOF", "", null, false, [1, 19, 1, 19]]
+      ],
+      "mode": "lex",
+      "stdin": ""
+    },
+    {
+      "id": "lex-output-over",
+      "file": "tests/lex/inputs/lex-output-over.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "diagnostic": {
+        "code": "E211",
+        "file": null,
+        "span": null,
+        "message_contains": "stdout_bytes"
+      },
+      "limits": {
+        "stdout_bytes": 1
+      },
+      "mode": "lex",
+      "stdin": "",
+      "stdout": ""
+    }
+  ]
+}

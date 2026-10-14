@@ -1,6 +1,6 @@
 # ZZY 语言语法规则
 
-更新：2026-10-09｜适用设计：语法 v0.6、标准库 v0.6.1｜状态：参考文档，示例未运行
+更新：2026-10-14｜适用设计：语法 v0.6、标准库 v0.6.1｜状态：P06 已逐段验证本页 13 个完整代码块；对应文件与记录见 tests/p06，能力以根 README 为准
 
 本文面向编写 ZZY 的开发者，按使用场景说明规则。完整 Token、EBNF 和语义以 [正式语法契约](../docs/language/syntax.md) 为准，函数签名见 [标准库契约](../docs/language/stdlib.md)。各代码块作为独立文件阅读；只有明确标注文件关系的模块示例需要组合。
 
@@ -271,7 +271,7 @@ use 相对导入文件解析路径，目标必须 `.zzy`；顶层具名函数、
 | io | 单参数 print、带提示 input、UTF-8 文件和原子写入 |
 | array | 整数 sum/stats、全 Int 或全 String 的 sorted、复制/增删、map/filter |
 | text | trim/join/split/contains/replace/safe_int |
-| math | 当前只有 abs |
+| math | abs(Int/Float) 已实现，不接受 Bool |
 | data | Map、严格 JSON、kind |
 | unit | 精确数量 make/format |
 

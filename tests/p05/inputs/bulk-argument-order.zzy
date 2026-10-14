@@ -1,0 +1,1 @@
+(addnew) first(){io.print("first");(return)[1];}(addnew) second(){io.print("second");(return)(addnew)(x)=>x;}io.print(array.map(first(),second()));

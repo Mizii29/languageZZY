@@ -1,0 +1,1 @@
+(addnew) f(a:(Array),b:(Bool),s:(String),r:(Range),g:(Function)) -> (Array) {(return) [a,b,s,len(r),g(2)];} io.print(f(["a",1],(true),"x",0..<3,(addnew) (n)=>n+1));

@@ -1,0 +1,16 @@
+(zno) n := 0;
+(machine) Toggle { a -- "flip" --> b; b -- "flip" --> a; }
+(zno) toggle :=  Toggle("a");
+(addnew) bench() {
+    (zyes) i := 0;
+    (zyes) successes := 0;
+    (while) i < n {
+        (?_?) toggle << "flip" {
+            (^_^)(state) => { successes <- successes + 1; }
+            (T_T)(message) => { (o_o) (false); }
+        }
+        i <- i + 1;
+    }
+    (return) [successes, toggle.state];
+}
+io.print(bench());

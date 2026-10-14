@@ -1,0 +1,1 @@
+(addnew) outer() {(zno) x := 9; (return) (addnew) () => (addnew) () => x;} io.print(outer()()());

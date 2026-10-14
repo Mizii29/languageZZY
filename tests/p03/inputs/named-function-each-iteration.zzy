@@ -1,0 +1,1 @@
+(zno) fs:=[]; (for) i (in) 0..<2 {(addnew) f() {(return) i;} array.push(fs,f);} io.print([fs[0](),fs[1](),fs[0]==fs[1]]);

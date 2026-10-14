@@ -1,0 +1,2 @@
+(zyes) n := 0; (addnew) next() {n <- n+1; (return) n;} (shape) S {x := next(); f := (addnew) () => n;}
+(addnew) make(n) {(return) S::{};} (zno) a := make(99); (zno) b := make(88); io.print([a.x,b.x,a.f(),b.f()]);

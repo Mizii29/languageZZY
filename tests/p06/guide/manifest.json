@@ -1,0 +1,107 @@
+[
+  {
+    "document": "skills/syntax.md",
+    "block": 1,
+    "file": "tests/p06/guide/syntax-1/main.zzy",
+    "stdout": "你好，ZZY！\n2\n",
+    "specs": 0
+  },
+  {
+    "document": "skills/syntax.md",
+    "block": 2,
+    "file": "tests/p06/guide/syntax-2/main.zzy",
+    "stdout": "第一行\n第二行\nC:\\tmp\\notes.txt\n[OoO]n\n",
+    "specs": 0
+  },
+  {
+    "document": "skills/syntax.md",
+    "block": 3,
+    "file": "tests/p06/guide/syntax-3/main.zzy",
+    "stdout": "",
+    "specs": 0
+  },
+  {
+    "document": "skills/syntax.md",
+    "block": 4,
+    "file": "tests/p06/guide/syntax-4/main.zzy",
+    "stdout": "通过\n12\n",
+    "specs": 0
+  },
+  {
+    "document": "skills/syntax.md",
+    "block": 5,
+    "file": "tests/p06/guide/syntax-5/main.zzy",
+    "stdout": "",
+    "specs": 0
+  },
+  {
+    "document": "skills/syntax.md",
+    "block": 6,
+    "file": "tests/p06/guide/syntax-6/main.zzy",
+    "stdout": "5\n8\n",
+    "specs": 0
+  },
+  {
+    "document": "skills/syntax.md",
+    "block": 7,
+    "file": "tests/p06/guide/syntax-7/main.zzy",
+    "stdout": "12\n",
+    "specs": 0
+  },
+  {
+    "document": "skills/syntax.md",
+    "block": 8,
+    "file": "tests/p06/guide/syntax-8/main.zzy",
+    "stdout": "270\n270\n270\n",
+    "specs": 0
+  },
+  {
+    "document": "skills/syntax.md",
+    "block": 9,
+    "file": "tests/p06/guide/syntax-9/main.zzy",
+    "stdout": "写测试\n",
+    "specs": 0
+  },
+  {
+    "document": "skills/syntax.md",
+    "block": 10,
+    "file": "tests/p06/guide/syntax-10/main.zzy",
+    "stdout": "doing\n2500::ms\n",
+    "specs": 0
+  },
+  {
+    "document": "skills/syntax.md",
+    "block": 11,
+    "file": "tests/p06/guide/syntax-11/helpers.zzy",
+    "stdout": "",
+    "specs": 0
+  },
+  {
+    "document": "skills/syntax.md",
+    "block": 12,
+    "file": "tests/p06/guide/syntax-12/main.zzy",
+    "stdout": "6\n",
+    "specs": 0
+  },
+  {
+    "document": "skills/syntax.md",
+    "block": 13,
+    "file": "tests/p06/guide/syntax-13/main.zzy",
+    "stdout": "",
+    "specs": 1
+  },
+  {
+    "document": "skills/guide.md",
+    "block": 1,
+    "file": "tests/p06/guide/guide-1/main.zzy",
+    "stdout": "15\n",
+    "specs": 1
+  },
+  {
+    "document": "skills/guide.md",
+    "block": 2,
+    "file": "tests/p06/guide/guide-2/main.zzy",
+    "stdout": "",
+    "specs": 0
+  }
+]

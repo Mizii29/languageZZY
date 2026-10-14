@@ -1,0 +1,1 @@
+(addnew) f(f) {{(zno) f := 7; io.print(f);} (return) f;} io.print(f(9));

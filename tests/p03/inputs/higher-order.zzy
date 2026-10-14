@@ -1,0 +1,4 @@
+(addnew) apply(f: (Function), x) {(return) f(x);}
+(zno) inc := (addnew) (x: (Int),) => x+1;
+io.print(apply(inc,4,));
+io.print(((addnew) () => inc)()(9));

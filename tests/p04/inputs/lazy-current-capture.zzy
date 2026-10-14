@@ -1,0 +1,1 @@
+(addnew) make(){(zyes)n:=1;(zno) v:=(zzz)(n);n<-8;(return)v;}(zno)v:=make();io.print(wake(v));

@@ -1,0 +1,1 @@
+(zno) a := [1]; (zno) alias := a; (for) x (in) a {array.push(alias,2); (break);}

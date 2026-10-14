@@ -1,0 +1,1 @@
+io.print([text.safe_int(" +0012[OoO]r[OoO]n"),text.safe_int("-0"),text.safe_int("-42")]);

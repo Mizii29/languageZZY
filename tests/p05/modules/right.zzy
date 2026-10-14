@@ -1,0 +1,1 @@
+(use) "./counter.zzy" (as) c;(addnew) next(){(return)c.next();}

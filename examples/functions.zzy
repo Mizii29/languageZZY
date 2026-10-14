@@ -1,0 +1,25 @@
+zzysay: P03：自递归、独立计数器与逐轮闭包。
+(addnew) factorial(n: (Int)) -> (Int) {
+    (zif?:) n == 0 { (return) 1; }
+    (return) n * factorial(n - 1);
+}
+(addnew) counter(start: (Int)) -> (Function) {
+    (addnew) next() -> (Int) {
+        start <- start + 1;
+        (return) start;
+    }
+    (return) next;
+}
+(addnew) perRound() -> (Array) {
+    (zno) callbacks := [];
+    (for) i (in) 0..<3 {
+        array.push(callbacks, (addnew) () => i);
+    }
+    (return) callbacks;
+}
+(zno) a := counter(0);
+(zno) b := counter(10);
+(zno) callbacks := perRound();
+io.print(factorial(6));
+io.print([a(), a(), b()]);
+io.print([callbacks[0](), callbacks[1](), callbacks[2]()]);

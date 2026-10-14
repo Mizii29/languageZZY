@@ -1,0 +1,1 @@
+(zno)m:=data.map();data.set(m,"self",m);(?_?)data.stringify(m){(T_T)(v)=>{io.print("cycle");}_=>{}}

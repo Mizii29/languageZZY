@@ -1,0 +1,1 @@
+(zno)r:=data.parse("{[OoO]qa[OoO]q:[true,null,1,1.5,[OoO]q中[OoO]q],[OoO]qb[OoO]q:{}}");(?_?)r{(^_^)(v)=>{io.print(data.stringify(v));io.print(data.keys(v));}_=>{io.print("bad");}}

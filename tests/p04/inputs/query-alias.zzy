@@ -1,0 +1,1 @@
+(zno)a:=[[1]];(zno)b:=a ?> {(yield):@;};io.print(a==b);array.push(b[0],2);array.push(b,[]);io.print(a);

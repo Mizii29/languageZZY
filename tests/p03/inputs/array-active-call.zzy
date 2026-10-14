@@ -1,0 +1,1 @@
+(addnew) mutate(a) {array.push(a,2);} (zno) a := [1]; (for) x (in) a {mutate(a);}

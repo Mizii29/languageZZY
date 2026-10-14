@@ -1,0 +1,1 @@
+io.print(text.trim("  中[OoO]t "));io.print(text.join(["a","","中"],"|"));io.print(text.join([],"|"));io.print(text.split("|a||","|"));io.print(text.contains("abc",""));io.print(text.replace("aa","X","aaaaa"));

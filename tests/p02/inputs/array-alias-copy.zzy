@@ -1,0 +1,4 @@
+(zno) a := [[1],2]; (zno) alias := a; (zno) copy := array.copy(a);
+io.print(a == alias); io.print(a == copy); io.print(a[0] == copy[0]);
+alias[1] <- 3; copy[0][0] <- 9; array.push(a,4); io.print(array.pop(a));
+io.print(a); io.print(copy); io.print(array.copy([]) == []);

@@ -1,0 +1,1 @@
+(zno) x := 7; (shape) S {x := x;} io.print(S::{}.x);

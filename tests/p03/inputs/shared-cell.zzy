@@ -1,0 +1,8 @@
+(addnew) factory(start) {
+ (zyes) n: (Int) := start;
+ (addnew) inc() {n <- n+1; (return) n;}
+ (addnew) get() {(return) n;}
+ (return) [inc,get];
+}
+(zno) a := factory(0); (zno) b := factory(10);
+io.print([a[0](),a[1](),a[0](),b[1](),b[0](),a[1]()]);

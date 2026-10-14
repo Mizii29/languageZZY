@@ -1,0 +1,1 @@
+(zno) a := [1]; (zno) alias := a; (for) x (in) a {array.pop(alias); (break);}

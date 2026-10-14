@@ -1,0 +1,24 @@
+(addnew) summarize(path: (String)) -> (Result) {
+    (zno) content := io.read_text(path)?;
+    (zno) values := data.parse(content)?;
+    (zif?:) data.kind(values) != "array" {
+        (return) (T_T)("数据必须为分钟数组");
+    }
+    (for) value (in) values {
+        (zif?:) data.kind(value) != "int" {
+            (return) (T_T)("分钟必须为非负整数");
+        }
+        (zif?:) value < 0 {
+            (return) (T_T)("分钟必须为非负整数");
+        }
+    }
+    (zno) report := data.map();
+    data.set(report, "count", len(values));
+    data.set(report, "minutes", array.sum(values));
+    (return) (^_^)(report);
+}
+(addnew) save(report: (Map)) -> (Result) {
+    (zno) content := data.stringify(report)?;
+    io.write_atomic("report.json", content)?;
+    (return) (^_^)(report);
+}

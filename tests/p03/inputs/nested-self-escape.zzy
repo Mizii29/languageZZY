@@ -1,0 +1,2 @@
+(addnew) outer() {(addnew) f(n) {(zif?:) n == 0 {(return) (addnew) () => f;} (return) f(n-1);} (return) f;}
+(zno) f := outer(); io.print(f(4)() == f);

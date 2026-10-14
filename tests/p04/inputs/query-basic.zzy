@@ -1,0 +1,1 @@
+(zno)a:=[3,1,2,1];io.print(a ?> {(keep):@>0;(order):@ (desc);(take):3;(yield):@*2;});io.print(a);io.print(a ?> {(yield):@;} ?> {(take):2;(yield):@;});

@@ -1,0 +1,1 @@
+(zyes)n:=0;(addnew) f(){n<-n+1;(return)(T_T)("bad");}(zno)v:=(zzz)(f());io.print(wake(v));io.print(wake(v));io.print(n);

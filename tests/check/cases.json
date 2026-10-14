@@ -1,0 +1,1421 @@
+{
+  "schema_version": 1,
+  "cases": [
+    {
+      "id": "hello",
+      "file": "tests/run/inputs/hello.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "strings",
+      "file": "tests/run/inputs/strings.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "raw-once",
+      "file": "tests/run/inputs/raw-once.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "unicode-names",
+      "file": "tests/run/inputs/unicode-names.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "grouping",
+      "file": "tests/run/inputs/grouping.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "comments",
+      "file": "tests/run/inputs/comments.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "dynamic-rebind",
+      "file": "tests/run/inputs/dynamic-rebind.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "typed-string",
+      "file": "tests/run/inputs/typed-string.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "function-alias",
+      "file": "tests/run/inputs/function-alias.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "namespace-alias",
+      "file": "tests/run/inputs/namespace-alias.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "null-return",
+      "file": "tests/run/inputs/null-return.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "empty",
+      "file": "tests/run/inputs/empty.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "expression-statement",
+      "file": "tests/run/inputs/expression-statement.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "string-escapes",
+      "file": "tests/run/inputs/string-escapes.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "duplicate",
+      "file": "tests/run/inputs/duplicate.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E301",
+        "span": [
+          1,
+          45,
+          1,
+          46
+        ]
+      },
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "builtin-redeclare",
+      "file": "tests/run/inputs/builtin-redeclare.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E301",
+        "span": [
+          1,
+          7,
+          1,
+          9
+        ]
+      },
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "reserved-builtin-redeclare",
+      "file": "tests/run/inputs/reserved-builtin-redeclare.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E301",
+        "span": [
+          1,
+          7,
+          1,
+          10
+        ]
+      },
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "self-reference",
+      "file": "tests/run/inputs/self-reference.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E302",
+        "span": [
+          1,
+          12,
+          1,
+          13
+        ]
+      },
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "forward-reference",
+      "file": "tests/run/inputs/forward-reference.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E302",
+        "span": [
+          1,
+          10,
+          1,
+          11
+        ]
+      },
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "late-unknown",
+      "file": "tests/run/inputs/late-unknown.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E302",
+        "span": [
+          2,
+          1,
+          2,
+          8
+        ]
+      },
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "missing-semicolon",
+      "file": "tests/run/inputs/missing-semicolon.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E103",
+        "span": [
+          2,
+          13,
+          2,
+          13
+        ]
+      },
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "missing-close",
+      "file": "tests/run/inputs/missing-close.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E103",
+        "span": [
+          1,
+          11,
+          1,
+          12
+        ]
+      },
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "missing-initializer",
+      "file": "tests/run/inputs/missing-initializer.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E103",
+        "span": [
+          1,
+          12,
+          1,
+          13
+        ]
+      },
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "bad-declaration-name",
+      "file": "tests/run/inputs/bad-declaration-name.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E103",
+        "span": [
+          1,
+          7,
+          1,
+          10
+        ]
+      },
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "bad-assignment-target",
+      "file": "tests/run/inputs/bad-assignment-target.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E103",
+        "span": [
+          1,
+          3,
+          1,
+          4
+        ]
+      },
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "grouped-assignment-target",
+      "file": "tests/run/inputs/grouped-assignment-target.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E103",
+        "span": [
+          1,
+          1,
+          1,
+          2
+        ]
+      },
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "called-assignment-target",
+      "file": "tests/run/inputs/called-assignment-target.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E103",
+        "span": [
+          1,
+          12,
+          1,
+          13
+        ]
+      },
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "empty-argument-comma",
+      "file": "tests/run/inputs/empty-argument-comma.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E103",
+        "span": [
+          1,
+          10,
+          1,
+          11
+        ]
+      },
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "double-comma",
+      "file": "tests/run/inputs/double-comma.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E103",
+        "span": [
+          1,
+          12,
+          1,
+          13
+        ]
+      },
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "immutable-before-rhs",
+      "file": "tests/run/inputs/immutable-before-rhs.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "builtin-readonly",
+      "file": "tests/run/inputs/builtin-readonly.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "field-readonly",
+      "file": "tests/run/inputs/field-readonly.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "init-type",
+      "file": "tests/run/inputs/init-type.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "assign-type",
+      "file": "tests/run/inputs/assign-type.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "mixed-add",
+      "file": "tests/run/inputs/mixed-add.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "left-to-right",
+      "file": "tests/run/inputs/left-to-right.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "callability-after-args",
+      "file": "tests/run/inputs/callability-after-args.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "arity-after-args",
+      "file": "tests/run/inputs/arity-after-args.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "zero-arity",
+      "file": "tests/run/inputs/zero-arity.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "callee-before-args",
+      "file": "tests/run/inputs/callee-before-args.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "argument-error-stops-rest",
+      "file": "tests/run/inputs/argument-error-stops-rest.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "unknown-field",
+      "file": "tests/run/inputs/unknown-field.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "lexical-before-effects",
+      "file": "tests/run/inputs/lexical-before-effects.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E101",
+        "span": [
+          1,
+          20,
+          1,
+          21
+        ]
+      },
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "unclosed-string",
+      "file": "tests/run/inputs/unclosed-string.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E101",
+        "span": [
+          1,
+          10,
+          1,
+          11
+        ]
+      },
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "bad-escape",
+      "file": "tests/run/inputs/bad-escape.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E102",
+        "span": [
+          1,
+          11,
+          1,
+          17
+        ]
+      },
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "unsupported-float",
+      "file": "tests/run/inputs/unsupported-float.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "unsupported-bool",
+      "file": "tests/run/inputs/unsupported-bool.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "unsupported-array",
+      "file": "tests/run/inputs/unsupported-array.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "unsupported-minus",
+      "file": "tests/run/inputs/unsupported-minus.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "unsupported-block",
+      "file": "tests/run/inputs/unsupported-block.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "unsupported-annotation",
+      "file": "tests/run/inputs/unsupported-annotation.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "unsupported-spec",
+      "file": "tests/run/inputs/unsupported-spec.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "integer-literal-limit",
+      "file": "tests/run/inputs/integer-literal-limit.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "limits": {
+        "integer_bits": 4
+      },
+      "diagnostic": {
+        "code": "E211",
+        "span": [
+          1,
+          29,
+          1,
+          31
+        ],
+        "message_contains": "integer_bits"
+      },
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "integer-add-limit",
+      "file": "tests/run/inputs/integer-add-limit.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "integer_bits": 4
+      },
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "integer-at-limit",
+      "file": "tests/run/inputs/integer-at-limit.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "integer_bits": 4
+      },
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "integer-below-limit",
+      "file": "tests/run/inputs/integer-below-limit.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "integer_bits": 4
+      },
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "integer-zero",
+      "file": "tests/run/inputs/integer-zero.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "integer_bits": 1
+      },
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "integer-output-limit",
+      "file": "tests/run/inputs/integer-output-limit.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "numeric_digits": 2
+      },
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "string-concat-limit",
+      "file": "tests/run/inputs/string-concat-limit.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "text_codepoints": 3
+      },
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "string-concat-at-limit",
+      "file": "tests/run/inputs/string-concat-at-limit.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "text_codepoints": 3
+      },
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "string-concat-below-limit",
+      "file": "tests/run/inputs/string-concat-below-limit.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "text_codepoints": 3
+      },
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "ast-over",
+      "file": "tests/run/inputs/ast-over.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "limits": {
+        "ast_nodes_total": 2
+      },
+      "diagnostic": {
+        "code": "E211",
+        "span": [
+          1,
+          1,
+          1,
+          2
+        ],
+        "message_contains": "ast_nodes_total"
+      },
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "ast-at",
+      "file": "tests/run/inputs/ast-at.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "ast_nodes_total": 3
+      },
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "ast-below",
+      "file": "tests/run/inputs/ast-below.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "ast_nodes_total": 2
+      },
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "depth-at",
+      "file": "tests/run/inputs/depth-at.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "depth-below",
+      "file": "tests/run/inputs/depth-below.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "depth-over",
+      "file": "tests/run/inputs/depth-over.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E211",
+        "span": [
+          1,
+          1,
+          1,
+          2
+        ],
+        "message_contains": "syntax_depth"
+      },
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "source-depth-over",
+      "file": "tests/run/inputs/source-depth-over.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E211",
+        "span": [
+          1,
+          65,
+          1,
+          66
+        ],
+        "message_contains": "syntax_depth"
+      },
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "sum-depth-at",
+      "file": "tests/run/inputs/sum-depth-at.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "sum-depth-over",
+      "file": "tests/run/inputs/sum-depth-over.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E211",
+        "span": [
+          1,
+          1,
+          1,
+          2
+        ],
+        "message_contains": "syntax_depth"
+      },
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "stdout-over",
+      "file": "tests/run/inputs/stdout-over.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "stdout_bytes": 3
+      },
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "stdout-at",
+      "file": "tests/run/inputs/stdout-at.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "stdout_bytes": 4
+      },
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "payload-alias",
+      "file": "tests/run/inputs/payload-alias.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "runtime_payload_bytes": 8
+      },
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "payload-release",
+      "file": "tests/run/inputs/payload-release.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "runtime_payload_bytes": 16
+      },
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "payload-retained",
+      "file": "tests/run/inputs/payload-retained.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "runtime_payload_bytes": 16
+      },
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "payload-add-over",
+      "file": "tests/run/inputs/payload-add-over.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "runtime_payload_bytes": 31
+      },
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "payload-add-at",
+      "file": "tests/run/inputs/payload-add-at.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "runtime_payload_bytes": 32
+      },
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "slots-over",
+      "file": "tests/run/inputs/slots-over.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "runtime_slots": 3
+      },
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "slots-at",
+      "file": "tests/run/inputs/slots-at.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "runtime_slots": 3
+      },
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "decimal-default-at",
+      "file": "tests/run/inputs/decimal-default-at.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "decimal-default-over-result",
+      "file": "tests/run/inputs/decimal-default-over-result.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "decimal-zeroes",
+      "file": "tests/run/inputs/decimal-zeroes.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "payload-add-integer-exact",
+      "file": "tests/run/inputs/payload-add-integer-exact.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "runtime_payload_bytes": 3,
+        "integer_bits": 8
+      },
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "integer-byte-carry",
+      "file": "tests/run/inputs/integer-byte-carry.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "payload-repeated-expression",
+      "file": "tests/run/inputs/payload-repeated-expression.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "runtime_payload_bytes": 16
+      },
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "utf8-stdout-limit",
+      "file": "tests/run/inputs/utf8-stdout-limit.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "stdout_bytes": 3
+      },
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "utf8-stdout-at",
+      "file": "tests/run/inputs/utf8-stdout-at.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "stdout_bytes": 4
+      },
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "print-temp-limit",
+      "file": "tests/run/inputs/print-temp-limit.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "runtime_payload_bytes": 19
+      },
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "print-temp-at",
+      "file": "tests/run/inputs/print-temp-at.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "runtime_payload_bytes": 20
+      },
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "no-python-attributes",
+      "file": "tests/run/inputs/no-python-attributes.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "raw-type-span",
+      "file": "tests/run/inputs/raw-type-span.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "integer-print-temp-over",
+      "file": "tests/run/inputs/integer-print-temp-over.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "runtime_payload_bytes": 12
+      },
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "integer-print-temp-at",
+      "file": "tests/run/inputs/integer-print-temp-at.zzy",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "runtime_payload_bytes": 13
+      },
+      "mode": "check",
+      "stdin": ""
+    },
+    {
+      "id": "no-execution-budget",
+      "file": "tests/check/inputs/no-execution-budget.zzy",
+      "mode": "check",
+      "stdin": "",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "runtime_objects": 1,
+        "runtime_slots": 1,
+        "runtime_payload_bytes": 1,
+        "stdout_bytes": 1
+      }
+    },
+    {
+      "id": "no-call-or-type-check",
+      "file": "tests/check/inputs/no-call-or-type-check.zzy",
+      "mode": "check",
+      "stdin": "",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "unknown-after-runtime-error",
+      "file": "tests/check/inputs/unknown-after-runtime-error.zzy",
+      "mode": "check",
+      "stdin": "",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E302",
+        "span": [
+          1,
+          22,
+          1,
+          29
+        ]
+      }
+    },
+    {
+      "id": "source-limit",
+      "file": "tests/check/inputs/source-limit.zzy",
+      "mode": "check",
+      "stdin": "",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E211",
+        "span": null
+      },
+      "limits": {
+        "source_file_bytes": 1
+      }
+    },
+    {
+      "id": "token-limit",
+      "file": "tests/check/inputs/token-limit.zzy",
+      "mode": "check",
+      "stdin": "",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E211",
+        "span": [
+          1,
+          3,
+          1,
+          4
+        ]
+      },
+      "limits": {
+        "tokens_per_file": 1
+      }
+    },
+    {
+      "id": "diagnostic-name",
+      "file": "tests/check/inputs/diagnostic-name.zzy",
+      "mode": "check",
+      "stdin": "",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E302",
+        "span": [
+          1,
+          10,
+          1,
+          15
+        ]
+      }
+    },
+    {
+      "id": "diagnostic-comment",
+      "file": "tests/check/inputs/diagnostic-comment.zzy",
+      "mode": "check",
+      "stdin": "",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E101",
+        "span": [
+          1,
+          1,
+          1,
+          12
+        ]
+      }
+    },
+    {
+      "id": "bom-crlf",
+      "file": "tests/check/inputs/bom-crlf.zzy",
+      "mode": "check",
+      "stdin": "",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "bom-crlf-name",
+      "file": "tests/check/inputs/bom-crlf-name.zzy",
+      "mode": "check",
+      "stdin": "",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E302",
+        "span": [
+          2,
+          11,
+          2,
+          14
+        ]
+      }
+    },
+    {
+      "id": "中文 空格",
+      "file": "tests/check/inputs/中文 空格.zzy",
+      "mode": "check",
+      "stdin": "",
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "relative-cwd",
+      "file": "中文 空格.zzy",
+      "mode": "check",
+      "stdin": "",
+      "cwd": "tests/check/inputs",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "missing-file",
+      "file": "missing.zzy",
+      "mode": "check",
+      "stdin": "",
+      "cwd": "tests/check/inputs",
+      "timeout_seconds": 10,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E401",
+        "file": "missing.zzy",
+        "span": null
+      }
+    }
+  ]
+}

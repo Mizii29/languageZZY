@@ -1,0 +1,1 @@
+{(zno)math:=[1];[] ?> {(yield):math.abs(@);};}

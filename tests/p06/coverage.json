@@ -1,0 +1,167 @@
+{
+  "LEX-01": {
+    "normal": "lex:fixed-symbols",
+    "boundary": "lex:bom-crlf",
+    "error": "lex:fullwidth-parenthesis"
+  },
+  "LEX-02": {
+    "normal": "lex:comments-not-tokens",
+    "boundary": "lex:end-boundaries",
+    "error": "lex:unclosed-comment"
+  },
+  "LEX-03": {
+    "normal": "lex:adjacent-operators",
+    "boundary": "run:p04-quantity-units-independent",
+    "error": "run:p04-quantity-unknown"
+  },
+  "MACHINE-01": {
+    "normal": "run:p05-module-type",
+    "boundary": "run:p04-machine-self-loop",
+    "error": "run:p04-machine-duplicate"
+  },
+  "MACHINE-02": {
+    "normal": "run:p04-machine-state",
+    "boundary": "run:p04-machine-empty-send",
+    "error": "run:p04-machine-readonly"
+  },
+  "UNIT-01": {
+    "normal": "run:p04-quantity-exact",
+    "boundary": "run:p04-quantity-zero",
+    "error": "run:p04-quantity-add-dimension"
+  },
+  "UNIT-02": {
+    "normal": "run:p05-unit-conversion",
+    "boundary": "run:p04-quantity-float",
+    "error": "run:p05-unit-dimension"
+  },
+  "STR-01": {
+    "normal": "lex:strings",
+    "boundary": "lex:backslash-not-escape",
+    "error": "lex:dangling-escape-eof"
+  },
+  "EXPR-01": {
+    "normal": "run:p02-numeric-precedence",
+    "boundary": "run:p02-exact-comparison",
+    "error": "run:p02-bool-add"
+  },
+  "EXPR-02": {
+    "normal": "run:p03-evaluation-order",
+    "boundary": "run:p03-short-circuit-function",
+    "error": "run:p03-arg-error-stops-rest"
+  },
+  "BIND-01": {
+    "normal": "run:p03-shared-cell",
+    "boundary": "run:p03-assignment-location-once",
+    "error": "run:p03-captured-immutable-write"
+  },
+  "ARRAY-01": {
+    "normal": "run:p02-array-alias-copy",
+    "boundary": "run:p02-array-copy-during-iteration",
+    "error": "run:p05-callback-pop-last"
+  },
+  "ARRAY-02": {
+    "normal": "run:p02-array-iteration",
+    "boundary": "run:p03-return-releases-iteration",
+    "error": "run:p03-array-active-call"
+  },
+  "SHAPE-01": {
+    "normal": "run:p02-shape-defaults",
+    "boundary": "run:p02-default-after-explicit",
+    "error": "run:p02-shape-explicit-type-order"
+  },
+  "SHAPE-02": {
+    "normal": "run:p02-shape-order-with",
+    "boundary": "run:p02-shape-types-with",
+    "error": "run:p02-with-field-list-first"
+  },
+  "CTRL-01": {
+    "normal": "run:p02-loops",
+    "boundary": "run:p02-empty-range-identity",
+    "error": "run:p03-cross-break"
+  },
+  "FN-01": {
+    "normal": "run:p03-factorial",
+    "boundary": "run:p03-for-capture-local",
+    "error": "run:p03-return-implicit-type"
+  },
+  "RES-01": {
+    "normal": "run:p04-result-values",
+    "boundary": "run:p04-propagate-loop",
+    "error": "run:p04-propagate-lazy"
+  },
+  "LAZY-01": {
+    "normal": "run:p04-lazy-once",
+    "boundary": "run:p04-lazy-reference",
+    "error": "run:p04-lazy-mutual-cycle"
+  },
+  "QUERY-01": {
+    "normal": "run:p04-query-basic",
+    "boundary": "run:p05-module-once",
+    "error": "run:p04-query-clause-order"
+  },
+  "QUERY-02": {
+    "normal": "run:p04-query-stable",
+    "boundary": "run:p04-query-take-zero-no-yield",
+    "error": "run:p04-query-take-zero-order"
+  },
+  "QUERY-03": {
+    "normal": "run:p05-query-pure-library",
+    "boundary": "run:p04-query-repeated",
+    "error": "run:p05-kind-query-rejected"
+  },
+  "PIPE-01": {
+    "normal": "run:p04-pipe-chain",
+    "boundary": "run:p04-pipe-order",
+    "error": "run:p04-pipe-source-error"
+  },
+  "IO-01": {
+    "normal": "run:p02-input-lines",
+    "boundary": "run:p02-input-eof-empty",
+    "error": "run:p02-input-type"
+  },
+  "LIB-01": {
+    "normal": "run:p05-sum-reference",
+    "boundary": "run:p05-stats-empty",
+    "error": "run:p05-callback-error-stop"
+  },
+  "JSON-01": {
+    "normal": "run:p05-json-roundtrip",
+    "boundary": "run:p05-json-sharing",
+    "error": "run:p05-map-missing"
+  },
+  "JSON-02": {
+    "normal": "run:p05-kind-closed",
+    "boundary": "run:p05-kind-cyclic",
+    "error": "run:p05-kind-query-rejected"
+  },
+  "MOD-01": {
+    "normal": "run:p05-module-diamond",
+    "boundary": "run:p05-module-once",
+    "error": "run:p05-module-cycle"
+  },
+  "TEST-01": {
+    "normal": "run:p04-assert-once",
+    "boundary": "run:p04-spec-run-skipped",
+    "error": "run:p04-assert-false"
+  },
+  "CLI-01": {
+    "normal": "run:hello",
+    "boundary": "check:empty",
+    "error": "check:missing-file"
+  },
+  "CLI-02": {
+    "normal": "run:p06-doc-syntax-2",
+    "boundary": "check:bom-crlf-name",
+    "error": "run:p06-diagnostic-unit"
+  },
+  "RESOURCE-01": {
+    "normal": "check:ast-at",
+    "boundary": "run:p03-depth-64",
+    "error": "run:p03-depth-65"
+  },
+  "RESOURCE-02": {
+    "normal": "run:p06-resource-runtime_payload_bytes-at",
+    "boundary": "run:p06-resource-runtime_payload_bytes-below",
+    "error": "run:p06-resource-runtime_payload_bytes-over"
+  }
+}

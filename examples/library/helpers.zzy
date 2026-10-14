@@ -1,0 +1,18 @@
+zzysay: 模块只导出顶层具名函数、结构和状态机定义。
+(shape) Row { name: (String); score: (Int); }
+(machine) Workflow { draft -- "submit" --> ready; }
+
+(addnew) select_names(rows: (Array)) -> (Array) {
+    (return) rows ?> {
+        (keep): @.score >= 60;
+        (order): @.score (desc);
+        (yield): text.trim(@.name);
+    };
+}
+
+(addnew) encode_scores(values: (Array)) -> (Result) {
+    (zno) report := data.map();
+    data.set(report, "values", values);
+    data.set(report, "stats", array.stats(values));
+    (return) data.stringify(report);
+}

@@ -1,0 +1,10 @@
+(use) "helpers.zzy" (as) lib;
+(zno) scores := [81, 59, 92];
+io.print(array.sorted(scores));
+io.print(scores);
+(zno) rows := [lib.Row::{name: " Ada ", score: 81}, lib.Row::{name: " Lin ", score: 92}];
+io.print(lib.select_names(rows));
+io.print(lib.encode_scores(scores));
+io.print(unit.format(1::s / 3, "ms"));
+(zno) flow := lib.Workflow("draft");
+io.print(flow << "submit");

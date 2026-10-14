@@ -1,0 +1,18 @@
+(use) "summary.zzy" (as) summary;
+(zno) path := io.input("");
+(zif?:) path == (null) {
+    io.print("取消");
+}
+(zzyf:) {
+    (?_?) summary.summarize(path) {
+        (^_^)(report) => {
+            (?_?) summary.save(report) {
+                (^_^)(saved) => {
+                    io.print("共 " + str(data.get(saved, "count")) + " 项，" + str(data.get(saved, "minutes")) + " 分钟");
+                }
+                (T_T)(reason) => {io.print("保存失败");}
+            }
+        }
+        (T_T)(reason) => {io.print(reason);}
+    }
+}

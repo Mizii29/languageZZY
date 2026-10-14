@@ -1,0 +1,1 @@
+(addnew) old(x) {(return) "old";} (addnew) new(x) {(return) "new";} (zyes) f:=old; (addnew) change() {f<-new; (return) 0;} io.print(f(change())); io.print(f(0));

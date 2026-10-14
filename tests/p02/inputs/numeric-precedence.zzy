@@ -1,0 +1,4 @@
+io.print(2 + 3 * 4); io.print((2 + 3) * 4); io.print(8 - 3 - 2);
+io.print(-7 // 3); io.print(-7 % 3); io.print(7 // -3); io.print(7 % -3);
+io.print(1 / 2); io.print(1 + 2.5); io.print(2.5 * 2); io.print(-1.5); io.print(+3);
+io.print((not) 1 == 2); io.print((true) (or) (false) (and) (false));

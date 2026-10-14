@@ -1,0 +1,1 @@
+(addnew) mark(x) {io.print(x); (return) x;} (addnew) sum(a,b) {(return) a+b;} (addnew) callee() {io.print("callee"); (return) sum;} io.print(callee()(mark(1),mark(2)));

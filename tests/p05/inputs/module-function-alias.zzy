@@ -1,0 +1,1 @@
+(use) "../modules/counter.zzy" (as) m;(zno)f:=m.query;io.print(f([1,2,3]));io.print(data.kind(m));

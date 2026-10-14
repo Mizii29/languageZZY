@@ -1,0 +1,1830 @@
+{
+  "schema_version": 1,
+  "cases": [
+    {
+      "id": "p06-diagnostic-name",
+      "file": "tests/p06/inputs/diagnostic-name.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E302",
+        "span": [
+          1,
+          10,
+          1,
+          15
+        ]
+      }
+    },
+    {
+      "id": "p06-diagnostic-name",
+      "file": "tests/p06/inputs/diagnostic-name.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E302",
+        "span": [
+          1,
+          10,
+          1,
+          15
+        ]
+      }
+    },
+    {
+      "id": "p06-diagnostic-type",
+      "file": "tests/p06/inputs/diagnostic-type.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E201",
+        "span": [
+          1,
+          12,
+          1,
+          13
+        ]
+      }
+    },
+    {
+      "id": "p06-diagnostic-type",
+      "file": "tests/p06/inputs/diagnostic-type.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p06-diagnostic-comment",
+      "file": "tests/p06/inputs/diagnostic-comment.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E101",
+        "span": [
+          1,
+          1,
+          1,
+          12
+        ]
+      }
+    },
+    {
+      "id": "p06-diagnostic-comment",
+      "file": "tests/p06/inputs/diagnostic-comment.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E101",
+        "span": [
+          1,
+          1,
+          1,
+          12
+        ]
+      }
+    },
+    {
+      "id": "p06-diagnostic-unit",
+      "file": "tests/p06/inputs/diagnostic-unit.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E213",
+        "span": [
+          1,
+          15,
+          1,
+          16
+        ]
+      }
+    },
+    {
+      "id": "p06-diagnostic-unit",
+      "file": "tests/p06/inputs/diagnostic-unit.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p06-resource-tokens_per_file-over",
+      "file": "tests/p06/inputs/resource-tokens_per_file-over.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E211",
+        "span": [
+          1,
+          2,
+          1,
+          3
+        ],
+        "message_contains": "tokens_per_file"
+      },
+      "limits": {
+        "tokens_per_file": 1
+      }
+    },
+    {
+      "id": "p06-resource-tokens_per_file-over",
+      "file": "tests/p06/inputs/resource-tokens_per_file-over.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E211",
+        "span": [
+          1,
+          2,
+          1,
+          3
+        ],
+        "message_contains": "tokens_per_file"
+      },
+      "limits": {
+        "tokens_per_file": 1
+      }
+    },
+    {
+      "id": "p06-resource-tokens_per_file-at",
+      "file": "tests/p06/inputs/resource-tokens_per_file-at.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "tokens_per_file": 2
+      }
+    },
+    {
+      "id": "p06-resource-tokens_per_file-at",
+      "file": "tests/p06/inputs/resource-tokens_per_file-at.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "tokens_per_file": 2
+      }
+    },
+    {
+      "id": "p06-resource-tokens_per_file-below",
+      "file": "tests/p06/inputs/resource-tokens_per_file-below.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "tokens_per_file": 3
+      }
+    },
+    {
+      "id": "p06-resource-tokens_per_file-below",
+      "file": "tests/p06/inputs/resource-tokens_per_file-below.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "tokens_per_file": 3
+      }
+    },
+    {
+      "id": "p06-resource-ast_nodes_total-over",
+      "file": "tests/p06/inputs/resource-ast_nodes_total-over.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E211",
+        "span": [
+          1,
+          1,
+          1,
+          2
+        ],
+        "message_contains": "ast_nodes_total"
+      },
+      "limits": {
+        "ast_nodes_total": 2
+      }
+    },
+    {
+      "id": "p06-resource-ast_nodes_total-over",
+      "file": "tests/p06/inputs/resource-ast_nodes_total-over.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E211",
+        "span": [
+          1,
+          1,
+          1,
+          2
+        ],
+        "message_contains": "ast_nodes_total"
+      },
+      "limits": {
+        "ast_nodes_total": 2
+      }
+    },
+    {
+      "id": "p06-resource-ast_nodes_total-at",
+      "file": "tests/p06/inputs/resource-ast_nodes_total-at.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "ast_nodes_total": 3
+      }
+    },
+    {
+      "id": "p06-resource-ast_nodes_total-at",
+      "file": "tests/p06/inputs/resource-ast_nodes_total-at.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "ast_nodes_total": 3
+      }
+    },
+    {
+      "id": "p06-resource-ast_nodes_total-below",
+      "file": "tests/p06/inputs/resource-ast_nodes_total-below.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "ast_nodes_total": 4
+      }
+    },
+    {
+      "id": "p06-resource-ast_nodes_total-below",
+      "file": "tests/p06/inputs/resource-ast_nodes_total-below.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "ast_nodes_total": 4
+      }
+    },
+    {
+      "id": "p06-resource-numeric_digits-over",
+      "file": "tests/p06/inputs/resource-numeric_digits-over.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E211",
+        "span": [
+          1,
+          1,
+          1,
+          4
+        ],
+        "message_contains": "numeric_digits"
+      },
+      "limits": {
+        "numeric_digits": 2
+      }
+    },
+    {
+      "id": "p06-resource-numeric_digits-over",
+      "file": "tests/p06/inputs/resource-numeric_digits-over.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E211",
+        "span": [
+          1,
+          1,
+          1,
+          4
+        ],
+        "message_contains": "numeric_digits"
+      },
+      "limits": {
+        "numeric_digits": 2
+      }
+    },
+    {
+      "id": "p06-resource-numeric_digits-at",
+      "file": "tests/p06/inputs/resource-numeric_digits-at.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "numeric_digits": 3
+      }
+    },
+    {
+      "id": "p06-resource-numeric_digits-at",
+      "file": "tests/p06/inputs/resource-numeric_digits-at.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "numeric_digits": 3
+      }
+    },
+    {
+      "id": "p06-resource-numeric_digits-below",
+      "file": "tests/p06/inputs/resource-numeric_digits-below.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "numeric_digits": 4
+      }
+    },
+    {
+      "id": "p06-resource-numeric_digits-below",
+      "file": "tests/p06/inputs/resource-numeric_digits-below.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "numeric_digits": 4
+      }
+    },
+    {
+      "id": "p06-resource-integer_bits-over",
+      "file": "tests/p06/inputs/resource-integer_bits-over.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E211",
+        "span": [
+          1,
+          1,
+          1,
+          2
+        ],
+        "message_contains": "integer_bits"
+      },
+      "limits": {
+        "integer_bits": 2
+      }
+    },
+    {
+      "id": "p06-resource-integer_bits-over",
+      "file": "tests/p06/inputs/resource-integer_bits-over.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E211",
+        "span": [
+          1,
+          1,
+          1,
+          2
+        ],
+        "message_contains": "integer_bits"
+      },
+      "limits": {
+        "integer_bits": 2
+      }
+    },
+    {
+      "id": "p06-resource-integer_bits-at",
+      "file": "tests/p06/inputs/resource-integer_bits-at.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "integer_bits": 3
+      }
+    },
+    {
+      "id": "p06-resource-integer_bits-at",
+      "file": "tests/p06/inputs/resource-integer_bits-at.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "integer_bits": 3
+      }
+    },
+    {
+      "id": "p06-resource-integer_bits-below",
+      "file": "tests/p06/inputs/resource-integer_bits-below.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "integer_bits": 4
+      }
+    },
+    {
+      "id": "p06-resource-integer_bits-below",
+      "file": "tests/p06/inputs/resource-integer_bits-below.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "integer_bits": 4
+      }
+    },
+    {
+      "id": "p06-resource-container_items-over",
+      "file": "tests/p06/inputs/resource-container_items-over.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E211",
+        "span": [
+          1,
+          1,
+          1,
+          2
+        ],
+        "message_contains": "container_items"
+      },
+      "limits": {
+        "container_items": 2
+      }
+    },
+    {
+      "id": "p06-resource-container_items-over",
+      "file": "tests/p06/inputs/resource-container_items-over.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "container_items": 2
+      }
+    },
+    {
+      "id": "p06-resource-container_items-at",
+      "file": "tests/p06/inputs/resource-container_items-at.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "container_items": 3
+      }
+    },
+    {
+      "id": "p06-resource-container_items-at",
+      "file": "tests/p06/inputs/resource-container_items-at.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "container_items": 3
+      }
+    },
+    {
+      "id": "p06-resource-container_items-below",
+      "file": "tests/p06/inputs/resource-container_items-below.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "container_items": 4
+      }
+    },
+    {
+      "id": "p06-resource-container_items-below",
+      "file": "tests/p06/inputs/resource-container_items-below.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "container_items": 4
+      }
+    },
+    {
+      "id": "p06-resource-text_codepoints-over",
+      "file": "tests/p06/inputs/resource-text_codepoints-over.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E211",
+        "span": [
+          1,
+          1,
+          1,
+          5
+        ],
+        "message_contains": "text_codepoints"
+      },
+      "limits": {
+        "text_codepoints": 2
+      }
+    },
+    {
+      "id": "p06-resource-text_codepoints-over",
+      "file": "tests/p06/inputs/resource-text_codepoints-over.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E211",
+        "span": [
+          1,
+          1,
+          1,
+          5
+        ],
+        "message_contains": "text_codepoints"
+      },
+      "limits": {
+        "text_codepoints": 2
+      }
+    },
+    {
+      "id": "p06-resource-text_codepoints-at",
+      "file": "tests/p06/inputs/resource-text_codepoints-at.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "text_codepoints": 3
+      }
+    },
+    {
+      "id": "p06-resource-text_codepoints-at",
+      "file": "tests/p06/inputs/resource-text_codepoints-at.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "text_codepoints": 3
+      }
+    },
+    {
+      "id": "p06-resource-text_codepoints-below",
+      "file": "tests/p06/inputs/resource-text_codepoints-below.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "text_codepoints": 4
+      }
+    },
+    {
+      "id": "p06-resource-text_codepoints-below",
+      "file": "tests/p06/inputs/resource-text_codepoints-below.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "text_codepoints": 4
+      }
+    },
+    {
+      "id": "p06-resource-runtime_objects-over",
+      "file": "tests/p06/inputs/resource-runtime_objects-over.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E211",
+        "span": [
+          1,
+          1,
+          1,
+          2
+        ],
+        "message_contains": "runtime_objects"
+      },
+      "limits": {
+        "runtime_objects": 2
+      }
+    },
+    {
+      "id": "p06-resource-runtime_objects-over",
+      "file": "tests/p06/inputs/resource-runtime_objects-over.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "runtime_objects": 2
+      }
+    },
+    {
+      "id": "p06-resource-runtime_objects-at",
+      "file": "tests/p06/inputs/resource-runtime_objects-at.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "runtime_objects": 3
+      }
+    },
+    {
+      "id": "p06-resource-runtime_objects-at",
+      "file": "tests/p06/inputs/resource-runtime_objects-at.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "runtime_objects": 3
+      }
+    },
+    {
+      "id": "p06-resource-runtime_objects-below",
+      "file": "tests/p06/inputs/resource-runtime_objects-below.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "runtime_objects": 4
+      }
+    },
+    {
+      "id": "p06-resource-runtime_objects-below",
+      "file": "tests/p06/inputs/resource-runtime_objects-below.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "runtime_objects": 4
+      }
+    },
+    {
+      "id": "p06-resource-runtime_slots-over",
+      "file": "tests/p06/inputs/resource-runtime_slots-over.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E211",
+        "span": [
+          1,
+          18,
+          1,
+          19
+        ],
+        "message_contains": "runtime_slots"
+      },
+      "limits": {
+        "runtime_slots": 3
+      }
+    },
+    {
+      "id": "p06-resource-runtime_slots-over",
+      "file": "tests/p06/inputs/resource-runtime_slots-over.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "runtime_slots": 3
+      }
+    },
+    {
+      "id": "p06-resource-runtime_slots-at",
+      "file": "tests/p06/inputs/resource-runtime_slots-at.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "runtime_slots": 4
+      }
+    },
+    {
+      "id": "p06-resource-runtime_slots-at",
+      "file": "tests/p06/inputs/resource-runtime_slots-at.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "runtime_slots": 4
+      }
+    },
+    {
+      "id": "p06-resource-runtime_slots-below",
+      "file": "tests/p06/inputs/resource-runtime_slots-below.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "runtime_slots": 5
+      }
+    },
+    {
+      "id": "p06-resource-runtime_slots-below",
+      "file": "tests/p06/inputs/resource-runtime_slots-below.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "runtime_slots": 5
+      }
+    },
+    {
+      "id": "p06-resource-runtime_payload_bytes-over",
+      "file": "tests/p06/inputs/resource-runtime_payload_bytes-over.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E211",
+        "span": [
+          1,
+          1,
+          1,
+          5
+        ],
+        "message_contains": "runtime_payload_bytes"
+      },
+      "limits": {
+        "runtime_payload_bytes": 7
+      }
+    },
+    {
+      "id": "p06-resource-runtime_payload_bytes-over",
+      "file": "tests/p06/inputs/resource-runtime_payload_bytes-over.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "runtime_payload_bytes": 7
+      }
+    },
+    {
+      "id": "p06-resource-runtime_payload_bytes-at",
+      "file": "tests/p06/inputs/resource-runtime_payload_bytes-at.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "runtime_payload_bytes": 8
+      }
+    },
+    {
+      "id": "p06-resource-runtime_payload_bytes-at",
+      "file": "tests/p06/inputs/resource-runtime_payload_bytes-at.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "runtime_payload_bytes": 8
+      }
+    },
+    {
+      "id": "p06-resource-runtime_payload_bytes-below",
+      "file": "tests/p06/inputs/resource-runtime_payload_bytes-below.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "runtime_payload_bytes": 9
+      }
+    },
+    {
+      "id": "p06-resource-runtime_payload_bytes-below",
+      "file": "tests/p06/inputs/resource-runtime_payload_bytes-below.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "runtime_payload_bytes": 9
+      }
+    },
+    {
+      "id": "p06-resource-stdout_bytes-over",
+      "file": "tests/p06/inputs/resource-stdout_bytes-over.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E211",
+        "span": null,
+        "message_contains": "stdout_bytes",
+        "file": null
+      },
+      "limits": {
+        "stdout_bytes": 2
+      }
+    },
+    {
+      "id": "p06-resource-stdout_bytes-over",
+      "file": "tests/p06/inputs/resource-stdout_bytes-over.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "stdout_bytes": 2
+      }
+    },
+    {
+      "id": "p06-resource-stdout_bytes-at",
+      "file": "tests/p06/inputs/resource-stdout_bytes-at.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": "ab\n",
+      "limits": {
+        "stdout_bytes": 3
+      }
+    },
+    {
+      "id": "p06-resource-stdout_bytes-at",
+      "file": "tests/p06/inputs/resource-stdout_bytes-at.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "stdout_bytes": 3
+      }
+    },
+    {
+      "id": "p06-resource-stdout_bytes-below",
+      "file": "tests/p06/inputs/resource-stdout_bytes-below.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": "ab\n",
+      "limits": {
+        "stdout_bytes": 4
+      }
+    },
+    {
+      "id": "p06-resource-stdout_bytes-below",
+      "file": "tests/p06/inputs/resource-stdout_bytes-below.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "stdout_bytes": 4
+      }
+    },
+    {
+      "id": "p06-resource-io_payload_bytes-over",
+      "file": "tests/p06/inputs/resource-io_payload_bytes-over.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "ab\n",
+      "timeout_seconds": 15,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E211",
+        "span": [
+          1,
+          9,
+          1,
+          10
+        ],
+        "message_contains": "io_payload_bytes"
+      },
+      "limits": {
+        "io_payload_bytes": 2
+      }
+    },
+    {
+      "id": "p06-resource-io_payload_bytes-over",
+      "file": "tests/p06/inputs/resource-io_payload_bytes-over.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "ab\n",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "io_payload_bytes": 2
+      }
+    },
+    {
+      "id": "p06-resource-io_payload_bytes-at",
+      "file": "tests/p06/inputs/resource-io_payload_bytes-at.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "ab\n",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "io_payload_bytes": 3
+      }
+    },
+    {
+      "id": "p06-resource-io_payload_bytes-at",
+      "file": "tests/p06/inputs/resource-io_payload_bytes-at.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "ab\n",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "io_payload_bytes": 3
+      }
+    },
+    {
+      "id": "p06-resource-io_payload_bytes-below",
+      "file": "tests/p06/inputs/resource-io_payload_bytes-below.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "ab\n",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "io_payload_bytes": 4
+      }
+    },
+    {
+      "id": "p06-resource-io_payload_bytes-below",
+      "file": "tests/p06/inputs/resource-io_payload_bytes-below.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "ab\n",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "io_payload_bytes": 4
+      }
+    },
+    {
+      "id": "p06-resource-quantity_exponent_abs-over",
+      "file": "tests/p06/inputs/resource-quantity_exponent_abs-over.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E211",
+        "span": [
+          1,
+          13,
+          1,
+          14
+        ],
+        "message_contains": "quantity_exponent_abs"
+      },
+      "limits": {
+        "quantity_exponent_abs": 2
+      }
+    },
+    {
+      "id": "p06-resource-quantity_exponent_abs-over",
+      "file": "tests/p06/inputs/resource-quantity_exponent_abs-over.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "quantity_exponent_abs": 2
+      }
+    },
+    {
+      "id": "p06-resource-quantity_exponent_abs-at",
+      "file": "tests/p06/inputs/resource-quantity_exponent_abs-at.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "quantity_exponent_abs": 3
+      }
+    },
+    {
+      "id": "p06-resource-quantity_exponent_abs-at",
+      "file": "tests/p06/inputs/resource-quantity_exponent_abs-at.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "quantity_exponent_abs": 3
+      }
+    },
+    {
+      "id": "p06-resource-quantity_exponent_abs-below",
+      "file": "tests/p06/inputs/resource-quantity_exponent_abs-below.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "quantity_exponent_abs": 4
+      }
+    },
+    {
+      "id": "p06-resource-quantity_exponent_abs-below",
+      "file": "tests/p06/inputs/resource-quantity_exponent_abs-below.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "quantity_exponent_abs": 4
+      }
+    },
+    {
+      "id": "p06-resource-call_depth-over",
+      "file": "tests/p06/inputs/resource-call_depth-over.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E211",
+        "span": [
+          1,
+          51,
+          1,
+          52
+        ],
+        "message_contains": "call_depth"
+      },
+      "limits": {
+        "call_depth": 2
+      }
+    },
+    {
+      "id": "p06-resource-call_depth-over",
+      "file": "tests/p06/inputs/resource-call_depth-over.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "call_depth": 2
+      }
+    },
+    {
+      "id": "p06-resource-call_depth-at",
+      "file": "tests/p06/inputs/resource-call_depth-at.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "call_depth": 3
+      }
+    },
+    {
+      "id": "p06-resource-call_depth-at",
+      "file": "tests/p06/inputs/resource-call_depth-at.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "call_depth": 3
+      }
+    },
+    {
+      "id": "p06-resource-call_depth-below",
+      "file": "tests/p06/inputs/resource-call_depth-below.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "call_depth": 4
+      }
+    },
+    {
+      "id": "p06-resource-call_depth-below",
+      "file": "tests/p06/inputs/resource-call_depth-below.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "call_depth": 4
+      }
+    },
+    {
+      "id": "p06-resource-value_depth-over",
+      "file": "tests/p06/inputs/resource-value_depth-over.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E211",
+        "span": [
+          1,
+          9,
+          1,
+          10
+        ],
+        "message_contains": "value_depth"
+      },
+      "limits": {
+        "value_depth": 2
+      }
+    },
+    {
+      "id": "p06-resource-value_depth-over",
+      "file": "tests/p06/inputs/resource-value_depth-over.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "value_depth": 2
+      }
+    },
+    {
+      "id": "p06-resource-value_depth-at",
+      "file": "tests/p06/inputs/resource-value_depth-at.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": "[[[0]]]\n",
+      "limits": {
+        "value_depth": 3
+      }
+    },
+    {
+      "id": "p06-resource-value_depth-at",
+      "file": "tests/p06/inputs/resource-value_depth-at.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "value_depth": 3
+      }
+    },
+    {
+      "id": "p06-resource-value_depth-below",
+      "file": "tests/p06/inputs/resource-value_depth-below.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": "[[[0]]]\n",
+      "limits": {
+        "value_depth": 4
+      }
+    },
+    {
+      "id": "p06-resource-value_depth-below",
+      "file": "tests/p06/inputs/resource-value_depth-below.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "value_depth": 4
+      }
+    },
+    {
+      "id": "p06-resource-syntax_depth-over",
+      "file": "tests/p06/inputs/resource-syntax_depth-over.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E211",
+        "span": [
+          1,
+          1,
+          1,
+          2
+        ],
+        "message_contains": "syntax_depth"
+      },
+      "limits": {
+        "syntax_depth": 4
+      }
+    },
+    {
+      "id": "p06-resource-syntax_depth-over",
+      "file": "tests/p06/inputs/resource-syntax_depth-over.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E211",
+        "span": [
+          1,
+          1,
+          1,
+          2
+        ],
+        "message_contains": "syntax_depth"
+      },
+      "limits": {
+        "syntax_depth": 4
+      }
+    },
+    {
+      "id": "p06-resource-syntax_depth-at",
+      "file": "tests/p06/inputs/resource-syntax_depth-at.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "syntax_depth": 5
+      }
+    },
+    {
+      "id": "p06-resource-syntax_depth-at",
+      "file": "tests/p06/inputs/resource-syntax_depth-at.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "syntax_depth": 5
+      }
+    },
+    {
+      "id": "p06-resource-syntax_depth-below",
+      "file": "tests/p06/inputs/resource-syntax_depth-below.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "syntax_depth": 6
+      }
+    },
+    {
+      "id": "p06-resource-syntax_depth-below",
+      "file": "tests/p06/inputs/resource-syntax_depth-below.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "syntax_depth": 6
+      }
+    },
+    {
+      "id": "p06-check-all-effects",
+      "file": "tests/p06/inputs/check-all-effects.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "limits": {
+        "runtime_objects": 1,
+        "runtime_slots": 1,
+        "runtime_payload_bytes": 1
+      }
+    },
+    {
+      "id": "p06-doc-syntax-1",
+      "file": "tests/p06/guide/syntax-1/main.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": "你好，ZZY！\n2\n"
+    },
+    {
+      "id": "p06-doc-syntax-1",
+      "file": "tests/p06/guide/syntax-1/main.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p06-doc-syntax-2",
+      "file": "tests/p06/guide/syntax-2/main.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": "第一行\n第二行\nC:\\tmp\\notes.txt\n[OoO]n\n"
+    },
+    {
+      "id": "p06-doc-syntax-2",
+      "file": "tests/p06/guide/syntax-2/main.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p06-doc-syntax-3",
+      "file": "tests/p06/guide/syntax-3/main.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p06-doc-syntax-3",
+      "file": "tests/p06/guide/syntax-3/main.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p06-doc-syntax-4",
+      "file": "tests/p06/guide/syntax-4/main.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": "通过\n12\n"
+    },
+    {
+      "id": "p06-doc-syntax-4",
+      "file": "tests/p06/guide/syntax-4/main.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p06-doc-syntax-5",
+      "file": "tests/p06/guide/syntax-5/main.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p06-doc-syntax-5",
+      "file": "tests/p06/guide/syntax-5/main.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p06-doc-syntax-6",
+      "file": "tests/p06/guide/syntax-6/main.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": "5\n8\n"
+    },
+    {
+      "id": "p06-doc-syntax-6",
+      "file": "tests/p06/guide/syntax-6/main.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p06-doc-syntax-7",
+      "file": "tests/p06/guide/syntax-7/main.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": "12\n"
+    },
+    {
+      "id": "p06-doc-syntax-7",
+      "file": "tests/p06/guide/syntax-7/main.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p06-doc-syntax-8",
+      "file": "tests/p06/guide/syntax-8/main.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": "270\n270\n270\n"
+    },
+    {
+      "id": "p06-doc-syntax-8",
+      "file": "tests/p06/guide/syntax-8/main.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p06-doc-syntax-9",
+      "file": "tests/p06/guide/syntax-9/main.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": "写测试\n"
+    },
+    {
+      "id": "p06-doc-syntax-9",
+      "file": "tests/p06/guide/syntax-9/main.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p06-doc-syntax-10",
+      "file": "tests/p06/guide/syntax-10/main.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": "doing\n2500::ms\n"
+    },
+    {
+      "id": "p06-doc-syntax-10",
+      "file": "tests/p06/guide/syntax-10/main.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p06-doc-syntax-11",
+      "file": "tests/p06/guide/syntax-11/helpers.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p06-doc-syntax-11",
+      "file": "tests/p06/guide/syntax-11/helpers.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p06-doc-syntax-12",
+      "file": "tests/p06/guide/syntax-12/main.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": "6\n"
+    },
+    {
+      "id": "p06-doc-syntax-12",
+      "file": "tests/p06/guide/syntax-12/main.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p06-doc-syntax-13",
+      "file": "tests/p06/guide/syntax-13/main.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p06-doc-syntax-13",
+      "file": "tests/p06/guide/syntax-13/main.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p06-doc-guide-1",
+      "file": "tests/p06/guide/guide-1/main.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": "15\n"
+    },
+    {
+      "id": "p06-doc-guide-1",
+      "file": "tests/p06/guide/guide-1/main.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p06-doc-guide-2",
+      "file": "tests/p06/guide/guide-2/main.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "p06-doc-guide-2",
+      "file": "tests/p06/guide/guide-2/main.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 15,
+      "exit_code": 0,
+      "stdout": ""
+    }
+  ]
+}

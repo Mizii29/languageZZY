@@ -1,0 +1,1 @@
+io.print(text.safe_int("+"));

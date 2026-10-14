@@ -1,0 +1,1 @@
+(addnew) make() {(return) (addnew) () => 0;} (zno) f:=make(); (zno) a:=[];

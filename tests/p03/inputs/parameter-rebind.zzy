@@ -1,0 +1,3 @@
+(zyes) x := 3;
+(addnew) f(x: (Int)) {x <- x+7; (return) x;}
+io.print([f(x),x,f(0)]);

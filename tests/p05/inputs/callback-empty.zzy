@@ -1,0 +1,1 @@
+(addnew) f(x){io.print("bad");(return)1/0;}io.print(array.map([],f));io.print(array.filter([],f));

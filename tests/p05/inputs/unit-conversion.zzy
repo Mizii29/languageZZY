@@ -1,0 +1,1 @@
+io.print(unit.format(2::s+500::ms,"ms"));io.print(unit.format(1::s/3,"ms"));io.print(unit.make(2,"km"));io.print([unit.make(0.1,"s")==0.1::s,unit.make(0.5,"s")==0.5::s]);

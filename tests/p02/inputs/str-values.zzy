@@ -1,0 +1,1 @@
+io.print(str(-123)); io.print(str(2.5)); io.print(str((true))); io.print(str((null))); io.print(str("text"));

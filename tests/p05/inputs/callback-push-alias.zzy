@@ -1,0 +1,1 @@
+(zno)a:=[1];(zno)b:=a;(addnew) f(x){array.push(b,2);}array.map(a,f);

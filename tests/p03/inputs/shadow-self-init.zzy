@@ -1,0 +1,1 @@
+(zno) x := 1; (addnew) f() {(zno) x := (addnew) () => x;}

@@ -1,0 +1,1 @@
+(zno) ext := []; (shape) S {a; b := len(ext);} io.print(S::{a:array.push(ext,1)}.b);

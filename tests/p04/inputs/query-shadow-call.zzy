@@ -1,0 +1,1 @@
+{(zno)str:=(addnew)(x)=>x;[] ?> {(yield):str(@);};}

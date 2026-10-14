@@ -1,0 +1,1 @@
+(addnew) f() {(return) [];} (zno) a:=f(); (zno) b:=f(); array.push(a,1); io.print([a,b,a==b]);

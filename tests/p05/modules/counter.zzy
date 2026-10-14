@@ -1,0 +1,1 @@
+io.print("init");(zyes)n:=0;(zno)items:=[];(addnew) next(){n<-n+1;(return)n;}(zno)lazy:=(zzz)(next());(addnew) cached(){(return)wake(lazy);}(shape) S {v:(Int):=next();}(machine) M {a -- "go" --> b;}(addnew) query(a){(return)a ?> {(keep):math.abs(@)>1;(yield):@;};}

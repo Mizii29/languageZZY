@@ -1,0 +1,1 @@
+(addnew) f(){io.print("arg");(return)1;}1 ~> 2(@,f());

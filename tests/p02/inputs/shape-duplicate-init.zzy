@@ -1,0 +1,1 @@
+(shape) S {a;} S::{a:io.print("bad"),a:1};

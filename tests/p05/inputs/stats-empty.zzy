@@ -1,0 +1,1 @@
+(zno)s:array.Stats:=array.stats([]);io.print([s.count,s.sum,s.min,s.max]);io.print(array.stats([])==s);s.count<-2;io.print(s.count);

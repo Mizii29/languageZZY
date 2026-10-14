@@ -1,0 +1,6 @@
+(zno) scores := [80, 90, 100];
+(zno) pending := (zzz)(array.sum(scores));
+io.print(wake(pending));
+io.print(wake(pending));
+(zno) total := scores ~> array.sum(@);
+io.print(total);

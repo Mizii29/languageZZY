@@ -1,0 +1,1 @@
+(addnew) outer(k) {(addnew) f(n) {(zif?:) n == 0 {(return) k;} (return) f(n-1)+1;} (return) f;} io.print([outer(3)(8),outer(9)(2)]);

@@ -1,0 +1,1 @@
+(zyes) x:=0; (addnew) f() {(return) x;} f();

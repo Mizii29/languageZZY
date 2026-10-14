@@ -1,0 +1,2 @@
+(machine) M {a -- "go" --> b;b -- "go" --> a;b -- "stay" --> b;}
+M(1);

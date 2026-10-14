@@ -1,0 +1,1 @@
+(zyes)n:=0;(addnew) f(){n<-n+1;(return)(true);}(o_o) f();io.print(n);

@@ -1,0 +1,1 @@
+(zno) a:=[1]; (zyes) current:=a; (addnew) index() {io.print("index"); (return) 0;} (addnew) rhs() {current<-[2]; (return) 9;} current[index()]<-rhs(); io.print([a,current]);

@@ -1,0 +1,6 @@
+(zyes) n := 0;
+(while) n < 5 {n <- n + 1; (zif?:) n == 2 {(continue);} (zif?:) n == 4 {(break);} io.print(n);}
+(while) (false) {io.print("bad");}
+(for) x (in) range(5,0,-2) {io.print(x);} (for) x (in) 3..<3 {io.print("bad");}
+(for) x (in) 4..<2 {io.print("bad");} (for) x (in) "中😀é" {io.print(x);}
+io.print(len("中😀é")); io.print("中😀é"[1]);
