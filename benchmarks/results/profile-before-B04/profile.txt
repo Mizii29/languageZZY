@@ -1,0 +1,96 @@
+         1390844 function calls (1385806 primitive calls) in 0.506 seconds
+
+   Ordered by: cumulative time
+   List reduced from 319 to 50 due to restriction <50>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.000    0.000    0.522    0.522 D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\benchmarks\worker.py:65(sample)
+        1    0.000    0.000    0.515    0.515 D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\zzy\interpreter.py:70(run)
+        1    0.000    0.000    0.512    0.512 D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\zzy\interpreter.py:97(drive)
+        3    0.000    0.000    0.512    0.171 {method 'send' of 'generator' objects}
+   1005/5    0.001    0.000    0.511    0.102 D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\zzy\interpreter.py:271(statement)
+        2    0.000    0.000    0.357    0.179 D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\benchmarks\worker.py:34(execute_program)
+        1    0.004    0.004    0.357    0.357 D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\zzy\interpreter.py:394(for_loop)
+     1001    0.002    0.000    0.346    0.000 D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\zzy\interpreter.py:231(block)
+5012/1006    0.010    0.000    0.337    0.000 D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\zzy\interpreter.py:466(evaluate)
+     9023    0.003    0.000    0.327    0.000 D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\zzy\interpreter.py:40(location)
+     9030    0.007    0.000    0.324    0.000 D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\zzy\diagnostics.py:34(display_path)
+     9030    0.059    0.000    0.314    0.000 <frozen ntpath>:738(relpath)
+     6017    0.015    0.000    0.311    0.000 D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\zzy\interpreter.py:49(reserve)
+     1003    0.004    0.000    0.262    0.000 D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\zzy\features.py:44(call_value)
+     1001    0.003    0.000    0.256    0.000 D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\zzy\native\library.py:33(native_call)
+        1    0.000    0.000    0.154    0.154 D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\zzy\interpreter.py:161(execute_user)
+     1000    0.004    0.000    0.148    0.000 D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\zzy\interpreter.py:664(integer_operation)
+     3006    0.003    0.000    0.134    0.000 D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\zzy\interpreter.py:46(check)
+   108366    0.067    0.000    0.126    0.000 <frozen ntpath>:52(normcase)
+     1004    0.003    0.000    0.105    0.000 D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\zzy\interpreter.py:57(scalar)
+     1000    0.001    0.000    0.101    0.000 D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\zzy\interpreter.py:745(call)
+     1000    0.002    0.000    0.099    0.000 D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\zzy\values.py:46(push)
+     9030    0.022    0.000    0.067    0.000 <frozen ntpath>:108(join)
+    63216    0.041    0.000    0.065    0.000 <frozen ntpath>:180(splitroot)
+     9155    0.003    0.000    0.055    0.000 D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\zzy\tokens.py:70(span)
+     9267    0.008    0.000    0.053    0.000 D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\zzy\source.py:36(span)
+    18534    0.017    0.000    0.034    0.000 D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\zzy\source.py:30(position)
+     6075    0.014    0.000    0.029    0.000 D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\zzy\resources.py:159(reserve)
+   180622    0.028    0.000    0.028    0.000 {method 'replace' of 'str' objects}
+   108366    0.026    0.000    0.026    0.000 {built-in method _winapi.LCMapStringEx}
+198679/198678    0.018    0.000    0.023    0.000 {built-in method nt.fspath}
+   195695    0.021    0.000    0.021    0.000 {built-in method builtins.isinstance}
+    18060    0.006    0.000    0.020    0.000 <frozen ntpath>:538(abspath)
+    18060    0.010    0.000    0.010    0.000 {built-in method nt._getfullpathname}
+     6018    0.004    0.000    0.010    0.000 {built-in method builtins.any}
+     9275    0.004    0.000    0.008    0.000 D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\zzy\resources.py:149(check)
+    18188    0.004    0.000    0.008    0.000 D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\zzy\resources.py:146(used)
+    20309    0.006    0.000    0.007    0.000 D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\zzy\resources.py:131(check)
+    36122    0.007    0.000    0.007    0.000 {built-in method nt._path_normpath}
+    18066    0.006    0.000    0.006    0.000 {method 'split' of 'str' objects}
+    12040    0.004    0.000    0.006    0.000 D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\zzy\interpreter.py:51(<genexpr>)
+     3004    0.002    0.000    0.005    0.000 D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\zzy\interpreter.py:133(read_reference)
+     9267    0.003    0.000    0.005    0.000 D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\zzy\diagnostics.py:29(__post_init__)
+     9035    0.004    0.000    0.005    0.000 C:\Users\13691\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\pathlib.py:447(__fspath__)
+     6017    0.003    0.000    0.004    0.000 C:\Users\13691\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\_weakrefset.py:85(add)
+    24187    0.004    0.000    0.004    0.000 {method 'items' of 'dict' objects}
+     1000    0.002    0.000    0.004    0.000 D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\zzy\interpreter.py:937(add_bits)
+      2/1    0.000    0.000    0.004    0.004 D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\zzy\prepare.py:18(prepare)
+    32230    0.003    0.000    0.003    0.000 {built-in method builtins.len}
+     1003    0.001    0.000    0.003    0.000 {method 'clear' of 'dict' objects}
+
+
+         1390844 function calls (1385806 primitive calls) in 0.506 seconds
+
+   Ordered by: internal time
+   List reduced from 319 to 30 due to restriction <30>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+   108366    0.067    0.000    0.126    0.000 <frozen ntpath>:52(normcase)
+     9030    0.059    0.000    0.314    0.000 <frozen ntpath>:738(relpath)
+    63216    0.041    0.000    0.065    0.000 <frozen ntpath>:180(splitroot)
+   180622    0.028    0.000    0.028    0.000 {method 'replace' of 'str' objects}
+   108366    0.026    0.000    0.026    0.000 {built-in method _winapi.LCMapStringEx}
+     9030    0.022    0.000    0.067    0.000 <frozen ntpath>:108(join)
+   195695    0.021    0.000    0.021    0.000 {built-in method builtins.isinstance}
+198679/198678    0.018    0.000    0.023    0.000 {built-in method nt.fspath}
+    18534    0.017    0.000    0.034    0.000 D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\zzy\source.py:30(position)
+     6017    0.015    0.000    0.311    0.000 D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\zzy\interpreter.py:49(reserve)
+     6075    0.014    0.000    0.029    0.000 D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\zzy\resources.py:159(reserve)
+    18060    0.010    0.000    0.010    0.000 {built-in method nt._getfullpathname}
+5012/1006    0.010    0.000    0.337    0.000 D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\zzy\interpreter.py:466(evaluate)
+     9267    0.008    0.000    0.053    0.000 D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\zzy\source.py:36(span)
+    36122    0.007    0.000    0.007    0.000 {built-in method nt._path_normpath}
+     9030    0.007    0.000    0.324    0.000 D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\zzy\diagnostics.py:34(display_path)
+    18066    0.006    0.000    0.006    0.000 {method 'split' of 'str' objects}
+    18060    0.006    0.000    0.020    0.000 <frozen ntpath>:538(abspath)
+    20309    0.006    0.000    0.007    0.000 D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\zzy\resources.py:131(check)
+    18188    0.004    0.000    0.008    0.000 D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\zzy\resources.py:146(used)
+     9275    0.004    0.000    0.008    0.000 D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\zzy\resources.py:149(check)
+     6018    0.004    0.000    0.010    0.000 {built-in method builtins.any}
+     1000    0.004    0.000    0.148    0.000 D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\zzy\interpreter.py:664(integer_operation)
+    24187    0.004    0.000    0.004    0.000 {method 'items' of 'dict' objects}
+        1    0.004    0.004    0.357    0.357 D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\zzy\interpreter.py:394(for_loop)
+     9035    0.004    0.000    0.005    0.000 C:\Users\13691\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\pathlib.py:447(__fspath__)
+    12040    0.004    0.000    0.006    0.000 D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\zzy\interpreter.py:51(<genexpr>)
+     1003    0.004    0.000    0.262    0.000 D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\zzy\features.py:44(call_value)
+    32230    0.003    0.000    0.003    0.000 {built-in method builtins.len}
+    18218    0.003    0.000    0.003    0.000 {method 'get' of 'dict' objects}
+
+

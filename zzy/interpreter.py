@@ -5,6 +5,7 @@ from dataclasses import replace
 import gc
 import math
 import operator
+import os
 import sys
 from weakref import WeakSet
 
@@ -36,9 +37,21 @@ class Interpreter(Features, Library):
         self.current_item = None
         self.selected_spec = None
         self.modules = {}
+        self._location_cwd = None
+        self._location_paths = {}
 
     def location(self, node):
-        return display_path(node.token.source.path)
+        # Diagnostic metadata is constant per source while cwd is unchanged.
+        # Keep it context-local, bounded by source paths (not evaluation count),
+        # and preserve the old behavior if a host callback changes directories.
+        cwd = os.getcwd()
+        if cwd != self._location_cwd:
+            self._location_paths.clear()
+            self._location_cwd = cwd
+        path = os.fspath(node.token.source.path)
+        if path not in self._location_paths:
+            self._location_paths[path] = display_path(path)
+        return self._location_paths[path]
 
     def error(self, node, code, message):
         raise DiagnosticError(Diagnostic(message, code, self.location(node), node.token.span), Phase.EXECUTION)
@@ -86,6 +99,7 @@ class Interpreter(Features, Library):
             for reservation in list(self.reservations):
                 reservation.release()
             self.reservations.clear()
+            self._location_paths.clear()
 
     def execute_program(self):
         for statement in self.program.root.children:

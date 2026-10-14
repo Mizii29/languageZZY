@@ -379,3 +379,14 @@ Git 提交：真实标识 / 未提交
 - .venv/Scripts/python.exe -X utf8 -m benchmarks.audit benchmarks/results/baseline：evidence_complete=true，records=1644，equivalence_jobs=108，measured_jobs=84，sample_records=1260，failure_records=37，all_workloads_passed=false；审计成功不改判超时。新审计检查生成字节、哈希、环境关联、索引/次数和由原始样本重算的汇总。
 - -m unittest tests.test_p07_benchmarks -v：9/9、8.747秒、退出0；补快照启动器实际选中版本、缺失记录/改动输入拒绝和不对缺样本计算比值。-m benchmarks.report --baseline benchmarks/results/baseline --output docs/runtime/performance-report.md 已生成真实基线表格；尚无优化结论。
 - P07-01/02完成，P07-03/04保持未勾选。先保存此基线提交，再独立运行cProfile。最大规模失败、其他平台、峰值RSS、长期Program缓存与其他查询/单位负载仍未验证；用户docs/manual-tests继续保留且不纳入。
+
+
+## 2026-10-14：P07-03 路径热点、单项优化与回归
+
+- 先以05e972b保存完整基线，再分别执行 -m benchmarks.profile --inputs benchmarks/results/baseline/inputs --case B01/B04/B09 --n 1000 --output benchmarks/results/profile-before-B01/B04/B09（实际为三次独立命令）。均完整结果校验通过；cProfile/pstats、文本和结构记录单列，不进入正式速度样本。
+- 剖析观察：location累计占比B01 64.9%、B04 64.6%、B09 70.1%；调用数8013/9023/30021，主要来自display_path/Windows relpath。嵌套累计时间不能相加，也不将剖析耗时当作性能加速比。
+- 只实施这一项优化：Interpreter按源码路径缓存诊断显示字符串，缓存属于单个运行器，每次检查cwd变化即失效，run结束清空；不缓存Program、用户值、错误或求值结果，不跳过任何资源/类型/取消检查。字符串键保留源码路径大小写，数量随固定源码路径而非循环次数增长。
+- 新增真实行为测试：输入回调切换工作目录后仍报告正确E205文件/行列；同一Program和运行器在不同目录复用，不出现旧路径或状态残留，失败后Frame/预算释放。-m unittest tests.test_p07_locations tests.test_p07_benchmarks -v：11/11、8.983秒、退出0。
+- .venv/Scripts/python.exe -X utf8 -m tests --report benchmarks/results/regression/all-tests.json：1744/1744、汇总计时579.844秒、退出0，failures/errors/skipped/expected_failures全0；其中包含原有1588条外部CLI清单。只跑一次最终完整回归，未把额外宿主/基准调用与1588相加。
+- 资源配置、正式语法/库规则未改；requirement SHA-256保持B099C19FC339CE1DC1AAB7E9D6C8126A9C5C9ACE3D31B969A0623DF90F521D2B。运行时包版本仍0.6.0a1，用Git提交明确区分性能版本。
+- 下一步固定此优化源码提交，使用before=05e972b与after实际提交的隔离快照，同一输入/启动器交错测B01/B04、n=10000，3预热/15样本；尚未宣称有速度收益，P07-03/04保持未完成。
