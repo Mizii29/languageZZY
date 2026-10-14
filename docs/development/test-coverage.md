@@ -1,6 +1,6 @@
 # ZZY 黑盒覆盖与验收计划
 
-更新：2026-10-14｜状态：P01—P05 已有统一 lex/run/check 外部黑盒和独立 spec 测试；其余阶段覆盖仍待实现，验收见 tests/README.md 与开发记录
+更新：2026-10-14｜状态：P06 核心矩阵已落实为实际映射及回归；优化/GUI/应用等后续阶段仍待实现，证据与未测范围见 tests/p06 和开发记录
 
 本文件将 [syntax.md](../language/syntax.md) 与 [stdlib.md](../language/stdlib.md) 的可观察规则映射到测试类别。它不是测试集或通过报告；实际用例需用 `.zzy` 编写并通过真实 CLI 一键运行。
 
@@ -11,6 +11,8 @@ P03 实际映射见 [tests/p03/README.md](../../tests/p03/README.md)：234 个 r
 P04 实际映射见 [tests/p04/README.md](../../tests/p04/README.md)：317 项独立 run/check 期望、12 项运行时宿主和 12 项 spec/trace/运行器测试。覆盖 RES/LAZY/PIPE、MACHINE/UNIT/QUERY 的核心及 TEST 状态隔离；UNIT-02 的 unit 库/JSON、MACHINE 模块导出和 TEST 模块/文件库隔离依赖 P05，未宣称完成整张矩阵。
 
 P05 实际映射见 [tests/p05/README.md](../../tests/p05/README.md)：369 项独立 run/check 期望与 18 项集成/宿主检查，覆盖完整核心库、Map/严格 JSON、单位库、导出定义与查询封装、文件失败保护、模块与 spec 的状态/源码快照隔离。补 MOD-01、LIB-01、JSON-01/02、QUERY-03 与 TEST/CLI 跨文件部分；完整默认容量矩阵、全部指南和真实终端中断仍留 P06，缓存优化与可选扩展不算本阶段完成。
+
+P06 当前汇总见 [tests/p06/README.md](../../tests/p06/README.md)：33 条核心规则逐项列出实际正常/边界/错误用例，九组变形 spec、15 个指南片段、真实 Ctrl+C/进程树、20 个生效限额的小配置相邻边界及关键默认边界。最大默认容器/对象/槽/载荷压力、其他 OS、缓存优化未验证；历史段落只描述当时范围，现状以此映射及最新日志为准。
 
 ## 1. 核心覆盖矩阵
 

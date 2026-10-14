@@ -1,6 +1,6 @@
 # ZZY 语法与语义契约
 
-作者：赵梓伊｜更新：2026-10-14｜语法契约版本：v0.6｜状态：P00—P05 核心语言与库/模块已实现，验证范围见根 README；本文不是运行成功的证明
+作者：赵梓伊｜更新：2026-10-14｜语法契约版本：v0.6｜状态：P00—P06 核心语言与库/模块已实现，验证范围见根 README；本文不是运行成功的证明
 
 本文是解释器、测试、示例和 Agent 使用的统一规则来源。[语法参考](../../skills/syntax.md) 按编程场景解释规则，[design详细版.md](../design详细版.md) 归纳完整设计，[stdlib.md](stdlib.md) 定义库接口；[machine-units.md](../features/machine-units.md) 细化已选状态机和数量机制，[query.md](../features/query.md) 细化已选集合查询，[sketch.md](../features/sketch.md) 定义已选画笔扩展。作业约束始终以只读的 [requirement.md](../requirement.md) 为准。实现不足时标注未支持，不能通过修改契约伪装测试通过。
 

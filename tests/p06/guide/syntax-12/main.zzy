@@ -1,0 +1,2 @@
+(use) "helpers.zzy" (as) helpers;
+io.print(helpers.twice(3));

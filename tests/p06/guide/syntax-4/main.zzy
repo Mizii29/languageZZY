@@ -1,0 +1,19 @@
+(zno) score := 85;
+(zif?:) score >= 90 {
+    io.print("优秀");
+}
+(zzif?:) score >= 60 {
+    io.print("通过");
+}
+(zzyf:) {
+    io.print("继续练习");
+}
+
+(zyes) total := 0;
+(for) number (in) 0..<5 {
+    total <- total + number;
+}
+(while) total < 12 {
+    total <- total + 1;
+}
+io.print(total);

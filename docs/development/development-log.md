@@ -332,3 +332,29 @@ Git 提交：真实标识 / 未提交
 - 验收结论：roadmap 的手写循环/库结果一致、排序不改变源和模块/测试状态隔离均有实际证据，P05-01—04 全部完成；70 项代码任务完成 30 项。没有已知未修复的本阶段失败，下一项 P06-01，本轮到 P05 结束。
 - 提交核对：34 份 Markdown 围栏和 298 个本地链接有效；requirement 原始 SHA-256 仍为 B099C19FC339CE1DC1AAB7E9D6C8126A9C5C9ACE3D31B969A0623DF90F521D2B；syntax 第 2—10 节原文未变，git diff --check 通过。静态检查仅作一致性证据，不替代真实运行。
 - Git：将本轮代码、独立源码/期望、集成测试、实际示例、指南和日志纳入本地 P05 阶段提交，基于 feature 的 b5406c9；提交标识见实际 Git 历史及最终报告。dist/.venv/wheel/临时生成脚本与机器相关报告保持忽略，不推送、不改写历史。
+
+
+## 2026-10-14：P06 完整测试、指南、真实中断和阶段验收
+
+- 用户任务：完成 P06-01—05，逐项对照 roadmap/todo/正式契约/test-coverage，核对成功/边界/失败、求值顺序/别名/隔离/定位、check 零执行、未实现能力与零收集误报；修复后真实回归，更新记录并创建本地阶段提交，不推送或改写历史。
+- 接手：按 skills/zzy/SKILL.md 阅读交接和 P05 最新记录，核对 README、requirement、roadmap、覆盖及所需 syntax/stdlib/diagnostics/resources/interpreter 契约。初始 feature 工作区干净，HEAD 与 origin/feature 均为 f8092d4b56d5941f6c4f3dba1aeefd74073cae3b。CPython 3.12.14 / Windows 11 26200 / Unicode 15.0，入口仍为 .venv/Scripts/python.exe -X utf8；不使用文档中的能力作为运行证据。
+- 代码修复：旧 run_bounded 只 kill 直接子进程，改成拥有整个进程树。Windows CREATE_SUSPENDED 后先加入带 KILL_ON_JOB_CLOSE 的 Job，再恢复初始线程；正常退出遗留后代、超时、输出超额、取消和启动设置失败均清理。TerminateJobObject 后等待 active process=0，避免后代不持有管道却仍持有临时文件。POSIX 使用独立进程组，代码存在但本机未运行验证。
+- 真实中断：首次控制台探针无法中断 run、test 只能到超时；查明桌面宿主传下 ignore-Ctrl+C 标志。CLI 在附着 Windows 控制台时清除该标志。test_p06_process 在隐藏独立控制台运行真实 run/test，外部 helper 只向目标控制台生成 Ctrl+C，验证 stderr 一条 cancelled/code=null、退出 130、spec 临时目录消失；与 KeyboardInterrupt 注入/超时退出 1 明确分开。句柄重复启动稳定、故障后管道关闭、无继承管道的持文件孙进程退出均有真实检查。
+- 测试交付：P06 cases.json 新增 129 项（run 64/check 65），含 diagnostics 四个原文、15 个小资源限额的三值、check 全效果毒丸和 15 个文档片段。全部外部清单合计 1588（lex 62/run 753/check 773），不依赖 spec。69 个本阶段 .zzy 夹具；coverage.json 为 33 条核心规则提供正常/边界/错误实际 ID，自动核对规则全集、引用与退出属性。既有顺序/别名/状态/跨文件/Lazy/错误回归保持，未删减原清单。
+- 独立 spec 与指南：9 组变形 spec 同时比较独立固定 stdout，覆盖 sum、stats 手写循环、with/共享、JSON 往返、Quantity、Machine、query 手写稳定插入参考、pipeline 一次、sorted 幂等。syntax 的 13 段和 guide 的 2 段全部保存并逐段内容核对、check/run；另运行语法 spec、累加 spec、指南文件函数 3 个正常/失败 spec。新增 examples/agent-practice 的任务、两个模块和 spec，测试独立固定数据/业务失败/EOF/保存失败/check；真实当前 Agent 按指南完成，无第三方盲测或伪造 Agent 记录。其首次专项 3/3、4.281 秒通过（内含多子场景与 2 spec）。
+- 资源验收：其余源码/依赖四键和 stderr 由生成式 CLI 用例补齐，20 个生效限额都有缩小配置相邻三值。关键默认值实测源码 2 MiB/总图16 MiB、Token250000、AST500000、module128、import32、数字4096、Int65536bit、指数64、String4Mi码点、IO16MiB、双流1MiB；默认语法/调用/值深度沿用并重跑原63/64/65。AST 探针只提高 Token 上限；IO 字节探针只提高 String 容量4码点，报告/代码明确隔离方式。缓存两键只在配置和指纹中保留，长期 Program 缓存尚未实现，命中/淘汰/宽转紧不计已验证。
+- 运行器：新增 python -X utf8 -m tests 一键入口；collected 必须 >0 且等于 tests_run，不允许 skip/expected failure，并记录环境/策略指纹。原 blackbox 的空/坏清单、输出超额、少执行、错误答案、超时和报告失败回归保留。正常 spec 不与故意非法源码混收；未改为 zzy test tests/。
+- 实际发现与修正：首轮新增外部清单 129 项中 5 项失败来自独立答案的手算位置/输出超限无来源定位：核对原文调用括号列、词法扫描前缀和 Output 无来源位置后修正期望，未放宽比较。默认 stderr 的初稿误以为单条 trace 可超过4KiB，改为多条完整记录累计至默认限额。1MiB 逐字符 stdin 探针在60秒超时后已回收；该性能探针未通过，不提升超时冒充成功，默认输出容量改用受限文件读取供值。大 stdin 性能留 P07，不宣称本轮测出效率。静态链接检查发现故意缺失文件样例不可作为真实文件链接，改为链接其期望清单。
+- 文档一致性：纠正 README 旧“仅基础库/Map待实现”及 stdlib 的“拟议 write_atomic”过期措辞，语法/接口规则未变；同步指南/SKILL、导航、roadmap、diagnostics、resources、interpreter 和 tests/README，新增完整 P06 映射及 Agent 练习记录。语法第2节起正文与 HEAD 完全一致；requirement SHA-256 仍为 B099C19FC339CE1DC1AAB7E9D6C8126A9C5C9ACE3D31B969A0623DF90F521D2B。
+- 实测命令：-m unittest tests.test_p06_resources tests.test_p06_guides -v 的初版生成式/指南 11/11、114.064秒通过；之后新增默认文本/IO/输出、映射、诊断与进程专项分别通过。-m unittest tests.test_p06_diagnostics tests.test_p06_process tests.test_p06_guides -v：12/12、13.623秒。Job drain 补强后的 -m unittest tests.test_p06_process tests.test_blackbox_runner.CaptureTests tests.test_p04_spec -q：20/20、17.942秒通过。
+- 首轮一键全量：.venv/Scripts/python.exe -X utf8 -m tests --report dist/p06-all-tests.json：1733/1733、675.402秒、退出0、无跳过/expected failure。为把最终 Job drain 代码纳入同一全量快照，已另启动最终完整回归；最终结果在下文追加，不将前一快照当成该修改的全量证据。
+- 发布专项：0.6.0a1 wheel 使用宿主 pip --no-deps --no-build-isolation --no-index 离线构建，pip --python .venv/Scripts/python.exe install --force-reinstall --no-index --no-deps 安装。dist/verify_p06_install.py 以 -I -X utf8 在 dist 下运行全部129项 P06 CLI、9个变形和2个Agent spec，全部通过；27个安装Python文件集合及字节与工作区一致。初次安装探针取中文路径时遗漏 -X utf8 导致宿主解码失败，修正探针后完整重跑，未称该次失败为安装通过。zzy.exe --version 输出0.6.0a1 (P06 interpreter)。
+- 额外已运行指南命令：zzy test examples/features-spec.zzy 为2/2；examples/library/spec.zzy 为2/2；examples/total-up-to.zzy 为1/1且顶层输出15。全部退出0。指南代码块一致性测试在文案修改后再次通过。Markdown围栏、本地链接、compileall和git diff --check仅作静态/打包补充，不充当语言执行证据。
+- 明确未验证：其他Python/OS、最大默认 container_items/runtime_objects/runtime_slots/runtime_payload_bytes 实分配压力、1MiB逐字符stdin性能；长期Program缓存/优化、GUI/sketch、Web/嵌入、完整应用及性能收益未实现或留后续。P06 按正式资源要求完成所有缩小配置与关键默认边界，不声称完整默认最大分配矩阵或RSS上界。当前Agent练习不等于第三方盲测，也不代替P09完整应用。
+
+- 独立全外部清单：.venv/Scripts/python.exe -X utf8 -m tests.blackbox --report dist/p06-blackbox-report.json：1588/1588、483.761秒、退出0。逐项确认 passed、observed_exit_code 和原期望一致，lex62/run753/check773，75种生效指纹。此入口与完整1733项中的1588项重合，不能相加。默认策略指纹为2e654aef52d3267bfecf0768bef9faee1eed942a329001ec455aee951c858bd2。
+
+- 最终代码全量门禁：.venv/Scripts/python.exe -X utf8 -m tests --report dist/p06-all-tests.json：1733/1733、663.878秒、退出0；collected=tests_run=1733，failures/errors/skipped/expected_failures 均0。1588外部CLI+145集成/宿主/运行器；此轮包含最终Job drain实现。通过后不再修改执行代码或测试代码。
+- 验收结论：33条核心规则无未解释空缺，全部现有黑盒通过，15个指南代码块有实际执行记录，公开能力和计划接口分开；P06-01—05全部完成，70项代码任务完成35项。未测范围已明确，未把最大默认实分配或其他平台写成通过。下一项P07-01，本轮在P06结束。
+- 提交前核对：37份Markdown围栏配对、420个本地链接有效；70个任务ID唯一、35个完成；compileall与git diff --check通过；requirement原始哈希及syntax第2节起正文保持。纳入的文件为代码/配置、测试与独立期望、可运行指南/Agent练习和真实日志；构建产物、临时目录、机器报告及venv忽略。
+- Git：基于feature的f8092d4创建本地阶段提交，主题为“feat: complete P06 acceptance and process cleanup”；提交标识见实际Git历史及最终报告。不推送，不改写历史。

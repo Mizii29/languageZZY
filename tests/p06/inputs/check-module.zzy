@@ -1,0 +1,1 @@
+io.input("module");io.write_text("check-must-not-write","bad");(addnew) f(){(return)1/0;}f();

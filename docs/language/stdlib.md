@@ -24,7 +24,7 @@
 | `io.write_text(path, content)` | Result<Null> | 两参数均 String；UTF-8 写入并覆盖，成功载荷 Null；不自动创建父目录，写入失败为失败 Result |
 | `io.write_atomic(path, content)` | Result<Null> | 两参数均 String；完整生成受限 UTF-8 后，宿主独占创建同目录临时文件，写入/关闭后替换目标；替换前失败保留原文件，不自动建目录 |
 
-`io.write_text` 不承诺原子持久化；CLI 应用可优先使用拟议 `io.write_atomic`，将唯一临时文件的独占创建、写入、关闭和替换封装在宿主，失败清理临时文件。不能先“检查文件不存在”再普通覆盖创建，以免竞争；并发成功保存采用最后一次替换胜出，不承诺业务级事务。
+`io.write_text` 不承诺原子持久化；CLI 应用可优先使用已实现的 `io.write_atomic`，将唯一临时文件的独占创建、写入、关闭和替换封装在宿主，失败清理临时文件。不能先“检查文件不存在”再普通覆盖创建，以免竞争；并发成功保存采用最后一次替换胜出，不承诺业务级事务。
 
 低层 `io.replace_file(source, target)` 已在 P05 实现，参数为 String，成功 Result<Null>、文件操作失败为失败 Result；调用者须先关闭完整源文件。同目录临时文件方案不承诺断电后已落盘，replace 跨文件系统不承诺成功。应用测试覆盖写入/关闭/替换失败保留旧文件、并发临时文件不互相覆盖；类型/资源错误不吞成 I/O Result。
 

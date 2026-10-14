@@ -1,8 +1,9 @@
-"""Infrastructure, lexical inspection and execution of the P05 subset."""
+"""Infrastructure, lexical inspection and execution of the P06 subset."""
 
 import argparse
 import json
 import math
+import os
 import platform
 import sys
 import unicodedata
@@ -32,15 +33,15 @@ def _parser(output: Output) -> ArgumentParser:
     common.add_argument("--limits", metavar="JSON", help="资源策略覆盖文件（最多 64 KiB）")
     common.add_argument("--diagnostic-format", choices=("text", "json"), help="stderr 诊断格式")
     parser = ArgumentParser(prog="zzy", parents=[common],
-                            description="ZZY P05：标准库与模块、非执行检查和隔离 spec 测试。",
+                            description="ZZY P06：标准库与模块、非执行检查和隔离 spec 测试。",
                             allow_abbrev=False)
     parser.output = output
-    parser.add_argument("--version", action="version", version=f"ZZY {__version__} (P05 interpreter)")
+    parser.add_argument("--version", action="version", version=f"ZZY {__version__} (P06 interpreter)")
     commands = parser.add_subparsers(dest="command", required=True)
     for name, help in (("info", "输出宿主环境、生效策略及指纹"),
                        ("source-info", "读取 UTF-8 源码并输出摘要，不做语法检查"),
                        ("lex", "扫描词法并输出 Token JSON Lines；不解析、不执行"),
-                       ("run", "执行 P05：完整核心语法、标准库与模块"),
+                       ("run", "执行 P06：完整核心语法、标准库与模块"),
                        ("check", "检查核心语法、名称及递归模块依赖；不执行程序"),
                        ("test", "收集并隔离运行 spec，空收集/失败/超时非成功")):
         subparser = commands.add_parser(name, parents=[common], help=help, allow_abbrev=False)
@@ -78,6 +79,13 @@ def main(argv: list[str] | None = None) -> int:
     output = Output(sys.stdout, sys.stderr, ResourceMeter(ResourcePolicy(), Phase.FRONTEND),
                     _requested_format(argv))
     try:
+        if os.name == "nt":
+            # Desktop/CI parents may pass the Windows console ignore-Ctrl+C flag.
+            # A standalone CLI attached to a console must honor its Ctrl+C contract.
+            import ctypes
+            kernel = ctypes.WinDLL("kernel32", use_last_error=True)
+            if kernel.GetConsoleCP() and not kernel.SetConsoleCtrlHandler(None, False):
+                raise ctypes.WinError(ctypes.get_last_error())
         args = _parser(output).parse_args(argv)
         policy = ResourcePolicy.from_file(args.limits) if hasattr(args, "limits") else ResourcePolicy()
         output.meter = ResourceMeter(policy, Phase.FRONTEND)
@@ -89,7 +97,7 @@ def main(argv: list[str] | None = None) -> int:
             return run_specs(args.file, output, policy, args.timeout)
         if args.command == "info":
             result = {
-                "zzy_version": __version__, "stage": "P05",
+                "zzy_version": __version__, "stage": "P06",
                 "python_implementation": platform.python_implementation(),
                 "python_version": sys.version, "python_executable": sys.executable,
                 "unicode_version": unicodedata.unidata_version,

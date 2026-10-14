@@ -1,0 +1,17 @@
+(use) "summary.zzy" (as) summary;
+(spec) "normal" {
+    io.write_text("minutes.json","[30,15,0]");
+    (?_?) summary.summarize("minutes.json") {
+        (^_^)(value)=>{(o_o)data.get(value,"count")==3;(o_o)data.get(value,"minutes")==45;}
+        _=>{(o_o)(false);}
+    }
+}
+(spec) "empty and invalid" {
+    io.write_text("minutes.json","[]");
+    (?_?) summary.summarize("minutes.json") {
+        (^_^)(value)=>{(o_o)data.get(value,"count")==0;(o_o)data.get(value,"minutes")==0;}
+        _=>{(o_o)(false);}
+    }
+    io.write_text("minutes.json","[true]");
+    (o_o)summary.summarize("minutes.json")== (T_T)("分钟必须为非负整数");
+}

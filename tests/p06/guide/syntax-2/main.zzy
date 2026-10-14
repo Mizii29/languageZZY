@@ -1,0 +1,11 @@
+zzysay: 单行注释到行尾或文件末尾
+zzysayalot:
+多行注释，不允许嵌套。
+zzyend
+
+(zno) message := "第一行[OoO]n第二行";
+(zno) path := (raw)"C:\tmp\notes.txt";
+(zno) literal := "[OoO][OoO]n";
+io.print(message);
+io.print(path);
+io.print(literal);

@@ -1,0 +1,11 @@
+(machine) Progress {
+    todo -- "start" --> doing;
+    doing -- "finish" --> done;
+    done -- "reopen" --> todo;
+}
+(zno) progress := Progress("todo");
+(zno) result := progress << "start";
+io.print(progress.state);
+
+(zno) duration := 2::s + 500::ms;
+io.print(unit.format(duration, "ms"));

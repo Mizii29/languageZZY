@@ -6,11 +6,11 @@
 
 ## 1. 先确认能做什么
 
-P00—P05 已实现，版本 0.5.0a1；核心语法、io/array/text/math/data/unit 标准库、Map/严格 JSON、原子文件保存及模块已接通。GUI、性能测量和完整应用仍待后续阶段。使用 `python -m zzy run examples/features.zzy` 和 `python -m zzy test examples/features-spec.zzy` 运行特色示例；独立外部期望仍由 `python -X utf8 -m tests.blackbox` 验证。check 不执行用户表达式。本文完整片段未逐一运行；已验证的库/模块例子见 examples/library/；下一项 P06-01，接手先核对 todo、最新开发记录和 Git。
+P00—P06 已实现，版本 0.6.0a1；核心语法、io/array/text/math/data/unit 标准库、Map/严格 JSON、原子文件保存及模块已接通。GUI、性能测量和完整应用仍待后续阶段。使用 `python -m zzy run examples/features.zzy` 和 `python -m zzy test examples/features-spec.zzy` 运行特色示例；独立外部期望仍由 `python -X utf8 -m tests.blackbox` 验证。check 不执行用户表达式。本文 2 段完整代码已保存至 tests/p06/guide/，逐段 check/run，另补正常/失败 spec；库/模块例子见 examples/library/；下一项 P07-01，接手先核对 todo、最新开发记录和 Git。
 
 解释器使用 Python，核心运行只依赖标准库。P00 已验证 CPython 3.12.14、Windows 11、Unicode 15.0.0；实际运行和安装命令见项目 README。没有依赖清单时不要凭空执行安装命令；GUI 和后续 Web 等可选依赖不应成为普通 CLI/check 的前提。
 
-计划中的目录分工：
+目录分工：
 
 - `zzy/`：词法、语法、名字解析、运行时、标准库与 CLI。
 - `examples/`：可独立运行的示例及必要输入。
@@ -127,7 +127,7 @@ zno、array.copy 和 with 都不是深冻结/深复制。为实现撤销，应�
 
 执行顺序以 [roadmap](../docs/development/roadmap.md) 为准，具体部件见 [interpreter](../docs/runtime/interpreter.md)。核心主线是 P00 → P01 → P02 → P03 → P04 → P05 → P06，再完成 P07 测量、P09 应用和 P11 交付；分支依赖见阶段表，不把文档讲解顺序当作开发依赖。
 
-后续先核对仓库和环境，再从 P06-01 扩充完整黑盒与指南验收，保留全部 CLI 回归。不要先建 VM，或一次性实现所有扩展。E 在 P05/P06 后分阶段推进；Web/Python 互联 P08 在 P09 后可选，P10 优化依据测量决定。
+后续先核对仓库和环境，再从 P07-01 开始 B01—B09 配对基准，保留完整回归。不要先建 VM，或一次性实现所有扩展。E 在 P05/P06 后分阶段推进；Web/Python 互联 P08 在 P09 后可选，P10 优化依据测量决定。
 
 每个实现任务按以下过程收尾：
 
@@ -145,7 +145,7 @@ zno、array.copy 和 with 都不是深冻结/深复制。为实现撤销，应�
 
 默认应用是校园任务管家，业务用 ZZY 编写，Python 只提供通用宿主能力。实际 ZZY 源码至少 200 行，建议有效代码也达到要求，不靠注释和重复代码凑数。绘图演示不自动替代该交付物，变更应用主题时仍须满足作业要求。
 
-最终按 [requirement](../docs/requirement.md) 核对八项交付物：语法规则、解释器源代码、ZZY 黑盒测试集、性能报告、开发及 AI 指南、应用源代码及 Agent 开发记录、所有工作的 Git 历史、系统介绍 PPT。本文和 SKILL 目前只是指南草稿；P06 仍须实际运行示例，并验证他人或 Agent 能仅依靠指南完成任务。
+最终按 [requirement](../docs/requirement.md) 核对八项交付物：语法规则、解释器源代码、ZZY 黑盒测试集、性能报告、开发及 AI 指南、应用源代码及 Agent 开发记录、所有工作的 Git 历史、系统介绍 PPT。本文完整代码块已有逐段验证；当前 Agent 按指南完成的练习见 [实际记录](../examples/agent-practice/README.md)，没有第三方盲测证据。
 
 
 ## P05 库与模块的已验证用法
@@ -158,4 +158,8 @@ sum/stats 逐项检查 Int，Bool/Float 不混入；stats 的 min/max 空值为 
 
 查询白名单固定为 len/str、math.abs、text.trim/contains、unit.make/format；不可把库别名、动态函数或 data.kind 放进查询条目。普通具名函数可以封装整个查询并通过模块导出。unit.format 使用精确分数；unit.make(Float, unit) 保留该 Float 的实际二进制值。
 
-宿主注册元数据、失败注入、模块/文件/spec 隔离的证据索引见 [P05 测试映射](../tests/p05/README.md)。完整指南逐段执行与完整 RESOURCE/CLI 矩阵留到 P06；本次没有验证 GUI、其他操作系统或性能收益。
+宿主注册元数据、失败注入、模块/文件/spec 隔离的证据索引见 [P05 测试映射](../tests/p05/README.md)。P06 的逐段执行、资源/诊断/进程矩阵与未验证范围见 [验收映射](../tests/p06/README.md)。GUI、其他操作系统及性能收益仍未验证。
+
+## 一键回归与指南练习
+
+从根目录运行 `python -X utf8 -m tests`；本机使用 `.venv/Scripts/python.exe -X utf8 -m tests`。该入口包含独立外部期望、正常 spec 和宿主清理测试，不能用 `zzy test tests/` 替代，因为 tests 中含故意非法源码。只运行语言 spec 可以执行 `python -m zzy test tests/p06/specs`；预期 9/9。全部 15 个语法/指南片段及固定答案由 tests/p06/guide/manifest.json 管理，修改片段必须同步对应文件与期望。练习要求及源码见 [Agent 练习](../examples/agent-practice/task.md)。

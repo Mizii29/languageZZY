@@ -1,0 +1,10 @@
+(shape) Task {
+    title: (String);
+    priority: (Int) := 1;
+    done: (Bool) := (false);
+}
+
+(zno) task := Task::{title: "阅读语法"};
+(zno) finished := task (with) {done: (true)};
+(o_o) task.done == (false);
+(o_o) finished.done == (true);

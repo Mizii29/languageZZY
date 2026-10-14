@@ -1,0 +1,21 @@
+(addnew) load_task_values(path: (String)) -> (Result) {
+    (zno) content := io.read_text(path)?;
+    (zno) root := data.parse(content)?;
+    (zif?:) data.kind(root) != "map" {
+        (return) (T_T)("文件根值必须是对象");
+    }
+    (zif?:) (not) data.has(root, "tasks") {
+        (return) (T_T)("文件缺少 tasks");
+    }
+    (zno) values := data.get(root, "tasks");
+    (zif?:) data.kind(values) != "array" {
+        (return) (T_T)("tasks 必须是数组");
+    }
+    (return) (^_^)(values);
+}
+
+(addnew) save_json(path: (String), value) -> (Result) {
+    (zno) content := data.stringify(value)?;
+    io.write_atomic(path, content)?;
+    (return) (^_^)((null));
+}

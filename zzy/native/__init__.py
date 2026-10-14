@@ -1,1 +1,1 @@
-"""Metadata infrastructure only; native ZZY functions arrive in P05/E1."""
+"""Core native registry and implementations; optional extensions stay separate."""

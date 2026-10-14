@@ -1,0 +1,27 @@
+(use) "main.zzy" (as) guide;
+(spec) "valid tasks and atomic save" {
+    (o_o) io.write_text("tasks.json", "{[OoO]qtasks[OoO]q:[1,2]}") == (^_^)((null));
+    (?_?) guide.load_task_values("tasks.json") {(^_^)(items)=>{(o_o)len(items)==2;(o_o)items[1]==2;} _=>{(o_o)(false);}}
+    (zno) value := data.map();data.set(value,"tasks",[]);
+    (o_o) guide.save_json("saved.json",value) == (^_^)((null));
+    (o_o) io.read_text("saved.json") == (^_^)("{[OoO]qtasks[OoO]q:[]}");
+    io.print("save:ok");
+}
+(spec) "root field and business boundary" {
+    (zno) inputs := ["[]", "{}", "{[OoO]qtasks[OoO]q:null}"];
+    (zno) errors := ["文件根值必须是对象", "文件缺少 tasks", "tasks 必须是数组"];
+    (for)i(in)0..<3 {
+        io.write_text("tasks.json",inputs[i]);
+        (o_o) guide.load_task_values("tasks.json") == (T_T)(errors[i]);
+    }
+    io.print("validation:ok");
+}
+(spec) "read parse serialize and save failures propagate" {
+    (?_?) guide.load_task_values("missing.json") {(T_T)(why)=>{} _=>{(o_o)(false);}}
+    io.write_text("bad.json","[");
+    (?_?) guide.load_task_values("bad.json") {(T_T)(why)=>{} _=>{(o_o)(false);}}
+    (?_?) guide.save_json("missing/target.json",[]) {(T_T)(why)=>{} _=>{(o_o)(false);}}
+    (?_?) guide.save_json("not-written.json",(zzz)(1)) {(T_T)(why)=>{} _=>{(o_o)(false);}}
+    (?_?) io.read_text("not-written.json") {(T_T)(why)=>{} _=>{(o_o)(false);}}
+    io.print("failures:ok");
+}

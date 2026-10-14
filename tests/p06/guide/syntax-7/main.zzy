@@ -1,0 +1,12 @@
+(addnew) parse_nonnegative(input: (String)) -> (Result) {
+    (zno) value := text.safe_int(input)?;
+    (zif?:) value < 0 {
+        (return) (T_T)("需要非负整数");
+    }
+    (return) (^_^)(value);
+}
+
+(?_?) parse_nonnegative("12") {
+    (^_^)(value) => { io.print(value); }
+    (T_T)(reason) => { io.print(reason); }
+}

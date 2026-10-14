@@ -2,7 +2,7 @@
 
 ZZY 是赵梓伊在程序设计实践课程中设计的通用脚本语言，使用 Python 实现解释器，用 ZZY 编写测试、性能脚本和完整应用。
 
-**当前状态：P00—P05 已实现，版本 0.5.0a1；核心语法、io/array/text/math/data/unit 标准库、Map/严格 JSON、原子文件保存及模块已接通。GUI、性能测量和完整应用仍待后续阶段。** 核心语法 v0.6、标准库契约 v0.6.1 不变。Python AST 树遍历；run/check/test 共用前端准备。1459 项独立外部 CLI 期望与宿主状态/运行器测试覆盖当前能力，阶段证据见开发记录。
+**当前状态：P00—P06 已实现，版本 0.6.0a1；核心语法、io/array/text/math/data/unit 标准库、Map/严格 JSON、原子文件保存及模块已接通。GUI、性能测量和完整应用仍待后续阶段。** 核心语法 v0.6、标准库契约 v0.6.1 不变。Python AST 树遍历；run/check/test 共用前端准备。1588 项独立外部 CLI 期望与宿主状态/运行器测试覆盖当前能力，阶段证据见开发记录。
 
 ## 项目特色
 
@@ -61,7 +61,7 @@ python -m zzy source-info missing.zzy --diagnostic-format json
 python -m zzy lex examples/lexer.zzy
 python -m zzy lex tests/lex/inputs/unclosed-comment.zzy --diagnostic-format json
 python -X utf8 -m tests.blackbox
-python -X utf8 -m unittest discover -s tests -v
+python -X utf8 -m tests
 ```
 
 `run examples/hello.zzy` 输出 `5`。`python -m zzy run examples/grades.zzy` 运行 P02 成绩菜单：输入姓名，再输入 `1`，固定四门成绩的总分为 344、平均分 86.0、最高分 100；其他菜单输入退出，姓名输入 EOF 输出“输入结束”。业务计算、循环与分支都在 ZZY 中。
@@ -75,9 +75,9 @@ python -X utf8 -m unittest discover -s tests -v
 - Array 字面、索引、替换、浅复制、push/pop；别名共享，活动遍历期间先拒绝增删，允许替换并读取后续元素的新值。数组的结构/内容版本由统一写入口维护。
 - 顶层 shape、名义类型注解、显式字段、每次构造求默认值、字段写入、浅层 with。默认 `[]` 每实例新建，默认外部数组保持共享；with 不重跑默认值。
 - 具名/匿名函数、高阶调用、return、自递归、可选参数/返回注解、词法闭包。每次调用使用独立局部槽位；可变捕获共享 Cell，不可变捕获保留对象别名，逐轮绑定独立。尚未声明的相互递归报 E302，跨函数 break/continue 报 E304。
-- 基础库仅有 `io.print/input`、`len/str/range/wake`、`array.copy/push/pop`。len 接受 Array/String/Range；str 接受基础标量和 Quantity。io.input 输出并 flush 提示，去掉一组 LF/CRLF，空行为 String，EOF 为 Null；输入不经过 ZZY 字符串转义。Map 及其他 stdlib 接口按后续阶段实现。
+- 基础入口包括 `io.print/input`、`len/str/range/wake`、`array.copy/push/pop`；完整库已在 P05 接通，见下文。len 接受 Array/String/Map/Range；str 接受基础标量和 Quantity。io.input 输出并 flush 提示，去掉一组 LF/CRLF，空行为 String，EOF 为 Null；输入不经过 ZZY 字符串转义。Map、严格 JSON、文件、统计/回调、文本和单位库均已实现。
 
-普通运算从左到右，调用先求被调用对象及全部实参，再检查可调用性/数量。赋值先定位并检查目标可写性，再求右侧，写入前重新检查下标/类型。zno 禁止重新绑定但不冻结容器；错误不回滚此前副作用。可选注解支持 `(Int)/(Float)/(String)/(Bool)/(Null)/(Array)/(Range)/(Function)` 、`(Result)/(Lazy)/(Machine)/(Quantity)` 及已定义 shape/machine 的身份。
+普通运算从左到右，调用先求被调用对象及全部实参，再检查可调用性/数量。赋值先定位并检查目标可写性，再求右侧，写入前重新检查下标/类型。zno 禁止重新绑定但不冻结容器；错误不回滚此前副作用。可选注解支持 `(Int)/(Float)/(String)/(Bool)/(Null)/(Array)/(Range)/(Function)` 、`(Map)/(Result)/(Lazy)/(Machine)/(Quantity)` 及已定义 shape/machine 的身份。
 
 `check FILE` 完成整文件词法、语法、词法名称、控制流位置及数字字面准备，成功双流为空、退出 0。它不建立执行器，不计算表达式、不调用输入输出、不运行循环、构造或结构默认值。运行时类型/调用/写入错误不提前报出，因此 check 成功不保证 run 成功。未知/自引用名称 E302、重复声明 E301、非法控制流 E304、语法 E103 在执行前退出 2；运行时类型 E201、调用 E202、写入 E203、下标 E204、除零 E205、活动遍历修改 E206、数值范围 E208 退出 1。结构构造/with 字段清单错误使用 E203，字段访问不存在使用 E302。容量错误统一 E211，依发生阶段退出 2/1。
 
@@ -97,7 +97,7 @@ python -m zzy test examples/library/spec.zzy
 
 `use` 路径相对导入文件，普通文件路径相对进程工作目录。模块仅导出顶层具名函数、shape 和 machine 定义；同一上下文规范路径相同只初始化一次。每次 run/spec 创建独立模块状态；spec 使用整个依赖图的收集快照。`check` 递归检查依赖，不初始化模块或执行文件操作。`io.write_atomic` 独占创建同目录临时文件，写入并关闭后替换；预期 I/O 失败为 Result，未替换前保持旧文件，不承诺断电持久化。
 
-`python -X utf8 -m tests.blackbox` 运行 1459 个外部用例；失败、超时、输出超额及空/坏清单返回 1。清单、可选 JSON 报告和资源指纹见 [测试说明](tests/README.md)。
+`python -X utf8 -m tests.blackbox` 运行 1588 个外部用例；失败、超时、输出超额及空/坏清单返回 1。清单、可选 JSON 报告和资源指纹见 [测试说明](tests/README.md)。
 
 `source-info` 仅做有界 UTF-8 读取，输出字节数、码点数、行数和同一字节快照的 SHA-256；`syntax_checked` 固定为 false，不代表语法检查或执行成功。空文件计 1 行，末尾换行后保留空行。缺文件、非法 UTF-8 和参数错误为 E401/退出 2；前端资源超限为 E211/退出 2。`info` 输出完整宿主版本、Unicode/平台、生效资源配置和指纹。
 
@@ -113,7 +113,7 @@ python -m zzy test examples/library/spec.zzy
 $zzyPython = 'C:\Users\13691\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe'
 & $zzyPython -m venv --without-pip .venv
 & .\.venv\Scripts\python.exe -m zzy --help
-& .\.venv\Scripts\python.exe -X utf8 -m unittest discover -s tests -v
+& .\.venv\Scripts\python.exe -X utf8 -m tests
 ```
 
 可选安装：在已有 pip/setuptools（构建要求 setuptools>=68）的 Python 3.12.14 环境中执行 `python -m pip install --no-deps --no-build-isolation .`，随后可用 `zzy --help`。源码运行和宿主测试不要求 pip；GUI/Web/NumPy 不会随 CLI 初始化。
@@ -131,3 +131,7 @@ Web、NumPy 和字节码 VM 属于可选后续工作。P00 的资源计量接口
 课程交付包括语法文档、解释器、ZZY 黑盒测试、与 Python 的性能比较、人和 AI 的指南、不少于 200 行的完整 ZZY 应用及开发记录、Git 历史和 PPT。原始约束见 [作业要求](docs/requirement.md)。默认应用是校园任务管家，画笔扩展不自动替代应用交付。
 
 `docs` 维护正式规则，`skills` 将其组织为学习和开发入口。指南存在不代表接口已经实现；后续以真实代码、测试结果和开发记录更新能力状态。
+
+## P06 一键验收与已验证指南
+
+`python -X utf8 -m tests` 运行全部 CLI、spec 和宿主回归，空收集/跳过/少执行/失败均返回非零；`--report dist/p06-all-tests.json` 保存计数、环境与默认策略指纹（目录需存在）。外部黑盒仍可单独运行。映射、15 个指南片段、9 个变形 spec、资源验证范围见 [P06 验收](tests/p06/README.md)；真实 Agent 练习见 [分钟汇总](examples/agent-practice/README.md)。Windows 11 的真实 Ctrl+C/run/test、派生进程树回收和临时目录清理已经专项验证；其他平台及未测大容量范围明确列在验收页。GUI/Web/长期 Program 缓存仍未实现，不由本阶段完成推断可用。

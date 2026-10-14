@@ -1,0 +1,16 @@
+(shape) Item {
+    title: (String);
+    priority: (Int);
+    done: (Bool);
+}
+(zno) tasks := [
+    Item::{title: "写测试", priority: 3, done: (false)},
+    Item::{title: "读文档", priority: 1, done: (true)},
+];
+(zno) titles := tasks ?> {
+    (keep): (not) @.done;
+    (order): @.priority (desc);
+    (take): 2;
+    (yield): @.title;
+};
+io.print(titles[0]);

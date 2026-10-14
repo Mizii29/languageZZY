@@ -50,7 +50,7 @@ class CliTests(unittest.TestCase):
         result = self.cli("info")
         self.assertEqual(result.returncode, 0)
         record = json.loads(result.stdout)
-        self.assertEqual(record["stage"], "P05")
+        self.assertEqual(record["stage"], "P06")
         self.assertEqual(record["python_implementation"], "CPython")
         self.assertEqual(record["resource_policy"]["limits"]["numeric_digits"], 4096)
 

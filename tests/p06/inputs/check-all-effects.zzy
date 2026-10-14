@@ -1,0 +1,6 @@
+(use) "check-module.zzy" (as) m;
+(shape) Trap { x := io.input("default"); }
+(zno) lazy := (zzz)(io.write_atomic("check-must-not-write","bad"));
+(zno) query := [1] ?> {(keep): 1 / 0 == 0; (yield): @;};
+(spec) "never" {io.print(wake(lazy));}
+(while)(true){}

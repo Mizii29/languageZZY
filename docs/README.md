@@ -2,15 +2,15 @@
 
 更新：2026-10-14｜核心语法：v0.6｜标准库：v0.6.1｜绘图扩展目标：sketch 1.0
 
-本目录维护设计与开发计划，项目介绍见 [根目录 README](../README.md)，使用文档见同级 [skills](../skills/README.md)。P00—P05 已实现，有宿主及统一 lex/run/check 外部黑盒测试和隔离 spec 运行器；完整覆盖矩阵、性能数据和应用尚未实现。文件按用途归类，详细版解释整体设计，skills 提供语法参考和开发指南；精确规则由各专题契约维护。
+本目录维护设计与开发计划，项目介绍见 [根目录 README](../README.md)，使用文档见同级 [skills](../skills/README.md)。P00—P06 已实现，有宿主及统一 lex/run/check 外部黑盒测试和隔离 spec 运行器；P06 核心覆盖映射与指南示例已验证；性能数据和完整应用尚未实现。文件按用途归类，详细版解释整体设计，skills 提供语法参考和开发指南；精确规则由各专题契约维护。
 
 ## 1. 从哪里开始读
 
-- 想编写 ZZY 程序：读 [语法规则参考](../skills/syntax.md) 和 [开发指南](../skills/guide.md)；AI 先读 [项目 SKILL](../skills/zzy/SKILL.md)，再按任务查阅本目录契约。已运行示例见根 README，完整指南逐段验证留 P06。
+- 想编写 ZZY 程序：读 [语法规则参考](../skills/syntax.md) 和 [开发指南](../skills/guide.md)；AI 先读 [项目 SKILL](../skills/zzy/SKILL.md)，再按任务查阅本目录契约。已运行示例见根 README，完整指南逐段验证见 [P06](../tests/p06/README.md)。
 - 想了解完整方案：读 [设计详细版](design详细版.md)，它串起语法、特色、运行机制和交付要求。
 - 准备写解释器：先读 [阶段计划](development/roadmap.md) 与 [待办状态](development/todo.md)，再对照 [语法契约](language/syntax.md)、[标准库契约](language/stdlib.md) 和 [实现流程](runtime/interpreter.md)。
 - 准备落实补充设计：看 [资源限额](runtime/resources.md)、[诊断样例](language/diagnostics.md)、[性能基准清单](runtime/performance.md) 和 [应用保存/恢复](development/campus-app.md)。
-- 准备接手续做：先看 [开发记录](development/development-log.md) 的最新条目，再核对实际文件；P05 阶段验收见最新记录，下一项 P06-01，实际状态以 todo 为准。
+- 准备接手续做：先看 [开发记录](development/development-log.md) 的最新条目，再核对实际文件；P06 阶段验收见最新记录，下一项 P07-01，实际状态以 todo 为准。
 
 ## 2. 文件分类
 

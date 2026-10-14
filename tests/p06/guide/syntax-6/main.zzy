@@ -1,0 +1,7 @@
+(addnew) add(left: (Int), right: (Int)) -> (Int) {
+    (return) left + right;
+}
+
+(zno) double := (addnew)(value: (Int)) => value * 2;
+io.print(add(2, 3));
+io.print(double(4));

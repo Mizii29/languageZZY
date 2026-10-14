@@ -1,0 +1,5 @@
+(zno) greeting := "你好，ZZY！";
+(zyes) count: (Int) := 1;
+count <- count + 1;
+io.print(greeting);
+io.print(count);

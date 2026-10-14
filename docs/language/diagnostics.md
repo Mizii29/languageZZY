@@ -1,6 +1,6 @@
 # ZZY 诊断格式与错误示例
 
-更新：2026-10-13｜diagnostic schema_version：1｜状态：基础格式、词法、P02 数据/控制流及 P03/P04 函数、特色语法和 trace 诊断已实现
+更新：2026-10-14｜diagnostic schema_version：1｜状态：P06 已验证四例、格式/定位、真实 Windows Ctrl+C 及内部缺陷边界
 
 错误码和退出码以 [syntax.md](syntax.md) 为准，资源细则见 [resources.md](../runtime/resources.md)。本文件确定人和 Agent 可依赖的定位方式；不新增语言语法。
 
@@ -70,3 +70,5 @@ io.print(2::s + 1::m);
 资源诊断附限制键/上限，最终记录仍受预留诊断容量控制。Ctrl+C 使用 cancelled、code 为 null、CLI 退出 130；测试中的取消/超时由运行器汇总为失败。内部实现缺陷使用 internal_error、code 为 null，按发生阶段退出 2/1，提示这是解释器问题；不能把所有未知宿主异常改写为 E201 或失败 Result 来伪装用户输入错误。
 
 P01 起收录以上 .zzy 和期望清单，尚未支持的语法示例按阶段加入，不能假装早期版本已支持 Quantity。P06 补全 CLI-02：BOM、CRLF、中文/补充平面字符、制表符、EOF 零宽、缺文件 null span、JSON Lines 可解析、trace/error 区分、跨文件调用和 Lazy 位置；两种显示格式对应同一个诊断对象。
+
+P06 实际证据：四例在 tests/p06/inputs/diagnostic-*.zzy 和外部 cases.json；test_p06_diagnostics 核对两种格式、BOM/CRLF/Unicode/Tab/EOF 与 internal_error；test_p06_process 向独立隐藏控制台发送真实 Ctrl+C，验证 run/test 的 cancelled、130 和清理。其他宿主平台未验证；诊断规则及错误码没有改变。
