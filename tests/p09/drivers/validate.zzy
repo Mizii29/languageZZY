@@ -1,0 +1,14 @@
+(use) "../../../apps/zzy-campus/validation.zzy" (as) validation;
+(use) "../../../apps/zzy-campus/storage.zzy" (as) storage;
+(addnew) run() -> (Result) {
+    (zno) content := io.read_text("matrix.json")?;
+    (zno) cases := data.parse(content)?;
+    (for) value (in) cases {
+        (?_?) validation.document(value) {
+            (^_^)(doc) => { io.print("OK:" + str(doc.next_id) + ":" + str(len(doc.tasks))); }
+            (T_T)(message) => { io.print(message); }
+        }
+    }
+    (return) (^_^)((null));
+}
+run();

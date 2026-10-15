@@ -1,0 +1,62 @@
+(use) "model.zzy" (as) model;
+(use) "storage.zzy" (as) storage;
+
+zzysay: Histories keep references to published arrays; no operation mutates them.
+(addnew) push_history(history: (Array), items: (Array)) -> (Array) {
+    (zno) result := [];
+    (zyes) start := 0;
+    (zif?:) len(history) >= 100 { start <- 1; }
+    (for) index (in) start..<len(history) { array.push(result, history[index]); }
+    array.push(result, array.copy(items));
+    (return) result;
+}
+(addnew) commit(state: model.Session, candidate: model.Document) -> (String) {
+    (zif?:) candidate.next_id == state.document.next_id
+        (and) model.same_tasks(candidate.tasks, state.document.tasks) { (return) "没有变化"; }
+    (zno) trimmed := len(state.undo) >= 100;
+    (zno) history := push_history(state.undo, state.document.tasks);
+    state.document <- candidate;
+    state.undo <- history;
+    state.redo <- [];
+    (zif?:) trimmed { (return) "已更新；历史已满，丢弃最旧一步"; }
+    (return) "已更新";
+}
+(addnew) undo(state: model.Session) -> (Result) {
+    (zif?:) len(state.undo) == 0 { (return) (T_T)("没有可撤销操作"); }
+    (zno) past := array.copy(state.undo);
+    (zno) items := array.pop(past);
+    (zno) future := push_history(state.redo, state.document.tasks);
+    state.document <- state.document (with) {tasks: items};
+    state.undo <- past;
+    state.redo <- future;
+    (return) (^_^)("已撤销");
+}
+(addnew) redo(state: model.Session) -> (Result) {
+    (zif?:) len(state.redo) == 0 { (return) (T_T)("没有可重做操作"); }
+    (zno) future := array.copy(state.redo);
+    (zno) items := array.pop(future);
+    (zno) past := push_history(state.undo, state.document.tasks);
+    state.document <- state.document (with) {tasks: items};
+    state.undo <- past;
+    state.redo <- future;
+    (return) (^_^)("已重做");
+}
+(addnew) save(state: model.Session, path: (String)) -> (Result) {
+    storage.save(path, state.document)?;
+    state.path <- path;
+    state.saved_path <- path;
+    state.saved <- state.document;
+    (return) (^_^)("保存成功");
+}
+(addnew) load(state: model.Session, path: (String)) -> (Result) {
+    (zno) candidate := storage.load(path)?;
+    (zno) fresh_filter := model.Filter::{};
+    state.document <- candidate;
+    state.path <- path;
+    state.saved_path <- path;
+    state.saved <- candidate;
+    state.undo <- [];
+    state.redo <- [];
+    state.filter <- fresh_filter;
+    (return) (^_^)("打开成功");
+}

@@ -1,0 +1,47 @@
+(use) "model.zzy" (as) model;
+
+(addnew) select(doc: model.Document, filter: model.Filter) -> (Array) {
+    (zno) items := doc.tasks ?> {
+        (keep): (filter.category == "" (or) @.category == filter.category)
+            (and) (filter.priority == 0 (or) @.priority == filter.priority)
+            (and) (filter.status == 0 (or) (filter.status == 1 (and) @.done)
+                (or) (filter.status == 2 (and) (not) @.done))
+            (and) text.contains(@.title, filter.search);
+        (yield): @;
+    };
+    (zif?:) filter.sorting == 1 { (return) items ?> { (order): @.id; (yield): @; }; }
+    (zif?:) filter.sorting == 2 { (return) items ?> { (order): @.priority (desc); (yield): @; }; }
+    (zif?:) filter.sorting == 3 { (return) items ?> { (order): @.title; (yield): @; }; }
+    (return) items;
+}
+(addnew) row(item: model.Task) -> (String) {
+    (return) text.join([str(item.id), item.title, item.category, str(item.priority), str(item.done)], "[OoO]t");
+}
+(addnew) tsv(items: (Array)) -> (String) {
+    (zno) lines := ["id[OoO]ttitle[OoO]tcategory[OoO]tpriority[OoO]tdone"];
+    (for) item (in) items { array.push(lines, row(item)); }
+    (return) text.join(lines, "[OoO]n") + "[OoO]n";
+}
+(addnew) show(items: (Array)) {
+    io.print("id[OoO]ttitle[OoO]tcategory[OoO]tpriority[OoO]tdone");
+    (for) item (in) items { io.print(row(item)); }
+    io.print("共" + str(len(items)) + "项");
+}
+(addnew) stats(doc: model.Document) -> (Map) {
+    (zno) categories := data.map();
+    (zno) priority := [0, 0, 0];
+    (zyes) completed := 0;
+    (for) item (in) doc.tasks {
+        (zif?:) item.done { completed <- completed + 1; }
+        priority[item.priority - 1] <- priority[item.priority - 1] + 1;
+        (zif?:) (not) data.has(categories, item.category) { data.set(categories, item.category, 0); }
+        data.set(categories, item.category, data.get(categories, item.category) + 1);
+    }
+    (zno) result := data.map();
+    data.set(result, "total", len(doc.tasks));
+    data.set(result, "done", completed);
+    data.set(result, "pending", len(doc.tasks) - completed);
+    data.set(result, "priority", priority);
+    data.set(result, "categories", categories);
+    (return) result;
+}

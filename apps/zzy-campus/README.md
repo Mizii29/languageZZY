@@ -1,8 +1,8 @@
 # ZZY 校园任务管家
 
-更新：2026-10-15｜本轮：P09-01 功能、结构与验收设计｜文件格式：schema_version=1
+更新：2026-10-15｜应用版本：1.0｜P09 完整功能验收中｜文件格式：schema_version=1
 
-**当前只有设计、资源配置和解释器能力验证；应用尚不能启动。** P09-02—06 的功能、完整应用验收及不少于200行要求均未完成。这里的拟定模块、菜单和流程是下一轮的实现依据，不是已可用接口。
+**七个ZZY模块及完整菜单已经实现。** 任务增删改、完成、筛选搜索、排序、统计、TSV导出、JSON保存加载与撤销/重做均通过真实CLI测试；完整阶段回归证据在验收结束后记录。运行时仍为0.6.0a1，应用版本1.0，文件schema_version=1，三者分别标识。
 
 权威规则：[校园应用契约](../../docs/development/campus-app.md)、[标准库](../../docs/language/stdlib.md)、[语法](../../docs/language/syntax.md)。如有差异，以这些契约为准；本轮不改变格式、语法或宿主接口。
 
@@ -12,7 +12,7 @@
 
 起始菜单固定为1新建、2打开、0退出。新建是用户明确选择，建立tasks=[]、next_id=1、无路径、无已保存快照的新会话；视为未保存，即使任务为空也不能冒充已有文件。打开必须完整校验成功才进入会话；读失败绝不自动创建空文件。
 
-主菜单拟定如下，编号在P09-02实现时落地；尚未实现的条目届时不显示为可用：
+主菜单如下；每次显示任务数、next_id及未保存标记。
 
 | 编号 | 功能 | 行为与阶段 |
 |---|---|---|
@@ -36,7 +36,7 @@
 
 TSV导出含表头`id\ttitle\tcategory\tpriority\tdone`，行尾LF、Bool为true/false。已验证字段禁止Tab/CR/LF，因此无需偷偷改写标题。导出使用write_atomic，失败不宣布成功，不改变绑定文件/保存快照/历史；目标由用户明确确认，提示避免选择数据文件，拒绝与当前绑定路径字符串相同的目标。没有通用路径规范化接口，不能声称已识别所有软链接/大小写/相对路径别名；使用独立导出路径是操作约定。TSV不是v1存档，不支持作为任务文件打开。
 
-## 数据结构与模块边界（拟定）
+## 数据结构与模块边界
 
 | 模块 | 职责 | 依赖 |
 |---|---|---|
@@ -48,7 +48,7 @@ TSV导出含表头`id\ttitle\tcategory\tpriority\tdone`，行尾LF、Bool为true
 | session.zzy | 编辑提交、历史、高水位、dirty、加载提交与保存快照 | model、tasks、storage |
 | main.zzy | 菜单、字段输入、确认/恢复/EOF流程 | session、views |
 
-文件均待实现，不创建空函数或假成功入口。模块图无环，按声明先后组织函数；use相对导入文件，普通I/O路径相对启动工作目录。所有业务逻辑、格式校验和状态提交用ZZY；Python仅作为现有解释器、通用文件接口与外部测试驱动。
+上述七个模块均已实现，入口为main.zzy。模块图无环，按声明先后组织函数；use相对导入文件，普通I/O路径相对启动工作目录。所有业务逻辑、格式校验和状态提交用ZZY；Python仅作为现有解释器、通用文件接口与外部测试驱动。
 
 Task字段顺序为id:Int、title:String、category:String、priority:Int、done:Bool。Document含next_id和tasks，磁盘编码另构造schema_version/next_id/tasks的Map；只有验证后才构造带注解Task。Session另外保存path（String或Null）、saved（最近成功加载/保存的值快照或Null）、undo/redo及视图条件。可空字段不编造联合类型注解，外部输入不用注解代替业务检查。
 
@@ -77,23 +77,32 @@ v1合法文档仅有根Map→tasks Array→Task Map三层容器，字段均标�
 
 ## 启动与验证
 
-目前可执行的是能力核验，不能运行尚不存在的main.zzy。在项目根目录：
+在项目根目录运行，Python入口使用已有虚拟环境：
 
 ```powershell
-& ./.venv/Scripts/python.exe -X utf8 -m zzy info --limits apps/zzy-campus/limits.json
-& ./.venv/Scripts/python.exe -X utf8 -m unittest tests.test_p09_prerequisites tests.test_p05_integration -q
+& ./.venv/Scripts/python.exe -X utf8 -m zzy check apps/zzy-campus/main.zzy --limits apps/zzy-campus/limits.json
+& ./.venv/Scripts/python.exe -X utf8 -m zzy run apps/zzy-campus/main.zzy --limits apps/zzy-campus/limits.json
 ```
 
-P09-02开始提供真实入口后，以下才成为应用启动命令，当前**不可运行**：
+先选1新建，选2新增并依次输入标题、分类、1—3优先级、1提交。选10保存，首次输入路径并确认；选0退出。下次启动选2打开刚才的JSON即可恢复。保存路径可以含中文和空格；普通文件路径相对启动工作目录。建议使用专用数据目录，导出TSV用不同路径。
 
-```text
-python -X utf8 -m zzy check apps/zzy-campus/main.zzy --limits apps/zzy-campus/limits.json
-python -X utf8 -m zzy run apps/zzy-campus/main.zzy --limits apps/zzy-campus/limits.json
+菜单0在子确认中表示取消；编辑采用完整字段重填，空白标题不会表示“保留旧值”。筛选分类和搜索允许空行表示全部。撤销新增不会回收ID；撤销到相同任务内容但next_id更高时仍显示未保存，这符合高水位持久化规则。
+
+[demo-input.txt](demo-input.txt)给出新增两条、完成一条、统计、保存、退出的固定输入；其中写入campus-demo.json，运行前确认目标目录。可先创建并切换到独立演示目录，再以绝对路径指定解释器、main.zzy和limits.json。不要把用户现有数据当测试夹具。测试驱动会自动使用临时目录，无需手动复制样例。
+
+验证命令：
+
+```powershell
+& ./.venv/Scripts/python.exe -X utf8 -m unittest tests.test_p09_app tests.test_p09_prerequisites -q
+& ./.venv/Scripts/python.exe -X utf8 -m tests.p09.count_lines --check
+& ./.venv/Scripts/python.exe -X utf8 -m tests --report dist/p09-all-tests.json
 ```
+
+测试覆盖说明及独立期望见[tests/p09](../../tests/p09/README.md)。最后一条包含所有既有语言/运行器测试，报告目录须已存在；数量边界测试要实际校验10000条任务，超时单列，不能用空收集或跳过报成功。
 
 不依赖可选P08；不新增Python任务管理接口或专用启动包装器。入口使用上述限额参数，单独绕过配置运行不算应用验收。自动测试采用临时中文/空格工作目录、固定stdin、外部stdout/stderr/退出码/磁盘期望。应用不自动扫描或覆盖项目中的用户文件。
 
-## 验收矩阵（以下应用场景均待实现后执行）
+## 验收矩阵（实际证据见 tests/p09）
 
 | 场景 | 输入/操作与独立断言 | 对应任务 |
 |---|---|---|
@@ -113,10 +122,10 @@ python -X utf8 -m zzy run apps/zzy-campus/main.zzy --limits apps/zzy-campus/limi
 | APP-03-D | 每层输入EOF、未保存正常退出三选项、保存失败退出停止、真实Ctrl+C不自动覆盖 | P09-03/05 |
 | CHECK | 对实际入口check，包含副作用依赖时仍零输入/输出/文件写入；非法源码位置保留 | P09-02至05 |
 
-Python测试只建立夹具、启动CLI、注入通用I/O故障和核对外部答案，不实现待测业务。故障注入测试不能替代真实CLI正常/坏数据/重启流程；普通I/O错误文本随OS变化，仅固定应用提示和失败类别。测试集合必须非空，缺清单、遗漏用例、超时、跳过或输出超额均不能算通过。不得将此矩阵的“计划”写成APP已通过。
+Python测试只建立夹具、启动CLI、注入通用I/O故障和核对外部答案，不实现待测业务。故障注入测试不能替代真实CLI正常/坏数据/重启流程；普通I/O错误文本随OS变化，仅固定应用提示和失败类别。测试集合必须非空，缺清单、遗漏用例、超时、跳过或输出超额均不能算通过。每个矩阵场景须有实际测试方法与结果，未验证的平台及容量范围在测试说明中单列。
 
 ## 行数、Agent记录与后续
 
-当前应用业务ZZY源码为 **0总行 / 0有效代码行**；tests/p09中的通用资源探针不计应用行数。不提前堆满200行。P09-04按apps/zzy-campus实际.zzy文件逐个统计总物理行、含非注释Token的有效行；排除空白、纯注释行、夹具、生成数据和重复占位逻辑，有效代码目标也不少于200行。使用真实词法器识别注释/字符串，不能仅靠以zzysay开头的文本过滤。
+应用七个ZZY文件共 **504总物理行、493含非注释Token的有效行、406排除纯标点行的代码行**。逐文件哈希与计数见[line-count.json](line-count.json)，通过真实Lexer统计，不按文本前缀猜测注释；测试驱动、夹具、文档和Python不计入应用行数。没有用重复占位函数凑数。
 
-真实过程见[Agent开发记录](agent-log.md)；完成状态以[todo](../../docs/development/todo.md)为准。P09-01交付后下一项 **P09-02**：实现model/tasks/views及可运行菜单的增删改、完成状态、筛选搜索/排序，补独立CLI测试。保存/加载/统计/导出/历史依P09-03接入，不能在P09-02界面显示假成功。
+真实过程见[Agent开发记录](agent-log.md)，完成状态以[todo](../../docs/development/todo.md)为准。运行时核心无第三方依赖，应用不使用Python业务插件；Windows11/CPython3.12.14为本轮验证平台。其他系统、路径别名识别、多写者合并及断电持久化未验证或不承诺；默认逻辑配额不代表RSS上界。应用的10000项边界与4MiB文件边界单列验收，不推断所有最坏字段长度/100步历史组合都能同时容纳。

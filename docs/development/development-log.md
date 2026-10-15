@@ -422,3 +422,15 @@ Git 提交：真实标识 / 未提交
 - 同步README、导航、SKILL、roadmap、test-coverage、todo与真实Agent记录。仅P09-01勾选，70项代码任务40项完成；下一项P09-02。本地提交主题docs: define P09 campus application and verify prerequisites，提交标识见Git历史/交付报告；不推送或改写历史，不纳入用户docs/manual-tests/及临时文件。
 
 - 提交前一致性：41份Markdown围栏配对、459个本地链接有效（排除用户未跟踪手工测试目录）；70个任务ID唯一、40完成；语法/stdlib/requirement全文与父提交一致，campus-app第1节起正式规则逐字不变。requirement原始SHA256仍为B099C19FC339CE1DC1AAB7E9D6C8126A9C5C9ACE3D31B969A0623DF90F521D2B；git diff --check通过。项目及父目录没有AGENTS.md。静态核对不是运行成功的替代。
+
+
+## 2026-10-15：P09-02—04 全部应用业务及专项验证
+
+- 用户将本轮范围扩展为完成P09全部。接手codex/p09-01-campus-design/311d4e4，保留docs/manual-tests/；重读SKILL、交接、campus-app、stdlib、syntax和roadmap，采用原v1规则，继续使用Python AST解释器，不新增语言或任务管家宿主接口。
+- 完成model/validation/tasks/views/storage/session/main七个ZZY模块：真实逐行菜单、增删改/完成、组合筛选搜索/稳定排序、统计/TSV、受限文件读写、全量校验后替换、值内容dirty、撤销/重做与ID高水位。历史数组与Task只发布后替换，不原地改旧任务；Map去重避免两两扫描；每个外部容器先检查类别和字段集合，业务错误显式Result，资源超限保持E211。
+- 输入草稿确认前不修改状态；每层EOF结束并对dirty输出未保存提示，退出/加载先保存/放弃/取消，保存失败中止后续动作。初始打开失败可重试/其他路径/返回，不自动新建文件。保存校验和序列化先于write_atomic，成功才更新path/saved；保存不清历史，加载成功清历史/视图。TSV导出不更新dirty，保留P09-01的路径别名边界。
+- 初稿真实check通过，随后完整菜单新增两条/设完成/统计/保存/退出实跑成功，磁盘全部字段正确。新增160组独立JSON格式/字段/类型/边界期望，经真实CLI调用ZZY校验；既有测试期望未改。首轮应用16/16、18.692秒通过；补上数量/字节/交互边界和真实中断后22/22、109.335秒通过，命令为`.venv/Scripts/python.exe -X utf8 -m unittest tests.test_p09_app -q`，退出0、无跳过。
+- 专项包括9999/10000/10001任务（默认应用配置，单例限时180秒）；4MiB前/等/后文件；损坏/重复键/非有限数/代理字符/编码失败；ID最大值与重启、高水位/别名/dirty/100步历史；真实菜单固定全文和磁盘JSON/TSV；check零执行、每层草稿EOF、保存失败停止加载和取消。单独10000项探针37.406秒成功，仅为功能边界观察，不是P07性能统计。
+- 宿主故障注入运行真实ZZY session/storage：写入/关闭/替换/权限失败保留旧文件、编辑、path、dirty、历史并清临时文件/预算；读取PermissionError同样保留会话。真实隐藏独立控制台Ctrl+C发生在有dirty修改后加载大文件期间，退出130、单条cancelled且旧存档不变；没有把异常注入当作真实信号。
+- 审核时补上菜单ID/任务容量已耗尽的提前拒绝，避免无意义收集输入；未放宽校验。无需修改解释器。按真实Lexer统计7文件：504总行、493含非注释Token有效行、406排除纯标点行代码；`-m tests.p09.count_lines`生成文件SHA及计数，应用源码指定LF保证跨检出哈希稳定。测试、文档、Python和夹具不计200行。
+- P09-02/03/04完成，P09-05/06尚待最终全量回归、指南与提交核对；不将当前专项成功冒充全量成功。先建立实现提交，再执行全量门禁；只本地提交，不推送，不纳入用户手工测试目录。

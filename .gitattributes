@@ -1,4 +1,6 @@
 # Preserve literal BOM/CRLF test inputs on every checkout.
+# Keep application source hashes/line reports reproducible on Windows and POSIX.
+apps/zzy-campus/*.zzy text eol=lf
 tests/lex/inputs/bom-crlf.zzy -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
 tests/lex/inputs/comments-crlf.zzy -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
 tests/lex/inputs/physical-crlf.zzy -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol

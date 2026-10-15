@@ -1,0 +1,2584 @@
+[
+  {
+    "id": "valid",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": " 学习 ",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "OK:2:1\n"
+  },
+  {
+    "id": "empty",
+    "value": {
+      "schema_version": 1,
+      "next_id": 1,
+      "tasks": []
+    },
+    "stdout": "OK:1:0\n"
+  },
+  {
+    "id": "root-None",
+    "value": null,
+    "stdout": "root: 需要对象\n"
+  },
+  {
+    "id": "root-1",
+    "value": 1,
+    "stdout": "root: 需要对象\n"
+  },
+  {
+    "id": "root-True",
+    "value": true,
+    "stdout": "root: 需要对象\n"
+  },
+  {
+    "id": "root-[]",
+    "value": [],
+    "stdout": "root: 需要对象\n"
+  },
+  {
+    "id": "root-x",
+    "value": "x",
+    "stdout": "root: 需要对象\n"
+  },
+  {
+    "id": "missing-schema_version",
+    "value": {
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": " 学习 ",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "root.schema_version: 缺少字段\n"
+  },
+  {
+    "id": "missing-next_id",
+    "value": {
+      "schema_version": 1,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": " 学习 ",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "root.next_id: 缺少字段\n"
+  },
+  {
+    "id": "missing-tasks",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2
+    },
+    "stdout": "root.tasks: 缺少字段\n"
+  },
+  {
+    "id": "unknown-root",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": " 学习 ",
+          "priority": 3,
+          "done": false
+        }
+      ],
+      "extra": 1
+    },
+    "stdout": "root: 含未知字段\n"
+  },
+  {
+    "id": "schema_version-True",
+    "value": {
+      "schema_version": true,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": " 学习 ",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "schema_version: 需要整数\n"
+  },
+  {
+    "id": "schema_version-1.0",
+    "value": {
+      "schema_version": 1.0,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": " 学习 ",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "schema_version: 需要整数\n"
+  },
+  {
+    "id": "schema_version-'1'",
+    "value": {
+      "schema_version": "1",
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": " 学习 ",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "schema_version: 需要整数\n"
+  },
+  {
+    "id": "schema_version-None",
+    "value": {
+      "schema_version": null,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": " 学习 ",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "schema_version: 需要整数\n"
+  },
+  {
+    "id": "schema_version-[]",
+    "value": {
+      "schema_version": [],
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": " 学习 ",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "schema_version: 需要整数\n"
+  },
+  {
+    "id": "schema_version-{}",
+    "value": {
+      "schema_version": {},
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": " 学习 ",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "schema_version: 需要整数\n"
+  },
+  {
+    "id": "next_id-True",
+    "value": {
+      "schema_version": 1,
+      "next_id": true,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": " 学习 ",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "next_id: 需要整数\n"
+  },
+  {
+    "id": "next_id-1.0",
+    "value": {
+      "schema_version": 1,
+      "next_id": 1.0,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": " 学习 ",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "next_id: 需要整数\n"
+  },
+  {
+    "id": "next_id-'1'",
+    "value": {
+      "schema_version": 1,
+      "next_id": "1",
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": " 学习 ",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "next_id: 需要整数\n"
+  },
+  {
+    "id": "next_id-None",
+    "value": {
+      "schema_version": 1,
+      "next_id": null,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": " 学习 ",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "next_id: 需要整数\n"
+  },
+  {
+    "id": "next_id-[]",
+    "value": {
+      "schema_version": 1,
+      "next_id": [],
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": " 学习 ",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "next_id: 需要整数\n"
+  },
+  {
+    "id": "next_id-{}",
+    "value": {
+      "schema_version": 1,
+      "next_id": {},
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": " 学习 ",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "next_id: 需要整数\n"
+  },
+  {
+    "id": "schema_version-range0",
+    "value": {
+      "schema_version": 0,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": " 学习 ",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "schema_version: 超出范围\n"
+  },
+  {
+    "id": "schema_version-range2",
+    "value": {
+      "schema_version": 2,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": " 学习 ",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "schema_version: 超出范围\n"
+  },
+  {
+    "id": "next_id-range0",
+    "value": {
+      "schema_version": 1,
+      "next_id": 0,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": " 学习 ",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "next_id: 超出范围\n"
+  },
+  {
+    "id": "next_id-range2147483649",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2147483649,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": " 学习 ",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "next_id: 超出范围\n"
+  },
+  {
+    "id": "watermark",
+    "value": {
+      "schema_version": 1,
+      "next_id": 1,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": " 学习 ",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "next_id: 必须大于所有ID\n"
+  },
+  {
+    "id": "tasks-None",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": null
+    },
+    "stdout": "tasks: 需要数组\n"
+  },
+  {
+    "id": "tasks-1",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": 1
+    },
+    "stdout": "tasks: 需要数组\n"
+  },
+  {
+    "id": "tasks-{}",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": {}
+    },
+    "stdout": "tasks: 需要数组\n"
+  },
+  {
+    "id": "tasks-True",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": true
+    },
+    "stdout": "tasks: 需要数组\n"
+  },
+  {
+    "id": "tasks-'x'",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": "x"
+    },
+    "stdout": "tasks: 需要数组\n"
+  },
+  {
+    "id": "task-None",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        null
+      ]
+    },
+    "stdout": "tasks[0]: 需要对象\n"
+  },
+  {
+    "id": "task-1",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        1
+      ]
+    },
+    "stdout": "tasks[0]: 需要对象\n"
+  },
+  {
+    "id": "task-[]",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        []
+      ]
+    },
+    "stdout": "tasks[0]: 需要对象\n"
+  },
+  {
+    "id": "task-True",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        true
+      ]
+    },
+    "stdout": "tasks[0]: 需要对象\n"
+  },
+  {
+    "id": "task-'x'",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        "x"
+      ]
+    },
+    "stdout": "tasks[0]: 需要对象\n"
+  },
+  {
+    "id": "missing-task-id",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "title": " 课程😀 ",
+          "category": " 学习 ",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].id: 缺少字段\n"
+  },
+  {
+    "id": "missing-task-title",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "category": " 学习 ",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].title: 缺少字段\n"
+  },
+  {
+    "id": "missing-task-category",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].category: 缺少字段\n"
+  },
+  {
+    "id": "missing-task-priority",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": " 学习 ",
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].priority: 缺少字段\n"
+  },
+  {
+    "id": "missing-task-done",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": " 学习 ",
+          "priority": 3
+        }
+      ]
+    },
+    "stdout": "tasks[0].done: 缺少字段\n"
+  },
+  {
+    "id": "unknown-task",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": " 学习 ",
+          "priority": 3,
+          "done": false,
+          "extra": 1
+        }
+      ]
+    },
+    "stdout": "tasks[0]: 含未知字段\n"
+  },
+  {
+    "id": "id-True",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": true,
+          "title": " 课程😀 ",
+          "category": " 学习 ",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].id: 需要整数\n"
+  },
+  {
+    "id": "id-1.0",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1.0,
+          "title": " 课程😀 ",
+          "category": " 学习 ",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].id: 需要整数\n"
+  },
+  {
+    "id": "id-'1'",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": "1",
+          "title": " 课程😀 ",
+          "category": " 学习 ",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].id: 需要整数\n"
+  },
+  {
+    "id": "id-None",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": null,
+          "title": " 课程😀 ",
+          "category": " 学习 ",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].id: 需要整数\n"
+  },
+  {
+    "id": "id-[]",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": [],
+          "title": " 课程😀 ",
+          "category": " 学习 ",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].id: 需要整数\n"
+  },
+  {
+    "id": "id-{}",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": {},
+          "title": " 课程😀 ",
+          "category": " 学习 ",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].id: 需要整数\n"
+  },
+  {
+    "id": "priority-True",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": " 学习 ",
+          "priority": true,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].priority: 需要整数\n"
+  },
+  {
+    "id": "priority-1.0",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": " 学习 ",
+          "priority": 1.0,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].priority: 需要整数\n"
+  },
+  {
+    "id": "priority-'1'",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": " 学习 ",
+          "priority": "1",
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].priority: 需要整数\n"
+  },
+  {
+    "id": "priority-None",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": " 学习 ",
+          "priority": null,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].priority: 需要整数\n"
+  },
+  {
+    "id": "priority-[]",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": " 学习 ",
+          "priority": [],
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].priority: 需要整数\n"
+  },
+  {
+    "id": "priority-{}",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": " 学习 ",
+          "priority": {},
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].priority: 需要整数\n"
+  },
+  {
+    "id": "id-range0",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 0,
+          "title": " 课程😀 ",
+          "category": " 学习 ",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].id: 超出范围\n"
+  },
+  {
+    "id": "id-range2147483648",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 2147483648,
+          "title": " 课程😀 ",
+          "category": " 学习 ",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].id: 超出范围\n"
+  },
+  {
+    "id": "priority-range0",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": " 学习 ",
+          "priority": 0,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].priority: 超出范围\n"
+  },
+  {
+    "id": "priority-range4",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": " 学习 ",
+          "priority": 4,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].priority: 超出范围\n"
+  },
+  {
+    "id": "title-typeNone",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": null,
+          "category": " 学习 ",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].title: 需要字符串\n"
+  },
+  {
+    "id": "title-typeFalse",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": false,
+          "category": " 学习 ",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].title: 需要字符串\n"
+  },
+  {
+    "id": "title-type1",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": 1,
+          "category": " 学习 ",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].title: 需要字符串\n"
+  },
+  {
+    "id": "title-type[]",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": [],
+          "category": " 学习 ",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].title: 需要字符串\n"
+  },
+  {
+    "id": "title-type{}",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": {},
+          "category": " 学习 ",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].title: 需要字符串\n"
+  },
+  {
+    "id": "title-length0",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": "",
+          "category": " 学习 ",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].title: 长度超出范围\n"
+  },
+  {
+    "id": "title-length1",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": "😀",
+          "category": " 学习 ",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "OK:2:1\n"
+  },
+  {
+    "id": "title-length200",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": "😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀",
+          "category": " 学习 ",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "OK:2:1\n"
+  },
+  {
+    "id": "title-length201",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": "😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀",
+          "category": " 学习 ",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].title: 长度超出范围\n"
+  },
+  {
+    "id": "title-blank' '",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " ",
+          "category": " 学习 ",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].title: 不能全为空白\n"
+  },
+  {
+    "id": "title-blank'\\u3000'",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": "　",
+          "category": " 学习 ",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].title: 不能全为空白\n"
+  },
+  {
+    "id": "title-blank'\\t\\r\\n'",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": "\t\r\n",
+          "category": " 学习 ",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].title: 不能全为空白\n"
+  },
+  {
+    "id": "title-control0",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": "a\u0000",
+          "category": " 学习 ",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].title: 不允许控制字符\n"
+  },
+  {
+    "id": "title-control1",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": "a\u0001",
+          "category": " 学习 ",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].title: 不允许控制字符\n"
+  },
+  {
+    "id": "title-control2",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": "a\u0002",
+          "category": " 学习 ",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].title: 不允许控制字符\n"
+  },
+  {
+    "id": "title-control3",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": "a\u0003",
+          "category": " 学习 ",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].title: 不允许控制字符\n"
+  },
+  {
+    "id": "title-control4",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": "a\u0004",
+          "category": " 学习 ",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].title: 不允许控制字符\n"
+  },
+  {
+    "id": "title-control5",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": "a\u0005",
+          "category": " 学习 ",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].title: 不允许控制字符\n"
+  },
+  {
+    "id": "title-control6",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": "a\u0006",
+          "category": " 学习 ",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].title: 不允许控制字符\n"
+  },
+  {
+    "id": "title-control7",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": "a\u0007",
+          "category": " 学习 ",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].title: 不允许控制字符\n"
+  },
+  {
+    "id": "title-control8",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": "a\b",
+          "category": " 学习 ",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].title: 不允许控制字符\n"
+  },
+  {
+    "id": "title-control9",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": "a\t",
+          "category": " 学习 ",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].title: 不允许控制字符\n"
+  },
+  {
+    "id": "title-control10",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": "a\n",
+          "category": " 学习 ",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].title: 不允许控制字符\n"
+  },
+  {
+    "id": "title-control11",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": "a\u000b",
+          "category": " 学习 ",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].title: 不允许控制字符\n"
+  },
+  {
+    "id": "title-control12",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": "a\f",
+          "category": " 学习 ",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].title: 不允许控制字符\n"
+  },
+  {
+    "id": "title-control13",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": "a\r",
+          "category": " 学习 ",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].title: 不允许控制字符\n"
+  },
+  {
+    "id": "title-control14",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": "a\u000e",
+          "category": " 学习 ",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].title: 不允许控制字符\n"
+  },
+  {
+    "id": "title-control15",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": "a\u000f",
+          "category": " 学习 ",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].title: 不允许控制字符\n"
+  },
+  {
+    "id": "title-control16",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": "a\u0010",
+          "category": " 学习 ",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].title: 不允许控制字符\n"
+  },
+  {
+    "id": "title-control17",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": "a\u0011",
+          "category": " 学习 ",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].title: 不允许控制字符\n"
+  },
+  {
+    "id": "title-control18",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": "a\u0012",
+          "category": " 学习 ",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].title: 不允许控制字符\n"
+  },
+  {
+    "id": "title-control19",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": "a\u0013",
+          "category": " 学习 ",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].title: 不允许控制字符\n"
+  },
+  {
+    "id": "title-control20",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": "a\u0014",
+          "category": " 学习 ",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].title: 不允许控制字符\n"
+  },
+  {
+    "id": "title-control21",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": "a\u0015",
+          "category": " 学习 ",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].title: 不允许控制字符\n"
+  },
+  {
+    "id": "title-control22",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": "a\u0016",
+          "category": " 学习 ",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].title: 不允许控制字符\n"
+  },
+  {
+    "id": "title-control23",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": "a\u0017",
+          "category": " 学习 ",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].title: 不允许控制字符\n"
+  },
+  {
+    "id": "title-control24",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": "a\u0018",
+          "category": " 学习 ",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].title: 不允许控制字符\n"
+  },
+  {
+    "id": "title-control25",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": "a\u0019",
+          "category": " 学习 ",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].title: 不允许控制字符\n"
+  },
+  {
+    "id": "title-control26",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": "a\u001a",
+          "category": " 学习 ",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].title: 不允许控制字符\n"
+  },
+  {
+    "id": "title-control27",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": "a\u001b",
+          "category": " 学习 ",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].title: 不允许控制字符\n"
+  },
+  {
+    "id": "title-control28",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": "a\u001c",
+          "category": " 学习 ",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].title: 不允许控制字符\n"
+  },
+  {
+    "id": "title-control29",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": "a\u001d",
+          "category": " 学习 ",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].title: 不允许控制字符\n"
+  },
+  {
+    "id": "title-control30",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": "a\u001e",
+          "category": " 学习 ",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].title: 不允许控制字符\n"
+  },
+  {
+    "id": "title-control31",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": "a\u001f",
+          "category": " 学习 ",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].title: 不允许控制字符\n"
+  },
+  {
+    "id": "title-control127",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": "a",
+          "category": " 学习 ",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].title: 不允许控制字符\n"
+  },
+  {
+    "id": "category-typeNone",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": null,
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].category: 需要字符串\n"
+  },
+  {
+    "id": "category-typeFalse",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": false,
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].category: 需要字符串\n"
+  },
+  {
+    "id": "category-type1",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": 1,
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].category: 需要字符串\n"
+  },
+  {
+    "id": "category-type[]",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": [],
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].category: 需要字符串\n"
+  },
+  {
+    "id": "category-type{}",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": {},
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].category: 需要字符串\n"
+  },
+  {
+    "id": "category-length0",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": "",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].category: 长度超出范围\n"
+  },
+  {
+    "id": "category-length1",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": "😀",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "OK:2:1\n"
+  },
+  {
+    "id": "category-length40",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": "😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "OK:2:1\n"
+  },
+  {
+    "id": "category-length41",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": "😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].category: 长度超出范围\n"
+  },
+  {
+    "id": "category-blank' '",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": " ",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].category: 不能全为空白\n"
+  },
+  {
+    "id": "category-blank'\\u3000'",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": "　",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].category: 不能全为空白\n"
+  },
+  {
+    "id": "category-blank'\\t\\r\\n'",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": "\t\r\n",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].category: 不能全为空白\n"
+  },
+  {
+    "id": "category-control0",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": "a\u0000",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].category: 不允许控制字符\n"
+  },
+  {
+    "id": "category-control1",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": "a\u0001",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].category: 不允许控制字符\n"
+  },
+  {
+    "id": "category-control2",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": "a\u0002",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].category: 不允许控制字符\n"
+  },
+  {
+    "id": "category-control3",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": "a\u0003",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].category: 不允许控制字符\n"
+  },
+  {
+    "id": "category-control4",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": "a\u0004",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].category: 不允许控制字符\n"
+  },
+  {
+    "id": "category-control5",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": "a\u0005",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].category: 不允许控制字符\n"
+  },
+  {
+    "id": "category-control6",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": "a\u0006",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].category: 不允许控制字符\n"
+  },
+  {
+    "id": "category-control7",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": "a\u0007",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].category: 不允许控制字符\n"
+  },
+  {
+    "id": "category-control8",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": "a\b",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].category: 不允许控制字符\n"
+  },
+  {
+    "id": "category-control9",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": "a\t",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].category: 不允许控制字符\n"
+  },
+  {
+    "id": "category-control10",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": "a\n",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].category: 不允许控制字符\n"
+  },
+  {
+    "id": "category-control11",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": "a\u000b",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].category: 不允许控制字符\n"
+  },
+  {
+    "id": "category-control12",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": "a\f",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].category: 不允许控制字符\n"
+  },
+  {
+    "id": "category-control13",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": "a\r",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].category: 不允许控制字符\n"
+  },
+  {
+    "id": "category-control14",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": "a\u000e",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].category: 不允许控制字符\n"
+  },
+  {
+    "id": "category-control15",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": "a\u000f",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].category: 不允许控制字符\n"
+  },
+  {
+    "id": "category-control16",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": "a\u0010",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].category: 不允许控制字符\n"
+  },
+  {
+    "id": "category-control17",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": "a\u0011",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].category: 不允许控制字符\n"
+  },
+  {
+    "id": "category-control18",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": "a\u0012",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].category: 不允许控制字符\n"
+  },
+  {
+    "id": "category-control19",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": "a\u0013",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].category: 不允许控制字符\n"
+  },
+  {
+    "id": "category-control20",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": "a\u0014",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].category: 不允许控制字符\n"
+  },
+  {
+    "id": "category-control21",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": "a\u0015",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].category: 不允许控制字符\n"
+  },
+  {
+    "id": "category-control22",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": "a\u0016",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].category: 不允许控制字符\n"
+  },
+  {
+    "id": "category-control23",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": "a\u0017",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].category: 不允许控制字符\n"
+  },
+  {
+    "id": "category-control24",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": "a\u0018",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].category: 不允许控制字符\n"
+  },
+  {
+    "id": "category-control25",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": "a\u0019",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].category: 不允许控制字符\n"
+  },
+  {
+    "id": "category-control26",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": "a\u001a",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].category: 不允许控制字符\n"
+  },
+  {
+    "id": "category-control27",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": "a\u001b",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].category: 不允许控制字符\n"
+  },
+  {
+    "id": "category-control28",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": "a\u001c",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].category: 不允许控制字符\n"
+  },
+  {
+    "id": "category-control29",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": "a\u001d",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].category: 不允许控制字符\n"
+  },
+  {
+    "id": "category-control30",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": "a\u001e",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].category: 不允许控制字符\n"
+  },
+  {
+    "id": "category-control31",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": "a\u001f",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].category: 不允许控制字符\n"
+  },
+  {
+    "id": "category-control127",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": "a",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[0].category: 不允许控制字符\n"
+  },
+  {
+    "id": "done-0",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": " 学习 ",
+          "priority": 3,
+          "done": 0
+        }
+      ]
+    },
+    "stdout": "tasks[0].done: 需要布尔值\n"
+  },
+  {
+    "id": "done-1",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": " 学习 ",
+          "priority": 3,
+          "done": 1
+        }
+      ]
+    },
+    "stdout": "tasks[0].done: 需要布尔值\n"
+  },
+  {
+    "id": "done-1.0",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": " 学习 ",
+          "priority": 3,
+          "done": 1.0
+        }
+      ]
+    },
+    "stdout": "tasks[0].done: 需要布尔值\n"
+  },
+  {
+    "id": "done-'true'",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": " 学习 ",
+          "priority": 3,
+          "done": "true"
+        }
+      ]
+    },
+    "stdout": "tasks[0].done: 需要布尔值\n"
+  },
+  {
+    "id": "done-None",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": " 学习 ",
+          "priority": 3,
+          "done": null
+        }
+      ]
+    },
+    "stdout": "tasks[0].done: 需要布尔值\n"
+  },
+  {
+    "id": "done-[]",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": " 学习 ",
+          "priority": 3,
+          "done": []
+        }
+      ]
+    },
+    "stdout": "tasks[0].done: 需要布尔值\n"
+  },
+  {
+    "id": "done-{}",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": " 学习 ",
+          "priority": 3,
+          "done": {}
+        }
+      ]
+    },
+    "stdout": "tasks[0].done: 需要布尔值\n"
+  },
+  {
+    "id": "duplicate",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": " 学习 ",
+          "priority": 3,
+          "done": false
+        },
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": " 学习 ",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[1].id: 重复ID\n"
+  },
+  {
+    "id": "last-invalid",
+    "value": {
+      "schema_version": 1,
+      "next_id": 3,
+      "tasks": [
+        {
+          "id": 1,
+          "title": " 课程😀 ",
+          "category": " 学习 ",
+          "priority": 3,
+          "done": false
+        },
+        {
+          "id": 2,
+          "title": " 课程😀 ",
+          "category": " 学习 ",
+          "priority": false,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "tasks[1].priority: 需要整数\n"
+  },
+  {
+    "id": "id-ceiling",
+    "value": {
+      "schema_version": 1,
+      "next_id": 2147483648,
+      "tasks": [
+        {
+          "id": 2147483647,
+          "title": " 课程😀 ",
+          "category": " 学习 ",
+          "priority": 3,
+          "done": false
+        }
+      ]
+    },
+    "stdout": "OK:2147483648:1\n"
+  }
+]

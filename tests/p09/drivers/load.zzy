@@ -1,0 +1,5 @@
+(use) "../../../apps/zzy-campus/storage.zzy" (as) storage;
+(?_?) storage.load("case.json") {
+    (^_^)(doc) => { io.print("OK:" + str(doc.next_id) + ":" + str(len(doc.tasks))); }
+    (T_T)(message) => { io.print("FAIL:" + message); }
+}

@@ -1,0 +1,43 @@
+(use) "model.zzy" (as) model;
+(use) "validation.zzy" (as) validation;
+
+(addnew) find(doc: model.Document, id: (Int)) -> (Result) {
+    (for) item (in) doc.tasks {
+        (zif?:) item.id == id { (return) (^_^)(item); }
+    }
+    (return) (T_T)("任务ID不存在");
+}
+(addnew) add(doc: model.Document, title, category, priority) -> (Result) {
+    (zif?:) doc.next_id > 2147483647 { (return) (T_T)("ID已耗尽"); }
+    (zif?:) len(doc.tasks) >= 10000 { (return) (T_T)("tasks: 最多10000项"); }
+    (zno) task := validation.task_fields(doc.next_id, title, category, priority, (false), "task")?;
+    (zno) result := array.copy(doc.tasks);
+    array.push(result, task);
+    (return) (^_^)(model.Document::{next_id: doc.next_id + 1, tasks: result});
+}
+(addnew) replace(doc: model.Document, item: model.Task) -> (Result) {
+    find(doc, item.id)?;
+    (zno) result := [];
+    (for) previous (in) doc.tasks {
+        (zif?:) previous.id == item.id { array.push(result, item); }
+        (zzyf:) { array.push(result, previous); }
+    }
+    (return) (^_^)(doc (with) {tasks: result});
+}
+(addnew) edit(doc: model.Document, id: (Int), title, category, priority) -> (Result) {
+    (zno) previous := find(doc, id)?;
+    (zno) item := validation.task_fields(id, title, category, priority, previous.done, "task")?;
+    (return) replace(doc, item);
+}
+(addnew) complete(doc: model.Document, id: (Int), done: (Bool)) -> (Result) {
+    (zno) previous := find(doc, id)?;
+    (return) replace(doc, previous (with) {done: done});
+}
+(addnew) remove(doc: model.Document, id: (Int)) -> (Result) {
+    find(doc, id)?;
+    (zno) result := [];
+    (for) item (in) doc.tasks {
+        (zif?:) item.id != id { array.push(result, item); }
+    }
+    (return) (^_^)(doc (with) {tasks: result});
+}
