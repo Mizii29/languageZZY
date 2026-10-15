@@ -11,7 +11,7 @@ description: 在 ZZY 课程项目中编写或审查 .zzy 程序、实现解释�
 
 先读 [文档导航](../../docs/README.md)、[任务状态与交接栏](../../docs/development/todo.md) 和 [开发记录的最新条目](../../docs/development/development-log.md)，再核对实际文件。不要把历史记录中的旧计数或下一步当作当前事实。
 
-截至 2026-10-15，P00—P07 与 P09-01 已完成，版本 0.6.0a1；核心语法、io/array/text/math/data/unit 标准库、Map/严格 JSON、原子文件保存及模块已接通。B01—B09性能基线与诊断路径优化已实测；GUI和完整应用仍待后续阶段。check 仅做前端准备，不执行用户表达式；test 对每个 spec 启动独立进程。一键完整回归为 python -X utf8 -m tests；独立外部清单入口仍为 python -X utf8 -m tests.blackbox。P06 已补指南片段、变形 spec、真实 Windows Ctrl+C 与进程树验收，证据和未测范围见 tests/p06/README.md。P07证据见 benchmarks/results 和 docs/runtime/performance-report.md；版本以Git区分，超时不算通过。P09-01仅完成应用设计和前置能力验证，应用入口尚不存在，见 apps/zzy-campus/README.md。下一项 P09-02；先核对 README、todo、最新记录、代码和 Git。语法 v0.6/标准库 v0.6.1 规则不变。
+截至 2026-10-15，P00—P07与P09全部已完成，版本 0.6.0a1；核心语法、io/array/text/math/data/unit 标准库、Map/严格 JSON、原子文件保存及模块已接通。B01—B09性能基线与诊断路径优化已实测；校园任务管家已实现；GUI仍待后续阶段。check 仅做前端准备，不执行用户表达式；test 对每个 spec 启动独立进程。一键完整回归为 python -X utf8 -m tests；独立外部清单入口仍为 python -X utf8 -m tests.blackbox。P06 已补指南片段、变形 spec、真实 Windows Ctrl+C 与进程树验收，证据和未测范围见 tests/p06/README.md。P07证据见 benchmarks/results 和 docs/runtime/performance-report.md；版本以Git区分，超时不算通过。P09应用入口为 apps/zzy-campus/main.zzy，必须使用同目录limits.json，业务全部为ZZY；启动、行数、失败/恢复验收见该目录README及tests/p09。下一项E1-01；P11核心交付前置已满足，按todo及用户范围推进；先核对 README、todo、最新记录、代码和 Git。语法 v0.6/标准库 v0.6.1 规则不变。
 
 遵循用户任务范围与适用的仓库指示。只整理文档时不启动实现；只要求审查时不扩展成语言重设计。作业约束查 [requirement](../../docs/requirement.md)，保留原文。
 

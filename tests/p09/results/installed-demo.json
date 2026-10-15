@@ -1,0 +1,89 @@
+{
+  "runtime_source_files_equal_normalized_newlines": 27,
+  "byte_identical": 24,
+  "newline_only_differences": [
+    "zzy/lexer.py",
+    "zzy/prepare.py",
+    "zzy/tokens.py"
+  ],
+  "installed_package": "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\.venv\\Lib\\site-packages\\zzy",
+  "rows": [
+    {
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\.venv\\Scripts\\python.exe",
+        "-I",
+        "-X",
+        "utf8",
+        "-m",
+        "zzy",
+        "check",
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\apps\\zzy-campus\\main.zzy",
+        "--limits",
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\apps\\zzy-campus\\limits.json"
+      ],
+      "stdin": "",
+      "stdout": "",
+      "stderr": "",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\.venv\\Scripts\\python.exe",
+        "-I",
+        "-X",
+        "utf8",
+        "-m",
+        "zzy",
+        "run",
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\apps\\zzy-campus\\main.zzy",
+        "--limits",
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\apps\\zzy-campus\\limits.json"
+      ],
+      "stdin": "1\r\n2\r\n完成ZZY演示\r\n课程\r\n3\r\n1\r\n2\r\n归还图书\r\n生活\r\n1\r\n1\r\n5\r\n1\r\n1\r\n8\r\n10\r\ncampus-demo.json\r\n1\r\n0\r\n",
+      "stdout": "ZZY 校园任务管家 v1\n1新建 2打开 0退出> 已新建\n任务数=0 next_id=1 未保存=true\n1列表 2新增 3编辑 4删除 5完成 6筛选 7排序 8统计 9导出 10保存 11打开 12撤销 13重做 0退出> 标题> 分类> 优先级1低/2中/3高> 1提交 2重填 0取消> 已更新\n任务数=1 next_id=2 未保存=true\n1列表 2新增 3编辑 4删除 5完成 6筛选 7排序 8统计 9导出 10保存 11打开 12撤销 13重做 0退出> 标题> 分类> 优先级1低/2中/3高> 1提交 2重填 0取消> 已更新\n任务数=2 next_id=3 未保存=true\n1列表 2新增 3编辑 4删除 5完成 6筛选 7排序 8统计 9导出 10保存 11打开 12撤销 13重做 0退出> 任务ID> 1已完成 2未完成 0取消> 已更新\n任务数=2 next_id=3 未保存=true\n1列表 2新增 3编辑 4删除 5完成 6筛选 7排序 8统计 9导出 10保存 11打开 12撤销 13重做 0退出> {\"total\":2,\"done\":1,\"pending\":1,\"priority\":[1,0,1],\"categories\":{\"课程\":1,\"生活\":1}}\n任务数=2 next_id=3 未保存=true\n1列表 2新增 3编辑 4删除 5完成 6筛选 7排序 8统计 9导出 10保存 11打开 12撤销 13重做 0退出> 保存路径> 保存到：campus-demo.json\n1确认写入(可能覆盖) 0取消> 保存成功\n任务数=2 next_id=3 未保存=false\n1列表 2新增 3编辑 4删除 5完成 6筛选 7排序 8统计 9导出 10保存 11打开 12撤销 13重做 0退出> 再见\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\.venv\\Scripts\\python.exe",
+        "-I",
+        "-X",
+        "utf8",
+        "-m",
+        "zzy",
+        "run",
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\apps\\zzy-campus\\main.zzy",
+        "--limits",
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\apps\\zzy-campus\\limits.json"
+      ],
+      "stdin": "2\ncampus-demo.json\n1\n0\n",
+      "stdout": "ZZY 校园任务管家 v1\n1新建 2打开 0退出> 打开路径> 打开成功\n任务数=2 next_id=3 未保存=false\n1列表 2新增 3编辑 4删除 5完成 6筛选 7排序 8统计 9导出 10保存 11打开 12撤销 13重做 0退出> id\ttitle\tcategory\tpriority\tdone\n1\t完成ZZY演示\t课程\t3\ttrue\n2\t归还图书\t生活\t1\tfalse\n共2项\n任务数=2 next_id=3 未保存=false\n1列表 2新增 3编辑 4删除 5完成 6筛选 7排序 8统计 9导出 10保存 11打开 12撤销 13重做 0退出> 再见\n",
+      "stderr": "",
+      "exit_code": 0
+    }
+  ],
+  "disk_json": {
+    "schema_version": 1,
+    "next_id": 3,
+    "tasks": [
+      {
+        "id": 1,
+        "title": "完成ZZY演示",
+        "category": "课程",
+        "priority": 3,
+        "done": true
+      },
+      {
+        "id": 2,
+        "title": "归还图书",
+        "category": "生活",
+        "priority": 1,
+        "done": false
+      }
+    ]
+  },
+  "disk_sha256": "6c3497bb3309f5aedaffac51e1391f336baea6f8a9114f324952da3ee8abeb16",
+  "check_no_effects": true,
+  "restart_verified": true
+}

@@ -1,0 +1,66 @@
+{
+  "APP-01-A": [
+    "test_crud_filter_sort_stats_and_export",
+    "test_real_menu_save_restart_and_exact_output"
+  ],
+  "APP-01-B": [
+    "test_crud_filter_sort_stats_and_export",
+    "test_view_is_readonly_stable_empty_and_all_sort_modes"
+  ],
+  "APP-01-C": [
+    "test_crud_filter_sort_stats_and_export",
+    "test_view_is_readonly_stable_empty_and_all_sort_modes",
+    "test_exhausted_menu_noop_cancel_and_failed_export"
+  ],
+  "APP-01-D": [
+    "test_real_menu_save_restart_and_exact_output",
+    "test_id_exhaustion_delete_save_and_restart"
+  ],
+  "APP-01-E": [
+    "test_history_alias_dirty_highwater_and_redo_branch"
+  ],
+  "APP-02-A": [
+    "test_validation_matrix_fixed_independent_errors",
+    "test_load_commit_is_all_or_nothing_and_success_resets_history"
+  ],
+  "APP-02-B": [
+    "test_validation_matrix_fixed_independent_errors",
+    "test_save_revalidates_internal_state_before_touching_disk"
+  ],
+  "APP-02-C": [
+    "test_validation_matrix_fixed_independent_errors",
+    "test_task_count_boundaries_real_cli"
+  ],
+  "APP-02-D": [
+    "test_bad_json_encoding_missing_and_empty_files",
+    "test_application_file_byte_boundary_including_json_parse",
+    "test_resource_failure_is_not_recoverable_format_error",
+    "test_app_permission_read_failure_keeps_session"
+  ],
+  "APP-02-E": [
+    "test_app_atomic_write_close_replace_and_permission_failures"
+  ],
+  "APP-03-A": [
+    "test_menu_cancel_failed_save_blocks_load_and_eof_no_write",
+    "test_load_commit_is_all_or_nothing_and_success_resets_history",
+    "test_open_retry_other_path_and_preserve_current"
+  ],
+  "APP-03-B": [
+    "test_id_exhaustion_delete_save_and_restart",
+    "test_history_alias_dirty_highwater_and_redo_branch"
+  ],
+  "APP-03-C": [
+    "test_history_99_100_101_and_empty_undo",
+    "test_history_alias_dirty_highwater_and_redo_branch",
+    "test_exhausted_menu_noop_cancel_and_failed_export"
+  ],
+  "APP-03-D": [
+    "test_every_draft_prompt_eof_is_non_mutating",
+    "test_actual_ctrl_c_during_load_does_not_save_dirty_session",
+    "test_menu_cancel_failed_save_blocks_load_and_eof_no_write",
+    "test_numeric_errors_reenter_fields_and_cancel_preserve_id"
+  ],
+  "CHECK": [
+    "test_fixed_startup_eof_and_check"
+  ]
+}
