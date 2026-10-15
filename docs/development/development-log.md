@@ -408,3 +408,17 @@ Git 提交：真实标识 / 未提交
 - Git：基于test的d085c94，本轮依次建立36e511e（工具）、c8f615f（恢复既有字节属性）、05e972b（基线）、03c3ea7（热点优化）及最终验收提交。核对纳入的配对脚本/原始证据/测试/说明；用户docs/manual-tests/保持未跟踪、不纳入，dist/.venv/构建产物保持忽略。只本地提交，不推送或改写历史；最终提交标识以Git历史及本轮报告为准。下一项P09-01，本轮在P07验收结束。
 
 - 暂存后补充核对：字节保留的Windows原始JSON含CRLF，首次cached diff检查将CR识别为尾部空白；pstats原文另有末尾空行。仅给benchmarks/results追加cr-at-eol，并对profile.txt允许工具自带的末尾空行，仍检查真正的行尾空格；不重写原始证据字节或哈希。重新核对暂存区通过。
+
+
+## 2026-10-15：P09-01 校园任务管家结构与前置验证
+
+- 用户范围：按P09顺序，本轮只完成最早未完成项。核实P09-01尚未勾选、P05/P06/P07已完成；读取SKILL、campus-app、stdlib、syntax、resources、roadmap、todo、最新记录，核对catalog/CLI/测试真实文件。起点为main/fa6e374（已合并P07），非旧交接中的test；在codex/p09-01-campus-design开发，保留用户docs/manual-tests/。
+- 设计交付：apps/zzy-campus/README.md确定中文逐行菜单、增删改/完成/筛选搜索/稳定视图排序、统计/TSV导出、模块依赖、Task/Document/Session与内容dirty、候选加载提交、ID高水位、历史100步及保存/取消/EOF流程。所有功能明确所属P09-02/03及待执行APP-01—03，未创建main.zzy或占位业务实现；没有Python专用任务管理接口。只更新campus-app状态和实现设计链接，v1字段/范围/失败规则原文保持。
+- 配置：limits.json仅io_payload_bytes收紧至4194304，其余默认。v1合法结构三层，分层字段校验拒绝非法容器，通用JSON仍受默认value_depth64；不将内部Session/历史结构也误限到4层。资源超限保持E211，不能吞成可恢复格式Result。
+- 真实能力核验：.venv/Scripts/python.exe -X utf8 -m zzy info --limits apps/zzy-campus/limits.json退出0，CPython3.12.14、Windows11 26200、Unicode15.0；策略指纹fd1aaefacc02ee4b7d585ad733a9fed92a01d948bcdf020b38ecea64eaa80fe5。注册表及真实CLI确认Map/data.kind/严格JSON/Result、safe_int、数组/模块/查询、文件接口可用。
+- 测试：tests/p09/prerequisites.json引用23项独立既有CLI期望，应用配置下执行，不改变旧答案。另2项测试实际核对info配置、文件4194303/4194304/4194305字节读取（前两档成功，超一字节E211）、缺文件check零执行。与18项P05集成联合运行：`.venv/Scripts/python.exe -X utf8 -m unittest tests.test_p09_prerequisites tests.test_p05_integration -q`最终43/43、16.244秒、退出0、无跳过。既有集成涵盖原子写入/关闭/替换故障、保留旧文件、清理、状态/模块隔离。
+- 过程真实失败：首轮直接导入BlackboxCase，被unittest当测试类收集并传入字符串case，错误报告又触发TypeError。改为模块引用，重跑完整43项通过；没有跳过或删除预期案例。引用清单空/重复/缺失会收集失败，不靠零用例成功。
+- 范围与行数：apps/zzy-campus尚无业务.zzy，0总行/0有效行；通用资源探针不计应用200行。未重跑整个1744项历史全量（解释器执行代码未改），更未声称APP保存失败/坏文件/重启/200行已通过。APP-01—03、实际主菜单及所有业务仍待P09-02—06。
+- 同步README、导航、SKILL、roadmap、test-coverage、todo与真实Agent记录。仅P09-01勾选，70项代码任务40项完成；下一项P09-02。本地提交主题docs: define P09 campus application and verify prerequisites，提交标识见Git历史/交付报告；不推送或改写历史，不纳入用户docs/manual-tests/及临时文件。
+
+- 提交前一致性：41份Markdown围栏配对、459个本地链接有效（排除用户未跟踪手工测试目录）；70个任务ID唯一、40完成；语法/stdlib/requirement全文与父提交一致，campus-app第1节起正式规则逐字不变。requirement原始SHA256仍为B099C19FC339CE1DC1AAB7E9D6C8126A9C5C9ACE3D31B969A0623DF90F521D2B；git diff --check通过。项目及父目录没有AGENTS.md。静态核对不是运行成功的替代。

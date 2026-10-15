@@ -1,0 +1,6 @@
+{
+  "policy_version": 1,
+  "limits": {
+    "io_payload_bytes": 4194304
+  }
+}

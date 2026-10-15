@@ -1,0 +1,5 @@
+zzysay: Generic I/O capability probe, not campus application business code.
+(?_?) io.read_text("payload.txt") {
+    (^_^)(content) => { io.print(len(content)); }
+    (T_T)(message) => { io.print("unexpected read failure"); }
+}

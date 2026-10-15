@@ -123,3 +123,6 @@ P07 的 B01—B09 与 [performance.md](../runtime/performance.md) 第 3.4/3.5 �
 P07实际证据：配对源码与独立固定答案位于benchmarks/zzy、python、expected-small.json，三档原始样本及失败矩阵见 [性能报告](../runtime/performance-report.md)。tests/test_p07_benchmarks.py的9项测试覆盖18个真实配对CLI、9个不执行代码的check、空/小规模及批内复位、完整排序与输入未变、非法类型/部分和超限、错答案/超时/空清单、原始证据缺失/输入改动、实际运行时快照选择及缺样本不计算比值。tests/test_p07_locations.py的2项测试验证cwd变化后的文件/行列与跨运行器状态隔离和失败释放。优化后完整1744/1744通过（含原1588外部清单），无跳过或expected failure。
 
 性能失败不冒充功能通过：基线12个大规模预检超时、24个配对未测量，正式样本中1个整请求超时均保留；这些规模的未完成结果明确未验证。性能计时与cProfile/tracemalloc及一次性stdin探针分开，不把P08接口、Program缓存或所有默认最大容量压力写成已实现/已测。
+
+
+P09-01前置证据见 [tests/p09](../../tests/p09/README.md)：23项既有CLI期望在4MiB应用配置重跑，加2项实际info/文件边界检查；联合18项P05集成回归43/43通过。业务实现尚无，APP-01—03均未执行，不将该前置验证算应用通过；计划详见 [应用README](../../apps/zzy-campus/README.md)。
