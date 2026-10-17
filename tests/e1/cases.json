@@ -1199,26 +1199,17 @@
       "stdout": ""
     },
     {
-      "id": "e1-future-svg",
+      "id": "e1-svg-available",
       "file": "tests/e1/inputs/future-svg.zzy",
       "mode": "run",
       "cwd": ".",
       "stdin": "",
       "timeout_seconds": 20,
-      "exit_code": 1,
-      "stdout": "",
-      "diagnostic": {
-        "code": "E302",
-        "span": [
-          3,
-          8,
-          3,
-          16
-        ]
-      }
+      "exit_code": 0,
+      "stdout": ""
     },
     {
-      "id": "e1-future-svg",
+      "id": "e1-svg-available",
       "file": "tests/e1/inputs/future-svg.zzy",
       "mode": "check",
       "cwd": ".",

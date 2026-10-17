@@ -2,7 +2,7 @@
 from types import MappingProxyType
 from .metadata import NativeFunction, NativeType
 
-ABI = 'e1-01-v1'
+ABI = 'e1-02-v1'
 TYPES = MappingProxyType({name: NativeType('sketch.' + name, mutable, ownership, equality)
     for name, mutable, ownership, equality in (
         ('Canvas', True, 'ExecutionContext', 'identity'),
@@ -17,6 +17,8 @@ _SPEC = {
     'rgb': ('r g b', 'Int Int Int', 'sketch.Color'),
     'background': ('canvas color', 'sketch.Canvas sketch.Color', 'Null'),
     'clear': ('canvas', 'sketch.Canvas', 'Null'),
+    'svg_text': ('canvas', 'sketch.Canvas', 'Result'),
+    'save_svg': ('canvas path', 'sketch.Canvas String', 'Result'),
     'color': ('pen color', 'sketch.Pen sketch.Color', 'Null'),
     'fill_color': ('pen color', 'sketch.Pen sketch.Color', 'Null'),
     'width': ('pen width', 'sketch.Pen Int|Float', 'Null'),
@@ -39,7 +41,7 @@ for _name in ('pen_up', 'pen_down', 'show_cursor', 'hide_cursor', 'home',
     _SPEC[_name] = ('pen', 'sketch.Pen', 'Null')
 FUNCTIONS = MappingProxyType({ 'sketch.' + name: NativeFunction(
     'sketch.' + name, tuple(params.split()), returns,
-    ('read',) if name in {'position', 'heading'} else ('allocate',) if name in {'canvas', 'pen', 'rgb'} else ('mutation',),
+    ('read',) if name in {'position', 'heading', 'svg_text'} else ('io',) if name == 'save_svg' else ('allocate',) if name in {'canvas', 'pen', 'rgb'} else ('mutation',),
     ('E201', 'E202', 'E203', 'E208', 'E211', 'E214'),
     tuple(tuple(t.split('|')) for t in kinds.split()))
     for name, (params, kinds, returns) in _SPEC.items()})

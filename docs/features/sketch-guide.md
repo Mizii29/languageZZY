@@ -1,8 +1,8 @@
-# Sketch E1-01 使用与验证指南
+# Sketch E1 使用与验证指南
 
-更新：2026-10-17｜已实现子集：E1-01｜ABI：e1-01-v1｜完整 sketch 1.0 尚未发布
+更新：2026-10-17｜已实现子集：E1｜ABI：e1-02-v1｜完整 sketch 1.0 尚未发布
 
-规则以 [sketch.md](sketch.md) 为准。本轮实现内存几何模型、受控类型、样式、路径和填充，阶段验收结果见 [tests/e1](../../tests/e1/README.md)。E1-02 的 SVG 尚未实现；E2 的窗口/图层工具/文字、E3 的历史/回放/图案、E4 的事件/项目文件仍待推进。没有占位成功接口，调用未实现成员得到 E302。
+规则以 [sketch.md](sketch.md) 为准。本轮实现内存几何模型、受控类型、样式、路径和填充，阶段验收结果见 [tests/e1](../../tests/e1/README.md)。E1-02 的 SVG 已实现；E2 的窗口/图层工具/文字、E3 的历史/回放/图案、E4 的事件/项目文件仍待推进。没有占位成功接口，调用未实现成员得到 E302。
 
 ## 运行已有示例
 
@@ -20,7 +20,7 @@ sketch.Position::{x: 0.0, y: 30.0}
 0.0
 ```
 
-本例不显示窗口或生成图片。当前可通过 position/heading 观察几何状态；内部路径的独立固定答案、曲线误差、样式和填充组合由宿主测试核验。SVG 的外部几何验收属于下一项，不能用这些内存断言代替它。
+本例不显示窗口或生成图片。当前可通过 position/heading 观察几何状态；内部路径的独立固定答案、曲线误差、样式和填充组合由宿主测试核验。SVG 的外部几何验收见 tests/test_sketch_svg.py，解析导出 XML 后核对几何。
 
 ## 可用接口
 
@@ -85,4 +85,19 @@ end_fill 要求至少三个不同顶点，发布一个 evenodd 填充组及已�
 & ./.venv/Scripts/python.exe -X utf8 -m tests --report dist/e1-all-tests.json
 ```
 
-check 只加载类型/签名元数据；测试用禁止 GUI 导入的独立进程确认 check 不导入几何实现、不执行输入/写文件，headless run 也不导入 tkinter/turtle。线程测试是原生句柄归属验证，**没有 GUI 验收结果**。完整 E1 仍待 E1-02 SVG；之后按 E2→E3→E4 推进。
+check 只加载类型/签名元数据；测试用禁止 GUI 导入的独立进程确认 check 不导入几何实现、不执行输入/写文件，headless run 也不导入 tkinter/turtle。线程测试是原生句柄归属验证，**没有 GUI 验收结果**。E1 完成后按 E2→E3→E4 推进。
+
+## E1-02：无窗口 SVG
+
+`sketch.svg_text(canvas)` 返回 Result<String>；`sketch.save_svg(canvas,path)` 返回 Result<Null>，复用 io.write_atomic。可读取冻结画布；活动填充 E214。输出包括背景、裁剪区和规范折线路径，不包含光标。Y 坐标反转，中心平移到画布中心；填充边界单独闭合为 evenodd，不补描边。SVG 数值保留模型浮点值，允许 SVG 自身的指数记法，不改变 ZZY 数字语法。
+
+标题按 XML 1.0 转义；非法 XML 字符返回失败 Result。逐片检查 text_codepoints/io_payload_bytes，累积文本与引用槽计入运行时预算；容量/取消仍为诊断/中止，不吞成失败 Result。先完整生成，之后同目录临时文件替换；父目录不存在不自动创建。普通 run、check 和导出不导入 Tk。
+
+```zzy
+(zno)c:=sketch.canvas(400,300,"SVG 示例");
+(zno)p:=sketch.pen(c,"pen");
+sketch.circle(p,50,360);
+io.print(sketch.save_svg(c,"picture.svg"));
+```
+
+专项命令：`.venv/Scripts/python.exe -X utf8 -m unittest tests.test_sketch_svg tests.test_e1_runtime tests.test_e1_cli -q`。SVG 成功不构成 GUI/撤销验收。

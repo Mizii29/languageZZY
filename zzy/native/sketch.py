@@ -265,7 +265,7 @@ def invoke(runtime, name, args, node):
             runtime.error(node, 'E208', '画布宽高必须为 1..32768')
         return Canvas(args[0].data, args[1].data, args[2].data, runtime, node)
     handle = args[0]
-    canvas = guard(runtime, node, handle, write=op not in {'position', 'heading'})
+    canvas = guard(runtime, node, handle, write=op not in {'position', 'heading', 'svg_text', 'save_svg'})
     pen = handle if isinstance(handle, Pen) else None
     if op in {'position', 'heading'}:
         if op == 'heading':
@@ -284,6 +284,9 @@ def invoke(runtime, name, args, node):
     permitted = op in {'forward', 'backward', 'left', 'right', 'set_heading', 'move_to',
                        'home', 'circle', 'polyline', 'bezier_to', 'color', 'width', 'end_fill', 'cancel_fill'}
     ready(runtime, node, canvas, pen, permitted)
+    if op in {'svg_text', 'save_svg'}:
+        from .sketch_svg import export
+        return export(runtime, node, canvas, args[1] if op == 'save_svg' else None)
     if op == 'pen':
         label = args[1].data
         if not label or label in canvas.pens:

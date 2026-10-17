@@ -474,3 +474,11 @@ Git 提交：真实标识 / 未提交
 - 本地阶段提交限定解释器接入/几何模块、真实测试与证据、示例和能力说明；用户docs/manual-tests/及dist不纳入，不推送/改写历史。提交标识以Git历史及最终答复为准。
 
 - 本地虚拟环境已用同一wheel离线force-reinstall同步；随后临时中文/空格cwd下以-I执行示例check/run 2/2，29个安装源码文本与工作区一致，追加到installed.json。定稿静态复核43份Markdown/500条本地链接及围栏、70个唯一任务/46完成、仅E1-01勾选、源码哈希与实际全量报告一致；git diff --check及compileall通过。指南原代码片段一致性单独1/1、0.003秒通过，静态结果不代替运行证据。
+
+## 2026-10-17：E1-02 SVG 验收
+
+- 本轮用户扩大到完成 E，继续按 E1→E2→E3→E4，不把后续未验收项标为可用。基于 ac91a27；保留未跟踪 docs/manual-tests/。
+- 实现 svg_text/save_svg，复用规范路径、中心/Y坐标转换、画布裁剪、evenodd填充与原子文件发布；逐片容量/取消检查、XML转义、非法XML字符失败Result。冻结画布可导出，活动填充拒绝。ABI e1-02-v1。
+- `.venv/Scripts/python.exe -X utf8 -m unittest tests.test_sketch_svg tests.test_e1_runtime tests.test_e1_cli -q` 最终 132/132、36.640秒通过，无跳过。首次运行测试夹具漏传ResourceExceeded的phase、旧future-svg清单残留diagnostic导致失败，修复测试后重跑。解析SVG核对坐标/裁剪/背景/填充无附加描边/曲线逐点一致；替换失败、取消、限额保留旧文件及清理临时文件/预算；真实CLI验证check不导入几何、不保存，headless导出不导入Tk。
+- GUI预检：受限环境Tk报缺init.tcl；同一Python在真实桌面环境创建Tk 8.6.12窗口，1536×960屏幕、mainloop/after关闭成功。此仅环境探针，不代表E2工具/线程验收。
+- E1-02达到完成标准，E1完成；下一阶段E2。全量核心/P09回归将在本轮最终代码执行。没有将headless当GUI、撤销验收。

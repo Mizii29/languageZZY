@@ -99,10 +99,10 @@ P03-03 的 Lazy 部分是共享捕获布局/Cell 基础；Lazy AST 的捕获分�
 
 ## E：已选完整画笔扩展（依赖 P05、P06）
 
-接口与验收以 [sketch.md](../features/sketch.md) 为准，E1→E2→E3→E4；E1-01几何子集已实现并验收；E1-02及E2—E4未实现，不替代 P09 默认应用。
+接口与验收以 [sketch.md](../features/sketch.md) 为准，E1→E2→E3→E4；E1几何及SVG子集已实现并验收；E2—E4未实现，不替代 P09 默认应用。
 
 - [x] E1-01 登记受控原生类型、归属/冻结、画笔几何/样式/路径/填充和分配配额；SKETCH-01及SKETCH-02的E1填充子集固定答案通过（文字/公开图层与对象编辑分别在E2/E4验收）。
-- [ ] E1-02 完成 headless SVG 与一致坐标/曲线/填充规则，普通 CLI/check 不 import Tk。
+- [x] E1-02 完成 headless SVG 与一致坐标/曲线/填充规则，普通 CLI/check 不 import Tk。
 - [ ] E2-01 完成 Tk 主线程视图、多画笔/图层/文字、缩放/基础工具及关闭/缺依赖验证。
 - [ ] E3-01 完成增量历史、分组撤销/重做、确定回放与有界检查点，SKETCH-03 通过。
 - [ ] E3-02 完成 Drawing/stamp、版本化图案数据、Lazy 解码缓存和经过真实前端校验的 .zzy 函数库导出，SKETCH-04/05 通过。
