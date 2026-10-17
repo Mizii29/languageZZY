@@ -35,24 +35,25 @@ def fragments(canvas):
     yield f'<rect width="{w}" height="{h}" fill="{rgb(canvas.background)}"/>\n'
     yield f'<g clip-path="url(#canvas-clip)"><g transform="translate({number(w / 2)} {number(h / 2)})">\n'
     for block in (b for layer in canvas.layers if layer.visible for b in canvas.objects if b.geometry.layer == layer.id):
-        g = block.geometry
-        yield f'<g id="object-{g.id}">'
-        if g.boundary:
-            yield '<path d="'
-            yield from path(g.boundary, True)
-            yield f'" fill="{rgb(g.fill)}" fill-rule="evenodd" stroke="none"/>'
-        if g.kind == 'dot':
-            yield f'<circle cx="{number(g.center[0])}" cy="{number(-g.center[1])}" r="{number(g.diameter / 2)}" fill="{rgb(g.fill)}"/>'
-        if g.kind == 'text':
-            yield f'<text x="{number(g.center[0])}" y="{number(-g.center[1])}" fill="{rgb(g.fill)}" font-size="{number(g.size)}" text-anchor="'+{'left':'start','center':'middle','right':'end'}[g.align]+'" dominant-baseline="central" font-family="'
-            yield from escaped(g.font)
-            yield '">'
-            yield from escaped(g.text)
-            yield '</text>'
-        for s in g.strokes:
-            yield '<path d="'
-            yield from path(s.points)
-            yield f'" fill="none" stroke="{rgb(s.color)}" stroke-width="{number(s.width)}" stroke-linecap="round" stroke-linejoin="round"/>'
+        root=block.geometry
+        yield f'<g id="object-{root.id}">'
+        for g in root.children if root.kind=='group' else (root,):
+            if g.boundary:
+                yield '<path d="'
+                yield from path(g.boundary, True)
+                yield f'" fill="{rgb(g.fill)}" fill-rule="evenodd" stroke="none"/>'
+            if g.kind == 'dot':
+                yield f'<circle cx="{number(g.center[0])}" cy="{number(-g.center[1])}" r="{number(g.diameter / 2)}" fill="{rgb(g.fill)}"/>'
+            if g.kind == 'text':
+                yield f'<text x="{number(g.center[0])}" y="{number(-g.center[1])}" fill="{rgb(g.fill)}" font-size="{number(g.size)}" text-anchor="'+{'left':'start','center':'middle','right':'end'}[g.align]+'" dominant-baseline="central" font-family="'
+                yield from escaped(g.font)
+                yield f'" transform="rotate({number(-g.angle)} {number(g.center[0])} {number(-g.center[1])})">'
+                yield from escaped(g.text)
+                yield '</text>'
+            for s in g.strokes:
+                yield '<path d="'
+                yield from path(s.points)
+                yield f'" fill="none" stroke="{rgb(s.color)}" stroke-width="{number(s.width)}" stroke-linecap="round" stroke-linejoin="round"/>'
         yield '</g>\n'
     yield '</g></g>\n</svg>\n'
 

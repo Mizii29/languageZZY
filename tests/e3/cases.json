@@ -60,6 +60,26 @@
       "timeout_seconds": 20,
       "exit_code": 0,
       "stdout": ""
+    },
+    {
+      "id": "e3-pattern",
+      "file": "tests/e3/inputs/pattern.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": "2\nsketch.Position::{x: 10.0, y: 0.0}\n2\ntrue\n1\n"
+    },
+    {
+      "id": "e3-pattern",
+      "file": "tests/e3/inputs/pattern.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": ""
     }
   ]
 }

@@ -76,6 +76,8 @@ class Geometry:
     font: str = 'sans-serif'
     align: str = 'left'
     size: float = 12.0
+    angle: float = 0.0
+    children: tuple = ()
 
 
 class Block:
@@ -169,19 +171,23 @@ def ready(runtime, node, canvas, pen=None, allowed=False):
 
 
 def prepare_block(runtime, node, canvas, strokes=(), *, boundary=(), fill=None,
-                  kind='path', center=None, diameter=0.0, layer=0, text='', font='sans-serif', align='left', size=12.0):
+                  kind='path', center=None, diameter=0.0, layer=0, text='', font='sans-serif', align='left', size=12.0, angle=0.0, children=()):
     segments = sum(max(0, len(s.points) - 1) for s in strokes)
     if kind in {'dot', 'text'}:
         segments = 1
+    for child in children:
+        segments += sum(max(0,len(s.points)-1) for s in child.strokes) + (1 if child.kind in {'dot','text'} else 0)
     pending = canvas.draft.segments if canvas.draft else 0
     capacity(runtime, node, 'path_segments', canvas.segments + pending + segments)
     capacity(runtime, node, 'objects', len(canvas.objects) + 1)
     points = sum(len(s.points) for s in strokes) + len(boundary)
+    child_points=sum(sum(len(s.points) for s in g.strokes)+len(g.boundary) for g in children)
+    child_cost=sum(128+48*len(g.strokes)+4*(len(g.text)+len(g.font)) for g in children)+16*child_points
     owner = runtime.reserve(node, runtime_objects=1,
-        runtime_slots=4 + len(strokes) + points,
-        runtime_payload_bytes=128 + 48 * len(strokes) + 16 * points + 4 * (len(text) + len(font)))
+        runtime_slots=4 + len(strokes) + points + len(children)*4 + child_points,
+        runtime_payload_bytes=128 + 48 * len(strokes) + 16 * points + 4 * (len(text) + len(font)) + child_cost)
     try:
-        geometry = Geometry(canvas.next_id, kind, strokes, boundary, fill, center, diameter, layer=layer, text=text, font=font, align=align, size=size)
+        geometry = Geometry(canvas.next_id, kind, strokes, boundary, fill, center, diameter, layer=layer, text=text, font=font, align=align, size=size, angle=angle, children=children)
         return Block(geometry, segments, owner)
     except BaseException:
         owner.release()
@@ -266,6 +272,9 @@ def _invoke(runtime, name, args, node):
     if runtime.native_thread != get_ident():
         runtime.error(node, 'E203', 'sketch 原生调用不属于当前执行线程')
     op = name.removeprefix('sketch.')
+    if op in {'drawing_from_json','drawing_text','save_function'}:
+        from .sketch_patterns import invoke as patterns
+        return patterns(runtime,op,args,node)
     if op == 'rgb':
         if any(not 0 <= arg.data <= 255 for arg in args):
             runtime.error(node, 'E208', 'RGB 分量必须为 0..255')
@@ -278,7 +287,7 @@ def _invoke(runtime, name, args, node):
             runtime.error(node, 'E208', '画布宽高必须为 1..32768')
         return Canvas(args[0].data, args[1].data, args[2].data, runtime, node)
     handle = args[0]
-    canvas = guard(runtime, node, handle, write=op not in {'position', 'heading', 'svg_text', 'save_svg', 'layer_info', 'show'})
+    canvas = guard(runtime, node, handle, write=op not in {'position', 'heading', 'svg_text', 'save_svg', 'layer_info', 'show', 'capture'})
     pen = handle if isinstance(handle, Pen) else None
     if op in {'position', 'heading'}:
         if op == 'heading':
@@ -302,6 +311,9 @@ def _invoke(runtime, name, args, node):
         idle(runtime,canvas,node)
         from .sketch_svg import export
         return export(runtime, node, canvas, args[1] if op == 'save_svg' else None)
+    if op in {'capture','stamp'}:
+        from .sketch_patterns import invoke as patterns
+        return patterns(runtime,op,args,node)
     if op in {'add_layer', 'set_layer', 'layer_visible', 'lock_layer', 'rename_layer', 'move_layer', 'layer_info', 'font', 'text_align', 'text'}:
         from .sketch_layers import invoke as layer_call
         return layer_call(runtime, op, args, node, canvas, pen)
@@ -438,7 +450,7 @@ def _invoke(runtime, name, args, node):
     return NULL
 
 
-_READ = {'position','heading','svg_text','save_svg','layer_info','show'}
+_READ = {'position','heading','svg_text','save_svg','layer_info','show','capture','drawing_from_json','drawing_text','save_function'}
 _NO_HISTORY = _READ | {'canvas','pen','rgb','begin_fill','cancel_fill','show_cursor','hide_cursor'}
 
 def invoke(runtime,name,args,node):

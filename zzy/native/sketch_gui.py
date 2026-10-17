@@ -112,14 +112,14 @@ class View:
                 a.create_line(*self.screen((x*step,s.height/2)),*self.screen((x*step,-s.height/2)),fill='#eeeeee')
             for y in range(math.ceil(-s.height/2/step),math.floor(s.height/2/step)+1):
                 a.create_line(*self.screen((-s.width/2,y*step)),*self.screen((s.width/2,y*step)),fill='#eeeeee')
-        for g in s.geometries:
+        for g in (leaf for root in s.geometries for leaf in (root.children if root.kind=="group" else (root,))):
             if g.boundary:a.create_polygon(*(v for p in g.boundary for v in self.screen(p)),fill=rgb(g.fill),outline='')
             if g.kind=='dot':
                 x,y=self.screen(g.center);radius=g.diameter*self.zoom/2
                 a.create_oval(x-radius,y-radius,x+radius,y+radius,fill=rgb(g.fill),outline='')
             if g.kind=='text':
                 x,y=self.screen(g.center)
-                a.create_text(x,y,text=g.text,fill=rgb(g.fill),font=(g.font if g.font!='sans-serif' else 'Arial',-max(1,round(g.size*self.zoom))),anchor={'left':'w','center':'center','right':'e'}[g.align])
+                a.create_text(x,y,text=g.text,fill=rgb(g.fill),font=(g.font if g.font!='sans-serif' else 'Arial',-max(1,round(g.size*self.zoom))),anchor={'left':'w','center':'center','right':'e'}[g.align],angle=g.angle)
             for stroke in g.strokes:
                 a.create_line(*(v for p in stroke.points for v in self.screen(p)),fill=rgb(stroke.color),width=stroke.width*self.zoom,capstyle='round',joinstyle='round')
         # Cover geometry outside logical canvas without changing document data.

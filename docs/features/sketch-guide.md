@@ -121,3 +121,11 @@ io.print(sketch.save_svg(c,"picture.svg"));
 窗口新增撤销/重做、播放/暂停/单步/进度定位。回放副本应用记录，不执行源码，不覆盖真实画笔；编辑先回到真实文档。最多8个共享路径检查点、16MiB缓存预算，预算不足仅不创建加速缓存，仍准确应用增量。frame_interval接受(0,24h]时间Quantity，向上取整毫秒，默认40ms。
 
 宿主历史5项、独立CLI6项、真实GUI4项通过；GUI定位/单步/编辑退出以及正常关窗分别有证据。图案和项目仍待下一任务，完整1.0未发布。
+
+## E3-02：图案与函数库
+
+capture取得可见图层的只读路径快照；后改源文档不影响Drawing。stamp按缩放→逆时针旋转→平移，线宽/字号同步缩放，目标笔状态不变，整组放default层，undo作为一项。Drawing按身份相等，通用JSON不接受；显式drawing_text/drawing_from_json采用schema_version=1、kind=zzy-drawing和objects有序数组。对象type为path/fill/dot/text/group，固定字段、严格重复键/数值/容量检查；组只含叶对象，不允许嵌套组。错误格式返回失败Result，资源中止保留E211。
+
+save_function(drawing,path,name)生成私有Lazy解码绑定和具名Result函数，名字经Lexer、整个文件经真实prepare（Lexer/Parser/Resolver）验证后原子写入。导入/check不解码、不绘图；首次调用wake一次解码，同一上下文后续调用复用Drawing；重新执行Program重新解码。空Drawing函数导出返回失败。引用方式仍为 `(use) "pattern.zzy" (as) patterns;`，调用 `patterns.flower(canvas,x,y,scale,angle)` 返回盖章ID的Result。
+
+当前E3已实现，仍非完整sketch1.0；公开事件/对象工具/项目文件及完整性能测量属于E4。

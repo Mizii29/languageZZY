@@ -43,6 +43,7 @@ class Interpreter(Features, Library):
         self.native_context = object()
         self.native_thread = get_ident()
         self.native_canvases = WeakSet()
+        self.native_active=False
 
     def location(self, node):
         # Diagnostic metadata is constant per source while cwd is unchanged.
@@ -85,6 +86,7 @@ class Interpreter(Features, Library):
         return Value(kind, data, self.reserve(node, runtime_payload_bytes=size))
 
     def run(self):
+        self.native_active=True
         self.meter.phase = Phase.EXECUTION
         self.native_context = object()
         self.native_thread = get_ident()
@@ -97,6 +99,7 @@ class Interpreter(Features, Library):
             for canvas in self.native_canvases:
                 canvas.cleanup()
             self.native_canvases.clear()
+            self.native_active=False
             self.frame = None
             self.call_depth = 0
             self.modules.clear()

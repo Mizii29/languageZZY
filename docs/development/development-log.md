@@ -498,3 +498,10 @@ Git 提交：真实标识 / 未提交
 - 原几何/SVG/图层24/24、8.941秒；新增history宿主5/5、0.017秒；`.venv/Scripts/python.exe -X utf8 -m tests.blackbox tests/e3/cases.json --report tests/e3/results/history-cli.json` 6/6、1.461秒。几何极限测试增加clear_history隔离已经被撤销历史保留的旧图形，未降低既有几何限额。
 - GUI首次4项有1失败：固定70ms等待未等到回放消息；同时暴露异常退出有未取消Tk after。测试改用3秒上限的状态等待，运行器清理所有after。真实桌面重跑 `.venv/Scripts/python.exe -X utf8 -m tests.gui_sketch --report tests/e3/results/history-gui.json` 4/4、1.531秒，无跳过。固定答案验证seek=1/step=2，undo编辑退出回放后实际笔位置2及对象数2。
 - E3-01验收，继续E3-02图案/函数导出。完整E尚未完成；最终全量回归仍待本轮最终代码。
+
+## 2026-10-17：E3-02 图案与函数库
+
+- 实现Drawing共享不可变Block、visible capture、默认层整组stamp；平移/统一缩放/逆时针旋转以及字号/线宽转换，保留所有目标Pen状态，变换后边界先校验。group在SVG/Tk按叶几何渲染，文本单独旋转保持坐标一致。
+- 严格schema1图案编码/解码：固定kind/字段、重复键/未知类型/版本/非有限数/Bools拒绝，填充边界与描边连续性校验，容量沿用核心与扩展限额。原生Drawing按上下文/线程归属，仅显式编解码。
+- save_function验证同一Lexer的名字与真实prepare前端；JSON嵌在正确转义的ZZY字符串，私有Lazy首次wake解码、显式Result传播；原子替换前全部准备。真实临时中文/空格目录的导出模块check/run通过，连续调用ID1/2且调用者笔不变；宿主计数证明check零解码、每次执行首次解码一次、Program再次执行重新解码。
+- `.venv/Scripts/python.exe -X utf8 -m unittest tests.test_sketch_patterns tests.test_sketch_history tests.test_sketch_layers tests.test_sketch_svg tests.test_e3_cli -q` 23/23、3.043秒通过；其中patterns3项含多个坏schema/保留名/注入名、快照别名、变换/冻结/undo固定断言以及真实CLI模块。E3完整子集通过，继续E4，尚不发布完整1.0。

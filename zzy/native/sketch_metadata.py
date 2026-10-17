@@ -2,7 +2,7 @@
 from types import MappingProxyType
 from .metadata import NativeFunction, NativeType
 
-ABI = 'e3-history-v1'
+ABI = 'e3-v1'
 TYPES = MappingProxyType({name: NativeType('sketch.' + name, mutable, ownership, equality)
     for name, mutable, ownership, equality in (
         ('Canvas', True, 'ExecutionContext', 'identity'),
@@ -23,6 +23,11 @@ _SPEC = {
     'redo': ('canvas', 'sketch.Canvas', 'Bool'),
     'clear_history': ('canvas', 'sketch.Canvas', 'Null'),
     'frame_interval': ('canvas duration', 'sketch.Canvas Quantity', 'Null'),
+    'capture': ('canvas', 'sketch.Canvas', 'sketch.Drawing'),
+    'stamp': ('canvas drawing x y scale angle', 'sketch.Canvas sketch.Drawing Int|Float Int|Float Int|Float Int|Float', 'Int'),
+    'drawing_text': ('drawing', 'sketch.Drawing', 'Result'),
+    'drawing_from_json': ('content', 'String', 'Result'),
+    'save_function': ('drawing path name', 'sketch.Drawing String String', 'Result'),
     'show': ('canvas', 'sketch.Canvas', 'Result'),
     'add_layer': ('canvas name', 'sketch.Canvas String', 'sketch.Layer'),
     'set_layer': ('pen layer', 'sketch.Pen sketch.Layer', 'Null'),
