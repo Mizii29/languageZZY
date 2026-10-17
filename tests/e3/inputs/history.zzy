@@ -1,0 +1,3 @@
+(zno)c:=sketch.canvas(200,100,"history");
+(zno)p:=sketch.pen(c,"p");
+io.print(sketch.undo(c));sketch.begin_group(c,"g");sketch.forward(p,10);sketch.left(p,90);sketch.end_group(c);io.print(sketch.undo(c));io.print(sketch.position(p));io.print(sketch.heading(p));io.print(sketch.redo(c));io.print(sketch.position(p));io.print(sketch.heading(p));

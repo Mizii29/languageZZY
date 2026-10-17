@@ -120,12 +120,15 @@ class Canvas(Handle):
         self.layer = Layer(self, runtime, node)
         self.layers = [self.layer]
         self.next_layer = 1
+        self.history=[];self.redo_history=[];self.group=None;self.group_label=""
+        self.history_bytes=0;self.history_count=0;self.interval_ms=40
         runtime.native_canvases.add(self)
 
     def cleanup(self):
         if self.draft is not None:
             self.draft.pen.state = self.draft.before
             self.draft = None
+        self.group=None;self.history.clear();self.redo_history.clear()
         self.alive = False
 
 
@@ -259,7 +262,7 @@ def bezier(runtime, node, start, c1, c2, end):
     return tuple(points)
 
 
-def invoke(runtime, name, args, node):
+def _invoke(runtime, name, args, node):
     if runtime.native_thread != get_ident():
         runtime.error(node, 'E203', 'sketch 原生调用不属于当前执行线程')
     op = name.removeprefix('sketch.')
@@ -295,6 +298,8 @@ def invoke(runtime, name, args, node):
                        'home', 'circle', 'polyline', 'bezier_to', 'color', 'width', 'end_fill', 'cancel_fill'}
     ready(runtime, node, canvas, pen, permitted)
     if op in {'svg_text', 'save_svg'}:
+        from .sketch_history import idle
+        idle(runtime,canvas,node)
         from .sketch_svg import export
         return export(runtime, node, canvas, args[1] if op == 'save_svg' else None)
     if op in {'add_layer', 'set_layer', 'layer_visible', 'lock_layer', 'rename_layer', 'move_layer', 'layer_info', 'font', 'text_align', 'text'}:
@@ -431,3 +436,24 @@ def invoke(runtime, name, args, node):
             raise AssertionError('unimplemented sketch ABI: ' + name)
         publish(runtime, node, pen, new, points)
     return NULL
+
+
+_READ = {'position','heading','svg_text','save_svg','layer_info','show'}
+_NO_HISTORY = _READ | {'canvas','pen','rgb','begin_fill','cancel_fill','show_cursor','hide_cursor'}
+
+def invoke(runtime,name,args,node):
+    op=name.removeprefix('sketch.')
+    if op in _NO_HISTORY:
+        return _invoke(runtime,name,args,node)
+    from .sketch_history import Edit, operate, interval
+    c=guard(runtime,node,args[0],write=op!='frame_interval')
+    if op in {'begin_group','end_group','undo','redo','clear_history'}:
+        return operate(runtime,c,node,op,args)
+    if op=='frame_interval':
+        guard(runtime,node,args[0],write=True)
+        ready(runtime,node,c)
+        c.interval_ms=interval(runtime,node,args[1]);return NULL
+    edit=Edit(runtime,c,node,op,args[0]) if c.draft is None or op=='end_fill' else None
+    result=_invoke(runtime,name,args,node)
+    if edit is not None:edit.finish()
+    return result

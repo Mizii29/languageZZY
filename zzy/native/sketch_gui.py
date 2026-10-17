@@ -25,6 +25,14 @@ class View:
         tk.Button(self.toolbar,text='−',command=lambda:self.scale(.8)).pack(side='left')
         self.grid=tk.BooleanVar(value=False)
         tk.Checkbutton(self.toolbar,text='网格',variable=self.grid,command=self.draw).pack(side='left')
+        history=tk.Frame(self.window);history.pack(fill='x')
+        for label,op in [('撤销','undo'),('重做','redo')]:
+            tk.Button(history,text=label,command=lambda op=op:self.session.send(('history',op))).pack(side='left')
+        for label,op in [('播放','play'),('暂停','pause'),('单步','step')]:
+            tk.Button(history,text=label,command=lambda op=op:self.session.send(('replay',op))).pack(side='left')
+        self.seek=tk.Scale(history,from_=0,to=0,orient='horizontal',showvalue=True)
+        self.seek.pack(side='left',fill='x',expand=True)
+        self.seek.bind('<ButtonRelease-1>',lambda e:self.session.send(('replay','seek',int(self.seek.get()))))
         self.label=tk.Label(self.window,text='');self.label.pack(side='bottom')
         self.layers=tk.Listbox(self.window,width=22);self.layers.pack(side='right',fill='y')
         self.area=tk.Canvas(self.window,width=700,height=500,background='#dddddd')
@@ -86,6 +94,8 @@ class View:
 
     def render(self,scene):
         self.scene=scene;self.window.title(scene.title)
+        self.seek.config(to=scene.history_length)
+        self.seek.set(scene.playback_position if scene.playback_position>=0 else scene.history_length)
         self.layers.delete(0,'end')
         for identity,name,visible,locked in reversed(scene.layers):
             self.layers.insert('end',f'{name} {"隐藏" if not visible else ""} {"锁定" if locked else ""}')
@@ -160,5 +170,7 @@ def run_gui(program,output,*,probe=None):
     finally:
         if thread.is_alive():output.meter.cancellation.cancel()
         if bridge.active:bridge.active.closed.set()
-        thread.join();root.destroy()
+        thread.join()
+        for timer in root.tk.call('after','info'):root.after_cancel(timer)
+        root.destroy()
     if failures:raise failures[0]

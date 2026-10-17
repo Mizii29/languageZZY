@@ -1239,26 +1239,17 @@
       "stdout": ""
     },
     {
-      "id": "e1-future-undo",
+      "id": "e1-undo-available",
       "file": "tests/e1/inputs/future-undo.zzy",
       "mode": "run",
       "cwd": ".",
       "stdin": "",
       "timeout_seconds": 20,
-      "exit_code": 1,
-      "stdout": "",
-      "diagnostic": {
-        "code": "E302",
-        "span": [
-          3,
-          8,
-          3,
-          12
-        ]
-      }
+      "exit_code": 0,
+      "stdout": ""
     },
     {
-      "id": "e1-future-undo",
+      "id": "e1-undo-available",
       "file": "tests/e1/inputs/future-undo.zzy",
       "mode": "check",
       "cwd": ".",

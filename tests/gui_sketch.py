@@ -3,6 +3,7 @@ import argparse
 import json
 from pathlib import Path
 import platform
+import time
 from threading import get_ident, main_thread
 import unittest
 from unittest.mock import patch
@@ -13,6 +14,34 @@ from zzy.native.sketch_gui import run_gui, View
 
 
 class GUIAcceptance(unittest.TestCase):
+    def test_real_history_controls_seek_step_and_edit_exit(self):
+        program,output=prepared('(zno)c:=sketch.canvas(200,200,"replay");(zno)p:=sketch.pen(c,"p");sketch.forward(p,1);sketch.forward(p,1);sketch.forward(p,1);sketch.show(c);io.print(sketch.layer_info(c)[0].count);io.print(sketch.position(p));')
+        lines=[]
+        def probe(view,thread):
+            def wait(predicate,action,deadline=None):
+                deadline=deadline or time.monotonic()+3
+                if predicate():action()
+                elif time.monotonic()>deadline:self.fail("GUI state did not arrive before deadline")
+                else:view.window.after(20,lambda:wait(predicate,action,deadline))
+            def start():
+                view.session.send(('replay','seek',1))
+                wait(lambda:view.scene.playback_position==1,step)
+            def step():
+                self.assertEqual(len(view.scene.geometries),1)
+                view.session.send(('replay','step'))
+                wait(lambda:view.scene.playback_position==2,edit)
+            def edit():
+                self.assertEqual(len(view.scene.geometries),2)
+                view.session.send(('history','undo'))
+                wait(lambda:view.scene.playback_position==-1 and len(view.scene.geometries)==2,finish)
+            def finish():
+                self.assertEqual(view.scene.playback_position,-1)
+                self.assertEqual(len(view.scene.geometries),2)
+                view.close()
+            view.window.after(70,start)
+        with patch.object(output,'write',lines.append):run_gui(program,output,probe=probe)
+        self.assertEqual(lines,['2\n','sketch.Position::{x: 2.0, y: 0.0}\n'])
+
     def test_real_window_tools_zoom_close_continue_and_reshow(self):
         source='''(zno)c:=sketch.canvas(400,300,"真实窗口验收");
 (zno)p:=sketch.pen(c,"first");sketch.forward(p,20);

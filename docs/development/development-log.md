@@ -490,3 +490,11 @@ Git 提交：真实标识 / 未提交
 - 桌面真实执行 `.venv/Scripts/python.exe -X utf8 -m tests.gui_sketch --report tests/e1/results/gui-e2.json`：3/3、1.500秒，无失败/跳过，线程ID实测不同，真实Tk事件生成矩形、视图缩放不改文档、两次关窗继续执行/导出、错误清理与缺显示环境故障注入。环境为Windows11/CPython3.12.14/Tk8.6.12；其他平台未验证。
 - 基础GUI测试不声称已经验收E3历史或E4事件/项目/队列满载。E2完成后继续E3；仅本地提交，不推送。
 - E2/既有CLI/SVG/图层/元数据联合125项首轮2项期望误加字符串引号，其余123项通过；按既有debug显示契约去掉夹具引号，独立E2黑盒6/6、1.637秒通过并保存cli.json；未改语言显示实现。
+
+## 2026-10-17：E3-01 历史与回放
+
+- 增量历史覆盖路径/文字/图层/样式/背景/clear，分组、undo/redo、显式clear_history；只读Block共享，正常撤销不回退ID，失败候选恢复状态。填充end记录begin前笔态，cancel不留历史。固定命令/字节上限，新增编辑按清除redo后的计数判断。
+- 回放执行侧副本读取记录，最多8个/16MiB共享检查点，定位/单步不重新执行源程序；GUI编辑退出回放。frame_interval精确Quantity转向上取整毫秒，(0,24h]。
+- 原几何/SVG/图层24/24、8.941秒；新增history宿主5/5、0.017秒；`.venv/Scripts/python.exe -X utf8 -m tests.blackbox tests/e3/cases.json --report tests/e3/results/history-cli.json` 6/6、1.461秒。几何极限测试增加clear_history隔离已经被撤销历史保留的旧图形，未降低既有几何限额。
+- GUI首次4项有1失败：固定70ms等待未等到回放消息；同时暴露异常退出有未取消Tk after。测试改用3秒上限的状态等待，运行器清理所有after。真实桌面重跑 `.venv/Scripts/python.exe -X utf8 -m tests.gui_sketch --report tests/e3/results/history-gui.json` 4/4、1.531秒，无跳过。固定答案验证seek=1/step=2，undo编辑退出回放后实际笔位置2及对象数2。
+- E3-01验收，继续E3-02图案/函数导出。完整E尚未完成；最终全量回归仍待本轮最终代码。

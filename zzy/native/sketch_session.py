@@ -2,6 +2,7 @@
 from dataclasses import dataclass
 from queue import Queue, Empty, Full
 from threading import Event
+import time
 
 from ..values import Value, NULL, Array
 from ..diagnostics import ResourceExceeded, Phase
@@ -20,13 +21,15 @@ class Scene:
     geometries: tuple
     pens: tuple
     layers: tuple
+    history_length: int = 0
+    playback_position: int = -1
 
 
 def snapshot(c):
     return Scene(c.width,c.height,c.title,c.background,
         tuple(b.geometry for layer in c.layers if layer.visible for b in c.objects if b.geometry.layer==layer.id),
         tuple((p.name,p.state) for p in c.pens.values()),
-        tuple((layer.id,layer.name,layer.visible,layer.locked) for layer in c.layers))
+        tuple((layer.id,layer.name,layer.visible,layer.locked) for layer in c.layers),len(c.history))
 
 
 class Session:
@@ -82,23 +85,47 @@ def tool(r,c,n,event):
 
 def show(r,c,n):
     sketch.guard(r,n,c);sketch.ready(r,n,c)
+    from .sketch_history import idle
+    idle(r,c,n)
     bridge=getattr(r,'gui_bridge',None)
     if bridge is None or bridge.error:
         return r.result(False,r.scalar('String',bridge.error if bridge else 'GUI unavailable: run requires --gui',n),n)
     if bridge.active is not None:r.error(n,'E214','同一上下文不可嵌套show')
     session=Session();bridge.active=session
+    replay=None;playing=False;deadline=0.
     try:
         session.refresh(snapshot(c));bridge.requests.put_nowait(session)
         while not session.closed.is_set():
             r.meter.cancellation.check()
             try:event=session.events.get(timeout=.04)
-            except Empty:continue
-            if event[0]=='tool':tool(r,c,n,event)
+            except Empty:event=None
+            if event is not None and event[0]=='replay':
+                from .sketch_replay import Replay
+                if replay is None:replay=Replay(r,c,n)
+                action=event[1]
+                if action=='play':playing=True;deadline=time.monotonic()
+                elif action=='pause':playing=False
+                elif action=='step':playing=False;replay.seek(replay.position+1)
+                elif action=='seek':playing=False;replay.seek(event[2])
+                session.refresh(replay.scene());continue
+            if event is None:
+                if replay is not None and playing and time.monotonic()>=deadline:
+                    replay.seek(replay.position+1);deadline=time.monotonic()+c.interval_ms/1000
+                    session.refresh(replay.scene())
+                    if replay.position==len(replay.entries):playing=False
+                continue
+            if replay is not None:replay.close();replay=None;playing=False
+            if event[0]=='tool':
+                sketch.invoke(r,'sketch.begin_group',[c,Value('String',event[1])],n)
+                tool(r,c,n,event)
+                sketch.invoke(r,'sketch.end_group',[c],n)
+            elif event[0]=='history':sketch.invoke(r,'sketch.'+event[1],[c],n)
             session.refresh(snapshot(c))
         if session.failed.is_set():
             raise ResourceExceeded('sketch.input_queue',QUEUE_LIMIT,QUEUE_LIMIT+1,Phase.EXECUTION,r.location(n),n.token.span)
         r.meter.cancellation.check()
         return r.result(True,NULL,n)
     finally:
+        if replay is not None:replay.close()
         session.closed.set();bridge.active=None
     yield  # Retain generator protocol for later ZZY callbacks, not a success stub.

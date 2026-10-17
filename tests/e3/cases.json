@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "cases": [
+    {
+      "id": "e3-history",
+      "file": "tests/e3/inputs/history.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": "false\ntrue\nsketch.Position::{x: 0.0, y: 0.0}\n0.0\ntrue\nsketch.Position::{x: 10.0, y: 0.0}\n90.0\n"
+    },
+    {
+      "id": "e3-history",
+      "file": "tests/e3/inputs/history.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "e3-fill-history",
+      "file": "tests/e3/inputs/fill-history.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": "true\n0\ntrue\n1\n"
+    },
+    {
+      "id": "e3-fill-history",
+      "file": "tests/e3/inputs/fill-history.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "e3-interval",
+      "file": "tests/e3/inputs/interval.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": "interval accepted\n"
+    },
+    {
+      "id": "e3-interval",
+      "file": "tests/e3/inputs/interval.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": ""
+    }
+  ]
+}

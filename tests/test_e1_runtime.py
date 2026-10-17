@@ -64,7 +64,7 @@ class SketchRuntimeTests(unittest.TestCase):
             old=p.state;self.call(r,n,'clear',c)
             self.assertEqual(c.objects,[]);self.assertEqual(c.segments,0)
             self.assertEqual(p.state,old);self.assertEqual(c.next_id,2)
-            self.assertNotIn('sketch.undo',FUNCTIONS);self.assertIn('sketch.svg_text',FUNCTIONS)
+            self.assertIn('sketch.undo',FUNCTIONS);self.assertIn('sketch.svg_text',FUNCTIONS)
             self.assertIn('sketch.show',FUNCTIONS)
             self.assertEqual(set(PURE_CALLS),{f.name for f in FUNCTIONS.values() if f.pure})
             self.assertEqual(len(REGISTRY.extensions['sketch'].types),5)
@@ -264,7 +264,7 @@ class SketchRuntimeTests(unittest.TestCase):
             old=p.state
             with self.assertRaises(ResourceExceeded):self.call(r,n,'circle',p,100,step*65536.5)
             self.assertEqual(p.state,old)
-            self.call(r,n,'clear',c)
+            self.call(r,n,'clear',c);self.call(r,n,'clear_history',c)
             points=Array(r,n)
             for i in range(10000):
                 pair=Array(r,n)
@@ -275,7 +275,7 @@ class SketchRuntimeTests(unittest.TestCase):
             old=p.state
             with self.assertRaises(ResourceExceeded):self.call(r,n,'forward',p,1)
             self.assertEqual(p.state,old);self.assertEqual(len(c.objects),100)
-            self.call(r,n,'clear',c)
+            self.call(r,n,'clear',c);self.call(r,n,'clear_history',c)
             for _ in range(100000):self.call(r,n,'dot',p,1)
             self.assertEqual(len(c.objects),100000)
             with self.assertRaises(ResourceExceeded):self.call(r,n,'dot',p,1)
