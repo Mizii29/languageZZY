@@ -86,3 +86,5 @@ A/C/D 已纳入 P04；E 是已选扩展，按 E1—E4 开发。Web/Python 互联
 | todo.md、test-coverage.md、development-log.md | development/ 下的同名文件 |
 
 使用者的语法参考和开发指南已放到同级 skills，AI 文档为 skills/zzy/SKILL.md；language 继续维护正式语法与库契约。真实性能报告已放到 [runtime/performance-report.md](runtime/performance-report.md)，交付索引仍待放到 development。
+
+画笔扩展接手入口：[正式sketch契约](features/sketch.md)、[E1-01使用指南](features/sketch-guide.md)、[实际验收](../tests/e1/README.md)。只实现E1-01子集，SVG和E2—E4能力逐项验收。

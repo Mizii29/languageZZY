@@ -1,0 +1,1474 @@
+{
+  "schema_version": 1,
+  "cases": [
+    {
+      "id": "e1-initial",
+      "file": "tests/e1/inputs/initial.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": "sketch.Position::{x: 0.0, y: 0.0}\n0.0\nother\ntrue\nfalse\n"
+    },
+    {
+      "id": "e1-initial",
+      "file": "tests/e1/inputs/initial.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "e1-movement",
+      "file": "tests/e1/inputs/movement.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": "sketch.Position::{x: 12.0, y: 0.0}\n0.0\nsketch.Position::{x: 0.0, y: 0.0}\n0.0\n"
+    },
+    {
+      "id": "e1-movement",
+      "file": "tests/e1/inputs/movement.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "e1-pen-up-jump",
+      "file": "tests/e1/inputs/pen-up-jump.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": "sketch.Position::{x: -2.0, y: 5.0}\nsketch.Position::{x: 3.0, y: 4.0}\n"
+    },
+    {
+      "id": "e1-pen-up-jump",
+      "file": "tests/e1/inputs/pen-up-jump.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "e1-arc-10-90",
+      "file": "tests/e1/inputs/arc-10-90.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": "true\ntrue\n90.0\n"
+    },
+    {
+      "id": "e1-arc-10-90",
+      "file": "tests/e1/inputs/arc-10-90.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "e1-arc--10-90",
+      "file": "tests/e1/inputs/arc--10-90.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": "true\ntrue\n270.0\n"
+    },
+    {
+      "id": "e1-arc--10-90",
+      "file": "tests/e1/inputs/arc--10-90.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "e1-arc-10--90",
+      "file": "tests/e1/inputs/arc-10--90.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": "true\ntrue\n270.0\n"
+    },
+    {
+      "id": "e1-arc-10--90",
+      "file": "tests/e1/inputs/arc-10--90.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "e1-arc--10--90",
+      "file": "tests/e1/inputs/arc--10--90.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": "true\ntrue\n90.0\n"
+    },
+    {
+      "id": "e1-arc--10--90",
+      "file": "tests/e1/inputs/arc--10--90.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "e1-arc-closed",
+      "file": "tests/e1/inputs/arc-closed.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": "sketch.Position::{x: 7.0, y: 9.0}\n37.0\nsketch.Position::{x: 7.0, y: 9.0}\n"
+    },
+    {
+      "id": "e1-arc-closed",
+      "file": "tests/e1/inputs/arc-closed.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "e1-bezier",
+      "file": "tests/e1/inputs/bezier.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": "sketch.Position::{x: 10.0, y: 0.0}\n17.0\n"
+    },
+    {
+      "id": "e1-bezier",
+      "file": "tests/e1/inputs/bezier.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "e1-fill-cancel",
+      "file": "tests/e1/inputs/fill-cancel.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": "sketch.Position::{x: 0.0, y: 0.0}\n0.0\nsketch.Position::{x: 0.0, y: 10.0}\n"
+    },
+    {
+      "id": "e1-fill-cancel",
+      "file": "tests/e1/inputs/fill-cancel.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "e1-color-identity",
+      "file": "tests/e1/inputs/color-identity.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": "true\nfalse\n(T_T)(sketch.Color 不能序列化)\n(T_T)(sketch.Canvas 不能序列化)\n"
+    },
+    {
+      "id": "e1-color-identity",
+      "file": "tests/e1/inputs/color-identity.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "e1-typed-function",
+      "file": "tests/e1/inputs/typed-function.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": "true\n0.0\n"
+    },
+    {
+      "id": "e1-typed-function",
+      "file": "tests/e1/inputs/typed-function.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "e1-bool",
+      "file": "tests/e1/inputs/bool.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E201",
+        "span": [
+          3,
+          18,
+          3,
+          24
+        ]
+      }
+    },
+    {
+      "id": "e1-bool",
+      "file": "tests/e1/inputs/bool.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "e1-rgb-bool",
+      "file": "tests/e1/inputs/rgb-bool.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E201",
+        "span": [
+          3,
+          12,
+          3,
+          18
+        ]
+      }
+    },
+    {
+      "id": "e1-rgb-bool",
+      "file": "tests/e1/inputs/rgb-bool.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "e1-rgb-range",
+      "file": "tests/e1/inputs/rgb-range.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E208",
+        "span": [
+          3,
+          11,
+          3,
+          12
+        ]
+      }
+    },
+    {
+      "id": "e1-rgb-range",
+      "file": "tests/e1/inputs/rgb-range.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "e1-width-zero",
+      "file": "tests/e1/inputs/width-zero.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E208",
+        "span": [
+          3,
+          13,
+          3,
+          14
+        ]
+      }
+    },
+    {
+      "id": "e1-width-zero",
+      "file": "tests/e1/inputs/width-zero.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "e1-radius-zero",
+      "file": "tests/e1/inputs/radius-zero.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E208",
+        "span": [
+          3,
+          14,
+          3,
+          15
+        ]
+      }
+    },
+    {
+      "id": "e1-radius-zero",
+      "file": "tests/e1/inputs/radius-zero.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "e1-coordinate-range",
+      "file": "tests/e1/inputs/coordinate-range.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E208",
+        "span": [
+          3,
+          15,
+          3,
+          16
+        ]
+      }
+    },
+    {
+      "id": "e1-coordinate-range",
+      "file": "tests/e1/inputs/coordinate-range.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "e1-derived-range",
+      "file": "tests/e1/inputs/derived-range.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E208",
+        "span": [
+          3,
+          43,
+          3,
+          44
+        ]
+      }
+    },
+    {
+      "id": "e1-derived-range",
+      "file": "tests/e1/inputs/derived-range.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "e1-bad-point-late",
+      "file": "tests/e1/inputs/bad-point-late.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E201",
+        "span": [
+          3,
+          16,
+          3,
+          17
+        ]
+      }
+    },
+    {
+      "id": "e1-bad-point-late",
+      "file": "tests/e1/inputs/bad-point-late.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "e1-wrong-arity",
+      "file": "tests/e1/inputs/wrong-arity.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E202",
+        "span": [
+          3,
+          15,
+          3,
+          16
+        ]
+      }
+    },
+    {
+      "id": "e1-wrong-arity",
+      "file": "tests/e1/inputs/wrong-arity.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "e1-missing-fill",
+      "file": "tests/e1/inputs/missing-fill.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E214",
+        "span": [
+          3,
+          16,
+          3,
+          17
+        ]
+      }
+    },
+    {
+      "id": "e1-missing-fill",
+      "file": "tests/e1/inputs/missing-fill.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "e1-missing-cancel",
+      "file": "tests/e1/inputs/missing-cancel.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E214",
+        "span": [
+          3,
+          19,
+          3,
+          20
+        ]
+      }
+    },
+    {
+      "id": "e1-missing-cancel",
+      "file": "tests/e1/inputs/missing-cancel.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "e1-fill-up",
+      "file": "tests/e1/inputs/fill-up.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E214",
+        "span": [
+          3,
+          35,
+          3,
+          36
+        ]
+      }
+    },
+    {
+      "id": "e1-fill-up",
+      "file": "tests/e1/inputs/fill-up.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "e1-fill-nested",
+      "file": "tests/e1/inputs/fill-nested.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E214",
+        "span": [
+          3,
+          39,
+          3,
+          40
+        ]
+      }
+    },
+    {
+      "id": "e1-fill-nested",
+      "file": "tests/e1/inputs/fill-nested.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "e1-fill-two-points",
+      "file": "tests/e1/inputs/fill-two-points.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E214",
+        "span": [
+          3,
+          60,
+          3,
+          61
+        ]
+      }
+    },
+    {
+      "id": "e1-fill-two-points",
+      "file": "tests/e1/inputs/fill-two-points.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "e1-fill-jump",
+      "file": "tests/e1/inputs/fill-jump.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E214",
+        "span": [
+          3,
+          36,
+          3,
+          37
+        ]
+      }
+    },
+    {
+      "id": "e1-fill-jump",
+      "file": "tests/e1/inputs/fill-jump.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "e1-fill-pen-up",
+      "file": "tests/e1/inputs/fill-pen-up.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E214",
+        "span": [
+          3,
+          35,
+          3,
+          36
+        ]
+      }
+    },
+    {
+      "id": "e1-fill-pen-up",
+      "file": "tests/e1/inputs/fill-pen-up.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "e1-fill-color-change",
+      "file": "tests/e1/inputs/fill-color-change.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E214",
+        "span": [
+          3,
+          69,
+          3,
+          70
+        ]
+      }
+    },
+    {
+      "id": "e1-fill-color-change",
+      "file": "tests/e1/inputs/fill-color-change.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "e1-fill-dot",
+      "file": "tests/e1/inputs/fill-dot.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E214",
+        "span": [
+          3,
+          32,
+          3,
+          33
+        ]
+      }
+    },
+    {
+      "id": "e1-fill-dot",
+      "file": "tests/e1/inputs/fill-dot.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "e1-fill-clear",
+      "file": "tests/e1/inputs/fill-clear.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E214",
+        "span": [
+          3,
+          34,
+          3,
+          35
+        ]
+      }
+    },
+    {
+      "id": "e1-fill-clear",
+      "file": "tests/e1/inputs/fill-clear.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "e1-fill-background",
+      "file": "tests/e1/inputs/fill-background.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E214",
+        "span": [
+          3,
+          69,
+          3,
+          70
+        ]
+      }
+    },
+    {
+      "id": "e1-fill-background",
+      "file": "tests/e1/inputs/fill-background.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "e1-fill-other-pen",
+      "file": "tests/e1/inputs/fill-other-pen.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E214",
+        "span": [
+          3,
+          62,
+          3,
+          63
+        ]
+      }
+    },
+    {
+      "id": "e1-fill-other-pen",
+      "file": "tests/e1/inputs/fill-other-pen.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "e1-duplicate-name",
+      "file": "tests/e1/inputs/duplicate-name.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E208",
+        "span": [
+          3,
+          11,
+          3,
+          12
+        ]
+      }
+    },
+    {
+      "id": "e1-duplicate-name",
+      "file": "tests/e1/inputs/duplicate-name.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "e1-empty-name",
+      "file": "tests/e1/inputs/empty-name.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E208",
+        "span": [
+          3,
+          11,
+          3,
+          12
+        ]
+      }
+    },
+    {
+      "id": "e1-empty-name",
+      "file": "tests/e1/inputs/empty-name.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "e1-canvas-zero",
+      "file": "tests/e1/inputs/canvas-zero.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E208",
+        "span": [
+          3,
+          14,
+          3,
+          15
+        ]
+      }
+    },
+    {
+      "id": "e1-canvas-zero",
+      "file": "tests/e1/inputs/canvas-zero.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "e1-canvas-bool",
+      "file": "tests/e1/inputs/canvas-bool.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E201",
+        "span": [
+          3,
+          15,
+          3,
+          21
+        ]
+      }
+    },
+    {
+      "id": "e1-canvas-bool",
+      "file": "tests/e1/inputs/canvas-bool.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "e1-huge-int",
+      "file": "tests/e1/inputs/huge-int.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E208",
+        "span": [
+          3,
+          15,
+          3,
+          16
+        ]
+      }
+    },
+    {
+      "id": "e1-huge-int",
+      "file": "tests/e1/inputs/huge-int.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "e1-bad-type",
+      "file": "tests/e1/inputs/bad-type.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E201",
+        "span": [
+          3,
+          22,
+          3,
+          23
+        ]
+      }
+    },
+    {
+      "id": "e1-bad-type",
+      "file": "tests/e1/inputs/bad-type.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "e1-snapshot-frozen",
+      "file": "tests/e1/inputs/snapshot-frozen.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E203",
+        "span": [
+          3,
+          30,
+          3,
+          31
+        ]
+      }
+    },
+    {
+      "id": "e1-snapshot-frozen",
+      "file": "tests/e1/inputs/snapshot-frozen.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "e1-readonly-name",
+      "file": "tests/e1/inputs/readonly-name.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E203",
+        "span": [
+          3,
+          8,
+          3,
+          14
+        ]
+      }
+    },
+    {
+      "id": "e1-readonly-name",
+      "file": "tests/e1/inputs/readonly-name.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "e1-argument-order",
+      "file": "tests/e1/inputs/argument-order.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 1,
+      "stdout": "1\ntrue\n",
+      "diagnostic": {
+        "code": "E201",
+        "span": [
+          3,
+          56,
+          3,
+          63
+        ]
+      }
+    },
+    {
+      "id": "e1-argument-order",
+      "file": "tests/e1/inputs/argument-order.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "e1-native-constructor",
+      "file": "tests/e1/inputs/native-constructor.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E201",
+        "span": [
+          3,
+          8,
+          3,
+          14
+        ]
+      }
+    },
+    {
+      "id": "e1-native-constructor",
+      "file": "tests/e1/inputs/native-constructor.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "e1-native-method",
+      "file": "tests/e1/inputs/native-method.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E201",
+        "span": [
+          3,
+          3,
+          3,
+          10
+        ]
+      }
+    },
+    {
+      "id": "e1-native-method",
+      "file": "tests/e1/inputs/native-method.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "e1-native-call",
+      "file": "tests/e1/inputs/native-call.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E202",
+        "span": [
+          3,
+          14,
+          3,
+          15
+        ]
+      }
+    },
+    {
+      "id": "e1-native-call",
+      "file": "tests/e1/inputs/native-call.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "e1-future-svg",
+      "file": "tests/e1/inputs/future-svg.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E302",
+        "span": [
+          3,
+          8,
+          3,
+          16
+        ]
+      }
+    },
+    {
+      "id": "e1-future-svg",
+      "file": "tests/e1/inputs/future-svg.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "e1-future-show",
+      "file": "tests/e1/inputs/future-show.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E302",
+        "span": [
+          3,
+          8,
+          3,
+          12
+        ]
+      }
+    },
+    {
+      "id": "e1-future-show",
+      "file": "tests/e1/inputs/future-show.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "e1-future-undo",
+      "file": "tests/e1/inputs/future-undo.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E302",
+        "span": [
+          3,
+          8,
+          3,
+          12
+        ]
+      }
+    },
+    {
+      "id": "e1-future-undo",
+      "file": "tests/e1/inputs/future-undo.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "e1-angle-limit",
+      "file": "tests/e1/inputs/angle-limit.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E208",
+        "span": [
+          3,
+          12,
+          3,
+          13
+        ]
+      }
+    },
+    {
+      "id": "e1-angle-limit",
+      "file": "tests/e1/inputs/angle-limit.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "e1-size-limit",
+      "file": "tests/e1/inputs/size-limit.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E208",
+        "span": [
+          3,
+          13,
+          3,
+          14
+        ]
+      }
+    },
+    {
+      "id": "e1-size-limit",
+      "file": "tests/e1/inputs/size-limit.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "e1-dimension-limit",
+      "file": "tests/e1/inputs/dimension-limit.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E208",
+        "span": [
+          3,
+          14,
+          3,
+          15
+        ]
+      }
+    },
+    {
+      "id": "e1-dimension-limit",
+      "file": "tests/e1/inputs/dimension-limit.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "e1-fill-cursor",
+      "file": "tests/e1/inputs/fill-cursor.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E214",
+        "span": [
+          3,
+          40,
+          3,
+          41
+        ]
+      }
+    },
+    {
+      "id": "e1-fill-cursor",
+      "file": "tests/e1/inputs/fill-cursor.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "e1-fill-create-pen",
+      "file": "tests/e1/inputs/fill-create-pen.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E214",
+        "span": [
+          3,
+          32,
+          3,
+          33
+        ]
+      }
+    },
+    {
+      "id": "e1-fill-create-pen",
+      "file": "tests/e1/inputs/fill-create-pen.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "e1-snapshot-json-query",
+      "file": "tests/e1/inputs/snapshot-json-query.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": "0.0\n[0.0]\n(^_^)({\"x\":0.0,\"y\":0.0})\n"
+    },
+    {
+      "id": "e1-snapshot-json-query",
+      "file": "tests/e1/inputs/snapshot-json-query.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "e1-guide-geometry",
+      "file": "examples/sketch/geometry.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": "sketch.Position::{x: 0.0, y: 30.0}\n0.0\n"
+    },
+    {
+      "id": "e1-guide-geometry",
+      "file": "examples/sketch/geometry.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": ""
+    }
+  ]
+}

@@ -105,7 +105,7 @@ check 检查 spec 内语法和名字，并读取依赖源码，但不执行用�
 | 表达合法状态转换 | [machine-units](../docs/features/machine-units.md) | 发送返回 Result；失败不改变状态；无动作回调 |
 | 精确的时间或长度计算 | [machine-units](../docs/features/machine-units.md) | 固定单位与量纲；无量纲仍是 Quantity |
 | 延后一次计算 | [语法参考](syntax.md) | Lazy 缓存首次结果，不随依赖变化自动刷新 |
-| 图形、回放与交互 | [sketch](../docs/features/sketch.md) | 已选但未实现的扩展；E1—E4 分阶段，GUI 单独验收 |
+| 图形、回放与交互 | [sketch](../docs/features/sketch.md) | E1-01几何子集已实现；其余分阶段推进，GUI 单独验收 |
 
 zno、array.copy 和 with 都不是深冻结/深复制。为实现撤销，应创建新的 Task 和外层数组；如果字段还包含 Array/Map，另行决定复制策略。状态机实例及 Lazy 载荷引用共享，也不能当作自动历史快照。
 
@@ -167,3 +167,7 @@ sum/stats 逐项检查 Int，Bool/Float 不混入；stats 的 min/max 空值为 
 ## 已实现的完整CLI应用
 
 [校园任务管家](../apps/zzy-campus/README.md)展示逐层JSON校验、候选加载提交、原子保存、内容dirty、ID高水位与浅快照撤销；所有业务模块可直接阅读。启动必须带应用limits.json，测试使用临时目录和独立磁盘/输出答案，不自动改用户文件。当前没有GUI/Web，其他平台和最坏容量组合不由本轮结果推断通过。
+
+## Sketch 已实现子集
+
+[sketch阶段指南](../docs/features/sketch-guide.md)提供E1-01几何示例、受控类型与配额说明。当前只能建立和检查内存几何，SVG及窗口尚未实现；不要从完整契约示例推断GUI/撤销/回放已可用。

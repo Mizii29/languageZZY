@@ -1,0 +1,551 @@
+{
+  "date": "2026-10-17",
+  "base_revision": "7fb645c2c6179adb856c6bc95ecf1f9b1095bf48",
+  "extension_abi": "e1-01-v1",
+  "complete_sketch_1_0": false,
+  "completed_task": "E1-01",
+  "next_task": "E1-02",
+  "runtime_version": "0.6.0a1",
+  "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "unicode": "15.0.0",
+  "extension_limits": {
+    "coordinate_abs": 1000000,
+    "angle_abs": 1000000,
+    "canvas_dimension": 32768,
+    "style_size": 10000,
+    "batch_points": 10000,
+    "curve_segments": 65536,
+    "path_segments": 1000000,
+    "objects": 100000,
+    "pens": 256
+  },
+  "curve_error_logical_units": 0.25,
+  "bezier_depth": 24,
+  "implemented_functions": [
+    "sketch.background",
+    "sketch.backward",
+    "sketch.begin_fill",
+    "sketch.bezier_to",
+    "sketch.cancel_fill",
+    "sketch.canvas",
+    "sketch.circle",
+    "sketch.clear",
+    "sketch.color",
+    "sketch.dot",
+    "sketch.end_fill",
+    "sketch.fill_color",
+    "sketch.forward",
+    "sketch.heading",
+    "sketch.hide_cursor",
+    "sketch.home",
+    "sketch.jump_to",
+    "sketch.left",
+    "sketch.move_to",
+    "sketch.pen",
+    "sketch.pen_down",
+    "sketch.pen_up",
+    "sketch.polyline",
+    "sketch.position",
+    "sketch.rgb",
+    "sketch.right",
+    "sketch.set_heading",
+    "sketch.show_cursor",
+    "sketch.width"
+  ],
+  "full_suite": {
+    "collected": 1918,
+    "tests_run": 1918,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "expected_failures": 0,
+    "passed": true,
+    "seconds": 729.36,
+    "zzy_version": "0.6.0a1",
+    "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "resource_policy": {
+      "policy_version": 1,
+      "profile": "default-v1",
+      "limits": {
+        "source_file_bytes": 2097152,
+        "source_total_bytes": 16777216,
+        "module_count": 128,
+        "import_depth": 32,
+        "tokens_per_file": 250000,
+        "ast_nodes_total": 500000,
+        "syntax_depth": 64,
+        "numeric_digits": 4096,
+        "integer_bits": 65536,
+        "quantity_exponent_abs": 64,
+        "call_depth": 64,
+        "value_depth": 64,
+        "container_items": 1000000,
+        "text_codepoints": 4194304,
+        "io_payload_bytes": 16777216,
+        "runtime_objects": 200000,
+        "runtime_slots": 2000000,
+        "runtime_payload_bytes": 134217728,
+        "stdout_bytes": 1048576,
+        "stderr_bytes": 1048576,
+        "program_cache_entries": 32,
+        "program_cache_bytes": 67108864
+      },
+      "host_decimal_digits": 4300,
+      "effective_decimal_digits": 4096
+    },
+    "resource_fingerprint": "2e654aef52d3267bfecf0768bef9faee1eed942a329001ec455aee951c858bd2"
+  },
+  "installed_verification": "tests/e1/results/installed.json",
+  "external_cli_current": 110,
+  "external_cli_all": 1698,
+  "host_tests": 17,
+  "source_hashes": [
+    {
+      "file": "examples/sketch/geometry.zzy",
+      "sha256": "4e560bd3ed960c60b09e7cf1162212f9036ee70a54144726ba6b0ca92a002b7f",
+      "text_lf_sha256": "4e560bd3ed960c60b09e7cf1162212f9036ee70a54144726ba6b0ca92a002b7f"
+    },
+    {
+      "file": "tests/e1/cases.json",
+      "sha256": "564c1ebdfdd2bd39ece208a3db7d5f22af062d76f9ae5e92e73e908c45828e19",
+      "text_lf_sha256": "b46cec6df017bd1f2ca5feb417595147c48eb974aa0c85d0e35dd11f517a3768"
+    },
+    {
+      "file": "tests/e1/inputs/angle-limit.zzy",
+      "sha256": "4c54d3823dc6abd76dc2d7f8331f24a41ed38777b1a0b46c021b4ccc93292427",
+      "text_lf_sha256": "963962dbea60b1e4b27dd031c296499f17186fa67568a34de7d2a5392d868bf4"
+    },
+    {
+      "file": "tests/e1/inputs/arc--10--90.zzy",
+      "sha256": "91da3585a2529e8328898234f2b6e321fec9487d406ddba19320da0294909d84",
+      "text_lf_sha256": "1c409a543ad8b77c3f09b5092da34eed07b59b8ba29d756bd13ab1eafcb87518"
+    },
+    {
+      "file": "tests/e1/inputs/arc--10-90.zzy",
+      "sha256": "8683613d502d48edbf0ddd1504e28580e38c6653e57eb317bf43642720fa28b7",
+      "text_lf_sha256": "dd71dc55dc6af3a4f42ad7a0526fb314f6e2e0fb15c863e06e00053ac33ddf77"
+    },
+    {
+      "file": "tests/e1/inputs/arc-10--90.zzy",
+      "sha256": "1d72059ecc405ece6f77fd6390f6d6991fe4962d53a7de44333e516911955ee7",
+      "text_lf_sha256": "a7e989f5d876eaef3ee97a2f4da2379834c5c69257775720d50cf84052eed755"
+    },
+    {
+      "file": "tests/e1/inputs/arc-10-90.zzy",
+      "sha256": "501079762cc148318aa08a5e19000c527c692c724922d2cb4747f4188e119b61",
+      "text_lf_sha256": "9a2b289bd46fe66b6aee6e3501977bfe218c6d6c1132b899347a86a41655d206"
+    },
+    {
+      "file": "tests/e1/inputs/arc-closed.zzy",
+      "sha256": "1a19b482dd6358f947ecf94a9448bef7bd3e9fa466edcf6f7bc9ae989276fd1d",
+      "text_lf_sha256": "4a29629023e7827526f410e4e0b97cb2f853c44e45eb3a88a6a72c20a0d62372"
+    },
+    {
+      "file": "tests/e1/inputs/argument-order.zzy",
+      "sha256": "6ccd5cb3525620f2db9061439454573b88794ec29a02fbb19676b2950b0ab5d8",
+      "text_lf_sha256": "cd34fbbdcdca92b6d05a9573b4ed7838194eed5dd5dbb53770129e1735a4ab07"
+    },
+    {
+      "file": "tests/e1/inputs/bad-point-late.zzy",
+      "sha256": "4ca610da35e9600f967e6e216f3c91306d8ac4d92a4a4ad71726ae364f93058f",
+      "text_lf_sha256": "4fcd8f6a0b5de62417b189a2fd290a8fe2b7bc7d71305827b1115d875219cf9c"
+    },
+    {
+      "file": "tests/e1/inputs/bad-type.zzy",
+      "sha256": "bdf76b448fb48e5a9b1ec2ce2b55bd8cca8d990496363f8bb66aaa6914868852",
+      "text_lf_sha256": "3f81da1185692d8f91f2cab014471fe88d68f3352c2da22b02fe0ee8e2791491"
+    },
+    {
+      "file": "tests/e1/inputs/bezier.zzy",
+      "sha256": "eb4a73b0a6690af67fc8aeed5aee614cc0bad9690baab0e2975ca7dfdf00f905",
+      "text_lf_sha256": "ec50fbff6edd36aa829334c25303384aabdfcbdfe87637162f0a4d1f7aa64977"
+    },
+    {
+      "file": "tests/e1/inputs/bool.zzy",
+      "sha256": "e1685207a8a44072fa2aa11840f1369af29719b664ad06b6c8073d37f657072c",
+      "text_lf_sha256": "2e253c116a964708fdec1d66f9e89c7a6052f842d1b9bc301fe6d80ad3ac54bf"
+    },
+    {
+      "file": "tests/e1/inputs/canvas-bool.zzy",
+      "sha256": "93df109ec0fe3df12f299bce83da1fb94e8e30581ab0fecad9695f24a4532164",
+      "text_lf_sha256": "78993592aeba58421b18bba5799cdd580864d8f707c2f802f1a6c2c9b39ba26c"
+    },
+    {
+      "file": "tests/e1/inputs/canvas-zero.zzy",
+      "sha256": "6700eb6e8d52324dc3b458e75daec95d7bddc00aeceab11a1ac90bba49f6a4cb",
+      "text_lf_sha256": "8ab0188ddca96a4537ab1e7148e8ccc38a208578e28ec79991eebbf548a49017"
+    },
+    {
+      "file": "tests/e1/inputs/color-identity.zzy",
+      "sha256": "c0c80c8c02121fae092879846cec1750d8699759a1d6ad5fa300ec17830d84ee",
+      "text_lf_sha256": "bd252d3f6e939292f3ff339937288da860de6c011c91312a6af4dde5ef020ee7"
+    },
+    {
+      "file": "tests/e1/inputs/coordinate-range.zzy",
+      "sha256": "d0f415d02243215d0c677bea01fd80e0095bae3d8b20b8952097f7259493fbe2",
+      "text_lf_sha256": "edca3fed46c6de062ed53724f72f89cef2ba7e831e3f6b794e72c6b3b42c75ef"
+    },
+    {
+      "file": "tests/e1/inputs/derived-range.zzy",
+      "sha256": "4c7d4e37c36e80bb8bace884d233a57ceb9324779854dc1204e1d0ee7c5b9ff6",
+      "text_lf_sha256": "5cd47f58a83be8e6d6036a07856aaced591d1909f6378bb81067690c926428ae"
+    },
+    {
+      "file": "tests/e1/inputs/dimension-limit.zzy",
+      "sha256": "ff665cd9b082c9057687476785db684cb29b962aed407000298e1b55d1a5251e",
+      "text_lf_sha256": "499f3d2125cd2c52840bed3111a67db0923651a6e53a98b8a3afee550749b9c3"
+    },
+    {
+      "file": "tests/e1/inputs/duplicate-name.zzy",
+      "sha256": "bd7e7574414e549d6103111df297d40c1f1a175c01b995904baf15a97dc5c140",
+      "text_lf_sha256": "8736c27ce459b64a9c869afba9375c872466c11c01dd652af26ddaa00446a4e4"
+    },
+    {
+      "file": "tests/e1/inputs/empty-name.zzy",
+      "sha256": "faae137b1450fdd668eca766edb4f63ef4f56166e67f1838820d6e3a2948b861",
+      "text_lf_sha256": "93200bf459849f0e115f7b04fb17e82c1fd8885eb20a6bef8311d8c6d2f06447"
+    },
+    {
+      "file": "tests/e1/inputs/fill-background.zzy",
+      "sha256": "71cf2ce3799f4118911bf000091224a81ebc636b5f929676523e5d935090c2d5",
+      "text_lf_sha256": "c608ae463313bfb1c03a92428d7cda32020816f2e5ff2e3e722e67f2ed807515"
+    },
+    {
+      "file": "tests/e1/inputs/fill-cancel.zzy",
+      "sha256": "c4b4f1886719d0a9b51e013a3204b892030582d094d7891e4930e0a633b36f6c",
+      "text_lf_sha256": "e9279863115b4ea2abaea47fc4e11a805b418d10fa065a6560c09aa49aa4fe2f"
+    },
+    {
+      "file": "tests/e1/inputs/fill-clear.zzy",
+      "sha256": "e547f5a38d425f598054b47c0d4a53baa4856bfa3832fb3f1a0ba1312ae40fce",
+      "text_lf_sha256": "bb7c9f8b56d6cad4ac167aae11e40328de1f7b5d988c03cd5b9b325c47df82b9"
+    },
+    {
+      "file": "tests/e1/inputs/fill-color-change.zzy",
+      "sha256": "ddff446daedc2a61d9ee656420f319cc629b0c490886b5ca96ae7f8cb986ead4",
+      "text_lf_sha256": "b763e186060bbf5e8de91e60cbbf5a25b2d0943fcbbb0806ffb4daee4c4bf305"
+    },
+    {
+      "file": "tests/e1/inputs/fill-create-pen.zzy",
+      "sha256": "9bdc840b47393069f9f261c2739db386a1b7cd0e25761ea37f0df1464f1890d3",
+      "text_lf_sha256": "b126ab7a88b93974c692125b89509b5871c0d67755d3c74ae0095e75914c4c64"
+    },
+    {
+      "file": "tests/e1/inputs/fill-cursor.zzy",
+      "sha256": "66dfce13b6cbf4aba472a05b6ea24c42871c23cab24884eb4b98ba5ed5903a63",
+      "text_lf_sha256": "9a2e7edaedff9f30559453a8c21297ffa77f23c8e6aaa4fe0e1f7156c29011de"
+    },
+    {
+      "file": "tests/e1/inputs/fill-dot.zzy",
+      "sha256": "bb9a907a11f2e918822bae76c352d104e47a5b51a2375c444f1d9db42efb54b1",
+      "text_lf_sha256": "1ab21c517196639475155a128c8f66914b55875e7a4ed6b4633cd9ab669c0762"
+    },
+    {
+      "file": "tests/e1/inputs/fill-jump.zzy",
+      "sha256": "e927c7ff039594d633c5e942611c8b286d1da6dc78edfe800df369890d03f289",
+      "text_lf_sha256": "5717c38334ec9e3af108683a5291ab568c078a2bfe13921c7896dee678461a4c"
+    },
+    {
+      "file": "tests/e1/inputs/fill-nested.zzy",
+      "sha256": "a830b03d8b662629a77d2793521617b54343d85b5d4768664482cd124bb9a4d4",
+      "text_lf_sha256": "8823e1805542c9e6c1a7a35bd962398fde7a8b4466890160d6e7bf6d79f7cf20"
+    },
+    {
+      "file": "tests/e1/inputs/fill-other-pen.zzy",
+      "sha256": "23000cd979c955b1794d397c81f37382664cef06977bc4df1bfb2e11921f4257",
+      "text_lf_sha256": "d3ed82f3ace21c469045b1cf9e5fe6782c9cdd756507784d0456fd4261b56d64"
+    },
+    {
+      "file": "tests/e1/inputs/fill-pen-up.zzy",
+      "sha256": "d86e1e9ad298e699a1754c18ca66bc23e0b737d554c849114ab1e7a0f44fd9ba",
+      "text_lf_sha256": "f766173b22db8e5f2d6bb0eb05fff1731a93cdeac50e1d447178cea93ffb7f02"
+    },
+    {
+      "file": "tests/e1/inputs/fill-two-points.zzy",
+      "sha256": "de85d3ca9e91e51704100d33a5e2bc701e38bd3a185421beafff4d7a09563673",
+      "text_lf_sha256": "0cbefaeb47496af300e22f64500f8db8692c74c0ddc6eebc5d99f47b501f2a2b"
+    },
+    {
+      "file": "tests/e1/inputs/fill-up.zzy",
+      "sha256": "d206c681bcbd7b07febc395d439e7a31b847314380392e04b13ae112342b966f",
+      "text_lf_sha256": "bff81603032fa75cc61eb2085c1a937129823578d140a741aec0ddcb79248fcb"
+    },
+    {
+      "file": "tests/e1/inputs/future-show.zzy",
+      "sha256": "5f62b6648b5a02f8d50d961746755cf4a07d5e86e3b9e9a49bcb936f9b56f57d",
+      "text_lf_sha256": "fe1c44f8c6101b8d2610daae5ca6b1f5efb4baeb73d964cfdf918e2444ddb2c9"
+    },
+    {
+      "file": "tests/e1/inputs/future-svg.zzy",
+      "sha256": "5228416cdae3b15fbe2dae74910ee5fb45435d3a3ed08a72b0f92b7b7d4121ba",
+      "text_lf_sha256": "181e1e0ca6c329131bc3994008bdd5f8a58639d218980abf459eb42e9308d50f"
+    },
+    {
+      "file": "tests/e1/inputs/future-undo.zzy",
+      "sha256": "28ab68f1f75e22cb1e79881b1cdd293286d9605acf918d9833bf664042a1e7e9",
+      "text_lf_sha256": "53ca49423b189e3f1bb1e12771ea622023b1296213abb0c475ca6a10f6e4a56c"
+    },
+    {
+      "file": "tests/e1/inputs/huge-int.zzy",
+      "sha256": "349de4c4163965749456ebadf9fe714b5f143c51ad2ef46845e4407c42833196",
+      "text_lf_sha256": "5bf234eb7579b3c66f0d8d7f54f8e14d653c61824af3be84718d57088b21312c"
+    },
+    {
+      "file": "tests/e1/inputs/initial.zzy",
+      "sha256": "3adb7ebe7e5376a6f47b1d4f68caf8cce5439f21467677ceb529f1f7368bdfef",
+      "text_lf_sha256": "ae74d3e0cd8b937f134723fbb4534fe25f65b4bfc0559d3d976ae158bd9ab74e"
+    },
+    {
+      "file": "tests/e1/inputs/missing-cancel.zzy",
+      "sha256": "3db45241b31c8944ad543957b3edc8ceba67bd9b19f006ac2ec9929dae607383",
+      "text_lf_sha256": "af7b320935dde743c4d567f2643c6f7840961ec07b0c4649f360f23d9fa6c189"
+    },
+    {
+      "file": "tests/e1/inputs/missing-fill.zzy",
+      "sha256": "6f3cc2a8ebdbe48383ff3a8d42116f8f27d4f56bb7c8a1c55b3630362049c071",
+      "text_lf_sha256": "00491f1b5d009e56513eb53341e416b59fc7edf1224f4ce734de4e937bdebab8"
+    },
+    {
+      "file": "tests/e1/inputs/movement.zzy",
+      "sha256": "6bb4580b292d3852e733a74238caaab385f4437dd8f2403ea7cdc65520910c02",
+      "text_lf_sha256": "c592a038e2998aef81adf3521b5e655399dc50150f12e5eb2cf9ea695055908b"
+    },
+    {
+      "file": "tests/e1/inputs/native-call.zzy",
+      "sha256": "b5ee7596e149a41ede385fdd371183f287842dc3f1045b1d266453bef9c35e30",
+      "text_lf_sha256": "cfb2a56bec076e2732a4c6084292bb6a4cdb4f146a67993d7553bc663dbdfabf"
+    },
+    {
+      "file": "tests/e1/inputs/native-constructor.zzy",
+      "sha256": "fe47ef9607154b26fd83580b1d125e7aa82a3fb2aaa8b4f0c47fae35283113ec",
+      "text_lf_sha256": "9c38df7b22905f9b1efdd1c905e7909cdd53158e3ddbefe976450951fe17b3c2"
+    },
+    {
+      "file": "tests/e1/inputs/native-method.zzy",
+      "sha256": "29028d51ce97b9b7a360a6aafcc1a1356e16d86d83769646cf22f069fd7c8e90",
+      "text_lf_sha256": "a28e9ea49920167d6cb949a2dd7cb478d8f4efba2e2d69d4c92fb4c629b9154b"
+    },
+    {
+      "file": "tests/e1/inputs/pen-up-jump.zzy",
+      "sha256": "6c0debb38c2cb15cc4ef43c06bf5933ba30bcd948c96b05356f9c44409e71303",
+      "text_lf_sha256": "d5123f96adcfd00b5f4f92b846972407a9a018376ac28a9d3490760a3d9edea7"
+    },
+    {
+      "file": "tests/e1/inputs/radius-zero.zzy",
+      "sha256": "cf8c4491c38184cb2e846876971d353c54dcf216876c2bd60528d6edd191026c",
+      "text_lf_sha256": "55eb5bbc856b9a23efb0ef734c779b86006d3923c0ea39723c8d1ed9616bc7fa"
+    },
+    {
+      "file": "tests/e1/inputs/readonly-name.zzy",
+      "sha256": "7f17f0bcdfe2341d01a2ab821507098b8b9440f06860251fc24f7d256552bc59",
+      "text_lf_sha256": "a638eef898ce2771b93767f9c9e73371aa4fd6dd8874fbc8c05cad94b7e4cfa9"
+    },
+    {
+      "file": "tests/e1/inputs/rgb-bool.zzy",
+      "sha256": "4631c0e96fb1a19aa960e83cbefe56c34889407e63525f75b888cd075b08af48",
+      "text_lf_sha256": "55ce09a3f172e276d6d22a0ae6306e8978c829948f6518e29aebd11da9242259"
+    },
+    {
+      "file": "tests/e1/inputs/rgb-range.zzy",
+      "sha256": "038978fd0518b95ca3681b9652f3742cbf4d3704ab3913df9ead6c72567447e7",
+      "text_lf_sha256": "31ca7be09562dd2e04fc3e7904d3bf8371909f85270531d6a70e107cd71f5ed9"
+    },
+    {
+      "file": "tests/e1/inputs/size-limit.zzy",
+      "sha256": "012a312fecb9b1e11a38f553d8cd8fcdb75c41b5818fdb0fa571d82290e488e9",
+      "text_lf_sha256": "e9f93d4a6969d214130e9d4f752ea3574914cb6ebdf2dcab385787ef7bbf9c25"
+    },
+    {
+      "file": "tests/e1/inputs/snapshot-frozen.zzy",
+      "sha256": "b6532f020982476187ed214aa15ecd3afce648d9069fda4525e03bc4c0ce9601",
+      "text_lf_sha256": "f8541aa9979c9419a2b6beee1bf70ad45665d922707cb87fe2befbc2b64ac2ac"
+    },
+    {
+      "file": "tests/e1/inputs/snapshot-json-query.zzy",
+      "sha256": "5dca290635b21ec6d253e92481947163dd514e930f463d9131472fc685323f6d",
+      "text_lf_sha256": "89fcd736b507767fa3ee7fdf2777a2a0eedf9cf8be971f62f67322a7a83e6d6d"
+    },
+    {
+      "file": "tests/e1/inputs/typed-function.zzy",
+      "sha256": "d8954ee1ba687c9ce46bf8b62ab0bb4339cdd2a847dd13de4db1377dd289fb0e",
+      "text_lf_sha256": "daacfc86c0feb130d52d805ae16a1c95da7c9ae969d543dde769b1b04111fc33"
+    },
+    {
+      "file": "tests/e1/inputs/width-zero.zzy",
+      "sha256": "e1753ee1385e8996129171f2bb675e8dfc8b36a3eba86c70ce061956191d8126",
+      "text_lf_sha256": "75c0e326d215424477ebffd380edfc935c0d4b3424de64fc1ddd213b5a7bde08"
+    },
+    {
+      "file": "tests/e1/inputs/wrong-arity.zzy",
+      "sha256": "ad91934361dfe6dc9894141bf33aa588757879929f6a317b8ebd065d8a54c412",
+      "text_lf_sha256": "92fc0d76edbaf70caeaf0edbf12f48fa8cd5b26ff9c5dde2633f13153a575aba"
+    },
+    {
+      "file": "tests/test_e1_cli.py",
+      "sha256": "3dde94b8b32a5a04bd28dc9d9218cd046aa7e8a778e36dd4a95f7557f6693065",
+      "text_lf_sha256": "5950da3d0f5e915cb36d9329f21964784fb9663cc6fc9d18cee5d3de7c1e6c98"
+    },
+    {
+      "file": "tests/test_e1_runtime.py",
+      "sha256": "ff74ab78bc7ac40508bd062618a49ccdff7d107ea6d129b14dbb259097abd33b",
+      "text_lf_sha256": "ff74ab78bc7ac40508bd062618a49ccdff7d107ea6d129b14dbb259097abd33b"
+    },
+    {
+      "file": "zzy/__init__.py",
+      "sha256": "918b735a252679ded627381557cb9b4b43d4f734e95109f8fc3eae3ea3f19378",
+      "text_lf_sha256": "1baaf700f36760f61df7e81f5ca640cc60cd661dec31db67ce70246778a61c99"
+    },
+    {
+      "file": "zzy/__main__.py",
+      "sha256": "482b8693e2fe6dbd732e3d7961e03827d3efa187bad11d29da188be580ebbeea",
+      "text_lf_sha256": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d"
+    },
+    {
+      "file": "zzy/ast_nodes.py",
+      "sha256": "ef2dcd105a9653d64865c3ba419fdc3faabc8536e9e39aaf428ad34f560a1a20",
+      "text_lf_sha256": "7de87c9716e7c3b184ac7e7faf431e33f26be4a2fd1ddb1b51d9c0d78117c7ce"
+    },
+    {
+      "file": "zzy/cli.py",
+      "sha256": "df97bf1b799a9222855d51dad873deba28bd71df5983d4ba3e9f420a31f26c8b",
+      "text_lf_sha256": "959257db58d753a2762a646a8a0dde5610c360cf5d32da9c2bf517eb561a1e5c"
+    },
+    {
+      "file": "zzy/diagnostics.py",
+      "sha256": "1bb7b7a8748f2f4324633562fc7b55fb7fc933bfc724a167ca1319e7ccfe5604",
+      "text_lf_sha256": "6c41cedd276d544415c03e4791cb72d8354bea238e85230b6a6457e720984a92"
+    },
+    {
+      "file": "zzy/features.py",
+      "sha256": "d74c07f4d84dd23a395525008f16c6f3dd3e8ad6c125f63213527b5b4fec8e0b",
+      "text_lf_sha256": "f7403b2eda1bcdd666b6f9c6c226a2dfcaa5d67974aaed3ab6fe4984bb90d308"
+    },
+    {
+      "file": "zzy/interpreter.py",
+      "sha256": "cbe46cdd64ad22398956e3c8b2a6aa964118d466db3cf3363c246dc27827f9c9",
+      "text_lf_sha256": "ac2958f9efe391dc5de85c418c16390cfdb85578a958fd9c1cc7864c2fce96b9"
+    },
+    {
+      "file": "zzy/lexer.py",
+      "sha256": "62fba0dbedc0028f92571784fc045e522850184760058c69da061464e98a8289",
+      "text_lf_sha256": "b0a38690cd36c19b58b00327038bb0342caed1ad9becd242d45af30236379796"
+    },
+    {
+      "file": "zzy/native/__init__.py",
+      "sha256": "29ade97372807897986c89586868ea0dda2c787ce3c86065ee9661ede22d304f",
+      "text_lf_sha256": "c0c06bc993b317ca3f1c148c5d68dcf45b83567bf645cf2590ad61d682757f80"
+    },
+    {
+      "file": "zzy/native/catalog.py",
+      "sha256": "52a2607e608747cff868c46a4a867b81dcb5801c48b77d9127f4646e97cd0043",
+      "text_lf_sha256": "1df930952b2dc1c86d9c2dad94c26f53e4817d883c7bff4c50e412c7ad43e847"
+    },
+    {
+      "file": "zzy/native/files.py",
+      "sha256": "e021f28b8e98925fd720543635438dba6d1929307cb4254217a3a898ad64ca07",
+      "text_lf_sha256": "d4b5f123bb45948e1e6970f4da4904612bd8a7cb162eb7f1c645fd882aafbb18"
+    },
+    {
+      "file": "zzy/native/json_codec.py",
+      "sha256": "b0191f91fee3ec0a86a26f167a1e1e4643016f9618037408ba6bc7d0a7de9703",
+      "text_lf_sha256": "d947dc7190336b10a9c44897be3b7d386bc57be4afdf32a2aeef81e4e71a8ac2"
+    },
+    {
+      "file": "zzy/native/library.py",
+      "sha256": "5aa5a4263ac4d4bb2a348993a7ee58236d75f863855248df166e386931d06380",
+      "text_lf_sha256": "49d265b69551f7f974d21520051b55a3c71c5a8e318a990ce4b167bd4715dc19"
+    },
+    {
+      "file": "zzy/native/metadata.py",
+      "sha256": "b75591c84c5d804ddbd09c8a6f6e7d151ee2b3c77900802eb69c756a44f81b28",
+      "text_lf_sha256": "a76e845ca46443988e935f644ac3cafad124676a9e44b0cb1b11a4a1de8eeadf"
+    },
+    {
+      "file": "zzy/native/sketch.py",
+      "sha256": "fc65f5539ff351f5f066319d3db7e0619d9240082d6d92e36510150f5ce5d1d0",
+      "text_lf_sha256": "fc65f5539ff351f5f066319d3db7e0619d9240082d6d92e36510150f5ce5d1d0"
+    },
+    {
+      "file": "zzy/native/sketch_metadata.py",
+      "sha256": "cf9f0f956911dbad92edc874d2fee39b218443633d189327544a0e8ab04dbf52",
+      "text_lf_sha256": "cf9f0f956911dbad92edc874d2fee39b218443633d189327544a0e8ab04dbf52"
+    },
+    {
+      "file": "zzy/output.py",
+      "sha256": "bfc695d0db9651d7d871caffa2fdaf03c759d703c62f3bffd39a4c18cf94c2ba",
+      "text_lf_sha256": "c401c13b3d1a8c1ea05e3ce5eea783dd814e741949765db5be692b5cdb46d1cd"
+    },
+    {
+      "file": "zzy/parser.py",
+      "sha256": "5d661015c3069622551120323cb1535b3ab8381fb1dd51fd2d46f97d7686b35f",
+      "text_lf_sha256": "0ffb682da35e4d54ce7074e058cb495731d17497ebb81c656d4d31e6b21a9164"
+    },
+    {
+      "file": "zzy/prepare.py",
+      "sha256": "766d14bb10281fca19d9ae672fc3d2b82bfb1225e667b7d1d14bac9afca036c2",
+      "text_lf_sha256": "afab3ecb3244992665ac09edc854f07df7bde453f8e03db911690bcca2746ecf"
+    },
+    {
+      "file": "zzy/process.py",
+      "sha256": "855003863e1b41bc44bae62d1b1059bddbaa41a0ab9315ea97f279c0e6a06b39",
+      "text_lf_sha256": "4c41af43e6794b91e9dcb16b5da5d2c6769e4da52c293d6a037b0e2da1062d87"
+    },
+    {
+      "file": "zzy/quantities.py",
+      "sha256": "da85167c457b5da17bb2d86edd4cf2585b2be7e1ccf1e53560af06ce73866103",
+      "text_lf_sha256": "64bd5b4321cdb3ca0ec66c70e7ddc44113487cd845d761283ef31b94097c389f"
+    },
+    {
+      "file": "zzy/resolver.py",
+      "sha256": "1c50934f61f338dbf29a2aed7ef3f09facdf706c07bad5f4845750eccaaa60c4",
+      "text_lf_sha256": "75a182a52d9a0e84bb0d973c25ae351d8539b8857e328559e91cbf4e62303a4d"
+    },
+    {
+      "file": "zzy/resources.py",
+      "sha256": "552ac299788eb18279208df4878c452b3e886793d39b75a2531ca2591c96d602",
+      "text_lf_sha256": "800c1b82893d01aab6ea3332b52edf5fe934c1f31d53cc61c8270c27dcb3677a"
+    },
+    {
+      "file": "zzy/source.py",
+      "sha256": "8c6827a5d37c623b2309bd4403befd6ba433a3ff7d8fc0cedb7a5736966b4f61",
+      "text_lf_sha256": "359d3579942f337994c6cf39c5253e1d0f90244725eb9e76d6215dff46094005"
+    },
+    {
+      "file": "zzy/spec_runner.py",
+      "sha256": "09b1f942d988418b973c80cbfde7b2ab60f0a4687627edc98541e8418f6f533d",
+      "text_lf_sha256": "621216a54d52671aa61956bc4448157b38e6420da20c2df70d20b854518b1ca6"
+    },
+    {
+      "file": "zzy/spec_worker.py",
+      "sha256": "8bf50a1d0be4684f3fd2fb7aca45b63c005394ab389cc58367fe4e0f6cdcee6c",
+      "text_lf_sha256": "52b09453019070b738a9e7614c21c3fea25499b9cb2d1018eb086659f5d40ea6"
+    },
+    {
+      "file": "zzy/tokens.py",
+      "sha256": "55847182fe23d23a330f056fa37484ae7204128e6aaf154b2cc2682b861d303a",
+      "text_lf_sha256": "740a69b9a4211cacf620dc97453f090f4bcad1aea36dc19c3b8d983c8eaeb1c5"
+    },
+    {
+      "file": "zzy/values.py",
+      "sha256": "447c835c305ab0f1e1d254033f466daa581b689db92178e1274f8cde7b0b8304",
+      "text_lf_sha256": "5d2ac675b765b527a8e42e900ffa9bf1afdca1a3b7032a04f9c62a19d4741bd1"
+    },
+    {
+      "file": "zzy/windows_job.py",
+      "sha256": "063b3d9e7749b2bdc4730770fb582719611760ab3173018fa730aa4bf2de0e45",
+      "text_lf_sha256": "9bfa12aa99fed4901879ea06329d3669cd86b2d1754bcfbd308b646a327c9d80"
+    }
+  ],
+  "unverified": [
+    "SVG (E1-02)",
+    "GUI/close/tools (E2/E4)",
+    "history/replay/Drawing (E3)",
+    "events/project persistence (E4)",
+    "other OS/Python",
+    "all maximum capacities combined",
+    "RSS",
+    "performance comparison"
+  ]
+}

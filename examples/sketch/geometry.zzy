@@ -1,0 +1,10 @@
+zzysay: E1-01 headless 几何示例；SVG 和窗口在后续任务实现。
+(zno) canvas:sketch.Canvas := sketch.canvas(400,300,"几何示例");
+(zno) pen:sketch.Pen := sketch.pen(canvas,"主画笔");
+sketch.fill_color(pen,sketch.rgb(100,160,240));
+sketch.begin_fill(pen);
+sketch.polyline(pen,[[40,0],[40,30],[0,30]]);
+sketch.end_fill(pen);
+sketch.circle(pen,15,360);
+io.print(sketch.position(pen));
+io.print(sketch.heading(pen));

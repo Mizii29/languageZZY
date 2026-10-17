@@ -1,8 +1,9 @@
 """Import-safe, closed native ABI used by resolution and execution."""
 from types import MappingProxyType
 from .metadata import Extension, MetadataRegistry, NativeFunction, NativeType
+from .sketch_metadata import FUNCTIONS as SKETCH_FUNCTIONS, TYPES as SKETCH_TYPES, ABI as SKETCH_ABI
 
-NAMESPACES = frozenset({'io', 'array', 'text', 'math', 'data', 'unit'})
+NAMESPACES = frozenset({'io', 'array', 'text', 'math', 'data', 'unit', 'sketch'})
 PURE_CALLS = frozenset({'core.len', 'core.str', 'math.abs', 'text.trim', 'text.contains', 'unit.make', 'unit.format'})
 # Parameter names and accepted outer kinds. Empty kind means any ZZY value.
 _SPEC = {
@@ -47,9 +48,10 @@ for name, (parameters, types, returns) in _SPEC.items():
  FUNCTIONS[name.removeprefix('core.')] = NativeFunction(name, tuple(parameters.split()), returns,
      effects, ('E201','E202','E211') + _ERRORS.get(name,()), kinds, name in PURE_CALLS,
      name in _CALLBACKS or name=='core.wake')
+FUNCTIONS.update(SKETCH_FUNCTIONS)
 FUNCTIONS = MappingProxyType(FUNCTIONS)
 REGISTRY = MetadataRegistry()
 for namespace in (*sorted(NAMESPACES),'core'):
- REGISTRY.register(Extension(namespace,'p05-v1',
-     types=(NativeType('array.Stats',True,'context','identity'),) if namespace=='array' else (),
+ REGISTRY.register(Extension(namespace,SKETCH_ABI if namespace=='sketch' else 'p05-v1',
+     types=tuple(SKETCH_TYPES.values()) if namespace=='sketch' else (NativeType('array.Stats',True,'context','identity'),) if namespace=='array' else (),
      functions=tuple(f for f in FUNCTIONS.values() if f.name.startswith(namespace+'.'))))

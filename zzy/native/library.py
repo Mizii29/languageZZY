@@ -30,7 +30,19 @@ class Library:
         return Value('Definition',(declaration,{f.token.lexeme:f.data for f in fields}),
                      self.reserve(node,runtime_objects=1,runtime_slots=4))
 
+    def position_definition(self,node):
+        source=Source.from_bytes(Path('<native sketch.Position>'),b'sketch.Position x y')
+        def token(name):
+            start=source.text.index(name)
+            return Token('IDENT',source,start,start+len(name))
+        fields=tuple(Node('field',token(name),data='Float') for name in ('x','y'))
+        return Value('Definition',(Node('shape',token('sketch.Position'),fields),{'x':'Float','y':'Float'}),
+                     self.reserve(node,runtime_objects=1,runtime_slots=2))
+
     def native_call(self,name,args,node):
+        if name.startswith('sketch.'):
+            from . import sketch
+            return sketch.invoke(self,name,args,node)
         if name in {'array.map','array.filter'}:
             values,callback=args
             result=Array(self,node)

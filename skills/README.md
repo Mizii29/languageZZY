@@ -25,3 +25,5 @@ AI 文档不复制整套设计：请让 Agent 先读取 `skills/zzy/SKILL.md`，
 正式语法以 [docs/language/syntax.md](../docs/language/syntax.md) 为准，库签名以 [stdlib.md](../docs/language/stdlib.md) 为准，扩展规则以各专题为准。`skills/syntax.md` 是面向编程者的规则参考，完整 EBNF 留在正式契约中维护。
 
 修改规则时同步相关指南与示例；实现后给示例补真实验证记录。当前的 70 项代码任务仍以 [todo.md](../docs/development/todo.md) 为唯一状态清单，语义验证记录见 P06 验收页，P07实测见 [性能报告](../docs/runtime/performance-report.md)，文档存在本身不是运行成功证据。
+
+画笔扩展的已实现子集及边界见[sketch阶段指南](../docs/features/sketch-guide.md)，完整契约不等于已实现清单。

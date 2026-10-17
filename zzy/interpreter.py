@@ -8,6 +8,7 @@ import operator
 import os
 import sys
 from weakref import WeakSet
+from threading import get_ident
 
 from .features import Features
 from . import quantities
@@ -39,6 +40,9 @@ class Interpreter(Features, Library):
         self.modules = {}
         self._location_cwd = None
         self._location_paths = {}
+        self.native_context = object()
+        self.native_thread = get_ident()
+        self.native_canvases = WeakSet()
 
     def location(self, node):
         # Diagnostic metadata is constant per source while cwd is unchanged.
@@ -82,12 +86,17 @@ class Interpreter(Features, Library):
 
     def run(self):
         self.meter.phase = Phase.EXECUTION
+        self.native_context = object()
+        self.native_thread = get_ident()
         try:
             self.slots.append(self.reserve(self.program.root, runtime_objects=2, runtime_slots=2))
             self.bindings["io"] = Binding(Value("Namespace", {"print": Value("Function", PRINT)}), False)
             self.bindings["io"].value.namespace = "io"
             self.drive(self.execute_program())
         finally:
+            for canvas in self.native_canvases:
+                canvas.cleanup()
+            self.native_canvases.clear()
             self.frame = None
             self.call_depth = 0
             self.modules.clear()
@@ -269,16 +278,18 @@ class Interpreter(Features, Library):
         value = self.read_reference(symbol, node)
         for name in fields:
             value = self.field(value, name, node)
-        if value.kind not in {"Definition", "MachineDefinition"}:
+        if value.kind not in {"Definition", "MachineDefinition", "NativeType"}:
             self.error(node, "E201", "类型注解需要结构定义")
         return value
 
     def typecheck(self, annotation, value, node, *, token_only=False):
         valid = (annotation is None or
                  isinstance(annotation, str) and value.kind == annotation or
+                 isinstance(annotation, Value) and annotation.kind == 'NativeType' and
+                 getattr(value, 'native_type', None) is annotation.data or
                  isinstance(annotation, Value) and value.kind in {"Shape", "Machine"} and value.data[0] is annotation)
         if not valid:
-            name = annotation if isinstance(annotation, str) else annotation.data[0].token.lexeme
+            name = annotation if isinstance(annotation, str) else annotation.data.name if annotation.kind == 'NativeType' else annotation.data[0].token.lexeme
             raise DiagnosticError(Diagnostic(f"注解要求 {name}，实际为 {value.kind}",
                                              "E201", self.location(node), node.token.span if token_only else node.span), Phase.EXECUTION)
 
@@ -454,6 +465,16 @@ class Interpreter(Features, Library):
                 if namespace == "array" and name == "Stats":
                     owner.data[name] = self.stats_definition(node)
                     return owner.data[name]
+                if namespace == 'sketch':
+                    if name == 'Position':
+                        owner.data[name] = self.position_definition(node)
+                        return owner.data[name]
+                    descriptor = next((t for t in REGISTRY.extensions['sketch'].types
+                                       if t.name == 'sketch.' + name), None)
+                    if descriptor is not None:
+                        owner.data[name] = Value('NativeType', descriptor,
+                                                self.reserve(node, runtime_objects=1))
+                        return owner.data[name]
                 qualified = namespace + "." + name
                 if qualified not in FUNCTIONS:
                     self.error(node, "E302", f"字段 {name} 尚未实现或不存在")
@@ -640,7 +661,7 @@ class Interpreter(Features, Library):
             return quantities.calculate(self, operation, left, right, node)
         numeric = left.kind in {"Int", "Float"} and right.kind in {"Int", "Float"}
         if operation in {"EQUAL", "NOT_EQUAL"}:
-            if numeric or left.kind == right.kind and left.kind in {"String", "Bool", "Null"}:
+            if numeric or left.kind == right.kind and left.kind in {"String", "Bool", "Null", "sketch.Color"}:
                 equal = left.data == right.data
             elif left.kind == right.kind == "Range":
                 equal = tuple(v.data for v in left.data) == tuple(v.data for v in right.data)
@@ -900,6 +921,10 @@ class Interpreter(Features, Library):
                 append("<module " + item.namespace + ">")
             elif item.kind == "Definition":
                 append("<shape " + item.data[0].token.lexeme + ">")
+            elif item.kind == 'NativeType':
+                append('<type ' + item.data.name + '>')
+            elif item.kind.startswith('sketch.'):
+                append('<' + item.kind + '>')
             else:
                 self.check("value_depth", depth + 1, node)
                 active.add(id(item))

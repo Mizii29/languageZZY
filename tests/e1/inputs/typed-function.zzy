@@ -1,0 +1,3 @@
+(zno)c:sketch.Canvas:=sketch.canvas(200,100,"画布");
+(zno)p:sketch.Pen:=sketch.pen(c,"笔");
+(addnew) identity(x:sketch.Pen)->sketch.Pen{(return)x;}io.print(identity(p)==p);(zno)s:sketch.Position:=sketch.position(p);io.print(s.x);

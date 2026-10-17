@@ -1,0 +1,45 @@
+"""E1-01 ABI metadata only; importing this never constructs a document."""
+from types import MappingProxyType
+from .metadata import NativeFunction, NativeType
+
+ABI = 'e1-01-v1'
+TYPES = MappingProxyType({name: NativeType('sketch.' + name, mutable, ownership, equality)
+    for name, mutable, ownership, equality in (
+        ('Canvas', True, 'ExecutionContext', 'identity'),
+        ('Pen', True, 'ExecutionContext', 'identity'),
+        ('Layer', True, 'ExecutionContext', 'identity'),
+        ('Color', False, 'value', 'rgb'),
+        ('Drawing', False, 'ExecutionContext', 'identity'))})
+# Layer/Drawing type identities are reserved; public factories arrive in E2/E3.
+_SPEC = {
+    'canvas': ('width height title', 'Int Int String', 'sketch.Canvas'),
+    'pen': ('canvas name', 'sketch.Canvas String', 'sketch.Pen'),
+    'rgb': ('r g b', 'Int Int Int', 'sketch.Color'),
+    'background': ('canvas color', 'sketch.Canvas sketch.Color', 'Null'),
+    'clear': ('canvas', 'sketch.Canvas', 'Null'),
+    'color': ('pen color', 'sketch.Pen sketch.Color', 'Null'),
+    'fill_color': ('pen color', 'sketch.Pen sketch.Color', 'Null'),
+    'width': ('pen width', 'sketch.Pen Int|Float', 'Null'),
+    'position': ('pen', 'sketch.Pen', 'sketch.Position'),
+    'heading': ('pen', 'sketch.Pen', 'Float'),
+    'forward': ('pen distance', 'sketch.Pen Int|Float', 'Null'),
+    'backward': ('pen distance', 'sketch.Pen Int|Float', 'Null'),
+    'left': ('pen angle', 'sketch.Pen Int|Float', 'Null'),
+    'right': ('pen angle', 'sketch.Pen Int|Float', 'Null'),
+    'set_heading': ('pen angle', 'sketch.Pen Int|Float', 'Null'),
+    'move_to': ('pen x y', 'sketch.Pen Int|Float Int|Float', 'Null'),
+    'jump_to': ('pen x y', 'sketch.Pen Int|Float Int|Float', 'Null'),
+    'circle': ('pen radius extent', 'sketch.Pen Int|Float Int|Float', 'Null'),
+    'polyline': ('pen points', 'sketch.Pen Array', 'Null'),
+    'bezier_to': ('pen c1x c1y c2x c2y x y', 'sketch.Pen ' + ' '.join(['Int|Float'] * 6), 'Null'),
+    'dot': ('pen diameter', 'sketch.Pen Int|Float', 'Null'),
+}
+for _name in ('pen_up', 'pen_down', 'show_cursor', 'hide_cursor', 'home',
+              'begin_fill', 'end_fill', 'cancel_fill'):
+    _SPEC[_name] = ('pen', 'sketch.Pen', 'Null')
+FUNCTIONS = MappingProxyType({ 'sketch.' + name: NativeFunction(
+    'sketch.' + name, tuple(params.split()), returns,
+    ('read',) if name in {'position', 'heading'} else ('allocate',) if name in {'canvas', 'pen', 'rgb'} else ('mutation',),
+    ('E201', 'E202', 'E203', 'E208', 'E211', 'E214'),
+    tuple(tuple(t.split('|')) for t in kinds.split()))
+    for name, (params, kinds, returns) in _SPEC.items()})

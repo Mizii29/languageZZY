@@ -582,3 +582,5 @@ P04-08 的核心验收不依赖 P05 库；P05 对齐原生纯函数元数据，�
 benchmarks/worker.py 使用正式 prepare、Interpreter.run/drive/evaluate 路径，独立计量读取、准备、输入/上下文初始化、bench调用、校验和清理。它是内部基准驱动，不是P08公开嵌入接口；完整CLI另起子进程测量。报告与范围见 [performance-report.md](performance-report.md)。
 
 cProfile证据表明重复构造显示路径是当前Windows工作量的热点；Interpreter.location现在按源码路径保存上下文内的显示字符串，cwd变化即清空，run结束清空。该元数据不保存用户值/异常或Program，不跨上下文共享，不跳过资源/类型/取消检查。真实错误行列、输入回调改变cwd、Program/运行器复用和1744项全量回归均已验证。只有B01/B04的n=10000优化前后做了15样本交错比较；其他优化、规模及平台不能据此宣称收益。
+
+E1-01扩展通过sketch_metadata登记类型与函数，运行时首次调用才导入几何实现；check只读元数据。原生类型按登记身份检查，拒绝宿主构造和属性反射。每次run独立上下文令牌/执行线程；结束时取消未提交填充、标记句柄失效并释放预算。GUI、历史与SVG尚未接入，见[阶段指南](../features/sketch-guide.md)。

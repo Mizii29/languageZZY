@@ -1,0 +1,3 @@
+(zno)c:sketch.Canvas:=sketch.canvas(200,100,"画布");
+(zno)p:sketch.Pen:=sketch.pen(c,"笔");
+sketch.circle(p,10,-90);(zno)s:=sketch.position(p);io.print(math.abs(s.x-(-10))<0.000001);io.print(math.abs(s.y-(10))<0.000001);io.print(sketch.heading(p));
