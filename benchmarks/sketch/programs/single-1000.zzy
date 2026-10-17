@@ -1,0 +1,1 @@
+(zno)c:=sketch.canvas(1000,600,"benchmark");(zno)p:=sketch.pen(c,"p");sketch.clear_history(c);io.print("ready");(for)i(in)range(0,1000,1){sketch.forward(p,1);}io.print("done");

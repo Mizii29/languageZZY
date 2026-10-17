@@ -1,0 +1,17 @@
+{
+  "recorded_at": "2026-10-17T19:27:31.216905+08:00",
+  "cpu_identifier": "Intel64 Family 6 Model 170 Stepping 4, GenuineIntel",
+  "logical_processors": 18,
+  "physical_memory_bytes": 25196617728,
+  "windows": "Windows-11-10.0.26200-SP0",
+  "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+  "unicode": "15.0.0",
+  "gc_enabled": true,
+  "gc_threshold": [
+    700,
+    10,
+    10
+  ],
+  "hardware_query": "environment + GlobalMemoryStatusEx; CIM denied in sandbox, no CIM values asserted",
+  "method": "fresh subprocesses; GC enabled; no warm-up discarded; editing/inspection allowed, no concurrent project tests/benchmarks; OS caches/power/other applications not controlled"
+}

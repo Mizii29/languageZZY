@@ -7,18 +7,23 @@ class Replay:
     def __init__(self,r,c,n):
         idle(r,c,n)
         self.r,self.c,self.n=r,c,n
+        self.owners=[];self.checkpoints={}
+        self.owner=r.reserve(n,runtime_slots=len(c.objects)+len(c.history))
         self.entries=tuple(c.history)
         self.position=len(self.entries)
         self.objects=list(c.objects)
         self.values={}
-        for _,entry in self.entries:
-            for delta in entry:
-                for obj,key,_,_ in delta.attrs:
-                    self.values[(id(obj),key)]=tuple(c.layers) if obj is c and key=='layers' else getattr(obj,key)
-        self.owners=[];self.checkpoints={}
-        self.owner=r.reserve(n,runtime_slots=len(self.objects)+2*len(self.values)+len(self.entries),runtime_payload_bytes=16*len(self.values))
-        self.seek(0)
-        self.checkpoint()
+        try:
+            for _,entry in self.entries:
+                for delta in entry:
+                    for obj,key,_,_ in delta.attrs:
+                        if (id(obj),key) not in self.values:
+                            self.owners.append(r.reserve(n,runtime_slots=2,runtime_payload_bytes=16))
+                            self.values[(id(obj),key)]=tuple(c.layers) if obj is c and key=='layers' else getattr(obj,key)
+            self.seek(0)
+            self.checkpoint()
+        except BaseException:
+            self.close();raise
         self.spacing=max(1,(len(self.entries)+6)//7)
 
     def close(self):
