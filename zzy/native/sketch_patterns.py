@@ -5,7 +5,7 @@ import math
 from pathlib import Path
 from threading import get_ident
 
-from ..diagnostics import DiagnosticError, Phase
+from ..diagnostics import DiagnosticError, Phase, ResourceExceeded
 from ..resources import ResourceMeter
 from ..source import Source
 from ..prepare import prepare
@@ -60,7 +60,45 @@ def bounded_text(r,n,parts):
 
 
 def encode(r,n,record):
-    return bounded_text(r,n,json.JSONEncoder(ensure_ascii=False,allow_nan=False,separators=(',',':')).iterencode(record))
+    def string_parts(text):
+        yield '"'
+        escapes={'"':'\\"','\\':'\\\\','\b':'\\b','\f':'\\f','\n':'\\n','\r':'\\r','\t':'\\t'}
+        for char in text:
+            yield escapes.get(char,'\\u%04x'%ord(char) if ord(char)<32 else char)
+        yield '"'
+    def visit(value,depth=0):
+        r.meter.cancellation.check()
+        if isinstance(value,str):yield from string_parts(value)
+        elif value is None:yield 'null'
+        elif type(value)is bool:yield 'true' if value else 'false'
+        elif type(value)is int:yield r.text_value(Value('Int',value),n).data
+        elif type(value)is float:
+            if not math.isfinite(value):raise ValueError('nonfinite JSON')
+            yield repr(value)
+        else:
+            r.check('value_depth',depth+1,n)
+            if type(value)is dict:
+                yield '{'
+                for i,(key,item) in enumerate(value.items()):
+                    if i:yield ','
+                    yield from string_parts(key);yield ':';yield from visit(item,depth+1)
+                yield '}'
+            elif type(value) in (tuple,list):
+                yield '['
+                for i,item in enumerate(value):
+                    if i:yield ','
+                    yield from visit(item,depth+1)
+                yield ']'
+            else:raise ValueError('unsupported JSON record')
+    def buffered():
+        chunks=[];size=0
+        for part in visit(record):
+            r.meter.cancellation.check()
+            chunks.append(part);size+=len(part)
+            if size>=4096:yield ''.join(chunks);chunks=[];size=0
+        if chunks:yield ''.join(chunks)
+    with r.reserve(n,runtime_payload_bytes=32768,runtime_slots=4096):
+        return bounded_text(r,n,buffered())
 
 
 class Decoded:
@@ -76,10 +114,16 @@ class Decoded:
                 self.owners.append(r.reserve(n,runtime_slots=len(v.data)))
                 return [convert(child) for child in v.data]
             return v.data
-        self.data=convert(value)
+        try:self.data=convert(value)
+        except BaseException:
+            self.close();raise
+
+    def close(self):
+        for owner in self.owners:owner.release()
+        self.owners.clear()
 
     def __del__(self):
-        for owner in self.owners:owner.release()
+        self.close()
 
 
 def fields(data,keys):
@@ -170,10 +214,16 @@ def transform(r,n,g,x,y,scale,angle):
 
 
 def quote(text):
-    return '"'+text.replace('[OoO]','[OoO][OoO]').replace('"','[OoO]q').replace('\n','[OoO]n').replace('\r','[OoO]r').replace('\t','[OoO]t')+'"'
+    parts=['"'];index=0
+    escapes={'"':'[OoO]q','\n':'[OoO]n','\r':'[OoO]r','\t':'[OoO]t'}
+    while index<len(text):
+        if text.startswith('[OoO]',index):parts.append('[OoO][OoO]');index+=5
+        else:parts.append(escapes.get(text[index],text[index]));index+=1
+    parts.append('"');return ''.join(parts)
 
 
 def invoke(r,op,args,n):
+    decoded=None
     try:
         if op=='drawing_from_json':
             decoded=Decoded(r,n,args[0].data);data=decoded.data
@@ -223,10 +273,15 @@ def invoke(r,op,args,n):
                 text=f'(zno){private}:=(zzz)(sketch.drawing_from_json({quote(encoded.data)}));\n(addnew) {name}(canvas,x,y,scale,angle) -> (Result) {{\n(zno)d:=wake({private})?;\n(return) (^_^)(sketch.stamp(canvas,d,x,y,scale,angle));\n}}\n'
                 raw=text.encode('utf-8')
                 r.check('source_file_bytes',len(raw),n)
-                prepare(Source.from_bytes(Path('<sketch-export.zzy>'),raw),meter)
+                try:prepare(Source.from_bytes(Path('<sketch-export.zzy>'),raw),meter)
+                except ResourceExceeded as error:
+                    raise ResourceExceeded(error.key,error.limit,error.requested,Phase.EXECUTION,r.location(n),n.token.span) from None
                 value=r.scalar('String',text,n)
             return files.invoke(r,'io.write_atomic',[args[1],value],n)
         raise AssertionError(op)
     except (ValueError,UnicodeError,json_codec.InvalidJSON,DiagnosticError) as error:
         if isinstance(error,DiagnosticError) and error.diagnostic.code not in {'E101','E102','E103','E301','E302','E304'}:raise
         return r.result(False,r.scalar('String','sketch format/export: '+str(error),n),n)
+
+    finally:
+        if decoded is not None:decoded.close()

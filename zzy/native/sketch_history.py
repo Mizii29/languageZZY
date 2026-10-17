@@ -1,8 +1,14 @@
 """Document deltas. Immutable geometry blocks are shared, never copied per edit."""
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 
 from ..diagnostics import Phase, ResourceExceeded
 from ..values import NULL, boolean
+
+class Label(str):
+    def __new__(cls,text,owner):
+        value=super().__new__(cls,text);value.owner=owner;return value
+    def __del__(self):self.owner.release()
+
 
 COMMANDS = 100000
 BYTES = 64 * 1024 * 1024
@@ -27,6 +33,7 @@ class Delta:
         for index,block in add:c.objects.insert(index,block)
         for obj,key,before,after in self.attrs:
             value=after if forward else before
+            if key=='state':value=replace(value,cursor=obj.state.cursor)
             setattr(obj,key,list(value) if key=='layers' else value)
 
 
@@ -36,7 +43,9 @@ def idle(r,c,n):
 
 def operate(r,c,n,op,args):
     if op=='begin_group':
-        idle(r,c,n);c.group=[];c.group_label=args[1].data;return NULL
+        idle(r,c,n)
+        owner=r.reserve(n,runtime_payload_bytes=4*len(args[1].data))
+        c.group_label=Label(args[1].data,owner);c.group=[];return NULL
     if op=='end_group':
         if c.group is None or c.draft is not None:r.error(n,'E214','分组未配对或仍有填充草稿')
         if c.group:c.history.append((c.group_label,tuple(c.group)))
@@ -67,7 +76,7 @@ class Edit:
     The synchronous native call has no callback boundary. Allocation failure
     restores its candidate fields/blocks/ID; completed earlier calls stay intact.
     """
-    def __init__(self,r,c,n,op,h):
+    def __init__(self,r,c,n,op,h,args):
         self.r,self.c,self.n,self.op=r,c,n,op
         self.old_id=c.next_id;self.old_layer_id=c.next_layer
         self.draft=c.draft
@@ -80,10 +89,13 @@ class Edit:
         self.before=[(obj,key,tuple(getattr(obj,key)) if key=='layers' else getattr(obj,key)) for obj,key in fields]
         self.start=len(c.objects)
         self.removed=tuple(enumerate(c.objects)) if op=='clear' else ()
+        if op in {'translate_object','delete_object'}:
+            self.removed=tuple((i,b) for i,b in enumerate(c.objects) if b.geometry.id==args[1].data)
 
     def finish(self):
         c=self.c;r=self.r;n=self.n
         added=tuple(enumerate(c.objects[self.start:],self.start)) if self.op!='clear' else ()
+        if self.op=='translate_object':added=tuple((i,c.objects[i]) for i,b in self.removed)
         attrs=[]
         for obj,key,before in self.before:
             after=tuple(getattr(obj,key)) if key=='layers' else getattr(obj,key)
@@ -91,17 +103,23 @@ class Edit:
             if self.op=='end_fill' and key=='state':before=self.draft.before
             if before!=after:attrs.append((obj,key,before,after))
         if not attrs and not self.removed and not added:return
-        cost=160+64*len(attrs)+16*(len(self.removed)+len(added))
+        label_cost=4*len(c.group_label) if c.group is not None and not c.group else 0
+        cost=160+64*len(attrs)+16*(len(self.removed)+len(added))+label_cost
         redo_count=sum(len(entry) for _,entry in c.redo_history)
         redo_bytes=sum(d.cost for _,entry in c.redo_history for d in entry)
         try:
             if c.history_count-redo_count+1>COMMANDS:raise ResourceExceeded('sketch.history_commands',COMMANDS,c.history_count+1,Phase.EXECUTION,r.location(n),n.token.span)
             if c.history_bytes-redo_bytes+cost>BYTES:raise ResourceExceeded('sketch.history_bytes',BYTES,c.history_bytes+cost,Phase.EXECUTION,r.location(n),n.token.span)
-            owner=r.reserve(n,runtime_slots=2+len(attrs)*4+len(self.removed)+len(added),runtime_payload_bytes=cost)
+            owner=r.reserve(n,runtime_slots=2+len(attrs)*4+len(self.removed)+len(added),runtime_payload_bytes=cost-label_cost)
             delta=Delta(tuple(attrs),self.removed,added,cost,owner)
             r.meter.cancellation.check()
         except BaseException:
             if self.op=='clear':c.objects[:]=[b for _,b in self.removed]
+            elif self.op in {'translate_object','delete_object'}:
+                if self.op=='translate_object':
+                    for i,b in self.removed:c.objects[i]=b
+                else:
+                    for i,b in self.removed:c.objects.insert(i,b)
             else:del c.objects[self.start:]
             for obj,key,before in self.before:setattr(obj,key,list(before) if key=='layers' else before)
             for owner in self.handle.owners[self.owners_start:]:owner.release()

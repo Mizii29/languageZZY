@@ -14,7 +14,7 @@ from .sketch_metadata import TYPES
 
 LIMITS = MappingProxyType(dict(coordinate_abs=1_000_000, angle_abs=1_000_000,
     canvas_dimension=32768, style_size=10000, batch_points=10000,
-    curve_segments=65536, path_segments=1_000_000, objects=100000, pens=256, layers=256))
+    curve_segments=65536, path_segments=1_000_000, objects=100000, pens=256, layers=256, timers=256))
 CURVE_ERROR = 0.25  # Maximum logical-unit chord deviation; shared by all renderers.
 
 
@@ -111,7 +111,7 @@ class Layer(Handle):
 
 
 class Canvas(Handle):
-    def __init__(self, width, height, title, runtime, node):
+    def __init__(self, width, height, title, runtime, node, register=True):
         super().__init__('Canvas', runtime, node, slots=2, payload=4 * len(title) + 32)
         self.width, self.height, self.title = width, height, title
         self.background = (255, 255, 255)
@@ -124,13 +124,16 @@ class Canvas(Handle):
         self.next_layer = 1
         self.history=[];self.redo_history=[];self.group=None;self.group_label=""
         self.history_bytes=0;self.history_count=0;self.interval_ms=40
-        runtime.native_canvases.add(self)
+        self.callbacks={};self.timers={};self.next_timer=1
+        if register:runtime.native_canvases.add(self)
 
     def cleanup(self):
         if self.draft is not None:
             self.draft.pen.state = self.draft.before
             self.draft = None
-        self.group=None;self.history.clear();self.redo_history.clear()
+        from .sketch_events import cleanup
+        cleanup(self)
+        self.group=None;self.group_label="";self.history.clear();self.redo_history.clear()
         self.alive = False
 
 
@@ -157,7 +160,9 @@ def guard(runtime, node, handle, write=False):
     if (handle.context is not runtime.native_context or handle.thread != get_ident()
             or not canvas.alive):
         runtime.error(node, 'E203', 'sketch 句柄不属于当前执行上下文/线程')
-    if isinstance(handle, Pen) and handle.layer.canvas is not canvas:
+    if isinstance(handle, Layer) and handle not in canvas.layers:
+        runtime.error(node, 'E203', '图层已不在当前文档')
+    if isinstance(handle, Pen) and (handle.layer.canvas is not canvas or handle.layer not in canvas.layers):
         runtime.error(node, 'E203', '画笔和图层不属于同一画布')
     if write and (handle.frozen or canvas.frozen
                   or isinstance(handle, Pen) and (handle.layer.frozen or handle.layer.locked)):
@@ -272,6 +277,9 @@ def _invoke(runtime, name, args, node):
     if runtime.native_thread != get_ident():
         runtime.error(node, 'E203', 'sketch 原生调用不属于当前执行线程')
     op = name.removeprefix('sketch.')
+    if op == 'load_project':
+        from .sketch_project import invoke as project
+        return project(runtime,op,args,node)
     if op in {'drawing_from_json','drawing_text','save_function'}:
         from .sketch_patterns import invoke as patterns
         return patterns(runtime,op,args,node)
@@ -287,7 +295,7 @@ def _invoke(runtime, name, args, node):
             runtime.error(node, 'E208', '画布宽高必须为 1..32768')
         return Canvas(args[0].data, args[1].data, args[2].data, runtime, node)
     handle = args[0]
-    canvas = guard(runtime, node, handle, write=op not in {'position', 'heading', 'svg_text', 'save_svg', 'layer_info', 'show', 'capture'})
+    canvas = guard(runtime, node, handle, write=op not in {'position', 'heading', 'svg_text', 'save_svg', 'layer_info', 'show', 'capture', 'pick', 'save_png', 'save_project', 'set_layer'})
     pen = handle if isinstance(handle, Pen) else None
     if op in {'position', 'heading'}:
         if op == 'heading':
@@ -311,6 +319,17 @@ def _invoke(runtime, name, args, node):
         idle(runtime,canvas,node)
         from .sketch_svg import export
         return export(runtime, node, canvas, args[1] if op == 'save_svg' else None)
+    if op == 'save_project':
+        from .sketch_project import invoke as project
+        return project(runtime,op,args,node)
+    if op in {'on_click','on_drag','on_release','on_key','every','cancel_timer'}:
+        from .sketch_events import invoke as events
+        return events(runtime,op,args,node,canvas)
+    if op in {'pick','translate_object','copy_object','delete_object'}:
+        from .sketch_objects import invoke as objects
+        return objects(runtime,op,args,node,canvas)
+    if op == 'save_png':
+        return runtime.result(False,runtime.scalar('String','PNG unavailable: no independent PNG backend is installed',node),node)
     if op in {'capture','stamp'}:
         from .sketch_patterns import invoke as patterns
         return patterns(runtime,op,args,node)
@@ -450,22 +469,22 @@ def _invoke(runtime, name, args, node):
     return NULL
 
 
-_READ = {'position','heading','svg_text','save_svg','layer_info','show','capture','drawing_from_json','drawing_text','save_function'}
-_NO_HISTORY = _READ | {'canvas','pen','rgb','begin_fill','cancel_fill','show_cursor','hide_cursor'}
+_READ = {'position','heading','svg_text','save_svg','layer_info','show','capture','drawing_from_json','drawing_text','save_function','pick','save_png','save_project','load_project'}
+_NO_HISTORY = _READ | {'canvas','pen','rgb','begin_fill','cancel_fill','show_cursor','hide_cursor','on_click','on_drag','on_release','on_key','every','cancel_timer'}
 
 def invoke(runtime,name,args,node):
     op=name.removeprefix('sketch.')
     if op in _NO_HISTORY:
         return _invoke(runtime,name,args,node)
     from .sketch_history import Edit, operate, interval
-    c=guard(runtime,node,args[0],write=op!='frame_interval')
+    c=guard(runtime,node,args[0],write=op not in {'frame_interval','set_layer'})
     if op in {'begin_group','end_group','undo','redo','clear_history'}:
         return operate(runtime,c,node,op,args)
     if op=='frame_interval':
         guard(runtime,node,args[0],write=True)
         ready(runtime,node,c)
         c.interval_ms=interval(runtime,node,args[1]);return NULL
-    edit=Edit(runtime,c,node,op,args[0]) if c.draft is None or op=='end_fill' else None
+    edit=Edit(runtime,c,node,op,args[0],args) if c.draft is None or op=='end_fill' else None
     result=_invoke(runtime,name,args,node)
     if edit is not None:edit.finish()
     return result

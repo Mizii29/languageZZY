@@ -2,7 +2,7 @@
 from types import MappingProxyType
 from .metadata import NativeFunction, NativeType
 
-ABI = 'e3-v1'
+ABI = 'e4-dev-v1'
 TYPES = MappingProxyType({name: NativeType('sketch.' + name, mutable, ownership, equality)
     for name, mutable, ownership, equality in (
         ('Canvas', True, 'ExecutionContext', 'identity'),
@@ -28,6 +28,19 @@ _SPEC = {
     'drawing_text': ('drawing', 'sketch.Drawing', 'Result'),
     'drawing_from_json': ('content', 'String', 'Result'),
     'save_function': ('drawing path name', 'sketch.Drawing String String', 'Result'),
+    'pick': ('canvas x y', 'sketch.Canvas Int|Float Int|Float', 'Int|Null'),
+    'translate_object': ('canvas id dx dy', 'sketch.Canvas Int Int|Float Int|Float', 'Null'),
+    'copy_object': ('canvas id', 'sketch.Canvas Int', 'Int'),
+    'delete_object': ('canvas id', 'sketch.Canvas Int', 'Null'),
+    'on_click': ('canvas handler', 'sketch.Canvas Function', 'Null'),
+    'on_drag': ('canvas handler', 'sketch.Canvas Function', 'Null'),
+    'on_release': ('canvas handler', 'sketch.Canvas Function', 'Null'),
+    'on_key': ('canvas handler', 'sketch.Canvas Function', 'Null'),
+    'every': ('canvas duration handler', 'sketch.Canvas Quantity Function', 'Int'),
+    'cancel_timer': ('canvas id', 'sketch.Canvas Int', 'Bool'),
+    'save_project': ('canvas path', 'sketch.Canvas String', 'Result'),
+    'load_project': ('path', 'String', 'Result'),
+    'save_png': ('canvas path', 'sketch.Canvas String', 'Result'),
     'show': ('canvas', 'sketch.Canvas', 'Result'),
     'add_layer': ('canvas name', 'sketch.Canvas String', 'sketch.Layer'),
     'set_layer': ('pen layer', 'sketch.Pen sketch.Layer', 'Null'),

@@ -14,6 +14,83 @@ from zzy.native.sketch_gui import run_gui, View
 
 
 class GUIAcceptance(unittest.TestCase):
+    def test_windows_pixels_confirm_evenodd_fill_and_clip(self):
+        source='''(zno)c:=sketch.canvas(200,200,"evenodd pixels");(zno)p:=sketch.pen(c,"p");sketch.hide_cursor(p);
+sketch.fill_color(p,sketch.rgb(255,0,0));sketch.jump_to(p,-60,-20);sketch.begin_fill(p);sketch.polyline(p,[[-20,-20],[-20,20],[-60,20],[-60,-20]]);sketch.end_fill(p);
+sketch.jump_to(p,20,-20);sketch.begin_fill(p);sketch.polyline(p,[[60,-20],[60,20],[20,20],[20,-20],[60,-20],[60,20],[20,20],[20,-20]]);sketch.end_fill(p);sketch.show(c);'''
+        program,output=prepared(source);observed=[]
+        def probe(view,thread):
+            deadline=time.monotonic()+3
+            def read():
+                if view.scene is None or not view.render_complete:
+                    if time.monotonic()>deadline:self.fail('render timeout')
+                    view.window.after(20,read);return
+                import ctypes
+                user=ctypes.WinDLL('user32',use_last_error=True);gdi=ctypes.WinDLL('gdi32',use_last_error=True)
+                user.GetDC.argtypes=[ctypes.c_void_p];user.GetDC.restype=ctypes.c_void_p
+                user.ReleaseDC.argtypes=[ctypes.c_void_p,ctypes.c_void_p]
+                gdi.GetPixel.argtypes=[ctypes.c_void_p,ctypes.c_int,ctypes.c_int];gdi.GetPixel.restype=ctypes.c_uint32
+                hwnd=view.area.winfo_id();dc=user.GetDC(hwnd)
+                try:
+                    for point in ((-40,0),(40,0),(110,0)):
+                        x,y=view.screen(point);observed.append(gdi.GetPixel(dc,round(x),round(y)))
+                finally:user.ReleaseDC(hwnd,dc)
+                view.close()
+            view.window.after(180,read)
+        run_gui(program,output,probe=probe)
+        self.assertEqual(observed,[0x0000ff,0xffffff,0xdddddd])
+
+    def test_callback_error_is_original_diagnostic_and_nested_show_rejected(self):
+        from zzy.diagnostics import DiagnosticError
+        for body,code in [('io.print(1/0);','E205'),('sketch.show(c);','E214')]:
+            program,output=prepared('(zno)c:=sketch.canvas(100,100,"callback error");(addnew) key(k){'+body+'}sketch.on_key(c,key);sketch.show(c);')
+            def probe(view,thread):view.window.after(60,lambda:view.session.send(('callback','key','x')))
+            with self.assertRaises(DiagnosticError) as error:run_gui(program,output,probe=probe)
+            self.assertEqual(error.exception.diagnostic.code,code)
+
+    def test_real_callbacks_timer_key_and_close_cleanup(self):
+        source='''(zno)c:=sketch.canvas(200,200,"events");
+(zyes)t:=0;
+(addnew) click(x,y,b){io.print(b);}
+(addnew) key(k){io.print(k);}
+(addnew) tick(){io.print("tick");sketch.cancel_timer(c,t);}
+sketch.on_click(c,click);sketch.on_key(c,key);t<-sketch.every(c,1::ms,tick);
+sketch.show(c);io.print(sketch.cancel_timer(c,t));io.print("closed");'''
+        program,output=prepared(source);lines=[]
+        def probe(view,thread):
+            def send():
+                view.area.event_generate('<ButtonPress-3>',x=80,y=90)
+                view.area.event_generate('<ButtonRelease-3>',x=80,y=90)
+                view.area.focus_force()
+                view.area.event_generate('<KeyPress>',keysym='Escape')
+                view.window.after(150,view.close)
+            view.window.after(80,send)
+        with patch.object(output,'write',lines.append):run_gui(program,output,probe=probe)
+        self.assertEqual(lines.count('tick\n'),1)
+        self.assertIn('3\n',lines);self.assertIn('Escape\n',lines)
+        self.assertEqual(lines[-2:],['false\n','closed\n'])
+
+    def test_close_interrupts_long_callback_and_continues_script(self):
+        program,output=prepared('(zno)c:=sketch.canvas(100,100,"long callback");(addnew) key(k){(while)(true){}}sketch.on_key(c,key);sketch.show(c);io.print("continued");')
+        lines=[];threads=[]
+        def probe(view,thread):
+            threads.append(thread)
+            view.window.after(50,lambda:view.session.send(('callback','key','a')))
+            view.window.after(150,view.close)
+        with patch.object(output,'write',lines.append):run_gui(program,output,probe=probe)
+        self.assertEqual(lines,['continued\n']);self.assertFalse(threads[0].is_alive())
+
+    def test_real_queue_overflow_aborts_long_callback(self):
+        program,output=prepared('(zno)c:=sketch.canvas(100,100,"overflow");(addnew) key(k){(while)(true){}}sketch.on_key(c,key);sketch.show(c);')
+        from zzy.diagnostics import ResourceExceeded
+        def probe(view,thread):
+            view.window.after(50,lambda:view.session.send(('callback','key','a')))
+            def flood():
+                for _ in range(5000):view.session.send(('callback','key','b'))
+            view.window.after(120,flood)
+        with self.assertRaises(ResourceExceeded) as error:run_gui(program,output,probe=probe)
+        self.assertEqual(error.exception.key,'sketch.input_queue')
+
     def test_real_history_controls_seek_step_and_edit_exit(self):
         program,output=prepared('(zno)c:=sketch.canvas(200,200,"replay");(zno)p:=sketch.pen(c,"p");sketch.forward(p,1);sketch.forward(p,1);sketch.forward(p,1);sketch.show(c);io.print(sketch.layer_info(c)[0].count);io.print(sketch.position(p));')
         lines=[]
@@ -61,8 +138,13 @@ io.print(sketch.show(c));io.print(sketch.show(c));io.print(sketch.svg_text(c));'
                     view.area.event_generate('<ButtonPress-1>',x=100,y=100)
                     view.area.event_generate('<B1-Motion>',x=150,y=150)
                     view.area.event_generate('<ButtonRelease-1>',x=150,y=150)
-                    view.window.after(150,view.close)
-                view.window.after(80,act)
+                    deadline=time.monotonic()+3
+                    def finish():
+                        if len(view.scene.geometries)==len(before.geometries)+1:view.close()
+                        elif time.monotonic()>deadline:self.fail('tool result did not arrive')
+                        else:view.window.after(20,finish)
+                    view.window.after(20,finish)
+                view.window.after(180,act)
             run_gui(program,output,probe=probe)
         self.assertEqual(len(windows),2)
         self.assertTrue(all(tid!=main for tid,_ in observed))

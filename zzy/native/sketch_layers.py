@@ -28,6 +28,7 @@ def invoke(r, op, args, n, c, p):
         owner=r.reserve(n,runtime_payload_bytes=4*len(name))
         h.owners.append(owner);h.name=name
     elif op == 'set_layer':
+        if p.frozen or c.frozen:r.error(n,'E203','画笔或画布只读')
         layer=args[1];other=guard(r,n,layer)
         if other is not c:r.error(n,'E203','图层不属于画笔画布')
         p.layer=layer

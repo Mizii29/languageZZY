@@ -1,0 +1,4 @@
+(zno)c:=sketch.canvas(200,100,"e4");
+(zno)p:=sketch.pen(c,"p");
+(zno)l:=sketch.add_layer(c,"top");
+sketch.move_layer(l,-1);

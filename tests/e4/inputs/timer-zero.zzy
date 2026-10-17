@@ -1,0 +1,4 @@
+(zno)c:=sketch.canvas(200,100,"e4");
+(zno)p:=sketch.pen(c,"p");
+(addnew)tick(){}
+sketch.every(c,0::ms,tick);

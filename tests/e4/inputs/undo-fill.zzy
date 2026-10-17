@@ -1,0 +1,4 @@
+(zno)c:=sketch.canvas(200,100,"e4");
+(zno)p:=sketch.pen(c,"p");
+sketch.begin_fill(p);
+sketch.undo(c);
