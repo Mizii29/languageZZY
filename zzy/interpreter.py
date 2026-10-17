@@ -466,6 +466,9 @@ class Interpreter(Features, Library):
                     owner.data[name] = self.stats_definition(node)
                     return owner.data[name]
                 if namespace == 'sketch':
+                    if name == 'LayerInfo':
+                        owner.data[name] = self.layer_info_definition(node)
+                        return owner.data[name]
                     if name == 'Position':
                         owner.data[name] = self.position_definition(node)
                         return owner.data[name]

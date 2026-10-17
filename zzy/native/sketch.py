@@ -14,7 +14,7 @@ from .sketch_metadata import TYPES
 
 LIMITS = MappingProxyType(dict(coordinate_abs=1_000_000, angle_abs=1_000_000,
     canvas_dimension=32768, style_size=10000, batch_points=10000,
-    curve_segments=65536, path_segments=1_000_000, objects=100000, pens=256))
+    curve_segments=65536, path_segments=1_000_000, objects=100000, pens=256, layers=256))
 CURVE_ERROR = 0.25  # Maximum logical-unit chord deviation; shared by all renderers.
 
 
@@ -50,6 +50,8 @@ class PenState:
     fill: tuple = (0, 0, 0)
     width: float = 1.0
     cursor: bool = True
+    font: str = "sans-serif"
+    align: str = "left"
 
 
 @dataclass(frozen=True)
@@ -69,6 +71,11 @@ class Geometry:
     center: tuple | None = None
     diameter: float = 0.0
     fill_rule: str = 'evenodd'
+    layer: int = 0
+    text: str = ''
+    font: str = 'sans-serif'
+    align: str = 'left'
+    size: float = 12.0
 
 
 class Block:
@@ -95,9 +102,10 @@ class Handle(Value):
 
 
 class Layer(Handle):
-    def __init__(self, canvas, runtime, node):
-        super().__init__('Layer', runtime, node, slots=1, payload=28)
-        self.canvas, self.name, self.locked, self.visible = canvas, 'default', False, True
+    def __init__(self, canvas, runtime, node, name="default", identity=0):
+        super().__init__('Layer', runtime, node, slots=1, payload=4 * len(name))
+        self.canvas, self.name, self.locked, self.visible = canvas, name, False, True
+        self.id = identity
 
 
 class Canvas(Handle):
@@ -110,6 +118,8 @@ class Canvas(Handle):
         self.draft = None
         self.alive = True
         self.layer = Layer(self, runtime, node)
+        self.layers = [self.layer]
+        self.next_layer = 1
         runtime.native_canvases.add(self)
 
     def cleanup(self):
@@ -156,9 +166,9 @@ def ready(runtime, node, canvas, pen=None, allowed=False):
 
 
 def prepare_block(runtime, node, canvas, strokes=(), *, boundary=(), fill=None,
-                  kind='path', center=None, diameter=0.0):
+                  kind='path', center=None, diameter=0.0, layer=0, text='', font='sans-serif', align='left', size=12.0):
     segments = sum(max(0, len(s.points) - 1) for s in strokes)
-    if kind == 'dot':
+    if kind in {'dot', 'text'}:
         segments = 1
     pending = canvas.draft.segments if canvas.draft else 0
     capacity(runtime, node, 'path_segments', canvas.segments + pending + segments)
@@ -166,9 +176,9 @@ def prepare_block(runtime, node, canvas, strokes=(), *, boundary=(), fill=None,
     points = sum(len(s.points) for s in strokes) + len(boundary)
     owner = runtime.reserve(node, runtime_objects=1,
         runtime_slots=4 + len(strokes) + points,
-        runtime_payload_bytes=128 + 48 * len(strokes) + 16 * points)
+        runtime_payload_bytes=128 + 48 * len(strokes) + 16 * points + 4 * (len(text) + len(font)))
     try:
-        geometry = Geometry(canvas.next_id, kind, strokes, boundary, fill, center, diameter)
+        geometry = Geometry(canvas.next_id, kind, strokes, boundary, fill, center, diameter, layer=layer, text=text, font=font, align=align, size=size)
         return Block(geometry, segments, owner)
     except BaseException:
         owner.release()
@@ -180,7 +190,7 @@ def publish(runtime, node, pen, state, points=()):
     block = None
     if len(points) > 1 and pen.state.down:
         stroke = Stroke(tuple(points), pen.state.color, pen.state.width)
-        block = prepare_block(runtime, node, canvas, (stroke,))
+        block = prepare_block(runtime, node, canvas, (stroke,), layer=pen.layer.id)
     runtime.meter.cancellation.check()
     if block is not None:
         if canvas.draft is not None:
@@ -265,7 +275,7 @@ def invoke(runtime, name, args, node):
             runtime.error(node, 'E208', '画布宽高必须为 1..32768')
         return Canvas(args[0].data, args[1].data, args[2].data, runtime, node)
     handle = args[0]
-    canvas = guard(runtime, node, handle, write=op not in {'position', 'heading', 'svg_text', 'save_svg'})
+    canvas = guard(runtime, node, handle, write=op not in {'position', 'heading', 'svg_text', 'save_svg', 'layer_info', 'show'})
     pen = handle if isinstance(handle, Pen) else None
     if op in {'position', 'heading'}:
         if op == 'heading':
@@ -287,6 +297,9 @@ def invoke(runtime, name, args, node):
     if op in {'svg_text', 'save_svg'}:
         from .sketch_svg import export
         return export(runtime, node, canvas, args[1] if op == 'save_svg' else None)
+    if op in {'add_layer', 'set_layer', 'layer_visible', 'lock_layer', 'rename_layer', 'move_layer', 'layer_info', 'font', 'text_align', 'text'}:
+        from .sketch_layers import invoke as layer_call
+        return layer_call(runtime, op, args, node, canvas, pen)
     if op == 'pen':
         label = args[1].data
         if not label or label in canvas.pens:
@@ -299,7 +312,7 @@ def invoke(runtime, name, args, node):
         canvas.background = args[1].data
         return NULL
     if op == 'clear':
-        if canvas.layer.frozen or canvas.layer.locked:
+        if any(layer.frozen or layer.locked for layer in canvas.layers):
             runtime.error(node, 'E203', '图层只读')
         canvas.objects.clear()
         canvas.segments = 0
@@ -339,7 +352,7 @@ def invoke(runtime, name, args, node):
             owner = runtime.reserve(node, runtime_objects=1, runtime_slots=4 + size + len(strokes),
                                     runtime_payload_bytes=128 + 48 * len(strokes) + 32 * size)
             try:
-                block = Block(Geometry(canvas.next_id, 'fill', strokes, boundary, draft.color), draft.segments, owner)
+                block = Block(Geometry(canvas.next_id, 'fill', strokes, boundary, draft.color, layer=pen.layer.id), draft.segments, owner)
                 count, next_id = canvas.segments + draft.segments, canvas.next_id + 1
                 runtime.meter.cancellation.check()
                 canvas.objects.append(block)
@@ -367,7 +380,7 @@ def invoke(runtime, name, args, node):
         point(runtime, node, x - diameter / 2, y - diameter / 2)
         point(runtime, node, x + diameter / 2, y + diameter / 2)
         block = prepare_block(runtime, node, canvas, kind='dot', center=state.position,
-                              diameter=diameter, fill=state.color)
+                              diameter=diameter, fill=state.color, layer=pen.layer.id)
         count, next_id = canvas.segments + 1, canvas.next_id + 1
         runtime.meter.cancellation.check()
         canvas.objects.append(block)

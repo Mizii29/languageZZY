@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "cases": [
+    {
+      "id": "e2-layers",
+      "file": "tests/e2/inputs/layers.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "e2-layers",
+      "file": "tests/e2/inputs/layers.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": "[sketch.LayerInfo::{name: default, visible: true, locked: false, count: 0, z: 0}, sketch.LayerInfo::{name: top, visible: true, locked: false, count: 1, z: 1}]\n[sketch.LayerInfo::{name: top, visible: true, locked: false, count: 1, z: 0}, sketch.LayerInfo::{name: default, visible: true, locked: false, count: 0, z: 1}]\n"
+    },
+    {
+      "id": "e2-text",
+      "file": "tests/e2/inputs/text.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "e2-text",
+      "file": "tests/e2/inputs/text.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": "sketch.Position::{x: 0.0, y: 0.0}\n1\n"
+    },
+    {
+      "id": "e2-headless",
+      "file": "tests/e2/inputs/headless.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "e2-headless",
+      "file": "tests/e2/inputs/headless.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": "(T_T)(GUI unavailable: run requires --gui)\n"
+    }
+  ]
+}

@@ -50,6 +50,8 @@ def _parser(output: Output) -> ArgumentParser:
             subparser.add_argument("file", help="相对当前工作目录的源码路径")
         if name == "test":
             subparser.add_argument("--timeout", type=float, default=10, help="每个 spec 超时秒数，默认 10")
+        if name == "run":
+            subparser.add_argument('--gui', action='store_true', help='启用主线程 Tk 视图和单一 ZZY 执行线程')
     return parser
 
 
@@ -111,7 +113,11 @@ def main(argv: list[str] | None = None) -> int:
                 if args.command in {"run", "check"}:
                     program = prepare(source, output.meter, loader)
                     if args.command == "run":
-                        Interpreter(program, output).run()
+                        if args.gui:
+                            from .native.sketch_gui import run_gui
+                            run_gui(program, output)
+                        else:
+                            Interpreter(program, output).run()
                     return 0
                 if args.command == "lex":
                     # Finish scanning first: lexical failure emits no token prefix.

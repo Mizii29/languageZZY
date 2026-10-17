@@ -101,3 +101,13 @@ io.print(sketch.save_svg(c,"picture.svg"));
 ```
 
 专项命令：`.venv/Scripts/python.exe -X utf8 -m unittest tests.test_sketch_svg tests.test_e1_runtime tests.test_e1_cli -q`。SVG 成功不构成 GUI/撤销验收。
+
+## E2：真实 Tk 视图
+
+显式 `python -m zzy run file.zzy --gui` 才加载 Tk。`sketch.show(c)` 正常关窗返回成功，之后可继续保存；不加 --gui 或缺 Tk/显示环境返回说明性失败 Result。默认 check/run/test 不初始化 GUI。
+
+已新增 add_layer/set_layer/layer_visible/lock_layer/rename_layer/move_layer/layer_info、font/text_align/text、show。图层最多256，0为底层；LayerInfo是冻结普通结构快照。SVG按可见图层顺序输出文字，字体族/内容均XML转义；文字水平、字号为逻辑单位。GUI缺字体由系统Tk替代，默认sans-serif映射Arial，不保证设备像素一致。
+
+窗口工具栏提供自由线、直线、矩形、圆、拖曳多边形、文字、平移，笔名/颜色/线宽、缩放/网格/坐标和图层状态栏。多边形以拖曳采样点形成闭合折线。Tk只操作不可变Scene与事件消息；通用绘图调用在单一ZZY执行线程执行。关闭使用独立Event，正常关闭不销毁文档。历史/回放尚待E3；公开回调、对象编辑和项目文件待E4。
+
+真实GUI验收独立命令：`.venv/Scripts/python.exe -X utf8 -m tests.gui_sketch --report tests/e2/results/gui.json`，需桌面环境，失败不跳过。当前Windows/Tk8.6.12真实窗口3/3通过；受限执行环境会报init.tcl不可用，不能把该结果冒充GUI成功。

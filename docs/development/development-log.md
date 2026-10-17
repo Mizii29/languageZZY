@@ -482,3 +482,11 @@ Git 提交：真实标识 / 未提交
 - `.venv/Scripts/python.exe -X utf8 -m unittest tests.test_sketch_svg tests.test_e1_runtime tests.test_e1_cli -q` 最终 132/132、36.640秒通过，无跳过。首次运行测试夹具漏传ResourceExceeded的phase、旧future-svg清单残留diagnostic导致失败，修复测试后重跑。解析SVG核对坐标/裁剪/背景/填充无附加描边/曲线逐点一致；替换失败、取消、限额保留旧文件及清理临时文件/预算；真实CLI验证check不导入几何、不保存，headless导出不导入Tk。
 - GUI预检：受限环境Tk报缺init.tcl；同一Python在真实桌面环境创建Tk 8.6.12窗口，1536×960屏幕、mainloop/after关闭成功。此仅环境探针，不代表E2工具/线程验收。
 - E1-02达到完成标准，E1完成；下一阶段E2。全量核心/P09回归将在本轮最终代码执行。没有将headless当GUI、撤销验收。
+
+## 2026-10-17：E2 视图与线程验收
+
+- 新增显式run --gui主线程Tk/单一ZZY工作线程桥接；show使用独立关闭控制信号，默认headless/check不加载Tk。图层、文字、多笔、缩放/平移、基础工具通过同一宿主调用修改文档，主线程不持有原生句柄或调用ZZY。无显示环境返回失败Result，真正工作线程错误保留原诊断。
+- `.venv/Scripts/python.exe -X utf8 -m unittest tests.test_sketch_layers -q` 2/2通过；与SVG/原几何22/22回归通过。新增6项独立CLI清单，覆盖LayerInfo快照/顺序、文字抬笔不移动和headless show失败。
+- 桌面真实执行 `.venv/Scripts/python.exe -X utf8 -m tests.gui_sketch --report tests/e1/results/gui-e2.json`：3/3、1.500秒，无失败/跳过，线程ID实测不同，真实Tk事件生成矩形、视图缩放不改文档、两次关窗继续执行/导出、错误清理与缺显示环境故障注入。环境为Windows11/CPython3.12.14/Tk8.6.12；其他平台未验证。
+- 基础GUI测试不声称已经验收E3历史或E4事件/项目/队列满载。E2完成后继续E3；仅本地提交，不推送。
+- E2/既有CLI/SVG/图层/元数据联合125项首轮2项期望误加字符串引号，其余123项通过；按既有debug显示契约去掉夹具引号，独立E2黑盒6/6、1.637秒通过并保存cli.json；未改语言显示实现。

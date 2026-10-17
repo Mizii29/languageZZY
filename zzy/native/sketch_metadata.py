@@ -2,7 +2,7 @@
 from types import MappingProxyType
 from .metadata import NativeFunction, NativeType
 
-ABI = 'e1-02-v1'
+ABI = 'e2-v1'
 TYPES = MappingProxyType({name: NativeType('sketch.' + name, mutable, ownership, equality)
     for name, mutable, ownership, equality in (
         ('Canvas', True, 'ExecutionContext', 'identity'),
@@ -17,6 +17,17 @@ _SPEC = {
     'rgb': ('r g b', 'Int Int Int', 'sketch.Color'),
     'background': ('canvas color', 'sketch.Canvas sketch.Color', 'Null'),
     'clear': ('canvas', 'sketch.Canvas', 'Null'),
+    'show': ('canvas', 'sketch.Canvas', 'Result'),
+    'add_layer': ('canvas name', 'sketch.Canvas String', 'sketch.Layer'),
+    'set_layer': ('pen layer', 'sketch.Pen sketch.Layer', 'Null'),
+    'layer_visible': ('layer visible', 'sketch.Layer Bool', 'Null'),
+    'lock_layer': ('layer locked', 'sketch.Layer Bool', 'Null'),
+    'rename_layer': ('layer name', 'sketch.Layer String', 'Null'),
+    'move_layer': ('layer index', 'sketch.Layer Int', 'Null'),
+    'layer_info': ('canvas', 'sketch.Canvas', 'Array'),
+    'font': ('pen family', 'sketch.Pen String', 'Null'),
+    'text_align': ('pen alignment', 'sketch.Pen String', 'Null'),
+    'text': ('pen content size', 'sketch.Pen String Int|Float', 'Null'),
     'svg_text': ('canvas', 'sketch.Canvas', 'Result'),
     'save_svg': ('canvas path', 'sketch.Canvas String', 'Result'),
     'color': ('pen color', 'sketch.Pen sketch.Color', 'Null'),

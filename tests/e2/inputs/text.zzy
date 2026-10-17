@@ -1,0 +1,3 @@
+(zno)c:=sketch.canvas(200,100,"e2");
+(zno)p:=sketch.pen(c,"pen");
+sketch.pen_up(p);sketch.text_align(p,"center");sketch.font(p,"sans-serif");sketch.text(p,"中文 & <标签>",12);io.print(sketch.position(p));io.print(sketch.layer_info(c)[0].count);

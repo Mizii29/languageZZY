@@ -65,7 +65,7 @@ class SketchRuntimeTests(unittest.TestCase):
             self.assertEqual(c.objects,[]);self.assertEqual(c.segments,0)
             self.assertEqual(p.state,old);self.assertEqual(c.next_id,2)
             self.assertNotIn('sketch.undo',FUNCTIONS);self.assertIn('sketch.svg_text',FUNCTIONS)
-            self.assertNotIn('sketch.show',FUNCTIONS)
+            self.assertIn('sketch.show',FUNCTIONS)
             self.assertEqual(set(PURE_CALLS),{f.name for f in FUNCTIONS.values() if f.pure})
             self.assertEqual(len(REGISTRY.extensions['sketch'].types),5)
         self.inspect('',inspect)
