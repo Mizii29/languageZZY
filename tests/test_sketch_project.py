@@ -90,6 +90,7 @@ class ProjectTests(unittest.TestCase):
                 self.assertEqual(path.read_bytes(),b'old');self.assertEqual(list(Path(tmp).glob('.zzy-*')),[])
                 self.call(r,n,'begin_group',c,'group')
                 self.error('E214',lambda:self.call(r,n,'save_project',c,str(path)))
+                self.error('E214',lambda:self.call(r,n,'save_png',c,str(path)))
                 self.call(r,n,'end_group',c)
                 self.assertFalse(self.call(r,n,'save_png',c,str(path)).data[0])
                 self.assertEqual(path.read_bytes(),b'old')

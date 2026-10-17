@@ -1,5 +1,7 @@
 # E1-01 几何与受控类型验收
 
+本文保留E1-01历史快照；当前完整E1—E4及GUI/离线证据见[tests/e4](../e4/README.md)，旧1918项不覆盖后续版本。
+
 更新：2026-10-17。本目录只覆盖 E1-01，不表示 SVG、GUI、撤销、回放或完整 sketch 1.0 已完成。接口子集和固定配额见 [使用指南](../../docs/features/sketch-guide.md)，正式行为见 [sketch](../../docs/features/sketch.md)。
 
 ## 实际测试

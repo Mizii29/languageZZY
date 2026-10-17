@@ -312,6 +312,35 @@
       "timeout_seconds": 20,
       "exit_code": 0,
       "stdout": ""
+    },
+    {
+      "id": "e4-png-group",
+      "file": "tests/e4/inputs/png-group.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E214",
+        "span": [
+          3,
+          16,
+          3,
+          17
+        ]
+      }
+    },
+    {
+      "id": "e4-png-group",
+      "file": "tests/e4/inputs/png-group.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": ""
     }
   ]
 }

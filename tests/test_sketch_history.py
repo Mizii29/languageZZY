@@ -89,5 +89,24 @@ class HistoryTests(unittest.TestCase):
             replay.close()
         self.inspect('',check)
 
+    def test_replay_reserves_largest_historical_document_before_restore(self):
+        from zzy.resources import ResourcePolicy
+        def check(r,c,p,n):
+            for _ in range(64):self.call(r,n,'forward',p,1)
+            self.call(r,n,'clear_history',c)
+            self.call(r,n,'clear',c)
+            self.assertEqual(len(c.objects),0)
+            used=r.meter.used('runtime_slots')
+            with patch.object(r.meter,'policy',ResourcePolicy({'runtime_slots':used+63})):
+                with self.assertRaises(ResourceExceeded):Replay(r,c,n)
+            self.assertEqual(r.meter.used('runtime_slots'),used)
+            replay=Replay(r,c,n)
+            self.assertEqual(len(replay.scene().geometries),64)
+            replay.seek(1)
+            self.assertFalse(replay.scene().geometries)
+            replay.close()
+            self.assertFalse(c.objects)
+        self.inspect('',check)
+
 
 if __name__=='__main__':unittest.main()

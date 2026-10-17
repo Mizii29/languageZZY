@@ -1,8 +1,8 @@
-"""E1-01 ABI metadata only; importing this never constructs a document."""
+"""Sketch ABI metadata only; importing this never constructs a document or GUI."""
 from types import MappingProxyType
 from .metadata import NativeFunction, NativeType
 
-ABI = 'e4-dev-v1'
+ABI = '1.0'
 TYPES = MappingProxyType({name: NativeType('sketch.' + name, mutable, ownership, equality)
     for name, mutable, ownership, equality in (
         ('Canvas', True, 'ExecutionContext', 'identity'),
@@ -10,7 +10,6 @@ TYPES = MappingProxyType({name: NativeType('sketch.' + name, mutable, ownership,
         ('Layer', True, 'ExecutionContext', 'identity'),
         ('Color', False, 'value', 'rgb'),
         ('Drawing', False, 'ExecutionContext', 'identity'))})
-# Layer/Drawing type identities are reserved; public factories arrive in E2/E3.
 _SPEC = {
     'canvas': ('width height title', 'Int Int String', 'sketch.Canvas'),
     'pen': ('canvas name', 'sketch.Canvas String', 'sketch.Pen'),
@@ -76,7 +75,10 @@ for _name in ('pen_up', 'pen_down', 'show_cursor', 'hide_cursor', 'home',
     _SPEC[_name] = ('pen', 'sketch.Pen', 'Null')
 FUNCTIONS = MappingProxyType({ 'sketch.' + name: NativeFunction(
     'sketch.' + name, tuple(params.split()), returns,
-    ('read',) if name in {'position', 'heading', 'svg_text'} else ('io',) if name == 'save_svg' else ('allocate',) if name in {'canvas', 'pen', 'rgb'} else ('mutation',),
-    ('E201', 'E202', 'E203', 'E208', 'E211', 'E214'),
+    ('io',) if name in {'save_svg','save_project','load_project','save_function','save_png'} else
+    ('callback',) if name == 'show' else
+    ('read','allocate') if name in {'position','heading','svg_text','layer_info','capture','drawing_text','pick'} else
+    ('allocate',) if name in {'canvas','pen','rgb','drawing_from_json'} else ('mutation',),
+    ('E201', 'E202', 'E203', 'E204', 'E208', 'E211', 'E214'),
     tuple(tuple(t.split('|')) for t in kinds.split()))
     for name, (params, kinds, returns) in _SPEC.items()})

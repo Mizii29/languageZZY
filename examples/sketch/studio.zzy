@@ -1,0 +1,32 @@
+(addnew) flower(canvas, pen, radius) {
+    sketch.begin_group(canvas, "六瓣小花");
+    (for) petal (in) range(0, 6, 1) {
+        sketch.circle(pen, radius, 360);
+        sketch.left(pen, 60);
+    }
+    sketch.dot(pen, 12);
+    sketch.end_group(canvas);
+}
+
+(addnew) main() -> (Result) {
+    (zno) canvas := sketch.canvas(800, 600, "梓伊小画室");
+    (zno) pen := sketch.pen(canvas, "梓伊一号笔");
+    sketch.background(canvas, sketch.rgb(248, 245, 255));
+    sketch.color(pen, sketch.rgb(150, 90, 220));
+    sketch.width(pen, 3);
+    flower(canvas, pen, 45);
+
+    zzysay: 捕获独立图案，再缩放旋转放到另一处
+    (zno) drawing := sketch.capture(canvas);
+    sketch.stamp(canvas, drawing, 180, 100, 0.6, 30);
+    sketch.save_svg(canvas, "little-flower.svg")?;
+    sketch.save_function(drawing, "flower.zzy", "draw_flower")?;
+    sketch.show(canvas)?;
+    sketch.save_project(canvas, "little-flower.zzysketch")?;
+    (return) (^_^)((null));
+}
+
+(?_?) main() {
+    (^_^)(value) => { io.print("小花出道，图案库也保存好了。"); }
+    (T_T)(message) => { io.print(message); }
+}

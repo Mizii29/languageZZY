@@ -1,6 +1,6 @@
 # ZZY 文档导航
 
-更新：2026-10-15｜核心语法：v0.6｜标准库：v0.6.1｜绘图扩展目标：sketch 1.0
+更新：2026-10-17｜核心语法：v0.6｜标准库：v0.6.1｜绘图扩展目标：sketch 1.0
 
 本目录维护设计与开发计划，项目介绍见 [根目录 README](../README.md)，使用文档见同级 [skills](../skills/README.md)。P00—P07 已完成，有宿主及统一 lex/run/check 外部黑盒测试和隔离 spec 运行器；P06 核心覆盖映射与指南示例已验证；B01—B09基线和一项优化的实测报告已建立，校园任务管家已实现并有独立应用测试。文件按用途归类，详细版解释整体设计，skills 提供语法参考和开发指南；精确规则由各专题契约维护。
 
@@ -87,4 +87,4 @@ A/C/D 已纳入 P04；E 是已选扩展，按 E1—E4 开发。Web/Python 互联
 
 使用者的语法参考和开发指南已放到同级 skills，AI 文档为 skills/zzy/SKILL.md；language 继续维护正式语法与库契约。真实性能报告已放到 [runtime/performance-report.md](runtime/performance-report.md)，交付索引仍待放到 development。
 
-画笔扩展接手入口：[正式sketch契约](features/sketch.md)、[E1-01使用指南](features/sketch-guide.md)、[实际验收](../tests/e1/README.md)。只实现E1-01子集，SVG和E2—E4能力逐项验收。
+画笔扩展接手入口：[正式sketch契约](features/sketch.md)、[使用指南](features/sketch-guide.md)、[完整验收](../tests/e4/README.md)。核心/headless/真实GUI分别验收；PNG不可用，E1—E4全部验收，sketch ABI 1.0。

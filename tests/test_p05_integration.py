@@ -268,7 +268,9 @@ class P05IntegrationTests(unittest.TestCase):
     def test_registry_is_closed_and_query_pure_list_explicit(self):
         self.assertEqual({f.name for f in FUNCTIONS.values() if f.pure},set(PURE_CALLS))
         self.assertEqual(len(FUNCTIONS),sum(len(e.functions) for e in REGISTRY.extensions.values()))
-        self.assertEqual({f.name for f in FUNCTIONS.values() if 'callback' in f.effects},{'array.map','array.filter'})
+        self.assertEqual({f.name for f in FUNCTIONS.values() if 'callback' in f.effects},
+                         {'array.map','array.filter','sketch.show'})
+        self.assertNotIn('sketch.show',PURE_CALLS)
         with self.assertRaises(TypeError):FUNCTIONS['hack']=FUNCTIONS['len']
 
     def test_json_default_depth_boundaries_and_literal_string_limits(self):

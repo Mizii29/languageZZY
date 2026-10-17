@@ -515,3 +515,37 @@ Git 提交：真实标识 / 未提交
 - GUI自审真正发现并修复三个问题：Tk变量/窗口残留可能在下一工作线程GC中析构导致Tcl_AsyncDelete；改为主线程显式销毁变量、当前回调结束后统一解除Tcl引用。默认Windows Tk多边形实际采用非evenodd填充；改为像素中心的奇偶扫描填充，分批渲染、200000渲染item硬上限，不使用背景擦除。队列溢出与关闭两次flag读取有竞争，曾被当成普通关闭；在SessionClosed出口重查失败和取消，保留E211。
 - 上述修复过程的GUI运行均记为失败：一次原生析构退出1、过早解绑Tk引用导致5个after删除错误、2个工具等待/填充像素失败、渲染替换笔误导致2个错误、关闭竞争导致1个失败；没有用较早7/7结果覆盖这些失败。测试由固定等待改为有截止时间的状态等待，不放宽固定答案。最终真实桌面 `.venv/Scripts/python.exe -X utf8 -m tests.gui_sketch --report tests/e4/results/gui.json` 9/9、3.141秒通过，无跳过/后台异常。GDI读取窗口像素证明单轮廓中心红色、重复两圈中心白色、画布外灰色。
 - 37项既有几何/SVG/图层/历史/图案/对象/项目宿主回归11.706秒通过（新增重启用例之后项目单独4/4）；核心check/headless仍不初始化Tk。E4-01完成，继续E4-02完整性能测量、隔离离线安装、完整回归和指南，尚未发布完整sketch1.0。
+
+
+## 2026-10-17：E4-02 基线、最终自审与真实 GUI 回归
+
+- `.venv/Scripts/python.exe -X utf8 -m benchmarks.sketch.run --repeats 3`实际退出0：108个新进程样本、27/27 ZZY/Python固定答案及几何SHA配对一致；同一运行时哈希在测量结束再次核对。基线本地提交a977596，包含原始样本、9个ZZY程序/通用Python对照、环境/配置/哈希。1000/10000/100000，single/batch/multi各3次，完整CLI与准备/生成/记录/undo/redo/定位/SVG/项目/函数导出/Lazy首次与缓存分开，峰值内存为Windows进程PeakWorkingSetSize。
+- 所有108个进程正常完成，无进程失败或超时；部分操作阶段真实触发默认slots/文本/载荷限制，完整保留E211资源键、上限、请求量，不计作成功时间。100000批量线段为10个对象，100000单笔为100000对象，不能把差异写成语言加速。第三轮有显著系统时序变化但代码未变，保留标准差，不宣称优化收益。本轮未做额外速度优化。CIM硬件查询被沙箱拒绝，改用环境/GlobalMemoryStatusEx记录真实CPU标识、18逻辑处理器、25196617728字节物理内存；未虚构CPU商品型号。
+- 审查新增回归先真实失败：两项宿主用例分别证明clear后的Replay按当前空列表预留不足、save_png未检查活动分组；真实GUI排队undo图层后再操作旧ID出现StopIteration→RuntimeError。随后修复Replay按历史最大对象数预留并在close释放暂存，PNG先执行idle检查，过期图层消息统一E203；不改公开语法/签名或默认配额。
+- 图层池上限疑点经实现复核排除：目前无删除图层API，新增编辑清空redo，保留图层并集仍受256上限约束，没有放宽坏文件校验。长拖曳已有10000点硬上限，新GUI用例确认超一项E211且无部分笔画。元数据补E204及实际副作用分类；ABI候选设1.0，但仍须最终门禁通过才勾选E4-02/宣告完整版本。GUI状态栏补正式契约的抬笔/撤销趣味提示，不写stdout、不改变Result。
+- 修复后 `.venv/Scripts/python.exe -X utf8 -m unittest tests.test_sketch_history tests.test_sketch_project tests.test_sketch_benchmarks -q`：12/12、1.838秒通过。测量工具新增零重复拒绝、GUI未完成真实渲染不能计成功的回归。`.venv/Scripts/python.exe -X utf8 -m tests.blackbox tests/e4/cases.json --report tests/e4/results/cli.json`：26/26、6.585秒通过；新增PNG活动分组真实run/check定位。
+- 真实桌面 `.venv/Scripts/python.exe -X utf8 -m tests.gui_sketch --report tests/e4/results/gui.json`：11/11、4.188秒，无失败/错误/跳过。包含Windows GDI evenodd/裁剪像素、窗口工具/缩放/两次show、回调/定时器、长回调关闭、队列溢出竞争、历史定位与真实笔态、过期图层及拖曳容量。旧9/9报告不替代本次11项。
+- 正在继续最终GUI性能、Replay相关复测、离线隔离安装与全量回归；E4-02保持未勾选。指南/能力说明已清除旧E1-01限定，明确PNG不可用和未测平台。用户docs/manual-tests/仍不纳入，requirement SHA256保持b099c19fc339ce1dc1aab7e9d6c8126a9c5c9ace3d31b969a0623df90f521d2b。
+
+- 最终GUI性能初轮27样本中6个batch小规模进程失败，已完整保留render-layout-failed.json。增加现场尺寸诊断后确认首次完成判定在1×1视口，后续变为704×504的Configure重绘改变item ID；属于测量同步错误。仅修正探针等待已映射/有效尺寸/渲染完成，保留严格ID断言；1000/10000两个原失败场景分别真实通过，再完整重跑27项。最终21个场景样本完成渲染/不变刷新/定位，6个100000独立对象样本因sketch.queue_bytes明确拒绝；无进程失败/超时，采集退出0，不将6个拒绝算作已渲染。
+- `.venv/Scripts/python.exe -X utf8 -m benchmarks.sketch.seek --all --repeats 3`最终27样本：21成功、6因runtime_slots拒绝，退出0；检查真实文档/笔态未变、预算释放。资源修复后的统计与基线分列，无加速宣传。报告由实际JSON生成于benchmarks/sketch/README.md；基线a977596的Git LF文本哈希另存baseline-checkout.json，原执行字节哈希未覆盖。
+- `.venv/Scripts/python.exe -X utf8 tests/e4/install.py --installer C:/Users/13691/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe`：离线wheel构建、新venv与当前venv安装、39个源码文本一致性、-I中文/空格cwd真实CLI/GUI/关窗保存/跨进程重启undo和函数库复用均通过，退出0。wheel SHA256 6d5b200a49b275e8c9b40a2f7d628a7abfb48477565cfffe07bfdb4416f7c0a4。新窗口实际映射704×504、Tk8.6.12、主/工作线程ID不同，显示8个对象；重启固定输出8、true、7、成功ID9、SVG保存成功。
+- 正式sketch第7节原代码另在临时目录以-I真实check/run：check无双流/文件，headless run生成SVG与函数库并明确打印缺--gui；XML解析12条path。证据guide-example.json。正式规则/示例代码未改，只更新过时状态文字；studio追加了关窗后保存项目。
+- 全量运行前冻结1019个代码/夹具文件哈希到tested-source.json，已启动`.venv/Scripts/python.exe -X utf8 -m tests --report tests/e4/results/all-tests.json`；等待最终计数，不以点状进度或专项通过代替完整回归。
+
+- 全量首轮实际完成1982项、890.360秒，1失败/0错误/0跳过。唯一失败为P05注册表测试旧断言只允许array.map/filter具有callback副作用，而本阶段元数据已正确把真实派发用户回调的sketch.show登记为callback。保留原始all-tests-registry-failed.json及其源码快照。更新封闭期望为精确三个成员，并显式断言show不在PURE_CALLS，不改运行实现、不放宽查询纯性。
+- 修复后针对注册表/元数据/测量工具的5项回归1.123秒通过。重新冻结时逐文件证明1019文件中仅tests/test_p05_integration.py改变，39个运行时文件及所有已测性能/GUI源码不变；正在重新执行完整1982项门禁，不把首轮1981项通过加一项重测伪称为一轮全量通过。
+
+
+## 2026-10-17：E1—E4 最终验收与完整 sketch 1.0
+
+- 最终完整命令`.venv/Scripts/python.exe -X utf8 -m tests --report tests/e4/results/all-tests.json`退出0，collected=tests_run=1982，898.39秒；failures/errors/skipped/expected_failures全0，含1738独立外部CLI。这是修正注册表期望后的完整重跑；首轮失败报告及原哈希另存。
+- `.venv/Scripts/python.exe -X utf8 -m tests.e4.accept`汇总门禁通过：核对完整/GUI/安装报告、27/27基线配对、最终渲染/Replay运行时哈希、39安装源码文本、1019冻结代码/夹具与requirement SHA。汇总仅验证已执行证据，不冒充另一次测试。
+- 真实GUI11/11、离线新环境窗口及重启分别通过。正式第7节原代码实际check/run，studio实际GUI闭环通过；指南、标准库/语法状态、资源口径、覆盖映射及性能报告同步。GUI性能21成功/6消息容量拒绝，Replay21成功/6slots拒绝；默认配置不偷换、失败不算速度，PNG明确不可用。
+- 文档定稿脚本初轮嵌套引号语法错误，未修改文件，改用直接保存脚本后处理。静态链接检查初轮遇Git中文路径引号，改用git ls-files -z后46份Markdown/516条本地链接和围栏通过；静态结果不代替运行证据。提交前再核对最终链接/任务/差异及暂存范围。
+- E4-02达到roadmap完成标准，七项E任务均勾选，52/70代码任务完成；现在才标记完整sketch1.0。下一项P11-01，本轮不提前执行。最终本地提交标识以Git和最终答复为准；不推送、不纳入docs/manual-tests/或dist。
+- 未验证范围保留：其他OS/Python/字体/DPI、所有最大容量组合、实际ACL、断电/并发写事务及所有阻塞宿主取消时序。字体/层名替换预留保守保留到句柄结束，指南已说明；逻辑预算不是RSS硬上限。
+
+- 定稿后复核通过：46份Markdown/518条本地链接、围栏成对；70个唯一任务中52完成，E七项全部完成；1019份冻结源码/夹具哈希一致。`git diff --check`退出0，仅Git换行提示；当前能力文档未检出遗留E4待验收状态。
+
+- 最后逐行审阅纠正todo/stdlib措辞：不执行用户代码仅适用于check；headless正常执行程序和文件操作，两者均不初始化Tk。仅文档澄清，运行代码及冻结哈希未改变。

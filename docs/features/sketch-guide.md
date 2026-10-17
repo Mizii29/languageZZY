@@ -1,131 +1,107 @@
-# Sketch E1 使用与验证指南
+# Sketch 使用与验证指南
 
-更新：2026-10-17｜已实现子集：E1｜ABI：e1-02-v1｜完整 sketch 1.0 尚未发布
+更新：2026-10-17｜核心 0.6.0a1｜扩展 ABI 1.0，E1—E4已验收；结果见 [验收入口](../../tests/e4/README.md)。
 
-规则以 [sketch.md](sketch.md) 为准。本轮实现内存几何模型、受控类型、样式、路径和填充，阶段验收结果见 [tests/e1](../../tests/e1/README.md)。E1-02 的 SVG 已实现；E2 的窗口/图层工具/文字、E3 的历史/回放/图案、E4 的事件/项目文件仍待推进。没有占位成功接口，调用未实现成员得到 E302。
+行为以 [sketch 契约](sketch.md) 为准。几何、SVG、图层、文字、历史、Drawing、事件和项目文件均有实际实现；完整1.0的四阶段门禁均已通过。PNG 没有独立渲染后端，save_png 明确返回失败 Result，不创建文件。
 
-## 运行已有示例
+## 启动
 
-在仓库根目录执行：
+在仓库根目录执行；默认 run/check/test 不导入 Tk。只有 run --gui 初始化窗口；check 没有 --gui 开关，也不执行用户表达式、绘图、文件保存或 Lazy 解码。
 
 ```powershell
-& ./.venv/Scripts/python.exe -X utf8 -m zzy check examples/sketch/geometry.zzy
-& ./.venv/Scripts/python.exe -X utf8 -m zzy run examples/sketch/geometry.zzy
+& ./.venv/Scripts/python.exe -X utf8 -m zzy check examples/sketch/studio.zzy
+& ./.venv/Scripts/python.exe -X utf8 -m zzy run examples/sketch/studio.zzy --gui
 ```
 
-实际 [geometry.zzy](../../examples/sketch/geometry.zzy) 创建矩形填充和一个闭合圆，输出：
+[studio.zzy](../../examples/sketch/studio.zzy) 绘制六瓣花、盖章并导出 SVG/函数库；关闭窗口后保存可编辑项目。输出文件相对启动目录。不加 --gui 时 show 返回说明性失败 Result；无 Tk/显示环境同样失败，不自动安装依赖。Python 必须带 Tk；本次真实桌面证据为 Windows 11、CPython 3.12.14、Tk 8.6.12，其他平台未验证。字体默认 sans-serif 映射 Arial，缺少字体由 Tk/查看 SVG 的软件替代，不承诺不同设备像素一致。
+
+仅需无窗口模型时可运行 [geometry.zzy](../../examples/sketch/geometry.zzy)，固定输出 Position 的 x=0.0、y=30.0 与 heading=0.0。SVG、项目和函数库导出均不需要 GUI。
+
+## 接口与受控值
+
+完整签名见正式契约；所有参数按核心规则从左至右求值，然后检查数量、类型、归属、冻结/图层锁、状态及数值。普通写操作返回 Null。
+
+| 能力 | 成员 |
+|---|---|
+| 文档与样式 | canvas、pen、rgb、background、clear、color、fill_color、width、pen_up/down、show/hide_cursor、position、heading |
+| 几何 | forward/backward、left/right、set_heading、move_to/jump_to、home、circle、polyline、bezier_to、dot |
+| 填充/文字 | begin_fill/end_fill/cancel_fill、font、text_align、text |
+| 图层 | add_layer、set_layer、layer_visible、lock_layer、rename_layer、move_layer、layer_info |
+| 对象 | pick、translate_object、copy_object、delete_object |
+| 历史 | begin_group/end_group、undo/redo、clear_history、frame_interval |
+| 图案 | capture、stamp、drawing_text、drawing_from_json、save_function |
+| 文件 | svg_text、save_svg、save_project、load_project；save_png 为明确不可用的可选能力 |
+| 会话 | show、on_click/on_drag/on_release/on_key、every、cancel_timer |
+
+Canvas/Pen/Layer/Drawing 按身份相等，Color 按 RGB 值相等；不能访问 Python 属性或直接构造原生值。Position、LayerInfo 是新的冻结普通结构快照，可用于查询；原生绘图调用不属于查询纯调用白名单。通用 JSON 拒绝原生值，使用 sketch 的显式格式。
+
+句柄归本次执行上下文与执行线程；冻结 Canvas 同时禁止所属笔/层写入。锁层可选择不可编辑。上下文结束清理文档和回调；关窗只关闭会话，脚本随后仍能保存、修改和重新 show，重新显示前需重新注册回调。
+
+## 几何、图层与填充
+
+中心原点，X 向右、Y 向上，逆时针为正；朝向归一到 [0,360)。初始落笔、黑色、线宽 1、光标可见、白背景/default 层。圆弧正负半径及 extent 遵循契约有向圆心，完整圈直接恢复起点与规范朝向。零 extent、空 polyline 不产生历史，半径零仍非法。
+
+圆弧弓高误差不超过 0.25 逻辑单位、单段转角不超过 90 度；贝塞尔 de Casteljau 二分直到两个控制点到端点线段均不超过 0.25，最大深度 24。规范展开路径保存于不可变 Block，SVG/Tk/历史/图案重复复用该版本与误差的结果，变换产生新块，最后引用释放时退还预算；没有跨上下文的曲线参数全局缓存。polyline 一次复制并校验输入，后改数组不影响路径。失败提交不留下前半条路径或位置/ID 修改。
+
+填充在 begin 保存笔状态及填充色，只允许同笔连续路径/转向/描边样式与读取。end 至少三个不同顶点，evenodd 闭合填充、不补描边、不移动笔；cancel 恢复开始状态。活动填充禁止其他文档写入、保存/捕获/历史操作。错误/关闭清理草稿，不自动保存。SVG 与真实 Tk 的奇偶填充、裁剪各有独立验证。
+
+图层按 z 序合成，隐藏层不导出/捕获，锁定层不能改图形。text 不移动笔，也不依赖落笔状态。pick 按最上可见对象命中，固定容差 4 逻辑单位；文字命中使用宽 0.6×字号×码点数、高为字号的逻辑框，不依赖字体测量。ID 单调分配，undo/redo 恢复原 ID，不复用已撤销 ID；删除擦除整个对象而非涂背景色。
+
+## 交互、线程与关闭
+
+工具栏提供自由线、直线、矩形、圆、拖曳多边形、文字、平移、选择、移动、复制、擦除及 callbacks 模式。多边形以拖曳采样点闭合；自由画笔的一次按下到松开组成一条历史。另有选笔、颜色、线宽、图层创建/显隐/锁定/命名/排序、缩放、网格、坐标。缩放/平移/网格仅改视图，不改几何和历史。
+
+有鼠标回调时初始使用 callbacks 模式，只派发用户回调；切换到内置工具时仍派发已注册回调，同时执行该工具，避免两处重复实现同一笔画。鼠标 button=1/2/3，坐标转换为逻辑 Float；键名 Enter、Escape、Backspace、Space、PageUp、PageDown，其余可打印字符或 Tk keysym。注册时检查函数及固定参数数量；同类注册覆盖旧项。定时器从 show 开始计时，延迟合并，不追补积压次数。
+
+Tk 只在主线程管理窗口，ZZY 在单一工作线程顺序处理消息和回调；不在任意 AST 指令中途重入。正常关闭可中断长回调并让 show 返回成功；原始诊断、队列溢出和执行取消不吞成成功。关闭信号独立于数据队列；清理后无存活工作线程。不能安全强杀任意阻塞 Python 调用，仍需进程隔离作为硬终止边界。
+
+## 撤销与回放
+
+历史保存增量字段和只读路径引用，撤销恢复相关笔/层状态；新编辑清空 redo。创建 Canvas/Pen、光标显示、视图状态不入绘图历史。分组不嵌套，空组忽略；不承诺回滚先前 I/O。填充 end 是一项，cancel 无历史。活动组/草稿禁止 undo/redo、保存/捕获/回放。
+
+窗口支持播放/暂停/单步/定位。回放副本只应用记录，不重跑源程序、随机数或回调，不覆盖真实笔；编辑退出回放，保存针对完整文档。frame_interval 初值 40::ms，正时间向上取整毫秒，范围 (0,24h]。检查点最多 8 个且 16MiB，核心预算不够时不建立可选缓存，增量定位仍正确。clear_history 显式清除 undo/redo，几何不变；clear 因历史仍引用旧路径，不能等同于释放全部内存。
+
+## 保存、重启与函数复用
+
+SVG 含背景/裁剪/可见层/规范路径与文字，不含光标；XML 转义与非法字符均受检查。save_* 先完成有界生成校验，再独占创建同目录临时文件并替换；失败保留旧文件并清理临时文件，不创建父目录，不承诺断电持久化/多写者事务。
+
+图案 schema_version=1、kind=zzy-drawing，项目 kind=zzy-project。两者严格拒绝重复键、未知字段/版本/类型、非有限数、错误引用及越界。项目保存笔/图层/几何池/历史/redo/ID 高水位与回放间隔，不保存窗口/回调/定时器/Lazy；load_project 全部校验后返回新 Canvas，坏数据不覆盖已有文档。
+
+capture 只包含可见已完成几何；后改源文档不影响 Drawing。stamp 按缩放→逆时针旋转→平移插入 default 层的一组，保留所有笔状态。save_function 输出自包含 .zzy 模块，名字经同一 Lexer、完整源码经 prepare 验证后原子写入；空图案/坏名字为失败 Result。导出函数 name(canvas,x,y,scale,angle) 返回盖章 ID 的 Result，私有 Lazy 每个上下文首次调用解码一次。check/导入准备不解码、不画图。
 
 ```text
-sketch.Position::{x: 0.0, y: 30.0}
-0.0
+(use) "flower.zzy" (as) flowers;
+(zno)c:=sketch.canvas(800,600,"复用图案");
+io.print(flowers.draw_flower(c,0,0,1,0));
+io.print(sketch.save_svg(c,"reused.svg"));
 ```
 
-本例不显示窗口或生成图片。当前可通过 position/heading 观察几何状态；内部路径的独立固定答案、曲线误差、样式和填充组合由宿主测试核验。SVG 的外部几何验收见 tests/test_sketch_svg.py，解析导出 XML 后核对几何。
+## 固定扩展配额
 
-## 可用接口
+扩展配额与核心 default-v1 同时生效；当前 --limits 只能配置核心预算，不能调高下表固定阈值。逻辑载荷不等于 CPython RSS；达到某个单项上限不表示所有上限可同时组合。
 
-全部是正式契约的固定位置参数调用，写操作返回 Null。参数先从左到右求值，再检查数量和外层类型，随后检查上下文/线程、冻结、活动填充及数值约束。
-
-| 能力 | 已登记成员 |
+| 项目 | 上限 |
 |---|---|
-| 创建/背景/清除 | canvas、pen、rgb、background、clear |
-| 样式与位置快照 | color、fill_color、width、pen_up、pen_down、show_cursor、hide_cursor、position、heading |
-| 移动/路径 | forward、backward、left、right、set_heading、move_to、jump_to、home、circle、polyline、bezier_to、dot |
-| 填充草稿 | begin_fill、end_fill、cancel_fill |
+| 画布宽/高 | 正 Int，32768 |
+| 坐标/距离/半径/角度绝对值 | 1,000,000；派生坐标同样检查 |
+| 线宽/直径/字号 | (0,10000] |
+| 单批点/单曲线段/贝塞尔深度 | 10000 / 65536 / 24 |
+| 每画布路径段/对象 | 1000000 / 100000 |
+| 每画布笔/活动图层/定时器 | 各 256 |
+| 历史命令/增量载荷 | 100000 / 64MiB；分组内命令也计数 |
+| 输入/渲染队列 | 4096 条 / 1 条合并刷新；合计载荷 16MiB |
+| Tk 文档渲染 item | 200000；拖曳预览最多另1个 |
+| 回放检查点 | 8 个 / 16MiB；可选加速缓存 |
 
-Canvas、Pen、Layer、Color、Drawing 的类型身份已经登记，可用于 qualified 注解，不能直接调用类型或用 `::{}` 构造。当前只有 Canvas/Pen/Color 的公开工厂；Layer 只用于内部 default 图层，Drawing 尚无实例工厂。登记身份不等于图层编辑或图案能力已实现。
+几何块基数128字节、描边48、点16，另计引用槽/草稿/临时数组；历史基数160、字段64、几何引用16、label每码点4字节，共享路径仍由 Block 计量。曲线暂存采用最多65537点的保守预留，低预算下小曲线也可能拒绝。SVG/JSON/源码生成遵守核心文本、I/O、引用槽和载荷限制。字体/图层名替换的字符串预留目前保守地保留到句柄结束，clear_history不保证这部分预留立即回收；大量反复换名/字体可能较早触发核心预算。容量超限 E211，在发布前拒绝，不自动降低精度或丢弃历史/输入。
 
-position 返回新的冻结普通 sketch.Position 结构，x/y 是 Float；它可按结构规则序列化，查询只能读取预先取得的普通快照。原生句柄不开放 Python 属性或方法；Canvas/Pen/Layer/Drawing 为身份相等，Color 为 RGB 分量相等。通用 JSON 对原生值返回失败，包括嵌套值。扩展函数未加入查询纯调用白名单。
-
-每次执行独立创建文档；原生句柄不能跨上下文、跨执行线程或在执行结束后使用。Canvas 冻结会阻止其画笔/图层写入；独立画笔冻结不影响其他笔。冻结入口同样检查归属，无法借内部冻结绕过边界。图层锁的内部写入口已有测试，公开图层 API 待 E2。
-
-clear 清空已提交几何并释放其逻辑预算，保留画笔、背景和 default 图层，ID 高水位不回退。本轮尚无 undo/redo，不能把契约中未来的可撤销行为当作已经交付。
-
-## 坐标、曲线与提交
-
-中心原点，X 向右、Y 向上；角度逆时针为正，朝向归一到 [0,360)。初态为原点/0 度、落笔、黑色描边与填充、线宽 1、光标可见、白背景。画笔名非空且同画布唯一。光标标志只存状态，E1-01 不显示光标。
-
-圆弧按正式契约的有向圆心/转角计算；负半径、负 extent 均可用。非零整圈直接恢复起点和规范朝向，不累计闭合漂移。extent=0、空 polyline 不分配曲线缓冲、不改文档；半径 0 仍为 E208。
-
-所有后端将复用同一只读折线路径。本版圆弧按弓高不超过 **0.25 个逻辑单位**分段，单段转角不超过 90 度；三次贝塞尔用 de Casteljau 二分，两个控制点到端点线段的距离均不超过 0.25 时接受该段，最大展开深度 24。这里固定模型近似误差，不声称像素精确或已经实现 SVG/Tk 渲染。
-
-polyline 一次复制并验证全部点；后改输入数组不影响已发布路径。曲线/批量操作在准备后一次提交，坏点、越界、取消或分配失败不保留前半条路径，不提前改变位置/ID。路径由有预算所有者的只读块承载，为后续渲染和增量历史共享提供基础，尚无历史记录/回放实现。
-
-## 填充
-
-begin_fill 要求落笔且同画布无其他草稿，保存完整笔状态与开始时的填充颜色。草稿只能由该笔执行连续路径、转向、描边颜色/线宽操作或读取；抬笔、jump、点、换填充色、光标设置、其他笔写入、清画布、创建笔、改背景及嵌套 begin 均为 E214。
-
-end_fill 要求至少三个不同顶点，发布一个 evenodd 填充组及已执行描边；闭合不新增描边、不移动笔。草稿未结束时，正式文档没有其半成品。失败保留草稿供宿主检查；语言运行错误仍终止执行，由统一清理撤销未提交草稿。cancel_fill 恢复 begin 前完整状态并释放草稿；执行中止也解除草稿锁，不自动保存。
-
-## 配额 e1-01-v1
-
-这些固定扩展限额与核心 default-v1 预算共同生效；不修改旧核心配置或指纹。扩展限额当前不可通过 `--limits` 调高，核心预算仍可收紧。后续若增加可配置扩展策略，需要版本化和相应验证。
-
-| 项目 | 当前上限/规则 | 诊断 |
-|---|---|---|
-| 画布宽高 | 非 Bool 正 Int，1—32768 | E201/E208 |
-| 坐标、距离、半径绝对值 | 1,000,000；所有派生坐标也检查有限性和范围 | E208 |
-| 角度、extent 绝对值 | 1,000,000 度 | E208 |
-| 线宽、点直径 | 大于 0，最多 10,000 | E208 |
-| 单次 polyline 输入点 | 10,000 | E211 |
-| 单曲线展开段 | 65,536，贝塞尔深度 24 | E211 |
-| 每画布已提交路径段 | 1,000,000；活动草稿预占剩余额度；点计一段 | E211 |
-| 每画布对象 | 100,000；整条 polyline、整条曲线或一个填充组各为一个对象 | E211 |
-| 每画布画笔 | 256 | E211 |
-
-所有文档对象、引用槽和逻辑载荷都使用现有 ResourceMeter，提交前检查。绘图块按 128 字节固定载荷、每描边 48 字节、每坐标点 16 字节及引用槽计量；这不是 CPython RSS 估计。笔状态和草稿另计固定载荷，临时点数组/递归工作栈计 scratch。当前曲线采用最多 65,537 点的保守预留，圆弧生成另有按实际段数的暂存，因此很低的核心预算可能在小曲线处拒绝；不会偷偷使用无界缓冲或降低误差。
-
-真实测试到达了 256 笔、65,536 曲线段、1,000,000 文档段和 100,000 对象，并验证各自再增加一项失败。9999/10000/10001 个 polyline 点通过真实 CLI 验证。默认极限逐项通过不等于所有极限同时组合可容纳，也不构成性能或最大 RSS 承诺。历史、队列、输出等后续配额沿用正式契约，尚未宣称落实。
-
-## 验证和下一项
+## 复现与证据边界
 
 ```powershell
-& ./.venv/Scripts/python.exe -X utf8 -m unittest tests.test_e1_cli tests.test_e1_runtime -q
-& ./.venv/Scripts/python.exe -X utf8 -m tests.blackbox tests/e1/cases.json
-& ./.venv/Scripts/python.exe -X utf8 -m tests --report dist/e1-all-tests.json
+& ./.venv/Scripts/python.exe -X utf8 -m tests --report tests/e4/results/all-tests.json
+& ./.venv/Scripts/python.exe -X utf8 -m tests.gui_sketch --report tests/e4/results/gui.json
+& ./.venv/Scripts/python.exe -X utf8 -m benchmarks.sketch.run --repeats 3
+& ./.venv/Scripts/python.exe -X utf8 -m benchmarks.sketch.render --all --repeats 3
 ```
 
-check 只加载类型/签名元数据；测试用禁止 GUI 导入的独立进程确认 check 不导入几何实现、不执行输入/写文件，headless run 也不导入 tkinter/turtle。线程测试是原生句柄归属验证，**没有 GUI 验收结果**。E1 完成后按 E2→E3→E4 推进。
-
-## E1-02：无窗口 SVG
-
-`sketch.svg_text(canvas)` 返回 Result<String>；`sketch.save_svg(canvas,path)` 返回 Result<Null>，复用 io.write_atomic。可读取冻结画布；活动填充 E214。输出包括背景、裁剪区和规范折线路径，不包含光标。Y 坐标反转，中心平移到画布中心；填充边界单独闭合为 evenodd，不补描边。SVG 数值保留模型浮点值，允许 SVG 自身的指数记法，不改变 ZZY 数字语法。
-
-标题按 XML 1.0 转义；非法 XML 字符返回失败 Result。逐片检查 text_codepoints/io_payload_bytes，累积文本与引用槽计入运行时预算；容量/取消仍为诊断/中止，不吞成失败 Result。先完整生成，之后同目录临时文件替换；父目录不存在不自动创建。普通 run、check 和导出不导入 Tk。
-
-```zzy
-(zno)c:=sketch.canvas(400,300,"SVG 示例");
-(zno)p:=sketch.pen(c,"pen");
-sketch.circle(p,50,360);
-io.print(sketch.save_svg(c,"picture.svg"));
-```
-
-专项命令：`.venv/Scripts/python.exe -X utf8 -m unittest tests.test_sketch_svg tests.test_e1_runtime tests.test_e1_cli -q`。SVG 成功不构成 GUI/撤销验收。
-
-## E2：真实 Tk 视图
-
-显式 `python -m zzy run file.zzy --gui` 才加载 Tk。`sketch.show(c)` 正常关窗返回成功，之后可继续保存；不加 --gui 或缺 Tk/显示环境返回说明性失败 Result。默认 check/run/test 不初始化 GUI。
-
-已新增 add_layer/set_layer/layer_visible/lock_layer/rename_layer/move_layer/layer_info、font/text_align/text、show。图层最多256，0为底层；LayerInfo是冻结普通结构快照。SVG按可见图层顺序输出文字，字体族/内容均XML转义；文字水平、字号为逻辑单位。GUI缺字体由系统Tk替代，默认sans-serif映射Arial，不保证设备像素一致。
-
-窗口工具栏提供自由线、直线、矩形、圆、拖曳多边形、文字、平移，笔名/颜色/线宽、缩放/网格/坐标和图层状态栏。多边形以拖曳采样点形成闭合折线。Tk只操作不可变Scene与事件消息；通用绘图调用在单一ZZY执行线程执行。关闭使用独立Event，正常关闭不销毁文档。历史/回放尚待E3；公开回调、对象编辑和项目文件待E4。
-
-真实GUI验收独立命令：`.venv/Scripts/python.exe -X utf8 -m tests.gui_sketch --report tests/e2/results/gui.json`，需桌面环境，失败不跳过。当前Windows/Tk8.6.12真实窗口3/3通过；受限执行环境会报init.tcl不可用，不能把该结果冒充GUI成功。
-
-## E3-01：增量历史与回放
-
-新增 begin_group/end_group、undo/redo、clear_history、frame_interval。历史保存变动字段与几何块引用；共享只读路径，不保存每步整张画布。单次失败恢复本次候选几何/位置/ID，先前成功操作不回滚。正常undo/redo保留对象ID高水位；新编辑丢弃redo。空组不入历史；填充在end时作为单项，cancel无历史。活动组/草稿不能undo/redo、导出或show。
-
-固定上限100000条实际修改命令（分组内也计数），历史增量载荷64MiB（160字节基数、每字段64、每几何引用16；共享路径另由原Block预算拥有），不静默丢历史。达到上限可显式clear_history，几何不变。旧路径因undo而仍被保留会继续占核心预算，clear不再等于释放全部路径；容量验收用clear_history分开测几何上限。
-
-窗口新增撤销/重做、播放/暂停/单步/进度定位。回放副本应用记录，不执行源码，不覆盖真实画笔；编辑先回到真实文档。最多8个共享路径检查点、16MiB缓存预算，预算不足仅不创建加速缓存，仍准确应用增量。frame_interval接受(0,24h]时间Quantity，向上取整毫秒，默认40ms。
-
-宿主历史5项、独立CLI6项、真实GUI4项通过；GUI定位/单步/编辑退出以及正常关窗分别有证据。图案和项目仍待下一任务，完整1.0未发布。
-
-## E3-02：图案与函数库
-
-capture取得可见图层的只读路径快照；后改源文档不影响Drawing。stamp按缩放→逆时针旋转→平移，线宽/字号同步缩放，目标笔状态不变，整组放default层，undo作为一项。Drawing按身份相等，通用JSON不接受；显式drawing_text/drawing_from_json采用schema_version=1、kind=zzy-drawing和objects有序数组。对象type为path/fill/dot/text/group，固定字段、严格重复键/数值/容量检查；组只含叶对象，不允许嵌套组。错误格式返回失败Result，资源中止保留E211。
-
-save_function(drawing,path,name)生成私有Lazy解码绑定和具名Result函数，名字经Lexer、整个文件经真实prepare（Lexer/Parser/Resolver）验证后原子写入。导入/check不解码、不绘图；首次调用wake一次解码，同一上下文后续调用复用Drawing；重新执行Program重新解码。空Drawing函数导出返回失败。引用方式仍为 `(use) "pattern.zzy" (as) patterns;`，调用 `patterns.flower(canvas,x,y,scale,angle)` 返回盖章ID的Result。
-
-当前E3已实现，仍非完整sketch1.0；公开事件/对象工具/项目文件及完整性能测量属于E4。
+GUI 命令必须在真实桌面运行，缺环境会失败而不跳过；headless 通过不能代替它。覆盖和原始证据见 [tests/e4](../../tests/e4/README.md)，性能方法/局限见 [测量报告](../../benchmarks/sketch/README.md)。其他 OS/Python/字体、所有最大容量组合、操作系统 ACL 和断电持久化没有本次证据，PNG 不可用。

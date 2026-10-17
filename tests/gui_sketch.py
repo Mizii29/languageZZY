@@ -14,6 +14,30 @@ from zzy.native.sketch_gui import run_gui, View
 
 
 class GUIAcceptance(unittest.TestCase):
+    def test_drag_buffer_limit_stops_session_without_partial_stroke(self):
+        from zzy.diagnostics import ResourceExceeded
+        program,output=prepared('(zno)c:=sketch.canvas(100,100,"drag bound");sketch.show(c);')
+        views=[]
+        def probe(view,thread):
+            views.append(view)
+            def drag():
+                view.points=[(0.,0.)]*10000
+                view.area.event_generate('<B1-Motion>',x=50,y=50)
+            view.window.after(60,drag)
+        with self.assertRaises(ResourceExceeded) as error:run_gui(program,output,probe=probe)
+        self.assertEqual(error.exception.key,'sketch.batch_points')
+        self.assertEqual(len(views[0].points),10000)
+        self.assertFalse(views[0].scene.geometries)
+
+    def test_stale_queued_layer_action_is_diagnostic_not_python_exception(self):
+        from zzy.diagnostics import DiagnosticError
+        program,output=prepared('(zno)c:=sketch.canvas(100,100,"stale layer");sketch.add_layer(c,"temporary");sketch.show(c);')
+        def probe(view,thread):
+            view.session.send(('history','undo'))
+            view.session.send(('layer','lock_layer',1,True))
+        with self.assertRaises(DiagnosticError) as error:run_gui(program,output,probe=probe)
+        self.assertEqual(error.exception.diagnostic.code,'E203')
+
     def test_windows_pixels_confirm_evenodd_fill_and_clip(self):
         source='''(zno)c:=sketch.canvas(200,200,"evenodd pixels");(zno)p:=sketch.pen(c,"p");sketch.hide_cursor(p);
 sketch.fill_color(p,sketch.rgb(255,0,0));sketch.jump_to(p,-60,-20);sketch.begin_fill(p);sketch.polyline(p,[[-20,-20],[-20,20],[-60,20],[-60,-20]]);sketch.end_fill(p);

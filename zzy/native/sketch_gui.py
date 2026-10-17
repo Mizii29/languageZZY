@@ -30,7 +30,7 @@ class View:
         tk.Checkbutton(self.toolbar,text='网格',variable=self.grid,command=self.draw).pack(side='left')
         history=tk.Frame(self.window);history.pack(fill='x')
         for label,op in [('撤销','undo'),('重做','redo')]:
-            tk.Button(history,text=label,command=lambda op=op:self.session.send(('history',op))).pack(side='left')
+            tk.Button(history,text=label,command=lambda op=op:self.history_action(op)).pack(side='left')
         for label,op in [('播放','play'),('暂停','pause'),('单步','step')]:
             tk.Button(history,text=label,command=lambda op=op:self.session.send(('replay',op))).pack(side='left')
         self.seek=tk.Scale(history,from_=0,to=0,orient='horizontal',showvalue=True)
@@ -111,7 +111,15 @@ class View:
         return ((e.x-cx)/self.zoom,(cy-e.y)/self.zoom)
 
     def motion(self,e):
-        x,y=self.logical(e);self.label.config(text=f'({x:.2f}, {y:.2f}) · {self.zoom:.2f}× · {self.mode.get()}')
+        x,y=self.logical(e)
+        state=next((state for name,state in self.scene.pens if name==self.pen.get()),None) if self.scene else None
+        hint=' · 画笔摸鱼中' if state is not None and not state.down else ''
+        self.label.config(text=f'({x:.2f}, {y:.2f}) · {self.zoom:.2f}× · {self.mode.get()}{hint}')
+
+    def history_action(self,op):
+        self.session.send(('history',op))
+        if op=='undo' and self.scene is not None and self.scene.history_length:
+            self.label.config(text='这一笔先回去进修')
 
     def press(self,e,button=1):
         self.area.focus_set()

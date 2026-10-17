@@ -8,7 +8,15 @@ class Replay:
         idle(r,c,n)
         self.r,self.c,self.n=r,c,n
         self.owners=[];self.checkpoints={}
-        self.owner=r.reserve(n,runtime_slots=len(c.objects)+len(c.history))
+        # A cleared/deleted document may be much smaller than an earlier frame.
+        # Reserve the maximum working list before restoring any historical data.
+        count=maximum=len(c.objects)
+        for _,entry in reversed(c.history):
+            r.meter.cancellation.check()
+            for delta in reversed(entry):
+                count+=len(delta.removed)-len(delta.added)
+                maximum=max(maximum,count)
+        self.owner=r.reserve(n,runtime_slots=maximum+len(c.history))
         self.entries=tuple(c.history)
         self.position=len(self.entries)
         self.objects=list(c.objects)
@@ -29,6 +37,9 @@ class Replay:
     def close(self):
         for owner in self.owners:owner.release()
         self.owners.clear();self.checkpoints.clear()
+        getattr(self,'objects',[]).clear()
+        getattr(self,'values',{}).clear()
+        self.entries=()
         if getattr(self,'owner',None):self.owner.release()
 
     def __del__(self):

@@ -329,6 +329,8 @@ def _invoke(runtime, name, args, node):
         from .sketch_objects import invoke as objects
         return objects(runtime,op,args,node,canvas)
     if op == 'save_png':
+        from .sketch_history import idle
+        idle(runtime,canvas,node)
         return runtime.result(False,runtime.scalar('String','PNG unavailable: no independent PNG backend is installed',node),node)
     if op in {'capture','stamp'}:
         from .sketch_patterns import invoke as patterns

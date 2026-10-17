@@ -1,0 +1,439 @@
+{
+  "started": "2026-10-17T11:50:27.403914+00:00",
+  "isolated": "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\dist\\E4 离线验收 rpwuyjua",
+  "commands": [
+    {
+      "command": [
+        "C:\\Users\\13691\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "-X",
+        "utf8",
+        "-m",
+        "pip",
+        "wheel",
+        ".",
+        "--no-deps",
+        "--no-build-isolation",
+        "--no-index",
+        "--no-cache-dir",
+        "--wheel-dir",
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\dist"
+      ],
+      "cwd": "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业",
+      "exit_code": 0,
+      "stdout": "Processing .\\.\r\n  Preparing metadata (pyproject.toml): started\r\n  Preparing metadata (pyproject.toml): finished with status 'done'\r\nBuilding wheels for collected packages: zzy-language\r\n  Building wheel for zzy-language (pyproject.toml): started\r\n  Building wheel for zzy-language (pyproject.toml): finished with status 'done'\r\n  Created wheel for zzy-language: filename=zzy_language-0.6.0a1-py3-none-any.whl size=106782 sha256=6d5b200a49b275e8c9b40a2f7d628a7abfb48477565cfffe07bfdb4416f7c0a4\r\n  Stored in directory: C:\\Users\\13691\\AppData\\Local\\Temp\\pip-ephem-wheel-cache-7igv1oqt\\wheels\\14\\21\\73\\4c562a032c9fd8ee8b0115920e1810ee94699ef07eb2a37d16\r\nSuccessfully built zzy-language\r\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "C:\\Users\\13691\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "-X",
+        "utf8",
+        "-m",
+        "pip",
+        "--python",
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\dist\\E4 离线验收 rpwuyjua\\环境\\Scripts\\python.exe",
+        "install",
+        "--force-reinstall",
+        "--no-index",
+        "--no-deps",
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\dist\\zzy_language-0.6.0a1-py3-none-any.whl"
+      ],
+      "cwd": "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业",
+      "exit_code": 0,
+      "stdout": "Processing .\\dist\\zzy_language-0.6.0a1-py3-none-any.whl\r\nInstalling collected packages: zzy-language\r\nSuccessfully installed zzy-language-0.6.0a1\r\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "C:\\Users\\13691\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "-X",
+        "utf8",
+        "-m",
+        "pip",
+        "--python",
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\.venv\\Scripts\\python.exe",
+        "install",
+        "--force-reinstall",
+        "--no-index",
+        "--no-deps",
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\dist\\zzy_language-0.6.0a1-py3-none-any.whl"
+      ],
+      "cwd": "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业",
+      "exit_code": 0,
+      "stdout": "Processing .\\dist\\zzy_language-0.6.0a1-py3-none-any.whl\r\nInstalling collected packages: zzy-language\r\n  Attempting uninstall: zzy-language\r\n    Found existing installation: zzy-language 0.6.0a1\r\n    Uninstalling zzy-language-0.6.0a1:\r\n      Successfully uninstalled zzy-language-0.6.0a1\r\nSuccessfully installed zzy-language-0.6.0a1\r\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\dist\\E4 离线验收 rpwuyjua\\环境\\Scripts\\python.exe",
+        "-I",
+        "-X",
+        "utf8",
+        "-c",
+        "import zzy;print(zzy.__file__)"
+      ],
+      "cwd": "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\dist\\E4 离线验收 rpwuyjua\\中文 空格 工作目录",
+      "exit_code": 0,
+      "stdout": "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\dist\\E4 离线验收 rpwuyjua\\环境\\Lib\\site-packages\\zzy\\__init__.py\r\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\dist\\E4 离线验收 rpwuyjua\\环境\\Scripts\\python.exe",
+        "-I",
+        "-X",
+        "utf8",
+        "installed_probe.py"
+      ],
+      "cwd": "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\dist\\E4 离线验收 rpwuyjua\\中文 空格 工作目录",
+      "exit_code": 0,
+      "stdout": "{\"passed\": true, \"python\": \"3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]\", \"executable\": \"D:\\\\大学资料\\\\北邮\\\\课程\\\\程序设计实践\\\\程序设计实践大作业\\\\dist\\\\E4 离线验收 rpwuyjua\\\\环境\\\\Scripts\\\\python.exe\", \"installed_package\": \"D:\\\\大学资料\\\\北邮\\\\课程\\\\程序设计实践\\\\程序设计实践大作业\\\\dist\\\\E4 离线验收 rpwuyjua\\\\环境\\\\Lib\\\\site-packages\\\\zzy\\\\__init__.py\", \"platform\": \"Windows-11-10.0.26200-SP0\", \"commands\": [{\"command\": [\"D:\\\\大学资料\\\\北邮\\\\课程\\\\程序设计实践\\\\程序设计实践大作业\\\\dist\\\\E4 离线验收 rpwuyjua\\\\环境\\\\Scripts\\\\python.exe\", \"-I\", \"-X\", \"utf8\", \"-m\", \"zzy\", \"check\", \"studio.zzy\"], \"cwd\": \"D:\\\\大学资料\\\\北邮\\\\课程\\\\程序设计实践\\\\程序设计实践大作业\\\\dist\\\\E4 离线验收 rpwuyjua\\\\中文 空格 工作目录\", \"exit_code\": 0, \"stdout\": \"\", \"stderr\": \"\"}, {\"command\": [\"D:\\\\大学资料\\\\北邮\\\\课程\\\\程序设计实践\\\\程序设计实践大作业\\\\dist\\\\E4 离线验收 rpwuyjua\\\\环境\\\\Scripts\\\\python.exe\", \"-I\", \"-X\", \"utf8\", \"-c\", \"import sys; from zzy.cli import main; sys.argv=['zzy','check','studio.zzy']; status=main(); assert 'tkinter' not in sys.modules; assert 'zzy.native.sketch' not in sys.modules; raise SystemExit(status)\"], \"exit_code\": 0, \"stdout\": \"\", \"stderr\": \"\"}, {\"command\": [\"D:\\\\大学资料\\\\北邮\\\\课程\\\\程序设计实践\\\\程序设计实践大作业\\\\dist\\\\E4 离线验收 rpwuyjua\\\\环境\\\\Scripts\\\\python.exe\", \"-I\", \"-X\", \"utf8\", \"-c\", \"import sys; from zzy.cli import main; sys.argv=['zzy','run','studio.zzy']; status=main(); assert 'tkinter' not in sys.modules; raise SystemExit(status)\"], \"exit_code\": 0, \"stdout\": \"GUI unavailable: run requires --gui\\n\", \"stderr\": \"\"}, {\"command\": [\"D:\\\\大学资料\\\\北邮\\\\课程\\\\程序设计实践\\\\程序设计实践大作业\\\\dist\\\\E4 离线验收 rpwuyjua\\\\环境\\\\Scripts\\\\python.exe\", \"-I\", \"-X\", \"utf8\", \"-m\", \"zzy\", \"check\", \"restart.zzy\"], \"cwd\": \"D:\\\\大学资料\\\\北邮\\\\课程\\\\程序设计实践\\\\程序设计实践大作业\\\\dist\\\\E4 离线验收 rpwuyjua\\\\中文 空格 工作目录\", \"exit_code\": 0, \"stdout\": \"\", \"stderr\": \"\"}, {\"command\": [\"D:\\\\大学资料\\\\北邮\\\\课程\\\\程序设计实践\\\\程序设计实践大作业\\\\dist\\\\E4 离线验收 rpwuyjua\\\\环境\\\\Scripts\\\\python.exe\", \"-I\", \"-X\", \"utf8\", \"-m\", \"zzy\", \"run\", \"restart.zzy\"], \"cwd\": \"D:\\\\大学资料\\\\北邮\\\\课程\\\\程序设计实践\\\\程序设计实践大作业\\\\dist\\\\E4 离线验收 rpwuyjua\\\\中文 空格 工作目录\", \"exit_code\": 0, \"stdout\": \"8\\ntrue\\n7\\n(^_^)(9)\\n(^_^)(null)\\n\", \"stderr\": \"\"}], \"gui\": [{\"main_thread\": 52684, \"worker_thread\": 25308, \"tk\": \"8.6.12\", \"rendered_objects\": 8, \"viewport\": [704, 504]}], \"gui_output\": [\"小花出道，图案库也保存好了。\\n\"], \"files\": {\"flower.zzy\": \"15355db387f240d18919d4b5b07d3de489d6699fbf488e9383e9846241896daf\", \"little-flower.svg\": \"957c04dc06c017ada34746aead12335366068e259abcb3caf35b77566d52500e\", \"little-flower.zzysketch\": \"4ed802d781ea99468d6a167717b536dcd9cf2cb0fa78da9e617a310fe9803d93\", \"restart.zzy\": \"5773eed75ab4d1d1d49ef49ea3e98446f30220001b15a2167f19acf9e375035d\", \"restarted.svg\": \"a627577bc43f93696af42d08fc25452af99c205ddb7ca6756f24ce88e3850963\", \"studio.zzy\": \"1d8d40027983c345292ab168ba5f4db2d367a5806b5e2a6bf47a6d3cd86cc474\"}}\r\n",
+      "stderr": ""
+    }
+  ],
+  "passed": true,
+  "wheel_sha256": "6d5b200a49b275e8c9b40a2f7d628a7abfb48477565cfffe07bfdb4416f7c0a4",
+  "source_files": [
+    {
+      "path": "ast_nodes.py",
+      "text_sha256": "7de87c9716e7c3b184ac7e7faf431e33f26be4a2fd1ddb1b51d9c0d78117c7ce",
+      "source_bytes_sha256": "ef2dcd105a9653d64865c3ba419fdc3faabc8536e9e39aaf428ad34f560a1a20",
+      "installed_bytes_sha256": "ef2dcd105a9653d64865c3ba419fdc3faabc8536e9e39aaf428ad34f560a1a20"
+    },
+    {
+      "path": "cli.py",
+      "text_sha256": "e687c539f3c6361fb281547d69b8f5d53f59f9e70c31b702f17f3aa0f436e1a4",
+      "source_bytes_sha256": "c4a63a48ea44528b8ff02bc09ddffdd16a4dbd5b24bc186c56e6574364d0d425",
+      "installed_bytes_sha256": "c4a63a48ea44528b8ff02bc09ddffdd16a4dbd5b24bc186c56e6574364d0d425"
+    },
+    {
+      "path": "diagnostics.py",
+      "text_sha256": "6c41cedd276d544415c03e4791cb72d8354bea238e85230b6a6457e720984a92",
+      "source_bytes_sha256": "1bb7b7a8748f2f4324633562fc7b55fb7fc933bfc724a167ca1319e7ccfe5604",
+      "installed_bytes_sha256": "1bb7b7a8748f2f4324633562fc7b55fb7fc933bfc724a167ca1319e7ccfe5604"
+    },
+    {
+      "path": "features.py",
+      "text_sha256": "f7403b2eda1bcdd666b6f9c6c226a2dfcaa5d67974aaed3ab6fe4984bb90d308",
+      "source_bytes_sha256": "d74c07f4d84dd23a395525008f16c6f3dd3e8ad6c125f63213527b5b4fec8e0b",
+      "installed_bytes_sha256": "d74c07f4d84dd23a395525008f16c6f3dd3e8ad6c125f63213527b5b4fec8e0b"
+    },
+    {
+      "path": "interpreter.py",
+      "text_sha256": "b51504a21466943acba5ea4e0d3256b1892b7e57bc9ec93237943905015320a3",
+      "source_bytes_sha256": "32478e27d2bc402c63b1469108805cc748f9e4925ad4f7b277c610431fa31e6f",
+      "installed_bytes_sha256": "32478e27d2bc402c63b1469108805cc748f9e4925ad4f7b277c610431fa31e6f"
+    },
+    {
+      "path": "lexer.py",
+      "text_sha256": "b0a38690cd36c19b58b00327038bb0342caed1ad9becd242d45af30236379796",
+      "source_bytes_sha256": "62fba0dbedc0028f92571784fc045e522850184760058c69da061464e98a8289",
+      "installed_bytes_sha256": "62fba0dbedc0028f92571784fc045e522850184760058c69da061464e98a8289"
+    },
+    {
+      "path": "output.py",
+      "text_sha256": "c401c13b3d1a8c1ea05e3ce5eea783dd814e741949765db5be692b5cdb46d1cd",
+      "source_bytes_sha256": "bfc695d0db9651d7d871caffa2fdaf03c759d703c62f3bffd39a4c18cf94c2ba",
+      "installed_bytes_sha256": "bfc695d0db9651d7d871caffa2fdaf03c759d703c62f3bffd39a4c18cf94c2ba"
+    },
+    {
+      "path": "parser.py",
+      "text_sha256": "0ffb682da35e4d54ce7074e058cb495731d17497ebb81c656d4d31e6b21a9164",
+      "source_bytes_sha256": "5d661015c3069622551120323cb1535b3ab8381fb1dd51fd2d46f97d7686b35f",
+      "installed_bytes_sha256": "5d661015c3069622551120323cb1535b3ab8381fb1dd51fd2d46f97d7686b35f"
+    },
+    {
+      "path": "prepare.py",
+      "text_sha256": "afab3ecb3244992665ac09edc854f07df7bde453f8e03db911690bcca2746ecf",
+      "source_bytes_sha256": "766d14bb10281fca19d9ae672fc3d2b82bfb1225e667b7d1d14bac9afca036c2",
+      "installed_bytes_sha256": "766d14bb10281fca19d9ae672fc3d2b82bfb1225e667b7d1d14bac9afca036c2"
+    },
+    {
+      "path": "process.py",
+      "text_sha256": "4c41af43e6794b91e9dcb16b5da5d2c6769e4da52c293d6a037b0e2da1062d87",
+      "source_bytes_sha256": "855003863e1b41bc44bae62d1b1059bddbaa41a0ab9315ea97f279c0e6a06b39",
+      "installed_bytes_sha256": "855003863e1b41bc44bae62d1b1059bddbaa41a0ab9315ea97f279c0e6a06b39"
+    },
+    {
+      "path": "quantities.py",
+      "text_sha256": "64bd5b4321cdb3ca0ec66c70e7ddc44113487cd845d761283ef31b94097c389f",
+      "source_bytes_sha256": "da85167c457b5da17bb2d86edd4cf2585b2be7e1ccf1e53560af06ce73866103",
+      "installed_bytes_sha256": "da85167c457b5da17bb2d86edd4cf2585b2be7e1ccf1e53560af06ce73866103"
+    },
+    {
+      "path": "resolver.py",
+      "text_sha256": "75a182a52d9a0e84bb0d973c25ae351d8539b8857e328559e91cbf4e62303a4d",
+      "source_bytes_sha256": "1c50934f61f338dbf29a2aed7ef3f09facdf706c07bad5f4845750eccaaa60c4",
+      "installed_bytes_sha256": "1c50934f61f338dbf29a2aed7ef3f09facdf706c07bad5f4845750eccaaa60c4"
+    },
+    {
+      "path": "resources.py",
+      "text_sha256": "800c1b82893d01aab6ea3332b52edf5fe934c1f31d53cc61c8270c27dcb3677a",
+      "source_bytes_sha256": "552ac299788eb18279208df4878c452b3e886793d39b75a2531ca2591c96d602",
+      "installed_bytes_sha256": "552ac299788eb18279208df4878c452b3e886793d39b75a2531ca2591c96d602"
+    },
+    {
+      "path": "source.py",
+      "text_sha256": "359d3579942f337994c6cf39c5253e1d0f90244725eb9e76d6215dff46094005",
+      "source_bytes_sha256": "8c6827a5d37c623b2309bd4403befd6ba433a3ff7d8fc0cedb7a5736966b4f61",
+      "installed_bytes_sha256": "8c6827a5d37c623b2309bd4403befd6ba433a3ff7d8fc0cedb7a5736966b4f61"
+    },
+    {
+      "path": "spec_runner.py",
+      "text_sha256": "621216a54d52671aa61956bc4448157b38e6420da20c2df70d20b854518b1ca6",
+      "source_bytes_sha256": "09b1f942d988418b973c80cbfde7b2ab60f0a4687627edc98541e8418f6f533d",
+      "installed_bytes_sha256": "09b1f942d988418b973c80cbfde7b2ab60f0a4687627edc98541e8418f6f533d"
+    },
+    {
+      "path": "spec_worker.py",
+      "text_sha256": "52b09453019070b738a9e7614c21c3fea25499b9cb2d1018eb086659f5d40ea6",
+      "source_bytes_sha256": "8bf50a1d0be4684f3fd2fb7aca45b63c005394ab389cc58367fe4e0f6cdcee6c",
+      "installed_bytes_sha256": "8bf50a1d0be4684f3fd2fb7aca45b63c005394ab389cc58367fe4e0f6cdcee6c"
+    },
+    {
+      "path": "tokens.py",
+      "text_sha256": "740a69b9a4211cacf620dc97453f090f4bcad1aea36dc19c3b8d983c8eaeb1c5",
+      "source_bytes_sha256": "55847182fe23d23a330f056fa37484ae7204128e6aaf154b2cc2682b861d303a",
+      "installed_bytes_sha256": "55847182fe23d23a330f056fa37484ae7204128e6aaf154b2cc2682b861d303a"
+    },
+    {
+      "path": "values.py",
+      "text_sha256": "5d2ac675b765b527a8e42e900ffa9bf1afdca1a3b7032a04f9c62a19d4741bd1",
+      "source_bytes_sha256": "447c835c305ab0f1e1d254033f466daa581b689db92178e1274f8cde7b0b8304",
+      "installed_bytes_sha256": "447c835c305ab0f1e1d254033f466daa581b689db92178e1274f8cde7b0b8304"
+    },
+    {
+      "path": "windows_job.py",
+      "text_sha256": "9bfa12aa99fed4901879ea06329d3669cd86b2d1754bcfbd308b646a327c9d80",
+      "source_bytes_sha256": "063b3d9e7749b2bdc4730770fb582719611760ab3173018fa730aa4bf2de0e45",
+      "installed_bytes_sha256": "063b3d9e7749b2bdc4730770fb582719611760ab3173018fa730aa4bf2de0e45"
+    },
+    {
+      "path": "__init__.py",
+      "text_sha256": "1baaf700f36760f61df7e81f5ca640cc60cd661dec31db67ce70246778a61c99",
+      "source_bytes_sha256": "918b735a252679ded627381557cb9b4b43d4f734e95109f8fc3eae3ea3f19378",
+      "installed_bytes_sha256": "918b735a252679ded627381557cb9b4b43d4f734e95109f8fc3eae3ea3f19378"
+    },
+    {
+      "path": "__main__.py",
+      "text_sha256": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+      "source_bytes_sha256": "482b8693e2fe6dbd732e3d7961e03827d3efa187bad11d29da188be580ebbeea",
+      "installed_bytes_sha256": "482b8693e2fe6dbd732e3d7961e03827d3efa187bad11d29da188be580ebbeea"
+    },
+    {
+      "path": "native\\catalog.py",
+      "text_sha256": "1df930952b2dc1c86d9c2dad94c26f53e4817d883c7bff4c50e412c7ad43e847",
+      "source_bytes_sha256": "52a2607e608747cff868c46a4a867b81dcb5801c48b77d9127f4646e97cd0043",
+      "installed_bytes_sha256": "52a2607e608747cff868c46a4a867b81dcb5801c48b77d9127f4646e97cd0043"
+    },
+    {
+      "path": "native\\files.py",
+      "text_sha256": "d4b5f123bb45948e1e6970f4da4904612bd8a7cb162eb7f1c645fd882aafbb18",
+      "source_bytes_sha256": "e021f28b8e98925fd720543635438dba6d1929307cb4254217a3a898ad64ca07",
+      "installed_bytes_sha256": "e021f28b8e98925fd720543635438dba6d1929307cb4254217a3a898ad64ca07"
+    },
+    {
+      "path": "native\\json_codec.py",
+      "text_sha256": "d947dc7190336b10a9c44897be3b7d386bc57be4afdf32a2aeef81e4e71a8ac2",
+      "source_bytes_sha256": "b0191f91fee3ec0a86a26f167a1e1e4643016f9618037408ba6bc7d0a7de9703",
+      "installed_bytes_sha256": "b0191f91fee3ec0a86a26f167a1e1e4643016f9618037408ba6bc7d0a7de9703"
+    },
+    {
+      "path": "native\\library.py",
+      "text_sha256": "a43fad11936da6562e9500a72c698db5fa457f8fc3cc55d8a3c5fb027ea48418",
+      "source_bytes_sha256": "643cce6641ccfb5a4da5fb5fab21e34a51b6a8cb3c40f5b8608f7f05d3a954ca",
+      "installed_bytes_sha256": "643cce6641ccfb5a4da5fb5fab21e34a51b6a8cb3c40f5b8608f7f05d3a954ca"
+    },
+    {
+      "path": "native\\metadata.py",
+      "text_sha256": "a76e845ca46443988e935f644ac3cafad124676a9e44b0cb1b11a4a1de8eeadf",
+      "source_bytes_sha256": "b75591c84c5d804ddbd09c8a6f6e7d151ee2b3c77900802eb69c756a44f81b28",
+      "installed_bytes_sha256": "b75591c84c5d804ddbd09c8a6f6e7d151ee2b3c77900802eb69c756a44f81b28"
+    },
+    {
+      "path": "native\\sketch.py",
+      "text_sha256": "4f1c43cfe274be287621939cbce537a841fc8a2d663e18adf9240ba78911ad7d",
+      "source_bytes_sha256": "c2e651a28aeaaaf9ee3927445e3df6330c35677208c15c07110f9fe64a06f9d5",
+      "installed_bytes_sha256": "c2e651a28aeaaaf9ee3927445e3df6330c35677208c15c07110f9fe64a06f9d5"
+    },
+    {
+      "path": "native\\sketch_events.py",
+      "text_sha256": "b2409d324e86d5ee9d7b98db4dfb7aef43f577389a962480ce24341ea3172e4d",
+      "source_bytes_sha256": "1ef9781ee3f8f3cd9893f6b018b323f2c76f13df2d3df8162b7a032b02829ebb",
+      "installed_bytes_sha256": "1ef9781ee3f8f3cd9893f6b018b323f2c76f13df2d3df8162b7a032b02829ebb"
+    },
+    {
+      "path": "native\\sketch_gui.py",
+      "text_sha256": "f53abe7002745751ca5c24f5383c3469ced491441c9ade3723ca485bee1d153f",
+      "source_bytes_sha256": "d36ca4fbdb1bdb3c2f2dd9a40cc39bbce44fa2b613eac3190289684d72292b71",
+      "installed_bytes_sha256": "d36ca4fbdb1bdb3c2f2dd9a40cc39bbce44fa2b613eac3190289684d72292b71"
+    },
+    {
+      "path": "native\\sketch_history.py",
+      "text_sha256": "3716bbb2519ff6ab2e8218d9416a5687bf5bf112ddb5157d4556974598c9bb73",
+      "source_bytes_sha256": "27477d4709dd4371d251546143a010708933f82be6a6a44677b12f9369faec59",
+      "installed_bytes_sha256": "27477d4709dd4371d251546143a010708933f82be6a6a44677b12f9369faec59"
+    },
+    {
+      "path": "native\\sketch_layers.py",
+      "text_sha256": "66f9f878298f8c7919807d2149fa8fe08772c80dcfc6347c8d626acb09c20f53",
+      "source_bytes_sha256": "17efd421524902fc7e42e86abc4eeda267d118853a5343d151b6b39b550296b6",
+      "installed_bytes_sha256": "17efd421524902fc7e42e86abc4eeda267d118853a5343d151b6b39b550296b6"
+    },
+    {
+      "path": "native\\sketch_metadata.py",
+      "text_sha256": "498d42d79b41fa3ff9001f0351cc9bc9a601fd5faa95027b2fb6f248f8771bd9",
+      "source_bytes_sha256": "3aa3d6b465d5905f8bd1e9f792e64211de78026eee5ac571a8a71eb2a1f5a074",
+      "installed_bytes_sha256": "3aa3d6b465d5905f8bd1e9f792e64211de78026eee5ac571a8a71eb2a1f5a074"
+    },
+    {
+      "path": "native\\sketch_objects.py",
+      "text_sha256": "51a2b78d850e55acb35193f25c639a30e8ae585d6c9d10d51382acdd8df3db43",
+      "source_bytes_sha256": "51a2b78d850e55acb35193f25c639a30e8ae585d6c9d10d51382acdd8df3db43",
+      "installed_bytes_sha256": "51a2b78d850e55acb35193f25c639a30e8ae585d6c9d10d51382acdd8df3db43"
+    },
+    {
+      "path": "native\\sketch_patterns.py",
+      "text_sha256": "8753069b1deef57b352478bab2318660cafea194738ebfa9779bd1d1b4391d46",
+      "source_bytes_sha256": "34420b6c80c0fd4dd88559626c4a7cf1fab2bc80c1bd2d529c794c361cf25328",
+      "installed_bytes_sha256": "34420b6c80c0fd4dd88559626c4a7cf1fab2bc80c1bd2d529c794c361cf25328"
+    },
+    {
+      "path": "native\\sketch_project.py",
+      "text_sha256": "025ae7ad8732db2434ca194008632f9e9a7eadeaffe16d4c98dc449113440edf",
+      "source_bytes_sha256": "b2c6c6246a83954911c5a138ad521c7496d9c5477cbf06d9125a629e26512297",
+      "installed_bytes_sha256": "b2c6c6246a83954911c5a138ad521c7496d9c5477cbf06d9125a629e26512297"
+    },
+    {
+      "path": "native\\sketch_replay.py",
+      "text_sha256": "c14dedaac7c69b839bb64da942e09cc2856bb0e767e3c86863b499f9a11eb395",
+      "source_bytes_sha256": "c14dedaac7c69b839bb64da942e09cc2856bb0e767e3c86863b499f9a11eb395",
+      "installed_bytes_sha256": "c14dedaac7c69b839bb64da942e09cc2856bb0e767e3c86863b499f9a11eb395"
+    },
+    {
+      "path": "native\\sketch_session.py",
+      "text_sha256": "f2c49d840e8cf320435ade6c7908f4daa725585e752f34e0a03387b1adfc1b80",
+      "source_bytes_sha256": "fbfd8e19e87255670c4b3eca593bb58ce8990775c75cf476565ddd6558c0948e",
+      "installed_bytes_sha256": "fbfd8e19e87255670c4b3eca593bb58ce8990775c75cf476565ddd6558c0948e"
+    },
+    {
+      "path": "native\\sketch_svg.py",
+      "text_sha256": "2e3bc876a1734ea937ff6d39e9877208f94089866b62660a33560940365e4345",
+      "source_bytes_sha256": "e37f88bbbb6f86bebc3ddf1c35e5d1e0d9d701fd4e335cbe876fccd9562bfb4d",
+      "installed_bytes_sha256": "e37f88bbbb6f86bebc3ddf1c35e5d1e0d9d701fd4e335cbe876fccd9562bfb4d"
+    },
+    {
+      "path": "native\\__init__.py",
+      "text_sha256": "c0c06bc993b317ca3f1c148c5d68dcf45b83567bf645cf2590ad61d682757f80",
+      "source_bytes_sha256": "29ade97372807897986c89586868ea0dda2c787ce3c86065ee9661ede22d304f",
+      "installed_bytes_sha256": "29ade97372807897986c89586868ea0dda2c787ce3c86065ee9661ede22d304f"
+    }
+  ],
+  "probe": {
+    "passed": true,
+    "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+    "executable": "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\dist\\E4 离线验收 rpwuyjua\\环境\\Scripts\\python.exe",
+    "installed_package": "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\dist\\E4 离线验收 rpwuyjua\\环境\\Lib\\site-packages\\zzy\\__init__.py",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "commands": [
+      {
+        "command": [
+          "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\dist\\E4 离线验收 rpwuyjua\\环境\\Scripts\\python.exe",
+          "-I",
+          "-X",
+          "utf8",
+          "-m",
+          "zzy",
+          "check",
+          "studio.zzy"
+        ],
+        "cwd": "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\dist\\E4 离线验收 rpwuyjua\\中文 空格 工作目录",
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\dist\\E4 离线验收 rpwuyjua\\环境\\Scripts\\python.exe",
+          "-I",
+          "-X",
+          "utf8",
+          "-c",
+          "import sys; from zzy.cli import main; sys.argv=['zzy','check','studio.zzy']; status=main(); assert 'tkinter' not in sys.modules; assert 'zzy.native.sketch' not in sys.modules; raise SystemExit(status)"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\dist\\E4 离线验收 rpwuyjua\\环境\\Scripts\\python.exe",
+          "-I",
+          "-X",
+          "utf8",
+          "-c",
+          "import sys; from zzy.cli import main; sys.argv=['zzy','run','studio.zzy']; status=main(); assert 'tkinter' not in sys.modules; raise SystemExit(status)"
+        ],
+        "exit_code": 0,
+        "stdout": "GUI unavailable: run requires --gui\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\dist\\E4 离线验收 rpwuyjua\\环境\\Scripts\\python.exe",
+          "-I",
+          "-X",
+          "utf8",
+          "-m",
+          "zzy",
+          "check",
+          "restart.zzy"
+        ],
+        "cwd": "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\dist\\E4 离线验收 rpwuyjua\\中文 空格 工作目录",
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\dist\\E4 离线验收 rpwuyjua\\环境\\Scripts\\python.exe",
+          "-I",
+          "-X",
+          "utf8",
+          "-m",
+          "zzy",
+          "run",
+          "restart.zzy"
+        ],
+        "cwd": "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\dist\\E4 离线验收 rpwuyjua\\中文 空格 工作目录",
+        "exit_code": 0,
+        "stdout": "8\ntrue\n7\n(^_^)(9)\n(^_^)(null)\n",
+        "stderr": ""
+      }
+    ],
+    "gui": [
+      {
+        "main_thread": 52684,
+        "worker_thread": 25308,
+        "tk": "8.6.12",
+        "rendered_objects": 8,
+        "viewport": [
+          704,
+          504
+        ]
+      }
+    ],
+    "gui_output": [
+      "小花出道，图案库也保存好了。\n"
+    ],
+    "files": {
+      "flower.zzy": "15355db387f240d18919d4b5b07d3de489d6699fbf488e9383e9846241896daf",
+      "little-flower.svg": "957c04dc06c017ada34746aead12335366068e259abcb3caf35b77566d52500e",
+      "little-flower.zzysketch": "4ed802d781ea99468d6a167717b536dcd9cf2cb0fa78da9e617a310fe9803d93",
+      "restart.zzy": "5773eed75ab4d1d1d49ef49ea3e98446f30220001b15a2167f19acf9e375035d",
+      "restarted.svg": "a627577bc43f93696af42d08fc25452af99c205ddb7ca6756f24ce88e3850963",
+      "studio.zzy": "1d8d40027983c345292ab168ba5f4db2d367a5806b5e2a6bf47a6d3cd86cc474"
+    }
+  },
+  "finished": "2026-10-17T11:50:35.401007+00:00"
+}

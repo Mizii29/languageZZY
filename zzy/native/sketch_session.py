@@ -207,12 +207,14 @@ def show(r,c,n):
             elif event[0]=='add_layer':
                 sketch.invoke(r,'sketch.add_layer',[c,Value('String',event[1])],n)
             elif event[0]=='set_layer':
-                layer=next(l for l in c.layers if l.id==event[2])
+                layer=next((l for l in c.layers if l.id==event[2]),None)
+                if layer is None:r.error(n,'E203','排队操作的图层已不在当前文档')
                 p=c.pens.get(event[1])
                 if p is None:p=sketch.invoke(r,'sketch.pen',[c,Value('String',event[1])],n)
                 sketch.invoke(r,'sketch.set_layer',[p,layer],n)
             elif event[0]=='layer':
-                layer=next(l for l in c.layers if l.id==event[2])
+                layer=next((l for l in c.layers if l.id==event[2]),None)
+                if layer is None:r.error(n,'E203','排队操作的图层已不在当前文档')
                 op=event[1];value=event[3]
                 sketch.invoke(r,'sketch.'+op,[layer,Value('Bool' if type(value)is bool else 'Int' if type(value)is int else 'String',value)],n)
             session.refresh(snapshot(c))
