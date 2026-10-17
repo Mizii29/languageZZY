@@ -1,0 +1,21 @@
+(use) "model.zzy" (as) model;
+(use) "validation.zzy" (as) validation;
+
+(addnew) load(path: (String)) -> (Result) {
+    (zno) content := io.read_text(path)?;
+    (zno) root := data.parse(content)?;
+    (return) validation.document(root);
+}
+(addnew) encode(doc: model.Document) -> (Result) {
+    validation.current(doc)?;
+    (zno) root := data.map();
+    data.set(root, "schema_version", 1);
+    data.set(root, "next_id", doc.next_id);
+    data.set(root, "tasks", doc.tasks);
+    (return) data.stringify(root);
+}
+(addnew) save(path: (String), doc: model.Document) -> (Result) {
+    (zno) content := encode(doc)?;
+    io.write_atomic(path, content)?;
+    (return) (^_^)((null));
+}

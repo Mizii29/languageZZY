@@ -6,7 +6,7 @@
 
 ## 1. 先确认能做什么
 
-P00—P06 已实现，版本 0.6.0a1；核心语法、io/array/text/math/data/unit 标准库、Map/严格 JSON、原子文件保存及模块已接通。GUI、性能测量和完整应用仍待后续阶段。使用 `python -m zzy run examples/features.zzy` 和 `python -m zzy test examples/features-spec.zzy` 运行特色示例；独立外部期望仍由 `python -X utf8 -m tests.blackbox` 验证。check 不执行用户表达式。本文 2 段完整代码已保存至 tests/p06/guide/，逐段 check/run，另补正常/失败 spec；库/模块例子见 examples/library/；下一项 P07-01，接手先核对 todo、最新开发记录和 Git。
+P00—P07及P09应用业务已实现，版本 0.6.0a1；核心语法、io/array/text/math/data/unit 标准库、Map/严格 JSON、原子文件保存及模块已接通。性能报告和校园任务CLI应用已有真实实现；GUI仍待后续阶段。使用 `python -m zzy run examples/features.zzy` 和 `python -m zzy test examples/features-spec.zzy` 运行特色示例；独立外部期望仍由 `python -X utf8 -m tests.blackbox` 验证。check 不执行用户表达式。本文 2 段完整代码已保存至 tests/p06/guide/，逐段 check/run，另补正常/失败 spec；库/模块例子见 examples/library/；应用启动与验收见 apps/zzy-campus/README.md，后续任务先核对 todo、最新开发记录和 Git。
 
 解释器使用 Python，核心运行只依赖标准库。P00 已验证 CPython 3.12.14、Windows 11、Unicode 15.0.0；实际运行和安装命令见项目 README。没有依赖清单时不要凭空执行安装命令；GUI 和后续 Web 等可选依赖不应成为普通 CLI/check 的前提。
 
@@ -163,3 +163,7 @@ sum/stats 逐项检查 Int，Bool/Float 不混入；stats 的 min/max 空值为 
 ## 一键回归与指南练习
 
 从根目录运行 `python -X utf8 -m tests`；本机使用 `.venv/Scripts/python.exe -X utf8 -m tests`。该入口包含独立外部期望、正常 spec 和宿主清理测试，不能用 `zzy test tests/` 替代，因为 tests 中含故意非法源码。只运行语言 spec 可以执行 `python -m zzy test tests/p06/specs`；预期 9/9。全部 15 个语法/指南片段及固定答案由 tests/p06/guide/manifest.json 管理，修改片段必须同步对应文件与期望。练习要求及源码见 [Agent 练习](../examples/agent-practice/task.md)。
+
+## 已实现的完整CLI应用
+
+[校园任务管家](../apps/zzy-campus/README.md)展示逐层JSON校验、候选加载提交、原子保存、内容dirty、ID高水位与浅快照撤销；所有业务模块可直接阅读。启动必须带应用limits.json，测试使用临时目录和独立磁盘/输出答案，不自动改用户文件。当前没有GUI/Web，其他平台和最坏容量组合不由本轮结果推断通过。

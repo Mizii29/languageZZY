@@ -1,0 +1,120 @@
+{
+  "scope": "P09-01 prerequisites, not APP-01/02/03 acceptance",
+  "cases": [
+    {
+      "manifest": "tests/p05/cases.json",
+      "id": "p05-kind-closed",
+      "mode": "check"
+    },
+    {
+      "manifest": "tests/p05/cases.json",
+      "id": "p05-kind-closed",
+      "mode": "run"
+    },
+    {
+      "manifest": "tests/p05/cases.json",
+      "id": "p05-json-roundtrip",
+      "mode": "check"
+    },
+    {
+      "manifest": "tests/p05/cases.json",
+      "id": "p05-json-roundtrip",
+      "mode": "run"
+    },
+    {
+      "manifest": "tests/p05/cases.json",
+      "id": "p05-json-invalid-duplicate",
+      "mode": "check"
+    },
+    {
+      "manifest": "tests/p05/cases.json",
+      "id": "p05-json-invalid-duplicate",
+      "mode": "run"
+    },
+    {
+      "manifest": "tests/p05/cases.json",
+      "id": "p05-json-invalid-overflow",
+      "mode": "check"
+    },
+    {
+      "manifest": "tests/p05/cases.json",
+      "id": "p05-json-invalid-overflow",
+      "mode": "run"
+    },
+    {
+      "manifest": "tests/p05/cases.json",
+      "id": "p05-json-invalid-surrogate",
+      "mode": "check"
+    },
+    {
+      "manifest": "tests/p05/cases.json",
+      "id": "p05-json-invalid-surrogate",
+      "mode": "run"
+    },
+    {
+      "manifest": "tests/p05/cases.json",
+      "id": "p05-map-order",
+      "mode": "check"
+    },
+    {
+      "manifest": "tests/p05/cases.json",
+      "id": "p05-map-order",
+      "mode": "run"
+    },
+    {
+      "manifest": "tests/p05/cases.json",
+      "id": "p05-safe-int-valid",
+      "mode": "check"
+    },
+    {
+      "manifest": "tests/p05/cases.json",
+      "id": "p05-safe-int-valid",
+      "mode": "run"
+    },
+    {
+      "manifest": "tests/p05/cases.json",
+      "id": "p05-safe-int-float",
+      "mode": "check"
+    },
+    {
+      "manifest": "tests/p05/cases.json",
+      "id": "p05-safe-int-float",
+      "mode": "run"
+    },
+    {
+      "manifest": "tests/p05/cases.json",
+      "id": "p05-sorted-copy",
+      "mode": "check"
+    },
+    {
+      "manifest": "tests/p05/cases.json",
+      "id": "p05-sorted-copy",
+      "mode": "run"
+    },
+    {
+      "manifest": "tests/p05/cases.json",
+      "id": "p05-stats-empty",
+      "mode": "check"
+    },
+    {
+      "manifest": "tests/p05/cases.json",
+      "id": "p05-stats-empty",
+      "mode": "run"
+    },
+    {
+      "manifest": "tests/p05/cases.json",
+      "id": "p05-module-once",
+      "mode": "check"
+    },
+    {
+      "manifest": "tests/p05/cases.json",
+      "id": "p05-module-once",
+      "mode": "run"
+    },
+    {
+      "manifest": "tests/p05/cases.json",
+      "id": "p05-check-library-noexecution",
+      "mode": "check"
+    }
+  ]
+}

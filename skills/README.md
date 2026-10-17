@@ -2,7 +2,7 @@
 
 ZZY 是用 Python 构建解释器的自定义脚本语言，面向数组/结构处理、CLI 工具、数据查询和绘图扩展。完整项目介绍见 [根目录 README](../README.md)。本目录与 `docs` 同级，收录使用者和 AI 编写 ZZY 程序所需的文档。
 
-更新：2026-10-14。文档依据核心语法 v0.6、标准库 v0.6.1。P00—P07 已有解释器、真实 CLI 验证及性能报告，已实现接口以 [根 README](../README.md) 为准；hello/grades/functions/features/features-spec/total-up-to 与 library/ 是可执行示例。语法参考 13 段、人用指南 2 段已逐段验收，映射见 [P06](../tests/p06/README.md)；GUI/Web 仍不可用。
+更新：2026-10-15。文档依据核心语法 v0.6、标准库 v0.6.1。P00—P07及P09已有解释器、真实CLI验证、性能报告和[校园应用](../apps/zzy-campus/README.md)，已实现接口以 [根 README](../README.md) 为准；hello/grades/functions/features/features-spec/total-up-to 与 library/ 是可执行示例。语法参考 13 段、人用指南 2 段已逐段验收，映射见 [P06](../tests/p06/README.md)；GUI/Web 仍不可用。
 
 | 文件 | 内容 | 适合谁 |
 |---|---|---|

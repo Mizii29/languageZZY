@@ -1,0 +1,49 @@
+zzysay: Values in a published task list are never mutated in place.
+(shape) Task {
+    id: (Int);
+    title: (String);
+    category: (String);
+    priority: (Int);
+    done: (Bool);
+}
+(shape) Document {
+    next_id: (Int);
+    tasks: (Array);
+}
+(shape) Filter {
+    category: (String) := "";
+    priority: (Int) := 0;
+    status: (Int) := 0;
+    search: (String) := "";
+    sorting: (Int) := 0;
+}
+(shape) Session {
+    document: Document;
+    path := (null);
+    saved := (null);
+    saved_path := (null);
+    undo: (Array) := [];
+    redo: (Array) := [];
+    filter: Filter := Filter::{};
+}
+(addnew) fresh() {
+    (return) Session::{document: Document::{next_id: 1, tasks: []}};
+}
+(addnew) same_task(left: Task, right: Task) -> (Bool) {
+    (return) left.id == right.id (and) left.title == right.title
+        (and) left.category == right.category (and) left.priority == right.priority
+        (and) left.done == right.done;
+}
+(addnew) same_tasks(left: (Array), right: (Array)) -> (Bool) {
+    (zif?:) len(left) != len(right) { (return) (false); }
+    (for) index (in) 0..<len(left) {
+        (zif?:) (not) same_task(left[index], right[index]) { (return) (false); }
+    }
+    (return) (true);
+}
+(addnew) dirty(state: Session) -> (Bool) {
+    (zif?:) state.saved == (null) { (return) (true); }
+    (return) state.path != state.saved_path
+        (or) state.document.next_id != state.saved.next_id
+        (or) (not) same_tasks(state.document.tasks, state.saved.tasks);
+}

@@ -1,8 +1,10 @@
 # ZZY 校园任务管家：保存格式与恢复设计
 
-更新：2026-10-09｜应用文件 schema_version：1｜状态：P09 默认应用设计，尚无应用代码
+更新：2026-10-15｜应用文件 schema_version：1｜状态：P09 全部已实现并验收，证据见 tests/p09 和开发日志
 
 本文件细化 [roadmap.md](roadmap.md) 的 P09，不替代不少于 200 行 ZZY 应用。业务校验和状态替换由 ZZY 编写，Python 只提供 [stdlib.md](../language/stdlib.md) 的通用 Map/JSON、类型类别和文件接口。
+
+应用的具体菜单、模块职责、启动配置及实际验收映射见 [应用 README](../../apps/zzy-campus/README.md)；入口为 main.zzy；应用测试独立核对 APP-01—03，不以前置语言验证代替应用验收。
 
 ## 1. 磁盘格式
 

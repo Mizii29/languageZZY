@@ -1,0 +1,199 @@
+(use) "model.zzy" (as) model;
+(use) "validation.zzy" (as) validation;
+(use) "tasks.zzy" (as) tasks;
+(use) "views.zzy" (as) views;
+(use) "session.zzy" (as) session;
+
+(shape) InputState { ended: (Bool) := (false); }
+(zno) input_state := InputState::{};
+
+(addnew) read_line(prompt: (String)) -> (Result) {
+    (zno) value := io.input(prompt);
+    (zif?:) value == (null) {
+        input_state.ended <- (true);
+        (return) (T_T)("输入结束");
+    }
+    (return) (^_^)(value);
+}
+(addnew) number(prompt: (String), minimum: (Int), maximum: (Int)) -> (Result) {
+    (while) (true) {
+        (zno) line := read_line(prompt)?;
+        (?_?) text.safe_int(line) {
+            (^_^)(value) => {
+                (zif?:) value >= minimum (and) value <= maximum { (return) (^_^)(value); }
+                io.print("选项超出范围");
+            }
+            (T_T)(message) => { io.print("请输入十进制整数"); }
+        }
+    }
+}
+(addnew) report(result: (Result)) {
+    (?_?) result {
+        (^_^)(message) => { io.print(message); }
+        (T_T)(message) => { io.print("失败：" + message); }
+    }
+}
+(addnew) edit_dialog(state: model.Session, editing: (Bool)) -> (Result) {
+    (zif?:) (not) editing {
+        (zif?:) state.document.next_id > 2147483647 { (return) (T_T)("ID已耗尽"); }
+        (zif?:) len(state.document.tasks) >= 10000 { (return) (T_T)("tasks: 最多10000项"); }
+    }
+    (zyes) id := state.document.next_id;
+    (zyes) done := (false);
+    (zif?:) editing {
+        id <- number("任务ID> ", 1, 2147483647)?;
+        (zno) previous := tasks.find(state.document, id)?;
+        io.print(views.row(previous));
+        done <- previous.done;
+    }
+    (while) (true) {
+        (zno) title := read_line("标题> ")?;
+        (zno) category := read_line("分类> ")?;
+        (zno) priority := number("优先级1低/2中/3高> ", 1, 3)?;
+        validation.task_fields(id, title, category, priority, done, "task")?;
+        (zno) confirm := number("1提交 2重填 0取消> ", 0, 2)?;
+        (zif?:) confirm == 0 { (return) (^_^)("已取消"); }
+        (zif?:) confirm == 1 {
+            (zif?:) editing {
+                (zno) candidate := tasks.edit(state.document, id, title, category, priority)?;
+                (return) (^_^)(session.commit(state, candidate));
+            }
+            (zno) candidate := tasks.add(state.document, title, category, priority)?;
+            (return) (^_^)(session.commit(state, candidate));
+        }
+    }
+}
+(addnew) delete_dialog(state: model.Session) -> (Result) {
+    (zno) id := number("任务ID> ", 1, 2147483647)?;
+    (zno) item := tasks.find(state.document, id)?;
+    io.print(views.row(item));
+    (zif?:) number("1确认删除 0取消> ", 0, 1)? == 0 { (return) (^_^)("已取消"); }
+    (zno) candidate := tasks.remove(state.document, id)?;
+    (return) (^_^)(session.commit(state, candidate));
+}
+(addnew) complete_dialog(state: model.Session) -> (Result) {
+    (zno) id := number("任务ID> ", 1, 2147483647)?;
+    tasks.find(state.document, id)?;
+    (zno) choice := number("1已完成 2未完成 0取消> ", 0, 2)?;
+    (zif?:) choice == 0 { (return) (^_^)("已取消"); }
+    (zno) candidate := tasks.complete(state.document, id, choice == 1)?;
+    (return) (^_^)(session.commit(state, candidate));
+}
+(addnew) filter_dialog(state: model.Session) -> (Result) {
+    (zno) category := read_line("分类(空=全部)> ")?;
+    (zno) priority := number("优先级0全部/1低/2中/3高> ", 0, 3)?;
+    (zno) status := number("状态0全部/1已完成/2未完成> ", 0, 2)?;
+    (zno) search := read_line("标题子串(空=全部)> ")?;
+    state.filter <- state.filter (with) {category: category, priority: priority, status: status, search: search};
+    (return) (^_^)("筛选已更新");
+}
+(addnew) sort_dialog(state: model.Session) -> (Result) {
+    (zno) sorting := number("排序0原序/1ID/2优先级降序/3标题> ", 0, 3)?;
+    state.filter <- state.filter (with) {sorting: sorting};
+    (return) (^_^)("排序已更新");
+}
+(addnew) save_dialog(state: model.Session) -> (Result) {
+    (zyes) path := state.path;
+    (zif?:) path == (null) { path <- read_line("保存路径> ")?; }
+    (zif?:) len(text.trim(path)) == 0 { (return) (T_T)("路径不能为空"); }
+    io.print("保存到：" + path);
+    (zif?:) number("1确认写入(可能覆盖) 0取消> ", 0, 1)? == 0 { (return) (^_^)((false)); }
+    (zno) message := session.save(state, path)?;
+    io.print(message);
+    (return) (^_^)((true));
+}
+(addnew) leave_guard(state: model.Session) -> (Result) {
+    (zif?:) (not) model.dirty(state) { (return) (^_^)((true)); }
+    (zno) choice := number("有未保存修改：1保存 2放弃 0取消> ", 0, 2)?;
+    (zif?:) choice == 0 { (return) (^_^)((false)); }
+    (zif?:) choice == 1 { (return) save_dialog(state); }
+    (return) (^_^)((true));
+}
+(addnew) open_dialog(state: model.Session) -> (Result) {
+    (zyes) path := read_line("打开路径> ")?;
+    (while) (true) {
+        (?_?) session.load(state, path) {
+            (^_^)(message) => { (return) (^_^)(message); }
+            (T_T)(message) => { io.print("打开失败：" + message); }
+        }
+        (zno) choice := number("1重试 2其他路径 0保留当前> ", 0, 2)?;
+        (zif?:) choice == 0 { (return) (T_T)("打开已取消"); }
+        (zif?:) choice == 2 { path <- read_line("打开路径> ")?; }
+    }
+}
+(addnew) load_dialog(state: model.Session) -> (Result) {
+    (zif?:) (not) leave_guard(state)? { (return) (^_^)("已取消"); }
+    (return) open_dialog(state);
+}
+(addnew) export_dialog(state: model.Session) -> (Result) {
+    (zno) path := read_line("导出TSV路径(勿选数据文件)> ")?;
+    (zif?:) len(text.trim(path)) == 0 { (return) (T_T)("路径不能为空"); }
+    (zif?:) path == state.path { (return) (T_T)("不能导出到当前数据文件"); }
+    (zif?:) number("1确认写入(可能覆盖) 0取消> ", 0, 1)? == 0 { (return) (^_^)("已取消"); }
+    (zno) content := views.tsv(views.select(state.document, state.filter));
+    io.write_atomic(path, content)?;
+    (return) (^_^)("导出成功");
+}
+(addnew) main() {
+    io.print("ZZY 校园任务管家 v1");
+    (zyes) active := (null);
+    (zyes) running := (true);
+    (while) running (and) (not) input_state.ended {
+        (zif?:) active == (null) {
+            (?_?) number("1新建 2打开 0退出> ", 0, 2) {
+                (^_^)(choice) => {
+                    (zif?:) choice == 0 { running <- (false); }
+                    (zzif?:) choice == 1 { active <- model.fresh(); io.print("已新建"); }
+                    (zzyf:) {
+                        (zno) candidate := model.fresh();
+                        (?_?) open_dialog(candidate) {
+                            (^_^)(message) => { active <- candidate; io.print(message); }
+                            (T_T)(message) => { io.print("失败：" + message); }
+                        }
+                    }
+                }
+                (T_T)(message) => { running <- (false); }
+            }
+        }
+        (zzyf:) {
+            io.print("任务数=" + str(len(active.document.tasks)) + " next_id=" + str(active.document.next_id)
+                + " 未保存=" + str(model.dirty(active)));
+            (?_?) number("1列表 2新增 3编辑 4删除 5完成 6筛选 7排序 8统计 9导出 10保存 11打开 12撤销 13重做 0退出> ", 0, 13) {
+                (^_^)(choice) => {
+                    (?_?) choice {
+                        0 => {
+                            (?_?) leave_guard(active) {
+                                (^_^)(allowed) => { (zif?:) allowed { running <- (false); } }
+                                (T_T)(message) => { io.print("失败：" + message); }
+                            }
+                        }
+                        1 => { views.show(views.select(active.document, active.filter)); }
+                        2 => { report(edit_dialog(active, (false))); }
+                        3 => { report(edit_dialog(active, (true))); }
+                        4 => { report(delete_dialog(active)); }
+                        5 => { report(complete_dialog(active)); }
+                        6 => { report(filter_dialog(active)); }
+                        7 => { report(sort_dialog(active)); }
+                        8 => { report(data.stringify(views.stats(active.document))); }
+                        9 => { report(export_dialog(active)); }
+                        10 => {
+                            (?_?) save_dialog(active) {
+                                (^_^)(saved) => { (zif?:) (not) saved { io.print("已取消"); } }
+                                (T_T)(message) => { io.print("保存失败：" + message); }
+                            }
+                        }
+                        11 => { report(load_dialog(active)); }
+                        12 => { report(session.undo(active)); }
+                        13 => { report(session.redo(active)); }
+                    }
+                }
+                (T_T)(message) => { running <- (false); }
+            }
+        }
+    }
+    (zif?:) input_state.ended (and) active != (null) {
+        (zif?:) model.dirty(active) { io.print("输入结束：有未保存修改，未自动保存"); }
+    }
+    io.print("再见");
+}
+main();

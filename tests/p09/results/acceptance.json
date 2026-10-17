@@ -1,0 +1,158 @@
+{
+  "date": "2026-10-15",
+  "implementation_revision": "8cfe8f120800c305334554b9333175999e7f243d",
+  "application_version": "1.0",
+  "file_schema_version": 1,
+  "runtime_version": "0.6.0a1",
+  "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+  "os": "Windows-11-10.0.26200-SP0",
+  "unicode": "15.0.0",
+  "resource_policy": {
+    "policy_version": 1,
+    "profile": "default-v1",
+    "limits": {
+      "source_file_bytes": 2097152,
+      "source_total_bytes": 16777216,
+      "module_count": 128,
+      "import_depth": 32,
+      "tokens_per_file": 250000,
+      "ast_nodes_total": 500000,
+      "syntax_depth": 64,
+      "numeric_digits": 4096,
+      "integer_bits": 65536,
+      "quantity_exponent_abs": 64,
+      "call_depth": 64,
+      "value_depth": 64,
+      "container_items": 1000000,
+      "text_codepoints": 4194304,
+      "io_payload_bytes": 4194304,
+      "runtime_objects": 200000,
+      "runtime_slots": 2000000,
+      "runtime_payload_bytes": 134217728,
+      "stdout_bytes": 1048576,
+      "stderr_bytes": 1048576,
+      "program_cache_entries": 32,
+      "program_cache_bytes": 67108864
+    },
+    "host_decimal_digits": 4300,
+    "effective_decimal_digits": 4096
+  },
+  "resource_fingerprint": "fd1aaefacc02ee4b7d585ad733a9fed92a01d948bcdf020b38ecea64eaa80fe5",
+  "full_suite": {
+    "collected": 1791,
+    "tests_run": 1791,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "expected_failures": 0,
+    "passed": true,
+    "seconds": 806.968,
+    "zzy_version": "0.6.0a1",
+    "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "resource_policy": {
+      "policy_version": 1,
+      "profile": "default-v1",
+      "limits": {
+        "source_file_bytes": 2097152,
+        "source_total_bytes": 16777216,
+        "module_count": 128,
+        "import_depth": 32,
+        "tokens_per_file": 250000,
+        "ast_nodes_total": 500000,
+        "syntax_depth": 64,
+        "numeric_digits": 4096,
+        "integer_bits": 65536,
+        "quantity_exponent_abs": 64,
+        "call_depth": 64,
+        "value_depth": 64,
+        "container_items": 1000000,
+        "text_codepoints": 4194304,
+        "io_payload_bytes": 16777216,
+        "runtime_objects": 200000,
+        "runtime_slots": 2000000,
+        "runtime_payload_bytes": 134217728,
+        "stdout_bytes": 1048576,
+        "stderr_bytes": 1048576,
+        "program_cache_entries": 32,
+        "program_cache_bytes": 67108864
+      },
+      "host_decimal_digits": 4300,
+      "effective_decimal_digits": 4096
+    },
+    "resource_fingerprint": "2e654aef52d3267bfecf0768bef9faee1eed942a329001ec455aee951c858bd2"
+  },
+  "application_specialist_tests": {
+    "tests_run": 22,
+    "seconds": 109.335,
+    "passed": true
+  },
+  "source_counts": {
+    "rule": "physical lines; effective contains non-comment tokens; substantive excludes punctuation-only lines",
+    "files": [
+      {
+        "file": "apps/zzy-campus/main.zzy",
+        "sha256": "ef2b6656cd3ab161866107844851d573580258a49b245a8a2f4690a4cb1b9eb5",
+        "total_lines": 199,
+        "effective_lines": 197,
+        "substantive_lines": 156
+      },
+      {
+        "file": "apps/zzy-campus/model.zzy",
+        "sha256": "dfcdfbd4329384c2001e119cfd90d3ab9a11b275b2ae091360fbfd30a9f2e6cb",
+        "total_lines": 49,
+        "effective_lines": 48,
+        "substantive_lines": 39
+      },
+      {
+        "file": "apps/zzy-campus/session.zzy",
+        "sha256": "2fbcb2e1e386314bab3cb33ba1988b564b345974a2d73cbfdee135020f8a95a0",
+        "total_lines": 62,
+        "effective_lines": 60,
+        "substantive_lines": 54
+      },
+      {
+        "file": "apps/zzy-campus/storage.zzy",
+        "sha256": "ad08f7f29b69998a3c4c7f5e65b2f1fa3c56d9bdc13b5a6632965474bb6b30d0",
+        "total_lines": 21,
+        "effective_lines": 20,
+        "substantive_lines": 17
+      },
+      {
+        "file": "apps/zzy-campus/tasks.zzy",
+        "sha256": "54a685e92f02aa7e19acb4d82babd9b027d38c7a659b690ab4b6f6b5161f3e97",
+        "total_lines": 43,
+        "effective_lines": 42,
+        "substantive_lines": 33
+      },
+      {
+        "file": "apps/zzy-campus/validation.zzy",
+        "sha256": "df40e60490ee8da16072f58fd8ba1bfa695608d19c48b44f28408deb60ab9c66",
+        "total_lines": 83,
+        "effective_lines": 80,
+        "substantive_lines": 68
+      },
+      {
+        "file": "apps/zzy-campus/views.zzy",
+        "sha256": "78cca9a504704b3c22c7195e894932ebec74dee41ab43a49a5261a653d7213f4",
+        "total_lines": 47,
+        "effective_lines": 46,
+        "substantive_lines": 39
+      }
+    ],
+    "total_lines": 504,
+    "effective_lines": 493,
+    "substantive_lines": 406
+  },
+  "coverage_map": "tests/p09/coverage.json",
+  "installed_demo": "tests/p09/results/installed-demo.json",
+  "unverified": [
+    "other OS/Python",
+    "real filesystem ACL failures (injected instead)",
+    "all blocking-host-call interruption timings",
+    "worst-case simultaneous field sizes and full history",
+    "power-loss durability",
+    "multi-writer merge",
+    "path alias equivalence"
+  ]
+}

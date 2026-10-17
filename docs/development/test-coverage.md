@@ -1,6 +1,6 @@
 # ZZY 黑盒覆盖与验收计划
 
-更新：2026-10-14｜状态：P06 核心矩阵已落实为实际映射及回归；优化/GUI/应用等后续阶段仍待实现，证据与未测范围见 tests/p06 和开发记录
+更新：2026-10-15｜状态：P06 核心矩阵已落实为实际映射及回归；P07优化与P09应用已落实，GUI仍待实现，证据与未测范围见 tests/p06 和开发记录
 
 本文件将 [syntax.md](../language/syntax.md) 与 [stdlib.md](../language/stdlib.md) 的可观察规则映射到测试类别。它不是测试集或通过报告；实际用例需用 `.zzy` 编写并通过真实 CLI 一键运行。
 
@@ -123,3 +123,11 @@ P07 的 B01—B09 与 [performance.md](../runtime/performance.md) 第 3.4/3.5 �
 P07实际证据：配对源码与独立固定答案位于benchmarks/zzy、python、expected-small.json，三档原始样本及失败矩阵见 [性能报告](../runtime/performance-report.md)。tests/test_p07_benchmarks.py的9项测试覆盖18个真实配对CLI、9个不执行代码的check、空/小规模及批内复位、完整排序与输入未变、非法类型/部分和超限、错答案/超时/空清单、原始证据缺失/输入改动、实际运行时快照选择及缺样本不计算比值。tests/test_p07_locations.py的2项测试验证cwd变化后的文件/行列与跨运行器状态隔离和失败释放。优化后完整1744/1744通过（含原1588外部清单），无跳过或expected failure。
 
 性能失败不冒充功能通过：基线12个大规模预检超时、24个配对未测量，正式样本中1个整请求超时均保留；这些规模的未完成结果明确未验证。性能计时与cProfile/tracemalloc及一次性stdin探针分开，不把P08接口、Program缓存或所有默认最大容量压力写成已实现/已测。
+
+
+P09-01前置证据见 [tests/p09](../../tests/p09/README.md)：23项既有CLI期望在4MiB应用配置重跑，加2项实际info/文件边界检查；联合18项P05集成回归43/43通过。当时业务尚未实现；此后真实应用验收见下文，不将该前置验证算应用通过；详情见 [应用README](../../apps/zzy-campus/README.md)。
+
+
+P09实际映射：[coverage.json](../../tests/p09/coverage.json)覆盖应用README全部15行APP-01—03/CHECK矩阵并引用22个实际方法，含160组独立格式/字段期望、任务/文件临界、状态/别名/恢复、真实Ctrl+C及原子文件故障。用户交互和磁盘结果由CLI黑盒验证，权限/写入/关闭/替换故障由宿主注入后运行真实ZZY业务，不新增Python业务实现。源码有效行、真实命令和未测范围见[tests/p09](../../tests/p09/README.md)。
+
+P09最终完整门禁：1791/1791，806.968秒，无失败/错误/跳过；[全量报告](../../tests/p09/results/all-tests.json)、[环境/源码/限制与验收](../../tests/p09/results/acceptance.json)。上述应用边界是真实执行证据，不推断其他平台或最坏组合容量。
