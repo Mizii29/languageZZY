@@ -593,3 +593,12 @@ Git 提交：真实标识 / 未提交
 - todo仍为52/70完成、P11五项未勾选；用户docs/manual-tests/保持原状。未推送、未改变远程规则；本轮不重做GUI/人工/正式性能验收，也不把本机检查写成云端Actions已通过。
 - 最终attempt02实际通过：`scripts.ci static/package/regression/gate`均退出0；完整回归collected=tests_run=2002、621.75秒，failures/errors/skipped/expected_failures均0，安装核对39个源码通过。报告位于`dist/logging-verification/2026-10-22-attempt02/`，四份报告源码指纹一致，复核时仍等于冻结值；这是本轮完整执行，未拼接旧通过项。
 - 普通完整回归tests.log实际3131字节，report/log正确记录1048576/4、encoding=utf-8、compression=gzip、rotations=0、older_logs_discarded=false；产物汇总三个job均true。此次时间是功能回归耗时，不是独占性能测量或速度优化结论；大输出的6次轮转证据另列于上文。
+
+
+## 2026-10-27：首次人工测试归档与云端路径兼容修复
+
+- 用户确认第一次人工大规模测试已完成，要求推送 feature 并经 PR 合并 main。将原始人工报告 manual-test-result.doc、CI/日志入口和测试指南归档为 431e7e4；保留 docs/manual-tests/ 未跟踪图片，不纳入构建产物，不提前勾选 P11。
+- 提交前重新核对本地 2002 项完整通过证据及源码指纹一致，另运行 static 与 20 项 CI/日志专项通过。随后 PR #3 首次触发云端检查：静态和隔离安装通过；Windows Server 2025 完整回归实际运行 2002 项，6 项失败，原始失败日志保留在对应 Actions 产物中，不将本地通过当作云端通过。
+- 根因：Windows 当前目录可保留 8.3 短路径别名，而 Source.path 已解析成长路径，relpath 将同一目录误当作不同路径。四项诊断路径断言及两项精确 stderr 容量边界因此失败。本机 GetShortPathNameW 实际切换到短路径后复现，既有路径回归中新增同一场景，修复前明确失败。
+- 修复：display_path 在计算相对路径前统一规范化源路径和当前目录，跨盘仍返回规范绝对路径；不改错误码、源码坐标、资源限额或既有外部答案。回归验证包含短路径、缺失文件和重复运行上下文；最终云端结果以该 PR 修复提交的完整重跑为准。
+- 本机修复后专项：tests.test_p07_locations/test_cli/test_p04_spec/test_p06_diagnostics/test_p06_resources 共 38/38 通过、107.274 秒，无跳过；静态入口通过。此结果不替代云端完整重跑。
