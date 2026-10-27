@@ -549,3 +549,47 @@ Git 提交：真实标识 / 未提交
 - 定稿后复核通过：46份Markdown/518条本地链接、围栏成对；70个唯一任务中52完成，E七项全部完成；1019份冻结源码/夹具哈希一致。`git diff --check`退出0，仅Git换行提示；当前能力文档未检出遗留E4待验收状态。
 
 - 最后逐行审阅纠正todo/stdlib措辞：不执行用户代码仅适用于check；headless正常执行程序和文件操作，两者均不初始化Tk。仅文档澄清，运行代码及冻结哈希未改变。
+
+## 2026-10-20：最终完整测试与 CI 方案
+
+- 任务摘要：了解基本完成的项目，设计提交前的自动化/人工完整测试阶段和CI，并写入docs；本次范围为方案与文档，不执行完整验收或接通CI。
+- 当前核对：分支test，HEAD为b5980430273e91567488f972db69bfc179eaa9a9；CPython3.12.14、Windows11。实际仅收集一键测试1982项；12份默认黑盒清单共1738项，GUI源码有11个测试方法。旧E4报告为2026-10-17的历史结果，未改写成新通过记录。
+- 新增[最终测试计划](final-test-plan.md)：F0—F5候选冻结、自动回归、真实GUI/安装、人工端到端、性能与稳定性、交付放行；列出18项人工用例、复现命令、边界/失败检查、缺陷级别及每个attempt独立证据规则。
+- 新增[CI设计](ci-design.md)：推荐GitHub Actions的Windows静态检查、全量回归、无窗口wheel安装smoke及统一ci-gate；设计PR/push/手动触发、报告留存、最小权限和八步实施验收。Python3.12.14的云端供给、控制台信号行为仍需真实试跑；GUI/人工/正式性能另验收。
+- 审阅安装脚本后明确其真实副作用：tests/e4/install.py会打开GUI、覆盖固定报告并重装调用Python，不能直接用作PR无窗口smoke；tests.e4.accept只汇总既有固定证据，不能替代新候选运行。CI静态脚本/独立安装smoke/workflow及远程规则均未实施。
+- 核对性能驱动与既有报告：核心正式大规模基准存在已记录超时，驱动会返回1；计划区分功能门禁、小规模正确性、正式样本采集及证据审计，不将已知失败类别或完整证据冒充全工作量成功。
+- 更新docs导航、test-coverage和todo的P11入口，清理导航中基准/CLI均待实现的过期描述。70项任务仍52项完成，P11五项保持未勾选；下一正式任务仍是P11-01。
+- 实际验证：检查48份Markdown的本地文件链接及代码围栏，无错误；18个人工ID唯一；GUI方法数与计划一致；Git差异空白检查通过。requirement SHA256仍为b099c19fc339ce1dc1aab7e9d6c8126a9c5c9ace3d31b969a0623df90f521d2b。上述静态检查和收集不是测试执行。
+- 未运行：1982项完整回归、11项真实GUI、人工用例、离线安装、性能复测和GitHub Actions。本轮不生成对应成功记录，用户docs/manual-tests/资料保留。
+- Git：本轮文档尚未提交，未推送。后续按计划准备候选版本和独立证据目录；CI按CI-01先验证精确运行时可取得，再落实脚本与工作流。
+
+## 2026-10-20：CI 实现、本机完整验证与独立人工指南
+
+- 用户继续要求应用 CI 设计，另写详细 VS Code 人工测试 Markdown；本轮据此新增 `.github/workflows/ci.yml`、`scripts.ci`、运行时/构建工具锁、安装探针及 CI 门禁自检，不修改语言运行实现或正式语义。未推送、未配置远程分支保护，不把本机通过写成 GitHub Actions 已通过。
+- 工作流 `ZZY CI`：main/test/feature/codex/** push、目标 main/test 的 PR、手动触发；Windows 2025 上 static → regression-windows/package-smoke → ci-gate。配置只读权限、完整 Action SHA、超时、并发取消、失败产物上传及 14 天留存。汇总核对依赖状态、checkout/head/base SHA、run ID/attempt 和源码指纹。
+- 精确环境供给：官方 actions/python-versions 当日清单没有 Windows 3.12.14 资产，改用 Astral 20260929 的 Windows x64 CPython 3.12.14；固定归档 SHA256 为 `28728baf30b65e263f0b25c5a85be8226e7ab0d212fbadd6a8f0f796139fa804`，先校验再解压执行。未改 requires-python、未降级到其他补丁版。pip25.2/setuptools80.9.0/wheel0.45.1 由带哈希的 requirements 固定，只安装到隔离 CI 运行时。
+- 本机下载调试保留事实：最初 Invoke-WebRequest 和 curl 传输被中断，保留 dist 下失败目录；Python urllib 路径完整下载并通过哈希。缓存归档启动及正常联网 bootstrap 均实际通过，正常联网结果位于 `dist/ci-runtime-network-20261020`。此过程不证明云端供给已经试跑。
+- 静态入口校验 requirement 字节 SHA、测试清单及重复次数、夹具存在性、Markdown 链接/围栏、空白和应用行数。新增基线为1992项，其中10项是CI宿主自检；独立黑盒仍为12清单1738项，P09应用策略重复23项不丢失。最初去重方案无法保留这23次执行，补反例后改用多重集合；预期缺文件的E401负例与意外丢失夹具分开处理。
+- 安装入口离线构建 wheel，在源码目录外的中文/空格临时 cwd 建全新 venv，以 `-I` 验证39个源码、CLI/spec/诊断、check无副作用、headless SVG/项目/函数库、实际校园菜单保存与另一进程读取。临时新环境完成后清理，不重装项目 `.venv`。构建日志初轮遇GBK字节解码失败，保留 `dist/ci-local-precheck/package`；明确子进程UTF-8并保留异常字节后重跑通过，未改产品标准流契约。
+- 锁定运行时完整实测：`python -X utf8 -m scripts.ci static/package/regression` 的最终报告位于 `dist/ci-local-final/`；完整回归 **collected=tests_run=1992、1443.14秒、退出0，failures/errors/skipped/expected_failures均0**。实际运行环境为Windows11/CPython3.12.14（Sep29 MSVC构建），不是托管Windows2025；本次非独占性能测量，不与旧回归耗时推导速度结论。
+- 同轮安装 passed=true、39个源码一致、headless=true；wheel SHA256为 `edb2d37c32bae1cc5f49f2c4df7421fabcbb497eadc59422a52f6fa932a9aa9f`。`scripts.ci gate --artifacts dist/ci-local-final --output dist/ci-local-final/gate` 实际退出0，三个job证据通过。报告关联HEAD `b5980430273e91567488f972db69bfc179eaa9a9` 及未提交工作区源码指纹 `40f0093d84f18fcbb72dc27b4567bb9107f2b28f6c5e47e81f93cf341db7bec2`，执行前后相同。
+- 门禁10项自检全部通过并已包含在1992项中；另实际调用CLI验证上游failure/cancelled/skipped、旧run报告、缺报告五种情况，均退出1且passed=false，证据 `dist/ci-negative-checks-20261020/summary.json`。工作流由下载后核验SHA的 actionlint v1.7.12 实际检查通过；未把本地反例说成失败PR验证。
+- 新增独立 [本机 VS Code 人工测试指南](manual-test-guide.md)：显式解释器/UTF-8、独立中文工作目录、真实Ctrl+C、语言诊断、应用M05—M10逐项输入和状态、GUI工具/图层/历史/回调、项目/函数重启、安装副本、DPI、日志及M01—M18记录表。锁层非法编辑按当前E203终止语义放入独立负例，不错误要求同一个show继续；不覆盖用户人工资料。
+- 指南主要命令实际复核33次，记录于 `dist/manual-guide-command-check-20261020-attempt02/commands.json`，独立报告passed=true。首轮发现“缺表达式”预期误写E101，实际为E103，修正文档后重跑；首轮记录另留。GUI程序仅做前端check；studio往返复核使用临时去除show的副本，不据此声称真实窗口或人工测试完成。
+- 同步根README、docs导航、最终计划/覆盖说明及todo入口；requirement内容和用户 `docs/manual-tests/` 未改。P11五项仍未勾选，70项中52完成。待实际执行：GitHub首跑/PR失败及取消/分支必需检查、11项本轮真实GUI、18项人工验收、真实离线GUI及正式性能/交付复核。
+- 文档复核：指南与CI文档共28个PowerShell代码块经本机Parser检查无语法错误，M01—M18章节完整且唯一；新增锁层负例check退出0，未开GUI。正常下载入口及完整门禁验证后没有再修改CI/测试/产品源码，源码指纹保持一致。
+
+## 2026-10-22：输出与日志配置
+
+- 按用户给出的日志知识点选择适合本机CLI/桌面项目的部分：对实际持久写盘的CI回归tests.log配置大小轮转、gzip压缩与保留份数；沿用CLI的UTF-8、stdout/stderr分工、固定错误码和结构化诊断，不增加用户程序输出前缀或按locale翻译机制。
+- 新增实际生效的 [logging.json](../runtime/logging.json) 和 [配置说明](../runtime/logging.md)。默认max_bytes=1048576、backup_count=4；每轮最多1个活动文件和4份gzip备份，超出自动淘汰，GitHub artifact仍保留14天。本地不同attempt的结果目录及人工资料不自动整目录删除，文档明确份数上限并非dist总空间上限。
+- 新增scripts/ci_logging.py，复用标准库RotatingFileHandler/gzip；按UTF-8字节校验单文件容量，管道流式读取，跨块解码保留中文，非法字节转义可见。父进程管理写入和重新打开，无需子进程接收SIGHUP。写盘/压缩失败使CI失败并清理进程树，压缩发布完成前不删除当前原文。
+- scripts.ci静态入口校验配置字段/类型/范围/重复键/64KiB上限；回归入口自动读取配置，report/log新增文件名、配置、rotations和older_logs_discarded。报告明确已淘汰时只保留最近片段，完整测试结果仍由退出码和all-tests.json核对；没有用日志截断掩盖失败。
+- 新增10项日志宿主检查，覆盖实际UTF-8字节上限、备份淘汰、跨块/残缺编码、可调整配置、非零退出、超时、后代进程占管道、写盘与压缩故障。最终专项命令`python -X utf8 -m unittest tests.test_ci_logging tests.test_ci -q`实测20/20、1.269秒通过，无跳过。清单从1992增至2002，原12份黑盒清单1738项未变；39个产品源码文件未修改。
+- 自审将固定默认值断言替换为“自定义8KiB阈值实际不轮转6KiB输出”的用例，保证合法调参不被旧断言阻止；基线仅对应新增日志用例及该明确替换。先前attempt01全量主动中断、未形成最终报告，目录保留；随后冻结最终源码为`0014a5309105954667555b648bf98b37434e9d16610af3eccf510482ae8e439b`，启动attempt02完整重跑，最终结果见下文。
+- 按正式1MiB/4份配置，实际向捕获器输入7000006字节，6次轮转后仅保留4个gzip及当前文件；每个备份原文1048576字节、当前708550字节，保留尾部4902854字节与原输入后缀完全一致，older_logs_discarded=true。证据为`dist/logging-verification/2026-10-22-rotation-smoke/report.json`；文档中的合并读取程序实际运行，重建内容逐字节一致。
+- 实际CLI六次验证：在C、zh_CN.UTF-8、en_US.UTF-8三组LANG/LC_ALL设置下运行hello及JSON诊断负例，正常输出均为5/退出0，错误均为E302/退出2且七个结构字段、消息和位置一致，无新增输出；证据为`dist/logging-verification/2026-10-22-interface/cli-protocol.json`。这是环境变量组合验证，不扩展为所有OS语言环境已验收。
+- 静态复核通过：50份Markdown、583条本地链接及围栏，日志文档3个PowerShell代码块语法正确；配置有效，当前收集2002。requirement字节SHA256仍为b099c19fc339ce1dc1aab7e9d6c8126a9c5c9ace3d31b969a0623df90f521d2b。更新README、导航、CI/人工/覆盖/最终计划的当前计数和日志入口，历史通过数据不改写。
+- todo仍为52/70完成、P11五项未勾选；用户docs/manual-tests/保持原状。未推送、未改变远程规则；本轮不重做GUI/人工/正式性能验收，也不把本机检查写成云端Actions已通过。
+- 最终attempt02实际通过：`scripts.ci static/package/regression/gate`均退出0；完整回归collected=tests_run=2002、621.75秒，failures/errors/skipped/expected_failures均0，安装核对39个源码通过。报告位于`dist/logging-verification/2026-10-22-attempt02/`，四份报告源码指纹一致，复核时仍等于冻结值；这是本轮完整执行，未拼接旧通过项。
+- 普通完整回归tests.log实际3131字节，report/log正确记录1048576/4、encoding=utf-8、compression=gzip、rotations=0、older_logs_discarded=false；产物汇总三个job均true。此次时间是功能回归耗时，不是独占性能测量或速度优化结论；大输出的6次轮转证据另列于上文。

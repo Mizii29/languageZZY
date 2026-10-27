@@ -1,0 +1,123 @@
+name: ZZY CI
+
+on:
+  push:
+    branches: [main, test, feature, 'codex/**']
+  pull_request:
+    branches: [main, test]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: zzy-ci-${{ github.event_name }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    shell: pwsh
+
+env:
+  PYTHONUTF8: '1'
+  CI_HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+  CI_BASE_SHA: ${{ github.event.pull_request.base.sha || '' }}
+
+jobs:
+  static:
+    runs-on: windows-2025
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Install verified CPython 3.12.14
+        run: ./scripts/ci/bootstrap-python.ps1 -Destination "$env:RUNNER_TEMP/zzy-python"
+      - name: Check inventory, documents and contracts
+        run: python -X utf8 -m scripts.ci static --output dist/ci/static
+      - name: Preserve reports and logs
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: zzy-static-${{ github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: dist/ci/
+          retention-days: 14
+          if-no-files-found: error
+
+  regression-windows:
+    needs: static
+    runs-on: windows-2025
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Install verified CPython 3.12.14
+        run: ./scripts/ci/bootstrap-python.ps1 -Destination "$env:RUNNER_TEMP/zzy-python"
+      - name: Run complete regression, including real console cancellation
+        run: python -X utf8 -m scripts.ci regression --output dist/ci/regression
+      - name: Preserve reports and logs
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: zzy-regression-${{ github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: dist/ci/
+          retention-days: 14
+          if-no-files-found: error
+
+  package-smoke:
+    needs: static
+    runs-on: windows-2025
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Install verified CPython 3.12.14
+        run: ./scripts/ci/bootstrap-python.ps1 -Destination "$env:RUNNER_TEMP/zzy-python"
+      - name: Prepare pinned build tools
+        run: |
+          python -m ensurepip --upgrade
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python -m pip install --require-hashes --only-binary=:all: -r scripts/ci/build-requirements.txt
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Build offline, install and test wheel outside checkout
+        run: python -X utf8 -m scripts.ci package --output dist/ci/package
+      - name: Preserve wheel, reports and logs
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: zzy-package-${{ github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: dist/ci/
+          retention-days: 14
+          if-no-files-found: error
+
+  ci-gate:
+    if: always()
+    needs: [static, regression-windows, package-smoke]
+    runs-on: windows-2025
+    timeout-minutes: 10
+    env:
+      CI_NEEDS_RESULTS: ${{ toJSON(needs) }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Install verified CPython 3.12.14
+        run: ./scripts/ci/bootstrap-python.ps1 -Destination "$env:RUNNER_TEMP/zzy-python"
+      - name: Download this run's evidence
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          pattern: zzy-*-${{ github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: dist/ci-download
+          merge-multiple: true
+      - name: Require all jobs and matching evidence to pass
+        run: python -X utf8 -m scripts.ci gate --artifacts dist/ci-download --output dist/ci/gate
+      - name: Preserve gate report
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: zzy-gate-${{ github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: dist/ci/
+          retention-days: 14
+          if-no-files-found: error
