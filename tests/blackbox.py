@@ -17,7 +17,7 @@ from zzy.resources import ResourcePolicy
 
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_MANIFESTS = tuple(ROOT / f"tests/{name}/cases.json" for name in ("lex", "run", "check", "p02", "p03", "p04", "p05", "p06"))
+DEFAULT_MANIFESTS = tuple(ROOT / f"tests/{name}/cases.json" for name in ("lex", "run", "check", "p02", "p03", "p04", "p05", "p06", "e1", "e2", "e3", "e4"))
 
 
 def _pairs(items):

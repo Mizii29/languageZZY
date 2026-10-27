@@ -1,0 +1,3 @@
+(zno)c:=sketch.canvas(200,100,"history");
+(zno)p:=sketch.pen(c,"p");
+sketch.begin_fill(p);sketch.move_to(p,10,0);sketch.move_to(p,10,10);sketch.end_fill(p);io.print(sketch.undo(c));io.print(sketch.layer_info(c)[0].count);io.print(sketch.redo(c));io.print(sketch.layer_info(c)[0].count);

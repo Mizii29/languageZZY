@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "zzy-language"
 version = "0.6.0a1"
-description = "ZZY language: P06 tree-walk interpreter with run/check/test CLI"
+description = "ZZY AST interpreter with run/check/test CLI and staged sketch extension"
 readme = "README.md"
 requires-python = "==3.12.14"
 dependencies = []

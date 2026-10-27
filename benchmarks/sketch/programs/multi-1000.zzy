@@ -1,0 +1,1 @@
+(zno)c:=sketch.canvas(1000,600,"benchmark");(zno)p:=sketch.pen(c,"p");(zno)pens:=[];(for)i(in)range(0,4,1){(zno)q:=sketch.pen(c,"p"+str(i));(zno)l:=sketch.add_layer(c,"l"+str(i));sketch.set_layer(q,l);array.push(pens,q);}sketch.clear_history(c);io.print("ready");(for)i(in)range(0,1000,1){sketch.forward(pens[i%4],1);}io.print("done");

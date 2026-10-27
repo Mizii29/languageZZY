@@ -1,0 +1,3 @@
+(zno)c:sketch.Canvas:=sketch.canvas(200,100,"画布");
+(zno)p:sketch.Pen:=sketch.pen(c,"笔");
+sketch.begin_fill(p);sketch.move_to(p,10,0);sketch.left(p,90);sketch.width(p,5);sketch.color(p,sketch.rgb(255,0,0));sketch.cancel_fill(p);io.print(sketch.position(p));io.print(sketch.heading(p));sketch.begin_fill(p);sketch.polyline(p,[[10,0],[0,10]]);sketch.end_fill(p);io.print(sketch.position(p));

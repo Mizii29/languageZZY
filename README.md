@@ -2,7 +2,7 @@
 
 ZZY 是赵梓伊在程序设计实践课程中设计的通用脚本语言，使用 Python 实现解释器，用 ZZY 编写测试、性能脚本和完整应用。
 
-**当前状态：P00—P07及P09已完成，运行时版本仍为 0.6.0a1；核心语法、io/array/text/math/data/unit 标准库、Map/严格 JSON、原子文件保存及模块已接通。B01—B09 性能基线与一项已验证优化已有实测；校园任务管家业务已实现并通过专项验证；GUI仍待后续阶段。** 核心语法 v0.6、标准库契约 v0.6.1 不变。Python AST 树遍历；run/check/test 共用前端准备。1588 项独立外部 CLI 期望与宿主状态/运行器测试覆盖当前能力，阶段证据见开发记录。
+**当前状态：P00—P07及P09已完成，运行时版本仍为 0.6.0a1；核心语法、io/array/text/math/data/unit 标准库、Map/严格 JSON、原子文件保存及模块已接通。B01—B09 性能基线与一项已验证优化已有实测；校园任务管家业务已实现并通过专项验证；Sketch 1.0 的 E1—E4 已全部验收。** 核心语法 v0.6、标准库契约 v0.6.1 不变。Python AST 树遍历；run/check/test 共用前端准备。独立外部 CLI 期望与宿主状态/运行器测试覆盖当前能力，阶段证据见开发记录。
 
 ## 项目特色
 
@@ -10,7 +10,7 @@ ZZY 是赵梓伊在程序设计实践课程中设计的通用脚本语言，使�
 - `zzysay:` 与 `zzysayalot: … zzyend` 注释，`[OoO]` 字符串转义。
 - 笑脸/哭脸 Result、显式 Lazy 和 `~>` 管道。
 - `?>` 集合查询、箭头状态机、精确带单位数值。
-- 已选 sketch 画笔扩展：图层、撤销/回放、图案函数库与无窗口导出，全部待实现。
+- 已选 sketch 画笔扩展：E1—E4 实现及验收入口见 [Sketch 指南](docs/features/sketch-guide.md) 与 [tests/e4](tests/e4/README.md)。
 
 ## 从哪里开始
 
@@ -97,7 +97,7 @@ python -m zzy test examples/library/spec.zzy
 
 `use` 路径相对导入文件，普通文件路径相对进程工作目录。模块仅导出顶层具名函数、shape 和 machine 定义；同一上下文规范路径相同只初始化一次。每次 run/spec 创建独立模块状态；spec 使用整个依赖图的收集快照。`check` 递归检查依赖，不初始化模块或执行文件操作。`io.write_atomic` 独占创建同目录临时文件，写入并关闭后替换；预期 I/O 失败为 Result，未替换前保持旧文件，不承诺断电持久化。
 
-`python -X utf8 -m tests.blackbox` 运行 1588 个外部用例；失败、超时、输出超额及空/坏清单返回 1。清单、可选 JSON 报告和资源指纹见 [测试说明](tests/README.md)。
+`python -X utf8 -m tests.blackbox` 当前运行 1738 个独立外部用例；失败、超时、输出超额及空/坏清单返回 1。清单、可选 JSON 报告和资源指纹见 [测试说明](tests/README.md)。
 
 `source-info` 仅做有界 UTF-8 读取，输出字节数、码点数、行数和同一字节快照的 SHA-256；`syntax_checked` 固定为 false，不代表语法检查或执行成功。空文件计 1 行，末尾换行后保留空行。缺文件、非法 UTF-8 和参数错误为 E401/退出 2；前端资源超限为 E211/退出 2。`info` 输出完整宿主版本、Unicode/平台、生效资源配置和指纹。
 
@@ -120,7 +120,7 @@ $zzyPython = 'C:\Users\13691\.cache\codex-runtimes\codex-primary-runtime\depende
 
 `--limits limits.json` 和 `--diagnostic-format text|json` 可放在命令前后。配置键、单位与默认值见 [资源契约](docs/runtime/resources.md)；未知/重复字段、Bool、非正整数、坏版本、超过 64 KiB 的配置均拒绝。`info` 中的指纹覆盖补齐默认后的全部有效值和宿主十进制上限。帮助/版本直接显示，不加载配置文件。
 
-CLI 文件参数和配置路径相对调用者工作目录；run/check 不切换目录，test 的 worker 使用私有临时目录。模块加载器使用规范绝对路径去重，诊断保留实际出错依赖文件的位置。标准流使用 UTF-8、输出 LF；[诊断](docs/language/diagnostics.md) 提供文本/JSON Lines。前端 E211/退出 2、执行 E211/退出 1 已通过 CLI 验证；取消出口及执行清理通过宿主注入测试，真实终端 Ctrl+C 尚未验收。
+CLI 文件参数和配置路径相对调用者工作目录；run/check 不切换目录，test 的 worker 使用私有临时目录。模块加载器使用规范绝对路径去重，诊断保留实际出错依赖文件的位置。标准流使用 UTF-8、输出 LF；[诊断](docs/language/diagnostics.md) 提供文本/JSON Lines。前端 E211/退出 2、执行 E211/退出 1 已通过 CLI 验证；取消出口、执行清理及 Windows 真实 Ctrl+C 已有专项证据，其他环境需另验收。
 
 ## 运行方式与交付目标
 
@@ -134,7 +134,11 @@ Web、NumPy 和字节码 VM 属于可选后续工作。P00 的资源计量接口
 
 ## P06 一键验收与已验证指南
 
-`python -X utf8 -m tests` 运行全部 CLI、spec 和宿主回归，空收集/跳过/少执行/失败均返回非零；`--report dist/p06-all-tests.json` 保存计数、环境与默认策略指纹（目录需存在）。外部黑盒仍可单独运行。映射、15 个指南片段、9 个变形 spec、资源验证范围见 [P06 验收](tests/p06/README.md)；真实 Agent 练习见 [分钟汇总](examples/agent-practice/README.md)。Windows 11 的真实 Ctrl+C/run/test、派生进程树回收和临时目录清理已经专项验证；其他平台及未测大容量范围明确列在验收页。GUI/Web/长期 Program 缓存仍未实现，不由本阶段完成推断可用。
+`python -X utf8 -m tests` 运行全部 CLI、spec 和宿主回归，当前收集 2002 项；空收集/跳过/少执行/失败均返回非零。`--report dist/p06-all-tests.json` 保存计数、环境与默认策略指纹（目录需存在）。外部黑盒仍可单独运行。映射、15 个指南片段、9 个变形 spec、资源验证范围见 [P06 验收](tests/p06/README.md)；真实 Agent 练习见 [分钟汇总](examples/agent-practice/README.md)。Windows 11 的真实 Ctrl+C/run/test、派生进程树回收和临时目录清理已经专项验证；其他平台及未测大容量范围明确列在验收页。GUI 已在后续 Sketch E 阶段实现并独立验收，Web/长期 Program 缓存仍未实现。
+
+最终验收按 [测试阶段计划](docs/development/final-test-plan.md) 执行；本机 VS Code 的详细步骤、命令和预期结果见 [人工测试指南](docs/development/manual-test-guide.md)。[GitHub Actions 工作流](.github/workflows/ci.yml) 已配置静态检查、Windows 全量回归、隔离 wheel 安装及汇总门禁，本地复现和云端待验证事项见 [CI 设计与实施](docs/development/ci-design.md)。CI 不代替真实 GUI、人工操作及正式性能验收。
+
+CI回归日志已读取 [logging.json](docs/runtime/logging.json)，按1MiB轮转、保留4份gzip备份并自动淘汰更旧片段；CLI继续使用UTF-8和固定错误码，查看与调整方法见 [日志配置说明](docs/runtime/logging.md)。
 
 
 ## P07 性能实测
@@ -155,4 +159,10 @@ Web、NumPy 和字节码 VM 属于可选后续工作。P00 的资源计量接口
 
 应用随仓库源码分发，wheel只安装通用解释器；需保留整个应用目录。4MiB单次文件/JSON限额在读取时生效，路径相对启动工作目录，默认不自动保存。首次新建→新增→10保存；重启选2打开。完整演示、测试及限制见应用指南与[验收说明](tests/p09/README.md)。
 
-P09最终全量回归1791/1791、806.968秒通过（包括1588项既有外部CLI），无跳过。应用专项22/22，实际映射与未测范围见验收说明；下一项E1-01。
+P09最终全量回归1791/1791、806.968秒通过（包括1588项既有外部CLI），无跳过。应用专项22/22，实际映射与未测范围见验收说明；当时下一项为E1-01，当前交接见todo。
+
+## Sketch 绘图扩展
+
+真实使用范围、固定配额和窗口启动见[Sketch 指南](docs/features/sketch-guide.md)，独立阶段验收与未测范围见[tests/e4](tests/e4/README.md)。默认 run/check/test 不初始化 Tk；显式 `python -m zzy run examples/sketch/studio.zzy --gui` 打开小画室。关闭窗口后例程保存项目，可在下次执行加载并继续编辑。
+
+几何、SVG、文字/多层、分组撤销、确定回放、图案函数库、事件与项目已实现，E1—E4已全部验收，扩展ABI为1.0；PNG没有独立后端，明确返回失败。核心info仍报告P06核心阶段/0.6.0a1，扩展ABI单独版本化。性能见[实际测量](benchmarks/sketch/README.md)，不能将headless通过当GUI验收。

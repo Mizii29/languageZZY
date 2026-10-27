@@ -66,5 +66,17 @@ class DiagnosticLocationTests(unittest.TestCase):
             self.assert_error(runtime)
             self.assert_error(self.runtime(program))
 
+        if os.name == 'nt':
+            import ctypes
+            kernel=ctypes.WinDLL('kernel32',use_last_error=True)
+            kernel.GetShortPathNameW.argtypes=[ctypes.c_wchar_p,ctypes.c_wchar_p,ctypes.c_uint]
+            kernel.GetShortPathNameW.restype=ctypes.c_uint
+            buffer=ctypes.create_unicode_buffer(32768)
+            self.assertTrue(kernel.GetShortPathNameW(str(self.first),buffer,len(buffer)))
+            os.chdir(buffer.value)
+            self.assertEqual(display_path(self.path),'source.zzy')
+            self.assertEqual(display_path(Path('missing.zzy')),'missing.zzy')
+            self.assert_error(self.runtime(program))
+
 
 if __name__=='__main__':unittest.main()

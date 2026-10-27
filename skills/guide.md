@@ -6,7 +6,7 @@
 
 ## 1. 先确认能做什么
 
-P00—P07及P09应用业务已实现，版本 0.6.0a1；核心语法、io/array/text/math/data/unit 标准库、Map/严格 JSON、原子文件保存及模块已接通。性能报告和校园任务CLI应用已有真实实现；GUI仍待后续阶段。使用 `python -m zzy run examples/features.zzy` 和 `python -m zzy test examples/features-spec.zzy` 运行特色示例；独立外部期望仍由 `python -X utf8 -m tests.blackbox` 验证。check 不执行用户表达式。本文 2 段完整代码已保存至 tests/p06/guide/，逐段 check/run，另补正常/失败 spec；库/模块例子见 examples/library/；应用启动与验收见 apps/zzy-campus/README.md，后续任务先核对 todo、最新开发记录和 Git。
+P00—P07及P09应用业务已实现，版本 0.6.0a1；核心语法、io/array/text/math/data/unit 标准库、Map/严格 JSON、原子文件保存及模块已接通。性能报告和校园任务CLI应用已有真实实现；Sketch 的真实GUI与headless分别验收，见扩展指南。使用 `python -m zzy run examples/features.zzy` 和 `python -m zzy test examples/features-spec.zzy` 运行特色示例；独立外部期望仍由 `python -X utf8 -m tests.blackbox` 验证。check 不执行用户表达式。本文 2 段完整代码已保存至 tests/p06/guide/，逐段 check/run，另补正常/失败 spec；库/模块例子见 examples/library/；应用启动与验收见 apps/zzy-campus/README.md，后续任务先核对 todo、最新开发记录和 Git。
 
 解释器使用 Python，核心运行只依赖标准库。P00 已验证 CPython 3.12.14、Windows 11、Unicode 15.0.0；实际运行和安装命令见项目 README。没有依赖清单时不要凭空执行安装命令；GUI 和后续 Web 等可选依赖不应成为普通 CLI/check 的前提。
 
@@ -105,7 +105,7 @@ check 检查 spec 内语法和名字，并读取依赖源码，但不执行用�
 | 表达合法状态转换 | [machine-units](../docs/features/machine-units.md) | 发送返回 Result；失败不改变状态；无动作回调 |
 | 精确的时间或长度计算 | [machine-units](../docs/features/machine-units.md) | 固定单位与量纲；无量纲仍是 Quantity |
 | 延后一次计算 | [语法参考](syntax.md) | Lazy 缓存首次结果，不随依赖变化自动刷新 |
-| 图形、回放与交互 | [sketch](../docs/features/sketch.md) | 已选但未实现的扩展；E1—E4 分阶段，GUI 单独验收 |
+| 图形、回放与交互 | [sketch](../docs/features/sketch.md) | E1—E4已验收，sketch 1.0；GUI 独立验收 |
 
 zno、array.copy 和 with 都不是深冻结/深复制。为实现撤销，应创建新的 Task 和外层数组；如果字段还包含 Array/Map，另行决定复制策略。状态机实例及 Lazy 载荷引用共享，也不能当作自动历史快照。
 
@@ -167,3 +167,7 @@ sum/stats 逐项检查 Int，Bool/Float 不混入；stats 的 min/max 空值为 
 ## 已实现的完整CLI应用
 
 [校园任务管家](../apps/zzy-campus/README.md)展示逐层JSON校验、候选加载提交、原子保存、内容dirty、ID高水位与浅快照撤销；所有业务模块可直接阅读。启动必须带应用limits.json，测试使用临时目录和独立磁盘/输出答案，不自动改用户文件。当前没有GUI/Web，其他平台和最坏容量组合不由本轮结果推断通过。
+
+## Sketch 已实现子集
+
+[sketch使用指南](../docs/features/sketch-guide.md)提供真实程序、受控类型、配额及GUI启动说明；[tests/e4](../tests/e4/README.md)分别记录headless、桌面窗口、离线安装和性能证据。PNG不可用；缺环境返回失败，不把窗口截图作为PNG导出。

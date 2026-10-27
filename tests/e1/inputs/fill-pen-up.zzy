@@ -1,0 +1,3 @@
+(zno)c:sketch.Canvas:=sketch.canvas(200,100,"画布");
+(zno)p:sketch.Pen:=sketch.pen(c,"笔");
+sketch.begin_fill(p);sketch.pen_up(p);

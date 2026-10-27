@@ -1,0 +1,153 @@
+{
+  "completed_at": "2026-10-17T12:23:00.125016+00:00",
+  "complete_sketch_1_0": true,
+  "extension_abi": "1.0",
+  "function_count": 66,
+  "completed_tasks": [
+    "E1-01",
+    "E1-02",
+    "E2-01",
+    "E3-01",
+    "E3-02",
+    "E4-01",
+    "E4-02"
+  ],
+  "next_task": "P11-01",
+  "base_revision": "ac91a27c13c154a159c06b3fb2fac57a96ff2cf1",
+  "baseline_revision": "a977596",
+  "pre_acceptance_head": "a977596fb514a830a92225ce7afd3eb2401ee43f",
+  "capabilities": {
+    "core": true,
+    "headless": true,
+    "svg": true,
+    "history": true,
+    "patterns": true,
+    "projects": true,
+    "gui": "verified Windows 11 CPython 3.12.14 Tk 8.6.12; explicit --gui",
+    "png": false
+  },
+  "extension_limits": {
+    "coordinate_abs": 1000000,
+    "angle_abs": 1000000,
+    "canvas_dimension": 32768,
+    "style_size": 10000,
+    "batch_points": 10000,
+    "curve_segments": 65536,
+    "path_segments": 1000000,
+    "objects": 100000,
+    "pens": 256,
+    "layers": 256,
+    "timers": 256
+  },
+  "requirement_sha256": "b099c19fc339ce1dc1aab7e9d6c8126a9c5c9ace3d31b969a0623df90f521d2b",
+  "evidence": {
+    "all": {
+      "path": "tests/e4/results/all-tests.json",
+      "sha256": "10e18ee2b1e406cad4070600039a49d2c9ced37d945c6dc7433accb2aa15c05b"
+    },
+    "gui": {
+      "path": "tests/e4/results/gui.json",
+      "sha256": "028387dac22b21d148a8eb878715d88204a721c86a20e871909d26b80894510e"
+    },
+    "installed": {
+      "path": "tests/e4/results/installed.json",
+      "sha256": "e41becf82bcf5dbded77fec0f55c162a091412ba2eb440c2170a6b824ad07f24"
+    },
+    "cli": {
+      "path": "tests/e4/results/cli.json",
+      "sha256": "da1d2a2b49e0665f24b10e8e062db586de2d8be9f3cf442c7509523ce22f3a27"
+    },
+    "baseline": {
+      "path": "benchmarks/sketch/results/baseline.json",
+      "sha256": "38b83df01f7f7dff6b41a93ffa5fa2d2a91df4984d323ecc265115993fffb93b"
+    },
+    "render": {
+      "path": "benchmarks/sketch/results/render.json",
+      "sha256": "68efe2d1c0505bd273a60377413a1a69d8622436d5b91465cb4ced4fdb62950b"
+    },
+    "seek": {
+      "path": "benchmarks/sketch/results/seek-final.json",
+      "sha256": "0c27a306bfc65ef3b969082085f1e8c74ea01d1fe4c22f442d9bcd3f61d604df"
+    }
+  },
+  "all_tests": {
+    "collected": 1982,
+    "tests_run": 1982,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "expected_failures": 0,
+    "passed": true,
+    "seconds": 898.39,
+    "zzy_version": "0.6.0a1",
+    "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "resource_policy": {
+      "policy_version": 1,
+      "profile": "default-v1",
+      "limits": {
+        "source_file_bytes": 2097152,
+        "source_total_bytes": 16777216,
+        "module_count": 128,
+        "import_depth": 32,
+        "tokens_per_file": 250000,
+        "ast_nodes_total": 500000,
+        "syntax_depth": 64,
+        "numeric_digits": 4096,
+        "integer_bits": 65536,
+        "quantity_exponent_abs": 64,
+        "call_depth": 64,
+        "value_depth": 64,
+        "container_items": 1000000,
+        "text_codepoints": 4194304,
+        "io_payload_bytes": 16777216,
+        "runtime_objects": 200000,
+        "runtime_slots": 2000000,
+        "runtime_payload_bytes": 134217728,
+        "stdout_bytes": 1048576,
+        "stderr_bytes": 1048576,
+        "program_cache_entries": 32,
+        "program_cache_bytes": 67108864
+      },
+      "host_decimal_digits": 4300,
+      "effective_decimal_digits": 4096
+    },
+    "resource_fingerprint": "2e654aef52d3267bfecf0768bef9faee1eed942a329001ec455aee951c858bd2"
+  },
+  "gui_tests": {
+    "collected": 11,
+    "tests_run": 11,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "expected_failures": 0,
+    "passed": true,
+    "seconds": 4.188,
+    "platform": "Windows-11-10.0.26200-SP0",
+    "tk": 8.6,
+    "kind": "real GUI; explicit desktop run"
+  },
+  "benchmark_statuses": {
+    "baseline": {
+      "ok": 108
+    },
+    "render": {
+      "ok": 21,
+      "resource_failure": 6
+    },
+    "seek": {
+      "ok": 21,
+      "resource_failure": 6
+    }
+  },
+  "unverified": [
+    "other OS/Python/fonts/DPI",
+    "all simultaneous maximum resource combinations",
+    "real OS ACL failures",
+    "power-loss durability and concurrent writer transactions",
+    "every blocking host call cancellation timing"
+  ],
+  "unavailable": [
+    "independent PNG renderer"
+  ]
+}

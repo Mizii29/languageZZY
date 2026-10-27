@@ -1,0 +1,346 @@
+{
+  "schema_version": 1,
+  "cases": [
+    {
+      "id": "e4-objects",
+      "file": "tests/e4/inputs/objects.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": "1\n2\n2\ntrue\n2\n"
+    },
+    {
+      "id": "e4-objects",
+      "file": "tests/e4/inputs/objects.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "e4-bad-drawing",
+      "file": "tests/e4/inputs/bad-drawing.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": "(T_T)(sketch format/export: unexpected schema fields)\n"
+    },
+    {
+      "id": "e4-bad-drawing",
+      "file": "tests/e4/inputs/bad-drawing.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "e4-png",
+      "file": "tests/e4/inputs/png.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": "(T_T)(PNG unavailable: no independent PNG backend is installed)\n"
+    },
+    {
+      "id": "e4-png",
+      "file": "tests/e4/inputs/png.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "e4-timer-cancel",
+      "file": "tests/e4/inputs/timer-cancel.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": "true\nfalse\n"
+    },
+    {
+      "id": "e4-timer-cancel",
+      "file": "tests/e4/inputs/timer-cancel.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "e4-callback-arity",
+      "file": "tests/e4/inputs/callback-arity.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E202",
+        "span": [
+          4,
+          16,
+          4,
+          17
+        ]
+      }
+    },
+    {
+      "id": "e4-callback-arity",
+      "file": "tests/e4/inputs/callback-arity.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "e4-timer-dimension",
+      "file": "tests/e4/inputs/timer-dimension.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E201",
+        "span": [
+          4,
+          13,
+          4,
+          14
+        ]
+      }
+    },
+    {
+      "id": "e4-timer-dimension",
+      "file": "tests/e4/inputs/timer-dimension.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "e4-timer-zero",
+      "file": "tests/e4/inputs/timer-zero.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E208",
+        "span": [
+          4,
+          13,
+          4,
+          14
+        ]
+      }
+    },
+    {
+      "id": "e4-timer-zero",
+      "file": "tests/e4/inputs/timer-zero.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "e4-group-nested",
+      "file": "tests/e4/inputs/group-nested.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E214",
+        "span": [
+          4,
+          19,
+          4,
+          20
+        ]
+      }
+    },
+    {
+      "id": "e4-group-nested",
+      "file": "tests/e4/inputs/group-nested.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "e4-undo-fill",
+      "file": "tests/e4/inputs/undo-fill.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E214",
+        "span": [
+          4,
+          12,
+          4,
+          13
+        ]
+      }
+    },
+    {
+      "id": "e4-undo-fill",
+      "file": "tests/e4/inputs/undo-fill.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "e4-missing-object",
+      "file": "tests/e4/inputs/missing-object.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E204",
+        "span": [
+          3,
+          24,
+          3,
+          25
+        ]
+      }
+    },
+    {
+      "id": "e4-missing-object",
+      "file": "tests/e4/inputs/missing-object.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "e4-text-zero",
+      "file": "tests/e4/inputs/text-zero.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E208",
+        "span": [
+          3,
+          12,
+          3,
+          13
+        ]
+      }
+    },
+    {
+      "id": "e4-text-zero",
+      "file": "tests/e4/inputs/text-zero.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "e4-layer-range",
+      "file": "tests/e4/inputs/layer-range.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E204",
+        "span": [
+          4,
+          18,
+          4,
+          19
+        ]
+      }
+    },
+    {
+      "id": "e4-layer-range",
+      "file": "tests/e4/inputs/layer-range.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "id": "e4-png-group",
+      "file": "tests/e4/inputs/png-group.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E214",
+        "span": [
+          3,
+          16,
+          3,
+          17
+        ]
+      }
+    },
+    {
+      "id": "e4-png-group",
+      "file": "tests/e4/inputs/png-group.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 20,
+      "exit_code": 0,
+      "stdout": ""
+    }
+  ]
+}

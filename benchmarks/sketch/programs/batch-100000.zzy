@@ -1,0 +1,1 @@
+(zno)c:=sketch.canvas(1000,600,"benchmark");(zno)p:=sketch.pen(c,"p");sketch.clear_history(c);io.print("ready");(for)start(in)range(0,100000,10000){(zno)points:=[];(for)i(in)range(start,start+10000,1){array.push(points,[i+1,0]);}sketch.polyline(p,points);}io.print("done");

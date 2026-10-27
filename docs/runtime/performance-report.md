@@ -199,3 +199,6 @@ B07/n1000 单独 tracemalloc 测得峰值 **2596070 字节**，结果核对通�
 report 只重建统计表，人工验收分析单独保留于本报告，不能用重新生成的表覆盖本文件。compare 本次退出0；stdio_probe 因旧版1MiB超时退出1；profile 各项结果验证通过。现有0.6.0a1包版本不区分优化，必须同时记录Git修订和源码哈希。
 
 明确未验证：其他操作系统/Python、优化后全部B01—B09三档与Python的完整矩阵、失败大规模的完整耗时分布、不同查询选择率/take值的性能、失败状态机事件性能、增长分母的Quantity压力、默认最大对象/槽位实分配和RSS上界。没有长期Program缓存、VM、NumPy、公开Python嵌入、GUI或完整应用的新实现。下一项为 **P09-01**，按 campus-app 契约确定完整CLI应用结构和验收流程。
+
+
+以上为P07当时的代码/下一步状态；当前进度见todo。后续Sketch的独立基线、GUI和回放测量见[Sketch报告](../../benchmarks/sketch/README.md)，不能把本报告旧版本结论推广到新扩展。

@@ -1,0 +1,38 @@
+{
+  "passed": true,
+  "source_sha256": "5d7e1427e8349c92efd68b45bbabb137ea508f1e73872d0b45aebd86464f9c7e",
+  "commands": [
+    {
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\.venv\\Scripts\\python.exe",
+        "-I",
+        "-X",
+        "utf8",
+        "-m",
+        "zzy",
+        "check",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY 正式示例 4h3l5frn\\formal-example.zzy"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\.venv\\Scripts\\python.exe",
+        "-I",
+        "-X",
+        "utf8",
+        "-m",
+        "zzy",
+        "run",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY 正式示例 4h3l5frn\\formal-example.zzy"
+      ],
+      "exit_code": 0,
+      "stdout": "GUI unavailable: run requires --gui\n",
+      "stderr": ""
+    }
+  ],
+  "svg_path_count": 12,
+  "meaning": "Exact formal section 7 checked/run headless; show correctly failed without GUI, SVG/function export verified. Real GUI uses studio.zzy in installed.json."
+}

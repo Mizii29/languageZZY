@@ -1,0 +1,3 @@
+(zno)c:=sketch.canvas(100,100,"state");
+sketch.begin_group(c,"pending");
+sketch.save_png(c,"must-not-exist.png");

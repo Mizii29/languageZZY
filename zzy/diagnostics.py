@@ -34,10 +34,13 @@ class Span:
 def display_path(path: str | os.PathLike | None) -> str | None:
     if path is None:
         return None
+    # Resolve both sides: Windows cwd may retain an 8.3 alias while Source.path
+    # already contains the canonical long name. These still name one directory.
+    canonical = os.path.realpath(path)
     try:
-        return os.path.relpath(path).replace("\\", "/")
+        return os.path.relpath(canonical, os.path.realpath(os.getcwd())).replace("\\", "/")
     except ValueError:
-        return os.path.abspath(path).replace("\\", "/")
+        return canonical.replace("\\", "/")
 
 
 @dataclass(frozen=True)

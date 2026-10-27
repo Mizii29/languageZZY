@@ -1,0 +1,1 @@
+(zno)c:=sketch.canvas(100,100,"pattern");(zno)p:=sketch.pen(c,"p");sketch.forward(p,10);(zno)d:=sketch.capture(c);io.print(sketch.stamp(c,d,5,6,2,90));io.print(sketch.position(p));io.print(sketch.layer_info(c)[0].count);io.print(sketch.undo(c));io.print(sketch.layer_info(c)[0].count);

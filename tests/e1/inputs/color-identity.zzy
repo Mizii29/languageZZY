@@ -1,0 +1,3 @@
+(zno)c:sketch.Canvas:=sketch.canvas(200,100,"画布");
+(zno)p:sketch.Pen:=sketch.pen(c,"笔");
+(zno)a:sketch.Color:=sketch.rgb(1,2,3);io.print(a==sketch.rgb(1,2,3));io.print(a==sketch.rgb(1,2,4));io.print(data.stringify([a]));io.print(data.stringify([c,p]));

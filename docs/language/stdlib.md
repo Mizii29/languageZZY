@@ -1,6 +1,6 @@
 # ZZY 标准库接口契约
 
-更新：2026-10-14｜标准库版本：v0.6.1｜核心语法：v0.6｜状态：P05 已实现本文核心接口，证据见 tests/p05；sketch/Web/db/num 扩展仍待各自阶段
+更新：2026-10-14｜标准库版本：v0.6.1｜核心语法：v0.6｜状态：P05 已实现本文核心接口，证据见 tests/p05；sketch独立扩展见其验收记录，Web/db/num待各自阶段
 
 语言规则见 [syntax.md](syntax.md)。下面集中规定 P01—P05 的公开接口，消除旧示例的裸 `print`、`push`、`safe_int` 等名称。类型标签是说明，不引入新语法；`A` 表示任意合法 ZZY 值，`Result<A>` 仅描述载荷，源码不支持泛型。
 
@@ -121,8 +121,10 @@ Web 需要另列 Request/Response、路由、状态码、Content-Type、JSON 校
 
 查询本身是语法，不再添加同义 query 库。可复用查询通过既有 `(addnew)` 和 `(use)` 封装/导出，输出仍为普通 Array；JSON、stats、sorted 等不会因数组来自查询就放宽类型。
 
-## 9. 已选 sketch 扩展（待 E1—E4 实现）
+## 9. 已选 sketch 扩展（独立版本）
 
 完整接口以 [sketch.md](../features/sketch.md) 为唯一来源：固定参数、受控原生类型、绘图/历史/事件、SVG/项目/图案函数导出与失败边界。默认通用 JSON 拒绝 Canvas/Pen/Layer/Color/Drawing，普通 Position/LayerInfo 快照按结构规则处理。资源/类型/状态错误仍为诊断，不吞成文件失败；可预期 I/O、依赖与格式失败返回 Result。
 
-原生登记与 Tk 初始化分开，headless/check 只读元数据、不启动窗口。扩展发布时更新能力清单、示例和黑盒；PNG 未装时单独标不可用，不能据本文判断 GUI/画笔已经实现。
+原生登记与 Tk 初始化分开；check只读接口元数据、不执行用户程序，headless运行正常执行几何及文件操作，两者均不初始化Tk。GUI能力以独立真实窗口验收为准；PNG没有独立后端时明确标为不可用。
+
+实际接口、固定限额、平台与验收见[sketch使用指南](../features/sketch-guide.md)。五种受控类型均有实际入口，Position/LayerInfo为冻结普通快照。几何、SVG、图层/文字、历史/回放、图案、事件与项目已实现；PNG明确不可用。核心v0.6.1签名不变，扩展ABI为1.0，验收见tests/e4。

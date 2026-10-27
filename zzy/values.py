@@ -164,6 +164,12 @@ def freeze(value, runtime, node):
         if id(item) in seen:
             continue
         seen.add(id(item))
+        if getattr(item, 'native_type', None) is not None:
+            runtime.check('value_depth', depth + 1, node)
+            if hasattr(item, 'freeze_native'):
+                item.freeze_native(runtime, node)
+            else:
+                item.frozen = True
         if item.kind == "Result":
             runtime.check("value_depth", depth + 1, node)
             pending.append((item.data[1], depth + 1))

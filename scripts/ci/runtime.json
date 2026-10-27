@@ -1,0 +1,8 @@
+{
+  "implementation": "CPython",
+  "version": "3.12.14",
+  "release": "20260929",
+  "url": "https://github.com/astral-sh/python-build-standalone/releases/download/20260929/cpython-3.12.14%2B20260929-x86_64-pc-windows-msvc-install_only.tar.gz",
+  "sha256": "28728baf30b65e263f0b25c5a85be8226e7ab0d212fbadd6a8f0f796139fa804",
+  "source": "https://github.com/astral-sh/python-build-standalone/releases/tag/20260929"
+}

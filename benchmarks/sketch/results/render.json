@@ -1,0 +1,1720 @@
+{
+  "started": "2026-10-17T11:42:54.369599+00:00",
+  "repeats": 3,
+  "runtime_hashes": {
+    "zzy\\ast_nodes.py": "ef2dcd105a9653d64865c3ba419fdc3faabc8536e9e39aaf428ad34f560a1a20",
+    "zzy\\cli.py": "c4a63a48ea44528b8ff02bc09ddffdd16a4dbd5b24bc186c56e6574364d0d425",
+    "zzy\\diagnostics.py": "1bb7b7a8748f2f4324633562fc7b55fb7fc933bfc724a167ca1319e7ccfe5604",
+    "zzy\\features.py": "d74c07f4d84dd23a395525008f16c6f3dd3e8ad6c125f63213527b5b4fec8e0b",
+    "zzy\\interpreter.py": "32478e27d2bc402c63b1469108805cc748f9e4925ad4f7b277c610431fa31e6f",
+    "zzy\\lexer.py": "62fba0dbedc0028f92571784fc045e522850184760058c69da061464e98a8289",
+    "zzy\\output.py": "bfc695d0db9651d7d871caffa2fdaf03c759d703c62f3bffd39a4c18cf94c2ba",
+    "zzy\\parser.py": "5d661015c3069622551120323cb1535b3ab8381fb1dd51fd2d46f97d7686b35f",
+    "zzy\\prepare.py": "766d14bb10281fca19d9ae672fc3d2b82bfb1225e667b7d1d14bac9afca036c2",
+    "zzy\\process.py": "855003863e1b41bc44bae62d1b1059bddbaa41a0ab9315ea97f279c0e6a06b39",
+    "zzy\\quantities.py": "da85167c457b5da17bb2d86edd4cf2585b2be7e1ccf1e53560af06ce73866103",
+    "zzy\\resolver.py": "1c50934f61f338dbf29a2aed7ef3f09facdf706c07bad5f4845750eccaaa60c4",
+    "zzy\\resources.py": "552ac299788eb18279208df4878c452b3e886793d39b75a2531ca2591c96d602",
+    "zzy\\source.py": "8c6827a5d37c623b2309bd4403befd6ba433a3ff7d8fc0cedb7a5736966b4f61",
+    "zzy\\spec_runner.py": "09b1f942d988418b973c80cbfde7b2ab60f0a4687627edc98541e8418f6f533d",
+    "zzy\\spec_worker.py": "8bf50a1d0be4684f3fd2fb7aca45b63c005394ab389cc58367fe4e0f6cdcee6c",
+    "zzy\\tokens.py": "55847182fe23d23a330f056fa37484ae7204128e6aaf154b2cc2682b861d303a",
+    "zzy\\values.py": "447c835c305ab0f1e1d254033f466daa581b689db92178e1274f8cde7b0b8304",
+    "zzy\\windows_job.py": "063b3d9e7749b2bdc4730770fb582719611760ab3173018fa730aa4bf2de0e45",
+    "zzy\\__init__.py": "918b735a252679ded627381557cb9b4b43d4f734e95109f8fc3eae3ea3f19378",
+    "zzy\\__main__.py": "482b8693e2fe6dbd732e3d7961e03827d3efa187bad11d29da188be580ebbeea",
+    "zzy\\native\\catalog.py": "52a2607e608747cff868c46a4a867b81dcb5801c48b77d9127f4646e97cd0043",
+    "zzy\\native\\files.py": "e021f28b8e98925fd720543635438dba6d1929307cb4254217a3a898ad64ca07",
+    "zzy\\native\\json_codec.py": "b0191f91fee3ec0a86a26f167a1e1e4643016f9618037408ba6bc7d0a7de9703",
+    "zzy\\native\\library.py": "643cce6641ccfb5a4da5fb5fab21e34a51b6a8cb3c40f5b8608f7f05d3a954ca",
+    "zzy\\native\\metadata.py": "b75591c84c5d804ddbd09c8a6f6e7d151ee2b3c77900802eb69c756a44f81b28",
+    "zzy\\native\\sketch.py": "c2e651a28aeaaaf9ee3927445e3df6330c35677208c15c07110f9fe64a06f9d5",
+    "zzy\\native\\sketch_events.py": "1ef9781ee3f8f3cd9893f6b018b323f2c76f13df2d3df8162b7a032b02829ebb",
+    "zzy\\native\\sketch_gui.py": "d36ca4fbdb1bdb3c2f2dd9a40cc39bbce44fa2b613eac3190289684d72292b71",
+    "zzy\\native\\sketch_history.py": "27477d4709dd4371d251546143a010708933f82be6a6a44677b12f9369faec59",
+    "zzy\\native\\sketch_layers.py": "17efd421524902fc7e42e86abc4eeda267d118853a5343d151b6b39b550296b6",
+    "zzy\\native\\sketch_metadata.py": "3aa3d6b465d5905f8bd1e9f792e64211de78026eee5ac571a8a71eb2a1f5a074",
+    "zzy\\native\\sketch_objects.py": "51a2b78d850e55acb35193f25c639a30e8ae585d6c9d10d51382acdd8df3db43",
+    "zzy\\native\\sketch_patterns.py": "34420b6c80c0fd4dd88559626c4a7cf1fab2bc80c1bd2d529c794c361cf25328",
+    "zzy\\native\\sketch_project.py": "b2c6c6246a83954911c5a138ad521c7496d9c5477cbf06d9125a629e26512297",
+    "zzy\\native\\sketch_replay.py": "c14dedaac7c69b839bb64da942e09cc2856bb0e767e3c86863b499f9a11eb395",
+    "zzy\\native\\sketch_session.py": "fbfd8e19e87255670c4b3eca593bb58ce8990775c75cf476565ddd6558c0948e",
+    "zzy\\native\\sketch_svg.py": "e37f88bbbb6f86bebc3ddf1c35e5d1e0d9d701fd4e335cbe876fccd9562bfb4d",
+    "zzy\\native\\__init__.py": "29ade97372807897986c89586868ea0dda2c787ce3c86065ee9661ede22d304f"
+  },
+  "samples": [
+    {
+      "repeat": 0,
+      "size": 1000,
+      "scenario": "single",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\.venv\\Scripts\\python.exe",
+        "-X",
+        "utf8",
+        "-m",
+        "benchmarks.sketch.render",
+        "--size",
+        "1000",
+        "--scenario",
+        "single"
+      ],
+      "seconds": 0.7982644999865443,
+      "exit_code": 0,
+      "stdout": "{\"size\": 1000, \"scenario\": \"single\", \"platform\": \"Windows-11-10.0.26200-SP0\", \"stages\": {\"first_render\": {\"status\": \"ok\", \"seconds\": 0.09886630001710728, \"items\": 1002, \"viewport\": [704, 504]}, \"unchanged_render\": {\"status\": \"ok\", \"seconds\": 0.01945520000299439, \"items\": 1002, \"viewport\": [704, 504]}, \"seek_render\": {\"status\": \"ok\", \"seconds\": 0.013146399985998869, \"items\": 502, \"viewport\": [704, 504]}}, \"tk_patchlevel\": \"8.6.12\", \"status\": \"ok\", \"generation_window_and_cleanup_seconds\": 0.4217223000014201, \"peak_process_working_set_bytes\": 49901568}\r\n",
+      "stderr": "",
+      "measurement": {
+        "size": 1000,
+        "scenario": "single",
+        "platform": "Windows-11-10.0.26200-SP0",
+        "stages": {
+          "first_render": {
+            "status": "ok",
+            "seconds": 0.09886630001710728,
+            "items": 1002,
+            "viewport": [
+              704,
+              504
+            ]
+          },
+          "unchanged_render": {
+            "status": "ok",
+            "seconds": 0.01945520000299439,
+            "items": 1002,
+            "viewport": [
+              704,
+              504
+            ]
+          },
+          "seek_render": {
+            "status": "ok",
+            "seconds": 0.013146399985998869,
+            "items": 502,
+            "viewport": [
+              704,
+              504
+            ]
+          }
+        },
+        "tk_patchlevel": "8.6.12",
+        "status": "ok",
+        "generation_window_and_cleanup_seconds": 0.4217223000014201,
+        "peak_process_working_set_bytes": 49901568
+      },
+      "status": "ok"
+    },
+    {
+      "repeat": 0,
+      "size": 10000,
+      "scenario": "single",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\.venv\\Scripts\\python.exe",
+        "-X",
+        "utf8",
+        "-m",
+        "benchmarks.sketch.render",
+        "--size",
+        "10000",
+        "--scenario",
+        "single"
+      ],
+      "seconds": 2.49357739998959,
+      "exit_code": 0,
+      "stdout": "{\"size\": 10000, \"scenario\": \"single\", \"platform\": \"Windows-11-10.0.26200-SP0\", \"stages\": {\"first_render\": {\"status\": \"ok\", \"seconds\": 0.2577735999948345, \"items\": 10002, \"viewport\": [704, 504]}, \"unchanged_render\": {\"status\": \"ok\", \"seconds\": 0.015748700010590255, \"items\": 10002, \"viewport\": [704, 504]}, \"seek_render\": {\"status\": \"ok\", \"seconds\": 0.5923849999671802, \"items\": 5002, \"viewport\": [704, 504]}}, \"tk_patchlevel\": \"8.6.12\", \"status\": \"ok\", \"generation_window_and_cleanup_seconds\": 2.078611200035084, \"peak_process_working_set_bytes\": 78020608}\r\n",
+      "stderr": "",
+      "measurement": {
+        "size": 10000,
+        "scenario": "single",
+        "platform": "Windows-11-10.0.26200-SP0",
+        "stages": {
+          "first_render": {
+            "status": "ok",
+            "seconds": 0.2577735999948345,
+            "items": 10002,
+            "viewport": [
+              704,
+              504
+            ]
+          },
+          "unchanged_render": {
+            "status": "ok",
+            "seconds": 0.015748700010590255,
+            "items": 10002,
+            "viewport": [
+              704,
+              504
+            ]
+          },
+          "seek_render": {
+            "status": "ok",
+            "seconds": 0.5923849999671802,
+            "items": 5002,
+            "viewport": [
+              704,
+              504
+            ]
+          }
+        },
+        "tk_patchlevel": "8.6.12",
+        "status": "ok",
+        "generation_window_and_cleanup_seconds": 2.078611200035084,
+        "peak_process_working_set_bytes": 78020608
+      },
+      "status": "ok"
+    },
+    {
+      "repeat": 0,
+      "size": 100000,
+      "scenario": "single",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\.venv\\Scripts\\python.exe",
+        "-X",
+        "utf8",
+        "-m",
+        "benchmarks.sketch.render",
+        "--size",
+        "100000",
+        "--scenario",
+        "single"
+      ],
+      "seconds": 20.487307999981567,
+      "exit_code": 0,
+      "stdout": "{\"size\": 100000, \"scenario\": \"single\", \"platform\": \"Windows-11-10.0.26200-SP0\", \"stages\": {}, \"tk_patchlevel\": \"8.6.12\", \"status\": \"resource_failure\", \"key\": \"sketch.queue_bytes\", \"limit\": 16777216, \"requested\": 35600516, \"generation_window_and_cleanup_seconds\": 19.63302670000121, \"peak_process_working_set_bytes\": 282628096}\r\n",
+      "stderr": "",
+      "measurement": {
+        "size": 100000,
+        "scenario": "single",
+        "platform": "Windows-11-10.0.26200-SP0",
+        "stages": {},
+        "tk_patchlevel": "8.6.12",
+        "status": "resource_failure",
+        "key": "sketch.queue_bytes",
+        "limit": 16777216,
+        "requested": 35600516,
+        "generation_window_and_cleanup_seconds": 19.63302670000121,
+        "peak_process_working_set_bytes": 282628096
+      },
+      "status": "resource_failure"
+    },
+    {
+      "repeat": 0,
+      "size": 1000,
+      "scenario": "batch",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\.venv\\Scripts\\python.exe",
+        "-X",
+        "utf8",
+        "-m",
+        "benchmarks.sketch.render",
+        "--size",
+        "1000",
+        "--scenario",
+        "batch"
+      ],
+      "seconds": 0.855534499976784,
+      "exit_code": 0,
+      "stdout": "{\"size\": 1000, \"scenario\": \"batch\", \"platform\": \"Windows-11-10.0.26200-SP0\", \"stages\": {\"first_render\": {\"status\": \"ok\", \"seconds\": 0.0323299000156112, \"items\": 3, \"viewport\": [704, 504]}, \"unchanged_render\": {\"status\": \"ok\", \"seconds\": 0.04256819997681305, \"items\": 3, \"viewport\": [704, 504]}, \"seek_render\": {\"status\": \"ok\", \"seconds\": 0.03580740001052618, \"items\": 2, \"viewport\": [704, 504]}}, \"tk_patchlevel\": \"8.6.12\", \"status\": \"ok\", \"generation_window_and_cleanup_seconds\": 0.4501432999968529, \"peak_process_working_set_bytes\": 50126848}\r\n",
+      "stderr": "",
+      "measurement": {
+        "size": 1000,
+        "scenario": "batch",
+        "platform": "Windows-11-10.0.26200-SP0",
+        "stages": {
+          "first_render": {
+            "status": "ok",
+            "seconds": 0.0323299000156112,
+            "items": 3,
+            "viewport": [
+              704,
+              504
+            ]
+          },
+          "unchanged_render": {
+            "status": "ok",
+            "seconds": 0.04256819997681305,
+            "items": 3,
+            "viewport": [
+              704,
+              504
+            ]
+          },
+          "seek_render": {
+            "status": "ok",
+            "seconds": 0.03580740001052618,
+            "items": 2,
+            "viewport": [
+              704,
+              504
+            ]
+          }
+        },
+        "tk_patchlevel": "8.6.12",
+        "status": "ok",
+        "generation_window_and_cleanup_seconds": 0.4501432999968529,
+        "peak_process_working_set_bytes": 50126848
+      },
+      "status": "ok"
+    },
+    {
+      "repeat": 0,
+      "size": 10000,
+      "scenario": "batch",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\.venv\\Scripts\\python.exe",
+        "-X",
+        "utf8",
+        "-m",
+        "benchmarks.sketch.render",
+        "--size",
+        "10000",
+        "--scenario",
+        "batch"
+      ],
+      "seconds": 1.9659767999546602,
+      "exit_code": 0,
+      "stdout": "{\"size\": 10000, \"scenario\": \"batch\", \"platform\": \"Windows-11-10.0.26200-SP0\", \"stages\": {\"first_render\": {\"status\": \"ok\", \"seconds\": 0.07058879995020106, \"items\": 3, \"viewport\": [704, 504]}, \"unchanged_render\": {\"status\": \"ok\", \"seconds\": 0.03459290001774207, \"items\": 3, \"viewport\": [704, 504]}, \"seek_render\": {\"status\": \"ok\", \"seconds\": 0.005683000024873763, \"items\": 2, \"viewport\": [704, 504]}}, \"tk_patchlevel\": \"8.6.12\", \"status\": \"ok\", \"generation_window_and_cleanup_seconds\": 1.5259352999855764, \"peak_process_working_set_bytes\": 80052224}\r\n",
+      "stderr": "",
+      "measurement": {
+        "size": 10000,
+        "scenario": "batch",
+        "platform": "Windows-11-10.0.26200-SP0",
+        "stages": {
+          "first_render": {
+            "status": "ok",
+            "seconds": 0.07058879995020106,
+            "items": 3,
+            "viewport": [
+              704,
+              504
+            ]
+          },
+          "unchanged_render": {
+            "status": "ok",
+            "seconds": 0.03459290001774207,
+            "items": 3,
+            "viewport": [
+              704,
+              504
+            ]
+          },
+          "seek_render": {
+            "status": "ok",
+            "seconds": 0.005683000024873763,
+            "items": 2,
+            "viewport": [
+              704,
+              504
+            ]
+          }
+        },
+        "tk_patchlevel": "8.6.12",
+        "status": "ok",
+        "generation_window_and_cleanup_seconds": 1.5259352999855764,
+        "peak_process_working_set_bytes": 80052224
+      },
+      "status": "ok"
+    },
+    {
+      "repeat": 0,
+      "size": 100000,
+      "scenario": "batch",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\.venv\\Scripts\\python.exe",
+        "-X",
+        "utf8",
+        "-m",
+        "benchmarks.sketch.render",
+        "--size",
+        "100000",
+        "--scenario",
+        "batch"
+      ],
+      "seconds": 20.153273199975956,
+      "exit_code": 0,
+      "stdout": "{\"size\": 100000, \"scenario\": \"batch\", \"platform\": \"Windows-11-10.0.26200-SP0\", \"stages\": {\"first_render\": {\"status\": \"ok\", \"seconds\": 0.5021933999960311, \"items\": 12, \"viewport\": [704, 504]}, \"unchanged_render\": {\"status\": \"ok\", \"seconds\": 0.005644800025038421, \"items\": 12, \"viewport\": [704, 504]}, \"seek_render\": {\"status\": \"ok\", \"seconds\": 0.07899240002734587, \"items\": 7, \"viewport\": [704, 504]}}, \"tk_patchlevel\": \"8.6.12\", \"status\": \"ok\", \"generation_window_and_cleanup_seconds\": 19.749134099984076, \"peak_process_working_set_bytes\": 98553856}\r\n",
+      "stderr": "",
+      "measurement": {
+        "size": 100000,
+        "scenario": "batch",
+        "platform": "Windows-11-10.0.26200-SP0",
+        "stages": {
+          "first_render": {
+            "status": "ok",
+            "seconds": 0.5021933999960311,
+            "items": 12,
+            "viewport": [
+              704,
+              504
+            ]
+          },
+          "unchanged_render": {
+            "status": "ok",
+            "seconds": 0.005644800025038421,
+            "items": 12,
+            "viewport": [
+              704,
+              504
+            ]
+          },
+          "seek_render": {
+            "status": "ok",
+            "seconds": 0.07899240002734587,
+            "items": 7,
+            "viewport": [
+              704,
+              504
+            ]
+          }
+        },
+        "tk_patchlevel": "8.6.12",
+        "status": "ok",
+        "generation_window_and_cleanup_seconds": 19.749134099984076,
+        "peak_process_working_set_bytes": 98553856
+      },
+      "status": "ok"
+    },
+    {
+      "repeat": 0,
+      "size": 1000,
+      "scenario": "multi",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\.venv\\Scripts\\python.exe",
+        "-X",
+        "utf8",
+        "-m",
+        "benchmarks.sketch.render",
+        "--size",
+        "1000",
+        "--scenario",
+        "multi"
+      ],
+      "seconds": 1.0367492000223137,
+      "exit_code": 0,
+      "stdout": "{\"size\": 1000, \"scenario\": \"multi\", \"platform\": \"Windows-11-10.0.26200-SP0\", \"stages\": {\"first_render\": {\"status\": \"ok\", \"seconds\": 0.1790468999533914, \"items\": 1006, \"viewport\": [704, 504]}, \"unchanged_render\": {\"status\": \"ok\", \"seconds\": 0.02725559996906668, \"items\": 1006, \"viewport\": [704, 504]}, \"seek_render\": {\"status\": \"ok\", \"seconds\": 0.02613860002020374, \"items\": 506, \"viewport\": [704, 504]}}, \"tk_patchlevel\": \"8.6.12\", \"status\": \"ok\", \"generation_window_and_cleanup_seconds\": 0.5750592999975197, \"peak_process_working_set_bytes\": 50257920}\r\n",
+      "stderr": "",
+      "measurement": {
+        "size": 1000,
+        "scenario": "multi",
+        "platform": "Windows-11-10.0.26200-SP0",
+        "stages": {
+          "first_render": {
+            "status": "ok",
+            "seconds": 0.1790468999533914,
+            "items": 1006,
+            "viewport": [
+              704,
+              504
+            ]
+          },
+          "unchanged_render": {
+            "status": "ok",
+            "seconds": 0.02725559996906668,
+            "items": 1006,
+            "viewport": [
+              704,
+              504
+            ]
+          },
+          "seek_render": {
+            "status": "ok",
+            "seconds": 0.02613860002020374,
+            "items": 506,
+            "viewport": [
+              704,
+              504
+            ]
+          }
+        },
+        "tk_patchlevel": "8.6.12",
+        "status": "ok",
+        "generation_window_and_cleanup_seconds": 0.5750592999975197,
+        "peak_process_working_set_bytes": 50257920
+      },
+      "status": "ok"
+    },
+    {
+      "repeat": 0,
+      "size": 10000,
+      "scenario": "multi",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\.venv\\Scripts\\python.exe",
+        "-X",
+        "utf8",
+        "-m",
+        "benchmarks.sketch.render",
+        "--size",
+        "10000",
+        "--scenario",
+        "multi"
+      ],
+      "seconds": 2.544739499979187,
+      "exit_code": 0,
+      "stdout": "{\"size\": 10000, \"scenario\": \"multi\", \"platform\": \"Windows-11-10.0.26200-SP0\", \"stages\": {\"first_render\": {\"status\": \"ok\", \"seconds\": 0.34327339997980744, \"items\": 10006, \"viewport\": [704, 504]}, \"unchanged_render\": {\"status\": \"ok\", \"seconds\": 0.01623409998137504, \"items\": 10006, \"viewport\": [704, 504]}, \"seek_render\": {\"status\": \"ok\", \"seconds\": 0.21544879995053634, \"items\": 5006, \"viewport\": [704, 504]}}, \"tk_patchlevel\": \"8.6.12\", \"status\": \"ok\", \"generation_window_and_cleanup_seconds\": 2.1254616999649443, \"peak_process_working_set_bytes\": 78118912}\r\n",
+      "stderr": "",
+      "measurement": {
+        "size": 10000,
+        "scenario": "multi",
+        "platform": "Windows-11-10.0.26200-SP0",
+        "stages": {
+          "first_render": {
+            "status": "ok",
+            "seconds": 0.34327339997980744,
+            "items": 10006,
+            "viewport": [
+              704,
+              504
+            ]
+          },
+          "unchanged_render": {
+            "status": "ok",
+            "seconds": 0.01623409998137504,
+            "items": 10006,
+            "viewport": [
+              704,
+              504
+            ]
+          },
+          "seek_render": {
+            "status": "ok",
+            "seconds": 0.21544879995053634,
+            "items": 5006,
+            "viewport": [
+              704,
+              504
+            ]
+          }
+        },
+        "tk_patchlevel": "8.6.12",
+        "status": "ok",
+        "generation_window_and_cleanup_seconds": 2.1254616999649443,
+        "peak_process_working_set_bytes": 78118912
+      },
+      "status": "ok"
+    },
+    {
+      "repeat": 0,
+      "size": 100000,
+      "scenario": "multi",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\.venv\\Scripts\\python.exe",
+        "-X",
+        "utf8",
+        "-m",
+        "benchmarks.sketch.render",
+        "--size",
+        "100000",
+        "--scenario",
+        "multi"
+      ],
+      "seconds": 26.54488219995983,
+      "exit_code": 0,
+      "stdout": "{\"size\": 100000, \"scenario\": \"multi\", \"platform\": \"Windows-11-10.0.26200-SP0\", \"stages\": {}, \"tk_patchlevel\": \"8.6.12\", \"status\": \"resource_failure\", \"key\": \"sketch.queue_bytes\", \"limit\": 16777216, \"requested\": 35601924, \"generation_window_and_cleanup_seconds\": 25.802079399989452, \"peak_process_working_set_bytes\": 282656768}\r\n",
+      "stderr": "",
+      "measurement": {
+        "size": 100000,
+        "scenario": "multi",
+        "platform": "Windows-11-10.0.26200-SP0",
+        "stages": {},
+        "tk_patchlevel": "8.6.12",
+        "status": "resource_failure",
+        "key": "sketch.queue_bytes",
+        "limit": 16777216,
+        "requested": 35601924,
+        "generation_window_and_cleanup_seconds": 25.802079399989452,
+        "peak_process_working_set_bytes": 282656768
+      },
+      "status": "resource_failure"
+    },
+    {
+      "repeat": 1,
+      "size": 1000,
+      "scenario": "single",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\.venv\\Scripts\\python.exe",
+        "-X",
+        "utf8",
+        "-m",
+        "benchmarks.sketch.render",
+        "--size",
+        "1000",
+        "--scenario",
+        "single"
+      ],
+      "seconds": 0.8617499000392854,
+      "exit_code": 0,
+      "stdout": "{\"size\": 1000, \"scenario\": \"single\", \"platform\": \"Windows-11-10.0.26200-SP0\", \"stages\": {\"first_render\": {\"status\": \"ok\", \"seconds\": 0.1025865999981761, \"items\": 1002, \"viewport\": [704, 504]}, \"unchanged_render\": {\"status\": \"ok\", \"seconds\": 0.008208299987018108, \"items\": 1002, \"viewport\": [704, 504]}, \"seek_render\": {\"status\": \"ok\", \"seconds\": 0.012331700010690838, \"items\": 502, \"viewport\": [704, 504]}}, \"tk_patchlevel\": \"8.6.12\", \"status\": \"ok\", \"generation_window_and_cleanup_seconds\": 0.4338446000474505, \"peak_process_working_set_bytes\": 50020352}\r\n",
+      "stderr": "",
+      "measurement": {
+        "size": 1000,
+        "scenario": "single",
+        "platform": "Windows-11-10.0.26200-SP0",
+        "stages": {
+          "first_render": {
+            "status": "ok",
+            "seconds": 0.1025865999981761,
+            "items": 1002,
+            "viewport": [
+              704,
+              504
+            ]
+          },
+          "unchanged_render": {
+            "status": "ok",
+            "seconds": 0.008208299987018108,
+            "items": 1002,
+            "viewport": [
+              704,
+              504
+            ]
+          },
+          "seek_render": {
+            "status": "ok",
+            "seconds": 0.012331700010690838,
+            "items": 502,
+            "viewport": [
+              704,
+              504
+            ]
+          }
+        },
+        "tk_patchlevel": "8.6.12",
+        "status": "ok",
+        "generation_window_and_cleanup_seconds": 0.4338446000474505,
+        "peak_process_working_set_bytes": 50020352
+      },
+      "status": "ok"
+    },
+    {
+      "repeat": 1,
+      "size": 10000,
+      "scenario": "single",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\.venv\\Scripts\\python.exe",
+        "-X",
+        "utf8",
+        "-m",
+        "benchmarks.sketch.render",
+        "--size",
+        "10000",
+        "--scenario",
+        "single"
+      ],
+      "seconds": 2.514842100034002,
+      "exit_code": 0,
+      "stdout": "{\"size\": 10000, \"scenario\": \"single\", \"platform\": \"Windows-11-10.0.26200-SP0\", \"stages\": {\"first_render\": {\"status\": \"ok\", \"seconds\": 0.2504131999448873, \"items\": 10002, \"viewport\": [704, 504]}, \"unchanged_render\": {\"status\": \"ok\", \"seconds\": 0.01512860000366345, \"items\": 10002, \"viewport\": [704, 504]}, \"seek_render\": {\"status\": \"ok\", \"seconds\": 0.6196070000296459, \"items\": 5002, \"viewport\": [704, 504]}}, \"tk_patchlevel\": \"8.6.12\", \"status\": \"ok\", \"generation_window_and_cleanup_seconds\": 2.074053800024558, \"peak_process_working_set_bytes\": 78200832}\r\n",
+      "stderr": "",
+      "measurement": {
+        "size": 10000,
+        "scenario": "single",
+        "platform": "Windows-11-10.0.26200-SP0",
+        "stages": {
+          "first_render": {
+            "status": "ok",
+            "seconds": 0.2504131999448873,
+            "items": 10002,
+            "viewport": [
+              704,
+              504
+            ]
+          },
+          "unchanged_render": {
+            "status": "ok",
+            "seconds": 0.01512860000366345,
+            "items": 10002,
+            "viewport": [
+              704,
+              504
+            ]
+          },
+          "seek_render": {
+            "status": "ok",
+            "seconds": 0.6196070000296459,
+            "items": 5002,
+            "viewport": [
+              704,
+              504
+            ]
+          }
+        },
+        "tk_patchlevel": "8.6.12",
+        "status": "ok",
+        "generation_window_and_cleanup_seconds": 2.074053800024558,
+        "peak_process_working_set_bytes": 78200832
+      },
+      "status": "ok"
+    },
+    {
+      "repeat": 1,
+      "size": 100000,
+      "scenario": "single",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\.venv\\Scripts\\python.exe",
+        "-X",
+        "utf8",
+        "-m",
+        "benchmarks.sketch.render",
+        "--size",
+        "100000",
+        "--scenario",
+        "single"
+      ],
+      "seconds": 20.0695221000351,
+      "exit_code": 0,
+      "stdout": "{\"size\": 100000, \"scenario\": \"single\", \"platform\": \"Windows-11-10.0.26200-SP0\", \"stages\": {}, \"tk_patchlevel\": \"8.6.12\", \"status\": \"resource_failure\", \"key\": \"sketch.queue_bytes\", \"limit\": 16777216, \"requested\": 35600516, \"generation_window_and_cleanup_seconds\": 19.315688300004695, \"peak_process_working_set_bytes\": 282525696}\r\n",
+      "stderr": "",
+      "measurement": {
+        "size": 100000,
+        "scenario": "single",
+        "platform": "Windows-11-10.0.26200-SP0",
+        "stages": {},
+        "tk_patchlevel": "8.6.12",
+        "status": "resource_failure",
+        "key": "sketch.queue_bytes",
+        "limit": 16777216,
+        "requested": 35600516,
+        "generation_window_and_cleanup_seconds": 19.315688300004695,
+        "peak_process_working_set_bytes": 282525696
+      },
+      "status": "resource_failure"
+    },
+    {
+      "repeat": 1,
+      "size": 1000,
+      "scenario": "batch",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\.venv\\Scripts\\python.exe",
+        "-X",
+        "utf8",
+        "-m",
+        "benchmarks.sketch.render",
+        "--size",
+        "1000",
+        "--scenario",
+        "batch"
+      ],
+      "seconds": 0.8241443000151776,
+      "exit_code": 0,
+      "stdout": "{\"size\": 1000, \"scenario\": \"batch\", \"platform\": \"Windows-11-10.0.26200-SP0\", \"stages\": {\"first_render\": {\"status\": \"ok\", \"seconds\": 0.08134079998126253, \"items\": 3, \"viewport\": [704, 504]}, \"unchanged_render\": {\"status\": \"ok\", \"seconds\": 0.03829350002342835, \"items\": 3, \"viewport\": [704, 504]}, \"seek_render\": {\"status\": \"ok\", \"seconds\": 0.03924879996338859, \"items\": 2, \"viewport\": [704, 504]}}, \"tk_patchlevel\": \"8.6.12\", \"status\": \"ok\", \"generation_window_and_cleanup_seconds\": 0.4425354999839328, \"peak_process_working_set_bytes\": 49840128}\r\n",
+      "stderr": "",
+      "measurement": {
+        "size": 1000,
+        "scenario": "batch",
+        "platform": "Windows-11-10.0.26200-SP0",
+        "stages": {
+          "first_render": {
+            "status": "ok",
+            "seconds": 0.08134079998126253,
+            "items": 3,
+            "viewport": [
+              704,
+              504
+            ]
+          },
+          "unchanged_render": {
+            "status": "ok",
+            "seconds": 0.03829350002342835,
+            "items": 3,
+            "viewport": [
+              704,
+              504
+            ]
+          },
+          "seek_render": {
+            "status": "ok",
+            "seconds": 0.03924879996338859,
+            "items": 2,
+            "viewport": [
+              704,
+              504
+            ]
+          }
+        },
+        "tk_patchlevel": "8.6.12",
+        "status": "ok",
+        "generation_window_and_cleanup_seconds": 0.4425354999839328,
+        "peak_process_working_set_bytes": 49840128
+      },
+      "status": "ok"
+    },
+    {
+      "repeat": 1,
+      "size": 10000,
+      "scenario": "batch",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\.venv\\Scripts\\python.exe",
+        "-X",
+        "utf8",
+        "-m",
+        "benchmarks.sketch.render",
+        "--size",
+        "10000",
+        "--scenario",
+        "batch"
+      ],
+      "seconds": 1.7367001000093296,
+      "exit_code": 0,
+      "stdout": "{\"size\": 10000, \"scenario\": \"batch\", \"platform\": \"Windows-11-10.0.26200-SP0\", \"stages\": {\"first_render\": {\"status\": \"ok\", \"seconds\": 0.11043220001738518, \"items\": 3, \"viewport\": [704, 504]}, \"unchanged_render\": {\"status\": \"ok\", \"seconds\": 0.0048614999977871776, \"items\": 3, \"viewport\": [704, 504]}, \"seek_render\": {\"status\": \"ok\", \"seconds\": 0.0242257000063546, \"items\": 2, \"viewport\": [704, 504]}}, \"tk_patchlevel\": \"8.6.12\", \"status\": \"ok\", \"generation_window_and_cleanup_seconds\": 1.337789699959103, \"peak_process_working_set_bytes\": 79912960}\r\n",
+      "stderr": "",
+      "measurement": {
+        "size": 10000,
+        "scenario": "batch",
+        "platform": "Windows-11-10.0.26200-SP0",
+        "stages": {
+          "first_render": {
+            "status": "ok",
+            "seconds": 0.11043220001738518,
+            "items": 3,
+            "viewport": [
+              704,
+              504
+            ]
+          },
+          "unchanged_render": {
+            "status": "ok",
+            "seconds": 0.0048614999977871776,
+            "items": 3,
+            "viewport": [
+              704,
+              504
+            ]
+          },
+          "seek_render": {
+            "status": "ok",
+            "seconds": 0.0242257000063546,
+            "items": 2,
+            "viewport": [
+              704,
+              504
+            ]
+          }
+        },
+        "tk_patchlevel": "8.6.12",
+        "status": "ok",
+        "generation_window_and_cleanup_seconds": 1.337789699959103,
+        "peak_process_working_set_bytes": 79912960
+      },
+      "status": "ok"
+    },
+    {
+      "repeat": 1,
+      "size": 100000,
+      "scenario": "batch",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\.venv\\Scripts\\python.exe",
+        "-X",
+        "utf8",
+        "-m",
+        "benchmarks.sketch.render",
+        "--size",
+        "100000",
+        "--scenario",
+        "batch"
+      ],
+      "seconds": 20.193201799993403,
+      "exit_code": 0,
+      "stdout": "{\"size\": 100000, \"scenario\": \"batch\", \"platform\": \"Windows-11-10.0.26200-SP0\", \"stages\": {\"first_render\": {\"status\": \"ok\", \"seconds\": 0.5150120999896899, \"items\": 12, \"viewport\": [704, 504]}, \"unchanged_render\": {\"status\": \"ok\", \"seconds\": 0.005153499951120466, \"items\": 12, \"viewport\": [704, 504]}, \"seek_render\": {\"status\": \"ok\", \"seconds\": 0.10158360004425049, \"items\": 7, \"viewport\": [704, 504]}}, \"tk_patchlevel\": \"8.6.12\", \"status\": \"ok\", \"generation_window_and_cleanup_seconds\": 19.771460100018885, \"peak_process_working_set_bytes\": 96260096}\r\n",
+      "stderr": "",
+      "measurement": {
+        "size": 100000,
+        "scenario": "batch",
+        "platform": "Windows-11-10.0.26200-SP0",
+        "stages": {
+          "first_render": {
+            "status": "ok",
+            "seconds": 0.5150120999896899,
+            "items": 12,
+            "viewport": [
+              704,
+              504
+            ]
+          },
+          "unchanged_render": {
+            "status": "ok",
+            "seconds": 0.005153499951120466,
+            "items": 12,
+            "viewport": [
+              704,
+              504
+            ]
+          },
+          "seek_render": {
+            "status": "ok",
+            "seconds": 0.10158360004425049,
+            "items": 7,
+            "viewport": [
+              704,
+              504
+            ]
+          }
+        },
+        "tk_patchlevel": "8.6.12",
+        "status": "ok",
+        "generation_window_and_cleanup_seconds": 19.771460100018885,
+        "peak_process_working_set_bytes": 96260096
+      },
+      "status": "ok"
+    },
+    {
+      "repeat": 1,
+      "size": 1000,
+      "scenario": "multi",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\.venv\\Scripts\\python.exe",
+        "-X",
+        "utf8",
+        "-m",
+        "benchmarks.sketch.render",
+        "--size",
+        "1000",
+        "--scenario",
+        "multi"
+      ],
+      "seconds": 0.9532988000428304,
+      "exit_code": 0,
+      "stdout": "{\"size\": 1000, \"scenario\": \"multi\", \"platform\": \"Windows-11-10.0.26200-SP0\", \"stages\": {\"first_render\": {\"status\": \"ok\", \"seconds\": 0.1531461999984458, \"items\": 1006, \"viewport\": [704, 504]}, \"unchanged_render\": {\"status\": \"ok\", \"seconds\": 0.022007199993822724, \"items\": 1006, \"viewport\": [704, 504]}, \"seek_render\": {\"status\": \"ok\", \"seconds\": 0.03629219997674227, \"items\": 506, \"viewport\": [704, 504]}}, \"tk_patchlevel\": \"8.6.12\", \"status\": \"ok\", \"generation_window_and_cleanup_seconds\": 0.5388821000233293, \"peak_process_working_set_bytes\": 50241536}\r\n",
+      "stderr": "",
+      "measurement": {
+        "size": 1000,
+        "scenario": "multi",
+        "platform": "Windows-11-10.0.26200-SP0",
+        "stages": {
+          "first_render": {
+            "status": "ok",
+            "seconds": 0.1531461999984458,
+            "items": 1006,
+            "viewport": [
+              704,
+              504
+            ]
+          },
+          "unchanged_render": {
+            "status": "ok",
+            "seconds": 0.022007199993822724,
+            "items": 1006,
+            "viewport": [
+              704,
+              504
+            ]
+          },
+          "seek_render": {
+            "status": "ok",
+            "seconds": 0.03629219997674227,
+            "items": 506,
+            "viewport": [
+              704,
+              504
+            ]
+          }
+        },
+        "tk_patchlevel": "8.6.12",
+        "status": "ok",
+        "generation_window_and_cleanup_seconds": 0.5388821000233293,
+        "peak_process_working_set_bytes": 50241536
+      },
+      "status": "ok"
+    },
+    {
+      "repeat": 1,
+      "size": 10000,
+      "scenario": "multi",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\.venv\\Scripts\\python.exe",
+        "-X",
+        "utf8",
+        "-m",
+        "benchmarks.sketch.render",
+        "--size",
+        "10000",
+        "--scenario",
+        "multi"
+      ],
+      "seconds": 2.469643599994015,
+      "exit_code": 0,
+      "stdout": "{\"size\": 10000, \"scenario\": \"multi\", \"platform\": \"Windows-11-10.0.26200-SP0\", \"stages\": {\"first_render\": {\"status\": \"ok\", \"seconds\": 0.3248211999889463, \"items\": 10006, \"viewport\": [704, 504]}, \"unchanged_render\": {\"status\": \"ok\", \"seconds\": 0.00667309999698773, \"items\": 10006, \"viewport\": [704, 504]}, \"seek_render\": {\"status\": \"ok\", \"seconds\": 0.21530899999197572, \"items\": 5006, \"viewport\": [704, 504]}}, \"tk_patchlevel\": \"8.6.12\", \"status\": \"ok\", \"generation_window_and_cleanup_seconds\": 2.0591775000211783, \"peak_process_working_set_bytes\": 78217216}\r\n",
+      "stderr": "",
+      "measurement": {
+        "size": 10000,
+        "scenario": "multi",
+        "platform": "Windows-11-10.0.26200-SP0",
+        "stages": {
+          "first_render": {
+            "status": "ok",
+            "seconds": 0.3248211999889463,
+            "items": 10006,
+            "viewport": [
+              704,
+              504
+            ]
+          },
+          "unchanged_render": {
+            "status": "ok",
+            "seconds": 0.00667309999698773,
+            "items": 10006,
+            "viewport": [
+              704,
+              504
+            ]
+          },
+          "seek_render": {
+            "status": "ok",
+            "seconds": 0.21530899999197572,
+            "items": 5006,
+            "viewport": [
+              704,
+              504
+            ]
+          }
+        },
+        "tk_patchlevel": "8.6.12",
+        "status": "ok",
+        "generation_window_and_cleanup_seconds": 2.0591775000211783,
+        "peak_process_working_set_bytes": 78217216
+      },
+      "status": "ok"
+    },
+    {
+      "repeat": 1,
+      "size": 100000,
+      "scenario": "multi",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\.venv\\Scripts\\python.exe",
+        "-X",
+        "utf8",
+        "-m",
+        "benchmarks.sketch.render",
+        "--size",
+        "100000",
+        "--scenario",
+        "multi"
+      ],
+      "seconds": 22.901769699994475,
+      "exit_code": 0,
+      "stdout": "{\"size\": 100000, \"scenario\": \"multi\", \"platform\": \"Windows-11-10.0.26200-SP0\", \"stages\": {}, \"tk_patchlevel\": \"8.6.12\", \"status\": \"resource_failure\", \"key\": \"sketch.queue_bytes\", \"limit\": 16777216, \"requested\": 35601924, \"generation_window_and_cleanup_seconds\": 22.0867679999792, \"peak_process_working_set_bytes\": 282701824}\r\n",
+      "stderr": "",
+      "measurement": {
+        "size": 100000,
+        "scenario": "multi",
+        "platform": "Windows-11-10.0.26200-SP0",
+        "stages": {},
+        "tk_patchlevel": "8.6.12",
+        "status": "resource_failure",
+        "key": "sketch.queue_bytes",
+        "limit": 16777216,
+        "requested": 35601924,
+        "generation_window_and_cleanup_seconds": 22.0867679999792,
+        "peak_process_working_set_bytes": 282701824
+      },
+      "status": "resource_failure"
+    },
+    {
+      "repeat": 2,
+      "size": 1000,
+      "scenario": "single",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\.venv\\Scripts\\python.exe",
+        "-X",
+        "utf8",
+        "-m",
+        "benchmarks.sketch.render",
+        "--size",
+        "1000",
+        "--scenario",
+        "single"
+      ],
+      "seconds": 0.9387256000190973,
+      "exit_code": 0,
+      "stdout": "{\"size\": 1000, \"scenario\": \"single\", \"platform\": \"Windows-11-10.0.26200-SP0\", \"stages\": {\"first_render\": {\"status\": \"ok\", \"seconds\": 0.12357240001438186, \"items\": 1002, \"viewport\": [704, 504]}, \"unchanged_render\": {\"status\": \"ok\", \"seconds\": 0.015514700033236295, \"items\": 1002, \"viewport\": [704, 504]}, \"seek_render\": {\"status\": \"ok\", \"seconds\": 0.023136299976613373, \"items\": 502, \"viewport\": [704, 504]}}, \"tk_patchlevel\": \"8.6.12\", \"status\": \"ok\", \"generation_window_and_cleanup_seconds\": 0.4906888999976218, \"peak_process_working_set_bytes\": 49881088}\r\n",
+      "stderr": "",
+      "measurement": {
+        "size": 1000,
+        "scenario": "single",
+        "platform": "Windows-11-10.0.26200-SP0",
+        "stages": {
+          "first_render": {
+            "status": "ok",
+            "seconds": 0.12357240001438186,
+            "items": 1002,
+            "viewport": [
+              704,
+              504
+            ]
+          },
+          "unchanged_render": {
+            "status": "ok",
+            "seconds": 0.015514700033236295,
+            "items": 1002,
+            "viewport": [
+              704,
+              504
+            ]
+          },
+          "seek_render": {
+            "status": "ok",
+            "seconds": 0.023136299976613373,
+            "items": 502,
+            "viewport": [
+              704,
+              504
+            ]
+          }
+        },
+        "tk_patchlevel": "8.6.12",
+        "status": "ok",
+        "generation_window_and_cleanup_seconds": 0.4906888999976218,
+        "peak_process_working_set_bytes": 49881088
+      },
+      "status": "ok"
+    },
+    {
+      "repeat": 2,
+      "size": 10000,
+      "scenario": "single",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\.venv\\Scripts\\python.exe",
+        "-X",
+        "utf8",
+        "-m",
+        "benchmarks.sketch.render",
+        "--size",
+        "10000",
+        "--scenario",
+        "single"
+      ],
+      "seconds": 2.8314056000090204,
+      "exit_code": 0,
+      "stdout": "{\"size\": 10000, \"scenario\": \"single\", \"platform\": \"Windows-11-10.0.26200-SP0\", \"stages\": {\"first_render\": {\"status\": \"ok\", \"seconds\": 0.3255656000110321, \"items\": 10002, \"viewport\": [704, 504]}, \"unchanged_render\": {\"status\": \"ok\", \"seconds\": 0.014174100011587143, \"items\": 10002, \"viewport\": [704, 504]}, \"seek_render\": {\"status\": \"ok\", \"seconds\": 0.8029126000474207, \"items\": 5002, \"viewport\": [704, 504]}}, \"tk_patchlevel\": \"8.6.12\", \"status\": \"ok\", \"generation_window_and_cleanup_seconds\": 2.3913732999935746, \"peak_process_working_set_bytes\": 78135296}\r\n",
+      "stderr": "",
+      "measurement": {
+        "size": 10000,
+        "scenario": "single",
+        "platform": "Windows-11-10.0.26200-SP0",
+        "stages": {
+          "first_render": {
+            "status": "ok",
+            "seconds": 0.3255656000110321,
+            "items": 10002,
+            "viewport": [
+              704,
+              504
+            ]
+          },
+          "unchanged_render": {
+            "status": "ok",
+            "seconds": 0.014174100011587143,
+            "items": 10002,
+            "viewport": [
+              704,
+              504
+            ]
+          },
+          "seek_render": {
+            "status": "ok",
+            "seconds": 0.8029126000474207,
+            "items": 5002,
+            "viewport": [
+              704,
+              504
+            ]
+          }
+        },
+        "tk_patchlevel": "8.6.12",
+        "status": "ok",
+        "generation_window_and_cleanup_seconds": 2.3913732999935746,
+        "peak_process_working_set_bytes": 78135296
+      },
+      "status": "ok"
+    },
+    {
+      "repeat": 2,
+      "size": 100000,
+      "scenario": "single",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\.venv\\Scripts\\python.exe",
+        "-X",
+        "utf8",
+        "-m",
+        "benchmarks.sketch.render",
+        "--size",
+        "100000",
+        "--scenario",
+        "single"
+      ],
+      "seconds": 21.09396480000578,
+      "exit_code": 0,
+      "stdout": "{\"size\": 100000, \"scenario\": \"single\", \"platform\": \"Windows-11-10.0.26200-SP0\", \"stages\": {}, \"tk_patchlevel\": \"8.6.12\", \"status\": \"resource_failure\", \"key\": \"sketch.queue_bytes\", \"limit\": 16777216, \"requested\": 35600516, \"generation_window_and_cleanup_seconds\": 20.294171000015922, \"peak_process_working_set_bytes\": 281919488}\r\n",
+      "stderr": "",
+      "measurement": {
+        "size": 100000,
+        "scenario": "single",
+        "platform": "Windows-11-10.0.26200-SP0",
+        "stages": {},
+        "tk_patchlevel": "8.6.12",
+        "status": "resource_failure",
+        "key": "sketch.queue_bytes",
+        "limit": 16777216,
+        "requested": 35600516,
+        "generation_window_and_cleanup_seconds": 20.294171000015922,
+        "peak_process_working_set_bytes": 281919488
+      },
+      "status": "resource_failure"
+    },
+    {
+      "repeat": 2,
+      "size": 1000,
+      "scenario": "batch",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\.venv\\Scripts\\python.exe",
+        "-X",
+        "utf8",
+        "-m",
+        "benchmarks.sketch.render",
+        "--size",
+        "1000",
+        "--scenario",
+        "batch"
+      ],
+      "seconds": 0.8378148999763653,
+      "exit_code": 0,
+      "stdout": "{\"size\": 1000, \"scenario\": \"batch\", \"platform\": \"Windows-11-10.0.26200-SP0\", \"stages\": {\"first_render\": {\"status\": \"ok\", \"seconds\": 0.053914699994493276, \"items\": 3, \"viewport\": [704, 504]}, \"unchanged_render\": {\"status\": \"ok\", \"seconds\": 0.03913969994755462, \"items\": 3, \"viewport\": [704, 504]}, \"seek_render\": {\"status\": \"ok\", \"seconds\": 0.025511200015898794, \"items\": 2, \"viewport\": [704, 504]}}, \"tk_patchlevel\": \"8.6.12\", \"status\": \"ok\", \"generation_window_and_cleanup_seconds\": 0.434203399985563, \"peak_process_working_set_bytes\": 50311168}\r\n",
+      "stderr": "",
+      "measurement": {
+        "size": 1000,
+        "scenario": "batch",
+        "platform": "Windows-11-10.0.26200-SP0",
+        "stages": {
+          "first_render": {
+            "status": "ok",
+            "seconds": 0.053914699994493276,
+            "items": 3,
+            "viewport": [
+              704,
+              504
+            ]
+          },
+          "unchanged_render": {
+            "status": "ok",
+            "seconds": 0.03913969994755462,
+            "items": 3,
+            "viewport": [
+              704,
+              504
+            ]
+          },
+          "seek_render": {
+            "status": "ok",
+            "seconds": 0.025511200015898794,
+            "items": 2,
+            "viewport": [
+              704,
+              504
+            ]
+          }
+        },
+        "tk_patchlevel": "8.6.12",
+        "status": "ok",
+        "generation_window_and_cleanup_seconds": 0.434203399985563,
+        "peak_process_working_set_bytes": 50311168
+      },
+      "status": "ok"
+    },
+    {
+      "repeat": 2,
+      "size": 10000,
+      "scenario": "batch",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\.venv\\Scripts\\python.exe",
+        "-X",
+        "utf8",
+        "-m",
+        "benchmarks.sketch.render",
+        "--size",
+        "10000",
+        "--scenario",
+        "batch"
+      ],
+      "seconds": 1.7946553999790922,
+      "exit_code": 0,
+      "stdout": "{\"size\": 10000, \"scenario\": \"batch\", \"platform\": \"Windows-11-10.0.26200-SP0\", \"stages\": {\"first_render\": {\"status\": \"ok\", \"seconds\": 0.12730500003090128, \"items\": 3, \"viewport\": [704, 504]}, \"unchanged_render\": {\"status\": \"ok\", \"seconds\": 0.006992700044065714, \"items\": 3, \"viewport\": [704, 504]}, \"seek_render\": {\"status\": \"ok\", \"seconds\": 0.026407900033518672, \"items\": 2, \"viewport\": [704, 504]}}, \"tk_patchlevel\": \"8.6.12\", \"status\": \"ok\", \"generation_window_and_cleanup_seconds\": 1.3807154999813065, \"peak_process_working_set_bytes\": 80003072}\r\n",
+      "stderr": "",
+      "measurement": {
+        "size": 10000,
+        "scenario": "batch",
+        "platform": "Windows-11-10.0.26200-SP0",
+        "stages": {
+          "first_render": {
+            "status": "ok",
+            "seconds": 0.12730500003090128,
+            "items": 3,
+            "viewport": [
+              704,
+              504
+            ]
+          },
+          "unchanged_render": {
+            "status": "ok",
+            "seconds": 0.006992700044065714,
+            "items": 3,
+            "viewport": [
+              704,
+              504
+            ]
+          },
+          "seek_render": {
+            "status": "ok",
+            "seconds": 0.026407900033518672,
+            "items": 2,
+            "viewport": [
+              704,
+              504
+            ]
+          }
+        },
+        "tk_patchlevel": "8.6.12",
+        "status": "ok",
+        "generation_window_and_cleanup_seconds": 1.3807154999813065,
+        "peak_process_working_set_bytes": 80003072
+      },
+      "status": "ok"
+    },
+    {
+      "repeat": 2,
+      "size": 100000,
+      "scenario": "batch",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\.venv\\Scripts\\python.exe",
+        "-X",
+        "utf8",
+        "-m",
+        "benchmarks.sketch.render",
+        "--size",
+        "100000",
+        "--scenario",
+        "batch"
+      ],
+      "seconds": 20.520008600025903,
+      "exit_code": 0,
+      "stdout": "{\"size\": 100000, \"scenario\": \"batch\", \"platform\": \"Windows-11-10.0.26200-SP0\", \"stages\": {\"first_render\": {\"status\": \"ok\", \"seconds\": 0.5148283999878913, \"items\": 12, \"viewport\": [704, 504]}, \"unchanged_render\": {\"status\": \"ok\", \"seconds\": 0.0056996000348590314, \"items\": 12, \"viewport\": [704, 504]}, \"seek_render\": {\"status\": \"ok\", \"seconds\": 0.07469639996998012, \"items\": 7, \"viewport\": [704, 504]}}, \"tk_patchlevel\": \"8.6.12\", \"status\": \"ok\", \"generation_window_and_cleanup_seconds\": 20.064916600007564, \"peak_process_working_set_bytes\": 96624640}\r\n",
+      "stderr": "",
+      "measurement": {
+        "size": 100000,
+        "scenario": "batch",
+        "platform": "Windows-11-10.0.26200-SP0",
+        "stages": {
+          "first_render": {
+            "status": "ok",
+            "seconds": 0.5148283999878913,
+            "items": 12,
+            "viewport": [
+              704,
+              504
+            ]
+          },
+          "unchanged_render": {
+            "status": "ok",
+            "seconds": 0.0056996000348590314,
+            "items": 12,
+            "viewport": [
+              704,
+              504
+            ]
+          },
+          "seek_render": {
+            "status": "ok",
+            "seconds": 0.07469639996998012,
+            "items": 7,
+            "viewport": [
+              704,
+              504
+            ]
+          }
+        },
+        "tk_patchlevel": "8.6.12",
+        "status": "ok",
+        "generation_window_and_cleanup_seconds": 20.064916600007564,
+        "peak_process_working_set_bytes": 96624640
+      },
+      "status": "ok"
+    },
+    {
+      "repeat": 2,
+      "size": 1000,
+      "scenario": "multi",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\.venv\\Scripts\\python.exe",
+        "-X",
+        "utf8",
+        "-m",
+        "benchmarks.sketch.render",
+        "--size",
+        "1000",
+        "--scenario",
+        "multi"
+      ],
+      "seconds": 0.9252108000218868,
+      "exit_code": 0,
+      "stdout": "{\"size\": 1000, \"scenario\": \"multi\", \"platform\": \"Windows-11-10.0.26200-SP0\", \"stages\": {\"first_render\": {\"status\": \"ok\", \"seconds\": 0.15251789998728782, \"items\": 1006, \"viewport\": [704, 504]}, \"unchanged_render\": {\"status\": \"ok\", \"seconds\": 0.020134099991992116, \"items\": 1006, \"viewport\": [704, 504]}, \"seek_render\": {\"status\": \"ok\", \"seconds\": 0.028579200035892427, \"items\": 506, \"viewport\": [704, 504]}}, \"tk_patchlevel\": \"8.6.12\", \"status\": \"ok\", \"generation_window_and_cleanup_seconds\": 0.5026703999610618, \"peak_process_working_set_bytes\": 50315264}\r\n",
+      "stderr": "",
+      "measurement": {
+        "size": 1000,
+        "scenario": "multi",
+        "platform": "Windows-11-10.0.26200-SP0",
+        "stages": {
+          "first_render": {
+            "status": "ok",
+            "seconds": 0.15251789998728782,
+            "items": 1006,
+            "viewport": [
+              704,
+              504
+            ]
+          },
+          "unchanged_render": {
+            "status": "ok",
+            "seconds": 0.020134099991992116,
+            "items": 1006,
+            "viewport": [
+              704,
+              504
+            ]
+          },
+          "seek_render": {
+            "status": "ok",
+            "seconds": 0.028579200035892427,
+            "items": 506,
+            "viewport": [
+              704,
+              504
+            ]
+          }
+        },
+        "tk_patchlevel": "8.6.12",
+        "status": "ok",
+        "generation_window_and_cleanup_seconds": 0.5026703999610618,
+        "peak_process_working_set_bytes": 50315264
+      },
+      "status": "ok"
+    },
+    {
+      "repeat": 2,
+      "size": 10000,
+      "scenario": "multi",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\.venv\\Scripts\\python.exe",
+        "-X",
+        "utf8",
+        "-m",
+        "benchmarks.sketch.render",
+        "--size",
+        "10000",
+        "--scenario",
+        "multi"
+      ],
+      "seconds": 2.5547037000069395,
+      "exit_code": 0,
+      "stdout": "{\"size\": 10000, \"scenario\": \"multi\", \"platform\": \"Windows-11-10.0.26200-SP0\", \"stages\": {\"first_render\": {\"status\": \"ok\", \"seconds\": 0.3316584999556653, \"items\": 10006, \"viewport\": [704, 504]}, \"unchanged_render\": {\"status\": \"ok\", \"seconds\": 0.010564099997282028, \"items\": 10006, \"viewport\": [704, 504]}, \"seek_render\": {\"status\": \"ok\", \"seconds\": 0.22480339999310672, \"items\": 5006, \"viewport\": [704, 504]}}, \"tk_patchlevel\": \"8.6.12\", \"status\": \"ok\", \"generation_window_and_cleanup_seconds\": 2.1007616000133567, \"peak_process_working_set_bytes\": 78098432}\r\n",
+      "stderr": "",
+      "measurement": {
+        "size": 10000,
+        "scenario": "multi",
+        "platform": "Windows-11-10.0.26200-SP0",
+        "stages": {
+          "first_render": {
+            "status": "ok",
+            "seconds": 0.3316584999556653,
+            "items": 10006,
+            "viewport": [
+              704,
+              504
+            ]
+          },
+          "unchanged_render": {
+            "status": "ok",
+            "seconds": 0.010564099997282028,
+            "items": 10006,
+            "viewport": [
+              704,
+              504
+            ]
+          },
+          "seek_render": {
+            "status": "ok",
+            "seconds": 0.22480339999310672,
+            "items": 5006,
+            "viewport": [
+              704,
+              504
+            ]
+          }
+        },
+        "tk_patchlevel": "8.6.12",
+        "status": "ok",
+        "generation_window_and_cleanup_seconds": 2.1007616000133567,
+        "peak_process_working_set_bytes": 78098432
+      },
+      "status": "ok"
+    },
+    {
+      "repeat": 2,
+      "size": 100000,
+      "scenario": "multi",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\.venv\\Scripts\\python.exe",
+        "-X",
+        "utf8",
+        "-m",
+        "benchmarks.sketch.render",
+        "--size",
+        "100000",
+        "--scenario",
+        "multi"
+      ],
+      "seconds": 27.125478699977975,
+      "exit_code": 0,
+      "stdout": "{\"size\": 100000, \"scenario\": \"multi\", \"platform\": \"Windows-11-10.0.26200-SP0\", \"stages\": {}, \"tk_patchlevel\": \"8.6.12\", \"status\": \"resource_failure\", \"key\": \"sketch.queue_bytes\", \"limit\": 16777216, \"requested\": 35601924, \"generation_window_and_cleanup_seconds\": 26.358003599976655, \"peak_process_working_set_bytes\": 282017792}\r\n",
+      "stderr": "",
+      "measurement": {
+        "size": 100000,
+        "scenario": "multi",
+        "platform": "Windows-11-10.0.26200-SP0",
+        "stages": {},
+        "tk_patchlevel": "8.6.12",
+        "status": "resource_failure",
+        "key": "sketch.queue_bytes",
+        "limit": 16777216,
+        "requested": 35601924,
+        "generation_window_and_cleanup_seconds": 26.358003599976655,
+        "peak_process_working_set_bytes": 282017792
+      },
+      "status": "resource_failure"
+    }
+  ],
+  "summary": [
+    {
+      "scenario": "single",
+      "size": 1000,
+      "statuses": {
+        "ok": 3
+      },
+      "stages": {
+        "first_render": {
+          "n": 3,
+          "median": 0.1025865999981761,
+          "stdev": 0.013320634440250041,
+          "min": 0.09886630001710728,
+          "max": 0.12357240001438186
+        },
+        "unchanged_render": {
+          "n": 3,
+          "median": 0.015514700033236295,
+          "stdev": 0.005706776404947716,
+          "min": 0.008208299987018108,
+          "max": 0.01945520000299439
+        },
+        "seek_render": {
+          "n": 3,
+          "median": 0.013146399985998869,
+          "stdev": 0.006016660456541483,
+          "min": 0.012331700010690838,
+          "max": 0.023136299976613373
+        }
+      }
+    },
+    {
+      "scenario": "single",
+      "size": 10000,
+      "statuses": {
+        "ok": 3
+      },
+      "stages": {
+        "first_render": {
+          "n": 3,
+          "median": 0.2577735999948345,
+          "stdev": 0.041428279372897905,
+          "min": 0.2504131999448873,
+          "max": 0.3255656000110321
+        },
+        "unchanged_render": {
+          "n": 3,
+          "median": 0.01512860000366345,
+          "stdev": 0.0007931960046046727,
+          "min": 0.014174100011587143,
+          "max": 0.015748700010590255
+        },
+        "seek_render": {
+          "n": 3,
+          "median": 0.6196070000296459,
+          "stdev": 0.11450171081751212,
+          "min": 0.5923849999671802,
+          "max": 0.8029126000474207
+        }
+      }
+    },
+    {
+      "scenario": "single",
+      "size": 100000,
+      "statuses": {
+        "resource_failure": 3
+      },
+      "stages": {}
+    },
+    {
+      "scenario": "batch",
+      "size": 1000,
+      "statuses": {
+        "ok": 3
+      },
+      "stages": {
+        "first_render": {
+          "n": 3,
+          "median": 0.053914699994493276,
+          "stdev": 0.0245633971118807,
+          "min": 0.0323299000156112,
+          "max": 0.08134079998126253
+        },
+        "unchanged_render": {
+          "n": 3,
+          "median": 0.03913969994755462,
+          "stdev": 0.0022636153403233616,
+          "min": 0.03829350002342835,
+          "max": 0.04256819997681305
+        },
+        "seek_render": {
+          "n": 3,
+          "median": 0.03580740001052618,
+          "stdev": 0.007148153844201057,
+          "min": 0.025511200015898794,
+          "max": 0.03924879996338859
+        }
+      }
+    },
+    {
+      "scenario": "batch",
+      "size": 10000,
+      "statuses": {
+        "ok": 3
+      },
+      "stages": {
+        "first_render": {
+          "n": 3,
+          "median": 0.11043220001738518,
+          "stdev": 0.029123058621430935,
+          "min": 0.07058879995020106,
+          "max": 0.12730500003090128
+        },
+        "unchanged_render": {
+          "n": 3,
+          "median": 0.006992700044065714,
+          "stdev": 0.01658447667434196,
+          "min": 0.0048614999977871776,
+          "max": 0.03459290001774207
+        },
+        "seek_render": {
+          "n": 3,
+          "median": 0.0242257000063546,
+          "stdev": 0.01138797026054317,
+          "min": 0.005683000024873763,
+          "max": 0.026407900033518672
+        }
+      }
+    },
+    {
+      "scenario": "batch",
+      "size": 100000,
+      "statuses": {
+        "ok": 3
+      },
+      "stages": {
+        "first_render": {
+          "n": 3,
+          "median": 0.5148283999878913,
+          "stdev": 0.007348424321040957,
+          "min": 0.5021933999960311,
+          "max": 0.5150120999896899
+        },
+        "unchanged_render": {
+          "n": 3,
+          "median": 0.005644800025038421,
+          "stdev": 0.00030072249255401435,
+          "min": 0.005153499951120466,
+          "max": 0.0056996000348590314
+        },
+        "seek_render": {
+          "n": 3,
+          "median": 0.07899240002734587,
+          "stdev": 0.014443796029959958,
+          "min": 0.07469639996998012,
+          "max": 0.10158360004425049
+        }
+      }
+    },
+    {
+      "scenario": "multi",
+      "size": 1000,
+      "statuses": {
+        "ok": 3
+      },
+      "stages": {
+        "first_render": {
+          "n": 3,
+          "median": 0.1531461999984458,
+          "stdev": 0.01513841062915602,
+          "min": 0.15251789998728782,
+          "max": 0.1790468999533914
+        },
+        "unchanged_render": {
+          "n": 3,
+          "median": 0.022007199993822724,
+          "stdev": 0.003691656535135945,
+          "min": 0.020134099991992116,
+          "max": 0.02725559996906668
+        },
+        "seek_render": {
+          "n": 3,
+          "median": 0.028579200035892427,
+          "stdev": 0.0053000391288107246,
+          "min": 0.02613860002020374,
+          "max": 0.03629219997674227
+        }
+      }
+    },
+    {
+      "scenario": "multi",
+      "size": 10000,
+      "statuses": {
+        "ok": 3
+      },
+      "stages": {
+        "first_render": {
+          "n": 3,
+          "median": 0.3316584999556653,
+          "stdev": 0.00932861420494712,
+          "min": 0.3248211999889463,
+          "max": 0.34327339997980744
+        },
+        "unchanged_render": {
+          "n": 3,
+          "median": 0.010564099997282028,
+          "stdev": 0.004808005503382858,
+          "min": 0.00667309999698773,
+          "max": 0.01623409998137504
+        },
+        "seek_render": {
+          "n": 3,
+          "median": 0.21544879995053634,
+          "stdev": 0.005441686585461467,
+          "min": 0.21530899999197572,
+          "max": 0.22480339999310672
+        }
+      }
+    },
+    {
+      "scenario": "multi",
+      "size": 100000,
+      "statuses": {
+        "resource_failure": 3
+      },
+      "stages": {}
+    }
+  ],
+  "finished": "2026-10-17T11:46:42.471339+00:00",
+  "driver_passed": true
+}

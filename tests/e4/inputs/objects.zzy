@@ -1,0 +1,3 @@
+(zno)c:=sketch.canvas(200,100,"e4");
+(zno)p:=sketch.pen(c,"p");
+sketch.forward(p,10);io.print(sketch.pick(c,5,0));io.print(sketch.copy_object(c,1));sketch.translate_object(c,2,20,30);io.print(sketch.pick(c,25,30));sketch.delete_object(c,2);io.print(sketch.undo(c));io.print(sketch.layer_info(c)[0].count);
