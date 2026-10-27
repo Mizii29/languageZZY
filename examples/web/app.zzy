@@ -1,0 +1,26 @@
+(shape) Response { status: (Int); body; }
+(addnew) hello(request: (Map)) {
+    (zno) result := data.map();
+    data.set(result, "message", "你好，ZZY Web！");
+    data.set(result, "language", "ZZY");
+    (return) Response::{status: 200, body: result};
+}
+(addnew) greet(request: (Map)) {
+    (zno) body := data.get(request, "body");
+    (zif?:) data.kind(body) != "map" {
+        (return) Response::{status: 422, body: "需要JSON对象"};
+    }
+    (zif?:) (not) data.has(body, "name") {
+        (return) Response::{status: 422, body: "缺少name"};
+    }
+    (zno) name := data.get(body, "name");
+    (zif?:) data.kind(name) != "string" {
+        (return) Response::{status: 422, body: "name必须为字符串"};
+    }
+    (zif?:) len(text.trim(name)) == 0 (or) len(name) > 80 {
+        (return) Response::{status: 422, body: "name长度应为1至80"};
+    }
+    (zno) result := data.map();
+    data.set(result, "message", "你好，" + text.trim(name));
+    (return) Response::{status: 200, body: result};
+}

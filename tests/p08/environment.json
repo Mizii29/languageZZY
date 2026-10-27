@@ -1,0 +1,30 @@
+{
+  "python": "3.12.14",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "base_revision": "fcb9373",
+  "dependencies": {
+    "starlette": "0.52.1",
+    "uvicorn": "0.54.0",
+    "anyio": "4.15.1",
+    "h11": "0.16.0",
+    "click": "8.5.0",
+    "idna": "3.20",
+    "typing-extensions": "4.16.0"
+  },
+  "hashes": {
+    "zzy/web.py": "b3e4b216323698f775810688b2c3c48194701897c07d00bcc143ca0c620c59ba",
+    "pyproject.toml": "c483707803784813f08dbddbe449e7c8f96afcfcd615e60d0c5748a71f0c0019",
+    "tests/web_http.py": "1e51c6773b40987f5fc9909b4e0a99425819c940a720d826963e6642929c5956",
+    "tests/test_web_core.py": "1755aa19c518503c92d12196afc5251cc006a013bc1a2b9eb0e99f5805de34d5",
+    "tests/p08/edge.zzy": "1f0fa17e2be7545b1a8930d0a81a31c97d4cdb5914360897dd9c6d33eae84457",
+    "examples/web/app.zzy": "17ceec637b4eadb7169286b5afc6dbc12ad0be0b8f9bc47f28130d101d392d2e",
+    "examples/web/index.html": "35ca8c92a2b5b939f3b1cf87cdf4cd23fe0f16f7ab97c92d4092e1b9ba188ed0"
+  },
+  "requirement_sha256": "b099c19fc339ce1dc1aab7e9d6c8126a9c5c9ace3d31b969a0623df90f521d2b",
+  "browser": {
+    "GET": "200: message=你好，ZZY Web！; language=ZZY",
+    "POST": "200: message=你好，同学",
+    "empty_name": "422: name长度应为1至80",
+    "screenshot": "browser-failure.png"
+  }
+}

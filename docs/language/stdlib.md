@@ -128,3 +128,7 @@ Web 需要另列 Request/Response、路由、状态码、Content-Type、JSON 校
 原生登记与 Tk 初始化分开；check只读接口元数据、不执行用户程序，headless运行正常执行几何及文件操作，两者均不初始化Tk。GUI能力以独立真实窗口验收为准；PNG没有独立后端时明确标为不可用。
 
 实际接口、固定限额、平台与验收见[sketch使用指南](../features/sketch-guide.md)。五种受控类型均有实际入口，Position/LayerInfo为冻结普通快照。几何、SVG、图层/文字、历史/回放、图案、事件与项目已实现；PNG明确不可用。核心v0.6.1签名不变，扩展ABI为1.0，验收见tests/e4。
+
+## P08 Web边界
+
+Web已选，P08-01通过独立可选ASGI适配器调用ZZY函数；实际Request/Response、固定宿主路由表、严格JSON及错误/资源规则统一见[Web契约](../runtime/web.md)。方向示例web.get/web.post/web.json/web.serve仍未登记；db与公开Python嵌入待后续任务。

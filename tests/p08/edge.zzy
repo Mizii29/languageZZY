@@ -1,0 +1,8 @@
+(shape) Response { status: (Int); body; }
+(zyes) count := 0;
+(addnew) echo(r) { count <- count + 1; (return) Response::{status: 200, body: [data.get(r, "body"), count]}; }
+(addnew) boom(r) { (return) 1 / 0; }
+(addnew) loop(r) { (while) (true) {} }
+(addnew) big(r) { (return) Response::{status: 200, body: 9007199254740992}; }
+(addnew) result(r) { (return) Response::{status: 200, body: (^_^)(1)}; }
+(addnew) badstatus(r) { (return) Response::{status: 204, body: (null)}; }

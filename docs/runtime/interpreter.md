@@ -469,7 +469,7 @@ HTML/CSS/JavaScript 不用读懂 `(addnew)` 或 `[OoO]`；它们只需要请求�
 
 Python Web 框架负责 HTTP 解析、连接和响应，ZZY 函数负责业务逻辑。第一版用 FastAPI/Starlette 适配已有 ASGI 服务器，不重写网络协议。[ASGI 规范](https://asgi.readthedocs.io/en/latest/specs/main.html)
 
-启动时加载 ZZY 模块并收集 `web.get`、`web.post` 注册的路由，`web.serve` 在注册结束后启动服务。每次请求的流程是：
+P08-01采用启动时prepare源码和宿主固定路由表，启动不执行ZZY初始化；旧web.get/web.post/web.serve仅为方向示例，不注册语言接口。实际规则集中见[Web契约](web.md)。每次请求的流程是：
 
 ```text
 HTTP 请求 -> Python 读取路径和 JSON -> 构造 ZZY Request

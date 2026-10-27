@@ -10,7 +10,7 @@
 - 想了解完整方案：读 [设计详细版](design详细版.md)，它串起语法、特色、运行机制和交付要求。
 - 准备写解释器：先读 [阶段计划](development/roadmap.md) 与 [待办状态](development/todo.md)，再对照 [语法契约](language/syntax.md)、[标准库契约](language/stdlib.md) 和 [实现流程](runtime/interpreter.md)。
 - 准备落实补充设计：看 [资源限额](runtime/resources.md)、[诊断样例](language/diagnostics.md)、[性能基准清单](runtime/performance.md) 和 [应用保存/恢复](development/campus-app.md)。
-- 准备接手续做：先看 [开发记录](development/development-log.md) 的最新条目，再核对实际文件；P07实测见性能报告，P09应用实现与验收见最新记录和[应用说明](../apps/zzy-campus/README.md)，E1—E4已有最终验收，后续按todo推进P11，实际状态以 todo 为准。
+- 准备接手续做：先看 [开发记录](development/development-log.md) 的最新条目，再核对实际文件；P07实测见性能报告，P09应用实现与验收见最新记录和[应用说明](../apps/zzy-campus/README.md)，E1—E4已有最终验收，用户现已选P08，后续按todo推进，实际状态以 todo 为准。
 - 准备最终完整测试：读 [最终测试计划](development/final-test-plan.md)；逐步操作见独立的 [VS Code 人工测试指南](development/manual-test-guide.md)，含命令、输入及预期结果。持续回归的实际工作流和本机复现见 [CI设计与实施](development/ci-design.md)；本地结果见最新开发记录，云端首跑及人工验收单独记录。
 - 配置输出与日志：读 [日志配置说明](runtime/logging.md)；[logging.json](runtime/logging.json) 已用于 CI 回归日志的大小轮转、压缩和自动淘汰，CLI 错误码与 stdout/stderr 协议沿用正式契约。
 
@@ -99,3 +99,5 @@ A/C/D 已纳入 P04；E 已按 E1—E4 实现并验收。Web/Python 互联属于
 使用者的语法参考和开发指南已放到同级 skills，AI 文档为 skills/zzy/SKILL.md；language 继续维护正式语法与库契约。真实性能报告已放到 [runtime/performance-report.md](runtime/performance-report.md)，交付索引仍待放到 development。
 
 画笔扩展接手入口：[正式sketch契约](features/sketch.md)、[使用指南](features/sketch-guide.md)、[完整验收](../tests/e4/README.md)。核心/headless/真实GUI分别验收；PNG不可用，E1—E4全部验收，sketch ABI 1.0。
+
+P08现已选择：集中接口见[Web契约](runtime/web.md)，实际HTTP演示见[示例](../examples/web/README.md)，进度以todo为准。

@@ -602,3 +602,22 @@ Git 提交：真实标识 / 未提交
 - 根因：Windows 当前目录可保留 8.3 短路径别名，而 Source.path 已解析成长路径，relpath 将同一目录误当作不同路径。四项诊断路径断言及两项精确 stderr 容量边界因此失败。本机 GetShortPathNameW 实际切换到短路径后复现，既有路径回归中新增同一场景，修复前明确失败。
 - 修复：display_path 在计算相对路径前统一规范化源路径和当前目录，跨盘仍返回规范绝对路径；不改错误码、源码坐标、资源限额或既有外部答案。回归验证包含短路径、缺失文件和重复运行上下文；最终云端结果以该 PR 修复提交的完整重跑为准。
 - 本机修复后专项：tests.test_p07_locations/test_cli/test_p04_spec/test_p06_diagnostics/test_p06_resources 共 38/38 通过、107.274 秒，无跳过；静态入口通过。此结果不替代云端完整重跑。
+
+
+## 2026-10-28：P08-01 HTTP与同源网页
+
+- 用户明确选择P08，并在提示末限定“现在完成p08-1”；因此本轮仅P08-01，不勾选P08-02—05，不提前P10。接手main/fcb9373，Git只有未跟踪docs/manual-tests/，没有已跟踪脏修改；保留人工目录和requirement原文。P05/P06/P09的完成状态与当前代码核对一致。
+- 阅读项目技能、README、todo交接、最新日志、P08 roadmap、interpreter第11节、stdlib/resources/test-coverage、项目配置和CI。使用zzy、git-pushing及失败时systematic-debugging技能。brainstorming内容仅用于设计检查；用户已明确架构/任务并授权普通选择直接实施，不增加常规确认门禁。
+- 设计决定：Starlette/Uvicorn可选extra；固定宿主路由表启动校验，启动只prepare不执行模块；每请求完整重建模块/捕获环境，复用只读Program，私有输入/输出/ResourceMeter。旧web.get/web.serve方向示例无现有签名，集中契约docs/runtime/web.md明确替代方案、实际Request/Response、JSON安全整数/拒绝、资源、错误、取消与后续嵌入/SQLite边界，不扩展语法。
+- 新增zzy/web.py、examples/web/app.zzy和同源页面。业务问候/姓名校验由ZZY编写；Python只做适配/转换，复用既有json_codec、解释器调用栈和finally清理。每body/响应64KiB、metadata16KiB、默认4并发、每收体/执行各5秒；超时/断连/关闭取消令牌，阻塞宿主不能强制打断的边界明确记录。
+- 首次依赖安装受沙箱网络WinError10013阻止；同命令授权联网安装成功：Starlette0.52.1/Uvicorn0.54.0及环境报告所列依赖。官网文档读取超时，依据本机安装源码与真实验证，不把未读网页当证据。核心dependencies仍为空。
+- 实际失败修复：示例首check报E101裸!，核对syntax改为(not)/(or)；内部探针Map.set传Python字符串报AttributeError，核对Value键、CallRequest单元素返回容器及stringify返回Value后修正边界；首次HTTP业务期望200却422，核对data.kind固定标签为map而非object，修正ZZY示例，不改既有标准库或放宽测试。
+- 测试命令：`.venv/Scripts/python.exe -X utf8 -m unittest tests.test_web_core -v`3/3通过；`-m tests.web_http --report tests/p08/http.json`最终8/8、2.406秒通过，零跳过，真实TCP，无TestClient替代。覆盖正常/拒绝、边界、错误恢复、12次并发独立计数、循环超时/慢body/断连释放与服务生命周期。
+- 浏览器实际访问127.0.0.1:8765，GET显示language=ZZY；POST同学显示你好，同学；空姓名422显示长度要求。截图tests/p08/browser-failure.png。演示服务已停止；自动浏览器检查不冒充用户人工验收，未改人工材料。
+- `.venv/Scripts/python.exe -X utf8 -m scripts.ci package --output dist/p08-package --installer C:/Users/13691/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe`通过，隔离核心wheel无第三方安装、40源码核对，保留package.json/package-probe.json。另新建dist/p08-web-installed/env安装该wheel[web]；`env/Scripts/python.exe -I -X utf8 .../probe.py`确认导入来自新环境并重跑8/8真实HTTP、2.938秒通过。保留installed-http.json和源码/依赖哈希。
+- CI新增web-http独立job，安装可选wheel、执行专项并上传证据，ci-gate依赖该job结果；核心/GUI仍分离。无推送，云端新增job尚未验证。本轮GUI未重跑，HTTP通过不替代GUI。
+- 完整核心回归正在运行，待最终结果才勾选P08-01。P08-02的共享冻结图与默认捕获完整矩阵、P08-03公开嵌入、P08-04 SQLite和P08-05完整交付留下一轮。
+
+- 最终完整命令`.venv/Scripts/python.exe -X utf8 -m tests --report tests/p08/core-regression.json`退出0：2005/2005、877.547秒，失败/错误/跳过/expected failure全0；原2002项完整保留，外部CLI1738项未减。最终源码哈希与HTTP/安装实测一致。静态门禁通过53份Markdown/612条本地链接、任务/fixture/requirement核对。P08-01达到子任务标准，现勾选；P08整体未完成，下一项P08-02。
+
+- 定稿后静态门禁再次通过；测试清单仅新增3个核心ID（2002→2005），原清单及期望未删减。todo核对53/70，P08只有01勾选。分支codex/p08-01-web，本轮仅本地提交，不推送；最终标识见Git与答复。

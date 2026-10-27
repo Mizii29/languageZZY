@@ -171,3 +171,7 @@ sum/stats 逐项检查 Int，Bool/Float 不混入；stats 的 min/max 空值为 
 ## Sketch 已实现子集
 
 [sketch使用指南](../docs/features/sketch-guide.md)提供真实程序、受控类型、配额及GUI启动说明；[tests/e4](../tests/e4/README.md)分别记录headless、桌面窗口、离线安装和性能证据。PNG不可用；缺环境返回失败，不把窗口截图作为PNG导出。
+
+## P08-01 Web
+
+可选安装、页面和HTTP调用见[Web示例](../examples/web/README.md)，规则只维护在[Web契约](../docs/runtime/web.md)。不要生成未注册的web.get/web.serve或db接口；公开嵌入与SQLite待后续。
