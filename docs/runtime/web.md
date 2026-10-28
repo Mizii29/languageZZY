@@ -1,6 +1,6 @@
 # P08 Web 与互联集中契约
 
-2026-10-28。P08 已选，P08-01—03已验收，P08-04/05未完成。核心语法/stdlib ABI 不变。本文件是 Web 边界唯一规则来源，不将旧设计中的 web.get/web.post/web.json/web.serve 方向示例注册为可调用语言接口。
+2026-10-28。P08 已选，P08-01—03已验收，P08-04实现及P08-05技术验收通过；本轮本地提交受权限限制。核心语法/stdlib ABI 不变。本文件是 Web 边界唯一规则来源，不将旧设计中的 web.get/web.post/web.json/web.serve 方向示例注册为可调用语言接口。
 
 ## 决策与范围
 
@@ -38,7 +38,7 @@ P08-02的实际共享模式和拒绝策略见下一节。
 
 P08-03接口与转换规则见下文；当前开发验收状态以todo为准。内部RequestRuntime不属于公开嵌入API。
 
-P08-04：SQLite待受控注册表接口；必须只用参数绑定、连接按请求拥有、事务成功commit/异常或取消rollback/finally close，不共享连接跨线程。具体签名、锁等待和SQL约束在实现时同文件补充，当前无db接口。保留校园CLI及文件格式。
+P08-04实际db接口与生命周期见文末SQLite契约；保留校园CLI及文件格式。
 
 P08-05：完成上述跨接口、持久化、安装与交付验收；分项通过不等于互联阶段全部完成，不以页面成功代替后续验收。
 
@@ -75,3 +75,11 @@ policy为ResourcePolicy或None；cancellation为CancellationToken或None。load_
 Python整数保持int，受integer_bits约束，不经十进制/JSON字符串中转；HTTP仍双向限制安全整数±(2^53-1)。大整数HTTP字段必须由业务明确为十进制String，不按大小偷偷改变类型。两种入口的区别是传输能力，不改变ZZY的Int语义。
 
 转换受value_depth（根容器为1）、container_items、text_codepoints及runtime对象/槽/载荷预算约束；导出Python树构建也预留预算，避免重复别名指数展开绕过配额。stdin受io_payload_bytes限制并计入临时载荷。调用成功后返回数据和输出由Python调用者拥有，不属于活跃ZZY上下文预算；不承诺进程RSS上限。显式load不启用自动缓存、热更新、VM或shape合约生成。
+
+## P08-04 SQLite契约
+
+受控语言接口：db.transaction(path: String, callback: Function) -> Result，callback必须零参数并返回Result；成功提交并返回该Result，失败Result回滚。db.query(sql: String, params: Array) -> Array<Array>只允许事务内执行，按列顺序返回行，非查询返回空数组。参数使用SQLite绑定，不拼接；只接受Null/Int（有符号64位）/有限Float/String，Bool、容器、句柄拒绝。数据字段由ZZY业务校验；路径和SQL由受信任程序控制，不将客户端输入当SQL。
+
+每次transaction新建同线程连接，BEGIN IMMEDIATE，禁止嵌套；所有退出路径finally回滚未提交事务并close。callback成功的提交发生在transaction返回之前，之后的语言/HTTP编码失败不撤销已提交事务，业务应在回调内完成校验。事务不跨请求共享，不支持手工BEGIN/COMMIT/SAVEPOINT、ATTACH/DETACH、PRAGMA或加载扩展；这些语句由SQLite authorizer拒绝。执行只支持单条SQL，参数数量由SQLite检查。SQL/I/O失败E401（客户端仍为既有zzy_error），类型E201、Int范围E208；错误不包含数据库内容或宿主堆栈。取消保持Cancelled，资源保持E211，均回滚。
+
+每SQL执行期限1秒，进度检查每1000条SQLite指令；锁等待最多250ms。取消在SQLite检查点及取行之间检查；文件系统阻塞仍无硬终止保证。SQL及单行单元长度受io_payload_bytes/SQLite长度限额控制，结果按行转换并使用已有对象/槽/载荷预算，不fetchall。SQLite内部页缓存/RSS不属语言逻辑计量。只支持文本、整数、浮点、Null结果，Blob拒绝；Unicode和有限数沿用转换边界。SQLite使用Python自带sqlite3，核心check只解析，不打开数据库，不加载GUI/Web。

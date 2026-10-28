@@ -9,3 +9,6 @@ dist/
 .coverage
 htmlcov/
 .zzy-cache/
+
+# SQLite demo state (not coursework CLI data)
+examples/sqlite/*.sqlite3*

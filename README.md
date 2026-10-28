@@ -134,7 +134,7 @@ P08已选并完成HTTP、共享隔离与Python嵌入；NumPy和字节码VM仍属
 
 ## P06 一键验收与已验证指南
 
-`python -X utf8 -m tests` 运行全部 CLI、spec 和宿主回归，当前收集 2021 项；空收集/跳过/少执行/失败均返回非零。`--report dist/p06-all-tests.json` 保存计数、环境与默认策略指纹（目录需存在）。外部黑盒仍可单独运行。映射、15 个指南片段、9 个变形 spec、资源验证范围见 [P06 验收](tests/p06/README.md)；真实 Agent 练习见 [分钟汇总](examples/agent-practice/README.md)。Windows 11 的真实 Ctrl+C/run/test、派生进程树回收和临时目录清理已经专项验证；其他平台及未测大容量范围明确列在验收页。GUI 已在后续 Sketch E 阶段实现并独立验收，Web/Python的P08-01—03能力见文末；长期Program缓存仍未实现。
+`python -X utf8 -m tests` 运行全部 CLI、spec 和宿主回归，当前收集 2027 项；空收集/跳过/少执行/失败均返回非零。`--report dist/p06-all-tests.json` 保存计数、环境与默认策略指纹（目录需存在）。外部黑盒仍可单独运行。映射、15 个指南片段、9 个变形 spec、资源验证范围见 [P06 验收](tests/p06/README.md)；真实 Agent 练习见 [分钟汇总](examples/agent-practice/README.md)。Windows 11 的真实 Ctrl+C/run/test、派生进程树回收和临时目录清理已经专项验证；其他平台及未测大容量范围明确列在验收页。GUI 已在后续 Sketch E 阶段实现并独立验收，Web/Python的P08-01—03能力见文末；长期Program缓存仍未实现。
 
 最终验收按 [测试阶段计划](docs/development/final-test-plan.md) 执行；本机 VS Code 的详细步骤、命令和预期结果见 [人工测试指南](docs/development/manual-test-guide.md)。[GitHub Actions 工作流](.github/workflows/ci.yml) 已配置静态检查、Windows 全量回归、隔离 wheel 安装及汇总门禁，本地复现和云端待验证事项见 [CI 设计与实施](docs/development/ci-design.md)。CI 不代替真实 GUI、人工操作及正式性能验收。
 
@@ -169,4 +169,6 @@ P09最终全量回归1791/1791、806.968秒通过（包括1588项既有外部CLI
 
 ## 已选 P08 Web
 
-P08已选，P08-01 HTTP已验收，P08-02共享冻结与并发隔离已验收（显式--shared）；P08-03公开Python嵌入已验收，SQLite与整体验收仍待P08-04—05。[启动和演示](examples/web/README.md)、[集中接口契约](docs/runtime/web.md)、[专项证据](tests/p08/README.md)。可选安装`pip install ".[web]"`，核心依赖保持为空。
+P08已选，P08-01 HTTP已验收，P08-02共享冻结与并发隔离已验收（显式--shared）；P08-03公开Python嵌入已验收，SQLite实现与整体验收已通过，本轮本地Git提交受权限限制。[启动和演示](examples/web/README.md)、[集中接口契约](docs/runtime/web.md)、[专项证据](tests/p08/README.md)。可选安装`pip install ".[web]"`，核心依赖保持为空。
+
+P08-04/05本轮新增SQLite事务与独立任务示例；实际db签名、提交/回滚与取消边界以[集中契约](docs/runtime/web.md)为准。SQLite专项、真实HTTP重启、安装和完整回归证据见tests/p08；当前验收状态见todo。

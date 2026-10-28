@@ -34,6 +34,9 @@ def main():
         if stdout is not None: assert out.decode() == stdout, records[-1]
         return out.decode(), err.decode()
 
+    (work/'db.zzy').write_text('(addnew) tx() { db.query("CREATE TABLE t(x)",[]); db.query("INSERT INTO t VALUES (?)",[7]); (return) (^_^)(db.query("SELECT x FROM t",[])); } io.print(db.transaction("installed.sqlite3",tx));',encoding='utf-8')
+    cli('check','db.zzy',stdout=''); assert not (work/'installed.sqlite3').exists()
+    cli('run','db.zzy',stdout='(^_^)([[7]])\n')
     cli('--help')
     out, _ = cli('info'); assert json.loads(out)['zzy_version'] == zzy.__version__
     (work / 'hello.zzy').write_text('io.print(2+3);', encoding='utf-8')

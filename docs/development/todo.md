@@ -1,6 +1,6 @@
 # ZZY 开发待办
 
-建立：2026-10-03｜当前阶段：P08-03 已验收｜下一项：P08-04
+建立：2026-10-03｜当前阶段：P08-05 技术验收通过、提交受阻｜下一项：完成本地提交
 
 本文件是任务状态的唯一清单；详细流程见 [roadmap.md](roadmap.md)，执行证据见 [development-log.md](development-log.md)。接手时根据实际仓库修正状态，不按日期猜测完成情况。
 
@@ -113,12 +113,12 @@ P03-03 的 Lazy 部分是共享捕获布局/Cell 基础；Lazy AST 的捕获分�
 
 ## P08：已选后端与互联（依赖 P05、P06、P09）
 
-2026-10-28明确选择；P08-01—03已验收，其余按依赖继续。集中契约见[Web](../runtime/web.md)。
+2026-10-28明确选择；P08-01—04已验收，P08-05技术验收通过但本地提交受阻。集中契约见[Web](../runtime/web.md)。
 
 - [x] P08-01 实现 GET/POST、JSON、错误响应和同源静态页面。
 - [x] P08-02 实现递归冻结共享模块、拒绝共享 Lazy/可变闭包、独立请求与并发隔离验证。
 - [x] P08-03 完成数据边界与明确的 Python 嵌入接口。
-- [ ] P08-04 完成 SQLite 参数化查询、事务、连接管理及持久化测试。
+- [x] P08-04 完成 SQLite 参数化查询、事务、连接管理及持久化测试。
 - [ ] P08-05 同步补齐 Web/Python API 的测试和指南，提交互联示例。
 
 ## P10：可选深入创新（相关基础完成后选择）
@@ -148,11 +148,9 @@ P10 各候选相互独立，不要求全部完成；P11 不以全部勾选为前
 
 ## 交接栏
 
-2026-10-28：本轮完成P08-03；70项任务55项完成。下一项P08-04 SQLite；P08-04/05、P11未完成，P10未选。P00—P07/P09/E和P08-01/02保持完成。
+2026-10-28：P08-01—04完成，P08-05的实现、测试、指南及安装均验收通过；因沙箱拒绝.git写入且禁止提权，本轮无法创建本地阶段提交，05保持未勾选。56/70。下一步在允许Git写入的环境审查并提交本轮变更，再勾选05，之后P11-01。
 
-- 核心公开API：zzy.embedding.load_module/LoadedModule.call/exports/close，返回CallResult(value, stdout, stderr)。load只prepare，每call独立初始化/执行/转换/finally清理，with退出释放Program；不暴露内部Value。精确类型、错误、资源及并发close规则统一见docs/runtime/web.md。
-- Python参数和结果严格转换并脱离运行上下文：Bool/Int区分，数组/Map/普通结构支持；子类、循环、非有限Float、孤立代理和不支持值拒绝，Result/Lazy不自动解包/唤醒。Python整数资源受限且保持int，HTTP仍限制安全整数；别名按出现次数复制并计量。
-- Python示例python -X utf8 -m examples.web.embed与HTTP调用同一app.zzy的greet。并发call的状态、stdin/stdout独立；有活动调用时close拒绝，宿主先取消/等待再关闭，线程取消仍为协作式。
-- 新嵌入专项11/11，加既有Web核心共19/19；真实HTTP专项13/13；完整回归2021/2021、966秒，失败/错误/跳过/expected failure全0。原2010项和1738外部CLI保留；报告与冻结源码哈希见tests/p08。
-- 核心隔离wheel安装42源码核对通过，并将公开API调用加入CI安装探针；安装环境嵌入11/11、HTTP13/13。没有新增依赖。云端CI/GUI/用户人工/其他平台未重测；不把本机结果写成云端通过。
-- 本轮仅本地提交，无推送/历史改写；用户8000端口服务和docs/manual-tests/未改动。requirement原文哈希不变，校园CLI与文件格式不改，核心0.6.0a1、语法v0.6、stdlibv0.6.1、sketch1.0保持。
+- 新接口db.transaction(path,callback)/db.query(sql,params)：零参数Result回调，参数绑定、成功提交、失败/取消回滚、连接finally关闭；不暴露句柄。业务示例examples/sqlite/app.zzy，独立于校园CLI。集中契约docs/runtime/web.md说明超时、拒绝、资源及提交后响应失败边界。
+- 核心回归2027/2027、838.109秒，零失败/错误/跳过/expected failure。SQLite6/6，HTTP14/14，安装后HTTP14/14，独立CLI服务器新PID重启恢复实测；原2021项及1738外部CLI保留。43源码核心隔离安装通过，CI探针加入真实SQLite。
+- 新SQLite网页人工交互、Tk GUI、云端CI、其他平台和断电恢复未验证；不得以核心/HTTP通过代替。requirement原文、校园文件格式、用户8000服务和docs/manual-tests/保留。
+- 当前仍在codex/p08-03-embedding，基线ec6431b。本轮无新提交、无推送，全部变更保留在工作区；切勿误把人工目录一并暂存。

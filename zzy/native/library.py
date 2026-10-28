@@ -50,6 +50,9 @@ class Library:
                      self.reserve(node,runtime_objects=1,runtime_slots=5))
 
     def native_call(self,name,args,node):
+        if name.startswith('db.'):
+            from .database import invoke
+            return (yield from invoke(self,name,args,node))
         if name == 'sketch.show':
             from .sketch_session import show
             return (yield from show(self,args[0],node))

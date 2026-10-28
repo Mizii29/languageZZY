@@ -659,3 +659,21 @@ Git 提交：真实标识 / 未提交
 
 - 最终完整命令`.venv/Scripts/python.exe -X utf8 -m tests --report tests/p08/core-regression-03.json`退出0：collected=tests_run=2021，966秒，失败/错误/跳过/expected failure均0；本轮全量一次完整跑完，没有用专项拼接或跳过。现勾选P08-03，55/70，下一项P08-04 SQLite，P08整体仍未完成。
 - 定稿`-m scripts.ci static --output dist/p08-03-static-final`通过：53份Markdown/635本地链接、任务/清单/requirement核对，冻结7个实现/测试文件哈希保持一致；最终wheel42份运行时源码与当前逐份规范换行匹配。审查本轮29个代码/测试/文档及报告文件后本地提交；docs/manual-tests/不暂存，requirement SHA256仍b099c19fc339ce1dc1aab7e9d6c8126a9c5c9ace3d31b969a0623df90f521d2b。提交标识见Git历史和答复。
+
+## 2026-10-28：P08-04 SQLite与P08-05整体验收
+
+- 接手ec6431b，仅docs/manual-tests/未跟踪。读取项目技能、交接、契约、注册表、资源和CI；使用zzy技能及既有故障定位/提交审查流程。用户本轮要求继续完成04及05，保留原校园CLI、requirement与8000服务。
+- 先补集中SQLite契约，新增db.transaction(path,callback)/db.query(sql,params)，通过原注册表调用；连接归当前执行线程/事务，成功Result提交，失败Result/异常/取消回滚，finally关闭。不暴露原生句柄；参数化执行，禁止事务控制/ATTACH/PRAGMA等，250ms锁等待与1秒SQL进度期限，逐行转换和配额检查。
+- 独立examples/sqlite/app.zzy实现任务标题校验、入库与查询；Python不写业务。新增同源页面与重启/HTTP/Python说明，数据库文件单独忽略。核心无第三方新增依赖，sqlite3惰性加载；check不创建数据库。
+- 初次夹具错误用了匿名块函数，E103明确要求=>；按既有语法改为嵌套具名函数，不改变语言。SQL错误路径发现ConversionError在execute之后导入，异常匹配报UnboundLocalError，移动到try前。新增回滚探针发现测试自己的sqlite连接with仅提交不关闭，改contextlib.closing；运行时所有连接关闭检查通过，不放宽期望。
+- SQLite专项最终6/6、0.974秒；真实HTTP14/14、4.829秒，新增非法业务请求及服务停止/重建后持久化。原13项全部保留。CI核心安装探针新增真实SQLite check/run/参数查询；完整回归与隔离wheel正在执行。
+- 尝试git switch -c codex/p08-sqlite失败：.git/refs/heads锁文件Permission denied。当前会话禁止提权，未绕过权限；继续完成不依赖Git写权限的工作，提交受阻待最终报告。人工材料未操作。
+
+- P08-04专项验收：最终数据库6/6、0.887秒（database-04.json），HTTP14/14；另用独立CLI服务器子进程实际POST后退出，再启动新PID，GET仍返回同一任务（process-restart-04.json）。因此勾选04，继续05全量/交付；Git提交仍受权限限制。
+- P08-05安装：scripts.ci package --output dist/p08-05-package通过，43源码、核心无Web依赖环境真实SQLite check/run；离线重装wheel后14/14 HTTP通过。无新增第三方依赖，现有CI自动收集新增6项核心和1项HTTP，安装探针接入SQLite。冻结哈希见source-05.json。新SQLite网页尚未浏览器人工交互，HTTP链路实测，不冒充人工验收。
+
+- 诊断契约复核：syntax原错误码表E401只列CLI/源码I/O，而现有宿主io.print也已使用该码；本轮明确扩展说明到SQLite操作失败，同步diagnostics与集中契约。无新错误码，既有期望不改；客户端仍使用既有zzy_error响应，不泄漏数据或路径。
+
+- 最终完整命令`.venv/Scripts/python.exe -X utf8 -m tests --report tests/p08/core-regression-05.json`退出0：2027/2027、838.109秒，失败/错误/跳过/expected failure全0。原2021项及1738外部CLI不删减，新增SQLite6项，HTTP新增1项。P08-05技术验收通过，但本地提交因.git写权限拒绝尚未完成，todo保持05未勾选（56/70）；不将受阻提交写成完成，不推送。
+
+- 最终静态通过54份Markdown/649本地链接；实现与测试冻结哈希匹配。审查33个本轮文件，明确排除docs/manual-tests/与requirement。实际git add显式文件清单再次被.git/index.lock Permission denied阻止（退出128），未暂存、未创建提交；当前权限禁止提权，未绕过。所有代码、文档和报告留在工作区，基线仍ec6431b。

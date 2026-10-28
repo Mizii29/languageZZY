@@ -45,6 +45,20 @@ def request(port,path='/api/hello',method='GET',body=None,headers=None):
 
 
 class HTTPTests(unittest.TestCase):
+    def test_sqlite_http_restart_and_validation(self):
+        import tempfile
+        with tempfile.TemporaryDirectory() as directory:
+            path=Path(directory)/'app.zzy';database=Path(directory)/'tasks.sqlite3'
+            path.write_text((ROOT/'examples/sqlite/app.zzy').read_text(encoding='utf-8').replace('examples/sqlite/tasks.sqlite3',database.as_posix()),encoding='utf-8')
+            routes=[('GET','/api/tasks','handle'),('POST','/api/tasks','handle')]
+            with server(path,routes,shared=True) as port:
+                self.assertEqual(request(port,'/api/tasks','POST',b'{}',{'Content-Type':'application/json'})[0],422)
+                status,_,body=request(port,'/api/tasks','POST',b'{"title":"homework"}',{'Content-Type':'application/json'})
+                self.assertEqual(status,200);self.assertEqual(json.loads(body),[[1,'homework']])
+            with server(path,routes,shared=True) as port:
+                status,_,body=request(port,'/api/tasks')
+                self.assertEqual(status,200);self.assertEqual(json.loads(body),[[1,'homework']])
+
     def test_python_embedding_matches_http_business_function(self):
         from zzy.embedding import load_module
         with load_module(ROOT/'examples/web/app.zzy') as module:

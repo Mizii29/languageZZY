@@ -57,4 +57,6 @@ description: 在 ZZY 课程项目中编写或审查 .zzy 程序、实现解释�
 
 继续Web前读取[集中接口契约](../../docs/runtime/web.md)、todo交接及最新日志。P08-01用可选Starlette/Uvicorn、宿主固定路由和默认每请求完整实例化；web.get/web.serve没有语言接口，不能凭旧设计示例调用。后续任务按依赖继续，不提前实现P10。
 
-P08-02已实现显式shared=True/--shared，默认逐请求模式保留；共享Lazy/可变绑定/Cell闭包/原生句柄拒绝。P08-03公开Python入口zzy.embedding.load_module/call/close，每调用独立上下文、自动严格转换与清理，CallResult含value/stdout/stderr；不传内部Value。详细规则只维护在Web契约，阶段验收数字与下一项看todo及最新日志；SQLite尚未提供。
+P08-02已实现显式shared=True/--shared，默认逐请求模式保留；共享Lazy/可变绑定/Cell闭包/原生句柄拒绝。P08-03公开Python入口zzy.embedding.load_module/call/close，每调用独立上下文、自动严格转换与清理，CallResult含value/stdout/stderr；不传内部Value。详细规则只维护在Web契约，阶段验收数字与下一项看todo及最新日志；SQLite事务接口和独立示例已实现，验收见todo。
+
+P08-04/05本轮新增SQLite事务与独立任务示例；实际db签名、提交/回滚与取消边界以docs/runtime/web.md为准。SQLite专项、真实HTTP重启、安装和完整回归证据见tests/p08；当前验收状态见todo。

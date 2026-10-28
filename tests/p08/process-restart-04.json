@@ -1,0 +1,21 @@
+{
+  "passed": true,
+  "runs": [
+    {
+      "pid": 28032,
+      "run": 0,
+      "read": []
+    },
+    {
+      "pid": 5920,
+      "run": 1,
+      "read": [
+        [
+          1,
+          "restart"
+        ]
+      ]
+    }
+  ],
+  "cleanup": "terminate only owned child; graceful shutdown covered separately"
+}

@@ -1803,6 +1803,12 @@
     "tests.test_cli.CliTests.test_run_check_cwd_options_and_literal_separator",
     "tests.test_cli.CliTests.test_run_check_frontend_diagnostics_match_in_both_formats",
     "tests.test_cli.CliTests.test_source_info_utf8_and_working_directory",
+    "tests.test_database.DatabaseTests.test_cancel_and_resource_rollback",
+    "tests.test_database.DatabaseTests.test_check_never_opens_database",
+    "tests.test_database.DatabaseTests.test_commit_binding_rollback_and_reopen",
+    "tests.test_database.DatabaseTests.test_failures_cleanup_and_recovery",
+    "tests.test_database.DatabaseTests.test_parallel_requests",
+    "tests.test_database.DatabaseTests.test_write_then_exception_rolls_back_and_lock_timeout",
     "tests.test_diagnostics.DiagnosticTests.test_default_output_boundary_and_emergency_once",
     "tests.test_diagnostics.DiagnosticTests.test_final_record_fits_unicode_and_escaped_json",
     "tests.test_diagnostics.DiagnosticTests.test_non_error_kinds_have_no_code",
@@ -3786,6 +3792,6 @@
       "run_cli.e4-undo-fill"
     ]
   },
-  "collected": 2021,
+  "collected": 2027,
   "blackbox": 1738
 }

@@ -145,3 +145,5 @@ P09最终完整门禁：1791/1791，806.968秒，无失败/错误/跳过；[全�
 P08-02：tests/test_web_shared.py覆盖嵌套冻结、只读闭包捕获、Lazy/Cell/原生句柄拒绝、导入模块默认捕获、原生名义类型身份及失败/关闭资源释放；tests.web_http新增屏障强制交错、只读失败后恢复、忙worker事件循环响应及真实lifespan关闭；启动取消后晚到快照的回收另用受控ASGI生命周期测试。当前完整门禁见tests/p08/README.md，不推断公开嵌入/SQLite。
 
 P08-03：tests/test_embedding.py执行真实ZZY夹具，覆盖严格Python类型、Bool/Int、有限数/Unicode、输入输出别名、64/65层及配额边界、循环与全部不支持值拒绝、load/check不执行、依赖快照、错误定位、初始化失败、取消/IO/资源释放、并发与活动close；tests.web_http新增与Python调用同一greet的真实HTTP正常/错误对照。scripts/ci_installed_probe.py验证核心无可选依赖安装后的公开API。最终计数与未验证范围见tests/p08，不推断SQLite已实现。
+
+P08-04/05本轮新增SQLite事务与独立任务示例；实际db签名、提交/回滚与取消边界以docs/runtime/web.md为准。SQLite专项、真实HTTP重启、安装和完整回归证据见tests/p08；当前验收状态见todo。

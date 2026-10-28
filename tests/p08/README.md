@@ -60,3 +60,21 @@ P08-01段落及报告保留历史含义；当前新增显式shared=True/--shared
 - 隔离env离线重装本轮wheel，`python -I`实测[嵌入11/11](installed-embedding-03.json)、[HTTP13/13](installed-http-03.json)，确认从安装目录导入。源码及测试对应[冻结哈希](source-03.json)。
 
 完整回归[2021/2021、966秒](core-regression-03.json)，失败/错误/跳过/expected failure全0；原2010项及1738外部CLI全部保留。只验证Windows11/CPython3.12.14；GUI、用户人工操作、云端CI和其他平台未重跑。无SQLite、隐式执行超时、自动缓存或热更新；线程协作取消不能打断所有阻塞宿主调用。
+
+## P08-04/05 SQLite与整体验收
+
+[SQLite示例及启动步骤](../../examples/sqlite/README.md)提供同源页面、HTTP、Python和重启命令，业务全部在ZZY。核心接口由db.transaction/db.query注册提供；详细规则见集中契约。
+
+实际命令：
+
+```powershell
+.venv/Scripts/python.exe -X utf8 -m unittest tests.test_database -v
+.venv/Scripts/python.exe -X utf8 -m tests.web_http --report tests/p08/http-04.json
+.venv/Scripts/python.exe -X utf8 -m tests --report tests/p08/core-regression-05.json
+```
+
+[数据库专项](database-04.json)6/6、[真实HTTP](http-04.json)14/14通过；[独立CLI服务器进程重启](process-restart-04.json)验证写入后退出/新PID启动仍读取原数据。测试只终止自己的服务器，不操作用户原8000服务；正常关闭另由HTTP lifespan测试覆盖。
+
+[核心隔离安装](package-05.json)、[安装探针](package-probe-05.json)核对43份源码并执行真实SQLite check/run；[安装后HTTP](installed-http-05.json)14/14。[源码哈希](source-05.json)锁定本轮实现。完整回归[2027/2027、838.109秒](core-regression-05.json)，失败/错误/跳过/expected failure均0。
+
+未验证：新SQLite页面的浏览器人工交互、Tk GUI重测、云端CI、其他平台及断电恢复。SQL锁等待250ms、进度期限1秒；宿主文件阻塞无法强制打断。当前Git写权限受沙箱限制，本地提交是否成功以最终记录为准。

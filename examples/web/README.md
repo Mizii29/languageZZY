@@ -1,6 +1,6 @@
 # ZZY Web 与 Python 示例（P08-01—03）
 
-业务源码[app.zzy](app.zzy)处理GET问候与POST姓名校验；同源页面[index.html](index.html)。[正式契约](../../docs/runtime/web.md)列出所有边界。Python嵌入见下文，SQLite待P08-04。共享冻结模式加--shared，默认模式仍逐请求实例化。
+业务源码[app.zzy](app.zzy)处理GET问候与POST姓名校验；同源页面[index.html](index.html)。[正式契约](../../docs/runtime/web.md)列出所有边界。Python嵌入见下文，SQLite见[独立互联示例](../sqlite/README.md)。共享冻结模式加--shared，默认模式仍逐请求实例化。
 
 仓库根目录，Python 3.12.14、有pip的环境：
 
@@ -50,4 +50,4 @@ with load_module("examples/web/app.zzy") as module:
 
 load不运行初始化；每次call独立执行，结束自动释放上下文，with退出释放模块。参数和结果自动按集中契约深复制/校验，结果为普通Python数据；不会返回内部ZZY句柄。Python支持资源限额内的int，HTTP仍拒绝超出安全整数范围的JSON数值，大整数HTTP字段须明确约定十进制字符串。
 
-取消可传`CancellationToken`并由宿主线程调用cancel；它是协作式取消。同步call在返回/抛错前完成清理；并发在途时close明确报错，先取消并等待调用结束再关闭。模块不共享可变运行数据；如需持久化，留待P08-04。
+取消可传`CancellationToken`并由宿主线程调用cancel；它是协作式取消。同步call在返回/抛错前完成清理；并发在途时close明确报错，先取消并等待调用结束再关闭。模块不共享可变运行数据；如需持久化，参见独立SQLite示例。

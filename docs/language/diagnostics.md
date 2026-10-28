@@ -76,3 +76,5 @@ io.print(2::s + 1::m);
 P01 起收录以上 .zzy 和期望清单，尚未支持的语法示例按阶段加入，不能假装早期版本已支持 Quantity。P06 补全 CLI-02：BOM、CRLF、中文/补充平面字符、制表符、EOF 零宽、缺文件 null span、JSON Lines 可解析、trace/error 区分、跨文件调用和 Lazy 位置；两种显示格式对应同一个诊断对象。
 
 P06 实际证据：四例在 tests/p06/inputs/diagnostic-*.zzy 和外部 cases.json；test_p06_diagnostics 核对两种格式、BOM/CRLF/Unicode/Tab/EOF 与 internal_error；test_p06_process 向独立隐藏控制台发送真实 Ctrl+C，验证 run/test 的 cancelled、130 和清理。其他宿主平台未验证；诊断规则及错误码没有改变。
+
+P08-04扩展既有E401的说明至SQLite宿主操作失败，主位置为db调用点，错误消息不包含SQL数据或数据库路径；类型/范围仍为E201/E208，资源/取消保持原信号。事务提交边界见Web集中契约。
