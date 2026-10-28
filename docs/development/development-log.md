@@ -677,3 +677,10 @@ Git 提交：真实标识 / 未提交
 - 最终完整命令`.venv/Scripts/python.exe -X utf8 -m tests --report tests/p08/core-regression-05.json`退出0：2027/2027、838.109秒，失败/错误/跳过/expected failure全0。原2021项及1738外部CLI不删减，新增SQLite6项，HTTP新增1项。P08-05技术验收通过，但本地提交因.git写权限拒绝尚未完成，todo保持05未勾选（56/70）；不将受阻提交写成完成，不推送。
 
 - 最终静态通过54份Markdown/649本地链接；实现与测试冻结哈希匹配。审查33个本轮文件，明确排除docs/manual-tests/与requirement。实际git add显式文件清单再次被.git/index.lock Permission denied阻止（退出128），未暂存、未创建提交；当前权限禁止提权，未绕过。所有代码、文档和报告留在工作区，基线仍ec6431b。
+
+## 2026-10-28：P08提交与feature交付
+
+- 用户要求核查并推送feature。交付复验SQLite6/6、1.104秒，真实HTTP14/14、4.984秒，静态门禁通过；输出保存在dist/p08-delivery-review。已有完整回归2027/2027、838.109秒，本次未重跑全量；source-05.json记录的7个实现/测试文件哈希与当前一致。
+- 用户恢复Git写权限后，显式暂存并审查33个P08相关文件，git diff --cached --check通过；创建提交0a70825（feat(sqlite): complete P08 integration and acceptance）。人工测试目录未暂存，requirement未修改。现勾选P08-05，57/70，后续P11仍独立验收。
+- 初次fetch经现有127.0.0.1:7897代理发生schannel握手失败，临时OpenSSL后端也遇到TLS EOF；临时清空本次命令代理后fetch成功。保留HTTPS证书校验及全局配置，未将连接故障误报为GitHub权限不足。
+- 已拉取并核对origin/feature与本地feature一致，且是当前P08分支祖先。后续以快进方式同步feature并正常推送；远端最终提交号以Git引用和聊天报告核验，不改写历史，不更新main/test，不将推送视为云端CI通过。
