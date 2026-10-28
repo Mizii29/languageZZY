@@ -423,7 +423,7 @@ class Interpreter(Features, Library):
         iterable = (yield from self.evaluate(node.children[0]))
         if iterable.kind not in {"Array", "String", "Range"}:
             self.error(node, "E201", "for 需要 Array、String 或 Range")
-        if iterable.kind == "Array":
+        if iterable.kind == "Array" and not getattr(iterable, "frozen", False):
             iterable.active += 1
         try:
             if iterable.kind == "Range":
@@ -442,7 +442,7 @@ class Interpreter(Features, Library):
                         if signal.kind == "break":
                             break
         finally:
-            if iterable.kind == "Array":
+            if iterable.kind == "Array" and not getattr(iterable, "frozen", False):
                 iterable.active -= 1
 
     def field(self, owner, name, node, write=False):

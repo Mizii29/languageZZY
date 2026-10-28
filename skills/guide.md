@@ -175,3 +175,5 @@ sum/stats 逐项检查 Int，Bool/Float 不混入；stats 的 min/max 空值为 
 ## P08-01 Web
 
 可选安装、页面和HTTP调用见[Web示例](../examples/web/README.md)，规则只维护在[Web契约](../docs/runtime/web.md)。不要生成未注册的web.get/web.serve或db接口；公开嵌入与SQLite待后续。
+
+P08-02可用--shared启动显式冻结共享模式，默认仍按请求实例化。不要修改共享模块数据或放置共享Lazy/可变捕获；初始化、取消和关闭边界见Web契约。

@@ -621,3 +621,25 @@ Git 提交：真实标识 / 未提交
 - 最终完整命令`.venv/Scripts/python.exe -X utf8 -m tests --report tests/p08/core-regression.json`退出0：2005/2005、877.547秒，失败/错误/跳过/expected failure全0；原2002项完整保留，外部CLI1738项未减。最终源码哈希与HTTP/安装实测一致。静态门禁通过53份Markdown/612条本地链接、任务/fixture/requirement核对。P08-01达到子任务标准，现勾选；P08整体未完成，下一项P08-02。
 
 - 定稿后静态门禁再次通过；测试清单仅新增3个核心ID（2002→2005），原清单及期望未删减。todo核对53/70，P08只有01勾选。分支codex/p08-01-web，本轮仅本地提交，不推送；最终标识见Git与答复。
+
+
+## 2026-10-28：P08-02共享冻结模块与并发隔离
+
+- 接手codex/p08-01-web/1e32f97，仅docs/manual-tests/未跟踪；保留用户8000端口服务及人工材料，测试使用独立临时端口。截图证明用户P08-01 GET/POST成功，未将其视为本轮隔离验收。读取技能、集中契约、todo/日志、相关解释器捕获/默认构造/冻结/计量与CI实现，沿用既有语法。
+- 先在集中契约明确显式shared=True/--shared方案：默认逐请求模式保留；共享模式ASGI lifespan启动时初始化一次，受信任初始化副作用与check分开。递归拒绝全部模块可变绑定、Lazy、Cell闭包捕获、原生句柄及命名空间别名；共享闭包/结构默认捕获/导入依赖的全部全局绑定一并检查，无静默降级。实际代码zzy/web_shared.py，采用独立服务计量和预留所有权转移，停服后释放。
+- Array/Map/Shape/Machine递归冻结；捕获只读容器的闭包检查到容器。普通结构默认[]仍每请求创建；默认引用共享数组保持冻结。默认表达式引用的全局环境由整个模块绑定图检查；函数内新建值/Cell仍属于请求，不禁止请求局部修改。
+- 复查发现冻结Array遍历仍写active计数，修改for与array.map/filter仅对非冻结数组记录active；冻结写入口E203不变，普通可变数组原活动遍历规则保持。内置Namespace成员惰性缓存按请求创建，防止把其缓存或资源归属共享到请求之间。
+- 首轮核心专项6/6、HTTP10/10通过；补依赖/默认捕获与生命周期后核心7/7。HTTP强制两个请求在解释器入口屏障交错，8次不同输入保持各自输出和EOF输入；共享写失败后读状态保持不变；忙worker时503及时返回、原循环504；真实服务只初始化一次，关闭后预留归零。
+- 生命周期审查发现ASGI启动取消可能晚收到成功快照；新增取消令牌和late-result close回调，用受控初始化屏障证明取消后快照关闭/计量归零。为最终证据一致，主动中断尚未完成的首轮全量（未形成成功报告，不计通过），修复及专项完成后重新完整运行。
+- 最终`.venv/Scripts/python.exe -X utf8 -m tests.web_http --report tests/p08/http-02.json`12/12、3.875秒通过，零失败/跳过。其中启动取消为ASGI生命周期受控交错，其余HTTP场景使用真实TCP，未冒充全是网络用例。日志中的E203/E205为负例服务端原始定位，响应不含Python堆栈。
+- `.venv/Scripts/python.exe -X utf8 -m scripts.ci package --output dist/p08-02-package-final --installer C:/Users/13691/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe`通过，核心无可选依赖安装41源码核对。另对dist/p08-web-installed/env离线强制重装本轮wheel，python -I探针确认导入来自隔离env并重复12/12、3.859秒通过；源码/安装证据见tests/p08。本轮没有联网新增依赖。
+- 当前完整回归正在运行，源码冻结于tests/p08/source-02.json；通过后才勾选P08-02。下一项P08-03公开嵌入，未提前SQLite/P10。GUI、用户人工测试、其他平台和所有阻塞宿主取消时序未验证；本轮不推送。
+
+- 后续名义类型验收补出真实失败：测试初稿把array.Stats写成带括号的注解，首先E103；按正式语法修正后，合法array.stats结果传入共享函数仍E201。原因是每请求重新创建了原生名义类型定义，而共享函数注解保留启动定义。修复为各请求独立命名空间缓存字典，启动已构造成员经检查后共享身份；不放宽类型匹配。核心专项8/8、0.598秒及Web12/12、3.797秒通过。再次主动中止未完成的全量，前两次均无最终报告、不得算通过；最终源码与新增5项测试清单冻结后完整重跑。
+- 最终包命令改用`-m scripts.ci package --output dist/p08-02-package-accepted --installer C:/Users/13691/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe`，退出0、41源码匹配。用该wheel离线重装隔离Web环境，`dist/p08-web-installed/env/Scripts/python.exe -I -X utf8 dist/p08-web-installed/probe.py`通过12/12、3.656秒；另同环境`core_probe.py`执行5项共享核心用例通过、0.187秒，包含名义类型修复。已更新tests/p08的package-02、package-probe-02、installed-http-02为最终包证据；前述旧包耗时仅保留为开发过程记录。
+- 交付前错误码交叉核对发现新共享拒绝复用了E214，与syntax.md第265行“sketch操作状态”冲突；影响启动错误码的公共含义。改用已有E303模块错误，集中契约明确这是入口模块根节点的发布条件诊断，原始求值/冻结写入定位不改，语法错误码表不扩展。核心8/8、0.757秒，Web12/12、3.813秒通过；因此中断第三次尚未完成的全量，重新冻结实现/测试哈希后从头运行。前三次中断都不是成功报告，不拼接通过项。最终打包目录为dist/p08-02-package-release，前述accepted仍是历史过程证据。
+- 静态入口第一次复用既有dist/p08-02-static目录，被exist_ok=False拒绝（退出1）；保留旧产物，改用新目录dist/p08-02-static-accepted后通过。交付定稿后再检查一次。
+- E303定稿后package-release无Web依赖核心安装41源码核对通过；离线重装该wheel后HTTP12/12、4.032秒，共享核心5/5、0.161秒，均退出0。另执行`.venv/Scripts/python.exe -X utf8 dist/p08-02-cli-probe.py`，由子进程实际启动`-m zzy.web ... --shared --port 62437`，真实GET/POST返回ZZY/Ada数据，保存tests/p08/cli-02.json。只终止探针自己的子进程；不把强制结束称为优雅关闭，后者由lifespan专项证明。用户8000服务不变。
+
+- 最终完整命令`.venv/Scripts/python.exe -X utf8 -m tests --report tests/p08/core-regression-02.json`退出0：collected=tests_run=2010，960.375秒，failures/errors/skipped/expected_failures全0。原2005项及1738外部CLI没有删减；新增5项核心用例，Web12项另执行。P08-02达到本轮完成标准，勾选后54/70；P08整体未完成，下一项P08-03。本地分支codex/p08-02-shared，仅提交本轮差异，不推送。
+- 定稿静态命令`-m scripts.ci static --output dist/p08-02-static-release`退出0：53份Markdown、621本地链接、fixture/清单/任务/requirement核对通过；校园源码仍504总行/493有效行。最终7个实现/测试文件哈希匹配，wheel中41份运行时源码与工作区逐份规范换行后相同。Git差异审查仅纳入本轮27个文件，docs/manual-tests/不暂存；requirement SHA256仍为b099c19fc339ce1dc1aab7e9d6c8126a9c5c9ace3d31b969a0623df90f521d2b。

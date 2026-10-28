@@ -1,5 +1,6 @@
 """Explicit optional suite: real TCP HTTP, no skipped tests or mock transport."""
 import argparse
+import asyncio
 from concurrent.futures import ThreadPoolExecutor
 from contextlib import contextmanager
 import http.client
@@ -110,6 +111,76 @@ class HTTPTests(unittest.TestCase):
             c.putrequest('POST','/api/echo');c.putheader('Content-Type','application/json');c.putheader('Content-Length','4');c.endheaders();c.send(b'{')
             self.assertEqual(c.getresponse().status,408);c.close()
             self.assertEqual(request(port,'/api/echo','POST',b'0',{'Content-Type':'application/json','X-Pad':'x'*16400})[0],431)
+
+    def test_shared_interleaved_requests_and_write_recovery(self):
+        from unittest.mock import patch
+        from zzy.web import RequestRuntime
+        barrier=threading.Barrier(2)
+        original=RequestRuntime.execute_program
+        def interleaved(runtime):
+            if runtime.handler.token.lexeme=='local_state':barrier.wait(timeout=5)
+            yield from original(runtime)
+        routes=[('GET','/api/'+n,n) for n in ('read','array_write','map_write','shape_write','machine_write','default_write')]
+        routes.append(('POST','/api/local','local_state'))
+        with server('tests/p08/shared.zzy',routes,shared=True) as port:
+            with patch.object(RequestRuntime,'execute_program',interleaved),ThreadPoolExecutor(2) as pool:
+                replies=list(pool.map(lambda i:request(port,'/api/local','POST',str(i).encode(),{'Content-Type':'application/json'}),range(8)))
+            for i,(status,_,body) in enumerate(replies):
+                self.assertEqual(status,200);self.assertEqual(json.loads(body),[None,i])
+            for name in ('array_write','map_write','shape_write','machine_write','default_write'):
+                self.assertEqual(request(port,'/api/'+name)[0],500)
+                self.assertEqual(json.loads(request(port,'/api/read')[2]),[[1,2],[7],'a'])
+
+    def test_cancelled_startup_closes_late_snapshot(self):
+        from unittest.mock import patch
+        from zzy import web_shared
+        entered,release=threading.Event(),threading.Event()
+        snapshots=[];original=web_shared.initialize
+        def paused(*args):
+            snapshot=original(*args);snapshots.append(snapshot);entered.set()
+            if not release.wait(5):raise AssertionError('test barrier timed out')
+            return snapshot
+        async def scenario():
+            app=create_app(ROOT/'tests/p08/shared.zzy',[('GET','/api/read','read')],shared=True)
+            context=app.router.lifespan_context(app)
+            task=asyncio.create_task(context.__aenter__())
+            try:
+                self.assertTrue(await asyncio.to_thread(entered.wait,5))
+                task.cancel()
+                await asyncio.sleep(0)
+            finally:release.set()
+            with self.assertRaises(asyncio.CancelledError):await task
+        with patch.object(web_shared,'initialize',paused):asyncio.run(scenario())
+        self.assertEqual(len(snapshots),1)
+        self.assertTrue(snapshots[0].closed)
+        self.assertTrue(all(snapshots[0].meter.used(k)==0 for k in ('runtime_objects','runtime_slots','runtime_payload_bytes')))
+
+    def test_shared_lifespan_releases_service_owned_reservations(self):
+        from unittest.mock import patch
+        from zzy import web_shared
+        snapshots=[]
+        original=web_shared.initialize
+        def observed(*args):
+            snapshot=original(*args);snapshots.append(snapshot);return snapshot
+        with patch.object(web_shared,'initialize',observed):
+            with server('tests/p08/shared.zzy',[('GET','/api/read','read')],shared=True) as port:
+                self.assertEqual(request(port,'/api/read')[0],200)
+                self.assertEqual(request(port,'/api/read')[0],200)
+                self.assertEqual(len(snapshots),1)
+                self.assertFalse(snapshots[0].closed)
+                self.assertGreater(snapshots[0].meter.used('runtime_slots'),0)
+        self.assertTrue(snapshots[0].closed)
+        self.assertTrue(all(snapshots[0].meter.used(k)==0 for k in ('runtime_objects','runtime_slots','runtime_payload_bytes')))
+
+    def test_event_loop_responds_during_busy_worker(self):
+        with server('tests/p08/shared.zzy',[('GET','/api/loop','loop')],workers=1,timeout=.6,shared=True) as port:
+            with ThreadPoolExecutor(1) as pool:
+                running=pool.submit(request,port,'/api/loop')
+                time.sleep(.1)
+                started=time.monotonic()
+                self.assertEqual(request(port,'/api/loop')[0],503)
+                self.assertLess(time.monotonic()-started,.4)
+                self.assertEqual(running.result()[0],504)
 
     def test_invalid_routes_rejected_before_serving(self):
         for routes in [[],[('GET','/api/{name}','hello')],[('GET','/api/a','missing')],[('GET','/api/a','hello')]*2]:

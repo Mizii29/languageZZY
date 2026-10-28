@@ -2004,7 +2004,12 @@
     "tests.test_source.SourceTests.test_snapshot_canonical_alias_and_importer_path",
     "tests.test_web_core.WebCoreTests.test_example_check_is_silent",
     "tests.test_web_core.WebCoreTests.test_import_does_not_load_optional_dependencies",
-    "tests.test_web_core.WebCoreTests.test_independent_context_and_released_budget"
+    "tests.test_web_core.WebCoreTests.test_independent_context_and_released_budget",
+    "tests.test_web_shared.SharedTests.test_dependency_defaults_and_failed_initialization_release",
+    "tests.test_web_shared.SharedTests.test_native_nominal_definition_identity_and_private_namespace_cache",
+    "tests.test_web_shared.SharedTests.test_nested_writes_and_default_alias_are_frozen",
+    "tests.test_web_shared.SharedTests.test_readonly_closure_captures_are_frozen",
+    "tests.test_web_shared.SharedTests.test_rejects_lazy_mutable_closure_and_default_capture"
   ],
   "manifests": {
     "tests/lex/cases.json": [
@@ -3770,6 +3775,6 @@
       "run_cli.e4-undo-fill"
     ]
   },
-  "collected": 2005,
+  "collected": 2010,
   "blackbox": 1738
 }

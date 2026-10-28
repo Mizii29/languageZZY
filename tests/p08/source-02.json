@@ -1,0 +1,9 @@
+{
+  "zzy/web.py": "45bffde004eedd5d459ea76fa1f86563a916f0124577f54b27582b55d3463e11",
+  "zzy/web_shared.py": "6b1cd616e121979a0cb7a7c1acfd7dfcf7d01547bdf2bfce710b2e85ef20d83e",
+  "zzy/interpreter.py": "78f615c94c0601c287f292769e48eafb27fd3f89fa6f30741034563923d9dddb",
+  "zzy/native/library.py": "2a7189ea73f49d8abd80e0c150fbe9ed4bbb1c992685e9f2e7471b164b7e1608",
+  "tests/test_web_shared.py": "e64e053accb6bd268bfeaa9e09087907d197146e7581fbdc7c58d30e404eadf7",
+  "tests/web_http.py": "a6bc1062d2d196154a6c9c4d6c9ae4f9a6993face144d985e1ac976230022d37",
+  "tests/p08/shared.zzy": "a28465e6260011b158de4ef54172c8a96135113b13dca3a516eb0a1d696b0f59"
+}

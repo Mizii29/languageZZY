@@ -6,7 +6,7 @@ from contextlib import asynccontextmanager
 import io
 import json
 from pathlib import Path
-from threading import Lock
+from threading import Lock, Timer
 
 from .ast_nodes import Node
 from .diagnostics import Cancelled, DiagnosticError, Phase, ResourceExceeded
@@ -59,7 +59,10 @@ class RequestRuntime(Interpreter):
         except (json_codec.InvalidJSON, BoundaryError) as error:
             raise BoundaryError('invalid request JSON') from error
         self.input_valid = True
-        yield from super().execute_program()
+        if getattr(self, "shared_snapshot", None) is None:
+            yield from super().execute_program()
+        else:
+            self.shared_snapshot.attach(self)
         function = self.bindings[id(self.handler)].value
         call = Node('call', self.handler.token, (self.handler, node))
         response = (yield CallRequest(function, [request], call))[0]
@@ -78,7 +81,7 @@ class RequestRuntime(Interpreter):
         self.result = status.data, payload
 
 
-def create_app(module, routes, *, page=None, timeout=5.0, workers=4):
+def create_app(module, routes, *, page=None, timeout=5.0, workers=4, shared=False):
     """Build a fixed GET/POST app. Each handler takes Request Map, returns Response."""
     from starlette.applications import Starlette
     from starlette.responses import Response, JSONResponse
@@ -90,6 +93,8 @@ def create_app(module, routes, *, page=None, timeout=5.0, workers=4):
         raise ValueError('workers must be 1..16')
     if type(timeout) not in (int, float) or not 0 < timeout <= 60:
         raise ValueError('timeout must be 0..60 seconds')
+    if type(shared) is not bool:
+        raise ValueError('shared must be Bool')
     policy = ResourcePolicy({'io_payload_bytes': MAX_RESPONSE})
     meter = ResourceMeter(policy, Phase.FRONTEND)
     with SourceLoader(meter) as loader:
@@ -113,6 +118,7 @@ def create_app(module, routes, *, page=None, timeout=5.0, workers=4):
     pool = ThreadPoolExecutor(max_workers=workers, thread_name_prefix='zzy-request')
     lock, active = Lock(), set()
     closing = False
+    snapshot = None
 
     def failure(status, code):
         return JSONResponse({'error': {'code': code}}, status_code=status)
@@ -120,6 +126,7 @@ def create_app(module, routes, *, page=None, timeout=5.0, workers=4):
     def execute(handler, request_text, token):
         output = Output(io.StringIO(), io.StringIO(), ResourceMeter(policy, Phase.EXECUTION, token))
         runtime = RequestRuntime(program, output, io.StringIO())
+        runtime.shared_snapshot = snapshot
         runtime.handler, runtime.request_text, runtime.input_valid = handler, request_text, False
         try:
             runtime.run()
@@ -143,8 +150,26 @@ def create_app(module, routes, *, page=None, timeout=5.0, workers=4):
 
     @asynccontextmanager
     async def lifespan(app):
-        nonlocal closing
+        nonlocal closing, snapshot
         try:
+            if shared:
+                from .web_shared import initialize
+                token = CancellationToken()
+                timer = Timer(timeout,token.cancel)
+                timer.start()
+                initializing = pool.submit(initialize,program,policy,token)
+                try:
+                    snapshot = await asyncio.shield(asyncio.wrap_future(initializing))
+                except BaseException:
+                    token.cancel()
+                    # A cancelled lifespan must still close a late successful snapshot.
+                    def discard(future):
+                        if not future.cancelled() and future.exception() is None:
+                            future.result().close()
+                    initializing.add_done_callback(discard)
+                    raise
+                finally:
+                    timer.cancel()
             yield
         finally:
             with lock:
@@ -152,6 +177,8 @@ def create_app(module, routes, *, page=None, timeout=5.0, workers=4):
                 for token in active:
                     token.cancel()
             await asyncio.to_thread(pool.shutdown, wait=True, cancel_futures=True)
+            if snapshot is not None:
+                snapshot.close()
 
     async def endpoint(request):
         key = request.method, request.url.path
@@ -239,12 +266,13 @@ def main(argv=None):
     parser.add_argument('module', type=Path)
     parser.add_argument('--route', nargs=3, action='append', required=True, metavar=('METHOD', 'PATH', 'FUNCTION'))
     parser.add_argument('--page', type=Path)
+    parser.add_argument('--shared', action='store_true', help='initialize and freeze module state once')
     parser.add_argument('--host', default='127.0.0.1')
     parser.add_argument('--port', type=int, default=8000)
     args = parser.parse_args(argv)
     try:
         import uvicorn
-        app = create_app(args.module, args.route, page=args.page)
+        app = create_app(args.module, args.route, page=args.page, shared=args.shared)
     except ImportError:
         parser.exit(2, 'Web requires the optional install: pip install ".[web]"\n')
     except (ValueError, OSError, DiagnosticError, ResourceExceeded) as error:

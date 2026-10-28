@@ -1,6 +1,6 @@
-# ZZY Web 示例（P08-01）
+# ZZY Web 示例（P08-01 / P08-02）
 
-业务源码[app.zzy](app.zzy)处理GET问候与POST姓名校验；同源页面[index.html](index.html)。[正式契约](../../docs/runtime/web.md)列出所有边界。Python嵌入、SQLite和共享冻结模块尚未交付。
+业务源码[app.zzy](app.zzy)处理GET问候与POST姓名校验；同源页面[index.html](index.html)。[正式契约](../../docs/runtime/web.md)列出所有边界。公开Python嵌入、SQLite尚未交付。共享冻结模式加--shared，默认模式仍逐请求实例化。
 
 仓库根目录，Python 3.12.14、有pip的环境：
 
@@ -19,3 +19,12 @@ python -X utf8 -m tests
 ```
 
 第一条返回message和language=ZZY，第二条message=你好，Ada。HTTP测试必须安装可选依赖，缺依赖即失败，绝不跳过。源码运行在本机可将python换为`.venv/Scripts/python.exe`。若该环境没有pip，用已有pip的解释器执行`python -m pip --python .venv/Scripts/python.exe install ".[web]"`。
+
+
+P08-02共享模式启动（示例只有只读模块定义，可直接使用）：
+
+```powershell
+python -m zzy.web examples/web/app.zzy --route GET /api/hello hello --route POST /api/greet greet --page examples/web/index.html --shared
+```
+
+共享模式启动时执行一次初始化，拒绝模块级zyes、可达Lazy、捕获Cell的闭包和原生句柄；不会自动退回默认模式。共享数组/Map/结构/Machine只读，业务可变状态用请求局部值（数据库待P08-04）。修改代码后需要重启，你先前启动的服务不会热更新。
