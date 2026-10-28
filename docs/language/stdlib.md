@@ -10,6 +10,8 @@
 
 只暴露正式契约登记的函数；不开放任意 Python 属性、`eval`、`exec`。`io`、`array`、`text`、`math`、`data`、`unit` 命名空间与宿主函数引用只读。已选 `sketch` 的独立接口以 [sketch.md](../features/sketch.md) 为准；`web`、`db`、`num` 属于后续扩展，当前不属于核心安装依赖。原生类型/函数的签名、归属、错误和效果元数据统一登记；查询白名单不会自动接受扩展函数。
 
+P08的HTTP适配与Python嵌入是宿主入口，不新增上述语言命名空间。Python侧`zzy.embedding.load_module`等签名及严格值转换统一见[互联契约](../runtime/web.md)；不将Python对象自动暴露给ZZY。
+
 ## 2. 基础与 I/O
 
 | 接口 | 返回与行为 | 边界 |

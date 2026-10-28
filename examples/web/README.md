@@ -1,6 +1,6 @@
-# ZZY Web 示例（P08-01 / P08-02）
+# ZZY Web 与 Python 示例（P08-01—03）
 
-业务源码[app.zzy](app.zzy)处理GET问候与POST姓名校验；同源页面[index.html](index.html)。[正式契约](../../docs/runtime/web.md)列出所有边界。公开Python嵌入、SQLite尚未交付。共享冻结模式加--shared，默认模式仍逐请求实例化。
+业务源码[app.zzy](app.zzy)处理GET问候与POST姓名校验；同源页面[index.html](index.html)。[正式契约](../../docs/runtime/web.md)列出所有边界。Python嵌入见下文，SQLite待P08-04。共享冻结模式加--shared，默认模式仍逐请求实例化。
 
 仓库根目录，Python 3.12.14、有pip的环境：
 
@@ -28,3 +28,26 @@ python -m zzy.web examples/web/app.zzy --route GET /api/hello hello --route POST
 ```
 
 共享模式启动时执行一次初始化，拒绝模块级zyes、可达Lazy、捕获Cell的闭包和原生句柄；不会自动退回默认模式。共享数组/Map/结构/Machine只读，业务可变状态用请求局部值（数据库待P08-04）。修改代码后需要重启，你先前启动的服务不会热更新。
+
+## Python直接调用同一业务函数
+
+核心安装即可使用，无需Web依赖。仓库根目录运行：
+
+```powershell
+.venv/Scripts/python.exe -X utf8 -m examples.web.embed
+```
+
+[embed.py](embed.py)直接调用同一app.zzy的greet，输出`{"status": 200, "body": {"message": "你好，Ada"}}`。Python只负责数据传入和展示；姓名校验、问候和业务状态码仍由ZZY处理。
+
+```python
+from zzy.embedding import load_module
+
+with load_module("examples/web/app.zzy") as module:
+    result = module.call("greet", {"body": {"name": "Ada"}})
+    print(result.value)
+    print(result.stdout, end="")
+```
+
+load不运行初始化；每次call独立执行，结束自动释放上下文，with退出释放模块。参数和结果自动按集中契约深复制/校验，结果为普通Python数据；不会返回内部ZZY句柄。Python支持资源限额内的int，HTTP仍拒绝超出安全整数范围的JSON数值，大整数HTTP字段须明确约定十进制字符串。
+
+取消可传`CancellationToken`并由宿主线程调用cancel；它是协作式取消。同步call在返回/抛错前完成清理；并发在途时close明确报错，先取消并等待调用结束再关闭。模块不共享可变运行数据；如需持久化，留待P08-04。

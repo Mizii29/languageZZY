@@ -643,3 +643,19 @@ Git 提交：真实标识 / 未提交
 
 - 最终完整命令`.venv/Scripts/python.exe -X utf8 -m tests --report tests/p08/core-regression-02.json`退出0：collected=tests_run=2010，960.375秒，failures/errors/skipped/expected_failures全0。原2005项及1738外部CLI没有删减；新增5项核心用例，Web12项另执行。P08-02达到本轮完成标准，勾选后54/70；P08整体未完成，下一项P08-03。本地分支codex/p08-02-shared，仅提交本轮差异，不推送。
 - 定稿静态命令`-m scripts.ci static --output dist/p08-02-static-release`退出0：53份Markdown、621本地链接、fixture/清单/任务/requirement核对通过；校园源码仍504总行/493有效行。最终7个实现/测试文件哈希匹配，wheel中41份运行时源码与工作区逐份规范换行后相同。Git差异审查仅纳入本轮27个文件，docs/manual-tests/不暂存；requirement SHA256仍为b099c19fc339ce1dc1aab7e9d6c8126a9c5c9ace3d31b969a0623df90f521d2b。
+
+## 2026-10-28：P08-03数据转换与Python嵌入
+
+- 用户要求完成下一项。接手codex/p08-02-shared/4815347，核实P08-02已验收、P08-03最早未完成；Git仅docs/manual-tests/未跟踪。使用项目zzy技能核对集中契约、interpreter第11节、stdlib/resources/覆盖表、CI与包配置；普通设计选择沿用用户直接实现授权。本轮仅P08-03，不提前SQLite/P10，不操作用户8000端口服务。
+- 契约先落在docs/runtime/web.md：公开zzy.embedding.load_module/LoadedModule.call/exports/close及CallResult/ConversionError。加载仅prepare；每调用新上下文，先转换宿主参数，再初始化及调用，最后转换结果，finally释放；并发可调用，活动调用时close明确拒绝且不关闭模块。返回值/输出由Python拥有；无内部Value句柄泄漏、隐式结果解包、Lazy唤醒或任意Python属性/eval/exec。
+- 实现精确None/bool/int/float/str/list/dict双向转换，结构返回字段dict，循环/非有限Float/孤立代理/子类/未知类型拒绝。别名按出现次数复制，输入不回写宿主，输出不保留可变别名；输出树预留预算防止重复别名展开绕过限额。Python Int直接保留到integer_bits上限，HTTP仍严格安全整数边界，不悄悄变String。使用既有诊断、资源计量与CancellationToken，无新语言错误码/语法。
+- examples/web/embed.py通过同一app.zzy的greet返回业务数据，Python无业务校验副本；真实HTTP新增对照正常中文/英文、缺字段、错误类型和Null的状态码/数据。标准库注册表及校园CLI格式均不改。
+- 首轮`-m unittest tests.test_embedding -v`10项中9通过、1错误：integer_bits=2在加载综合夹具时已拒绝源码数字9，未进入目标转换。按systematic-debugging核对实际Phase.FRONTEND，新增仅identity的独立embed-boundary.zzy；配额不放宽，验证等于阈值成功/超限失败。补依赖快照、初始化失败和宿主参数类型后嵌入11/11、0.975秒通过；输出别名展开的200槽限制另核实实际在to_python/retain中触发。
+- 最终核心专项包含嵌入11项与原Web核心8项：19/19、1.89秒，报告tests/p08/embedding-03.json。64/65层边界、Bool/Int、超长精确Int、Array/Map/结构、无副作用load、未唤醒Lazy、失败/取消清理、并发输入输出/计数、活动close拒绝及下一次调用恢复均实际执行。CLI check夹具静默、`-m examples.web.embed`实际输出Ada业务数据，导入embedding不加载Web/GUI。
+- `.venv/Scripts/python.exe -X utf8 -m tests.web_http --report tests/p08/http-03.json`13/13、4.797秒通过；真实TCP业务对照，其余原12项保留。ASGI启动取消仍单列生命周期用例，不冒充网络请求。
+- `.venv/Scripts/python.exe -X utf8 -m scripts.ci package --output dist/p08-03-package --installer C:/Users/13691/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe`通过。新wheel核心无Web依赖环境核对42源码，并新增真实嵌入调用到CI安装探针。离线强制重装wheel至dist/p08-web-installed/env后，`env/Scripts/python.exe -I -X utf8 .../probe.py`HTTP13/13、4.891秒；同环境embedding_probe.py嵌入11/11、1.046秒，均验证包从env导入。报告保存在tests/p08/package-03、package-probe-03、installed-http-03、installed-embedding-03.json。
+- 最终源码/测试哈希保存tests/p08/source-03.json，冻结后启动`.venv/Scripts/python.exe -X utf8 -m tests --report tests/p08/core-regression-03.json`完整回归；最终结果未出前保持P08-03未勾选。清单仅新增11项，原2010项和1738外部CLI不删减。分支codex/p08-03-embedding，本轮本地提交、不推送。GUI/用户人工测试/其他平台/云端CI未重跑，协作取消不承诺强制中止任意宿主阻塞。
+- 首次静态门禁`-m scripts.ci static --output dist/p08-03-static`失败：git diff --check报告skills/guide.md末尾新增空行；未把后续Get-Content的退出0当成门禁成功。修正文档后`-m scripts.ci static --output dist/p08-03-static-fixed`通过。未改变已冻结实现或测试。
+
+- 最终完整命令`.venv/Scripts/python.exe -X utf8 -m tests --report tests/p08/core-regression-03.json`退出0：collected=tests_run=2021，966秒，失败/错误/跳过/expected failure均0；本轮全量一次完整跑完，没有用专项拼接或跳过。现勾选P08-03，55/70，下一项P08-04 SQLite，P08整体仍未完成。
+- 定稿`-m scripts.ci static --output dist/p08-03-static-final`通过：53份Markdown/635本地链接、任务/清单/requirement核对，冻结7个实现/测试文件哈希保持一致；最终wheel42份运行时源码与当前逐份规范换行匹配。审查本轮29个代码/测试/文档及报告文件后本地提交；docs/manual-tests/不暂存，requirement SHA256仍b099c19fc339ce1dc1aab7e9d6c8126a9c5c9ace3d31b969a0623df90f521d2b。提交标识见Git历史和答复。

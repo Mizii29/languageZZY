@@ -1,6 +1,6 @@
 # ZZY 开发待办
 
-建立：2026-10-03｜当前阶段：P08-02 已验收｜下一项：P08-03
+建立：2026-10-03｜当前阶段：P08-03 已验收｜下一项：P08-04
 
 本文件是任务状态的唯一清单；详细流程见 [roadmap.md](roadmap.md)，执行证据见 [development-log.md](development-log.md)。接手时根据实际仓库修正状态，不按日期猜测完成情况。
 
@@ -113,11 +113,11 @@ P03-03 的 Lazy 部分是共享捕获布局/Cell 基础；Lazy AST 的捕获分�
 
 ## P08：已选后端与互联（依赖 P05、P06、P09）
 
-2026-10-28明确选择；P08-01/02已验收，其余按依赖继续。集中契约见[Web](../runtime/web.md)。
+2026-10-28明确选择；P08-01—03已验收，其余按依赖继续。集中契约见[Web](../runtime/web.md)。
 
 - [x] P08-01 实现 GET/POST、JSON、错误响应和同源静态页面。
 - [x] P08-02 实现递归冻结共享模块、拒绝共享 Lazy/可变闭包、独立请求与并发隔离验证。
-- [ ] P08-03 完成数据边界与明确的 Python 嵌入接口。
+- [x] P08-03 完成数据边界与明确的 Python 嵌入接口。
 - [ ] P08-04 完成 SQLite 参数化查询、事务、连接管理及持久化测试。
 - [ ] P08-05 同步补齐 Web/Python API 的测试和指南，提交互联示例。
 
@@ -148,11 +148,11 @@ P10 各候选相互独立，不要求全部完成；P11 不以全部勾选为前
 
 ## 交接栏
 
-2026-10-28：本轮完成P08-02；P00—P07/P09/E保持完成。70项任务54项完成。下一项P08-03；P08-03—05、P11未完成，P10未选。
+2026-10-28：本轮完成P08-03；70项任务55项完成。下一项P08-04 SQLite；P08-04/05、P11未完成，P10未选。P00—P07/P09/E和P08-01/02保持完成。
 
-- 实际接口create_app(..., shared=False) / --shared：默认逐请求模式保留；显式共享模式初始化一次，递归冻结Array/Map/结构/嵌套Machine及捕获环境。共享Lazy、可变绑定、Cell闭包和原生句柄拒绝，不降级。集中规则见docs/runtime/web.md。
-- 每请求独立绑定、命名空间缓存、输入输出与资源计量；原生名义类型定义身份保持，服务快照独立拥有预留，线程结束后关闭归零。同步ZZY运行于受控线程池，协作取消边界已说明。
-- 最终核心专项8/8、Web专项12/12；完整回归2010/2010、960.375秒，零失败/错误/跳过/expected failure，原1738外部CLI完整保留。实际命令、源码哈希及原始报告见tests/p08；并发测试使用真实TCP和屏障交错，启动取消另用ASGI生命周期用例。
-- 最终wheel无Web依赖核心安装41源码核对；隔离Web环境重装后HTTP12/12、共享核心5/5通过。另以独立CLI子进程验证--shared的GET/POST。用户原8000服务未重启。
-- 本轮不推送；云端CI、GUI、用户人工测试和其他平台未重跑，不以核心/HTTP通过替代。线程取消不能强制打断任意阻塞宿主调用；公开嵌入API和SQLite尚未提供。
-- requirement原文哈希不变，校园CLI及数据格式不改；docs/manual-tests/保留不提交。核心0.6.0a1、语法v0.6、stdlibv0.6.1、sketch1.0不变。历史证据仍见对应阶段报告。
+- 核心公开API：zzy.embedding.load_module/LoadedModule.call/exports/close，返回CallResult(value, stdout, stderr)。load只prepare，每call独立初始化/执行/转换/finally清理，with退出释放Program；不暴露内部Value。精确类型、错误、资源及并发close规则统一见docs/runtime/web.md。
+- Python参数和结果严格转换并脱离运行上下文：Bool/Int区分，数组/Map/普通结构支持；子类、循环、非有限Float、孤立代理和不支持值拒绝，Result/Lazy不自动解包/唤醒。Python整数资源受限且保持int，HTTP仍限制安全整数；别名按出现次数复制并计量。
+- Python示例python -X utf8 -m examples.web.embed与HTTP调用同一app.zzy的greet。并发call的状态、stdin/stdout独立；有活动调用时close拒绝，宿主先取消/等待再关闭，线程取消仍为协作式。
+- 新嵌入专项11/11，加既有Web核心共19/19；真实HTTP专项13/13；完整回归2021/2021、966秒，失败/错误/跳过/expected failure全0。原2010项和1738外部CLI保留；报告与冻结源码哈希见tests/p08。
+- 核心隔离wheel安装42源码核对通过，并将公开API调用加入CI安装探针；安装环境嵌入11/11、HTTP13/13。没有新增依赖。云端CI/GUI/用户人工/其他平台未重测；不把本机结果写成云端通过。
+- 本轮仅本地提交，无推送/历史改写；用户8000端口服务和docs/manual-tests/未改动。requirement原文哈希不变，校园CLI与文件格式不改，核心0.6.0a1、语法v0.6、stdlibv0.6.1、sketch1.0保持。

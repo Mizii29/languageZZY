@@ -1,6 +1,6 @@
 # P08 Web 与互联集中契约
 
-2026-10-28。P08 已选，P08-01/02已验收，P08-03—05未完成。核心语法/stdlib ABI 不变。本文件是 Web 边界唯一规则来源，不将旧设计中的 web.get/web.post/web.json/web.serve 方向示例注册为可调用语言接口。
+2026-10-28。P08 已选，P08-01—03已验收，P08-04/05未完成。核心语法/stdlib ABI 不变。本文件是 Web 边界唯一规则来源，不将旧设计中的 web.get/web.post/web.json/web.serve 方向示例注册为可调用语言接口。
 
 ## 决策与范围
 
@@ -32,15 +32,15 @@ Request是每请求新建的Map，五个键：method(String)、path(String)、qu
 
 超时/客户端断连/ASGI任务取消触发CancellationToken；解释器检查点及支持取消的原生操作退出并释放上下文。超时响应可先返回，执行槽直到线程真正退出才释放。取消不能强制打断任意阻塞宿主文件调用；服务关闭停止接单、取消全部活动令牌并等待池结束，永久阻塞宿主可能延迟关闭。不得将线程超时称为硬进程隔离。ZZY代码必须是服务拥有者信任的代码，本层不是文件系统沙箱。
 
-## 后续任务的边界（未实现接口）
+## 阶段接口索引与后续任务
 
 P08-02的实际共享模式和拒绝策略见下一节。
 
-P08-03：公开load/call/conversion/close API将在本文件补充具体签名；必须显式拥有和释放上下文，宿主传入值深拷贝并计量，Bool/Int严格区分，错误及不支持类型拒绝，不把本轮内部RequestRuntime发布为嵌入API。
+P08-03接口与转换规则见下文；当前开发验收状态以todo为准。内部RequestRuntime不属于公开嵌入API。
 
 P08-04：SQLite待受控注册表接口；必须只用参数绑定、连接按请求拥有、事务成功commit/异常或取消rollback/finally close，不共享连接跨线程。具体签名、锁等待和SQL约束在实现时同文件补充，当前无db接口。保留校园CLI及文件格式。
 
-P08-05：完成上述跨接口、持久化、安装与交付验收；本轮只交付HTTP子集，不以页面成功代替后续完成。
+P08-05：完成上述跨接口、持久化、安装与交付验收；分项通过不等于互联阶段全部完成，不以页面成功代替后续验收。
 
 
 ## P08-02共享模式
@@ -52,3 +52,26 @@ P08-05：完成上述跨接口、持久化、安装与交付验收；本轮只�
 共享整个模块依赖图：所有模块级可变绑定、任何可达Lazy、捕获Cell的闭包及原生句柄拒绝（E303），不隐式降级。只读闭包递归检查captures和注解；结构定义的默认值仍在请求中求值，其全局捕获绑定全部纳入共享检查。Array/Map/结构/嵌套Machine通过现有写入口递归冻结；默认新数组按请求创建，默认引用共享数组保持冻结。共享命名空间别名不支持；内置命名空间的成员缓存字典按请求复制，启动时已构造的只读成员（包括array.Stats等名义类型定义）保持身份，之后的惰性缓存写入只属于该请求。
 
 共享数据的预留由服务拥有，所有请求结束、线程池退出后才释放；每请求独立Binding映射/模块映射/Frame/计量/输入输出。共享数组遍历不修改active计数，冻结检查仍先于写入，普通可变数组的遍历规则不变。只读Program仍为固定启动快照；没有自动缓存、热更新或VM。
+
+## P08-03 Python嵌入
+
+公开入口为`from zzy.embedding import load_module, LoadedModule, CallResult, ConversionError`，核心安装即可使用，不导入Web/GUI。签名：
+
+```python
+load_module(path, *, policy=None) -> LoadedModule
+module.exports -> tuple[str, ...]
+module.call(name, *arguments, stdin="", cancellation=None) -> CallResult
+module.close() -> None
+```
+
+policy为ResourcePolicy或None；cancellation为CancellationToken或None。load_module仅prepare入口及依赖快照，不执行初始化或spec。exports按源码顺序列出入口模块顶层具名函数，不暴露变量、导入别名、结构构造器或任意Python属性。call按名称及位置参数调用，可调用零参数/多参数函数；先检查name/stdin/cancellation的宿主类型，再检查关闭状态、导出名称和参数数量。未知名称LookupError、参数数量或宿主参数类型错误TypeError，在执行初始化前拒绝。ZZY内部参数/返回注解仍走原诊断。
+
+每次call先在独立上下文中转换参数，再执行模块初始化及导出函数，最后转换结果，finally释放全部运行值、句柄和预留；默认空stdin即EOF，输出只进本次私有缓冲。返回冻结记录CallResult(value, stdout, stderr)，value是脱离上下文的Python数据树；失败不返回部分结果，原DiagnosticError、ResourceExceeded、Cancelled保持类别及定位，不自动包装成Result。Python调用点无ZZY表达式位置，参数注解诊断定位导出函数名；函数内部错误保留真实源码及调用notes。
+
+支持`with load_module(...) as module`；退出调用close。close幂等，释放模块持有的Program/函数索引；关闭后exports/call/重新进入with均RuntimeError。可并发调用同一模块，每次独立初始化/状态/预算；有在途调用时close明确RuntimeError且模块仍开放，不暗中等待或取消。宿主须先cancel令牌并等调用结束，再close。同步API不创建后台线程、不设置隐式超时；取消沿用协作检查点，不能强制打断任意阻塞宿主操作。宿主不得在call期间并发修改其参数树。加载源码的副作用属于受信任代码，本API不是文件系统沙箱。
+
+参数转换仅接受精确内置类型None/bool/int/float/str/list/dict（不接受子类/tuple/自定义对象）；dict键必须精确str。映射为Null/Bool/Int/Float/String/Array/Map。Bool不作为Int；只接受有限Float和无孤立代理码点的String，不解码[OoO]。输出反向转换，普通结构变字段dict（不保留名义类型）；拒绝Result、Lazy、函数、Machine、Quantity、Range、定义、模块及原生句柄，不解包或唤醒。循环引用双向拒绝；重复非循环引用按出现次数深复制，不保留可变别名。转换失败抛ConversionError（ValueError子类）。
+
+Python整数保持int，受integer_bits约束，不经十进制/JSON字符串中转；HTTP仍双向限制安全整数±(2^53-1)。大整数HTTP字段必须由业务明确为十进制String，不按大小偷偷改变类型。两种入口的区别是传输能力，不改变ZZY的Int语义。
+
+转换受value_depth（根容器为1）、container_items、text_codepoints及runtime对象/槽/载荷预算约束；导出Python树构建也预留预算，避免重复别名指数展开绕过配额。stdin受io_payload_bytes限制并计入临时载荷。调用成功后返回数据和输出由Python调用者拥有，不属于活跃ZZY上下文预算；不承诺进程RSS上限。显式load不启用自动缓存、热更新、VM或shape合约生成。

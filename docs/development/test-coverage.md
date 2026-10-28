@@ -140,6 +140,8 @@ P09最终完整门禁：1791/1791，806.968秒，无失败/错误/跳过；[全�
 
 ## P08-01 HTTP子集
 
-[专项证据](../../tests/p08/README.md)：真实TCP HTTP、网页GET/POST、严格JSON/安全整数、错误恢复、大小边界、慢body/执行超时、断连、独立请求及关闭；核心无可选依赖检查另跑。P08-01历史报告不覆盖共享捕获；当前P08-02证据见下项，P08-03公开嵌入、P08-04数据库仍未验证。
+[专项证据](../../tests/p08/README.md)：真实TCP HTTP、网页GET/POST、严格JSON/安全整数、错误恢复、大小边界、慢body/执行超时、断连、独立请求及关闭；核心无可选依赖检查另跑。P08-01历史报告不覆盖共享捕获或Python嵌入；当前后续任务证据见下项，P08-04数据库仍未验证。
 
 P08-02：tests/test_web_shared.py覆盖嵌套冻结、只读闭包捕获、Lazy/Cell/原生句柄拒绝、导入模块默认捕获、原生名义类型身份及失败/关闭资源释放；tests.web_http新增屏障强制交错、只读失败后恢复、忙worker事件循环响应及真实lifespan关闭；启动取消后晚到快照的回收另用受控ASGI生命周期测试。当前完整门禁见tests/p08/README.md，不推断公开嵌入/SQLite。
+
+P08-03：tests/test_embedding.py执行真实ZZY夹具，覆盖严格Python类型、Bool/Int、有限数/Unicode、输入输出别名、64/65层及配额边界、循环与全部不支持值拒绝、load/check不执行、依赖快照、错误定位、初始化失败、取消/IO/资源释放、并发与活动close；tests.web_http新增与Python调用同一greet的真实HTTP正常/错误对照。scripts/ci_installed_probe.py验证核心无可选依赖安装后的公开API。最终计数与未验证范围见tests/p08，不推断SQLite已实现。

@@ -132,3 +132,5 @@ B01—B09首次基线、两版交错复测和stdin探针均使用上述default-v
 HTTP子集的流式body/响应64KiB、元数据16KiB、受控并发、取消与关闭边界统一见[Web契约](web.md)。每请求新ResourceMeter，io_payload_bytes=65536，其余default-v1不变；线程取消不承诺强制终止任意阻塞宿主调用。
 
 P08-02共享模式增加服务自有计量，快照接管初始化预留，所有请求结束后关闭释放；每请求独立计量并预留绑定/模块映射槽。冻结数组遍历不写active，默认可变数组仍使用活动遍历保护。服务与每个请求各自受default-v1及Web覆盖约束，不宣称进程RSS硬限。
+
+P08-03嵌入的每次call独立ResourceMeter；输入转换和Python输出树构建均计运行对象/槽/载荷，深度/容器/字符串/整数沿用现有键，重复别名展开不能绕过预算。stdin有io_payload_bytes及临时载荷检查，stdout/stderr保留原输出配额。结果返回后由宿主拥有，全部ZZY预留在finally归零；模块close释放准备快照，活动调用时明确拒绝close。残余宿主MemoryError/RecursionError按现有CLI原则报告E211，不伪装数据转换失败。

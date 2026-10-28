@@ -40,3 +40,23 @@ P08-01段落及报告保留历史含义；当前新增显式shared=True/--shared
 实际CLI新增参数也经独立进程、临时端口验证：`python -X utf8 -m zzy.web examples/web/app.zzy --route GET /api/hello hello --route POST /api/greet greet --page examples/web/index.html --shared --port 62437`，GET返回language=ZZY，POST返回你好，Ada，见[CLI报告](cli-02.json)。探针退出时只终止自己的子进程；正常服务关闭证据由上述lifespan用例提供，用户原8000端口服务未操作。
 
 完整核心回归[2010/2010、960.375秒](core-regression-02.json)，失败/错误/跳过/expected failure均0；原2005项及1738外部CLI完整保留，新加5项核心测试。未验证其他平台/最大压力/真实互联网部署；协作取消不能强制中止所有阻塞宿主调用。GUI与用户人工测试本轮未重跑；未执行P08-03公开嵌入/P08-04 SQLite。CI沿用已接入的Web专项job，本轮未推送云端。
+
+## P08-03嵌入验收
+
+公开接口与所有权以[集中契约](../../docs/runtime/web.md)为准；[Python示例](../../examples/web/embed.py)与Web调用同一greet。加载、参数拒绝不运行初始化；call每次独立执行，转换和执行的finally释放共用原解释器机制。旧P08-01/02段落及报告保留当时含义。
+
+实际命令（根目录）：
+
+```powershell
+.venv/Scripts/python.exe -X utf8 -m unittest tests.test_embedding tests.test_web_core tests.test_web_shared -v
+.venv/Scripts/python.exe -X utf8 -m examples.web.embed
+.venv/Scripts/python.exe -X utf8 -m tests.web_http --report tests/p08/http-03.json
+.venv/Scripts/python.exe -X utf8 -m tests --report tests/p08/core-regression-03.json
+```
+
+- [核心专项19/19](embedding-03.json)：11项新嵌入用例、8项原Web核心。覆盖精确类型、层数/容量阈值、别名复制、循环及不支持值拒绝、初始化/调用错误定位、捕获IO、取消、并发、close与计量归零。
+- [Web专项13/13](http-03.json)：新增真实TCP与Python同一greet的正常/错误业务对照；原有安全整数边界及非法响应拒绝保留。
+- [核心wheel安装](package-03.json)与[探针](package-probe-03.json)：42份运行时源码，核心不安装Web依赖即可调用嵌入API。CI安装探针已接入该检查，现有核心回归/Web job自动收集新用例，无新增第三方依赖。
+- 隔离env离线重装本轮wheel，`python -I`实测[嵌入11/11](installed-embedding-03.json)、[HTTP13/13](installed-http-03.json)，确认从安装目录导入。源码及测试对应[冻结哈希](source-03.json)。
+
+完整回归[2021/2021、966秒](core-regression-03.json)，失败/错误/跳过/expected failure全0；原2010项及1738外部CLI全部保留。只验证Windows11/CPython3.12.14；GUI、用户人工操作、云端CI和其他平台未重跑。无SQLite、隐式执行超时、自动缓存或热更新；线程协作取消不能打断所有阻塞宿主调用。

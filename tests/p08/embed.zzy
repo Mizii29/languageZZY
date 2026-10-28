@@ -1,0 +1,25 @@
+(zyes) count := 0;
+(shape) Item { value; }
+(machine) Flow { a -- "go" --> b; }
+(addnew) identity(value) { (return) value; }
+(addnew) add(a: (Int), b: (Int)) { (return) a + b; }
+(addnew) shape_value() { (return) Item::{value: [1,(true),(null)]}; }
+(addnew) mutate(value) { array.push(value, 9); (return) value; }
+(addnew) aliases(value) { array.push(value[0], 9); (return) value; }
+(addnew) state(value) { count <- count + 1; io.print(value); (return) [count,io.input("input> "),value]; }
+(addnew) boom() { (return) 1 / 0; }
+(addnew) loop() { (while) (true) {} }
+(addnew) lazy_value() { (return) (zzz)(io.print("woke")); }
+(addnew) result_value() { (return) (^_^)(1); }
+(addnew) function_value() { (return) identity; }
+(addnew) native_function_value() { (return) io.print; }
+(addnew) machine_value() { (return) Flow("a"); }
+(addnew) quantity_value() { (return) 1::m; }
+(addnew) range_value() { (return) range(0,3,1); }
+(addnew) native_value() { (return) sketch.canvas(10,10,"embed"); }
+(addnew) definition_value() { (return) Item; }
+(addnew) namespace_value() { (return) array; }
+(addnew) cycle_value() { (zno) a := []; array.push(a,a); (return) a; }
+(addnew) map_cycle_value() { (zno) a := data.map(); data.set(a,"self",a); (return) a; }
+(addnew) repeated_value() { (zno) a := [1]; (return) [a,a]; }
+(addnew) expanded_value() { (zyes) a := [1]; (for) n (in) 0..<12 { a <- [a,a]; } (return) a; }

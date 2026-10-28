@@ -45,6 +45,16 @@ def request(port,path='/api/hello',method='GET',body=None,headers=None):
 
 
 class HTTPTests(unittest.TestCase):
+    def test_python_embedding_matches_http_business_function(self):
+        from zzy.embedding import load_module
+        with load_module(ROOT/'examples/web/app.zzy') as module:
+            with server('examples/web/app.zzy',[('POST','/api/greet','greet')],shared=True) as port:
+                for body in [{'name':'Ada'}, {'name':'同学'}, {}, {'name':True}, None]:
+                    expected=module.call('greet',{'body':body}).value
+                    status,_,payload=request(port,'/api/greet','POST',json.dumps(body).encode(),{'Content-Type':'application/json'})
+                    self.assertEqual(status,expected['status'])
+                    self.assertEqual(json.loads(payload),expected['body'])
+
     def test_page_get_post_and_business_errors(self):
         with server('examples/web/app.zzy',[('GET','/api/hello','hello'),('POST','/api/greet','greet')],page=ROOT/'examples/web/index.html') as port:
             status,ctype,body=request(port)

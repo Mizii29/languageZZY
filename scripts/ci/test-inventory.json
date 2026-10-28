@@ -1826,6 +1826,17 @@
     "tests.test_e1_runtime.SketchRuntimeTests.test_program_reuse_allocates_fresh_documents_and_resets_ids",
     "tests.test_e1_runtime.SketchRuntimeTests.test_real_cli_batch_boundary_and_shared_payload_limit",
     "tests.test_e1_runtime.SketchRuntimeTests.test_segment_and_object_limits_fail_before_publish",
+    "tests.test_embedding.EmbeddingTests.test_cancellation_and_next_call",
+    "tests.test_embedding.EmbeddingTests.test_concurrent_io_state_and_active_close",
+    "tests.test_embedding.EmbeddingTests.test_dependency_snapshot_initialization_failure_and_api_arguments",
+    "tests.test_embedding.EmbeddingTests.test_detached_copies_and_alias_policy",
+    "tests.test_embedding.EmbeddingTests.test_diagnostics_and_recovery",
+    "tests.test_embedding.EmbeddingTests.test_exact_scalar_and_nested_roundtrip",
+    "tests.test_embedding.EmbeddingTests.test_example_cli_check_and_optional_import_isolation",
+    "tests.test_embedding.EmbeddingTests.test_load_snapshot_no_execution_and_invalid_calls_before_initialization",
+    "tests.test_embedding.EmbeddingTests.test_rejects_python_types_cycles_and_invalid_numbers",
+    "tests.test_embedding.EmbeddingTests.test_rejects_zzy_values_without_waking_or_unpacking",
+    "tests.test_embedding.EmbeddingTests.test_resource_limits_input_output_and_cleanup",
     "tests.test_interpreter.InterpreterTests.test_ast_spans_and_left_association",
     "tests.test_interpreter.InterpreterTests.test_cancellation_inside_sum_scratch",
     "tests.test_interpreter.InterpreterTests.test_error_and_cancel_release_even_with_live_traceback",
@@ -3775,6 +3786,6 @@
       "run_cli.e4-undo-fill"
     ]
   },
-  "collected": 2010,
+  "collected": 2021,
   "blackbox": 1738
 }

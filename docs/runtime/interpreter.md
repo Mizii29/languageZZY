@@ -469,7 +469,7 @@ HTML/CSS/JavaScript 不用读懂 `(addnew)` 或 `[OoO]`；它们只需要请求�
 
 Python Web 框架负责 HTTP 解析、连接和响应，ZZY 函数负责业务逻辑。第一版用 FastAPI/Starlette 适配已有 ASGI 服务器，不重写网络协议。[ASGI 规范](https://asgi.readthedocs.io/en/latest/specs/main.html)
 
-P08-01采用启动时prepare源码和宿主固定路由表，启动不执行ZZY初始化；旧web.get/web.post/web.serve仅为方向示例，不注册语言接口。实际规则集中见[Web契约](web.md)。每次请求的流程是：
+P08-01采用启动时prepare源码和宿主固定路由表，默认模式启动不执行ZZY初始化；P08-02显式shared模式在服务启动时初始化一次并冻结。旧web.get/web.post/web.serve仅为方向示例，不注册语言接口。实际规则集中见[Web契约](web.md)。每次请求的流程是：
 
 ```text
 HTTP 请求 -> Python 读取路径和 JSON -> 构造 ZZY Request
@@ -478,6 +478,8 @@ HTTP 请求 -> Python 读取路径和 JSON -> 构造 ZZY Request
 ```
 
 请求头、查询参数和 JSON 对象可用宿主桥接提供的 `(Map)` 值表达，通过 `data.get` / `data.set` 等库函数访问，初版不必添加新的字典字面量语法。请求输入是数据，不是 ZZY 源码，不进行 `[OoO]` 转义解码。
+
+P08-03提供核心Python模块zzy.embedding：load_module只prepare，LoadedModule.call自动双向转换数据，并通过原Interpreter/CallRequest运行同一业务函数；每调用新上下文，finally清理，close释放Program。签名、类型、错误与所有权统一维护在Web集中契约，不以内部Value/RequestRuntime充当公开API。
 
 后端模式共享只读 Program 与递归冻结的模块数据，请求建立独立 ExecutionContext；共享数组/Map/结构及嵌套 Machine 的所有写入口都检查冻结。模块级 Lazy 和捕获可变绑定的共享闭包应拒绝或建立每请求实例，不能仅新建栈帧就声称隔离。冻结结构的默认表达式捕获环境也必须检查。可变业务状态放数据库。
 
