@@ -1,0 +1,9 @@
+{
+  "base": "57aab5d49418ebf5769cff9d2b186f57779d6c86",
+  "sha256_lf": {
+    "zzy/features.py": "bd60a27b14cb0f6a6fb6ed75df8e8ff75641152a738d5f19d9fccc8c46ce277c",
+    "tests/test_p11_query.py": "2f0be96729f68566cc32541909b306026b34d3b1862259827480f4d345d1b40a",
+    "scripts/ci/test-inventory.json": "d1b42283b96ec04de9e93fed3cb906167456789528aac14042b1433e3c42c01f"
+  },
+  "note": "Final seven query tests; runtime identical to measured 06-source.json. Full core report added after completion."
+}

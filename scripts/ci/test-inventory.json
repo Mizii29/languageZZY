@@ -2010,6 +2010,13 @@
     "tests.test_p11_meter.MeterOptimizationTests.test_registration_failure_releases_even_with_live_traceback",
     "tests.test_p11_meter.MeterOptimizationTests.test_release_weakrefs_subclass_cycles_aliases_and_gc_retry",
     "tests.test_p11_meter.MeterOptimizationTests.test_validation_cancellation_order_and_multi_atomicity",
+    "tests.test_p11_query.QueryComparatorTests.test_actual_sort_cancellation_and_next_context_recovery",
+    "tests.test_p11_query.QueryComparatorTests.test_empty_filter_take_boundaries_and_shallow_alias",
+    "tests.test_p11_query.QueryComparatorTests.test_fixed_real_cli_stable_mixed_numbers_strings_quantities_and_input",
+    "tests.test_p11_query.QueryComparatorTests.test_late_invalid_key_and_original_input_note_even_when_take_zero",
+    "tests.test_p11_query.QueryComparatorTests.test_shared_program_interleaved_queries_keep_inputs_and_state_private",
+    "tests.test_p11_query.QueryComparatorTests.test_sort_workspace_quotas_and_current_item_cleanup_match_generic",
+    "tests.test_p11_query.QueryComparatorTests.test_specialization_and_quantity_generic_route",
     "tests.test_p11_sum_stats.SumStatsTests.test_checks_and_additions_remain_interleaved",
     "tests.test_p11_sum_stats.SumStatsTests.test_fixed_cli_answers_empty_signed_duplicates_and_input_alias",
     "tests.test_p11_sum_stats.SumStatsTests.test_midway_cancel_cleanup_and_following_context_recovery",
@@ -3828,6 +3835,6 @@
       "run_cli.e4-undo-fill"
     ]
   },
-  "collected": 2063,
+  "collected": 2070,
   "blackbox": 1738
 }

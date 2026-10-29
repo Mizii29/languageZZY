@@ -158,13 +158,7 @@ class Features:
                                     dimensions = key.data[1]
                                 category = kind
                                 keyed.append((index, key))
-                            def compare(a, b):
-                                self.meter.cancellation.check()
-                                if self.binary("LESS", a[1], b[1], expression).data:
-                                    return -1
-                                if self.binary("GREATER", a[1], b[1], expression).data:
-                                    return 1
-                                return 0
+                            compare = self._query_comparator(category, expression)
                             keyed.sort(key=cmp_to_key(compare), reverse=clause.data == "DESC")
                             retained[:] = (index for index, key in keyed)
                             keyed.clear()
@@ -179,6 +173,29 @@ class Features:
                     return result
             finally:
                 self.current_item = previous
+
+    def _query_comparator(self, category, expression):
+        # Keys have all passed category validation. Native Int/Float comparison
+        # preserves large-Int precision; never coerce the keys to Float.
+        if category in {"number", "String"}:
+            def compare(a, b):
+                self.meter.cancellation.check()
+                left, right = a[1].data, b[1].data
+                if left < right:
+                    return -1
+                if left > right:
+                    return 1
+                return 0
+        else:
+            # Quantity comparisons retain their arithmetic/resource semantics.
+            def compare(a, b):
+                self.meter.cancellation.check()
+                if self.binary("LESS", a[1], b[1], expression).data:
+                    return -1
+                if self.binary("GREATER", a[1], b[1], expression).data:
+                    return 1
+                return 0
+        return compare
 
     def query_expression(self, expression, index):
         try:

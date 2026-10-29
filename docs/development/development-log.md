@@ -788,3 +788,13 @@ Git 提交：真实标识 / 未提交
 - 清单新增4项至2063，正对最终交付状态执行完整python -m tests --report tests/p11/05-core.json；不会把“少做比较”当性能证明，也不改变库能力说明为已发布分离。
 - 额外只读故障审查：已准备的函数内部触发integer_bits超限，同时令Source.span抛MemoryError；主定位兜底后，用户调用notes再次定位仍抛MemoryError，原quota_key丢失但资源归零。独立记录dist/p11-nested-location-audit.json。列入P11-07累计修复/新增回归，未修复前不宣称P11整体完成；当前正在跑的05回归源码不改。
 - 交付状态完整核心2063/2063、979.672秒，零失败/错误/跳过（05-core.json），运行时与6c88368一致（05-delivery-source）。05标注评估后撤回，sum仍执行原min/max工作；不将测试用时当性能。下一项06，07的notes故障待修项继续保留。
+
+## 2026-10-29/30：P11-06 查询比较（评估进行中）
+
+- P11-05提交57aab5d后实施。所有保留键已逐项验证category后选一次比较器：普通Int/Float/String直接用其原生值比较，混合数值不转Float；Quantity继续原binary LESS/GREATER。每次比较仍先检查取消，沿用cmp_to_key及reverse稳定排序；无top-k、流水线、重算键、早截取或缓存。快照/求take/完整筛选/全部键验证/排序/截取投影、临时槽位及current_item finally不变。
+- 新增6项test_p11_query：真实CLI固定顺序（2^53边界混合数值、Unicode字符串、相等Quantity升降序）、输入未变/浅别名、空集/全过滤/take0或过大、take错误优先、后部非法类别/量纲和除零原始输入下标、44档slots限额与通用比较器完整诊断对照；在真正compare栈帧第三次比较注入取消，检查current_item/Frame/预留恢复及随后上下文成功。
+- 结合P04 runtime和计量23/23、2.467秒，06-specialist.json；源码06-source。先跑真实HTTP/Schema，再独立benchmarks.p11 --before HEAD --after WORKTREE --cases B07 Q01 Q02 Q03 --output benchmarks/results/p11/06-query --profile；profile和正式样本隔离，去留与完整回归后补。
+
+- 06-query的306条记录全部成功，4组×15正式：B07执行−28.0%、Q01−14.3%，Q02/Q03约−8%但处于MAD内，CLI−2.4%..+4.3%；保留专用比较器，完整阶段与边界不变。随后补负大整数/负零稳定答案及共享Program四请求屏障交错，第7个测试接入清单；专项24/24、3.922秒，HTTP23/23、6.766秒。清单2070；正在跑最终核心回归，性能测量与回归没有并行。
+
+- 最终完整核心2070/2070、983.422秒，零失败/错误/跳过，06-core.json；static --output dist/p11-06-static通过。保留06并勾选，06-delivery-source锁定最终测试/源码；准备本地阶段提交。下一项07：先修复已复现的notes定位故障，再冻结累计版本测量及最终门禁，人工结果不提前填写。
