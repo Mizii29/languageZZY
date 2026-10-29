@@ -15,3 +15,9 @@
 ```
 
 核心完整入口仍是 `python -X utf8 -m tests`，新增 test_*.py 自动收集；没有用例/跳过/失败均不通过。基线未重跑旧全量，不把历史通过用于后续改动。GUI、人工 Ctrl+C 和云端另行记录，不由 headless 代替。
+
+## P11-02 映射
+
+`tests.test_p11_locations`：成功检查/预留及取消不触发定位；BOM/CRLF/中文/非BMP/EOF固定坐标；完整text/JSON记录与计数；定位OSError/MemoryError不掩盖E211；16个共享Program并发上下文；cwd；真实CLI跨模块主位置/调用notes及check不执行。`tests.test_p07_locations`保留现有cwd/8.3路径回归；`tests.test_resources`保留限额/取消规则。
+
+专项16/16（02-specialist.json），真实HTTP/Schema23/23（02-http.json）；完整核心2049/2049（02-core.json）；21组1496条配对测量成功，全部正式组15样本。02-source.json锁定源码；02-error-profile单独记录冷路径调查，不作速度样本。初始跨模块夹具把plus列号23写错，逐字符枚举和优化前HEAD实跑均证实为24，修正固定答案；原失败日志保留dist/p11-02-specialist-initial.log。

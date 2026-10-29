@@ -1,0 +1,51 @@
+         79794 function calls (79030 primitive calls) in 0.186 seconds
+
+   Ordered by: cumulative time
+   List reduced from 657 to 45 due to restriction <45>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.001    0.001    0.191    0.191 D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\benchmarks\p11_worker.py:11(measure)
+     40/2    0.001    0.000    0.165    0.082 <frozen importlib._bootstrap>:1349(_find_and_load)
+     40/2    0.000    0.000    0.165    0.082 <frozen importlib._bootstrap>:1304(_find_and_load_unlocked)
+     40/2    0.000    0.000    0.164    0.082 <frozen importlib._bootstrap>:911(_load_unlocked)
+     33/2    0.000    0.000    0.164    0.082 <frozen importlib._bootstrap_external>:993(exec_module)
+    108/4    0.000    0.000    0.164    0.041 <frozen importlib._bootstrap>:480(_call_with_frames_removed)
+    148/2    0.008    0.000    0.164    0.082 {built-in method builtins.exec}
+        1    0.000    0.000    0.164    0.164 D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\benchmarks\worker.py:1(<module>)
+       33    0.000    0.000    0.121    0.004 <frozen importlib._bootstrap_external>:1066(get_code)
+        1    0.000    0.000    0.081    0.081 C:\Users\13691\AppData\Local\Temp\tmprkoxg1j6\after\zzy\interpreter.py:1(<module>)
+       22    0.000    0.000    0.050    0.002 <frozen importlib._bootstrap_external>:1211(_cache_bytecode)
+       22    0.000    0.000    0.047    0.002 <frozen importlib._bootstrap_external>:1216(set_data)
+       22    0.001    0.000    0.044    0.002 <frozen importlib._bootstrap_external>:195(_write_atomic)
+        1    0.000    0.000    0.038    0.038 D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\benchmarks\common.py:1(<module>)
+       22    0.000    0.000    0.035    0.002 <frozen importlib._bootstrap_external>:1058(source_to_code)
+        1    0.000    0.000    0.035    0.035 C:\Users\13691\AppData\Local\Temp\tmprkoxg1j6\after\zzy\native\library.py:1(<module>)
+       24    0.034    0.001    0.034    0.001 {built-in method builtins.compile}
+       55    0.000    0.000    0.031    0.001 <frozen importlib._bootstrap_external>:1187(get_data)
+       55    0.029    0.001    0.029    0.001 {built-in method _io.open_code}
+        5    0.000    0.000    0.028    0.006 {built-in method builtins.__import__}
+       22    0.023    0.001    0.023    0.001 {built-in method nt.replace}
+        5    0.000    0.000    0.018    0.004 <frozen importlib._bootstrap>:1390(_handle_fromlist)
+     1000    0.001    0.000    0.016    0.000 C:\Users\13691\AppData\Local\Temp\tmprkoxg1j6\after\zzy\interpreter.py:64(check)
+       22    0.015    0.001    0.015    0.001 {built-in method nt.open}
+       19    0.000    0.000    0.014    0.001 C:\Users\13691\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\dataclasses.py:1264(wrap)
+       19    0.001    0.000    0.014    0.001 C:\Users\13691\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\dataclasses.py:921(_process_class)
+        1    0.000    0.000    0.013    0.013 C:\Users\13691\AppData\Local\Temp\tmprkoxg1j6\after\zzy\features.py:1(<module>)
+     1000    0.001    0.000    0.012    0.000 C:\Users\13691\AppData\Local\Temp\tmprkoxg1j6\after\zzy\interpreter.py:71(locate_resource_error)
+      188    0.012    0.000    0.012    0.000 {built-in method nt.stat}
+      185    0.000    0.000    0.012    0.000 <frozen importlib._bootstrap_external>:140(_path_stat)
+        1    0.000    0.000    0.011    0.011 C:\Users\13691\AppData\Local\Temp\tmprkoxg1j6\after\zzy\resources.py:1(<module>)
+       40    0.000    0.000    0.010    0.000 <frozen importlib._bootstrap>:1240(_find_spec)
+       35    0.000    0.000    0.010    0.000 <frozen importlib._bootstrap_external>:1524(find_spec)
+       35    0.000    0.000    0.010    0.000 <frozen importlib._bootstrap_external>:1495(_get_spec)
+     2014    0.000    0.000    0.009    0.000 C:\Users\13691\AppData\Local\Temp\tmprkoxg1j6\after\zzy\tokens.py:70(span)
+       63    0.001    0.000    0.009    0.000 <frozen importlib._bootstrap_external>:1597(find_spec)
+     2022    0.001    0.000    0.009    0.000 C:\Users\13691\AppData\Local\Temp\tmprkoxg1j6\after\zzy\source.py:36(span)
+    40/39    0.000    0.000    0.009    0.000 <frozen importlib._bootstrap>:806(module_from_spec)
+        1    0.000    0.000    0.009    0.009 C:\Users\13691\AppData\Local\Temp\tmprkoxg1j6\after\zzy\native\files.py:1(<module>)
+      115    0.000    0.000    0.008    0.000 C:\Users\13691\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\dataclasses.py:449(_create_fn)
+        1    0.000    0.000    0.008    0.008 C:\Users\13691\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\hashlib.py:1(<module>)
+        2    0.000    0.000    0.008    0.004 <frozen importlib._bootstrap_external>:1291(create_module)
+        2    0.006    0.003    0.008    0.004 {built-in method _imp.create_dynamic}
+        1    0.000    0.000    0.007    0.007 C:\Users\13691\AppData\Local\Temp\tmprkoxg1j6\after\zzy\prepare.py:1(<module>)
+     4044    0.003    0.000    0.006    0.000 C:\Users\13691\AppData\Local\Temp\tmprkoxg1j6\after\zzy\source.py:30(position)

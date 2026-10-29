@@ -750,3 +750,11 @@ Git 提交：真实标识 / 未提交
 - python -m unittest tests.test_p11_benchmarks -v：3/3，19.741秒；用tests.__main__.execute合并驱动、test_p09_app、test_embedding、test_database：42/42，126.291秒，零跳过，01-specialist.json。python -m tests.web_http --report tests/p11/01-http.json：23/23，7.156秒。校园含自动Ctrl+C检查，不声称人工Ctrl+C。scripts.ci inventory保留2041并新增3项至2044；static --output dist/p11-01-static通过。
 - 方法、基线、热点和复现命令见optimization-report；此阶段不改解释器。仅勾选01，下一项02。GUI/人工/云端未重跑，后续优化不能借用本项通过。
 - 暂存审查发现原始diff的上下文空格及pstats尾部空行触发diff --check；原始规划diff改为无损gzip保存，profile只去末尾空行，不改变样本或数值。
+
+## 2026-10-29：P11-02 诊断位置按需生成（验收进行中）
+
+- P11-01已本地提交eaa8bcc，工作区干净后实施02。Interpreter.check/reserve成功路径只调用原ResourceMeter；仅捕获ResourceExceeded时用原location+Token.span补诊断，不添加全局缓存/回调/Program字段，不改变meter取消安全点。定位普通异常含MemoryError保留原E211；无可用定位时保持file/span为空，计数和阶段保留。
+- 新增5项测试，完整诊断/Unicode/BOM/CRLF/EOF、错误provider兜底、共享Program16请求、cwd、真实CLI跨模块notes/check。第一次7项中1项失败是手写列号误差：枚举源码plus在24、独立HEAD快照也报[24,25)，修正夹具而非弱化期望。随后结合旧资源及P07位置专项16/16（0.541秒），HTTP/Schema23/23（6.687秒），记录tests/p11/02-*。
+- scripts.ci inventory新增5项至2049；完整命令python -X utf8 -m tests --report tests/p11/02-core.json正在执行，不提前勾选。性能会在回归结束后单独运行。
+- 完整核心2049/2049、939.047秒，失败/错误/跳过/expected failure全0，02-core.json；冻结源码见02-source.json。全量结束后才启动benchmarks.p11 --before HEAD --after WORKTREE --output benchmarks/results/p11/02-locations，覆盖全部21组，计时进行中。
+- 02-locations共1496记录成功/失败0；正式每组15。B01执行3.8267→2.1884ms，B04/1000 12.3229→5.9044ms，K01 8.9836→6.6997ms；CLI多数变化小，完整表及MAD见优化报告。D02真实超限6.1072→7.9971ms（+30.9%），独立profile复核新增补定位/Diagnostic复制冷路径开销，约1.89微秒/失败；明确接受而不称所有路径更快。未改变正确性代码去追计时，保留02，下一项03。

@@ -62,13 +62,30 @@ class Interpreter(Features, Library):
         raise DiagnosticError(Diagnostic(message, code, self.location(node), node.token.span), Phase.EXECUTION)
 
     def check(self, key, count, node):
-        self.meter.check(key, count, file=self.location(node), span=node.token.span)
+        try:
+            self.meter.check(key, count)
+        except ResourceExceeded as error:
+            self.locate_resource_error(error, node)
+            raise
+
+    def locate_resource_error(self, error, node):
+        # Resolve only on failure. No provider/closure is retained by the meter
+        # or shared Program. A broken cwd/source must not mask the quota abort.
+        try:
+            error.diagnostic = replace(error.diagnostic,
+                                       file=self.location(node), span=node.token.span)
+        except Exception:
+            pass
 
     def reserve(self, node, **amounts):
         # A dead container cycle must not keep a live-value quota occupied.
         if any(self.meter.used(key) + n > self.meter.policy.limits[key] for key, n in amounts.items()):
             gc.collect()
-        reservation = self.meter.reserve(file=self.location(node), span=node.token.span, **amounts)
+        try:
+            reservation = self.meter.reserve(**amounts)
+        except ResourceExceeded as error:
+            self.locate_resource_error(error, node)
+            raise
         self.reservations.add(reservation)
         return reservation
 
