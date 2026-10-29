@@ -1,0 +1,9 @@
+{
+  "runtime_identical_to": "6c88368",
+  "candidate_retained": false,
+  "source_sha256_lf": {
+    "zzy/native/library.py": "e1ccf9a83bc25a6b598d889acf282ec472b682409cae48a2c0ccd18f856d073c",
+    "tests/test_p11_sum_stats.py": "d8062da538a178ce1b0c4f6f272666e6e7db48fc33c41762876fe614001664fa",
+    "scripts/ci/test-inventory.json": "b74111b3d9702e2e543cf354f447f76b9e248254c40613fe2d9aab423790dee6"
+  }
+}

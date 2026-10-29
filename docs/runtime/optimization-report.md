@@ -99,3 +99,20 @@
 `benchmarks.p11_integer_candidate.SmallIntegerCandidate`仅供语义实验测试，不安装、不被CLI/解释器选择，不是第二个公开引擎；其super回退多一层Python调用，**不用于复算原速度**。原速度须使用归档的完整集成源码。全部新增测试保留执行，且新增发布路径与候选固定答案对照；撤回后21专项通过，交付状态完整核心2059/2059、867.953秒通过，零失败/跳过；04-delivery-source确认产品代码与03一致。无预设加速，也不以缩减取消点扩大收益。
 
 复现归档候选：在独立工作副本切到6c88368，复制本阶段提交的benchmarks目录（驱动含I01—I04），用gzip解压04-candidate-interpreter.py.gz替换该副本zzy/interpreter.py，然后运行 `python -X utf8 -m benchmarks.p11 --before 6c88368 --after WORKTREE --cases B01 B02 B04 B08 B09 K01 I01 I02 I03 I04 --output benchmarks/results/p11/reproduce-04`。不在当前开发副本覆盖文件；归档identity/manifest提供核对依据。
+
+## P11-05：评估后撤回 sum/stats 分离
+
+对照9ccb332 → 05-candidate-source.json；专项20/20（含真实CLI）后串行测6组，462记录成功，每组15正式样本。after是**已撤回候选**。候选仅在共享检查/累加循环中用预先计算的statistics标志包住min/max，没有改类型检查、部分和资源规则或取消点。
+
+|工作负载|规模|before执行±MAD ms|候选执行±MAD ms|执行变化|CLI变化|准备变化|
+|---|---:|---:|---:|---:|---:|---:|
+|B04|10|0.1137±0.0094|0.1098±0.0069|-3.4%|+3.2%|+3.5%|
+|B04|100|0.5438±0.0303|0.5372±0.0275|-1.2%|-1.8%|+1.2%|
+|B04|1000|5.5009±0.5082|6.1461±0.8968|+11.7%|-3.3%|-8.1%|
+|S01|10|0.2083±0.0135|0.2072±0.0095|-0.5%|+1.2%|-4.7%|
+|S01|100|0.6395±0.0088|0.6545±0.0378|+2.3%|+3.4%|+2.9%|
+|S01|1000|5.8015±0.3588|5.7196±0.5246|-1.4%|+1.6%|-6.1%|
+
+sum的10/100项中位改善小于本轮MAD，1000项反而+11.7%且离散较大；stats基本持平。不能据“少两次比较”宣称有效收益，也不据此断言所有规模的分离都更慢。按本轮无收益撤回规则，生产库恢复为原共享聚合循环，sum仍会维护未使用的min/max；不把分离写成已发布功能，不引入额外循环/缓存来追逐噪声。未来若更大业务剖析证实这部分占比显著，可单独重启评估。
+
+原始数据 `benchmarks/results/p11/05-sum-stats/`，候选完整库/patch与身份在tests/p11/05-candidate-*，新语义/CLI测试保留。复现方法与04相同：独立副本基于9ccb332，解压05-candidate-library.py.gz到zzy/native/library.py，使用同版驱动运行 `python -X utf8 -m benchmarks.p11 --before 9ccb332 --after WORKTREE --cases B04 S01 --output benchmarks/results/p11/reproduce-05`。本项不计累计收益；交付状态完整2063/2063、979.672秒通过，零失败/跳过，05-delivery-source确认原运行时未变。

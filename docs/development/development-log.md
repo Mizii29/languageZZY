@@ -778,3 +778,13 @@ Git 提交：真实标识 / 未提交
 - 将候选迁入benchmarks.p11_integer_candidate作为明确test-only语义实验类，CLI/安装不导入，不使用此子类额外super调用测原速度。原4项测试保留，并新增发布路径对照；撤回后21/21、1.969秒。清单2059，完整python -m tests --report tests/p11/04-core.json正在对交付状态执行，未提前勾选。
 - 撤回后完整核心2059/2059、867.953秒，零失败/错误/跳过（04-core.json）；04-delivery-source记录发布源码，git diff HEAD -- zzy为空，与03的23项HTTP已验证代码相同，本项不把历史HTTP当候选通过。只将04勾为“评估完成、未保留实现”，无新产品快路径；P10-03不变。准备本地阶段提交，下一项05。
 - static门禁通过；暂存检查去掉实验类末尾空行并验证AST相同，更新交付哈希；不涉及运行时或测试逻辑。
+
+## 2026-10-29：P11-05 sum/stats 工作分离（评估进行中）
+
+- P11-04评估撤回并提交9ccb332后实施。Library.native_call在共享循环外判定statistics，sum不执行min/max比较，stats才更新二者；同一处逐项Int检查、取消和integer_operation累加，不复制校验规则、不用裸sum/类型缓存、不改变空值或部分和限制。
+- 新增4项tests.test_p11_sum_stats：真实CLI固定空/单项/正负/重复答案、输入alias未改；中途Bool/String/Float的E201完整位置；最终可抵消但部分和超限的E211键/计数/位置及合法紧预算；类型检查和累加确实交错；中途取消释放及新上下文恢复。结合整数/解释器/计量20/20、5.741秒，05-specialist.json。当前候选与补丁已保存。
+- 专项正确性通过后单独开始benchmarks.p11 --before HEAD --after WORKTREE --cases B04 S01 --output benchmarks/results/p11/05-sum-stats，sum/stats各10/100/1000，3预热15正式；未与回归并行。去留和完整回归结果后补，不提前勾选。
+- 05-sum-stats：462条记录成功/失败0，每组15正式。sum三规模执行变化−3.4%/−1.2%/+11.7%，stats−0.5%/+2.3%/−1.4%，完整MAD/其他阶段见报告。小规模收益低于MAD，大规模离散较大且无收益；不声称分离普遍更慢，但本轮证据不足以保留。已撤回library改动，运行时与9ccb332/6c88368相同，保留候选完整库gzip/patch及全部测试。
+- 清单新增4项至2063，正对最终交付状态执行完整python -m tests --report tests/p11/05-core.json；不会把“少做比较”当性能证明，也不改变库能力说明为已发布分离。
+- 额外只读故障审查：已准备的函数内部触发integer_bits超限，同时令Source.span抛MemoryError；主定位兜底后，用户调用notes再次定位仍抛MemoryError，原quota_key丢失但资源归零。独立记录dist/p11-nested-location-audit.json。列入P11-07累计修复/新增回归，未修复前不宣称P11整体完成；当前正在跑的05回归源码不改。
+- 交付状态完整核心2063/2063、979.672秒，零失败/错误/跳过（05-core.json），运行时与6c88368一致（05-delivery-source）。05标注评估后撤回，sum仍执行原min/max工作；不将测试用时当性能。下一项06，07的notes故障待修项继续保留。

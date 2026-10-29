@@ -2010,6 +2010,10 @@
     "tests.test_p11_meter.MeterOptimizationTests.test_registration_failure_releases_even_with_live_traceback",
     "tests.test_p11_meter.MeterOptimizationTests.test_release_weakrefs_subclass_cycles_aliases_and_gc_retry",
     "tests.test_p11_meter.MeterOptimizationTests.test_validation_cancellation_order_and_multi_atomicity",
+    "tests.test_p11_sum_stats.SumStatsTests.test_checks_and_additions_remain_interleaved",
+    "tests.test_p11_sum_stats.SumStatsTests.test_fixed_cli_answers_empty_signed_duplicates_and_input_alias",
+    "tests.test_p11_sum_stats.SumStatsTests.test_midway_cancel_cleanup_and_following_context_recovery",
+    "tests.test_p11_sum_stats.SumStatsTests.test_real_cli_midway_types_and_partial_sum_overflow",
     "tests.test_resources.MeterTests.test_cancel_escapes_native_exception_handler",
     "tests.test_resources.MeterTests.test_each_counter_boundary_and_phase",
     "tests.test_resources.MeterTests.test_invalid_accounting_and_decimal_count",
@@ -3824,6 +3828,6 @@
       "run_cli.e4-undo-fill"
     ]
   },
-  "collected": 2059,
+  "collected": 2063,
   "blackbox": 1738
 }

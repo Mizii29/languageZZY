@@ -1,0 +1,65 @@
+[
+  {
+    "case": "B04",
+    "n": 10,
+    "source": "(zno) n := 10;\n(zno) numbers := [];\n(for) i (in) 0..<n { array.push(numbers, i); }\n(addnew) bench() { (return) array.sum(numbers); }\nio.print(bench());\n",
+    "answer": 45,
+    "stdout": "45\n",
+    "python": "from benchmarks.reference import CheckedArray\n\nn = 10\nnumbers = []\nfor i in range(n):\n    numbers.append(i)\nchecked = CheckedArray(numbers)\n\n\ndef bench():\n    return checked.sum()\n\n\nif __name__ == '__main__':\n    print(bench())\n"
+  },
+  {
+    "case": "B04",
+    "n": 100,
+    "source": "(zno) n := 100;\n(zno) numbers := [];\n(for) i (in) 0..<n { array.push(numbers, i); }\n(addnew) bench() { (return) array.sum(numbers); }\nio.print(bench());\n",
+    "answer": 4950,
+    "stdout": "4950\n",
+    "python": "from benchmarks.reference import CheckedArray\n\nn = 100\nnumbers = []\nfor i in range(n):\n    numbers.append(i)\nchecked = CheckedArray(numbers)\n\n\ndef bench():\n    return checked.sum()\n\n\nif __name__ == '__main__':\n    print(bench())\n"
+  },
+  {
+    "case": "B04",
+    "n": 1000,
+    "source": "(zno) n := 1000;\n(zno) numbers := [];\n(for) i (in) 0..<n { array.push(numbers, i); }\n(addnew) bench() { (return) array.sum(numbers); }\nio.print(bench());\n",
+    "answer": 499500,
+    "stdout": "499500\n",
+    "python": "from benchmarks.reference import CheckedArray\n\nn = 1000\nnumbers = []\nfor i in range(n):\n    numbers.append(i)\nchecked = CheckedArray(numbers)\n\n\ndef bench():\n    return checked.sum()\n\n\nif __name__ == '__main__':\n    print(bench())\n"
+  },
+  {
+    "case": "S01",
+    "n": 10,
+    "source": "(zno)n:=10;(zno)a:=[];(for)i(in)0..<n{array.push(a,i);}(addnew)bench(){(zno)s:=array.stats(a);(return)[s.count,s.sum,s.min,s.max];}io.print(bench());",
+    "answer": [
+      10,
+      45,
+      0,
+      9
+    ],
+    "stdout": "[10, 45, 0, 9]\n",
+    "python": "from benchmarks.p11_reference import CheckedStats\nchecked=CheckedStats(list(range(10)))\nprint(checked.stats())\nchecked.close()\n"
+  },
+  {
+    "case": "S01",
+    "n": 100,
+    "source": "(zno)n:=100;(zno)a:=[];(for)i(in)0..<n{array.push(a,i);}(addnew)bench(){(zno)s:=array.stats(a);(return)[s.count,s.sum,s.min,s.max];}io.print(bench());",
+    "answer": [
+      100,
+      4950,
+      0,
+      99
+    ],
+    "stdout": "[100, 4950, 0, 99]\n",
+    "python": "from benchmarks.p11_reference import CheckedStats\nchecked=CheckedStats(list(range(100)))\nprint(checked.stats())\nchecked.close()\n"
+  },
+  {
+    "case": "S01",
+    "n": 1000,
+    "source": "(zno)n:=1000;(zno)a:=[];(for)i(in)0..<n{array.push(a,i);}(addnew)bench(){(zno)s:=array.stats(a);(return)[s.count,s.sum,s.min,s.max];}io.print(bench());",
+    "answer": [
+      1000,
+      499500,
+      0,
+      999
+    ],
+    "stdout": "[1000, 499500, 0, 999]\n",
+    "python": "from benchmarks.p11_reference import CheckedStats\nchecked=CheckedStats(list(range(1000)))\nprint(checked.stats())\nchecked.close()\n"
+  }
+]
