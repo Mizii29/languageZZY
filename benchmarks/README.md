@@ -2,6 +2,8 @@
 
 P07 按 [性能契约](../docs/runtime/performance.md) 建立 B01—B09 的配对程序、独立答案和内部测量驱动。运行时仍为 P06 的 0.6.0a1；测量工具不是公开嵌入 API。已完成实测见 [性能报告](../docs/runtime/performance-report.md)，阶段进度以 todo 和实际记录为准。
 
+2026-10-29新增[P11优化计划](../docs/runtime/optimization-plan.md)：先冻结P10后的当前基线，再依次测诊断位置、计量、小整数、sum/stats、查询排序，最后做累计对照。P07的原始结果继续保留，不覆盖为新基线；P11计划另建benchmarks/results/p11，实际驱动/专项与命令在实现时补充。每项同工作量/同策略，profiler与正式计时分开，性能不与回归并行；当前尚无P11性能结果。原交付阶段顺延为P12。
+
 在项目根目录使用 CPython 3.12.14：
 
 ```powershell
@@ -46,3 +48,5 @@ compare从本地Git提取两版源码，核对资源实现及生效配置，保�
 profile和tracemalloc输出是独立诊断，不能当速度样本；后者不是峰值RSS。stdio_probe对4096/65536/1048576字符分别执行一次，保存完整结果或30秒超时，是功能/截止时间探针，不计算统计加速比。audit返回0仅说明证据结构完整；基线run或stdin探针中有超时则仍返回1。report只重建数据表；正式报告末尾的验收分析另根据剖析与回归记录编写。
 
 本次资源配置始终默认。初版基线的100000档部分请求超时，另有B04一次正式样本超时，不能据已完成样本宣称整个规模通过；详情在原始记录和报告中。硬件CIM查询的null原记录保留，hardware-supplement.json记录同机Windows注册表/内存API的补充证据。driver-entrypoints.json只补充实际内部调用名，不修改原始清单快照或样本。
+
+P11 基线与逐项结果已开始记录，见 [优化实测](../docs/runtime/optimization-report.md)。

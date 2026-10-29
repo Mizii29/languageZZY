@@ -125,7 +125,7 @@ zno、array.copy 和 with 都不是深冻结/深复制。为实现撤销，应�
 
 ## 7. 参与解释器实现
 
-执行顺序以 [roadmap](../docs/development/roadmap.md) 为准，具体部件见 [interpreter](../docs/runtime/interpreter.md)。核心主线是 P00 → P01 → P02 → P03 → P04 → P05 → P06，再完成 P07 测量、P09 应用和 P11 交付；分支依赖见阶段表，不把文档讲解顺序当作开发依赖。
+执行顺序以 [roadmap](../docs/development/roadmap.md) 为准，具体部件见 [interpreter](../docs/runtime/interpreter.md)。核心主线是P00→P01→P02→P03→P04→P05→P06，再完成P07测量、P09应用和P12交付；本轮P08、P10-01/06已有验收，先按[优化计划](../docs/runtime/optimization-plan.md)完成P11五项优化，再进入P12（原P11）。分支依赖见阶段表，不把文档讲解顺序当作开发依赖；P10未选项保留且不阻塞已选路线。
 
 后续先核对仓库和环境，再从 P07-01 开始 B01—B09 配对基准，保留完整回归。不要先建 VM，或一次性实现所有扩展。E 在 P05/P06 后分阶段推进；Web/Python 互联 P08 在 P09 后可选，P10 优化依据测量决定。
 

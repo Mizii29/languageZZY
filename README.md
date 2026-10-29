@@ -2,6 +2,8 @@
 
 P10-01 / P10-06 已完成并验收：显式 shape 合约使用同一静态描述完成字段校验、Map 默认值填充和 OpenAPI 3.1.1 生成。入口为 `python -m zzy.contracts` 与 Web `--contracts FILE`；核心无需 Web/GUI 依赖。见[独立演示](examples/contracts/README.md)、[正式契约](docs/runtime/web.md)、[测试与测量](tests/p10/README.md)。最终阶段结果以 todo/开发记录为准；不包含 VM、热更新、自动缓存或其他 P10 项。
 
+2026-10-29后续安排：已选诊断位置、资源计量、小整数、sum/stats和查询排序五项优化，编排为新 **P11**，原验收交付阶段顺延为 **P12**。当前代码任务59/77，优化均未实施；下一项P11-01冻结基线，按[优化实施计划](docs/runtime/optimization-plan.md)逐项开发/验证。未选P10候选保留，收益、成本及暂缓原因见[创新取舍](docs/features/innovation.md#6-p10-候选保留与取舍2026-10-29)，勾选以[todo](docs/development/todo.md)为准。
+
 ZZY 是赵梓伊在程序设计实践课程中设计的通用脚本语言，使用 Python 实现解释器，用 ZZY 编写测试、性能脚本和完整应用。
 
 **当前状态：P00—P07及P09已完成，运行时版本仍为 0.6.0a1；核心语法、io/array/text/math/data/unit 标准库、Map/严格 JSON、原子文件保存及模块已接通。B01—B09 性能基线与一项已验证优化已有实测；校园任务管家业务已实现并通过专项验证；Sketch 1.0 的 E1—E4 已全部验收。** 核心语法 v0.6、标准库契约 v0.6.1 不变。Python AST 树遍历；run/check/test 共用前端准备。独立外部 CLI 期望与宿主状态/运行器测试覆盖当前能力，阶段证据见开发记录。

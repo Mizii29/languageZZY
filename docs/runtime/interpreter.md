@@ -2,6 +2,8 @@
 
 作者：赵梓伊｜更新：2026-10-14｜状态：v0.6 树遍历实现；P00—P06 核心语法、库/模块、非执行 check 及测试/指南已验收
 
+2026-10-29阶段更新：P10-01/06已完成，用户选定的诊断位置、资源计量、小整数、sum/stats、查询排序优化编排为P11，依[优化实施计划](optimization-plan.md)从基线开始逐项验证；原验收交付阶段顺延为P12。以下内部流程说明不构成新优化已实现的证明，也不要求在P11建立VM。
+
 当前语法以 [syntax.md](../language/syntax.md) 为准，整体方案见 [design详细版.md](../design详细版.md)，库以 [stdlib.md](../language/stdlib.md) 为准；优化与后端扩展见 [performance.md](performance.md)。本文回答“先写什么、每一步产生什么、怎样证明做对了”，不把规划中的代码和命令当成已有功能。Web 为可选扩展，完整 CLI 应用不依赖 Web 或 VM。
 
 本文的“第几步”按部件说明完整架构，不是要求一次写完一个部件再开始执行。实际依赖以 [roadmap.md](../development/roadmap.md) 为准：P01 用最小 Lexer/Parser/名字表/执行器跑通输出，P02 补数据与控制流，P03 完善 Resolver、槽位与闭包，P04/P05 补特色和库；P06/P07/P09 完成测试、性能和应用。VM 按 P10 的热点证据选择，Web 属于 P09 之后的可选 P08。

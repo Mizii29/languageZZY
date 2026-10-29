@@ -1,0 +1,51 @@
+         83587 function calls (81902 primitive calls) in 0.149 seconds
+
+   Ordered by: cumulative time
+   List reduced from 706 to 45 due to restriction <45>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.000    0.000    0.152    0.152 D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\benchmarks\p11_worker.py:11(measure)
+     40/2    0.003    0.000    0.109    0.055 <frozen importlib._bootstrap>:1349(_find_and_load)
+     40/2    0.000    0.000    0.109    0.054 <frozen importlib._bootstrap>:1304(_find_and_load_unlocked)
+     40/2    0.001    0.000    0.108    0.054 <frozen importlib._bootstrap>:911(_load_unlocked)
+     33/2    0.000    0.000    0.108    0.054 <frozen importlib._bootstrap_external>:993(exec_module)
+     86/4    0.000    0.000    0.107    0.027 <frozen importlib._bootstrap>:480(_call_with_frames_removed)
+    148/2    0.013    0.000    0.107    0.053 {built-in method builtins.exec}
+        1    0.000    0.000    0.107    0.107 D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\benchmarks\worker.py:1(<module>)
+        1    0.000    0.000    0.055    0.055 D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\benchmarks\common.py:1(<module>)
+        1    0.000    0.000    0.044    0.044 D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\benchmarks\worker.py:65(sample)
+        1    0.000    0.000    0.040    0.040 C:\Users\13691\AppData\Local\Temp\zzy p11 snapshots w306cqya\before\zzy\interpreter.py:1(<module>)
+       33    0.001    0.000    0.024    0.001 <frozen importlib._bootstrap_external>:1066(get_code)
+    40/39    0.000    0.000    0.023    0.001 <frozen importlib._bootstrap>:806(module_from_spec)
+        1    0.000    0.000    0.022    0.022 C:\Users\13691\AppData\Local\Temp\zzy p11 snapshots w306cqya\before\zzy\interpreter.py:88(run)
+       40    0.000    0.000    0.022    0.001 <frozen importlib._bootstrap>:1240(_find_spec)
+        1    0.000    0.000    0.021    0.021 C:\Users\13691\AppData\Local\Temp\zzy p11 snapshots w306cqya\before\zzy\native\library.py:1(<module>)
+        2    0.000    0.000    0.021    0.010 <frozen importlib._bootstrap_external>:1291(create_module)
+        2    0.015    0.008    0.021    0.010 {built-in method _imp.create_dynamic}
+       35    0.000    0.000    0.021    0.001 <frozen importlib._bootstrap_external>:1524(find_spec)
+       35    0.000    0.000    0.021    0.001 <frozen importlib._bootstrap_external>:1495(_get_spec)
+        1    0.000    0.000    0.020    0.020 C:\Users\13691\AppData\Local\Temp\zzy p11 snapshots w306cqya\before\zzy\interpreter.py:123(drive)
+        3    0.000    0.000    0.020    0.007 {method 'send' of 'generator' objects}
+       19    0.000    0.000    0.020    0.001 C:\Users\13691\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\dataclasses.py:1264(wrap)
+       19    0.001    0.000    0.020    0.001 C:\Users\13691\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\dataclasses.py:921(_process_class)
+       73    0.001    0.000    0.020    0.000 <frozen importlib._bootstrap_external>:1597(find_spec)
+    206/6    0.001    0.000    0.019    0.003 C:\Users\13691\AppData\Local\Temp\zzy p11 snapshots w306cqya\before\zzy\interpreter.py:299(statement)
+        1    0.000    0.000    0.019    0.019 C:\Users\13691\AppData\Local\Temp\zzy p11 snapshots w306cqya\before\zzy\interpreter.py:187(execute_user)
+    101/1    0.000    0.000    0.019    0.019 C:\Users\13691\AppData\Local\Temp\zzy p11 snapshots w306cqya\before\zzy\interpreter.py:257(block)
+      152    0.017    0.000    0.017    0.000 {built-in method nt.stat}
+        1    0.000    0.000    0.017    0.017 C:\Users\13691\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\hashlib.py:1(<module>)
+      149    0.000    0.000    0.017    0.000 <frozen importlib._bootstrap_external>:140(_path_stat)
+  910/307    0.001    0.000    0.017    0.000 C:\Users\13691\AppData\Local\Temp\zzy p11 snapshots w306cqya\before\zzy\interpreter.py:507(evaluate)
+        1    0.000    0.000    0.017    0.017 C:\Users\13691\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\fractions.py:1(<module>)
+       19    0.001    0.000    0.015    0.001 <frozen ntpath>:664(realpath)
+       38    0.014    0.000    0.014    0.000 {built-in method nt._getfinalpathname}
+      115    0.001    0.000    0.013    0.000 C:\Users\13691\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\dataclasses.py:449(_create_fn)
+        8    0.000    0.000    0.013    0.002 C:\Users\13691\AppData\Local\Temp\zzy p11 snapshots w306cqya\before\zzy\diagnostics.py:34(display_path)
+        5    0.000    0.000    0.013    0.003 {built-in method builtins.__import__}
+       33    0.000    0.000    0.013    0.000 <frozen importlib._bootstrap_external>:1187(get_data)
+      301    0.000    0.000    0.011    0.000 C:\Users\13691\AppData\Local\Temp\zzy p11 snapshots w306cqya\before\zzy\interpreter.py:652(binary)
+      2/1    0.000    0.000    0.011    0.011 C:\Users\13691\AppData\Local\Temp\zzy p11 snapshots w306cqya\before\zzy\prepare.py:18(prepare)
+      200    0.001    0.000    0.011    0.000 C:\Users\13691\AppData\Local\Temp\zzy p11 snapshots w306cqya\before\zzy\interpreter.py:705(integer_operation)
+      509    0.001    0.000    0.011    0.000 C:\Users\13691\AppData\Local\Temp\zzy p11 snapshots w306cqya\before\zzy\interpreter.py:67(reserve)
+        1    0.000    0.000    0.011    0.011 C:\Users\13691\AppData\Local\Temp\zzy p11 snapshots w306cqya\before\zzy\resources.py:1(<module>)
+        1    0.000    0.000    0.010    0.010 C:\Users\13691\AppData\Local\Temp\zzy p11 snapshots w306cqya\before\zzy\prepare.py:25(visit)

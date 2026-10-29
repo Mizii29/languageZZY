@@ -1,0 +1,26 @@
+{
+  "head": "a480eccfb5265140158114d41ab0dcf20214aef8",
+  "original_branch": "feature",
+  "planning_files": {
+    "README.md": "20f4cd5e357c0f297275423cecf3dec2efae114b56951fc8c666e59104767b3b",
+    "benchmarks/README.md": "6b04ba3a3fda71abf9fbedeba4b2bdda4738bd09cc7188a540088e1a1ce45655",
+    "docs/README.md": "e9f2cfb79ac9dce73c33b9ef5e1f1e235f185b2763bbad2c7e0f1140cc198b2c",
+    "docs/design详细版.md": "61a8bab924d16fea878678d1974f5a08b7e6da254bbed85f69f061f244d8609d",
+    "docs/development/ci-design.md": "de68fd0c9c8afc8bccbb4714f0ee9b992473a9da7543beae006ccd04b78eb9ea",
+    "docs/development/development-log.md": "489dccd96ed475d8a74a7a0488d21c56b6957f4e1175e95c447599579a3022e8",
+    "docs/development/final-test-plan.md": "8453fc60afb53f2649aa3bbf8ba0b6f12395be5a996ad17d46fc021c6c7d76cd",
+    "docs/development/roadmap.md": "aebcdf94d7d45d8fd40d48f3e67d3116c103b51f816f7e480be3481404f3d012",
+    "docs/development/test-coverage.md": "bc2a0ce9871052909a10a591ddbd6dbfb85f2d38fd9d3ce401018e6b2f4319b6",
+    "docs/development/todo.md": "c1701f4a6eb66f8f7fe8fb2e13b47d950b7597ebd84332c6a2bd94f02d27df64",
+    "docs/features/innovation.md": "f44f3455ab19aafc6818a874954dc179dce9ce3fb7e33b97f606026d98ecaf5f",
+    "docs/runtime/interpreter.md": "bb1daa393eddb3769be1d356b763166d0ff550fe93ef1b16277af370fa141b23",
+    "docs/runtime/performance-report.md": "57b069b031c85f2c33d00adeb1950dd0e971692bca2cab7ecddb45b05a3d3522",
+    "docs/runtime/performance.md": "502476c42113a0530fb4b0bb8f387e675cf101e2396d1726ba55d239bb117b33",
+    "docs/runtime/resources.md": "24a0af6e9003900fc4f9f1b6dea9418786e7c641a36e067871cf2a708b4496a1",
+    "skills/README.md": "c4f1d3d6988c7d0c2e6108353ce18de2f664b3e4a5d5dd3c4cce564cf1b6926f",
+    "skills/guide.md": "eabc8855a795fa753b086d6746909bd3ad66185322864988cccc59feb5d6eb24",
+    "skills/zzy/SKILL.md": "d405001b14a1ceb73bb788f4e9b484f7cd63177a67fb4d902e8bf33282988481",
+    "tests/README.md": "b138fbe7c14e3b3ab61808ec8e38607b36e56025d924c5e72741309f1aef5f14",
+    "docs/runtime/optimization-plan.md": "a960dc4b361157d8fedf173f0fe3002c779cc649b2d23c1e4b614127f8c43ac7"
+  }
+}

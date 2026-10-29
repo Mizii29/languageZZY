@@ -731,3 +731,22 @@ Git 提交：真实标识 / 未提交
 - 最终测量measurement-final.json保持30次/档和同一资源配置：4/32/128字段的prepare中位数3.2545/4.1582/6.6476ms，generation为0.1429/0.2981/0.8919ms，validation为0.0635/0.3887/1.6050ms。未声称优化收益；初版结果不覆盖。最终声明仅限P10-01/06，现勾选两项；P10-02—05、07、08延期，下一项P11-01。
 - 将真实报告归档tests/p10；static归档保留摘要，完整ID清单仍在dist和已审查的test-inventory。归档追加证据不改运行时/用例，source.json逐文件校验一致；requirement原始SHA256未变。人工清单待操作者执行，GUI/其他平台/云端PR门禁不冒充通过。准备审查显式暂存清单并创建本地提交；不推送、不合并、不改保护。
 - 归档后scripts.ci static --output dist/p10-after-archive-static及actionlint再次通过；演示README的4个PowerShell块通过Parser语法检查（非人工执行）。暂存前核对70项代码任务仅59项完成、其余P10均未勾选，requirement及人工目录无差异。
+
+## 2026-10-29：新增P11解释器优化计划，交付阶段顺延P12
+
+- 用户明确选择先前讨论的1—5：诊断位置按需生成、资源计量简化、小整数守卫、sum/stats工作分离、查询排序比较；本轮授权是更新设计和开发顺序，不实现运行时。接手feature/a480ecc，工作区干净；核对todo与tests/p10现存验收，P10-01/06保持完成，不将旧报告当新测试。
+- 新增docs/runtime/optimization-plan.md，安排P11-01基线→02诊断位置→03资源计量→04小整数→05sum/stats→06查询排序→07累计验收；写明源码入口、保持值/诊断/配额/取消/并发隔离、边界与故障验证、同配置单项/累计测量、无收益撤回、实际证据路径和后续交接。新报告、测试映射及命令在实现时建立，不创建假通过记录。
+- 原P11-01—05交付任务一一顺延P12-01—05，任务内容与未勾选状态保留；新增七项后总数77、完成59。历史日志、人工原件及验收报告中的旧P11编号不改写；todo追加最新交接覆盖旧下一项。当前下一项P11-01冻结基线，P11完成后进入P12-01。
+- P10所有候选保留，innovation新增逐项收益/成本/暂缓原因/重启条件；02/03/04/05/07/08保持未勾选。03的小整数子范围移交P11-04、08的必要对照分布到P11，不代表完整VM或完整引擎/变形扩展完成，也不重复计数。
+- 同步根README、文档导航、详细设计、roadmap/todo、解释器/资源/性能说明、人用与AI指南、覆盖/CI/最终测试计划及tests/benchmarks导航，避免旧P11交付路径误导。静态一致性脚本核对原70项→新77项、59项完成、所有旧任务勾选保持、新P11七项和P12五项未勾选；requirement SHA256仍b099c19fc339ce1dc1aab7e9d6c8126a9c5c9ace3d31b969a0623df90f521d2b，当前差异仅Markdown，无运行时/测试代码变更。完整文档门禁结果另记于下。
+- 实际执行`.venv/Scripts/python.exe -X utf8 -m scripts.ci static --output dist/p11-planning-static-20261029`退出0、passed=true，检查58份Markdown、753个本地链接、围栏、原测试清单与应用行数及requirement。另核对P12五项正文和勾选与旧P11逐字一致、P11计划七节与P10八项取舍完整、开发记录仅追加、新取舍锚点有效。git diff --check通过；本轮未跑全量/HTTP/GUI或性能，不新增通过声明，不提交或推送。
+
+## 2026-10-29：P11-01 冻结基线与实验驱动
+
+- 按用户附件逐项推进，每项本地提交。从feature/a480ecc建立codex/p11-interpreter-optimization，接手19份规划修改及新optimization-plan；保留并随本项提交，原差异和哈希存tests/p11，不冒充本轮运行时实现。requirement及人工原件不变。
+- 核对P10记录列出的13文件与HEAD；CRLF使原始哈希部分不同，归一LF核对确认相同。44运行时文件以HEAD独立快照冻结，环境CPython3.12.14/Windows/default-v1、CPU/GC/依赖及源码/驱动身份存environment.json。P10历史2041全量仅证实未改基线，本项未重跑全量。
+- 新增benchmarks.p11/p11_worker/p11_reference，复用B01—B09算法/答案，补stats三规模、重复键/筛选/take0查询、Sketch、成功检查/超限/预留释放。临时快照比较，不改产品开关；正确性预检→独立profile→3预热/15正式，串行交错、独立状态，阶段成本/CLI分别记录，失败不填0。测量与回归未并行。
+- 真实命令：python -X utf8 -m benchmarks.p11 --before HEAD --output benchmarks/results/p11/01-baseline --profile；762条记录成功/失败0，正式样本每组15。初始01-precheck的50条通过保留，正式前已补stats参考并重做预检；profile证实成功路径重复span开销，结果不预称加速。
+- python -m unittest tests.test_p11_benchmarks -v：3/3，19.741秒；用tests.__main__.execute合并驱动、test_p09_app、test_embedding、test_database：42/42，126.291秒，零跳过，01-specialist.json。python -m tests.web_http --report tests/p11/01-http.json：23/23，7.156秒。校园含自动Ctrl+C检查，不声称人工Ctrl+C。scripts.ci inventory保留2041并新增3项至2044；static --output dist/p11-01-static通过。
+- 方法、基线、热点和复现命令见optimization-report；此阶段不改解释器。仅勾选01，下一项02。GUI/人工/云端未重跑，后续优化不能借用本项通过。
+- 暂存审查发现原始diff的上下文空格及pstats尾部空行触发diff --check；原始规划diff改为无损gzip保存，profile只去末尾空行，不改变样本或数值。

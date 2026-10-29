@@ -1,5 +1,7 @@
 # ZZY 黑盒、宿主与应用回归
 
+2026-10-29开发安排：P10-01/06已有[独立证据](p10/README.md)，保存的核心2041/2041、HTTP/Schema及安装23/23是新阶段起点。后续先按[P11优化计划](../docs/runtime/optimization-plan.md)和[待补覆盖](../docs/development/test-coverage.md)逐项开发，原交付阶段顺延为P12；tests/p11映射在实现时建立，目前没有P11通过结果。下文历史阶段数量不作为当前收集基线，旧ID必须保留。
+
 从项目根目录运行 `python -X utf8 -m tests`，可用 `--report dist/p06-all-tests.json` 留存汇总。该一键入口检查收集数/执行数一致、非空、无跳过或 expected failure；底层仍可用 unittest discover 调试，但阶段验收使用带保护的一键入口。只使用标准库 unittest，实际启动 CLI 子进程并检查 stdout、stderr、退出码；宿主层验证资源预留/释放、源码坐标、词法容量和异常边界。
 
 [词法](lex/README.md)、[P01 回归](run/README.md)、[非执行检查](check/README.md) 的 260 例与 [P02](p02/README.md) 的 279 例、[P03](p03/README.md) 的 234 例，加 [P04](p04/README.md) 的 317 例，以及 [P05](p05/README.md) 的 369 例，加上 [P06](p06/README.md) 的 129 例，原核心共1588个外部用例，新增[E1](e1/README.md)的110例，当前共1698例，均不依赖 spec；正常变形 spec、指南 spec、Agent 练习及宿主清理测试由一键入口额外执行。P06 已实测 Windows 真实 Ctrl+C 和进程树回收。
@@ -24,3 +26,5 @@ python -X utf8 -m tests.blackbox --report dist/p06-blackbox-report.json
 
 
 [P09校园任务管家](p09/README.md)的真实CLI/磁盘测试与4MiB策略前置检查由一键入口自动收集，P09本身不增加默认语言清单；当前E1另新增110项，独立tests.blackbox共1698项。应用采用外部期望和实际模块，不用spec成功替代菜单/保存/重启验收。
+
+P11 基线与逐项结果已开始记录，见 [P11 验证](p11/README.md)。

@@ -1992,6 +1992,9 @@
     "tests.test_p09_app.CampusAppTests.test_view_is_readonly_stable_empty_and_all_sort_modes",
     "tests.test_p09_prerequisites.CampusPolicyTests.test_actual_startup_policy_only_tightens_file_payload",
     "tests.test_p09_prerequisites.CampusPolicyTests.test_file_read_rejects_bytes_above_four_mib",
+    "tests.test_p11_benchmarks.P11BenchmarkTests.test_manifest_and_reference_fixed_answers",
+    "tests.test_p11_benchmarks.P11BenchmarkTests.test_real_snapshot_precheck",
+    "tests.test_p11_benchmarks.P11BenchmarkTests.test_statistics_preserve_failed_and_missing_samples",
     "tests.test_resources.MeterTests.test_cancel_escapes_native_exception_handler",
     "tests.test_resources.MeterTests.test_each_counter_boundary_and_phase",
     "tests.test_resources.MeterTests.test_invalid_accounting_and_decimal_count",
@@ -3806,6 +3809,6 @@
       "run_cli.e4-undo-fill"
     ]
   },
-  "collected": 2041,
+  "collected": 2044,
   "blackbox": 1738
 }

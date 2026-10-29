@@ -1,0 +1,67 @@
+{
+  "zzy/contracts.py": {
+    "raw_match": false,
+    "lf_match": true,
+    "head_match": true
+  },
+  "zzy/web.py": {
+    "raw_match": true,
+    "lf_match": false,
+    "head_match": true
+  },
+  "tests/test_contracts.py": {
+    "raw_match": false,
+    "lf_match": true,
+    "head_match": true
+  },
+  "tests/schema_contracts.py": {
+    "raw_match": false,
+    "lf_match": true,
+    "head_match": true
+  },
+  "tests/web_http.py": {
+    "raw_match": true,
+    "lf_match": false,
+    "head_match": true
+  },
+  "benchmarks/contracts.py": {
+    "raw_match": false,
+    "lf_match": true,
+    "head_match": true
+  },
+  "scripts/ci_installed_probe.py": {
+    "raw_match": true,
+    "lf_match": false,
+    "head_match": true
+  },
+  "scripts/ci_web_installed_probe.py": {
+    "raw_match": false,
+    "lf_match": true,
+    "head_match": true
+  },
+  "scripts/ci/contract-requirements.txt": {
+    "raw_match": false,
+    "lf_match": true,
+    "head_match": true
+  },
+  ".github/workflows/ci.yml": {
+    "raw_match": true,
+    "lf_match": false,
+    "head_match": true
+  },
+  "examples/contracts/app.zzy": {
+    "raw_match": false,
+    "lf_match": true,
+    "head_match": true
+  },
+  "examples/contracts/routes.json": {
+    "raw_match": false,
+    "lf_match": true,
+    "head_match": true
+  },
+  "examples/contracts/openapi.json": {
+    "raw_match": false,
+    "lf_match": true,
+    "head_match": true
+  }
+}

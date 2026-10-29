@@ -11,7 +11,7 @@ description: 在 ZZY 课程项目中编写或审查 .zzy 程序、实现解释�
 
 先读 [文档导航](../../docs/README.md)、[任务状态与交接栏](../../docs/development/todo.md) 和 [开发记录的最新条目](../../docs/development/development-log.md)，再核对实际文件。不要把历史记录中的旧计数或下一步当作当前事实。
 
-截至 2026-10-17，P00—P07与P09全部已完成，版本 0.6.0a1；核心语法、io/array/text/math/data/unit 标准库、Map/严格 JSON、原子文件保存及模块已接通。B01—B09性能基线与诊断路径优化已实测；校园任务管家已实现；Sketch真实GUI与headless分别验收。check 仅做前端准备，不执行用户表达式；test 对每个 spec 启动独立进程。一键完整回归为 python -X utf8 -m tests；独立外部清单入口仍为 python -X utf8 -m tests.blackbox。P06 已补指南片段、变形 spec、真实 Windows Ctrl+C 与进程树验收，证据和未测范围见 tests/p06/README.md。P07证据见 benchmarks/results 和 docs/runtime/performance-report.md；版本以Git区分，超时不算通过。P09应用入口为 apps/zzy-campus/main.zzy，必须使用同目录limits.json，业务全部为ZZY；启动、行数、失败/恢复验收见该目录README及tests/p09。E1—E4已全部验收，sketch ABI 1.0；实际状态以todo为准，使用范围与配额见docs/features/sketch-guide.md，真实GUI/安装证据见tests/e4；用户现已选择P08，当前下一项以文末与todo为准；P11核心交付前置已满足，按todo及用户范围推进；先核对 README、todo、最新记录、代码和 Git。语法 v0.6/标准库 v0.6.1 规则不变。
+截至 2026-10-17，P00—P07与P09全部已完成，版本 0.6.0a1；核心语法、io/array/text/math/data/unit 标准库、Map/严格 JSON、原子文件保存及模块已接通。B01—B09性能基线与诊断路径优化已实测；校园任务管家已实现；Sketch真实GUI与headless分别验收。check 仅做前端准备，不执行用户表达式；test 对每个 spec 启动独立进程。一键完整回归为 python -X utf8 -m tests；独立外部清单入口仍为 python -X utf8 -m tests.blackbox。P06 已补指南片段、变形 spec、真实 Windows Ctrl+C 与进程树验收，证据和未测范围见 tests/p06/README.md。P07证据见 benchmarks/results 和 docs/runtime/performance-report.md；版本以Git区分，超时不算通过。P09应用入口为 apps/zzy-campus/main.zzy，必须使用同目录limits.json，业务全部为ZZY；启动、行数、失败/恢复验收见该目录README及tests/p09。E1—E4已全部验收，sketch ABI 1.0；实际状态以todo为准，使用范围与配额见docs/features/sketch-guide.md，真实GUI/安装证据见tests/e4；用户现已选择P08，当前下一项以文末与todo为准；原P11交付阶段已于2026-10-29顺延为P12；当前先按新P11优化计划推进，最新状态见文末和todo；先核对 README、todo、最新记录、代码和 Git。语法 v0.6/标准库 v0.6.1 规则不变。
 
 遵循用户任务范围与适用的仓库指示。只整理文档时不启动实现；只要求审查时不扩展成语言重设计。作业约束查 [requirement](../../docs/requirement.md)，保留原文。
 
@@ -65,3 +65,11 @@ P08-04/05本轮新增SQLite事务与独立任务示例；实际db签名、提交
 ## P10-01 / P10-06 已实现并验收
 
 2026-10-29用户已显式选择本范围。shape合约读取[集中接口契约](../../docs/runtime/web.md)的P10-01节和[演示](../../examples/contracts/README.md)。使用zzy.contracts生成及Web --contracts显式启用；check不自动启用合约。严格Int/Float标签不能靠通用JSON Schema完全验证；Array/Map不推断元素类型。业务仍接收Map，不调用shape默认表达式。正式验收及延期项看todo；不得扩大为P10-08完成。
+
+## P11已选优化与P12交付（2026-10-29）
+
+P10-01/06已完成。用户选择诊断位置、资源计量、小整数、sum/stats、查询排序五项，新增P11-01—07；原P11-01—05一一顺延为P12-01—05，历史日志/报告的旧编号不重写。P11-01基线已冻结，下一项P11-02；当前进度以todo为准。
+
+实施必读[优化计划](../../docs/runtime/optimization-plan.md)、[性能方法](../../docs/runtime/performance.md)、[资源](../../docs/runtime/resources.md)、[覆盖计划](../../docs/development/test-coverage.md)及相关诊断/stdlib/query/Web契约。顺序01基线→02诊断位置→03计量→04小整数→05sum/stats→06查询排序→07累计验收→P12交付。每项先验证再单独测量并记录去留，不预设加速倍数，不通过弱化配额/错误顺序/取消换速度；无收益可撤回并如实标注评估结论。
+
+P10未选项保留，逐项利弊见[创新取舍](../../docs/features/innovation.md#6-p10-候选保留与取舍2026-10-29)。小整数快路径和必要对照仅落实相关子范围，不将P10-03/08整体勾选，不擅自实现VM、结果缓存或热切换。优化证据和报告的计划路径不代表文件/命令已经存在；实际创建后补映射，人工结果只记录真实执行。
