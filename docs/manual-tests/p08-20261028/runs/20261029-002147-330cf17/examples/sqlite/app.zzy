@@ -1,0 +1,21 @@
+(shape) Response { status; body; }
+(addnew) handle(request) {
+    (zno) body := data.get(request,"body");
+    (zno) adding := data.get(request,"method") == "POST";
+    (zif?:) adding {
+        (zif?:) data.kind(body) != "map" { (return) Response::{status:422,body:"需要对象"}; }
+        (zif?:) (not) data.has(body,"title") { (return) Response::{status:422,body:"缺少title"}; }
+        (zno) title := data.get(body,"title");
+        (zif?:) data.kind(title) != "string" { (return) Response::{status:422,body:"title必须为字符串"}; }
+        (zif?:) len(text.trim(title)) == 0 (or) len(title) > 80 { (return) Response::{status:422,body:"title长度应为1至80"}; }
+    }
+    (addnew) work() {
+        db.query("CREATE TABLE IF NOT EXISTS tasks (id INTEGER PRIMARY KEY, title TEXT NOT NULL)",[]);
+        (zif?:) adding { db.query("INSERT INTO tasks(title) VALUES (?)",[text.trim(data.get(body,"title"))]); }
+        (return) (^_^)(db.query("SELECT id,title FROM tasks ORDER BY id",[]));
+    }
+    (?_?) db.transaction("examples/sqlite/tasks.sqlite3",work) {
+        (^_^)(rows) => { (return) Response::{status:200,body:rows}; }
+        (T_T)(message) => { (return) Response::{status:409,body:message}; }
+    }
+}

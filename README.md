@@ -126,7 +126,7 @@ CLI 文件参数和配置路径相对调用者工作目录；run/check 不切换
 
 语言内测试入口已可用，例如 `python -m zzy test examples/library/spec.zzy`。外部负例仍用 tests.blackbox，不能对含故意错误源码的整个 tests/ 执行 zzy test。
 
-Web、NumPy 和字节码 VM 属于可选后续工作。P00 的资源计量接口不等于所有未来值/AST/缓存都已接入限额，当前验证范围见 [测试说明](tests/README.md) 与 [开发记录](docs/development/development-log.md)。
+P08已选并完成HTTP、共享隔离与Python嵌入；NumPy和字节码VM仍属可选后续工作。P00 的资源计量接口不等于所有未来值/AST/缓存都已接入限额，当前验证范围见 [测试说明](tests/README.md) 与 [开发记录](docs/development/development-log.md)。
 
 课程交付包括语法文档、解释器、ZZY 黑盒测试、与 Python 的性能比较、人和 AI 的指南、不少于 200 行的完整 ZZY 应用及开发记录、Git 历史和 PPT。原始约束见 [作业要求](docs/requirement.md)。默认应用是校园任务管家，画笔扩展不自动替代应用交付。
 
@@ -134,9 +134,9 @@ Web、NumPy 和字节码 VM 属于可选后续工作。P00 的资源计量接口
 
 ## P06 一键验收与已验证指南
 
-`python -X utf8 -m tests` 运行全部 CLI、spec 和宿主回归，当前收集 2002 项；空收集/跳过/少执行/失败均返回非零。`--report dist/p06-all-tests.json` 保存计数、环境与默认策略指纹（目录需存在）。外部黑盒仍可单独运行。映射、15 个指南片段、9 个变形 spec、资源验证范围见 [P06 验收](tests/p06/README.md)；真实 Agent 练习见 [分钟汇总](examples/agent-practice/README.md)。Windows 11 的真实 Ctrl+C/run/test、派生进程树回收和临时目录清理已经专项验证；其他平台及未测大容量范围明确列在验收页。GUI 已在后续 Sketch E 阶段实现并独立验收，Web/长期 Program 缓存仍未实现。
+`python -X utf8 -m tests` 运行全部 CLI、spec 和宿主回归，当前收集 2027 项；空收集/跳过/少执行/失败均返回非零。`--report dist/p06-all-tests.json` 保存计数、环境与默认策略指纹（目录需存在）。外部黑盒仍可单独运行。映射、15 个指南片段、9 个变形 spec、资源验证范围见 [P06 验收](tests/p06/README.md)；真实 Agent 练习见 [分钟汇总](examples/agent-practice/README.md)。Windows 11 的真实 Ctrl+C/run/test、派生进程树回收和临时目录清理已经专项验证；其他平台及未测大容量范围明确列在验收页。GUI 已在后续 Sketch E 阶段实现并独立验收，Web/Python的P08-01—03能力见文末；长期Program缓存仍未实现。
 
-最终验收按 [测试阶段计划](docs/development/final-test-plan.md) 执行；本机 VS Code 的详细步骤、命令和预期结果见 [人工测试指南](docs/development/manual-test-guide.md)。[GitHub Actions 工作流](.github/workflows/ci.yml) 已配置静态检查、Windows 全量回归、隔离 wheel 安装及汇总门禁，本地复现和云端待验证事项见 [CI 设计与实施](docs/development/ci-design.md)。CI 不代替真实 GUI、人工操作及正式性能验收。
+最终验收按 [测试阶段计划](docs/development/final-test-plan.md) 执行；本机 VS Code 的详细步骤、历史结果与本次 P08 补测见 [人工测试资料](docs/manual-tests/README.md)。[GitHub Actions 工作流](.github/workflows/ci.yml) 已配置静态检查、Windows 全量回归、隔离 wheel 安装及汇总门禁，本地复现和云端待验证事项见 [CI 设计与实施](docs/development/ci-design.md)。CI 不代替真实 GUI、人工操作及正式性能验收。
 
 CI回归日志已读取 [logging.json](docs/runtime/logging.json)，按1MiB轮转、保留4份gzip备份并自动淘汰更旧片段；CLI继续使用UTF-8和固定错误码，查看与调整方法见 [日志配置说明](docs/runtime/logging.md)。
 
@@ -166,3 +166,9 @@ P09最终全量回归1791/1791、806.968秒通过（包括1588项既有外部CLI
 真实使用范围、固定配额和窗口启动见[Sketch 指南](docs/features/sketch-guide.md)，独立阶段验收与未测范围见[tests/e4](tests/e4/README.md)。默认 run/check/test 不初始化 Tk；显式 `python -m zzy run examples/sketch/studio.zzy --gui` 打开小画室。关闭窗口后例程保存项目，可在下次执行加载并继续编辑。
 
 几何、SVG、文字/多层、分组撤销、确定回放、图案函数库、事件与项目已实现，E1—E4已全部验收，扩展ABI为1.0；PNG没有独立后端，明确返回失败。核心info仍报告P06核心阶段/0.6.0a1，扩展ABI单独版本化。性能见[实际测量](benchmarks/sketch/README.md)，不能将headless通过当GUI验收。
+
+## 已选 P08 Web
+
+P08已选，P08-01 HTTP已验收，P08-02共享冻结与并发隔离已验收（显式--shared）；P08-03公开Python嵌入已验收，SQLite实现与整体验收已通过，本轮本地Git提交受权限限制。[启动和演示](examples/web/README.md)、[集中接口契约](docs/runtime/web.md)、[专项证据](tests/p08/README.md)。可选安装`pip install ".[web]"`，核心依赖保持为空。
+
+P08-04/05本轮新增SQLite事务与独立任务示例；实际db签名、提交/回滚与取消边界以[集中契约](docs/runtime/web.md)为准。SQLite专项、真实HTTP重启、安装和完整回归证据见tests/p08；当前验收状态见todo。

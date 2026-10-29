@@ -171,3 +171,15 @@ sum/stats 逐项检查 Int，Bool/Float 不混入；stats 的 min/max 空值为 
 ## Sketch 已实现子集
 
 [sketch使用指南](../docs/features/sketch-guide.md)提供真实程序、受控类型、配额及GUI启动说明；[tests/e4](../tests/e4/README.md)分别记录headless、桌面窗口、离线安装和性能证据。PNG不可用；缺环境返回失败，不把窗口截图作为PNG导出。
+
+## P08-01 Web
+
+可选安装、页面和HTTP调用见[Web示例](../examples/web/README.md)，规则只维护在[Web契约](../docs/runtime/web.md)。不要生成未注册的web.get/web.serve或db接口；公开Python嵌入见下节；SQLite实现见examples/sqlite，验收见todo。
+
+P08-02可用--shared启动显式冻结共享模式，默认仍按请求实例化。不要修改共享模块数据或放置共享Lazy/可变捕获；初始化、取消和关闭边界见Web契约。
+
+## Python调用ZZY
+
+核心安装提供`from zzy.embedding import load_module`，用`with load_module(path) as module`拥有源码快照，再用`module.call(name, *arguments)`调用顶层导出函数；结果为CallResult，业务数据在`.value`，本次输出在`.stdout/.stderr`。加载不执行初始化，每调用独立运行并自动清理；参数不是源码，不解码[OoO]。精确数据类型、拒绝规则、取消/close及Python整数与HTTP安全整数的区别以[集中契约](../docs/runtime/web.md)为准；[同一业务函数示例](../examples/web/README.md)可直接运行。不把内部Value或任意Python对象交给ZZY。
+
+P08-04/05本轮新增SQLite事务与独立任务示例；实际db签名、提交/回滚与取消边界以docs/runtime/web.md为准。SQLite专项、真实HTTP重启、安装和完整回归证据见tests/p08；当前验收状态见todo。

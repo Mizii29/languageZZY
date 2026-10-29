@@ -1,10 +1,10 @@
 # ZZY 黑盒覆盖与验收计划
 
-更新：2026-10-17｜状态：P06 核心矩阵已落实为实际映射及回归；P07优化与P09应用已落实，Sketch真实GUI单独验收，证据与未测范围见tests/e4及开发记录
+更新：2026-10-28｜状态：P06 核心矩阵、P07优化、P09应用及 P08 互联已落实；Sketch真实GUI及人工操作单独验收，证据与未测范围见各阶段报告及开发记录
 
 本文件将 [syntax.md](../language/syntax.md) 与 [stdlib.md](../language/stdlib.md) 的可观察规则映射到测试类别。它不是测试集或通过报告；实际用例需用 `.zzy` 编写并通过真实 CLI 一键运行。
 
-最终提交候选的执行顺序、自动/人工分工及放行标准见 [最终测试计划](final-test-plan.md)，逐项操作见 [VS Code 人工测试指南](manual-test-guide.md)。持续回归实现见 [CI设计](ci-design.md)：2026-10-20接通工作流及10项门禁自检，2026-10-22新增 [日志轮转配置](../runtime/logging.md) 及10项日志自检；当前全量2002项、独立黑盒仍1738项。实际本地结果见最新开发记录，云端首跑及人工测试不由脚本落地推断通过。
+最终提交候选的执行顺序、自动/人工分工及放行标准见 [最终测试计划](final-test-plan.md)，逐项操作与结果见 [人工测试统一目录](../manual-tests/README.md)。持续回归实现见 [CI设计](ci-design.md)：2026-10-20接通工作流及10项门禁自检，2026-10-22新增 [日志轮转配置](../runtime/logging.md) 及10项日志自检；P08 完成后现存全量报告为2027项、独立黑盒仍1738项，另有真实HTTP14项及SQLite6项证据，详见 [P08](../../tests/p08/README.md)。实际本地结果见最新开发记录，云端首跑及人工测试不由脚本落地推断通过。
 
 P02 实际映射见 [tests/p02/README.md](../../tests/p02/README.md)：279 个 run/check 期望覆盖 EXPR、BIND/CTRL 的非函数部分、ARRAY、SHAPE、输入及本阶段资源边界。ARRAY-02 的异常/取消清理、版本与配额原子性使用宿主测试补充。库回调、JSON 和模块的 P05 证据见下文，缓存仍是待验证计划，不将整张矩阵视为已通过。
 
@@ -137,3 +137,13 @@ P09最终完整门禁：1791/1791，806.968秒，无失败/错误/跳过；[全�
 ## E1—E4 实际映射
 
 完整映射见[tests/e4](../../tests/e4/README.md)：E1/E2/E3/E4独立CLI清单加宿主不变量/故障注入，默认一键收集；真实Tk GUI另跑并验证线程、像素、事件、回放、关闭及满队列。项目保存后另进程加载/undo与导出函数库复用均实际执行，check不产生输出文件、不解码Lazy。E4最终回归、真实GUI与离线验收均已通过；实际数字见results/all-tests.json、gui.json、installed.json为准。旧tests/e1报告只证明当时子集，不覆盖后续改动。
+
+## P08-01 HTTP子集
+
+[专项证据](../../tests/p08/README.md)：真实TCP HTTP、网页GET/POST、严格JSON/安全整数、错误恢复、大小边界、慢body/执行超时、断连、独立请求及关闭；核心无可选依赖检查另跑。P08-01历史报告不覆盖共享捕获或Python嵌入；当前后续任务证据见下项，P08-04数据库仍未验证。
+
+P08-02：tests/test_web_shared.py覆盖嵌套冻结、只读闭包捕获、Lazy/Cell/原生句柄拒绝、导入模块默认捕获、原生名义类型身份及失败/关闭资源释放；tests.web_http新增屏障强制交错、只读失败后恢复、忙worker事件循环响应及真实lifespan关闭；启动取消后晚到快照的回收另用受控ASGI生命周期测试。当前完整门禁见tests/p08/README.md，不推断公开嵌入/SQLite。
+
+P08-03：tests/test_embedding.py执行真实ZZY夹具，覆盖严格Python类型、Bool/Int、有限数/Unicode、输入输出别名、64/65层及配额边界、循环与全部不支持值拒绝、load/check不执行、依赖快照、错误定位、初始化失败、取消/IO/资源释放、并发与活动close；tests.web_http新增与Python调用同一greet的真实HTTP正常/错误对照。scripts/ci_installed_probe.py验证核心无可选依赖安装后的公开API。最终计数与未验证范围见tests/p08，不推断SQLite已实现。
+
+P08-04/05本轮新增SQLite事务与独立任务示例；实际db签名、提交/回滚与取消边界以docs/runtime/web.md为准。SQLite专项、真实HTTP重启、安装和完整回归证据见tests/p08；当前验收状态见todo。

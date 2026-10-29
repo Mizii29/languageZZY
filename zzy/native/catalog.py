@@ -3,10 +3,12 @@ from types import MappingProxyType
 from .metadata import Extension, MetadataRegistry, NativeFunction, NativeType
 from .sketch_metadata import FUNCTIONS as SKETCH_FUNCTIONS, TYPES as SKETCH_TYPES, ABI as SKETCH_ABI
 
-NAMESPACES = frozenset({'io', 'array', 'text', 'math', 'data', 'unit', 'sketch'})
+NAMESPACES = frozenset({'io', 'array', 'text', 'math', 'data', 'unit', 'sketch', 'db'})
 PURE_CALLS = frozenset({'core.len', 'core.str', 'math.abs', 'text.trim', 'text.contains', 'unit.make', 'unit.format'})
 # Parameter names and accepted outer kinds. Empty kind means any ZZY value.
 _SPEC = {
+ 'db.transaction': ('path callback', 'String Function', 'Result'),
+ 'db.query': ('sql params', 'String Array', 'Array'),
  'core.len': ('value', 'Array|String|Map|Range', 'Int'), 'core.str': ('value', 'Int|Float|Bool|Null|String|Quantity', 'String'),
  'core.range': ('start stop step', 'Int Int Int', 'Range'), 'core.wake': ('value', 'Lazy', 'value'),
  'io.print': ('value', '', 'Null'), 'io.input': ('prompt', 'String', 'String|Null'),
@@ -32,9 +34,10 @@ _SPEC = {
  'unit.format': ('quantity unit_name', 'Quantity String', 'String'),
 }
 _MUTATING = {'array.push','array.pop','data.set'}
-_CALLBACKS = {'array.map','array.filter'}
+_CALLBACKS = {'array.map','array.filter','db.transaction'}
 # Direct failures; callback/wake additionally propagate arbitrary user diagnostics.
 _ERRORS = {
+ 'db.transaction': ('E401',), 'db.query': ('E401','E208'),
  'core.range': ('E208',), 'io.print': ('E401',), 'io.input': ('E401',),
  'array.push': ('E203','E206'), 'array.pop': ('E203','E204','E206'),
  'text.split': ('E208',), 'text.replace': ('E208',),
@@ -43,7 +46,7 @@ _ERRORS = {
 }
 FUNCTIONS = {}
 for name, (parameters, types, returns) in _SPEC.items():
- effects = ('io',) if name.startswith('io.') else ('mutation',) if name in _MUTATING else ('callback',) if name in _CALLBACKS else ('lazy',) if name=='core.wake' else ()
+ effects = ('io',) if name.startswith(('io.','db.')) else ('mutation',) if name in _MUTATING else ('callback',) if name in _CALLBACKS else ('lazy',) if name=='core.wake' else ()
  kinds = tuple(() if t=='*' else tuple(t.split('|')) for t in types.split())
  FUNCTIONS[name.removeprefix('core.')] = NativeFunction(name, tuple(parameters.split()), returns,
      effects, ('E201','E202','E211') + _ERRORS.get(name,()), kinds, name in PURE_CALLS,

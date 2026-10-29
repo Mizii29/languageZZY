@@ -1,0 +1,9 @@
+{
+  "zzy/embedding.py": "a6faff7cda6fd62e1470c5c13cf68942217c4be18e99a9e688051cc2b507b9d5",
+  "examples/web/embed.py": "1652f28e564b38e97f548e75aebc8b7f0e75b70649f80c1da4d42a1104f1c475",
+  "tests/test_embedding.py": "af0f511dc97c652310f39a8128eeba9c710288eb8d73445383ce10bb557207ef",
+  "tests/p08/embed.zzy": "87bcaaf6b474b2e1add7f7fa08d4e64aedff04f269d66c9e5ac7e9c7008fbb45",
+  "tests/p08/embed-boundary.zzy": "3a2e82ff896cd45162639d1e3cf18be4a0bd87f676aad72e8f04f23744620e90",
+  "tests/web_http.py": "8ad1b2b0b816e54be54ba3cb7aa8590dca4d37ba9cd7a842e96b41fd5b8b14d6",
+  "scripts/ci_installed_probe.py": "4c67a455c2d74cd09237ddc1b9a1f850e45e1748b0007ddd0139342d14d3c001"
+}

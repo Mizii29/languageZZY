@@ -34,11 +34,20 @@ def main():
         if stdout is not None: assert out.decode() == stdout, records[-1]
         return out.decode(), err.decode()
 
+    (work/'db.zzy').write_text('(addnew) tx() { db.query("CREATE TABLE t(x)",[]); db.query("INSERT INTO t VALUES (?)",[7]); (return) (^_^)(db.query("SELECT x FROM t",[])); } io.print(db.transaction("installed.sqlite3",tx));',encoding='utf-8')
+    cli('check','db.zzy',stdout=''); assert not (work/'installed.sqlite3').exists()
+    cli('run','db.zzy',stdout='(^_^)([[7]])\n')
     cli('--help')
     out, _ = cli('info'); assert json.loads(out)['zzy_version'] == zzy.__version__
     (work / 'hello.zzy').write_text('io.print(2+3);', encoding='utf-8')
     cli('check', 'hello.zzy', stdout='')
     cli('run', 'hello.zzy', stdout='5\n')
+    from zzy.embedding import load_module
+    (work / 'embed.zzy').write_text('(addnew) identity(x) { (return) x; }', encoding='utf-8')
+    with load_module(work / 'embed.zzy') as embedded:
+        value = {'n': 2**100, 'items': [True, 1, None]}
+        assert embedded.call('identity', value).value == value
+    assert not any(name in sys.modules for name in ('starlette', 'uvicorn', 'tkinter'))
     (work / 'bad.zzy').write_text('io.print(total);', encoding='utf-8')
     out, err = cli('run', 'bad.zzy', '--diagnostic-format', 'json', status=2, stdout='')
     assert json.loads(err)['code'] == 'E302'

@@ -2,7 +2,7 @@
 
 建立：2026-10-20｜更新：2026-10-22｜状态：工作流及本地入口已实现；云端首跑、远程必需检查尚待验证
 
-CI 的作用是让每次候选修改自动经过相同检查，并保存结果，及时发现回归。当前仓库远程为 GitHub `Mizii29/languageZZY`，工作流已写入 [ci.yml](../../.github/workflows/ci.yml)，通用执行入口为 [scripts/ci.py](../../scripts/ci.py)。最终完整测试及人工放行见 [最终测试计划](final-test-plan.md)，本机操作见 [VS Code 人工测试指南](manual-test-guide.md)。本次没有推送，也没有修改 GitHub 仓库规则；文件落地不等于云端已经运行。
+CI 的作用是让每次候选修改自动经过相同检查，并保存结果，及时发现回归。当前仓库远程为 GitHub `Mizii29/languageZZY`，工作流已写入 [ci.yml](../../.github/workflows/ci.yml)，通用执行入口为 [scripts/ci.py](../../scripts/ci.py)。最终完整测试及人工放行见 [最终测试计划](final-test-plan.md)，本机操作与结果见 [人工测试统一目录](../manual-tests/README.md)。本次没有推送，也没有修改 GitHub 仓库规则；文件落地不等于云端已经运行。
 
 ## 1. 适用范围和前提
 

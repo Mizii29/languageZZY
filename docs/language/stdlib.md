@@ -8,7 +8,9 @@
 
 所有宿主接口通过注册表调用，参数数量和外层类型先检查；Bool 不作为 Int。调用错误为 `E202`，类型错误为 `E201`，程序错误沿用语法契约的诊断；可预期的数据或 I/O 失败返回 `(T_T)(String)`。不能用一个 broad catch 将控制流、配额、取消和所有 Python 异常统一吞成 Result。
 
-只暴露正式契约登记的函数；不开放任意 Python 属性、`eval`、`exec`。`io`、`array`、`text`、`math`、`data`、`unit` 命名空间与宿主函数引用只读。已选 `sketch` 的独立接口以 [sketch.md](../features/sketch.md) 为准；`web`、`db`、`num` 属于后续扩展，当前不属于核心安装依赖。原生类型/函数的签名、归属、错误和效果元数据统一登记；查询白名单不会自动接受扩展函数。
+只暴露正式契约登记的函数；不开放任意 Python 属性、`eval`、`exec`。`io`、`array`、`text`、`math`、`data`、`unit` 命名空间与宿主函数引用只读。已选 `sketch` 的独立接口以 [sketch.md](../features/sketch.md) 为准；`web`、`num` 属于后续语言扩展；`db`已提供SQLite事务接口，当前不属于核心安装依赖。原生类型/函数的签名、归属、错误和效果元数据统一登记；查询白名单不会自动接受扩展函数。
+
+P08的HTTP适配与Python嵌入是宿主入口，不新增上述语言命名空间。Python侧`zzy.embedding.load_module`等签名及严格值转换统一见[互联契约](../runtime/web.md)；不将Python对象自动暴露给ZZY。
 
 ## 2. 基础与 I/O
 
@@ -128,3 +130,11 @@ Web 需要另列 Request/Response、路由、状态码、Content-Type、JSON 校
 原生登记与 Tk 初始化分开；check只读接口元数据、不执行用户程序，headless运行正常执行几何及文件操作，两者均不初始化Tk。GUI能力以独立真实窗口验收为准；PNG没有独立后端时明确标为不可用。
 
 实际接口、固定限额、平台与验收见[sketch使用指南](../features/sketch-guide.md)。五种受控类型均有实际入口，Position/LayerInfo为冻结普通快照。几何、SVG、图层/文字、历史/回放、图案、事件与项目已实现；PNG明确不可用。核心v0.6.1签名不变，扩展ABI为1.0，验收见tests/e4。
+
+## P08 Web边界
+
+Web已选，P08-01通过独立可选ASGI适配器调用ZZY函数；实际Request/Response、固定宿主路由表、严格JSON及错误/资源规则统一见[Web契约](../runtime/web.md)。方向示例web.get/web.post/web.json/web.serve仍未登记；公开Python嵌入及db.transaction/db.query规则见同一集中契约。
+
+P08-04/05本轮新增SQLite事务与独立任务示例；实际db签名、提交/回滚与取消边界以docs/runtime/web.md为准。SQLite专项、真实HTTP重启、安装和完整回归证据见tests/p08；当前验收状态见todo。
+
+SQLite事务是上述单步I/O Result约定的明确例外：db.query的SQL/I/O错误以E401中止并回滚整个事务，不能忽略失败后继续提交；回调主动返回失败Result用于业务拒绝并回滚。签名、生命周期及提交后的边界只在互联契约维护。

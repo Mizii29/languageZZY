@@ -50,6 +50,9 @@ class Library:
                      self.reserve(node,runtime_objects=1,runtime_slots=5))
 
     def native_call(self,name,args,node):
+        if name.startswith('db.'):
+            from .database import invoke
+            return (yield from invoke(self,name,args,node))
         if name == 'sketch.show':
             from .sketch_session import show
             return (yield from show(self,args[0],node))
@@ -60,7 +63,8 @@ class Library:
             values,callback=args
             result=Array(self,node)
             call=replace(node,children=(node.children[2],node.children[1]))
-            values.active+=1
+            tracked = not getattr(values,"frozen",False)
+            if tracked: values.active+=1
             try:
                 for item in values.data:
                     self.meter.cancellation.check()
@@ -71,7 +75,8 @@ class Library:
                         if mapped.data:result.push(item,self,node)
                     else:result.push(mapped,self,node)
                 return result
-            finally:values.active-=1
+            finally:
+                if tracked: values.active-=1
         if name in {'core.len','core.str','core.range','io.print','io.input','array.copy','array.push','array.pop'}:
             return self.call(name,args,node)
         if name.startswith('io.'):return files.invoke(self,name,args,node)

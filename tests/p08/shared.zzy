@@ -1,0 +1,20 @@
+(shape) Response { status: (Int); body; }
+(machine) Flow { a -- "go" --> b; }
+(zno) numbers := [1,2];
+(zno) mapping := data.map();
+data.set(mapping,"numbers",numbers);
+(shape) Box { values: (Array) := numbers; fresh: (Array) := []; }
+(zno) box := Box::{};
+(zno) flow := Flow("a");
+(zno) nested := [mapping,box,flow];
+(addnew) read(r) { (zno) local := Box::{}; array.push(local.fresh,7); (return) Response::{status:200,body:[numbers,local.fresh,flow.state]}; }
+(addnew) array_write(r) { numbers[0] <- 9; }
+(addnew) map_write(r) { data.set(mapping,"x",1); }
+(addnew) shape_write(r) { box.values <- []; }
+(addnew) machine_write(r) { flow << "go"; }
+(addnew) default_write(r) { (zno) local := Box::{}; array.push(local.values,3); }
+(addnew) local_state(r) { (zno) input := io.input(""); io.print(data.get(r,"body")); (return) Response::{status:200,body:[input,data.get(r,"body")]}; }
+(addnew) loop(r) { (while) (true) {} }
+
+(addnew) each(x) { (return) x + 1; }
+(addnew) iterate(r) { (zyes) total := 0; (for) n (in) numbers { total <- total + n; } (return) Response::{status:200,body:[total,array.map(numbers,each)]}; }

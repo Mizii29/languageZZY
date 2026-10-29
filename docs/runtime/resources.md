@@ -126,3 +126,13 @@ B01—B09首次基线、两版交错复测和stdin探针均使用上述default-v
 几何/草稿、增量历史、回放检查点、图案/项目临时值、消息和输出均执行核心预算或固定扩展容量检查；数值与记账口径见[使用指南](../features/sketch-guide.md)。输入4096条，显示刷新单槽合并，两者消息载荷合计16MiB；关闭独立控制，满载E211。历史满不淘汰，用户可显式clear_history。不可变路径展开随块版本共享并在最后引用释放；回放检查点最多8个/16MiB，仅是可选加速，不影响正确性。
 
 固定扩展阈值不修改default-v1或P07原始指纹，不能通过核心--limits调高。100000笔画测量中的超限与成功分列于[Sketch性能报告](../../benchmarks/sketch/README.md)；逻辑预算不等于进程RSS。最大单项实测不保证所有极限组合可容纳。
+
+## P08-01 HTTP容量
+
+HTTP子集的流式body/响应64KiB、元数据16KiB、受控并发、取消与关闭边界统一见[Web契约](web.md)。每请求新ResourceMeter，io_payload_bytes=65536，其余default-v1不变；线程取消不承诺强制终止任意阻塞宿主调用。
+
+P08-02共享模式增加服务自有计量，快照接管初始化预留，所有请求结束后关闭释放；每请求独立计量并预留绑定/模块映射槽。冻结数组遍历不写active，默认可变数组仍使用活动遍历保护。服务与每个请求各自受default-v1及Web覆盖约束，不宣称进程RSS硬限。
+
+P08-03嵌入的每次call独立ResourceMeter；输入转换和Python输出树构建均计运行对象/槽/载荷，深度/容器/字符串/整数沿用现有键，重复别名展开不能绕过预算。stdin有io_payload_bytes及临时载荷检查，stdout/stderr保留原输出配额。结果返回后由宿主拥有，全部ZZY预留在finally归零；模块close释放准备快照，活动调用时明确拒绝close。残余宿主MemoryError/RecursionError按现有CLI原则报告E211，不伪装数据转换失败。
+
+P08-04/05本轮新增SQLite事务与独立任务示例；实际db签名、提交/回滚与取消边界以docs/runtime/web.md为准。SQLite专项、真实HTTP重启、安装和完整回归证据见tests/p08；当前验收状态见todo。

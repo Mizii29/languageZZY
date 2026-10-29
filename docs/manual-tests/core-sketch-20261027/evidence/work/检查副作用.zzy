@@ -1,0 +1,5 @@
+(zno) value := io.input("请输入> ");
+io.print(value);
+io.print(io.write_text("check-effect.txt", "done"));
+(zno) c := sketch.canvas(200, 100, "headless");
+io.print(sketch.save_svg(c, "check.svg"));

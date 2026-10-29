@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="zh-CN"><meta charset="utf-8"><title>ZZY 小站</title>
+<style>body{font:18px system-ui;max-width:650px;margin:60px auto;padding:20px}button,input{font:inherit;padding:8px}pre{white-space:pre-wrap;background:#eee;padding:20px}</style>
+<h1>ZZY 小站</h1><p>业务处理由 ZZY 完成。</p>
+<button id="hello">GET 问候</button><p><label>姓名 <input id="name" maxlength="80" value="同学"></label> <button id="post">POST 问候</button></p>
+<pre id="result" role="status">正在连接…</pre>
+<script>
+async function call(path,options){
+ const out=document.getElementById('result');out.textContent='请求中…';
+ try{const r=await fetch(path,options);const data=await r.json();
+ out.textContent=(r.ok?'成功':'请求失败（HTTP '+r.status+'）')+'\n'+JSON.stringify(data,null,2);
+ }catch(e){out.textContent='无法连接服务，请确认后端已启动。';}
+}
+document.getElementById('hello').onclick=()=>call('/api/hello');
+document.getElementById('post').onclick=()=>call('/api/greet',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:document.getElementById('name').value})});
+call('/api/hello');
+</script></html>

@@ -1,0 +1,13 @@
+﻿ M README.md
+ M docs/README.md
+ M docs/development/ci-design.md
+ M docs/development/development-log.md
+ M docs/development/final-test-plan.md
+ M docs/development/manual-test-guide.md
+ D docs/development/manual-test-result.doc
+ M docs/development/test-coverage.md
+ M docs/development/todo.md
+ M docs/runtime/web.md
+ M examples/web/README.md
+ M tests/p08/README.md
+?? docs/manual-tests/

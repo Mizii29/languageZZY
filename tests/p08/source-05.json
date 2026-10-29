@@ -1,0 +1,9 @@
+{
+  "zzy/native/database.py": "0c91fd1e2caac15eb782c25395a3b33e1e356093d08731a9bd21a83dffa183a5",
+  "zzy/native/catalog.py": "f9f9b6ae08f480634ea4c8c4c2d4e93e4ec8d050e7ffb55a1aaaa79a2ea8f044",
+  "zzy/native/library.py": "ae56ba07ae69cb60c563902dad0b04fb3b7e84b73ffc0393018d57b44d19c602",
+  "tests/test_database.py": "8514891243814ce3f8388936d8fc4c8c4d46cf5cc1b55fe83c5ef5745216a604",
+  "tests/web_http.py": "cb47f4fce7ace429c8c15a4e37dcf08a49a1e9318c4ceed69914d321204148db",
+  "examples/sqlite/app.zzy": "23b2542027d1718bc46d92ef2618cab0175fcea754e76a5603d1665021846d17",
+  "scripts/ci_installed_probe.py": "9d93d177d85075a7573c0b3068af5453a998665a7a788c7a0b0d1fb8f05bf7c3"
+}

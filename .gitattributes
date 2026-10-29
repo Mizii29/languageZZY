@@ -13,3 +13,7 @@ tests/check/inputs/bom-crlf-name.zzy -text whitespace=blank-at-eol,blank-at-eof,
 benchmarks/results/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
 # pstats emits a terminating blank line; preserve its verbatim report.
 benchmarks/results/**/profile.txt whitespace=blank-at-eol,space-before-tab,cr-at-eol,-blank-at-eof
+
+# Raw PowerShell transcripts contain CRLF/control bytes; preserve evidence verbatim.
+docs/manual-tests/core-sketch-20261027/evidence/terminal.txt -text -diff
+docs/manual-tests/p08-20261028/runs/20261029-002147-330cf17/terminal.txt -text -diff

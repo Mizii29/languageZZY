@@ -1,0 +1,42 @@
+{
+  "passed": true,
+  "command": [
+    "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\.venv\\Scripts\\python.exe",
+    "-X",
+    "utf8",
+    "-m",
+    "zzy.web",
+    "examples/web/app.zzy",
+    "--route",
+    "GET",
+    "/api/hello",
+    "hello",
+    "--route",
+    "POST",
+    "/api/greet",
+    "greet",
+    "--page",
+    "examples/web/index.html",
+    "--shared",
+    "--port",
+    "62437"
+  ],
+  "results": [
+    {
+      "method": "GET",
+      "status": 200,
+      "body": {
+        "message": "你好，ZZY Web！",
+        "language": "ZZY"
+      }
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "body": {
+        "message": "你好，Ada"
+      }
+    }
+  ],
+  "cleanup": "Terminate only this probe child; graceful shutdown tested separately by HTTP lifespan tests"
+}

@@ -11,7 +11,7 @@ description: 在 ZZY 课程项目中编写或审查 .zzy 程序、实现解释�
 
 先读 [文档导航](../../docs/README.md)、[任务状态与交接栏](../../docs/development/todo.md) 和 [开发记录的最新条目](../../docs/development/development-log.md)，再核对实际文件。不要把历史记录中的旧计数或下一步当作当前事实。
 
-截至 2026-10-17，P00—P07与P09全部已完成，版本 0.6.0a1；核心语法、io/array/text/math/data/unit 标准库、Map/严格 JSON、原子文件保存及模块已接通。B01—B09性能基线与诊断路径优化已实测；校园任务管家已实现；Sketch真实GUI与headless分别验收。check 仅做前端准备，不执行用户表达式；test 对每个 spec 启动独立进程。一键完整回归为 python -X utf8 -m tests；独立外部清单入口仍为 python -X utf8 -m tests.blackbox。P06 已补指南片段、变形 spec、真实 Windows Ctrl+C 与进程树验收，证据和未测范围见 tests/p06/README.md。P07证据见 benchmarks/results 和 docs/runtime/performance-report.md；版本以Git区分，超时不算通过。P09应用入口为 apps/zzy-campus/main.zzy，必须使用同目录limits.json，业务全部为ZZY；启动、行数、失败/恢复验收见该目录README及tests/p09。E1—E4已全部验收，sketch ABI 1.0；实际状态以todo为准，使用范围与配额见docs/features/sketch-guide.md，真实GUI/安装证据见tests/e4；E结束后下一项P11-01；P11核心交付前置已满足，按todo及用户范围推进；先核对 README、todo、最新记录、代码和 Git。语法 v0.6/标准库 v0.6.1 规则不变。
+截至 2026-10-17，P00—P07与P09全部已完成，版本 0.6.0a1；核心语法、io/array/text/math/data/unit 标准库、Map/严格 JSON、原子文件保存及模块已接通。B01—B09性能基线与诊断路径优化已实测；校园任务管家已实现；Sketch真实GUI与headless分别验收。check 仅做前端准备，不执行用户表达式；test 对每个 spec 启动独立进程。一键完整回归为 python -X utf8 -m tests；独立外部清单入口仍为 python -X utf8 -m tests.blackbox。P06 已补指南片段、变形 spec、真实 Windows Ctrl+C 与进程树验收，证据和未测范围见 tests/p06/README.md。P07证据见 benchmarks/results 和 docs/runtime/performance-report.md；版本以Git区分，超时不算通过。P09应用入口为 apps/zzy-campus/main.zzy，必须使用同目录limits.json，业务全部为ZZY；启动、行数、失败/恢复验收见该目录README及tests/p09。E1—E4已全部验收，sketch ABI 1.0；实际状态以todo为准，使用范围与配额见docs/features/sketch-guide.md，真实GUI/安装证据见tests/e4；用户现已选择P08，当前下一项以文末与todo为准；P11核心交付前置已满足，按todo及用户范围推进；先核对 README、todo、最新记录、代码和 Git。语法 v0.6/标准库 v0.6.1 规则不变。
 
 遵循用户任务范围与适用的仓库指示。只整理文档时不启动实现；只要求审查时不扩展成语言重设计。作业约束查 [requirement](../../docs/requirement.md)，保留原文。
 
@@ -52,3 +52,11 @@ description: 在 ZZY 课程项目中编写或审查 .zzy 程序、实现解释�
 测试以 ZZY 黑盒为主，非法源码独立文件，外部清单检查诊断及退出码。测试无用例、失败、超时或输出超额均不能报成功；优化后确认行为和资源语义保持。性能结论必须来自等价工作量的真实记录。
 
 交接时说明修改文件、实际验证、未验证部分和下一项；区分“设计完成”“接口实现”“测试通过”。应用业务写在 ZZY 中，满足 requirement 的行数与交付要求；Agent 记录来自真实开发，不补造历史。
+
+## P08已选（2026-10-28）
+
+继续Web前读取[集中接口契约](../../docs/runtime/web.md)、todo交接及最新日志。P08-01用可选Starlette/Uvicorn、宿主固定路由和默认每请求完整实例化；web.get/web.serve没有语言接口，不能凭旧设计示例调用。后续任务按依赖继续，不提前实现P10。
+
+P08-02已实现显式shared=True/--shared，默认逐请求模式保留；共享Lazy/可变绑定/Cell闭包/原生句柄拒绝。P08-03公开Python入口zzy.embedding.load_module/call/close，每调用独立上下文、自动严格转换与清理，CallResult含value/stdout/stderr；不传内部Value。详细规则只维护在Web契约，阶段验收数字与下一项看todo及最新日志；SQLite事务接口和独立示例已实现，验收见todo。
+
+P08-04/05本轮新增SQLite事务与独立任务示例；实际db签名、提交/回滚与取消边界以docs/runtime/web.md为准。SQLite专项、真实HTTP重启、安装和完整回归证据见tests/p08；当前验收状态见todo。

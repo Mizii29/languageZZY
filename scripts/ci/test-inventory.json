@@ -1803,6 +1803,12 @@
     "tests.test_cli.CliTests.test_run_check_cwd_options_and_literal_separator",
     "tests.test_cli.CliTests.test_run_check_frontend_diagnostics_match_in_both_formats",
     "tests.test_cli.CliTests.test_source_info_utf8_and_working_directory",
+    "tests.test_database.DatabaseTests.test_cancel_and_resource_rollback",
+    "tests.test_database.DatabaseTests.test_check_never_opens_database",
+    "tests.test_database.DatabaseTests.test_commit_binding_rollback_and_reopen",
+    "tests.test_database.DatabaseTests.test_failures_cleanup_and_recovery",
+    "tests.test_database.DatabaseTests.test_parallel_requests",
+    "tests.test_database.DatabaseTests.test_write_then_exception_rolls_back_and_lock_timeout",
     "tests.test_diagnostics.DiagnosticTests.test_default_output_boundary_and_emergency_once",
     "tests.test_diagnostics.DiagnosticTests.test_final_record_fits_unicode_and_escaped_json",
     "tests.test_diagnostics.DiagnosticTests.test_non_error_kinds_have_no_code",
@@ -1826,6 +1832,17 @@
     "tests.test_e1_runtime.SketchRuntimeTests.test_program_reuse_allocates_fresh_documents_and_resets_ids",
     "tests.test_e1_runtime.SketchRuntimeTests.test_real_cli_batch_boundary_and_shared_payload_limit",
     "tests.test_e1_runtime.SketchRuntimeTests.test_segment_and_object_limits_fail_before_publish",
+    "tests.test_embedding.EmbeddingTests.test_cancellation_and_next_call",
+    "tests.test_embedding.EmbeddingTests.test_concurrent_io_state_and_active_close",
+    "tests.test_embedding.EmbeddingTests.test_dependency_snapshot_initialization_failure_and_api_arguments",
+    "tests.test_embedding.EmbeddingTests.test_detached_copies_and_alias_policy",
+    "tests.test_embedding.EmbeddingTests.test_diagnostics_and_recovery",
+    "tests.test_embedding.EmbeddingTests.test_exact_scalar_and_nested_roundtrip",
+    "tests.test_embedding.EmbeddingTests.test_example_cli_check_and_optional_import_isolation",
+    "tests.test_embedding.EmbeddingTests.test_load_snapshot_no_execution_and_invalid_calls_before_initialization",
+    "tests.test_embedding.EmbeddingTests.test_rejects_python_types_cycles_and_invalid_numbers",
+    "tests.test_embedding.EmbeddingTests.test_rejects_zzy_values_without_waking_or_unpacking",
+    "tests.test_embedding.EmbeddingTests.test_resource_limits_input_output_and_cleanup",
     "tests.test_interpreter.InterpreterTests.test_ast_spans_and_left_association",
     "tests.test_interpreter.InterpreterTests.test_cancellation_inside_sum_scratch",
     "tests.test_interpreter.InterpreterTests.test_error_and_cancel_release_even_with_live_traceback",
@@ -2001,7 +2018,15 @@
     "tests.test_source.SourceTests.test_file_limit_and_total_limit",
     "tests.test_source.SourceTests.test_module_and_import_depth_boundaries",
     "tests.test_source.SourceTests.test_read_failures_rollback_and_close_handles",
-    "tests.test_source.SourceTests.test_snapshot_canonical_alias_and_importer_path"
+    "tests.test_source.SourceTests.test_snapshot_canonical_alias_and_importer_path",
+    "tests.test_web_core.WebCoreTests.test_example_check_is_silent",
+    "tests.test_web_core.WebCoreTests.test_import_does_not_load_optional_dependencies",
+    "tests.test_web_core.WebCoreTests.test_independent_context_and_released_budget",
+    "tests.test_web_shared.SharedTests.test_dependency_defaults_and_failed_initialization_release",
+    "tests.test_web_shared.SharedTests.test_native_nominal_definition_identity_and_private_namespace_cache",
+    "tests.test_web_shared.SharedTests.test_nested_writes_and_default_alias_are_frozen",
+    "tests.test_web_shared.SharedTests.test_readonly_closure_captures_are_frozen",
+    "tests.test_web_shared.SharedTests.test_rejects_lazy_mutable_closure_and_default_capture"
   ],
   "manifests": {
     "tests/lex/cases.json": [
@@ -3767,6 +3792,6 @@
       "run_cli.e4-undo-fill"
     ]
   },
-  "collected": 2002,
+  "collected": 2027,
   "blackbox": 1738
 }

@@ -602,3 +602,108 @@ Git 提交：真实标识 / 未提交
 - 根因：Windows 当前目录可保留 8.3 短路径别名，而 Source.path 已解析成长路径，relpath 将同一目录误当作不同路径。四项诊断路径断言及两项精确 stderr 容量边界因此失败。本机 GetShortPathNameW 实际切换到短路径后复现，既有路径回归中新增同一场景，修复前明确失败。
 - 修复：display_path 在计算相对路径前统一规范化源路径和当前目录，跨盘仍返回规范绝对路径；不改错误码、源码坐标、资源限额或既有外部答案。回归验证包含短路径、缺失文件和重复运行上下文；最终云端结果以该 PR 修复提交的完整重跑为准。
 - 本机修复后专项：tests.test_p07_locations/test_cli/test_p04_spec/test_p06_diagnostics/test_p06_resources 共 38/38 通过、107.274 秒，无跳过；静态入口通过。此结果不替代云端完整重跑。
+
+
+## 2026-10-28：P08-01 HTTP与同源网页
+
+- 用户明确选择P08，并在提示末限定“现在完成p08-1”；因此本轮仅P08-01，不勾选P08-02—05，不提前P10。接手main/fcb9373，Git只有未跟踪docs/manual-tests/，没有已跟踪脏修改；保留人工目录和requirement原文。P05/P06/P09的完成状态与当前代码核对一致。
+- 阅读项目技能、README、todo交接、最新日志、P08 roadmap、interpreter第11节、stdlib/resources/test-coverage、项目配置和CI。使用zzy、git-pushing及失败时systematic-debugging技能。brainstorming内容仅用于设计检查；用户已明确架构/任务并授权普通选择直接实施，不增加常规确认门禁。
+- 设计决定：Starlette/Uvicorn可选extra；固定宿主路由表启动校验，启动只prepare不执行模块；每请求完整重建模块/捕获环境，复用只读Program，私有输入/输出/ResourceMeter。旧web.get/web.serve方向示例无现有签名，集中契约docs/runtime/web.md明确替代方案、实际Request/Response、JSON安全整数/拒绝、资源、错误、取消与后续嵌入/SQLite边界，不扩展语法。
+- 新增zzy/web.py、examples/web/app.zzy和同源页面。业务问候/姓名校验由ZZY编写；Python只做适配/转换，复用既有json_codec、解释器调用栈和finally清理。每body/响应64KiB、metadata16KiB、默认4并发、每收体/执行各5秒；超时/断连/关闭取消令牌，阻塞宿主不能强制打断的边界明确记录。
+- 首次依赖安装受沙箱网络WinError10013阻止；同命令授权联网安装成功：Starlette0.52.1/Uvicorn0.54.0及环境报告所列依赖。官网文档读取超时，依据本机安装源码与真实验证，不把未读网页当证据。核心dependencies仍为空。
+- 实际失败修复：示例首check报E101裸!，核对syntax改为(not)/(or)；内部探针Map.set传Python字符串报AttributeError，核对Value键、CallRequest单元素返回容器及stringify返回Value后修正边界；首次HTTP业务期望200却422，核对data.kind固定标签为map而非object，修正ZZY示例，不改既有标准库或放宽测试。
+- 测试命令：`.venv/Scripts/python.exe -X utf8 -m unittest tests.test_web_core -v`3/3通过；`-m tests.web_http --report tests/p08/http.json`最终8/8、2.406秒通过，零跳过，真实TCP，无TestClient替代。覆盖正常/拒绝、边界、错误恢复、12次并发独立计数、循环超时/慢body/断连释放与服务生命周期。
+- 浏览器实际访问127.0.0.1:8765，GET显示language=ZZY；POST同学显示你好，同学；空姓名422显示长度要求。截图tests/p08/browser-failure.png。演示服务已停止；自动浏览器检查不冒充用户人工验收，未改人工材料。
+- `.venv/Scripts/python.exe -X utf8 -m scripts.ci package --output dist/p08-package --installer C:/Users/13691/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe`通过，隔离核心wheel无第三方安装、40源码核对，保留package.json/package-probe.json。另新建dist/p08-web-installed/env安装该wheel[web]；`env/Scripts/python.exe -I -X utf8 .../probe.py`确认导入来自新环境并重跑8/8真实HTTP、2.938秒通过。保留installed-http.json和源码/依赖哈希。
+- CI新增web-http独立job，安装可选wheel、执行专项并上传证据，ci-gate依赖该job结果；核心/GUI仍分离。无推送，云端新增job尚未验证。本轮GUI未重跑，HTTP通过不替代GUI。
+- 完整核心回归正在运行，待最终结果才勾选P08-01。P08-02的共享冻结图与默认捕获完整矩阵、P08-03公开嵌入、P08-04 SQLite和P08-05完整交付留下一轮。
+
+- 最终完整命令`.venv/Scripts/python.exe -X utf8 -m tests --report tests/p08/core-regression.json`退出0：2005/2005、877.547秒，失败/错误/跳过/expected failure全0；原2002项完整保留，外部CLI1738项未减。最终源码哈希与HTTP/安装实测一致。静态门禁通过53份Markdown/612条本地链接、任务/fixture/requirement核对。P08-01达到子任务标准，现勾选；P08整体未完成，下一项P08-02。
+
+- 定稿后静态门禁再次通过；测试清单仅新增3个核心ID（2002→2005），原清单及期望未删减。todo核对53/70，P08只有01勾选。分支codex/p08-01-web，本轮仅本地提交，不推送；最终标识见Git与答复。
+
+
+## 2026-10-28：P08-02共享冻结模块与并发隔离
+
+- 接手codex/p08-01-web/1e32f97，仅docs/manual-tests/未跟踪；保留用户8000端口服务及人工材料，测试使用独立临时端口。截图证明用户P08-01 GET/POST成功，未将其视为本轮隔离验收。读取技能、集中契约、todo/日志、相关解释器捕获/默认构造/冻结/计量与CI实现，沿用既有语法。
+- 先在集中契约明确显式shared=True/--shared方案：默认逐请求模式保留；共享模式ASGI lifespan启动时初始化一次，受信任初始化副作用与check分开。递归拒绝全部模块可变绑定、Lazy、Cell闭包捕获、原生句柄及命名空间别名；共享闭包/结构默认捕获/导入依赖的全部全局绑定一并检查，无静默降级。实际代码zzy/web_shared.py，采用独立服务计量和预留所有权转移，停服后释放。
+- Array/Map/Shape/Machine递归冻结；捕获只读容器的闭包检查到容器。普通结构默认[]仍每请求创建；默认引用共享数组保持冻结。默认表达式引用的全局环境由整个模块绑定图检查；函数内新建值/Cell仍属于请求，不禁止请求局部修改。
+- 复查发现冻结Array遍历仍写active计数，修改for与array.map/filter仅对非冻结数组记录active；冻结写入口E203不变，普通可变数组原活动遍历规则保持。内置Namespace成员惰性缓存按请求创建，防止把其缓存或资源归属共享到请求之间。
+- 首轮核心专项6/6、HTTP10/10通过；补依赖/默认捕获与生命周期后核心7/7。HTTP强制两个请求在解释器入口屏障交错，8次不同输入保持各自输出和EOF输入；共享写失败后读状态保持不变；忙worker时503及时返回、原循环504；真实服务只初始化一次，关闭后预留归零。
+- 生命周期审查发现ASGI启动取消可能晚收到成功快照；新增取消令牌和late-result close回调，用受控初始化屏障证明取消后快照关闭/计量归零。为最终证据一致，主动中断尚未完成的首轮全量（未形成成功报告，不计通过），修复及专项完成后重新完整运行。
+- 最终`.venv/Scripts/python.exe -X utf8 -m tests.web_http --report tests/p08/http-02.json`12/12、3.875秒通过，零失败/跳过。其中启动取消为ASGI生命周期受控交错，其余HTTP场景使用真实TCP，未冒充全是网络用例。日志中的E203/E205为负例服务端原始定位，响应不含Python堆栈。
+- `.venv/Scripts/python.exe -X utf8 -m scripts.ci package --output dist/p08-02-package-final --installer C:/Users/13691/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe`通过，核心无可选依赖安装41源码核对。另对dist/p08-web-installed/env离线强制重装本轮wheel，python -I探针确认导入来自隔离env并重复12/12、3.859秒通过；源码/安装证据见tests/p08。本轮没有联网新增依赖。
+- 当前完整回归正在运行，源码冻结于tests/p08/source-02.json；通过后才勾选P08-02。下一项P08-03公开嵌入，未提前SQLite/P10。GUI、用户人工测试、其他平台和所有阻塞宿主取消时序未验证；本轮不推送。
+
+- 后续名义类型验收补出真实失败：测试初稿把array.Stats写成带括号的注解，首先E103；按正式语法修正后，合法array.stats结果传入共享函数仍E201。原因是每请求重新创建了原生名义类型定义，而共享函数注解保留启动定义。修复为各请求独立命名空间缓存字典，启动已构造成员经检查后共享身份；不放宽类型匹配。核心专项8/8、0.598秒及Web12/12、3.797秒通过。再次主动中止未完成的全量，前两次均无最终报告、不得算通过；最终源码与新增5项测试清单冻结后完整重跑。
+- 最终包命令改用`-m scripts.ci package --output dist/p08-02-package-accepted --installer C:/Users/13691/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe`，退出0、41源码匹配。用该wheel离线重装隔离Web环境，`dist/p08-web-installed/env/Scripts/python.exe -I -X utf8 dist/p08-web-installed/probe.py`通过12/12、3.656秒；另同环境`core_probe.py`执行5项共享核心用例通过、0.187秒，包含名义类型修复。已更新tests/p08的package-02、package-probe-02、installed-http-02为最终包证据；前述旧包耗时仅保留为开发过程记录。
+- 交付前错误码交叉核对发现新共享拒绝复用了E214，与syntax.md第265行“sketch操作状态”冲突；影响启动错误码的公共含义。改用已有E303模块错误，集中契约明确这是入口模块根节点的发布条件诊断，原始求值/冻结写入定位不改，语法错误码表不扩展。核心8/8、0.757秒，Web12/12、3.813秒通过；因此中断第三次尚未完成的全量，重新冻结实现/测试哈希后从头运行。前三次中断都不是成功报告，不拼接通过项。最终打包目录为dist/p08-02-package-release，前述accepted仍是历史过程证据。
+- 静态入口第一次复用既有dist/p08-02-static目录，被exist_ok=False拒绝（退出1）；保留旧产物，改用新目录dist/p08-02-static-accepted后通过。交付定稿后再检查一次。
+- E303定稿后package-release无Web依赖核心安装41源码核对通过；离线重装该wheel后HTTP12/12、4.032秒，共享核心5/5、0.161秒，均退出0。另执行`.venv/Scripts/python.exe -X utf8 dist/p08-02-cli-probe.py`，由子进程实际启动`-m zzy.web ... --shared --port 62437`，真实GET/POST返回ZZY/Ada数据，保存tests/p08/cli-02.json。只终止探针自己的子进程；不把强制结束称为优雅关闭，后者由lifespan专项证明。用户8000服务不变。
+
+- 最终完整命令`.venv/Scripts/python.exe -X utf8 -m tests --report tests/p08/core-regression-02.json`退出0：collected=tests_run=2010，960.375秒，failures/errors/skipped/expected_failures全0。原2005项及1738外部CLI没有删减；新增5项核心用例，Web12项另执行。P08-02达到本轮完成标准，勾选后54/70；P08整体未完成，下一项P08-03。本地分支codex/p08-02-shared，仅提交本轮差异，不推送。
+- 定稿静态命令`-m scripts.ci static --output dist/p08-02-static-release`退出0：53份Markdown、621本地链接、fixture/清单/任务/requirement核对通过；校园源码仍504总行/493有效行。最终7个实现/测试文件哈希匹配，wheel中41份运行时源码与工作区逐份规范换行后相同。Git差异审查仅纳入本轮27个文件，docs/manual-tests/不暂存；requirement SHA256仍为b099c19fc339ce1dc1aab7e9d6c8126a9c5c9ace3d31b969a0623df90f521d2b。
+
+## 2026-10-28：P08-03数据转换与Python嵌入
+
+- 用户要求完成下一项。接手codex/p08-02-shared/4815347，核实P08-02已验收、P08-03最早未完成；Git仅docs/manual-tests/未跟踪。使用项目zzy技能核对集中契约、interpreter第11节、stdlib/resources/覆盖表、CI与包配置；普通设计选择沿用用户直接实现授权。本轮仅P08-03，不提前SQLite/P10，不操作用户8000端口服务。
+- 契约先落在docs/runtime/web.md：公开zzy.embedding.load_module/LoadedModule.call/exports/close及CallResult/ConversionError。加载仅prepare；每调用新上下文，先转换宿主参数，再初始化及调用，最后转换结果，finally释放；并发可调用，活动调用时close明确拒绝且不关闭模块。返回值/输出由Python拥有；无内部Value句柄泄漏、隐式结果解包、Lazy唤醒或任意Python属性/eval/exec。
+- 实现精确None/bool/int/float/str/list/dict双向转换，结构返回字段dict，循环/非有限Float/孤立代理/子类/未知类型拒绝。别名按出现次数复制，输入不回写宿主，输出不保留可变别名；输出树预留预算防止重复别名展开绕过限额。Python Int直接保留到integer_bits上限，HTTP仍严格安全整数边界，不悄悄变String。使用既有诊断、资源计量与CancellationToken，无新语言错误码/语法。
+- examples/web/embed.py通过同一app.zzy的greet返回业务数据，Python无业务校验副本；真实HTTP新增对照正常中文/英文、缺字段、错误类型和Null的状态码/数据。标准库注册表及校园CLI格式均不改。
+- 首轮`-m unittest tests.test_embedding -v`10项中9通过、1错误：integer_bits=2在加载综合夹具时已拒绝源码数字9，未进入目标转换。按systematic-debugging核对实际Phase.FRONTEND，新增仅identity的独立embed-boundary.zzy；配额不放宽，验证等于阈值成功/超限失败。补依赖快照、初始化失败和宿主参数类型后嵌入11/11、0.975秒通过；输出别名展开的200槽限制另核实实际在to_python/retain中触发。
+- 最终核心专项包含嵌入11项与原Web核心8项：19/19、1.89秒，报告tests/p08/embedding-03.json。64/65层边界、Bool/Int、超长精确Int、Array/Map/结构、无副作用load、未唤醒Lazy、失败/取消清理、并发输入输出/计数、活动close拒绝及下一次调用恢复均实际执行。CLI check夹具静默、`-m examples.web.embed`实际输出Ada业务数据，导入embedding不加载Web/GUI。
+- `.venv/Scripts/python.exe -X utf8 -m tests.web_http --report tests/p08/http-03.json`13/13、4.797秒通过；真实TCP业务对照，其余原12项保留。ASGI启动取消仍单列生命周期用例，不冒充网络请求。
+- `.venv/Scripts/python.exe -X utf8 -m scripts.ci package --output dist/p08-03-package --installer C:/Users/13691/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe`通过。新wheel核心无Web依赖环境核对42源码，并新增真实嵌入调用到CI安装探针。离线强制重装wheel至dist/p08-web-installed/env后，`env/Scripts/python.exe -I -X utf8 .../probe.py`HTTP13/13、4.891秒；同环境embedding_probe.py嵌入11/11、1.046秒，均验证包从env导入。报告保存在tests/p08/package-03、package-probe-03、installed-http-03、installed-embedding-03.json。
+- 最终源码/测试哈希保存tests/p08/source-03.json，冻结后启动`.venv/Scripts/python.exe -X utf8 -m tests --report tests/p08/core-regression-03.json`完整回归；最终结果未出前保持P08-03未勾选。清单仅新增11项，原2010项和1738外部CLI不删减。分支codex/p08-03-embedding，本轮本地提交、不推送。GUI/用户人工测试/其他平台/云端CI未重跑，协作取消不承诺强制中止任意宿主阻塞。
+- 首次静态门禁`-m scripts.ci static --output dist/p08-03-static`失败：git diff --check报告skills/guide.md末尾新增空行；未把后续Get-Content的退出0当成门禁成功。修正文档后`-m scripts.ci static --output dist/p08-03-static-fixed`通过。未改变已冻结实现或测试。
+
+- 最终完整命令`.venv/Scripts/python.exe -X utf8 -m tests --report tests/p08/core-regression-03.json`退出0：collected=tests_run=2021，966秒，失败/错误/跳过/expected failure均0；本轮全量一次完整跑完，没有用专项拼接或跳过。现勾选P08-03，55/70，下一项P08-04 SQLite，P08整体仍未完成。
+- 定稿`-m scripts.ci static --output dist/p08-03-static-final`通过：53份Markdown/635本地链接、任务/清单/requirement核对，冻结7个实现/测试文件哈希保持一致；最终wheel42份运行时源码与当前逐份规范换行匹配。审查本轮29个代码/测试/文档及报告文件后本地提交；docs/manual-tests/不暂存，requirement SHA256仍b099c19fc339ce1dc1aab7e9d6c8126a9c5c9ace3d31b969a0623df90f521d2b。提交标识见Git历史和答复。
+
+## 2026-10-28：P08-04 SQLite与P08-05整体验收
+
+- 接手ec6431b，仅docs/manual-tests/未跟踪。读取项目技能、交接、契约、注册表、资源和CI；使用zzy技能及既有故障定位/提交审查流程。用户本轮要求继续完成04及05，保留原校园CLI、requirement与8000服务。
+- 先补集中SQLite契约，新增db.transaction(path,callback)/db.query(sql,params)，通过原注册表调用；连接归当前执行线程/事务，成功Result提交，失败Result/异常/取消回滚，finally关闭。不暴露原生句柄；参数化执行，禁止事务控制/ATTACH/PRAGMA等，250ms锁等待与1秒SQL进度期限，逐行转换和配额检查。
+- 独立examples/sqlite/app.zzy实现任务标题校验、入库与查询；Python不写业务。新增同源页面与重启/HTTP/Python说明，数据库文件单独忽略。核心无第三方新增依赖，sqlite3惰性加载；check不创建数据库。
+- 初次夹具错误用了匿名块函数，E103明确要求=>；按既有语法改为嵌套具名函数，不改变语言。SQL错误路径发现ConversionError在execute之后导入，异常匹配报UnboundLocalError，移动到try前。新增回滚探针发现测试自己的sqlite连接with仅提交不关闭，改contextlib.closing；运行时所有连接关闭检查通过，不放宽期望。
+- SQLite专项最终6/6、0.974秒；真实HTTP14/14、4.829秒，新增非法业务请求及服务停止/重建后持久化。原13项全部保留。CI核心安装探针新增真实SQLite check/run/参数查询；完整回归与隔离wheel正在执行。
+- 尝试git switch -c codex/p08-sqlite失败：.git/refs/heads锁文件Permission denied。当前会话禁止提权，未绕过权限；继续完成不依赖Git写权限的工作，提交受阻待最终报告。人工材料未操作。
+
+- P08-04专项验收：最终数据库6/6、0.887秒（database-04.json），HTTP14/14；另用独立CLI服务器子进程实际POST后退出，再启动新PID，GET仍返回同一任务（process-restart-04.json）。因此勾选04，继续05全量/交付；Git提交仍受权限限制。
+- P08-05安装：scripts.ci package --output dist/p08-05-package通过，43源码、核心无Web依赖环境真实SQLite check/run；离线重装wheel后14/14 HTTP通过。无新增第三方依赖，现有CI自动收集新增6项核心和1项HTTP，安装探针接入SQLite。冻结哈希见source-05.json。新SQLite网页尚未浏览器人工交互，HTTP链路实测，不冒充人工验收。
+
+- 诊断契约复核：syntax原错误码表E401只列CLI/源码I/O，而现有宿主io.print也已使用该码；本轮明确扩展说明到SQLite操作失败，同步diagnostics与集中契约。无新错误码，既有期望不改；客户端仍使用既有zzy_error响应，不泄漏数据或路径。
+
+- 最终完整命令`.venv/Scripts/python.exe -X utf8 -m tests --report tests/p08/core-regression-05.json`退出0：2027/2027、838.109秒，失败/错误/跳过/expected failure全0。原2021项及1738外部CLI不删减，新增SQLite6项，HTTP新增1项。P08-05技术验收通过，但本地提交因.git写权限拒绝尚未完成，todo保持05未勾选（56/70）；不将受阻提交写成完成，不推送。
+
+- 最终静态通过54份Markdown/649本地链接；实现与测试冻结哈希匹配。审查33个本轮文件，明确排除docs/manual-tests/与requirement。实际git add显式文件清单再次被.git/index.lock Permission denied阻止（退出128），未暂存、未创建提交；当前权限禁止提权，未绕过。所有代码、文档和报告留在工作区，基线仍ec6431b。
+
+## 2026-10-28：P08提交与feature交付
+
+- 用户要求核查并推送feature。交付复验SQLite6/6、1.104秒，真实HTTP14/14、4.984秒，静态门禁通过；输出保存在dist/p08-delivery-review。已有完整回归2027/2027、838.109秒，本次未重跑全量；source-05.json记录的7个实现/测试文件哈希与当前一致。
+- 用户恢复Git写权限后，显式暂存并审查33个P08相关文件，git diff --cached --check通过；创建提交0a70825（feat(sqlite): complete P08 integration and acceptance）。人工测试目录未暂存，requirement未修改。现勾选P08-05，57/70，后续P11仍独立验收。
+- 初次fetch经现有127.0.0.1:7897代理发生schannel握手失败，临时OpenSSL后端也遇到TLS EOF；临时清空本次命令代理后fetch成功。保留HTTPS证书校验及全局配置，未将连接故障误报为GitHub权限不足。
+- 已拉取并核对origin/feature与本地feature一致，且是当前P08分支祖先。后续以快进方式同步feature并正常推送；远端最终提交号以Git引用和聊天报告核验，不改写历史，不更新main/test，不将推送视为云端CI通过。
+
+## 2026-10-28：P08完成复核与人工测试统一归档
+
+- 用户要求检查P08日志和完成情况，编写简洁人工方案，并与上次资料统一存放。当前分支test、HEAD为330cf1754fa991bd72b4f56bc89fdaa57ce8d2ff；P08-01—05已勾选，代码任务57/70，下一项仍为P11-01。本轮仅整理文档和人工证据，不修改运行时、测试实现、requirement或用户8000服务，不提交/推送。
+- 核对现存tests/p08/core-regression-05.json：2027/2027、838.109秒、零失败/错误/跳过；database-04为6/6，http-04及installed-http-05均14/14。source-05记录的7个实现/测试哈希匹配当前；验收wheel SHA256为e123f539508287db8decde7f5cfe20ab175298271bd10eaf75ad6627965f9524，43份运行时源码逐份规范换行后与当前一致。以上是现存证据核对，本次未重跑全量/HTTP/GUI。
+- 新增docs/manual-tests/README.md统一索引及p08-20261028/manual-test-plan.md、manual-test-result.md。W01—W07覆盖默认GET/中文POST、422及恢复、shared冒烟、Python嵌入、SQLite中文/单引号标题、空标题拒绝、Ctrl+C失联及新进程持久化恢复。提供6块PowerShell准备/启动/结束命令，明确同一终端、同一运行目录与独立测试数据库；结果表保持待执行。
+- 将上次完整guide和原始manual-test-result.doc归档到docs/manual-tests/core-sketch-20261027/；原guide路径保留导航入口，新旧DOC同目录引用不变。DOC SHA256仍为3a8b6e107be09243812146a3cffcf4c2d321f4f5e2c824be3fa5dfdb1721f4ee，未改二进制内容或41张截图。另从原运行目录复制终端记录、M17安装报告及全部顶层工作文件，共24份，逐份字节相同；不复制环境/依赖，原dist目录保留。P06原始图片未改。
+- 修正文档导航、测试计划/覆盖说明和Web示例中的过期“P08未实现/数据库待04/提交仍受阻”口径；开发记录历史过程不改写，P11保持未完成。上次GUI/校园全流程不强制重做，额外DPI、物理断网、手工并发及模拟断电可跳过，不冒填通过。
+- 实际执行`.venv/Scripts/python.exe -X utf8 -m scripts.ci static --output dist/p08-manual-docs-review-20261028`通过。由于既有CI有意排除人工资料目录，另单独检查该目录5份Markdown、27个本地链接和围栏，全部通过；使用PowerShell Parser检查新方案6块命令语法通过，只解析、未执行人工命令。requirement SHA256仍为b099c19fc339ce1dc1aab7e9d6c8126a9c5c9ace3d31b969a0623df90f521d2b。
+
+## 2026-10-29：P08人工结果逐图核验
+
+- 用户已完成测试，要求检查。接手test/330cf17，操作者将结果表改为docs/manual-tests/p08-20261028/manual-test-result.docx，并保存runs/20261029-002147-330cf17。按项目技能及文档读取流程检查DOCX结构、全部11张原始截图、transcript、候选和工作区记录；未修改原DOCX，未重新执行服务器或用户人工测试。
+- W01默认GET返回200、中文POST成功；W02空姓名422后Ada恢复成功；W04嵌入输出status200及你好，Ada，退出0。W03图5证实带shared的新进程37252启动，操作者随后备注“一切正常，与上述无异，不再重复记录”；按操作者确认记录，不冒充重复请求独立截图或并发隔离证明。GET正文language字段与初始空库亦未单独截图，保留现有自动覆盖与人工主流程的区别，不要求重复补测。
+- SQLite图7保留ID1人工任务一、ID2 O'Reilly；图8空标题422，未增加空记录；图9停服失联；图10旧PID45652完成shutdown，新PID24148启动并GET200后仍返回原两条；图11新进程结束及数据库Test-Path=True。只读查询实际数据库与截图一致，integrity_check=ok，读前后SHA256均12ec1577227c4d28b8d63d95f7fa2d8fcc374e3dcc4136070d5c0da26f7bfec8。四份示例副本与当前源码/页面字节相同，source-05七个冻结文件哈希仍一致。
+- 未发现阻塞性功能问题，本轮人工主流程核验通过，W03证据边界如上。favicon.ico404是未提供站点图标，非业务接口失败；PowerShell5.1 transcript的Ctrl+C管道停止文字与截图中的Uvicorn正常shutdown结合判读，不误报崩溃。transcript未完整捕获原生程序输出，以DOCX截图补足。Python/浏览器完整版本未在本轮材料独立留存，不补填已核验版本。
+- 新增同轮manual-test-review.md逐项记录证据、结论与原件哈希；修复结果由MD换为DOCX后的导航失效，同步人工索引、方案、todo、Web契约状态、测试说明及最终计划。原DOCX SHA256保持de847465191ec00602c115bc5a0bc344db65b0518ec8daf85daf62fbe22fd9ff，transcript保持1d11602838b515f1f9b7a20e3c41476330708f87f155fabfc155a8c92457a2a4。代码、数据库、requirement及上次人工原件未改，不提交/推送；P11任务保持未完成。
+- 实际执行`.venv/Scripts/python.exe -X utf8 -m scripts.ci static --output dist/p08-manual-review-20261029/static`通过；另外检查人工目录5份Markdown、32个本地链接和围栏通过，校验原DOCX/transcript/数据库/requirement哈希不变。核验产物存dist/p08-manual-review-20261029，不将其当作新全量、HTTP、GUI或云端CI执行结果。
+
+## 2026-10-29：人工通过后的主分支交付
+
+- 用户确认人工测试成功，授权提交推送并合并main。本轮将人工资料迁移、原始报告、日志、测试数据库及配套导航作为同一交付提交；不改运行时代码或requirement，不将人工确认扩写为未执行的测试。
+- 提交前本地静态门禁通过，输出dist/p08-main-release-static-20261029；主分支启用PR要求且对管理员生效。本轮通过test到main的PR执行云端静态、Windows完整回归、隔离安装、HTTP和ci-gate，成功后正常合并。最终运行与合并SHA以GitHub记录及聊天报告核对，不绕过保护。

@@ -4,6 +4,8 @@
 
 错误码和退出码以 [syntax.md](syntax.md) 为准，资源细则见 [resources.md](../runtime/resources.md)。本文件确定人和 Agent 可依赖的定位方式；不新增语言语法。
 
+P08-02共享模块的启动图校验失败采用既有E303模块错误，定位入口模块根节点并说明拒绝类别；原始初始化求值错误不改码/定位，冻结写入仍按写表达式报E203。具体规则集中在[Web契约](../runtime/web.md)，不复用专属于sketch状态的E214。
+
 日志文件的大小轮转、gzip压缩及保留策略见 [日志配置](../runtime/logging.md)；它管理CI保存的输出副本，CLI诊断字段、错误码及stdout/stderr分工仍以下文为准。本项目不按locale切换自有提示语言；机器匹配错误码/结构字段，不依赖完整中文措辞或系统附带错误文本。
 
 ## 1. 输出约定
@@ -74,3 +76,5 @@ io.print(2::s + 1::m);
 P01 起收录以上 .zzy 和期望清单，尚未支持的语法示例按阶段加入，不能假装早期版本已支持 Quantity。P06 补全 CLI-02：BOM、CRLF、中文/补充平面字符、制表符、EOF 零宽、缺文件 null span、JSON Lines 可解析、trace/error 区分、跨文件调用和 Lazy 位置；两种显示格式对应同一个诊断对象。
 
 P06 实际证据：四例在 tests/p06/inputs/diagnostic-*.zzy 和外部 cases.json；test_p06_diagnostics 核对两种格式、BOM/CRLF/Unicode/Tab/EOF 与 internal_error；test_p06_process 向独立隐藏控制台发送真实 Ctrl+C，验证 run/test 的 cancelled、130 和清理。其他宿主平台未验证；诊断规则及错误码没有改变。
+
+P08-04扩展既有E401的说明至SQLite宿主操作失败，主位置为db调用点，错误消息不包含SQL数据或数据库路径；类型/范围仍为E201/E208，资源/取消保持原信号。事务提交边界见Web集中契约。
