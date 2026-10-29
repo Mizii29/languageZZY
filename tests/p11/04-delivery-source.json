@@ -1,0 +1,13 @@
+{
+  "runtime_identical_to": "6c88368",
+  "candidate_retained": false,
+  "source_sha256_lf": {
+    "zzy/interpreter.py": "e0b20a4e20499661b2fcd8ca664b1d29439e36e3cda5753c822757ae308328c1",
+    "zzy/resources.py": "1ba439eaf47b4e4f9400d98090b9a44f16b5be411fe77c2a23d3eda27698b193",
+    "benchmarks/p11_integer_candidate.py": "e70d848fc0f5a305e1186a4f514a440693322e85b56fc87cda50bf9cbcecc059",
+    "benchmarks/p11.py": "dcc27beee3df6cbdcf65b7c0b52ad1e703b049cfdccd5e4b1c8472505ba1fe87",
+    "tests/test_p11_integers.py": "97052bc49280bae8cd72ef28d417ef2cad63d3077c1ca9ddc84abc0689f18a25",
+    "scripts/ci/test-inventory.json": "12d8ce15c0585f7b35aa4db243a20f70024249a80ca2b6409ab747ea68e9f2e5"
+  },
+  "post_test_format_only": "candidate trailing blank line removed; AST identical"
+}

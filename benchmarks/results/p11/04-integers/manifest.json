@@ -1,0 +1,103 @@
+[
+  {
+    "case": "B01",
+    "n": 100,
+    "source": "(zno) n := 100;\n(addnew) bench() {\n    (zyes) i := 0;\n    (zyes) total := 0;\n    (while) i < n { total <- total + i; i <- i + 1; }\n    (return) total;\n}\nio.print(bench());\n",
+    "answer": 4950,
+    "stdout": "4950\n",
+    "python": "n = 100\n\n\ndef bench():\n    i = total = 0\n    while i < n:\n        total = total + i\n        i = i + 1\n    return total\n\n\nif __name__ == '__main__':\n    print(bench())\n"
+  },
+  {
+    "case": "B02",
+    "n": 100,
+    "source": "(zno) n := 100;\n(addnew) inc(x) { (return) x + 1; }\n(addnew) bench() {\n    (zyes) i := 0;\n    (zyes) total := 0;\n    (while) i < n { total <- total + inc(i); i <- i + 1; }\n    (return) total;\n}\nio.print(bench());\n",
+    "answer": 5050,
+    "stdout": "5050\n",
+    "python": "n = 100\n\n\ndef inc(x):\n    return x + 1\n\n\ndef bench():\n    i = total = 0\n    while i < n:\n        total = total + inc(i)\n        i = i + 1\n    return total\n\n\nif __name__ == '__main__':\n    print(bench())\n"
+  },
+  {
+    "case": "B04",
+    "n": 10,
+    "source": "(zno) n := 10;\n(zno) numbers := [];\n(for) i (in) 0..<n { array.push(numbers, i); }\n(addnew) bench() { (return) array.sum(numbers); }\nio.print(bench());\n",
+    "answer": 45,
+    "stdout": "45\n",
+    "python": "from benchmarks.reference import CheckedArray\n\nn = 10\nnumbers = []\nfor i in range(n):\n    numbers.append(i)\nchecked = CheckedArray(numbers)\n\n\ndef bench():\n    return checked.sum()\n\n\nif __name__ == '__main__':\n    print(bench())\n"
+  },
+  {
+    "case": "B04",
+    "n": 100,
+    "source": "(zno) n := 100;\n(zno) numbers := [];\n(for) i (in) 0..<n { array.push(numbers, i); }\n(addnew) bench() { (return) array.sum(numbers); }\nio.print(bench());\n",
+    "answer": 4950,
+    "stdout": "4950\n",
+    "python": "from benchmarks.reference import CheckedArray\n\nn = 100\nnumbers = []\nfor i in range(n):\n    numbers.append(i)\nchecked = CheckedArray(numbers)\n\n\ndef bench():\n    return checked.sum()\n\n\nif __name__ == '__main__':\n    print(bench())\n"
+  },
+  {
+    "case": "B04",
+    "n": 1000,
+    "source": "(zno) n := 1000;\n(zno) numbers := [];\n(for) i (in) 0..<n { array.push(numbers, i); }\n(addnew) bench() { (return) array.sum(numbers); }\nio.print(bench());\n",
+    "answer": 499500,
+    "stdout": "499500\n",
+    "python": "from benchmarks.reference import CheckedArray\n\nn = 1000\nnumbers = []\nfor i in range(n):\n    numbers.append(i)\nchecked = CheckedArray(numbers)\n\n\ndef bench():\n    return checked.sum()\n\n\nif __name__ == '__main__':\n    print(bench())\n"
+  },
+  {
+    "case": "B08",
+    "n": 100,
+    "source": "(zno) n := 100;\n(machine) Toggle { a -- \"flip\" --> b; b -- \"flip\" --> a; }\n(zno) toggle :=  Toggle(\"a\");\n(addnew) bench() {\n    (zyes) i := 0;\n    (zyes) successes := 0;\n    (while) i < n {\n        (?_?) toggle << \"flip\" {\n            (^_^)(state) => { successes <- successes + 1; }\n            (T_T)(message) => { (o_o) (false); }\n        }\n        i <- i + 1;\n    }\n    (return) [successes, toggle.state];\n}\nio.print(bench());\n",
+    "answer": [
+      100,
+      "a"
+    ],
+    "stdout": "[100, a]\n",
+    "python": "from benchmarks.reference import Machine\n\nn = 100\ngraph = {('a', 'flip'): 'b', ('b', 'flip'): 'a'}\nmachine = Machine(graph, 'a')\n\n\ndef bench():\n    i = successes = 0\n    while i < n:\n        ok, state = machine.send('flip')\n        if ok:\n            successes = successes + 1\n        else:\n            raise AssertionError(state)\n        i = i + 1\n    return [successes, machine.state]\n\n\nif __name__ == '__main__':\n    result = bench()\n    print(f'[{result[0]}, {result[1]}]')\n"
+  },
+  {
+    "case": "B09",
+    "n": 100,
+    "source": "(zno) n := 100;\n(zno) zero := 0::s;\n(zno) step := 1::ms;\n(addnew) bench() {\n    (zyes) total := zero;\n    (zyes) i := 0;\n    (while) i < n { total <- total + step; i <- i + 1; }\n    (return) total;\n}\nio.print(bench());\n",
+    "answer": [
+      1,
+      10,
+      [
+        0,
+        1
+      ]
+    ],
+    "stdout": "1/10::s\n",
+    "python": "from fractions import Fraction\nfrom benchmarks.reference import quantity_add, quantity_text\n\nn = 100\nzero = (Fraction(0), (0, 1))\nstep = (Fraction(1, 1000), (0, 1))\n\n\ndef bench():\n    total = zero\n    i = 0\n    while i < n:\n        total = quantity_add(total, step)\n        i = i + 1\n    return total\n\n\nif __name__ == '__main__':\n    print(quantity_text(bench()))\n"
+  },
+  {
+    "case": "K01",
+    "n": 100,
+    "source": "(zno)c:=sketch.canvas(200,200,\"bench\");(zno)p:=sketch.pen(c,\"p\");(addnew)bench(){(for)i(in)0..<100{sketch.forward(p,1);}(return)sketch.position(p).x==100;}io.print(bench());",
+    "answer": true,
+    "stdout": "true\n"
+  },
+  {
+    "case": "I01",
+    "n": 1000,
+    "source": "(addnew)bench(){(zyes)x:=0;(for)i(in)0..<1000{x<-8191+1;}(return)x;}io.print(bench());",
+    "answer": 8192,
+    "stdout": "8192\n"
+  },
+  {
+    "case": "I02",
+    "n": 1000,
+    "source": "(addnew)bench(){(zyes)x:=0;(for)i(in)0..<1000{x<-255+1;}(return)x;}io.print(bench());",
+    "answer": 256,
+    "stdout": "256\n"
+  },
+  {
+    "case": "I03",
+    "n": 100,
+    "source": "(addnew)bench(){(zyes)x:=0;(for)i(in)0..<100{x<-340282366920938463463374607431768211455+1;}(return)x;}io.print(bench());",
+    "answer": 340282366920938463463374607431768211456,
+    "stdout": "340282366920938463463374607431768211456\n"
+  },
+  {
+    "case": "I04",
+    "n": 1000,
+    "source": "(addnew)bench(){(zyes)x:=0;(for)i(in)0..<1000{x<-63-126;}(return)x;}io.print(bench());",
+    "answer": -63,
+    "stdout": "-63\n"
+  }
+]

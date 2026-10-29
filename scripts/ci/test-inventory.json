@@ -1995,6 +1995,11 @@
     "tests.test_p11_benchmarks.P11BenchmarkTests.test_manifest_and_reference_fixed_answers",
     "tests.test_p11_benchmarks.P11BenchmarkTests.test_real_snapshot_precheck",
     "tests.test_p11_benchmarks.P11BenchmarkTests.test_statistics_preserve_failed_and_missing_samples",
+    "tests.test_p11_integers.SmallIntegerTests.test_actual_tags_float_promotion_and_unsupported_ops",
+    "tests.test_p11_integers.SmallIntegerTests.test_all_cancellation_points_and_tight_quota_errors_are_identical",
+    "tests.test_p11_integers.SmallIntegerTests.test_fixed_and_generated_signed_answers_match_generic",
+    "tests.test_p11_integers.SmallIntegerTests.test_guard_is_conservative_and_fallback_has_no_side_effects",
+    "tests.test_p11_integers.SmallIntegerTests.test_released_path_matches_fixed_candidate_answers",
     "tests.test_p11_locations.LazyLocationTests.test_fixed_unicode_bom_crlf_token_and_eof_records",
     "tests.test_p11_locations.LazyLocationTests.test_location_failure_preserves_original_quota_abort_and_notes",
     "tests.test_p11_locations.LazyLocationTests.test_real_cli_cross_module_notes_and_check_no_execution",
@@ -3819,6 +3824,6 @@
       "run_cli.e4-undo-fill"
     ]
   },
-  "collected": 2054,
+  "collected": 2059,
   "blackbox": 1738
 }

@@ -34,6 +34,11 @@ def workloads():
         answer=[i for k in range(mod-1,-1,-1) for i in range(n) if i%keep==0 and (n-i)%mod==k][:take]
         jobs.append(dict(case=case,n=n,source=code,answer=answer,stdout=str(answer)+'\n'))
     jobs.append(dict(case='K01',n=100,source='(zno)c:=sketch.canvas(200,200,"bench");(zno)p:=sketch.pen(c,"p");(addnew)bench(){(for)i(in)0..<100{sketch.forward(p,1);}(return)sketch.position(p).x==100;}io.print(bench());',answer=True,stdout='true\n'))
+    # Fixed integer guard hit, byte-boundary miss, large fallback and subtraction.
+    for case,n,a,b,op in [('I01',1000,8191,1,'+'),('I02',1000,255,1,'+'),('I03',100,2**128-1,1,'+'),('I04',1000,63,126,'-')]:
+        answer=a+b if op=='+' else a-b
+        code=f'(addnew)bench(){{(zyes)x:=0;(for)i(in)0..<{n}{{x<-{a}{op}{b};}}(return)x;}}io.print(bench());'
+        jobs.append(dict(case=case,n=n,source=code,answer=answer,stdout=str(answer)+'\n'))
     for case in ('D01','D02','R01'):
         jobs.append(dict(case=case,n=1000,source='io.print(1);',answer=None,stdout=None))
     return jobs

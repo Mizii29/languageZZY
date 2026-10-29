@@ -33,7 +33,8 @@ docs/
   runtime/                        解释器与性能设计
     interpreter.md
     performance.md
-    optimization-plan.md         P11五项优化与验证计划（尚未实施）
+    optimization-plan.md         P11五项优化与验证计划
+    optimization-report.md       P11逐项实测、保留与撤回
     resources.md
     logging.md
     logging.json
@@ -66,7 +67,7 @@ docs/
 | 特色 | [sketch.md](features/sketch.md) | E：画笔、图层、撤销/回放、事件及图案库导出 |
 | 运行 | [interpreter.md](runtime/interpreter.md) | Lexer、Parser、Resolver、运行时、宿主库的实现流程 |
 | 运行 | [performance.md](runtime/performance.md) | 扫描成本、优化边界、稳定性和公平测量方法 |
-| 运行 | [optimization-plan.md](runtime/optimization-plan.md) | P11五项已选优化的顺序、实现边界、测试/测量及交接标准；尚未实施 |
+| 运行 | [optimization-plan.md](runtime/optimization-plan.md) | P11五项已选优化的顺序、实现边界、测试/测量及交接标准；状态见todo与optimization-report |
 | 运行 | [resources.md](runtime/resources.md) | default-v1 容量、配置、取消、测试超时和扩展限额 |
 | 运行 | [logging.md](runtime/logging.md)、[logging.json](runtime/logging.json) | 输出/诊断规则、CI日志轮转/压缩/淘汰的生效配置和本机查看方法 |
 | 开发 | [roadmap.md](development/roadmap.md) | 阶段依赖、开发顺序、完成标准和交付路径 |
