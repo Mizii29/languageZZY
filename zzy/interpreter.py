@@ -86,7 +86,11 @@ class Interpreter(Features, Library):
         except ResourceExceeded as error:
             self.locate_resource_error(error, node)
             raise
-        self.reservations.add(reservation)
+        try:
+            self.reservations.add(reservation)
+        except BaseException:
+            reservation.release()
+            raise
         return reservation
 
     def scalar(self, kind, data, node):

@@ -157,6 +157,17 @@ class ResourceMeter:
             raise ResourceExceeded(key, limit, requested, self.phase, file, span)
 
     def reserve(self, *, file=None, span=None, **amounts: int) -> "Reservation":
+        if len(amounts) == 1:
+            # All fallible validation/arithmetic/owner allocation precedes the
+            # single native-dict assignment. Multiple keys retain copy/commit.
+            (key, amount), = amounts.items()
+            if type(amount) is not int or amount < 0:
+                raise ValueError("reservations must be nonnegative integers")
+            requested = self.used(key) + amount
+            self.check(key, requested, file=file, span=span)
+            reservation = Reservation(self, amounts)
+            self._used[key] = requested
+            return reservation
         for key, amount in amounts.items():
             if type(amount) is not int or amount < 0:
                 raise ValueError("reservations must be nonnegative integers")
@@ -174,6 +185,8 @@ class ResourceMeter:
 
 
 class Reservation:
+    __slots__ = ("_meter", "_amounts", "_released", "__weakref__")
+
     def __init__(self, meter: ResourceMeter, amounts: dict[str, int]):
         self._meter = meter
         self._amounts = amounts

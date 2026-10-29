@@ -1,0 +1,32 @@
+test_registration_failure_releases_even_with_live_traceback (tests.test_p11_meter.MeterOptimizationTests.test_registration_failure_releases_even_with_live_traceback) ... FAIL
+
+======================================================================
+FAIL: test_registration_failure_releases_even_with_live_traceback (tests.test_p11_meter.MeterOptimizationTests.test_registration_failure_releases_even_with_live_traceback)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\tests\test_p11_meter.py", line 20, in test_registration_failure_releases_even_with_live_traceback
+    try:r.reserve(node,runtime_slots=2,runtime_payload_bytes=3)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\zzy\interpreter.py", line 89, in reserve
+    self.reservations.add(reservation)
+  File "C:\Users\13691\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\unittest\mock.py", line 1139, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\13691\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\unittest\mock.py", line 1143, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\13691\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\unittest\mock.py", line 1198, in _execute_mock_call
+    raise effect
+MemoryError: weak allocation
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\tests\test_p11_meter.py", line 23, in test_registration_failure_releases_even_with_live_traceback
+    self.assertEqual(r.meter.used('runtime_slots'),0)
+AssertionError: 2 != 0
+
+----------------------------------------------------------------------
+Ran 1 test in 0.027s
+
+FAILED (failures=1)

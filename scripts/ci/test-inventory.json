@@ -2000,6 +2000,11 @@
     "tests.test_p11_locations.LazyLocationTests.test_real_cli_cross_module_notes_and_check_no_execution",
     "tests.test_p11_locations.LazyLocationTests.test_shared_program_concurrent_errors_and_changing_cwd",
     "tests.test_p11_locations.LazyLocationTests.test_success_and_cancellation_do_not_evaluate_location",
+    "tests.test_p11_meter.MeterOptimizationTests.test_allocation_and_commit_faults_leave_no_partial_debit",
+    "tests.test_p11_meter.MeterOptimizationTests.test_random_reference_accounting_and_independent_concurrent_contexts",
+    "tests.test_p11_meter.MeterOptimizationTests.test_registration_failure_releases_even_with_live_traceback",
+    "tests.test_p11_meter.MeterOptimizationTests.test_release_weakrefs_subclass_cycles_aliases_and_gc_retry",
+    "tests.test_p11_meter.MeterOptimizationTests.test_validation_cancellation_order_and_multi_atomicity",
     "tests.test_resources.MeterTests.test_cancel_escapes_native_exception_handler",
     "tests.test_resources.MeterTests.test_each_counter_boundary_and_phase",
     "tests.test_resources.MeterTests.test_invalid_accounting_and_decimal_count",
@@ -3814,6 +3819,6 @@
       "run_cli.e4-undo-fill"
     ]
   },
-  "collected": 2049,
+  "collected": 2054,
   "blackbox": 1738
 }

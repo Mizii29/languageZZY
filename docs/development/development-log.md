@@ -758,3 +758,12 @@ Git 提交：真实标识 / 未提交
 - scripts.ci inventory新增5项至2049；完整命令python -X utf8 -m tests --report tests/p11/02-core.json正在执行，不提前勾选。性能会在回归结束后单独运行。
 - 完整核心2049/2049、939.047秒，失败/错误/跳过/expected failure全0，02-core.json；冻结源码见02-source.json。全量结束后才启动benchmarks.p11 --before HEAD --after WORKTREE --output benchmarks/results/p11/02-locations，覆盖全部21组，计时进行中。
 - 02-locations共1496记录成功/失败0；正式每组15。B01执行3.8267→2.1884ms，B04/1000 12.3229→5.9044ms，K01 8.9836→6.6997ms；CLI多数变化小，完整表及MAD见优化报告。D02真实超限6.1072→7.9971ms（+30.9%），独立profile复核新增补定位/Diagnostic复制冷路径开销，约1.89微秒/失败；明确接受而不称所有路径更快。未改变正确性代码去追计时，保留02，下一项03。
+
+## 2026-10-29：P11-03 资源计量与登记所有权（验收进行中）
+
+- P11-02提交02ebaa8后实施本项。先新增WeakSet登记MemoryError注入，在旧版本真实失败（runtime_slots为2而非0，dist/p11-03-fault-before.log），确认是meter已扣款而Interpreter尚未持有清理所有权。修复为登记任何BaseException时立即release后重抛，不把取消变普通错误。
+- 候选：单资源预留先完成原计数校验/取消/限额/整数计算及Reservation构造，再执行一次内部原生dict赋值；多资源仍使用副本统一提交。只对内部本来就是普通dict、str键和Int计数成立，不提供用户自定义映射接口。Reservation加slots及__weakref__，保留弱引用/子类扩展；不对Value加slots、不池化、不改跨请求所有权。
+- 新增5项test_p11_meter，L-1/L/L+1、未知键/Bool/取消原顺序、空预留、构造/副本/单赋值/登记MemoryError注入，保留活traceback时仍归零，重复release、alias/cycle/超限GC重试、12个独立并发计量上下文和固定种子参考账本。结合资源、解释器和P11位置共25/25、0.734秒，03-specialist.json。
+- 真实HTTP/Schema执行后启动完整python -X utf8 -m tests --report tests/p11/03-core.json；清单新增5项为2054。计时待全量结束后进行，尚未勾选03。
+- HTTP/Schema23/23、6.485秒；完整核心2054/2054、899.281秒，零失败/错误/跳过，03-core.json。独立tracemalloc（不与正式计时混跑）保留1000个单槽预留：跟踪current 284208→265064字节、peak 284384→265168，释放后slots=0；03-memory.json含执行代码及双方源码身份，不测RSS。随后串行启动03-meter对照（B01/B02/B03/B04三规模/B05/B06/B08/B09/K01/R01）。
+- 03-meter共884记录、失败0、正式每组15；B04三规模执行中位分别−3.7%/−6.3%/−6.8%，B02/B09/R01分别+1.9%/+2.2%/+1.4%，处于本轮MAD量级，不称全面加速。没有>20%中位退化，单项表/所有阶段原始值已存。保留小范围优化及登记修复；勾选03，下一项04。完整回归用时不当性能对照，tracemalloc不当RSS。

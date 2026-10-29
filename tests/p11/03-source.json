@@ -1,0 +1,9 @@
+{
+  "base_commit": "02ebaa88c8c219a03e9779e5d40d8fc58043e33e",
+  "source_sha256_lf": {
+    "zzy/resources.py": "1ba439eaf47b4e4f9400d98090b9a44f16b5be411fe77c2a23d3eda27698b193",
+    "zzy/interpreter.py": "e0b20a4e20499661b2fcd8ca664b1d29439e36e3cda5753c822757ae308328c1",
+    "tests/test_p11_meter.py": "5c8f8df4bf7b9330538243faade04e35b5f968c866a258ccd6184412b740120a",
+    "scripts/ci/test-inventory.json": "befc3540cf1a4cb4840eb31712c42639afc2e4da9405dd1bf0a2ccc5fbb10a85"
+  }
+}
