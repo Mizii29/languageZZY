@@ -77,4 +77,6 @@ P08-01段落及报告保留历史含义；当前新增显式shared=True/--shared
 
 [核心隔离安装](package-05.json)、[安装探针](package-probe-05.json)核对43份源码并执行真实SQLite check/run；[安装后HTTP](installed-http-05.json)14/14。[源码哈希](source-05.json)锁定本轮实现。完整回归[2027/2027、838.109秒](core-regression-05.json)，失败/错误/跳过/expected failure均0。
 
-未验证：新SQLite页面的浏览器人工交互、Tk GUI重测、云端CI、其他平台及断电恢复。SQL锁等待250ms、进度期限1秒；宿主文件阻塞无法强制打断。此前Git写权限阻塞已解除，SQLite及整体验收提交为0a70825。
+本轮未验证：Tk GUI重测、云端CI、其他平台及断电恢复。新SQLite页面人工交互已于2026-10-29补充并核验，详见下方人工记录。SQL锁等待250ms、进度期限1秒；宿主文件阻塞无法强制打断。此前Git写权限阻塞已解除，SQLite及整体验收提交为0a70825。
+
+2026-10-28新增[P08人工方案 W01—W07](../../docs/manual-tests/p08-20261028/manual-test-plan.md)，2026-10-29核对操作者[原始DOCX的11张截图](../../docs/manual-tests/p08-20261028/manual-test-result.docx)、终端记录和数据库，形成[逐项核验结论](../../docs/manual-tests/p08-20261028/manual-test-review.md)。主流程符合预期；W03共享模式由启动截图及操作者“与上述无异”备注确认，没有独立重复请求截图。本页自动报告与人工结论分开，不互相冒充。

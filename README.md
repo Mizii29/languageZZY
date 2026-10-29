@@ -136,7 +136,7 @@ P08已选并完成HTTP、共享隔离与Python嵌入；NumPy和字节码VM仍属
 
 `python -X utf8 -m tests` 运行全部 CLI、spec 和宿主回归，当前收集 2027 项；空收集/跳过/少执行/失败均返回非零。`--report dist/p06-all-tests.json` 保存计数、环境与默认策略指纹（目录需存在）。外部黑盒仍可单独运行。映射、15 个指南片段、9 个变形 spec、资源验证范围见 [P06 验收](tests/p06/README.md)；真实 Agent 练习见 [分钟汇总](examples/agent-practice/README.md)。Windows 11 的真实 Ctrl+C/run/test、派生进程树回收和临时目录清理已经专项验证；其他平台及未测大容量范围明确列在验收页。GUI 已在后续 Sketch E 阶段实现并独立验收，Web/Python的P08-01—03能力见文末；长期Program缓存仍未实现。
 
-最终验收按 [测试阶段计划](docs/development/final-test-plan.md) 执行；本机 VS Code 的详细步骤、命令和预期结果见 [人工测试指南](docs/development/manual-test-guide.md)。[GitHub Actions 工作流](.github/workflows/ci.yml) 已配置静态检查、Windows 全量回归、隔离 wheel 安装及汇总门禁，本地复现和云端待验证事项见 [CI 设计与实施](docs/development/ci-design.md)。CI 不代替真实 GUI、人工操作及正式性能验收。
+最终验收按 [测试阶段计划](docs/development/final-test-plan.md) 执行；本机 VS Code 的详细步骤、历史结果与本次 P08 补测见 [人工测试资料](docs/manual-tests/README.md)。[GitHub Actions 工作流](.github/workflows/ci.yml) 已配置静态检查、Windows 全量回归、隔离 wheel 安装及汇总门禁，本地复现和云端待验证事项见 [CI 设计与实施](docs/development/ci-design.md)。CI 不代替真实 GUI、人工操作及正式性能验收。
 
 CI回归日志已读取 [logging.json](docs/runtime/logging.json)，按1MiB轮转、保留4份gzip备份并自动淘汰更旧片段；CLI继续使用UTF-8和固定错误码，查看与调整方法见 [日志配置说明](docs/runtime/logging.md)。
 

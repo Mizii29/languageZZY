@@ -1,0 +1,1 @@
+(zno)c:=sketch.canvas(100,100,"png"); io.print(sketch.save_png(c,"optional.png"));

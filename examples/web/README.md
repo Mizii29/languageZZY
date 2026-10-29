@@ -27,7 +27,7 @@ P08-02共享模式启动（示例只有只读模块定义，可直接使用）�
 python -m zzy.web examples/web/app.zzy --route GET /api/hello hello --route POST /api/greet greet --page examples/web/index.html --shared
 ```
 
-共享模式启动时执行一次初始化，拒绝模块级zyes、可达Lazy、捕获Cell的闭包和原生句柄；不会自动退回默认模式。共享数组/Map/结构/Machine只读，业务可变状态用请求局部值（数据库待P08-04）。修改代码后需要重启，你先前启动的服务不会热更新。
+共享模式启动时执行一次初始化，拒绝模块级zyes、可达Lazy、捕获Cell的闭包和原生句柄；不会自动退回默认模式。共享数组/Map/结构/Machine只读，业务可变状态用请求局部值，持久化见已实现的[SQLite示例](../sqlite/README.md)。修改代码后需要重启，你先前启动的服务不会热更新。
 
 ## Python直接调用同一业务函数
 

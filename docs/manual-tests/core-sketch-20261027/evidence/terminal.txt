@@ -1,0 +1,584 @@
+﻿**********************
+Windows PowerShell 脚本开始
+开始时间: 20261027133652
+用户名: MIZII\13691
+RunAs 用户: MIZII\13691
+配置名称: 
+计算机: MIZII (Microsoft Windows NT 10.0.26200.0)
+主机应用程序: C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -noexit -command try { . "c:\Users\13691\AppData\Local\Programs\Microsoft VS Code\6d62b1d5da\resources\app\out\vs\workbench\contrib\terminal\common\scripts\shellIntegration.ps1" } catch {}
+进程 ID: 32876
+PSVersion: 5.1.26100.9711
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.9711
+BuildVersion: 10.0.26100.9711
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+已启动脚本，输出文件为 D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\terminal.txt
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业> ]633;B
+(.venv) & $ZzyPython -X utf8 -m zzy info
+
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业> ]633;B
+(.venv) function Invoke-Zzy {
+    & $ZzyPython -X utf8 -m zzy @args
+    $script:ZzyExitCode = $LASTEXITCODE
+    Write-Host "[ZZY退出码=$ZzyExitCode]"
+}
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业> ]633;B
+(.venv) function Save-ManualSource([string]$Name, [string]$Text) {
+    [System.IO.File]::WriteAllText((Join-Path $Work $Name), $Text, $Utf8NoBom)
+}
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业> ]633;B
+(.venv) Push-Location -LiteralPath $Work
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) Invoke-Zzy run (Join-Path $RepoRoot 'examples/hello.zzy')
+5
+[ZZY退出码=0]
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) Invoke-Zzy run (Join-Path $RepoRoot 'examples/functions.zzy')
+720
+[1, 2, 11]
+[0, 1, 2]
+[ZZY退出码=0]
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) Invoke-Zzy run (Join-Path $RepoRoot 'examples/features.zzy')
+
+[ZZY退出码=0]
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) Invoke-Zzy test (Join-Path $RepoRoot 'examples/features-spec.zzy')
+
+[ZZY退出码=0]
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) Save-ManualSource '错误 名称.zzy' 'io.print(total);'
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) Save-ManualSource '语法错误.zzy' '(zno) x := ;'
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) Save-ManualSource '类型错误.zzy' 'io.print(1 + (true));'
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) Save-ManualSource '量纲错误.zzy' 'io.print(2::s + 1::m);'
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) Invoke-Zzy run '错误 名称.zzy'
+
+[ZZY退出码=2]
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) Invoke-Zzy run '错误 名称.zzy' --diagnostic-format json
+
+[ZZY退出码=2]
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) Invoke-Zzy check '语法错误.zzy' --diagnostic-format json
+
+[ZZY退出码=2]
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) Invoke-Zzy check '类型错误.zzy'
+
+[ZZY退出码=0]
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) Invoke-Zzy run '类型错误.zzy' --diagnostic-format json
+
+[ZZY退出码=1]
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) Invoke-Zzy run '量纲错误.zzy' --diagnostic-format json
+
+[ZZY退出码=1]
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) Save-ManualSource '检查副作用.zzy' @'
+(zno) value := io.input("请输入> ");
+io.print(value);
+io.print(io.write_text("check-effect.txt", "done"));
+(zno) c := sketch.canvas(200, 100, "headless");
+io.print(sketch.save_svg(c, "check.svg"));
+'@
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) Invoke-Zzy check '检查副作用.zzy'
+
+[ZZY退出码=0]
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) Test-Path -LiteralPath 'check-effect.txt'
+False
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) Test-Path -LiteralPath 'check.svg'
+False
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) Save-ManualSource '取消循环.zzy' 'io.print("READY"); (while) (true) {}'
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) & $ZzyPython -X utf8 -m zzy run '取消循环.zzy' --diagnostic-format json
+
+(.venv) TerminatingError():“管道已被停止。”
+>> TerminatingError():“管道已被停止。”
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) $LASTEXITCODE
+130
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) $CampusMain = Join-Path $RepoRoot 'apps/zzy-campus/main.zzy'
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) $CampusLimits = Join-Path $RepoRoot 'apps/zzy-campus/limits.json'
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) Invoke-Zzy check $CampusMain --limits $CampusLimits
+
+[ZZY退出码=0]
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) Invoke-Zzy run $CampusMain --limits $CampusLimits
+排 序 0原 序 /1ID/2优 先 级 降 序 /3标 题 > 0
+排 序 已 更 新 
+任 务 数 =3 next_id=5 未 保 存 =true
+1列 表  2新 增  3编 辑  4删 除  5完 成  6筛 选  7排 序  8统 计  9导 出  10保 存  11打 开  12撤 销  13重 做  0退 出 > 1
+id      title   category        priority        done
+1       作 业     课 程     3       true
+2       阅 读     学 习     2       false
+4       新 作 业   课 程     3       false
+共 3项 
+任 务 数 =3 next_id=5 未 保 存 =true
+1列 表  2新 增  3编 辑  4删 除  5完 成  6筛 选  7排 序  8统 计  9导 出  10保 存  11打 开  12撤 销  13重 做  0退 出 > 10
+保 存 路 径 > tasks.json
+保 存 到 ： tasks.json
+1确 认 写 入 (可 能 覆 盖 ) 0取 消 > 1
+保 存 成 功 
+任 务 数 =3 next_id=5 未 保 存 =false
+1列 表  2新 增  3编 辑  4删 除  5完 成  6筛 选  7排 序  8统 计  9导 出  10保 存  11打 开  12撤 销  13重 做  0退 出 > $Saved =
+ Get-Content -LiteralPath 'tasks.json' -Raw -Encoding utf8 | ConvertFrom-Json
+请 输 入 十 进 制 整 数 
+1列 表  2新 增  3编 辑  4删 除  5完 成  6筛 选  7排 序  8统 计  9导 出  10保 存  11打 开  12撤 销  13重 做  0退 出 > $Saved |
+ ConvertTo-Json -Depth 8
+请 输 入 十 进 制 整 数 
+1列 表  2新 增  3编 辑  4删 除  5完 成  6筛 选  7排 序  8统 计  9导 出  10保 存  11打 开  12撤 销  13重 做  0退 出 > Get-Cont
+ent -LiteralPath 'report.tsv' -Encoding utf8
+请 输 入 十 进 制 整 数 
+1列 表  2新 增  3编 辑  4删 除  5完 成  6筛 选  7排 序  8统 计  9导 出  10保 存  11打 开  12撤 销  13重 做  0退 出 > 0
+再 见 
+[ZZY退出码=0]
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) $Saved = Get-Content -LiteralPath 'tasks.json' -Raw -Encoding utf8 | ConvertFrom-Json
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) $Saved | ConvertTo-Json -Depth 8
+{
+    "schema_version":  1,
+    "next_id":  5,
+    "tasks":  [
+                  {
+                      "id":  1,
+                      "title":  "作业",
+                      "category":  "课程",
+                      "priority":  3,
+                      "done":  true
+                  },
+                  {
+                      "id":  2,
+                      "title":  "阅读",
+                      "category":  "学习",
+                      "priority":  2,
+                      "done":  false
+                  },
+                  {
+                      "id":  4,
+                      "title":  "新作业",
+                      "category":  "课程",
+                      "priority":  3,
+                      "done":  false
+                  }
+              ]
+}
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) Get-Content -LiteralPath 'report.tsv' -Encoding utf8
+id	title	category	priority	done
+1	作业	课程	3	true
+4	新作业	课程	3	false
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) Invoke-Zzy run $CampusMain --limits $CampusLimits
+
+[ZZY退出码=0]
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) Invoke-Zzy run $CampusMain --limits $CampusLimits
+
+[ZZY退出码=0]
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) Invoke-Zzy run $CampusMain --limits $CampusLimits
+
+[ZZY退出码=0]
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) Invoke-Zzy run $CampusMain --limits $CampusLimits
+
+[ZZY退出码=0]
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) Invoke-Zzy run $CampusMain --limits $CampusLimits
+
+[ZZY退出码=0]
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) Invoke-Zzy run $CampusMain --limits $CampusLimits
+
+[ZZY退出码=0]
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+]633;D]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) Invoke-Zzy run $CampusMain --limits $CampusLimits
+
+[ZZY退出码=0]
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) Save-ManualSource 'bad.json' '{'
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) Save-ManualSource 'wrong-version.json' '{"schema_version":99,"next_id":1,"tasks":[]}'
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) Save-ManualSource 'duplicate.json' '{"schema_version":1,"schema_version":1,"next_id":1,"tasks":[]}'
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) Save-ManualSource 'wrong-field.json' '{"schema_version":1,"next_id":2,"tasks":[{"id":1,"title":"坏任务","category":"课程","priority":true,"done":false}]}'
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) $TasksHashBefore = (Get-FileHash -LiteralPath 'tasks.json' -Algorithm SHA256).Hash
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) Invoke-Zzy run $CampusMain --limits $CampusLimits
+
+[ZZY退出码=0]
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) Invoke-Zzy run $CampusMain --limits $CampusLimits
+有 未 保 存 修 改 ： 1保 存  2放 弃  0取 消 > 0
+任 务 数 =3 next_id=5 未 保 存 =true
+1列 表  2新 增  3编 辑  4删 除  5完 成  6筛 选  7排 序  8统 计  9导 出  10保 存  11打 开  12撤 销  13重 做  0退 出 > 0
+有 未 保 存 修 改 ： 1保 存  2放 弃  0取 消 > 0
+任 务 数 =3 next_id=5 未 保 存 =true
+1列 表  2新 增  3编 辑  4删 除  5完 成  6筛 选  7排 序  8统 计  9导 出  10保 存  11打 开  12撤 销  13重 做  0退 出 > 0
+有 未 保 存 修 改 ： 1保 存  2放 弃  0取 消 > 2
+再 见 
+[ZZY退出码=0]
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) Set-Location -LiteralPath $Work
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) Invoke-Zzy run '检查副作用.zzy'
+
+[ZZY退出码=0]
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) Get-Content -LiteralPath 'check-effect.txt' -Encoding utf8
+done
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) Test-Path -LiteralPath 'check.svg'
+True
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) Invoke-Zzy run $CampusMain --limits $CampusLimits
+
+[ZZY退出码=0]
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) Invoke-Zzy run $CampusMain --limits $CampusLimits
+
+[ZZY退出码=0]
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) Invoke-Zzy run $CampusMain --limits $CampusLimits
+1重 试  2其 他 路 径  0保 留 当 前 > 0
+失 败 ： 打 开 已 取 消 
+任 务 数 =3 next_id=5 未 保 存 =true
+1列 表  2新 增  3编 辑  4删 除  5完 成  6筛 选  7排 序  8统 计  9导 出  10保 存  11打 开  12撤 销  13重 做  0退 出 > 1
+id      title   category        priority        done
+1       作 业     课 程     3       true
+2       内 存 修 改         学 习     2       false
+4       新 作 业   课 程     3       false
+共 3项 
+任 务 数 =3 next_id=5 未 保 存 =true
+1列 表  2新 增  3编 辑  4删 除  5完 成  6筛 选  7排 序  8统 计  9导 出  10保 存  11打 开  12撤 销  13重 做  0退 出 > 0
+有 未 保 存 修 改 ： 1保 存  2放 弃  0取 消 > 2
+再 见 
+[ZZY退出码=0]
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) (Get-FileHash -LiteralPath 'tasks.json' -Algorithm SHA256).Hash -eq $TasksHashBefore
+False
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) Set-Location -LiteralPath $Work
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) Save-ManualSource 'bad.json' '{'
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) $TasksHashBefore = (Get-FileHash -LiteralPath 'tasks.json' -Algorithm SHA256).Hash
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) Invoke-Zzy run $CampusMain --limits $CampusLimits
+1列 表  2新 增  3编 辑  4删 除  5完 成  6筛 选  7排 序  8统 计  9导 出  10保 存  11打 开  12撤 销  13重 做  0退 出 > 1
+id      title   category        priority        done
+1       作 业     课 程     3       true
+2       内 存 修 改         学 习     2       false
+4       新 作 业   课 程     3       false
+共 3项 
+任 务 数 =3 next_id=5 未 保 存 =true
+1列 表  2新 增  3编 辑  4删 除  5完 成  6筛 选  7排 序  8统 计  9导 出  10保 存  11打 开  12撤 销  13重 做  0退 出 > 0
+有 未 保 存 修 改 ： 1保 存  2放 弃  0取 消 > 2
+再 见 
+[ZZY退出码=0]
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) (Get-FileHash -LiteralPath 'tasks.json' -Algorithm SHA256).Hash -eq $TasksHashBefore
+True
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) if (Test-Path -LiteralPath '不存在的目录') { throw '本负例要求该目录不存在，请换一个不存在的目录名' }
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) Invoke-Zzy run $CampusMain --limits $CampusLimits
+1列 表  2新 增  3编 辑  4删 除  5完 成  6筛 选  7排 序  8统 计  9导 出  10保 存  11打 开  12撤 销  13重 做  0退 出 > 10
+保 存 路 径 > 不 存 在 的 目 录 /tasks.json
+保 存 到 ： 不 存 在 的 目 录 /tasks.json
+1确 认 写 入 (可 能 覆 盖 ) 0取 消 > 1
+保 存 失 败 ： I/O failed: [Errno 2] No such file or directory: 'D:\\大 学 资 料 \\北 邮 \\课 程 \\程 序 设 计 实 
+践 \\程 序 设 计 实 践 大 作 业 \\dist\\manual-verification\\20261027-133652-b598043\\中 文  空 格  工 作 目 录 \\
+不 存 在 的 目 录 \\.zzy-r83g_93b.tmp'
+任 务 数 =1 next_id=2 未 保 存 =true
+1列 表  2新 增  3编 辑  4删 除  5完 成  6筛 选  7排 序  8统 计  9导 出  10保 存  11打 开  12撤 销  13重 做  0退 出 > 10
+保 存 路 径 > retry-tasks.json
+保 存 到 ： retry-tasks.json
+1确 认 写 入 (可 能 覆 盖 ) 0取 消 > 1
+保 存 成 功 
+任 务 数 =1 next_id=2 未 保 存 =false
+1列 表  2新 增  3编 辑  4删 除  5完 成  6筛 选  7排 序  8统 计  9导 出  10保 存  11打 开  12撤 销  13重 做  0退 出 > 0
+再 见 
+[ZZY退出码=0]
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) Set-Location -LiteralPath $Work
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) Invoke-Zzy run $CampusMain --limits $CampusLimits
+
+(.venv) TerminatingError():“管道已被停止。”
+>> TerminatingError():“管道已被停止。”
+>> TerminatingError():“管道已被停止。”
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) Set-Location -LiteralPath $Work
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) Invoke-Zzy run $CampusMain --limits $CampusLimits
+
+[ZZY退出码=0]
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) Invoke-Zzy run $CampusMain --limits $CampusLimits
+1列 表  2新 增  3编 辑  4删 除  5完 成  6筛 选  7排 序  8统 计  9导 出  10保 存  11打 开  12撤 销  13重 做  0退 出 > 12
+失 败 ： 没 有 可 撤 销 操 作 
+任 务 数 =3 next_id=7 未 保 存 =false
+1列 表  2新 增  3编 辑  4删 除  5完 成  6筛 选  7排 序  8统 计  9导 出  10保 存  11打 开  12撤 销  13重 做  0退 出 > 13
+失 败 ： 没 有 可 重 做 操 作 
+任 务 数 =3 next_id=7 未 保 存 =false
+1列 表  2新 增  3编 辑  4删 除  5完 成  6筛 选  7排 序  8统 计  9导 出  10保 存  11打 开  12撤 销  13重 做  0退 出 > 0
+再 见 
+[ZZY退出码=0]
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) Set-Location -LiteralPath $Work
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) Invoke-Zzy run $CampusMain --limits $CampusLimits
+
+[ZZY退出码=0]
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) "1`n2`n未提交草稿" | & $ZzyPython -X utf8 -m zzy run $CampusMain --limits $CampusLimits
+
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) $LASTEXITCODE
+0
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+]633;D]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) $TasksHashBefore = (Get-FileHash -LiteralPath 'tasks.json' -Algorithm SHA256).Hash
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) & $ZzyPython -X utf8 -m zzy run $CampusMain --limits $CampusLimits --diagnostic-format json
+
+(.venv) TerminatingError():“管道已被停止。”
+>> TerminatingError():“管道已被停止。”
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) $LASTEXITCODE
+130
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) (Get-FileHash -LiteralPath 'tasks.json' -Algorithm SHA256).Hash -eq $TasksHashBefore
+True
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) "1" | & $ZzyPython -X utf8 -m zzy run $CampusMain --limits $CampusLimits
+ZZY 校 园 任 务 管 家  v1
+1新 建  2打 开  0退 出 > 已 新 建 
+任 务 数 =0 next_id=1 未 保 存 =true
+1列 表  2新 增  3编 辑  4删 除  5完 成  6筛 选  7排 序  8统 计  9导 出  10保 存  11打 开  12撤 销  13重 做  0退 出 > 输 入 结 束 
+： 有 未 保 存 修 改 ， 未 自 动 保 存 
+再 见 
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) $LASTEXITCODE
+0
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) "2`ntasks.json`n3`n2`n未提交标题" | & $ZzyPython -X utf8 -m zzy run $CampusMain --limits $CampusLimits
+ZZY 校 园 任 务 管 家  v1
+1新 建  2打 开  0退 出 > 打 开 路 径 > 打 开 成 功 
+任 务 数 =3 next_id=7 未 保 存 =false
+1列 表  2新 增  3编 辑  4删 除  5完 成  6筛 选  7排 序  8统 计  9导 出  10保 存  11打 开  12撤 销  13重 做  0退 出 > 任 务 ID>
+2       阅 读 修 改         学 习     2       false
+标 题 > 分 类 > 失 败 ： 输 入 结 束 
+再 见 
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) $LASTEXITCODE
+0
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) "1`n10`neof-never-saved.json" | & $ZzyPython -X utf8 -m zzy run $CampusMain --limits $CampusLimits
+再 见 
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) $LASTEXITCODE
+0
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) Test-Path -LiteralPath 'eof-never-saved.json'
+False
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) Set-Location -LiteralPath $Work
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) Save-ManualSource '人工画室.zzy' @'
+(zno) c := sketch.canvas(800, 600, "人工绘图验收");
+(zno) p := sketch.pen(c, "主画笔");
+io.print(sketch.show(c));
+io.print(sketch.save_project(c, "manual.zzysketch"));
+io.print(sketch.save_svg(c, "manual.svg"));
+'@
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) Invoke-Zzy run '人工画室.zzy' --gui
+
+[ZZY退出码=0]
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) Set-Location -LiteralPath $Work
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) if (-not (Test-Path -LiteralPath 'manual.zzysketch')) { throw '请先完成 M11 保存，不要在旧窗口仍打开时运行' }
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) Save-ManualSource '重开人工画室.zzy' @'
+(?_?) sketch.load_project("manual.zzysketch") {
+    (^_^)(c) => { io.print(sketch.show(c)); }
+    (T_T)(m) => { io.print(m); }
+}
+'@
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) Invoke-Zzy run '重开人工画室.zzy' --gui
+
+[ZZY退出码=0]
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) Set-Location -LiteralPath $Work
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) Save-ManualSource '人工事件.zzy' @'
+(zno) c := sketch.canvas(400, 300, "事件验收：按l进入长回调");
+(zno) p := sketch.pen(c, "事件笔");
+(addnew) clicked(x, y, button) {
+    io.print("CLICK"); io.print(button);
+    sketch.jump_to(p, x, y); sketch.dot(p, 6);
+}
+(addnew) key(k) {
+    io.print(k);
+    (zif?:) k == "l" { io.print("LONG"); (while) (true) {} }
+}
+(addnew) tick() { io.print("TICK"); }
+sketch.on_click(c, clicked);
+sketch.on_key(c, key);
+sketch.every(c, 1000::ms, tick);
+io.print(sketch.show(c));
+io.print("CLOSED");
+'@
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) Invoke-Zzy run '人工事件.zzy' --gui
+
+[ZZY退出码=0]
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) Invoke-Zzy run '人工事件.zzy' --gui
+
+[ZZY退出码=0]
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) Set-Location -LiteralPath $Work
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) $StudioWork = Join-Path $Work ('原始 studio-' + (Get-Date -Format 'yyyyMMdd-HHmmss'))
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) New-Item -ItemType Directory -Path $StudioWork -ErrorAction Stop | Out-Null
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) Set-Location -LiteralPath $StudioWork
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录\x5c原始 studio-20261027-203232PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录\原始 studio-20261027-203232> ]633;B
+(.venv) Invoke-Zzy run (Join-Path $RepoRoot 'examples/sketch/studio.zzy') --gui
+
+[ZZY退出码=0]
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录\x5c原始 studio-20261027-203232PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录\原始 studio-20261027-203232> ]633;B
+(.venv) Get-Item -LiteralPath 'little-flower.svg','flower.zzy','little-flower.zzysketch' | Select-Object Name,Length
+
+Name                    Length
+----                    ------
+little-flower.svg        15216
+flower.zzy                8115
+little-flower.zzysketch  19559
+
+
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录\x5c原始 studio-20261027-203232PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录\原始 studio-20261027-203232> ]633;B
+(.venv) Invoke-Item -LiteralPath (Join-Path $StudioWork 'little-flower.svg')
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录\x5c原始 studio-20261027-203232PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录\原始 studio-20261027-203232> ]633;B
+(.venv) $RestartSource = @'
+(use) "flower.zzy" (as) flowers;
+(?_?) sketch.load_project("little-flower.zzysketch") {
+    (^_^)(c) => {
+        io.print(sketch.layer_info(c)[0].count);
+        io.print(sketch.undo(c));
+        io.print(sketch.layer_info(c)[0].count);
+        io.print(flowers.draw_flower(c, 0, 0, 1, 0));
+        io.print(sketch.save_svg(c, "restarted.svg"));
+    }
+    (T_T)(m) => { io.print(m); }
+}
+'@
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录\x5c原始 studio-20261027-203232PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录\原始 studio-20261027-203232> ]633;B
+(.venv) [System.IO.File]::WriteAllText((Join-Path $StudioWork 'restart.zzy'), $RestartSource, $Utf8NoBom)
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录\x5c原始 studio-20261027-203232PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录\原始 studio-20261027-203232> ]633;B
+(.venv) Invoke-Zzy check 'restart.zzy'
+
+[ZZY退出码=0]
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录\x5c原始 studio-20261027-203232PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录\原始 studio-20261027-203232> ]633;B
+(.venv) Invoke-Zzy run 'restart.zzy'
+
+[ZZY退出码=0]
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录\x5c原始 studio-20261027-203232PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录\原始 studio-20261027-203232> ]633;B
+(.venv) Pop-Location
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业> ]633;B
+(.venv) Save-ManualSource '无窗口show.zzy' '(zno)c:=sketch.canvas(100,100,"no gui"); io.print(sketch.show(c));'
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业> ]633;B
+(.venv) Save-ManualSource '可选PNG.zzy' '(zno)c:=sketch.canvas(100,100,"png"); io.print(sketch.save_png(c,"optional.png"));'
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业> ]633;B
+(.venv) Invoke-Zzy run '无窗口show.zzy'
+
+[ZZY退出码=2]
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业> ]633;B
+(.venv) Invoke-Zzy run '可选PNG.zzy'
+
+[ZZY退出码=2]
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业> ]633;B
+(.venv) Test-Path -LiteralPath 'optional.png'
+False
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业> ]633;B
+(.venv) $PackageEvidence = Join-Path $Evidence 'package-smoke'
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业> ]633;B
+(.venv) $BuildPython = 'C:\Users\13691\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe'
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业> ]633;B
+(.venv) & $ZzyPython -X utf8 -m scripts.ci package --output $PackageEvidence --installer $BuildPython
+
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业> ]633;B
+(.venv) $LASTEXITCODE
+0
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业> ]633;B
+(.venv) Set-Location -LiteralPath $Work
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) Invoke-Zzy run '无窗口show.zzy'
+
+[ZZY退出码=0]
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) Invoke-Zzy run '可选PNG.zzy'
+
+[ZZY退出码=0]
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) Test-Path -LiteralPath 'optional.png'
+False
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) $OfflineCopy = Join-Path $Evidence 'offline-copy'
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) New-Item -ItemType Directory -Path $OfflineCopy -ErrorAction Stop | Out-Null
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) foreach ($Item in @('zzy','tests','scripts','apps','examples','benchmarks','skills','docs','pyproject.toml','README.md')) {
+    Copy-Item -LiteralPath (Join-Path $RepoRoot $Item) -Destination $OfflineCopy -Recurse
+}
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) $OfflineVenv = Join-Path $Evidence 'offline-gui-venv'
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) & $ZzyPython -X utf8 -m venv --without-pip $OfflineVenv
+
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) if ($LASTEXITCODE -ne 0) { throw '专用venv创建失败' }
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) $OfflinePython = Join-Path $OfflineVenv 'Scripts/python.exe'
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) Push-Location -LiteralPath $OfflineCopy
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5coffline-copyPS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\offline-copy> ]633;B
+(.venv) & $OfflinePython -X utf8 tests/e4/install.py --installer $BuildPython
+{"passed": true, "source_files": 39, "wheel_sha256": "c92bd43d6035c70b685a0b8738e79be734cdc505fd1
+6602dc409192f62b5aa01", "report": "D:\\大 学 资 料 \\北 邮 \\课 程 \\程 序 设 计 实 践 \\程 序 设 计 实 践 大 作 业 \\di
+st\\manual-verification\\20261027-133652-b598043\\offline-copy\\tests\\e4\\results\\installed.jso
+n"}
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5coffline-copyPS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\offline-copy> ]633;B
+(.venv) $OfflineExitCode = $LASTEXITCODE
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5coffline-copyPS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\offline-copy> ]633;B
+(.venv) Pop-Location
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B
+(.venv) $OfflineExitCode
+0
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdist\x5cmanual-verification\x5c20261027-133652-b598043\x5c中文 空格 工作目录PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\dist\manual-verification\20261027-133652-b598043\中文 空格 工作目录> ]633;B

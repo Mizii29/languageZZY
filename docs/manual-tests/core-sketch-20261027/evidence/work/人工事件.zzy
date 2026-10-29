@@ -1,0 +1,16 @@
+(zno) c := sketch.canvas(400, 300, "事件验收：按l进入长回调");
+(zno) p := sketch.pen(c, "事件笔");
+(addnew) clicked(x, y, button) {
+    io.print("CLICK"); io.print(button);
+    sketch.jump_to(p, x, y); sketch.dot(p, 6);
+}
+(addnew) key(k) {
+    io.print(k);
+    (zif?:) k == "l" { io.print("LONG"); (while) (true) {} }
+}
+(addnew) tick() { io.print("TICK"); }
+sketch.on_click(c, clicked);
+sketch.on_key(c, key);
+sketch.every(c, 1000::ms, tick);
+io.print(sketch.show(c));
+io.print("CLOSED");

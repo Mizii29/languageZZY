@@ -1,0 +1,1 @@
+(zno)c:=sketch.canvas(100,100,"no gui"); io.print(sketch.show(c));

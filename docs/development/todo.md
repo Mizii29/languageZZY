@@ -136,7 +136,7 @@ P10 各候选相互独立，不要求全部完成；P11 不以全部勾选为前
 
 ## P11：验收提交（依赖 P06、P07、P09）
 
-2026-10-20已整理[最终测试计划](final-test-plan.md)，落地[CI工作流与本机入口](ci-design.md)，并新增独立[VS Code 人工测试指南](manual-test-guide.md)。本地结果见开发记录；云端首跑、人工/GUI/性能与交付复核仍分别验收，以下P11任务保持未勾选。
+2026-10-20已整理[最终测试计划](final-test-plan.md)，落地[CI工作流与本机入口](ci-design.md)，并新增独立[VS Code 人工测试指南](../manual-tests/core-sketch-20261027/manual-test-guide.md)。2026-10-28已将历次指南、结果与证据整理到[人工测试目录](../manual-tests/README.md)，P08人工测试于2026-10-29完成[主流程核验](../manual-tests/p08-20261028/manual-test-review.md)。本地结果见开发记录；云端首跑、最终候选GUI/性能与交付复核仍分别验收，以下P11任务保持未勾选。
 
 2026-10-22补充 [日志配置](../runtime/logging.md)：CI回归日志按大小轮转、压缩并自动淘汰，配置和输出边界已有专项检查；完整执行结果另见最新开发记录，不据此提前完成P11。
 
@@ -152,5 +152,5 @@ P10 各候选相互独立，不要求全部完成；P11 不以全部勾选为前
 
 - 新接口db.transaction(path,callback)/db.query(sql,params)：零参数Result回调，参数绑定、成功提交、失败/取消回滚、连接finally关闭；不暴露句柄。业务示例examples/sqlite/app.zzy，独立于校园CLI。集中契约docs/runtime/web.md说明超时、拒绝、资源及提交后响应失败边界。
 - 核心回归2027/2027、838.109秒，零失败/错误/跳过/expected failure。SQLite6/6，HTTP14/14，安装后HTTP14/14，独立CLI服务器新PID重启恢复实测；原2021项及1738外部CLI保留。43源码核心隔离安装通过，CI探针加入真实SQLite。
-- 新SQLite网页人工交互、Tk GUI、云端CI、其他平台和断电恢复未验证；不得以核心/HTTP通过代替。requirement原文、校园文件格式、用户8000服务和docs/manual-tests/保留。
+- 2026-10-29已核验新SQLite网页人工交互、Python嵌入及新进程重启持久化，见[P08逐项核验记录](../manual-tests/p08-20261028/manual-test-review.md)；共享模式按操作者备注确认，未独立重存重复截图。P08期间未重跑Tk GUI，云端CI、其他平台和断电恢复未验证，不得以本轮结果代替。requirement原文、校园文件格式和用户8000服务保留；历次人工资料统一归档到docs/manual-tests/。
 - P08-01—03的阶段提交与0a70825一并交付到feature；人工目录未暂存。main/test本轮不更新，Git传输不等于云端CI验收。

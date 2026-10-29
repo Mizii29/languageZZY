@@ -1,0 +1,81 @@
+﻿**********************
+Windows PowerShell 脚本开始
+开始时间: 20261029002147
+用户名: MIZII\13691
+RunAs 用户: MIZII\13691
+配置名称: 
+计算机: MIZII (Microsoft Windows NT 10.0.26200.0)
+主机应用程序: C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -noexit -command try { . "c:\Users\13691\AppData\Local\Programs\Microsoft VS Code\6d62b1d5da\resources\app\out\vs\workbench\contrib\terminal\common\scripts\shellIntegration.ps1" } catch {}
+进程 ID: 23400
+PSVersion: 5.1.26100.9711
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.9711
+BuildVersion: 10.0.26100.9711
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+已启动脚本，输出文件为 D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\docs\manual-tests\p08-20261028\runs\20261029-002147-330cf17\terminal.txt
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业> ]633;B
+(.venv) git rev-parse HEAD | Set-Content -Encoding utf8 (Join-Path $RunRoot 'candidate.txt')
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业> ]633;B
+(.venv) git status --short | Set-Content -Encoding utf8 (Join-Path $RunRoot 'working-tree.txt')
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业> ]633;B
+(.venv) foreach ($Example in @('web', 'sqlite')) {
+    $Target = Join-Path $RunRoot "examples/$Example"
+    New-Item -ItemType Directory -Path $Target -Force | Out-Null
+    Copy-Item -LiteralPath (Join-Path $RepoRoot "examples/$Example/app.zzy"), (Join-Path $RepoRoot "examples/$Example/index.html") -Destination $Target
+}
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业> ]633;B
+(.venv) $PreviousPythonPath = [Environment]::GetEnvironmentVariable('PYTHONPATH', 'Process')
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业> ]633;B
+(.venv) $env:PYTHONPATH = $RepoRoot
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业> ]633;B
+(.venv) Set-Location -LiteralPath $RunRoot
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdocs\x5cmanual-tests\x5cp08-20261028\x5cruns\x5c20261029-002147-330cf17PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\docs\manual-tests\p08-20261028\runs\20261029-002147-330cf17> ]633;B
+(.venv) Write-Host "本轮证据目录：$RunRoot"
+本轮证据目录：D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\docs\manual-tests\p08-20261028\runs\20261029-002147-330cf17
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdocs\x5cmanual-tests\x5cp08-20261028\x5cruns\x5c20261029-002147-330cf17PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\docs\manual-tests\p08-20261028\runs\20261029-002147-330cf17> ]633;B
+(.venv) & $ZzyPython -X utf8 -m zzy.web examples/web/app.zzy --route GET /api/hello hello --route POST /api/greet greet --page examples/web/index.html --port 18765
+
+(.venv) TerminatingError():“管道已被停止。”
+>> TerminatingError():“管道已被停止。”
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdocs\x5cmanual-tests\x5cp08-20261028\x5cruns\x5c20261029-002147-330cf17PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\docs\manual-tests\p08-20261028\runs\20261029-002147-330cf17> ]633;B
+(.venv) & $ZzyPython -X utf8 -m zzy.web examples/web/app.zzy --route GET /api/hello hello --route POST /api/greet greet --page examples/web/index.html --shared --port 18765
+
+(.venv) TerminatingError():“管道已被停止。”
+>> TerminatingError():“管道已被停止。”
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdocs\x5cmanual-tests\x5cp08-20261028\x5cruns\x5c20261029-002147-330cf17PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\docs\manual-tests\p08-20261028\runs\20261029-002147-330cf17> ]633;B
+(.venv) Set-Location -LiteralPath $RepoRoot
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业> ]633;B
+(.venv) & $ZzyPython -X utf8 -m examples.web.embed
+
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业> ]633;B
+(.venv) Write-Host "嵌入退出码=$LASTEXITCODE"
+嵌入退出码=0
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业> ]633;B
+(.venv) Set-Location -LiteralPath $RunRoot
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdocs\x5cmanual-tests\x5cp08-20261028\x5cruns\x5c20261029-002147-330cf17PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\docs\manual-tests\p08-20261028\runs\20261029-002147-330cf17> ]633;B
+(.venv) & $ZzyPython -X utf8 -m zzy.web examples/sqlite/app.zzy --route GET /api/tasks handle --route POST /api/tasks handle --page examples/sqlite/index.html --shared --port 18766
+
+(.venv) TerminatingError():“管道已被停止。”
+>> TerminatingError():“管道已被停止。”
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdocs\x5cmanual-tests\x5cp08-20261028\x5cruns\x5c20261029-002147-330cf17PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\docs\manual-tests\p08-20261028\runs\20261029-002147-330cf17> ]633;B
+(.venv) & $ZzyPython -X utf8 -m zzy.web examples/sqlite/app.zzy --route GET /api/tasks handle --route POST /api/tasks handle --page examples/sqlite/index.html --shared --port 18766
+
+(.venv) TerminatingError():“管道已被停止。”
+>> TerminatingError():“管道已被停止。”
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdocs\x5cmanual-tests\x5cp08-20261028\x5cruns\x5c20261029-002147-330cf17PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\docs\manual-tests\p08-20261028\runs\20261029-002147-330cf17> ]633;B
+(.venv) Test-Path -LiteralPath (Join-Path $RunRoot 'examples/sqlite/tasks.sqlite3')
+True
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业\x5cdocs\x5cmanual-tests\x5cp08-20261028\x5cruns\x5c20261029-002147-330cf17PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\docs\manual-tests\p08-20261028\runs\20261029-002147-330cf17> ]633;B
+(.venv) Set-Location -LiteralPath $RepoRoot
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业> ]633;B
+(.venv) [Environment]::SetEnvironmentVariable('PYTHONPATH', $PreviousPythonPath, 'Process')
+]633;D;0]633;A]633;P;Cwd=D:\x5c大学资料\x5c北邮\x5c课程\x5c程序设计实践\x5c程序设计实践大作业PS D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业> ]633;B
+(.venv) Stop-Transcript
+**********************
+Windows PowerShell 脚本结束
+结束时间: 20261029161239
+**********************

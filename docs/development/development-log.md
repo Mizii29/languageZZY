@@ -684,3 +684,26 @@ Git 提交：真实标识 / 未提交
 - 用户恢复Git写权限后，显式暂存并审查33个P08相关文件，git diff --cached --check通过；创建提交0a70825（feat(sqlite): complete P08 integration and acceptance）。人工测试目录未暂存，requirement未修改。现勾选P08-05，57/70，后续P11仍独立验收。
 - 初次fetch经现有127.0.0.1:7897代理发生schannel握手失败，临时OpenSSL后端也遇到TLS EOF；临时清空本次命令代理后fetch成功。保留HTTPS证书校验及全局配置，未将连接故障误报为GitHub权限不足。
 - 已拉取并核对origin/feature与本地feature一致，且是当前P08分支祖先。后续以快进方式同步feature并正常推送；远端最终提交号以Git引用和聊天报告核验，不改写历史，不更新main/test，不将推送视为云端CI通过。
+
+## 2026-10-28：P08完成复核与人工测试统一归档
+
+- 用户要求检查P08日志和完成情况，编写简洁人工方案，并与上次资料统一存放。当前分支test、HEAD为330cf1754fa991bd72b4f56bc89fdaa57ce8d2ff；P08-01—05已勾选，代码任务57/70，下一项仍为P11-01。本轮仅整理文档和人工证据，不修改运行时、测试实现、requirement或用户8000服务，不提交/推送。
+- 核对现存tests/p08/core-regression-05.json：2027/2027、838.109秒、零失败/错误/跳过；database-04为6/6，http-04及installed-http-05均14/14。source-05记录的7个实现/测试哈希匹配当前；验收wheel SHA256为e123f539508287db8decde7f5cfe20ab175298271bd10eaf75ad6627965f9524，43份运行时源码逐份规范换行后与当前一致。以上是现存证据核对，本次未重跑全量/HTTP/GUI。
+- 新增docs/manual-tests/README.md统一索引及p08-20261028/manual-test-plan.md、manual-test-result.md。W01—W07覆盖默认GET/中文POST、422及恢复、shared冒烟、Python嵌入、SQLite中文/单引号标题、空标题拒绝、Ctrl+C失联及新进程持久化恢复。提供6块PowerShell准备/启动/结束命令，明确同一终端、同一运行目录与独立测试数据库；结果表保持待执行。
+- 将上次完整guide和原始manual-test-result.doc归档到docs/manual-tests/core-sketch-20261027/；原guide路径保留导航入口，新旧DOC同目录引用不变。DOC SHA256仍为3a8b6e107be09243812146a3cffcf4c2d321f4f5e2c824be3fa5dfdb1721f4ee，未改二进制内容或41张截图。另从原运行目录复制终端记录、M17安装报告及全部顶层工作文件，共24份，逐份字节相同；不复制环境/依赖，原dist目录保留。P06原始图片未改。
+- 修正文档导航、测试计划/覆盖说明和Web示例中的过期“P08未实现/数据库待04/提交仍受阻”口径；开发记录历史过程不改写，P11保持未完成。上次GUI/校园全流程不强制重做，额外DPI、物理断网、手工并发及模拟断电可跳过，不冒填通过。
+- 实际执行`.venv/Scripts/python.exe -X utf8 -m scripts.ci static --output dist/p08-manual-docs-review-20261028`通过。由于既有CI有意排除人工资料目录，另单独检查该目录5份Markdown、27个本地链接和围栏，全部通过；使用PowerShell Parser检查新方案6块命令语法通过，只解析、未执行人工命令。requirement SHA256仍为b099c19fc339ce1dc1aab7e9d6c8126a9c5c9ace3d31b969a0623df90f521d2b。
+
+## 2026-10-29：P08人工结果逐图核验
+
+- 用户已完成测试，要求检查。接手test/330cf17，操作者将结果表改为docs/manual-tests/p08-20261028/manual-test-result.docx，并保存runs/20261029-002147-330cf17。按项目技能及文档读取流程检查DOCX结构、全部11张原始截图、transcript、候选和工作区记录；未修改原DOCX，未重新执行服务器或用户人工测试。
+- W01默认GET返回200、中文POST成功；W02空姓名422后Ada恢复成功；W04嵌入输出status200及你好，Ada，退出0。W03图5证实带shared的新进程37252启动，操作者随后备注“一切正常，与上述无异，不再重复记录”；按操作者确认记录，不冒充重复请求独立截图或并发隔离证明。GET正文language字段与初始空库亦未单独截图，保留现有自动覆盖与人工主流程的区别，不要求重复补测。
+- SQLite图7保留ID1人工任务一、ID2 O'Reilly；图8空标题422，未增加空记录；图9停服失联；图10旧PID45652完成shutdown，新PID24148启动并GET200后仍返回原两条；图11新进程结束及数据库Test-Path=True。只读查询实际数据库与截图一致，integrity_check=ok，读前后SHA256均12ec1577227c4d28b8d63d95f7fa2d8fcc374e3dcc4136070d5c0da26f7bfec8。四份示例副本与当前源码/页面字节相同，source-05七个冻结文件哈希仍一致。
+- 未发现阻塞性功能问题，本轮人工主流程核验通过，W03证据边界如上。favicon.ico404是未提供站点图标，非业务接口失败；PowerShell5.1 transcript的Ctrl+C管道停止文字与截图中的Uvicorn正常shutdown结合判读，不误报崩溃。transcript未完整捕获原生程序输出，以DOCX截图补足。Python/浏览器完整版本未在本轮材料独立留存，不补填已核验版本。
+- 新增同轮manual-test-review.md逐项记录证据、结论与原件哈希；修复结果由MD换为DOCX后的导航失效，同步人工索引、方案、todo、Web契约状态、测试说明及最终计划。原DOCX SHA256保持de847465191ec00602c115bc5a0bc344db65b0518ec8daf85daf62fbe22fd9ff，transcript保持1d11602838b515f1f9b7a20e3c41476330708f87f155fabfc155a8c92457a2a4。代码、数据库、requirement及上次人工原件未改，不提交/推送；P11任务保持未完成。
+- 实际执行`.venv/Scripts/python.exe -X utf8 -m scripts.ci static --output dist/p08-manual-review-20261029/static`通过；另外检查人工目录5份Markdown、32个本地链接和围栏通过，校验原DOCX/transcript/数据库/requirement哈希不变。核验产物存dist/p08-manual-review-20261029，不将其当作新全量、HTTP、GUI或云端CI执行结果。
+
+## 2026-10-29：人工通过后的主分支交付
+
+- 用户确认人工测试成功，授权提交推送并合并main。本轮将人工资料迁移、原始报告、日志、测试数据库及配套导航作为同一交付提交；不改运行时代码或requirement，不将人工确认扩写为未执行的测试。
+- 提交前本地静态门禁通过，输出dist/p08-main-release-static-20261029；主分支启用PR要求且对管理员生效。本轮通过test到main的PR执行云端静态、Windows完整回归、隔离安装、HTTP和ci-gate，成功后正常合并。最终运行与合并SHA以GitHub记录及聊天报告核对，不绕过保护。
