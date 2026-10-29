@@ -1,0 +1,371 @@
+{
+  "schema_version": 1,
+  "kind": "package",
+  "passed": true,
+  "started_at": "2026-10-29T11:17:59.070538+00:00",
+  "context": {
+    "checkout_sha": "db9be8fcf135d0ef55e36129327ba0a239fff8ca",
+    "head_sha": "",
+    "base_sha": "",
+    "run_id": "local",
+    "attempt": "1",
+    "source_fingerprint": "9ed6d52b4cb29f168b2cf89f613ec5c8e6ff792afc051993c113d169781d4c52"
+  },
+  "environment": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+    "executable": "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\.venv\\Scripts\\python.exe",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "unicode": "15.0.0",
+    "git": "git version 2.50.0.windows.1",
+    "runner_image": "",
+    "resource_policy": {
+      "policy_version": 1,
+      "profile": "default-v1",
+      "limits": {
+        "source_file_bytes": 2097152,
+        "source_total_bytes": 16777216,
+        "module_count": 128,
+        "import_depth": 32,
+        "tokens_per_file": 250000,
+        "ast_nodes_total": 500000,
+        "syntax_depth": 64,
+        "numeric_digits": 4096,
+        "integer_bits": 65536,
+        "quantity_exponent_abs": 64,
+        "call_depth": 64,
+        "value_depth": 64,
+        "container_items": 1000000,
+        "text_codepoints": 4194304,
+        "io_payload_bytes": 16777216,
+        "runtime_objects": 200000,
+        "runtime_slots": 2000000,
+        "runtime_payload_bytes": 134217728,
+        "stdout_bytes": 1048576,
+        "stderr_bytes": 1048576,
+        "program_cache_entries": 32,
+        "program_cache_bytes": 67108864
+      },
+      "host_decimal_digits": 4300,
+      "effective_decimal_digits": 4096
+    },
+    "resource_fingerprint": "2e654aef52d3267bfecf0768bef9faee1eed942a329001ec455aee951c858bd2"
+  },
+  "commands": [
+    {
+      "command": [
+        "C:\\Users\\13691\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "-X",
+        "utf8",
+        "-m",
+        "pip",
+        "wheel",
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业",
+        "--no-deps",
+        "--no-build-isolation",
+        "--no-index",
+        "--no-cache-dir",
+        "--wheel-dir",
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\dist\\p10-package\\wheel"
+      ],
+      "cwd": "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业",
+      "exit_code": 0,
+      "stdout": "Processing .\\.\r\n  Preparing metadata (pyproject.toml): started\r\n  Preparing metadata (pyproject.toml): finished with status 'done'\r\nBuilding wheels for collected packages: zzy-language\r\n  Building wheel for zzy-language (pyproject.toml): started\r\n  Building wheel for zzy-language (pyproject.toml): finished with status 'done'\r\n  Created wheel for zzy-language: filename=zzy_language-0.6.0a1-py3-none-any.whl size=123910 sha256=b882a790d5de3b450a41eb7ffbd029ff1a1a5b16318dd17fa1663c8844fbebe0\r\n  Stored in directory: C:\\Users\\13691\\AppData\\Local\\Temp\\pip-ephem-wheel-cache-jdcjm6n1\\wheels\\14\\21\\73\\4c562a032c9fd8ee8b0115920e1810ee94699ef07eb2a37d16\r\nSuccessfully built zzy-language\r\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "C:\\Users\\13691\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "-X",
+        "utf8",
+        "-m",
+        "pip",
+        "--python",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY CI 中文 安装 k892x1e3\\环境\\Scripts\\python.exe",
+        "install",
+        "--no-index",
+        "--no-deps",
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\dist\\p10-package\\wheel\\zzy_language-0.6.0a1-py3-none-any.whl"
+      ],
+      "cwd": "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY CI 中文 安装 k892x1e3\\中文 空格 工作目录",
+      "exit_code": 0,
+      "stdout": "Processing D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\dist\\p10-package\\wheel\\zzy_language-0.6.0a1-py3-none-any.whl\r\nInstalling collected packages: zzy-language\r\nSuccessfully installed zzy-language-0.6.0a1\r\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY CI 中文 安装 k892x1e3\\环境\\Scripts\\python.exe",
+        "-I",
+        "-X",
+        "utf8",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY CI 中文 安装 k892x1e3\\中文 空格 工作目录\\installed_probe.py",
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业"
+      ],
+      "cwd": "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY CI 中文 安装 k892x1e3\\中文 空格 工作目录",
+      "exit_code": 0,
+      "stdout": "{\"passed\": true, \"source_files\": 44, \"headless\": true}\r\n",
+      "stderr": ""
+    }
+  ],
+  "wheel_sha256": "b882a790d5de3b450a41eb7ffbd029ff1a1a5b16318dd17fa1663c8844fbebe0",
+  "probe": {
+    "passed": true,
+    "installed_package": "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY CI 中文 安装 k892x1e3\\环境\\Lib\\site-packages\\zzy",
+    "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+    "source_files": 44,
+    "headless": true,
+    "commands": [
+      {
+        "command": [
+          "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY CI 中文 安装 k892x1e3\\环境\\Scripts\\python.exe",
+          "-I",
+          "-X",
+          "utf8",
+          "-m",
+          "zzy",
+          "check",
+          "db.zzy"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY CI 中文 安装 k892x1e3\\环境\\Scripts\\python.exe",
+          "-I",
+          "-X",
+          "utf8",
+          "-m",
+          "zzy",
+          "run",
+          "db.zzy"
+        ],
+        "exit_code": 0,
+        "stdout": "(^_^)([[7]])\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY CI 中文 安装 k892x1e3\\环境\\Scripts\\python.exe",
+          "-I",
+          "-X",
+          "utf8",
+          "-m",
+          "zzy",
+          "--help"
+        ],
+        "exit_code": 0,
+        "stdout": "usage: zzy [-h] [--limits JSON] [--diagnostic-format {text,json}] [--version]\n           {info,source-info,lex,run,check,test} ...\n\nZZY P06：标准库与模块、非执行检查和隔离 spec 测试。\n\npositional arguments:\n  {info,source-info,lex,run,check,test}\n    info                输出宿主环境、生效策略及指纹\n    source-info         读取 UTF-8 源码并输出摘要，不做语法检查\n    lex                 扫描词法并输出 Token JSON Lines；不解析、不执行\n    run                 执行 P06：完整核心语法、标准库与模块\n    check               检查核心语法、名称及递归模块依赖；不执行程序\n    test                收集并隔离运行 spec，空收集/失败/超时非成功\n\noptions:\n  -h, --help            show this help message and exit\n  --limits JSON         资源策略覆盖文件（最多 64 KiB）\n  --diagnostic-format {text,json}\n                        stderr 诊断格式\n  --version             show program's version number and exit\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY CI 中文 安装 k892x1e3\\环境\\Scripts\\python.exe",
+          "-I",
+          "-X",
+          "utf8",
+          "-m",
+          "zzy",
+          "info"
+        ],
+        "exit_code": 0,
+        "stdout": "{\"zzy_version\":\"0.6.0a1\",\"stage\":\"P06\",\"python_implementation\":\"CPython\",\"python_version\":\"3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]\",\"python_executable\":\"C:\\\\Users\\\\13691\\\\AppData\\\\Local\\\\Temp\\\\ZZY CI 中文 安装 k892x1e3\\\\环境\\\\Scripts\\\\python.exe\",\"unicode_version\":\"15.0.0\",\"platform\":\"Windows-11-10.0.26200-SP0\",\"resource_policy\":{\"policy_version\":1,\"profile\":\"default-v1\",\"limits\":{\"source_file_bytes\":2097152,\"source_total_bytes\":16777216,\"module_count\":128,\"import_depth\":32,\"tokens_per_file\":250000,\"ast_nodes_total\":500000,\"syntax_depth\":64,\"numeric_digits\":4096,\"integer_bits\":65536,\"quantity_exponent_abs\":64,\"call_depth\":64,\"value_depth\":64,\"container_items\":1000000,\"text_codepoints\":4194304,\"io_payload_bytes\":16777216,\"runtime_objects\":200000,\"runtime_slots\":2000000,\"runtime_payload_bytes\":134217728,\"stdout_bytes\":1048576,\"stderr_bytes\":1048576,\"program_cache_entries\":32,\"program_cache_bytes\":67108864},\"host_decimal_digits\":4300,\"effective_decimal_digits\":4096},\"resource_fingerprint\":\"2e654aef52d3267bfecf0768bef9faee1eed942a329001ec455aee951c858bd2\"}\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY CI 中文 安装 k892x1e3\\环境\\Scripts\\python.exe",
+          "-I",
+          "-X",
+          "utf8",
+          "-m",
+          "zzy",
+          "check",
+          "hello.zzy"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY CI 中文 安装 k892x1e3\\环境\\Scripts\\python.exe",
+          "-I",
+          "-X",
+          "utf8",
+          "-m",
+          "zzy",
+          "run",
+          "hello.zzy"
+        ],
+        "exit_code": 0,
+        "stdout": "5\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY CI 中文 安装 k892x1e3\\环境\\Scripts\\python.exe",
+          "-I",
+          "-X",
+          "utf8",
+          "-m",
+          "zzy",
+          "run",
+          "bad.zzy",
+          "--diagnostic-format",
+          "json"
+        ],
+        "exit_code": 2,
+        "stdout": "",
+        "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E302\",\"file\":\"bad.zzy\",\"span\":{\"start\":{\"line\":1,\"column\":10},\"end\":{\"line\":1,\"column\":15}},\"message\":\"名称 total 尚未声明、正在初始化或尚未实现\",\"notes\":[]}\n"
+      },
+      {
+        "command": [
+          "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY CI 中文 安装 k892x1e3\\环境\\Scripts\\python.exe",
+          "-I",
+          "-X",
+          "utf8",
+          "-m",
+          "zzy",
+          "test",
+          "normal-spec.zzy"
+        ],
+        "exit_code": 0,
+        "stdout": "{\"schema_version\":1,\"tests\":1,\"passed\":1,\"failed\":0,\"timed_out\":0,\"collection_errors\":0}\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY CI 中文 安装 k892x1e3\\环境\\Scripts\\python.exe",
+          "-I",
+          "-X",
+          "utf8",
+          "-m",
+          "zzy",
+          "check",
+          "effects.zzy"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY CI 中文 安装 k892x1e3\\环境\\Scripts\\python.exe",
+          "-I",
+          "-X",
+          "utf8",
+          "-m",
+          "zzy",
+          "run",
+          "effects.zzy"
+        ],
+        "exit_code": 0,
+        "stdout": "input> hello\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY CI 中文 安装 k892x1e3\\环境\\Scripts\\python.exe",
+          "-I",
+          "-X",
+          "utf8",
+          "-m",
+          "zzy",
+          "check",
+          "save.zzy"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY CI 中文 安装 k892x1e3\\环境\\Scripts\\python.exe",
+          "-I",
+          "-X",
+          "utf8",
+          "-m",
+          "zzy",
+          "run",
+          "save.zzy"
+        ],
+        "exit_code": 0,
+        "stdout": "(^_^)(null)\n(^_^)(null)\n(^_^)(null)\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY CI 中文 安装 k892x1e3\\环境\\Scripts\\python.exe",
+          "-I",
+          "-X",
+          "utf8",
+          "-m",
+          "zzy",
+          "run",
+          "load.zzy"
+        ],
+        "exit_code": 0,
+        "stdout": "2\ntrue\n1\n(^_^)(3)\n2\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY CI 中文 安装 k892x1e3\\环境\\Scripts\\python.exe",
+          "-I",
+          "-X",
+          "utf8",
+          "-m",
+          "zzy",
+          "check",
+          "app/main.zzy",
+          "--limits",
+          "app/limits.json"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY CI 中文 安装 k892x1e3\\环境\\Scripts\\python.exe",
+          "-I",
+          "-X",
+          "utf8",
+          "-m",
+          "zzy",
+          "run",
+          "app/main.zzy",
+          "--limits",
+          "app/limits.json"
+        ],
+        "exit_code": 0,
+        "stdout": "ZZY 校园任务管家 v1\n1新建 2打开 0退出> 已新建\n任务数=0 next_id=1 未保存=true\n1列表 2新增 3编辑 4删除 5完成 6筛选 7排序 8统计 9导出 10保存 11打开 12撤销 13重做 0退出> 标题> 分类> 优先级1低/2中/3高> 1提交 2重填 0取消> 已更新\n任务数=1 next_id=2 未保存=true\n1列表 2新增 3编辑 4删除 5完成 6筛选 7排序 8统计 9导出 10保存 11打开 12撤销 13重做 0退出> 保存路径> 保存到：tasks.json\n1确认写入(可能覆盖) 0取消> 保存成功\n任务数=1 next_id=2 未保存=false\n1列表 2新增 3编辑 4删除 5完成 6筛选 7排序 8统计 9导出 10保存 11打开 12撤销 13重做 0退出> 再见\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY CI 中文 安装 k892x1e3\\环境\\Scripts\\python.exe",
+          "-I",
+          "-X",
+          "utf8",
+          "-m",
+          "zzy",
+          "run",
+          "app/main.zzy",
+          "--limits",
+          "app/limits.json"
+        ],
+        "exit_code": 0,
+        "stdout": "ZZY 校园任务管家 v1\n1新建 2打开 0退出> 打开路径> 打开成功\n任务数=1 next_id=2 未保存=false\n1列表 2新增 3编辑 4删除 5完成 6筛选 7排序 8统计 9导出 10保存 11打开 12撤销 13重做 0退出> id\ttitle\tcategory\tpriority\tdone\n1\t作业\t课程\t3\tfalse\n共1项\n任务数=1 next_id=2 未保存=false\n1列表 2新增 3编辑 4删除 5完成 6筛选 7排序 8统计 9导出 10保存 11打开 12撤销 13重做 0退出> 再见\n",
+        "stderr": ""
+      }
+    ],
+    "outputs": {
+      "drawing.svg": "eaf322d8c464e061b7c99e2a046f2f6e90b1975f609f23523b47d4ed7f548dec",
+      "saved.zzysketch": "0cdbaf00b7a16a9c1aa53baecffe90ac4cca7debf5275efe0abc928e90424bb5",
+      "tasks.json": "cd257b18f493ba4ecced5aefb789dbf58be9b8f29c67ee7aff77d2cec0cf11ab"
+    }
+  },
+  "finished_at": "2026-10-29T11:18:12.249049+00:00"
+}

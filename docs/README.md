@@ -106,3 +106,6 @@ A/C/D 已纳入 P04；E 已按 E1—E4 实现并验收。Web/Python 互联属于
 画笔扩展接手入口：[正式sketch契约](features/sketch.md)、[使用指南](features/sketch-guide.md)、[完整验收](../tests/e4/README.md)。核心/headless/真实GUI分别验收；PNG不可用，E1—E4全部验收，sketch ABI 1.0。
 
 P08现已选择：集中接口见[Web契约](runtime/web.md)，实际HTTP演示见[示例](../examples/web/README.md)，进度以todo为准。
+
+
+P10-01/P10-06已选择：[集中契约](runtime/web.md)、[独立合约演示](../examples/contracts/README.md)、[覆盖与测量](../tests/p10/README.md)。其余P10候选保持延期，实际完成情况见todo。

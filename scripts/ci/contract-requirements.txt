@@ -1,0 +1,2 @@
+# Independent schema validation in the optional HTTP acceptance job only.
+jsonschema==4.25.1

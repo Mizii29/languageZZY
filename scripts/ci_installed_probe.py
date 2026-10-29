@@ -48,6 +48,12 @@ def main():
         value = {'n': 2**100, 'items': [True, 1, None]}
         assert embedded.call('identity', value).value == value
     assert not any(name in sys.modules for name in ('starlette', 'uvicorn', 'tkinter'))
+    from zzy.contracts import generate_openapi
+    (work/'contract.zzy').write_text('(shape) Input {name:(String);}(addnew) handle(r){(return)r;}io.write_text("forbidden.txt","bad");',encoding='utf-8')
+    document=generate_openapi(work/'contract.zzy',[('POST','/api/name','handle')],{'POST /api/name':{'request':'Input'}})
+    assert document['components']['schemas']['S1_Input']['required']==['name']
+    assert not (work/'forbidden.txt').exists()
+    assert not any(name in sys.modules for name in ('starlette','uvicorn','tkinter','jsonschema'))
     (work / 'bad.zzy').write_text('io.print(total);', encoding='utf-8')
     out, err = cli('run', 'bad.zzy', '--diagnostic-format', 'json', status=2, stdout='')
     assert json.loads(err)['code'] == 'E302'

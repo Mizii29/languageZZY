@@ -138,3 +138,8 @@ Web已选，P08-01通过独立可选ASGI适配器调用ZZY函数；实际Request
 P08-04/05本轮新增SQLite事务与独立任务示例；实际db签名、提交/回滚与取消边界以docs/runtime/web.md为准。SQLite专项、真实HTTP重启、安装和完整回归证据见tests/p08；当前验收状态见todo。
 
 SQLite事务是上述单步I/O Result约定的明确例外：db.query的SQL/I/O错误以E401中止并回滚整个事务，不能忽略失败后继续提交；回调主动返回失败Result用于业务拒绝并回滚。签名、生命周期及提交后的边界只在互联契约维护。
+
+
+## P10 shape 合约边界
+
+本次新增的是核心Python静态生成工具和Web显式配置，不增加语言标准库函数。[Web集中契约](../runtime/web.md)维护入口/转换规则；业务保留data.get等Map接口，不虚构shape.validate或web.get等未登记函数。

@@ -17,6 +17,8 @@ from .prepare import prepare
 from .resources import CancellationToken, ResourceMeter, ResourcePolicy
 from .source import SourceLoader
 from .values import CallRequest
+from .contracts import (ContractViolation, compile_contracts, convert, encode_document,
+                        openapi, read_bindings, route_registry)
 
 MAX_BODY = 65536
 MAX_RESPONSE = 65536
@@ -59,6 +61,10 @@ class RequestRuntime(Interpreter):
         except (json_codec.InvalidJSON, BoundaryError) as error:
             raise BoundaryError('invalid request JSON') from error
         self.input_valid = True
+        contract = getattr(self, 'contract', None)
+        if contract is not None and contract.request is not None:
+            body = convert(self, contract.request, body, node)
+            request.set(self.scalar('String', 'body', node), body, self, node)
         if getattr(self, "shared_snapshot", None) is None:
             yield from super().execute_program()
         else:
@@ -75,13 +81,17 @@ class RequestRuntime(Interpreter):
         if status.kind != 'Int' or not 200 <= status.data <= 599 or status.data in {204, 205, 304}:
             raise BoundaryError('invalid JSON response status')
         safe_numbers(self, fields['body'])
-        payload = json_codec.stringify(self, fields['body'], node).data.encode('utf-8')
+        body = fields['body']
+        self.validating_response = True
+        if contract is not None and status.data in contract.responses:
+            body = convert(self, contract.responses[status.data], body, node)
+        payload = json_codec.stringify(self, body, node).data.encode('utf-8')
         if len(payload) > MAX_RESPONSE:
             raise BoundaryError('response too large')
         self.result = status.data, payload
 
 
-def create_app(module, routes, *, page=None, timeout=5.0, workers=4, shared=False):
+def create_app(module, routes, *, page=None, timeout=5.0, workers=4, shared=False, contracts=None):
     """Build a fixed GET/POST app. Each handler takes Request Map, returns Response."""
     from starlette.applications import Starlette
     from starlette.responses import Response, JSONResponse
@@ -99,16 +109,9 @@ def create_app(module, routes, *, page=None, timeout=5.0, workers=4, shared=Fals
     meter = ResourceMeter(policy, Phase.FRONTEND)
     with SourceLoader(meter) as loader:
         program = prepare(loader.read(module), meter, loader)
-    functions = {n.token.lexeme: n for n in program.root.children if n.kind == 'function'}
-    registry = {}
-    for method, path, name in routes:
-        if method not in {'GET', 'POST'} or not isinstance(path, str) or not path.startswith('/api/') or any(c in path for c in '{}?#'):
-            raise ValueError('routes require GET/POST and literal /api/ paths')
-        if (method, path) in registry or name not in functions or len(functions[name].children) != 2:
-            raise ValueError('duplicate route or missing one-argument function')
-        registry[method, path] = functions[name]
-    if not registry:
-        raise ValueError('empty routes')
+    registry = route_registry(program, routes)
+    contract_table = compile_contracts(program, registry, contracts, meter) if contracts is not None else {}
+    description = encode_document(openapi(registry, contract_table, meter), meter) if contracts is not None else None
     page_bytes = None
     if page is not None:
         with Path(page).open('rb') as stream:
@@ -123,14 +126,20 @@ def create_app(module, routes, *, page=None, timeout=5.0, workers=4, shared=Fals
     def failure(status, code):
         return JSONResponse({'error': {'code': code}}, status_code=status)
 
-    def execute(handler, request_text, token):
+    def execute(handler, request_text, token, contract):
         output = Output(io.StringIO(), io.StringIO(), ResourceMeter(policy, Phase.EXECUTION, token))
         runtime = RequestRuntime(program, output, io.StringIO())
         runtime.shared_snapshot = snapshot
         runtime.handler, runtime.request_text, runtime.input_valid = handler, request_text, False
+        runtime.contract, runtime.validating_response = contract, False
         try:
             runtime.run()
             return runtime.result
+        except ContractViolation as error:
+            response = runtime.validating_response
+            return (500 if response else 422), json.dumps({'error': {
+                'code': 'contract_response' if response else 'contract_input',
+                'path': error.path, 'reason': error.reason}}, ensure_ascii=True).encode('ascii')
         except (json_codec.InvalidJSON, BoundaryError):
             return (500, b'{"error":{"code":"invalid_response"}}') if runtime.input_valid else (400, b'{"error":{"code":"invalid_json"}}')
         except ResourceExceeded:
@@ -214,7 +223,7 @@ def create_app(module, routes, *, page=None, timeout=5.0, workers=4, shared=Fals
                                  'query': list(request.query_params.multi_items()),
                                  'headers': list(request.headers.items())}, ensure_ascii=True)
             request_text = (prefix, raw)
-            future = pool.submit(execute, registry[key], request_text, token)
+            future = pool.submit(execute, registry[key], request_text, token, contract_table.get(key))
             submitted = True
             def finished(_):
                 with lock:
@@ -251,6 +260,9 @@ def create_app(module, routes, *, page=None, timeout=5.0, workers=4, shared=Fals
     async def index(request):
         return Response(page_bytes, media_type='text/html')
 
+    async def description_endpoint(request):
+        return Response(description, media_type='application/json')
+
     async def http_error(request, error):
         return failure(error.status_code, 'not_found' if error.status_code == 404 else 'method_not_allowed')
 
@@ -258,6 +270,8 @@ def create_app(module, routes, *, page=None, timeout=5.0, workers=4, shared=Fals
     bindings = [Route(path, endpoint, methods=['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS', 'HEAD']) for path in paths]
     if page_bytes is not None:
         bindings.append(Route('/', index, methods=['GET']))
+    if description is not None:
+        bindings.append(Route('/openapi.json', description_endpoint, methods=['GET']))
     return Starlette(routes=bindings, lifespan=lifespan, exception_handlers={HTTPException: http_error})
 
 
@@ -266,13 +280,15 @@ def main(argv=None):
     parser.add_argument('module', type=Path)
     parser.add_argument('--route', nargs=3, action='append', required=True, metavar=('METHOD', 'PATH', 'FUNCTION'))
     parser.add_argument('--page', type=Path)
+    parser.add_argument('--contracts', type=Path, help='explicit shape contracts JSON configuration')
     parser.add_argument('--shared', action='store_true', help='initialize and freeze module state once')
     parser.add_argument('--host', default='127.0.0.1')
     parser.add_argument('--port', type=int, default=8000)
     args = parser.parse_args(argv)
     try:
         import uvicorn
-        app = create_app(args.module, args.route, page=args.page, shared=args.shared)
+        app = create_app(args.module, args.route, page=args.page, shared=args.shared,
+                         contracts=read_bindings(args.contracts) if args.contracts else None)
     except ImportError:
         parser.exit(2, 'Web requires the optional install: pip install ".[web]"\n')
     except (ValueError, OSError, DiagnosticError, ResourceExceeded) as error:

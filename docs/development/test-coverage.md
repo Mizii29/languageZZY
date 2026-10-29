@@ -147,3 +147,8 @@ P08-02：tests/test_web_shared.py覆盖嵌套冻结、只读闭包捕获、Lazy/
 P08-03：tests/test_embedding.py执行真实ZZY夹具，覆盖严格Python类型、Bool/Int、有限数/Unicode、输入输出别名、64/65层及配额边界、循环与全部不支持值拒绝、load/check不执行、依赖快照、错误定位、初始化失败、取消/IO/资源释放、并发与活动close；tests.web_http新增与Python调用同一greet的真实HTTP正常/错误对照。scripts/ci_installed_probe.py验证核心无可选依赖安装后的公开API。最终计数与未验证范围见tests/p08，不推断SQLite已实现。
 
 P08-04/05本轮新增SQLite事务与独立任务示例；实际db签名、提交/回滚与取消边界以docs/runtime/web.md为准。SQLite专项、真实HTTP重启、安装和完整回归证据见tests/p08；当前验收状态见todo。
+
+
+## P10-01 / P10-06 实际覆盖
+
+完整映射与命令见[tests/p10](../../tests/p10/README.md)：14项核心方法覆盖固定答案、真实ZZY执行、生成CLI及check零执行、默认/Null/严格数值/拒绝/路径/资源/确定性；新增5项真实HTTP覆盖默认/shared、交错并发、可变容器隔离、输入前置拒绝、业务与响应错误及恢复。另4项独立Draft202012Validator检查标准子集并明确Int/Float差异，显式纳入Web专项。原有14项HTTP和全部核心用例保留；不把本次必要验证勾选成P10-08。

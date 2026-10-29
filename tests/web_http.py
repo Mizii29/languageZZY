@@ -45,6 +45,111 @@ def request(port,path='/api/hello',method='GET',body=None,headers=None):
 
 
 class HTTPTests(unittest.TestCase):
+    def test_contract_example_default_shared_and_openapi(self):
+        from zzy.contracts import generate_openapi, read_bindings
+        routes=[('POST','/api/tasks','submit')]
+        bindings=read_bindings(ROOT/'examples/contracts/routes.json')
+        expected=generate_openapi(ROOT/'examples/contracts/app.zzy',routes,bindings)
+        for shared in (False,True):
+            with self.subTest(shared=shared),server('examples/contracts/app.zzy',routes,contracts=bindings,shared=shared) as port:
+                status,_,data=request(port,'/openapi.json')
+                self.assertEqual(status,200);self.assertEqual(json.loads(data),expected)
+                cases=[({'task':{'title':'  homework  '}},200,{'title':'homework','priority':1,'accepted':True}),
+                       ({'task':{'title':False}},422,{'error':{'code':'contract_input','path':'body.task.title','reason':'type'}}),
+                       ({'task':{'title':' '}},409,{'message':'标题长度必须为1至80'}),
+                       ({'task':{'title':'ok','priority':6}},409,{'message':'优先级必须为1至5'})]
+                for payload,status,expected_body in cases:
+                    actual,_,data=request(port,'/api/tasks','POST',json.dumps(payload).encode(),{'Content-Type':'application/json'})
+                    self.assertEqual((actual,json.loads(data)),(status,expected_body))
+
+    def test_contract_rejection_before_business_and_response_statuses(self):
+        import tempfile
+        with tempfile.TemporaryDirectory() as directory:
+            folder=Path(directory);path=folder/'app.zzy';marker=folder/'called.txt'
+            path.write_text('''(shape) Input {n:(Int);}
+(shape) Good {answer:(Int);}
+(shape) Response {status:(Int);body;}
+(addnew) handle(r) {
+io.write_text("MARKER","called");
+(zno) n:=data.get(data.get(r,"body"),"n");
+(zif?:) n==0 {(return) Response::{status:409,body:"business failure"};}
+(zif?:) n==1 {(return) Response::{status:200,body:data.map()};}
+(return) Response::{status:200,body:Good::{answer:n}};
+}'''.replace('MARKER',marker.as_posix()),encoding='utf-8')
+            routes=[('POST','/api/test','handle'),('POST','/api/plain','handle')]
+            bindings={'POST /api/test':{'request':'Input','responses':{'200':'Good','422':'Good','500':'Good'}}}
+            with server(path,routes,contracts=bindings) as port:
+                def post(path,payload):
+                    status,_,data=request(port,path,'POST',json.dumps(payload).encode(),{'Content-Type':'application/json'})
+                    self.assertNotIn(b'Traceback',data)
+                    return status,json.loads(data)
+                self.assertEqual(post('/api/test',{})[0],422);self.assertFalse(marker.exists())
+                self.assertEqual(post('/api/test',{'n':0}),(409,'business failure'))
+                self.assertEqual(post('/api/test',{'n':1}),(500,{'error':{'code':'contract_response','path':'body.answer','reason':'missing'}}))
+                self.assertEqual(post('/api/plain',{'n':1}),(200,{}))
+                self.assertEqual(post('/api/test',{'n':2}),(200,{'answer':2}))
+
+    def test_contract_interleaving_isolation_and_resource_recovery(self):
+        from unittest.mock import patch
+        from zzy.web import RequestRuntime
+        from zzy.contracts import read_bindings
+        barrier=threading.Barrier(2)
+        original=RequestRuntime.execute_program
+        def interleaved(runtime):
+            barrier.wait(timeout=5)
+            yield from original(runtime)
+        bindings=read_bindings(ROOT/'examples/contracts/routes.json')
+        for shared in (False,True):
+            with server('examples/contracts/app.zzy',[('POST','/api/tasks','submit')],contracts=bindings,shared=shared) as port:
+                with patch.object(RequestRuntime,'execute_program',interleaved),ThreadPoolExecutor(2) as pool:
+                    def call(i):
+                        return request(port,'/api/tasks','POST',json.dumps({'task':{'title':str(i)}}).encode(),{'Content-Type':'application/json'})
+                    results=list(pool.map(call,range(8)))
+                self.assertEqual([json.loads(r[2]) for r in results],[{'title':str(i),'priority':1,'accepted':True} for i in range(8)])
+                # A huge reflected unknown key must not produce an unbounded error response.
+                status,_,data=request(port,'/api/tasks','POST',json.dumps({'x'*5000:1}).encode(),{'Content-Type':'application/json'})
+                self.assertEqual((status,json.loads(data)),(503,{'error':{'code':'resource_limit'}}))
+                status,_,_=request(port,'/api/tasks','POST',b'{"task":{"title":"after"}}',{'Content-Type':'application/json'})
+                self.assertEqual(status,200)
+
+    def test_contract_generation_rejects_bad_shapes_before_shared_init(self):
+        import tempfile
+        with tempfile.TemporaryDirectory() as directory:
+            folder=Path(directory);marker=folder/'effect';path=folder/'app.zzy'
+            path.write_text('io.write_text("'+marker.as_posix()+'","bad");(shape) Input {x:(Int):=len([]);}(addnew) handle(r){(return)r;}',encoding='utf-8')
+            from zzy.diagnostics import DiagnosticError
+            with self.assertRaises(DiagnosticError):
+                create_app(path,[('POST','/api/test','handle')],contracts={'POST /api/test':{'request':'Input'}},shared=True)
+            self.assertFalse(marker.exists())
+
+    def test_contract_open_container_mutation_is_per_request(self):
+        import tempfile
+        from unittest.mock import patch
+        from zzy.web import RequestRuntime
+        with tempfile.TemporaryDirectory() as directory:
+            path=Path(directory)/'app.zzy'
+            path.write_text('''(shape) Input {n:(Int); a:(Array); m:(Map);}
+(shape) Response {status:(Int);body;}
+(addnew) handle(r) {
+(zno) body:=data.get(r,"body");
+array.push(data.get(body,"a"),data.get(body,"n"));
+data.set(data.get(body,"m"),"id",data.get(body,"n"));
+(return) Response::{status:200,body:body};}''',encoding='utf-8')
+            bindings={'POST /api/test':{'request':'Input','responses':{'200':'Input'}}}
+            barrier=threading.Barrier(2);original=RequestRuntime.execute_program
+            def interleaved(runtime):
+                barrier.wait(timeout=5)
+                yield from original(runtime)
+            for shared in (False,True):
+                with server(path,[('POST','/api/test','handle')],contracts=bindings,shared=shared) as port:
+                    with patch.object(RequestRuntime,'execute_program',interleaved),ThreadPoolExecutor(2) as pool:
+                        def call(i):
+                            status,_,body=request(port,'/api/test','POST',json.dumps({'n':i,'a':[1],'m':{}}).encode(),{'Content-Type':'application/json'})
+                            self.assertEqual(status,200)
+                            return json.loads(body)
+                        results=list(pool.map(call,range(8)))
+                    self.assertEqual(results,[{'n':i,'a':[1,i],'m':{'id':i}} for i in range(8)])
+
     def test_sqlite_http_restart_and_validation(self):
         import tempfile
         with tempfile.TemporaryDirectory() as directory:
@@ -213,9 +318,10 @@ class HTTPTests(unittest.TestCase):
 
 def main():
     parser=argparse.ArgumentParser();parser.add_argument('--report',type=Path);args=parser.parse_args()
-    suite=unittest.defaultTestLoader.loadTestsFromTestCase(HTTPTests)
+    from tests.schema_contracts import SchemaTests
+    suite=unittest.TestSuite([unittest.defaultTestLoader.loadTestsFromTestCase(cls) for cls in (HTTPTests,SchemaTests)])
     passed,report=execute(suite)
-    report['dependencies']={x:importlib.metadata.version(x) for x in ('starlette','uvicorn','anyio','h11')}
+    report['dependencies']={x:importlib.metadata.version(x) for x in ('starlette','uvicorn','anyio','h11','jsonschema','attrs','referencing','rpds-py','jsonschema-specifications')}
     if args.report:args.report.write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8')
     print(json.dumps(report));return 0 if passed else 1
 

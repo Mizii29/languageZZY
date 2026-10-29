@@ -707,3 +707,27 @@ Git 提交：真实标识 / 未提交
 
 - 用户确认人工测试成功，授权提交推送并合并main。本轮将人工资料迁移、原始报告、日志、测试数据库及配套导航作为同一交付提交；不改运行时代码或requirement，不将人工确认扩写为未执行的测试。
 - 提交前本地静态门禁通过，输出dist/p08-main-release-static-20261029；主分支启用PR要求且对管理员生效。本轮通过test到main的PR执行云端静态、Windows完整回归、隔离安装、HTTP和ci-gate，成功后正常合并。最终运行与合并SHA以GitHub记录及聊天报告核对，不绕过保护。
+
+
+## 2026-10-29：P10-01 / P10-06 shape 合约开发与验收
+
+- 用户显式选择01/06，其余P10候选延期。先核对zzy技能、README、todo/最新日志、innovation 4.3、Web/syntax/stdlib/resources/coverage/CI契约、实现和环境。初始main/db9be8fcf135d0ef55e36129327ba0a239fff8ca工作区干净，P08已有人工资料与PR交付；第一次创建分支因会话.git只读被拒绝，未改main。用户恢复权限后创建codex/p10-shape-contracts，保留原件与用户8000服务。
+- 决策：不改语法/普通shape。静态Compiler从prepare的注解绑定/模块图构建冻结Field/Shape描述，校验/Map布局转换/OpenAPI共享此描述；拒绝动态别名/默认/递归/不支持类型。请求仍Map、按请求补标量默认；响应精确状态码绑定，其他业务状态不套成功shape。生成命令不初始化模块，默认服务模式的错误请求甚至先于逐请求初始化拒绝；shared启动初始化维持P08原义。
+- 集中契约在docs/runtime/web.md；新增核心公开generate_openapi和python -m zzy.contracts；create_app增加contracts及CLI --contracts，启用后提供/openapi.json。错误422 contract_input、500 contract_response包含稳定path/reason；容量/取消沿用原控制信号。超长未知字段路径限制4096字节，避免错误响应放大；Unicode组件名转换为ASCII标识，operationId按有序路由唯一化。
+- 核对官方OpenAPI3.1.1和JSON Schema numeric文档，严格保留ZZY Int/Float差异，用x-zzy-type/x-zzy-rules说明。独立jsonschema4.25.1的Draft202012Validator只验证标准子集；测试明确1.0可满足标准integer但被ZZY Int拒绝，number可接受Int但ZZY Float拒绝。default由项目实际填充，不靠第三方；Array/Map不假造元素约束。
+- 初次专项14项中1项失败：夹具写成(zzz) io.input，现有语法要求(zzz)(...)，修正夹具而非放宽语法。最终核心合约14/14，真实HTTP原14项+新增5项+独立Schema3项=22/22，零跳过。交错屏障验证默认/shared不同输入、Map/Array局部修改无串用；字段失败不写业务标记文件，响应失败及资源失败后正常请求成功。资源/取消测试逐项核对计量归零。
+- 实际命令：.venv/Scripts/python.exe -X utf8 -m unittest tests.test_contracts -v；通过tests.__main__.execute将同一14项结果保存tests/p10/core-specialist.json（1.227秒）。.venv/Scripts/python.exe -X utf8 -m tests.web_http --report tests/p10/http.json通过22/22（7.109秒）。生成examples/contracts/openapi.json成功；源码中业务长度/非空/优先级规则仍ZZY实现。示例人工清单均待执行，不冒填人工结果。
+- .venv/Scripts/python.exe -X utf8 -m benchmarks.contracts --output tests/p10/measurement.json --repeats 30通过，4/32/128字段、每字段16字符；记录环境、资源、Git基线和实际源码哈希、全部原始样本与离散程度。prepare含读取/前端；generation含IR/OpenAPI编码；validation含Map规范化分配、不含JSON解析/业务/HTTP/清理。中位校验0.0636/0.3962/1.5638ms，无等价对照不声称提速。
+- .venv/Scripts/python.exe -X utf8 -m scripts.ci package --output dist/p10-package --installer C:/Users/13691/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe通过；44运行时源码一致，核心无第三方环境新增静态合约无副作用probe，原headless/校园/SQLite/嵌入探针保留。
+- 新建dist/p10-web-installed环境，安装上述wheel[web]及scripts/ci/contract-requirements.txt。安装探针第一次把位于dist下的venv误判成源码目录；检查实际zzy.__file__后改为必须位于sys.prefix且不是源码zzy目录，再逐文件比对全部44源码。修复后python -I -X utf8 scripts/ci_web_installed_probe.py --report tests/p10/installed-http.json在源码目录外运行22/22（7.5秒）。此探针接入CI Web job，不改核心运行依赖。核心runtime/专项用例在最终回归开始前已固定；其后只补文档及单独验收的CI安装包装脚本。
+- scripts.ci inventory将基线2027增至2041，仅新增14个ID；原1738外部CLI不减。scripts.ci static --output dist/p10-static-first通过；完整核心命令.venv/Scripts/python.exe -X utf8 -m tests --report tests/p10/core-regression.json进行中，输出dist/p10-regression.log，最终结果后补，不提前勾选任务。
+- 本轮没有执行真实Tk GUI、云端CI、其他OS或人工验收；不扩大为P10-08已完成，不推送/合并/修改保护。requirement和docs/manual-tests原件不改。
+
+- 额外真实CLI演示：生成命令与两个独立zzy.web --contracts进程（原版/只新增note字段的副本），10次POST均符合固定期望，导出文件与服务/openapi.json逐结构相同；自动证据tests/p10/cli-demo.json，不算人工验收。仅终止本探针拥有的进程，原8000服务未动。actionlint v1.7.12与scripts.ci static --output dist/p10-static-review均通过。
+
+- 第一轮完整核心回归2041/2041、944.750秒通过，零失败/错误/跳过，保留core-regression-initial.json。最终审查发现业务绑定422/500时OpenAPI未描述同状态码的适配错误包；新增独立Schema用例先真实失败，再为重叠状态码生成anyOf（业务shape或严格适配错误包），业务校验本身不变。23/23 HTTP/Schema专项通过（http-final.json，7.093秒）。为避免把旧生成器回归当最终代码证据，冻结代码后通过scripts.ci regression重跑，并重建安装包及执行汇总门禁；旧安装/测量/source证据保留initial或原文件，新测量另存measurement-final.json。
+
+- 最终冻结代码门禁：scripts.ci static --output dist/p10-final/static及static-review通过；scripts.ci regression --output dist/p10-final/regression真实调用完整python -m tests，2041/2041、919.828秒，failures/errors/skipped/expected_failures全0；scripts.ci package --output dist/p10-final/package --installer（同上）通过，44源码一致；新wheel在dist/p10-web-installed --force-reinstall --no-index --no-deps安装后，用python -I运行ci_web_installed_probe，23/23、7.282秒。scripts.ci gate --artifacts dist/p10-final --output dist/p10-final/gate退出0、passed=true，static/regression/package的context一致；Web安装结果独立保存，云端仍未运行。
+- 最终测量measurement-final.json保持30次/档和同一资源配置：4/32/128字段的prepare中位数3.2545/4.1582/6.6476ms，generation为0.1429/0.2981/0.8919ms，validation为0.0635/0.3887/1.6050ms。未声称优化收益；初版结果不覆盖。最终声明仅限P10-01/06，现勾选两项；P10-02—05、07、08延期，下一项P11-01。
+- 将真实报告归档tests/p10；static归档保留摘要，完整ID清单仍在dist和已审查的test-inventory。归档追加证据不改运行时/用例，source.json逐文件校验一致；requirement原始SHA256未变。人工清单待操作者执行，GUI/其他平台/云端PR门禁不冒充通过。准备审查显式暂存清单并创建本地提交；不推送、不合并、不改保护。
+- 归档后scripts.ci static --output dist/p10-after-archive-static及actionlint再次通过；演示README的4个PowerShell块通过Parser语法检查（非人工执行）。暂存前核对70项代码任务仅59项完成、其余P10均未勾选，requirement及人工目录无差异。

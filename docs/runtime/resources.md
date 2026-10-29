@@ -136,3 +136,8 @@ P08-02共享模式增加服务自有计量，快照接管初始化预留，所�
 P08-03嵌入的每次call独立ResourceMeter；输入转换和Python输出树构建均计运行对象/槽/载荷，深度/容器/字符串/整数沿用现有键，重复别名展开不能绕过预算。stdin有io_payload_bytes及临时载荷检查，stdout/stderr保留原输出配额。结果返回后由宿主拥有，全部ZZY预留在finally归零；模块close释放准备快照，活动调用时明确拒绝close。残余宿主MemoryError/RecursionError按现有CLI原则报告E211，不伪装数据转换失败。
 
 P08-04/05本轮新增SQLite事务与独立任务示例；实际db签名、提交/回滚与取消边界以docs/runtime/web.md为准。SQLite专项、真实HTTP重启、安装和完整回归证据见tests/p08；当前验收状态见todo。
+
+
+## P10-01 静态合约与规范化
+
+显式合约的深度/字段/路由/文档/诊断路径限额集中见[Web 契约](web.md)，不改变普通 shape。转换复用请求 ResourceMeter、Map 分配与协作取消；成功、拒绝、取消均释放上下文。生成不初始化用户模块，无缓存；CPU/宿主硬终止仍非本阶段承诺。测量和实测边界见[tests/p10](../../tests/p10/README.md)。

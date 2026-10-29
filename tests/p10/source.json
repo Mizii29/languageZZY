@@ -1,0 +1,21 @@
+{
+  "base_commit": "db9be8fcf135d0ef55e36129327ba0a239fff8ca",
+  "branch": "codex/p10-shape-contracts",
+  "source_sha256": {
+    "zzy/contracts.py": "b28bb17cf4a491d82e76ba89be7d91605a25817a13e98846d1f288ba37c17f7e",
+    "zzy/web.py": "4fd0d815b6346c4609a08c22a9945578b0e68311b0ff06da4376cb5833c297fc",
+    "tests/test_contracts.py": "7305f31af2a8e25dd017bf15d2a32cf8a3b1635e5775092e858b1bb82962bcdb",
+    "tests/schema_contracts.py": "cef3400b985793700e9b5ea0fa3487e808152b156f6440bfdb3354fcb6d0124f",
+    "tests/web_http.py": "66aa4f342c15762d24b26d34f7e0794dd34fbc4d9d2943138fd1bcee24b6415f",
+    "benchmarks/contracts.py": "f38b3452b1c5f585ff36f79e31a373ecdabd939573f93f50192ae5d1609fa1e4",
+    "scripts/ci_installed_probe.py": "e7783bfb9453cb2cfa596bf7875dc9aca5bd3ae47b607281df2b3f26fe87b0d6",
+    "scripts/ci_web_installed_probe.py": "0f3e359d533323d13083042c29da40ab3ef4f0829d554ccea7b7683510be08ae",
+    "scripts/ci/contract-requirements.txt": "8165a3c0513b9d4bf79067d19a0177580afa29c3f91d39d8efa4a8e4472250f7",
+    ".github/workflows/ci.yml": "2f458ea2f22f82b0aec765f56e376783847c2f57ca7157a5d5d031ca14510be4",
+    "examples/contracts/app.zzy": "6cee84d3cd6895e297a49042073fa54c549368737f78b8912c56bc0e21fd7374",
+    "examples/contracts/routes.json": "0708430f2b5b9e8c86cfffb57f98c36a0e16e8efd2868c7eaf98afdf599583f9",
+    "examples/contracts/openapi.json": "339e1e9b21baa181f048d9f280d91ebe526892cd5a691b3b2f1ea5575a3ca61b"
+  },
+  "requirement_sha256": "b099c19fc339ce1dc1aab7e9d6c8126a9c5c9ace3d31b969a0623df90f521d2b",
+  "scope": "working-tree implementation tested before local commit; GUI/cloud/manual not claimed"
+}

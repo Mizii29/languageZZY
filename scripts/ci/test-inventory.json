@@ -1803,6 +1803,20 @@
     "tests.test_cli.CliTests.test_run_check_cwd_options_and_literal_separator",
     "tests.test_cli.CliTests.test_run_check_frontend_diagnostics_match_in_both_formats",
     "tests.test_cli.CliTests.test_source_info_utf8_and_working_directory",
+    "tests.test_contracts.ContractTests.test_configuration_rejection",
+    "tests.test_contracts.ContractTests.test_conversion_limits_cancellation_and_recovery",
+    "tests.test_contracts.ContractTests.test_depth_bound_and_failed_cli_does_not_overwrite",
+    "tests.test_contracts.ContractTests.test_fixed_schema_and_deterministic_generation",
+    "tests.test_contracts.ContractTests.test_generation_does_not_execute_and_cli_is_core_only",
+    "tests.test_contracts.ContractTests.test_imported_shape_static_identity_and_alias_rejection",
+    "tests.test_contracts.ContractTests.test_input_rejected_before_initialization",
+    "tests.test_contracts.ContractTests.test_nested_paths_open_containers",
+    "tests.test_contracts.ContractTests.test_numeric_tags_and_safe_integer",
+    "tests.test_contracts.ContractTests.test_one_field_change_updates_validation_and_schema",
+    "tests.test_contracts.ContractTests.test_required_defaults_and_null",
+    "tests.test_contracts.ContractTests.test_response_defaults_and_distinct_operation_ids",
+    "tests.test_contracts.ContractTests.test_unicode_names_and_bounded_diagnostics",
+    "tests.test_contracts.ContractTests.test_unsupported_definitions_do_not_restrict_plain_shapes",
     "tests.test_database.DatabaseTests.test_cancel_and_resource_rollback",
     "tests.test_database.DatabaseTests.test_check_never_opens_database",
     "tests.test_database.DatabaseTests.test_commit_binding_rollback_and_reopen",
@@ -3792,6 +3806,6 @@
       "run_cli.e4-undo-fill"
     ]
   },
-  "collected": 2027,
+  "collected": 2041,
   "blackbox": 1738
 }

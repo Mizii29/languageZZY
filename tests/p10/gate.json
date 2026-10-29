@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "kind": "gate",
+  "passed": true,
+  "started_at": "2026-10-29T11:51:22.012515+00:00",
+  "context": {
+    "checkout_sha": "db9be8fcf135d0ef55e36129327ba0a239fff8ca",
+    "head_sha": "",
+    "base_sha": "",
+    "run_id": "local",
+    "attempt": "1",
+    "source_fingerprint": "44832d2224362e9815f03b1f552c5b4ef4a4766772a08b745a22c602c155525e"
+  },
+  "jobs": {
+    "static": true,
+    "regression": true,
+    "package": true
+  },
+  "finished_at": "2026-10-29T11:51:22.870452+00:00"
+}

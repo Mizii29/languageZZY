@@ -1,0 +1,6 @@
+{
+  "POST /api/tasks": {
+    "request": "Input",
+    "responses": {"200": "Accepted", "409": "Rejected"}
+  }
+}

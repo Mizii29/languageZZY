@@ -1,0 +1,134 @@
+{
+  "components": {
+    "schemas": {
+      "S1_Task": {
+        "additionalProperties": false,
+        "properties": {
+          "priority": {
+            "default": 1,
+            "maximum": 9007199254740991,
+            "minimum": -9007199254740991,
+            "type": "integer",
+            "x-zzy-type": "Int"
+          },
+          "title": {
+            "type": "string",
+            "x-zzy-type": "String"
+          }
+        },
+        "required": [
+          "title"
+        ],
+        "type": "object",
+        "x-zzy-type": "shape-layout-as-Map"
+      },
+      "S2_Input": {
+        "additionalProperties": false,
+        "properties": {
+          "task": {
+            "$ref": "#/components/schemas/S1_Task"
+          }
+        },
+        "required": [
+          "task"
+        ],
+        "type": "object",
+        "x-zzy-type": "shape-layout-as-Map"
+      },
+      "S3_Accepted": {
+        "additionalProperties": false,
+        "properties": {
+          "accepted": {
+            "type": "boolean",
+            "x-zzy-type": "Bool"
+          },
+          "priority": {
+            "maximum": 9007199254740991,
+            "minimum": -9007199254740991,
+            "type": "integer",
+            "x-zzy-type": "Int"
+          },
+          "title": {
+            "type": "string",
+            "x-zzy-type": "String"
+          }
+        },
+        "required": [
+          "title",
+          "priority",
+          "accepted"
+        ],
+        "type": "object",
+        "x-zzy-type": "shape-layout-as-Map"
+      },
+      "S4_Rejected": {
+        "additionalProperties": false,
+        "properties": {
+          "message": {
+            "type": "string",
+            "x-zzy-type": "String"
+          }
+        },
+        "required": [
+          "message"
+        ],
+        "type": "object",
+        "x-zzy-type": "shape-layout-as-Map"
+      }
+    }
+  },
+  "info": {
+    "title": "ZZY shape contracts",
+    "version": "1"
+  },
+  "openapi": "3.1.1",
+  "paths": {
+    "/api/tasks": {
+      "post": {
+        "operationId": "post_submit_0",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/S2_Input"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/S3_Accepted"
+                }
+              }
+            },
+            "description": "Business body contract; adapter errors bypass business validation"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/S4_Rejected"
+                }
+              }
+            },
+            "description": "Business body contract; adapter errors bypass business validation"
+          },
+          "default": {
+            "description": "Uncontracted business response or adapter error; see x-zzy-rules"
+          }
+        }
+      }
+    }
+  },
+  "x-zzy-rules": {
+    "business": "Nonempty and length rules belong to ZZY business logic; unlisted statuses are not shape validated.",
+    "defaults": "ZZY fills missing fields on input and contracted output; null is not missing; OpenAPI default is annotation only.",
+    "errors": "422 contract_input before handler; 500 contract_response after handler; error.path and error.reason; adapter errors bypass response contracts.",
+    "json-boundary": "Finite Float, safe Int (+/-9007199254740991), Unicode scalar strings, depth/capacity limits also apply inside open Array/Map.",
+    "numeric-tags": "Int rejects Float including 1.0; Float rejects Int. Bool is distinct. Generic JSON Schema cannot enforce these tags."
+  }
+}

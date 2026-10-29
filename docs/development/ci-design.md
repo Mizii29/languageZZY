@@ -181,3 +181,8 @@ if ($LASTEXITCODE -ne 0) { throw '汇总门禁失败' }
 下一次推送包含本次文件的 `test`/`main`/`feature`/`codex/**` 分支会触发工作流；PR 目标为 main/test 时也触发。进入 GitHub → Actions → ZZY CI 查看各 job，下载本轮 artifact，核对 SHA/run ID/attempt。手动 Run workflow 通常需工作流已存在于默认分支，首次接入优先用已列出的 push/PR 事件。
 
 CI 接入完成的标准是“真实触发、真实执行、错误能阻止通过、失败证据可取、安装确实来自 wheel、门禁对应实际检查”，不只是存在一份 YAML。最终发布仍须补齐本机 GUI、人工测试与同机性能证据。
+
+
+## P10-01 / P10-06 门禁增量（2026-10-29）
+
+核心discovery新增tests/test_contracts.py的14项，原2027项及1738外部CLI保留。核心package探针增加静态合约生成且用户文件副作用不发生，不装Web/Schema依赖。Web job额外安装[schema验证依赖](../../scripts/ci/contract-requirements.txt)，执行[安装探针](../../scripts/ci_web_installed_probe.py)：核对wheel全部运行时源码，复制必要测试/夹具到源码目录外，在Python -I下运行全部23项HTTP/Schema专项。导入来源必须是当前Python安装目录；不能把checkout源码当安装成功。云端结果须推送后另验，本轮只提交本地。静态、完整回归、安装证据见tests/p10和开发记录，旧章节历史数量不作为当前测试基线。

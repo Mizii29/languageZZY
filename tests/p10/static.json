@@ -1,0 +1,92 @@
+{
+  "schema_version": 1,
+  "kind": "static",
+  "passed": true,
+  "started_at": "2026-10-29T11:51:19.556082+00:00",
+  "context": {
+    "checkout_sha": "db9be8fcf135d0ef55e36129327ba0a239fff8ca",
+    "head_sha": "",
+    "base_sha": "",
+    "run_id": "local",
+    "attempt": "1",
+    "source_fingerprint": "44832d2224362e9815f03b1f552c5b4ef4a4766772a08b745a22c602c155525e"
+  },
+  "environment": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+    "executable": "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\.venv\\Scripts\\python.exe",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "unicode": "15.0.0",
+    "git": "git version 2.50.0.windows.1",
+    "runner_image": "",
+    "resource_policy": {
+      "policy_version": 1,
+      "profile": "default-v1",
+      "limits": {
+        "source_file_bytes": 2097152,
+        "source_total_bytes": 16777216,
+        "module_count": 128,
+        "import_depth": 32,
+        "tokens_per_file": 250000,
+        "ast_nodes_total": 500000,
+        "syntax_depth": 64,
+        "numeric_digits": 4096,
+        "integer_bits": 65536,
+        "quantity_exponent_abs": 64,
+        "call_depth": 64,
+        "value_depth": 64,
+        "container_items": 1000000,
+        "text_codepoints": 4194304,
+        "io_payload_bytes": 16777216,
+        "runtime_objects": 200000,
+        "runtime_slots": 2000000,
+        "runtime_payload_bytes": 134217728,
+        "stdout_bytes": 1048576,
+        "stderr_bytes": 1048576,
+        "program_cache_entries": 32,
+        "program_cache_bytes": 67108864
+      },
+      "host_decimal_digits": 4300,
+      "effective_decimal_digits": 4096
+    },
+    "resource_fingerprint": "2e654aef52d3267bfecf0768bef9faee1eed942a329001ec455aee951c858bd2"
+  },
+  "log_config": {
+    "max_bytes": 1048576,
+    "backup_count": 4
+  },
+  "markdown_files": 57,
+  "local_links": 695,
+  "commands": [
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "cwd": "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\.venv\\Scripts\\python.exe",
+        "-X",
+        "utf8",
+        "-m",
+        "tests.p09.count_lines",
+        "--check"
+      ],
+      "cwd": "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业",
+      "exit_code": 0,
+      "stdout": "{\"rule\": \"physical lines; effective contains non-comment tokens; substantive excludes punctuation-only lines\", \"total_lines\": 504, \"effective_lines\": 493, \"substantive_lines\": 406}\r\n",
+      "stderr": ""
+    }
+  ],
+  "finished_at": "2026-10-29T11:51:21.813949+00:00",
+  "inventory": {
+    "collected": 2041,
+    "blackbox": 1738
+  },
+  "scope": "static report with test ID lists omitted; full report in dist/p10-final/static-review/report.json"
+}

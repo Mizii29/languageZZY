@@ -183,3 +183,8 @@ P08-02可用--shared启动显式冻结共享模式，默认仍按请求实例化
 核心安装提供`from zzy.embedding import load_module`，用`with load_module(path) as module`拥有源码快照，再用`module.call(name, *arguments)`调用顶层导出函数；结果为CallResult，业务数据在`.value`，本次输出在`.stdout/.stderr`。加载不执行初始化，每调用独立运行并自动清理；参数不是源码，不解码[OoO]。精确数据类型、拒绝规则、取消/close及Python整数与HTTP安全整数的区别以[集中契约](../docs/runtime/web.md)为准；[同一业务函数示例](../examples/web/README.md)可直接运行。不把内部Value或任意Python对象交给ZZY。
 
 P08-04/05本轮新增SQLite事务与独立任务示例；实际db签名、提交/回滚与取消边界以docs/runtime/web.md为准。SQLite专项、真实HTTP重启、安装和完整回归证据见tests/p08；当前验收状态见todo。
+
+
+## P10 显式 shape 合约
+
+本次仅选 P10-01/P10-06。[独立演示](../examples/contracts/README.md)包含请求/响应 shape、静态生成、HTTP 成功/字段路径错误及修改字段后的同步演示；规则以[Web 集中契约](../docs/runtime/web.md)为准。新增公开入口 `zzy.contracts.generate_openapi`、`python -m zzy.contracts`、Web `--contracts` 和启用后的 `/openapi.json`。生成器不执行用户初始化；请求校验后保持 Map，按显式状态码校验响应。类型校验不替代非空/长度业务规则，Int/Float 附加标签不能靠通用 Schema 工具完整执行。核心不加载 Web/GUI，其他 P10 项仍延期。

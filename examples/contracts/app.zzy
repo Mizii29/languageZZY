@@ -1,0 +1,18 @@
+(shape) Task { title: (String); priority: (Int) := 1; }
+(shape) Input { task: Task; }
+(shape) Accepted { title: (String); priority: (Int); accepted: (Bool); }
+(shape) Rejected { message: (String); }
+(shape) Response { status: (Int); body; }
+
+(addnew) submit(request: (Map)) {
+    (zno) task := data.get(data.get(request, "body"), "task");
+    (zno) title := text.trim(data.get(task, "title"));
+    (zif?:) len(title) == 0 (or) len(title) > 80 {
+        (return) Response::{status: 409, body: Rejected::{message: "标题长度必须为1至80"}};
+    }
+    (zno) priority := data.get(task, "priority");
+    (zif?:) priority < 1 (or) priority > 5 {
+        (return) Response::{status: 409, body: Rejected::{message: "优先级必须为1至5"}};
+    }
+    (return) Response::{status: 200, body: Accepted::{title: title, priority: priority, accepted: (true)}};
+}

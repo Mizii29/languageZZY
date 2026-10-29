@@ -1,5 +1,23 @@
 # P08 Web 与互联集中契约
 
+## P10-01 shape 合约（2026-10-29）
+
+本节集中定义显式合约；普通 shape、未绑定路由和原 Request/Response 外层不变。实现进度及验收见 todo 和开发记录。
+
+`create_app(..., contracts=None)` 的 contracts 是 JSON 等价字典：键为 `METHOD /api/path`（仅方法后一个ASCII空格，合约路径不能含空格），值仅允许 `request`（shape 名称）和 `responses`（状态码字符串到 shape 名称的字典），至少一个非空绑定。request 只支持 POST body；GET 仍无请求体。响应只校验列出的精确状态码，不把成功 shape 用于其他业务状态。配置必须引用已注册路由；重复 JSON 键、未知配置字段、非法状态码均拒绝。CLI 新增 `--contracts FILE`，配置文件 UTF-8 且不超过 64 KiB。
+
+只选择入口顶层 shape 或静态导入别名限定的 shape，注解沿解析器绑定身份解析；不执行变量别名或工厂。支持 Int、Float、String、Bool、Null、Array、Map 和无环嵌套 shape。拒绝未注解字段、递归、Function/Result/Lazy/Range/Machine/Quantity/原生类型、动态默认值。默认仅允许标量字面、分组及单个数值正负号，类型须完全一致；不做表达式折叠，不执行函数或模块初始化。未被选择的普通 shape 不受这些限制。
+
+校验后 shape 层为新 Map（输出也允许结构实例，按字段布局检查），不用运行时 shape 构造器，不改变名义类型规则。无默认字段必填；有默认字段缺失时本项目填充（包括响应），显式 Null 只满足 Null。未知 shape 字段拒绝；Map 开放任意 String 键，Array 不约束元素类型，二者内部仍受既有严格 JSON、有限数、安全整数、深度及容量规则约束。不强制转换 Bool/Int/Float/String，不承诺非空或业务长度。默认标量按本次上下文分配；共享模式不保存请求值。
+
+字段失败返回 `{"error":{"code":"contract_input","path":"body.task.title","reason":"type"}}`、HTTP 422，发生在模块逐请求初始化及业务调用之前；reason 为 type/missing/unknown。响应字段失败为 HTTP 500/contract_response，路径同样从 body 开始，不返回实际值或堆栈。错误路径中正常标识符用点，其他未知键用 JSON 方括号字符串。业务失败仍由业务 Response 决定；JSON 解码错误、协议错误、资源错误、超时沿用 P08。响应校验发生在业务执行后，不能撤销已提交数据库或其他副作用。
+
+`zzy.contracts.generate_openapi(module, routes, bindings, *, policy=None)` 返回独立 Python 字典；`python -m zzy.contracts MODULE --route METHOD PATH FUNCTION --contracts FILE --output FILE` 导出确定的 OpenAPI 3.1.1 JSON。生成只 prepare，支持核心无 Web/GUI 安装；源码读取是必要的前端 I/O，不执行用户 I/O。启用 contracts 的服务额外提供 GET `/openapi.json`；不提供 Swagger UI 或下载外部脚本。修改源码/配置须重新生成并重启，无热更新。
+
+生成、字段转换和校验使用同一不可变中间描述。文档用组件引用避免重复展开；最多 64 层合约、4096 个字段、256 个路由，生成 JSON 最多 1 MiB；仅静态 /openapi.json 使用此文档上限，业务响应保持原64KiB限制。诊断路径经JSON转义后最多4096字节，超长未知键走资源错误。超限为 E211；Python API保留ResourceExceeded/DiagnosticError及其诊断，生成CLI错误消息写stderr、退出2，无JSON诊断选项。每请求转换沿用 ResourceMeter、Map 分配及协作取消，资源失败不伪装字段错误。深度/字段上限为本功能边界，不改变普通 shape。
+
+标准 JSON Schema integer 接受数值为整数的 1.0，number 接受整数；ZZY 保持严格标签及原 JSON 解码。schema 用 `x-zzy-type` 标记严格标签、顶层 `x-zzy-rules` 解释安全整数/有限数/开放容器/默认填充及资源限制；第三方通用验证器不会自动实现这些附加规则。default 仅是说明，本项目负责填充。标准能够表达的 required/additionalProperties/type/数值范围按固定答案及独立 Draft 2020-12 验证器复核。参考 [OpenAPI 3.1.1](https://spec.openapis.org/oas/v3.1.1.html) 和 [JSON Schema 数值语义](https://json-schema.org/understanding-json-schema/reference/numeric)。
+
 2026-10-29。P08-01—05已完成实现与自动验收，SQLite及整体验收提交为0a70825；此前提交权限阻塞已解除。本轮人工主流程已完成[证据核验](../manual-tests/p08-20261028/manual-test-review.md)，共享模式重复操作按操作者备注确认。核心语法/stdlib ABI 不变。本文件是 Web 边界唯一规则来源，不将旧设计中的 web.get/web.post/web.json/web.serve 方向示例注册为可调用语言接口。
 
 ## 决策与范围
@@ -10,7 +28,7 @@
 
 ## 实际入口与路由
 
-`zzy.web.create_app(module, routes, *, page=None, timeout=5.0, workers=4, shared=False)` 返回ASGI应用。module为本地ZZY文件路径；routes为 `(method, path, function_name)` 序列，只支持GET/POST、以/api/开头的固定路径，不支持模板、查询串或片段。重复项、空表、缺失入口、非单参数顶层具名函数在启动时拒绝。函数实际类型/返回注解按原解释器校验。
+`zzy.web.create_app(module, routes, *, page=None, timeout=5.0, workers=4, shared=False, contracts=None)` 返回ASGI应用。module为本地ZZY文件路径；routes为 `(method, path, function_name)` 序列，只支持GET/POST、以/api/开头的固定路径，不支持模板、查询串或片段。重复项、空表、缺失入口、非单参数顶层具名函数在启动时拒绝。函数实际类型/返回注解按原解释器校验。
 
 `python -m zzy.web MODULE --route GET /api/hello hello --route POST /api/greet greet --page PAGE [--host HOST] [--port PORT] [--shared]` 使用Uvicorn。page是可选单个UTF-8 HTML文件，启动有界读取，仅在GET /提供，不开放目录遍历。GET /自动支持HEAD；API的HEAD/OPTIONS等均405，无自动CORS。缺路由404，不重定向尾斜杠。路由校验不运行模块初始化；默认初始化在每个请求中执行；--shared在服务启动时执行一次。
 
@@ -83,3 +101,5 @@ Python整数保持int，受integer_bits约束，不经十进制/JSON字符串中
 每次transaction新建同线程连接，BEGIN IMMEDIATE，禁止嵌套；所有退出路径finally回滚未提交事务并close。callback成功的提交发生在transaction返回之前，之后的语言/HTTP编码失败不撤销已提交事务，业务应在回调内完成校验。事务不跨请求共享，不支持手工BEGIN/COMMIT/SAVEPOINT、ATTACH/DETACH、PRAGMA或加载扩展；这些语句由SQLite authorizer拒绝。执行只支持单条SQL，参数数量由SQLite检查。SQL/I/O失败E401（客户端仍为既有zzy_error），类型E201、Int范围E208；错误不包含数据库内容或宿主堆栈。取消保持Cancelled，资源保持E211，均回滚。
 
 每SQL执行期限1秒，进度检查每1000条SQLite指令；锁等待最多250ms。取消在SQLite检查点及取行之间检查；文件系统阻塞仍无硬终止保证。SQL及单行单元长度受io_payload_bytes/SQLite长度限额控制，结果按行转换并使用已有对象/槽/载荷预算，不fetchall。SQLite内部页缓存/RSS不属语言逻辑计量。只支持文本、整数、浮点、Null结果，Blob拒绝；Unicode和有限数沿用转换边界。SQLite使用Python自带sqlite3，核心check只解析，不打开数据库，不加载GUI/Web。
+
+P10补充：适配层错误不再通过业务响应shape验证；若业务显式绑定的状态码与适配错误重叠（如422/500/503），OpenAPI在该状态码生成anyOf（业务shape、适配错误包），同时描述两种合法传输结果。输入/响应合约错误包还要求path/reason，普通适配错误只有code。未列出的状态码保留默认响应描述。

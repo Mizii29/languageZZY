@@ -1,0 +1,222 @@
+{
+  "passed": true,
+  "scope": "automated CLI export/server HTTP demo; not manual acceptance; owned child terminated for cleanup",
+  "records": [
+    {
+      "changed_field": false,
+      "generate_command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\.venv\\Scripts\\python.exe",
+        "-X",
+        "utf8",
+        "-m",
+        "zzy.contracts",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\tmpd7851rc7\\original.zzy",
+        "--route",
+        "POST",
+        "/api/tasks",
+        "submit",
+        "--contracts",
+        "examples/contracts/routes.json",
+        "--output",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\tmpd7851rc7\\original.json"
+      ],
+      "server_command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\.venv\\Scripts\\python.exe",
+        "-X",
+        "utf8",
+        "-m",
+        "zzy.web",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\tmpd7851rc7\\original.zzy",
+        "--route",
+        "POST",
+        "/api/tasks",
+        "submit",
+        "--contracts",
+        "examples/contracts/routes.json",
+        "--port",
+        "55918"
+      ],
+      "export_matches_http": true,
+      "cases": [
+        {
+          "request": {
+            "task": {
+              "title": "Homework"
+            }
+          },
+          "status": 200,
+          "body": {
+            "title": "Homework",
+            "priority": 1,
+            "accepted": true
+          }
+        },
+        {
+          "request": {
+            "task": {
+              "title": false
+            }
+          },
+          "status": 422,
+          "body": {
+            "error": {
+              "code": "contract_input",
+              "path": "body.task.title",
+              "reason": "type"
+            }
+          }
+        },
+        {
+          "request": {
+            "task": {
+              "title": " "
+            }
+          },
+          "status": 409,
+          "body": {
+            "message": "标题长度必须为1至80"
+          }
+        },
+        {
+          "request": {
+            "task": {
+              "title": "Homework",
+              "note": "read"
+            }
+          },
+          "status": 422,
+          "body": {
+            "error": {
+              "code": "contract_input",
+              "path": "body.task.note",
+              "reason": "unknown"
+            }
+          }
+        },
+        {
+          "request": {
+            "task": {
+              "title": "Homework",
+              "note": true
+            }
+          },
+          "status": 422,
+          "body": {
+            "error": {
+              "code": "contract_input",
+              "path": "body.task.note",
+              "reason": "unknown"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "changed_field": true,
+      "generate_command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\.venv\\Scripts\\python.exe",
+        "-X",
+        "utf8",
+        "-m",
+        "zzy.contracts",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\tmpd7851rc7\\changed.zzy",
+        "--route",
+        "POST",
+        "/api/tasks",
+        "submit",
+        "--contracts",
+        "examples/contracts/routes.json",
+        "--output",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\tmpd7851rc7\\changed.json"
+      ],
+      "server_command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\.venv\\Scripts\\python.exe",
+        "-X",
+        "utf8",
+        "-m",
+        "zzy.web",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\tmpd7851rc7\\changed.zzy",
+        "--route",
+        "POST",
+        "/api/tasks",
+        "submit",
+        "--contracts",
+        "examples/contracts/routes.json",
+        "--port",
+        "55930"
+      ],
+      "export_matches_http": true,
+      "cases": [
+        {
+          "request": {
+            "task": {
+              "title": "Homework"
+            }
+          },
+          "status": 200,
+          "body": {
+            "title": "Homework",
+            "priority": 1,
+            "accepted": true
+          }
+        },
+        {
+          "request": {
+            "task": {
+              "title": false
+            }
+          },
+          "status": 422,
+          "body": {
+            "error": {
+              "code": "contract_input",
+              "path": "body.task.title",
+              "reason": "type"
+            }
+          }
+        },
+        {
+          "request": {
+            "task": {
+              "title": " "
+            }
+          },
+          "status": 409,
+          "body": {
+            "message": "标题长度必须为1至80"
+          }
+        },
+        {
+          "request": {
+            "task": {
+              "title": "Homework",
+              "note": "read"
+            }
+          },
+          "status": 200,
+          "body": {
+            "title": "Homework",
+            "priority": 1,
+            "accepted": true
+          }
+        },
+        {
+          "request": {
+            "task": {
+              "title": "Homework",
+              "note": true
+            }
+          },
+          "status": 422,
+          "body": {
+            "error": {
+              "code": "contract_input",
+              "path": "body.task.note",
+              "reason": "type"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -108,10 +108,12 @@ jobs:
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           python -m pip install ".[web]"
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python -m pip install -r scripts/ci/contract-requirements.txt
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - name: Real TCP HTTP acceptance
         run: |
           New-Item -ItemType Directory -Force dist/ci/web | Out-Null
-          python -X utf8 -m tests.web_http --report dist/ci/web/http.json
+          python -I -X utf8 scripts/ci_web_installed_probe.py --report dist/ci/web/http.json
       - name: Preserve HTTP evidence
         if: always()
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
