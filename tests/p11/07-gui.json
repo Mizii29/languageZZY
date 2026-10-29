@@ -1,0 +1,13 @@
+{
+  "collected": 11,
+  "tests_run": 11,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "expected_failures": 0,
+  "passed": true,
+  "seconds": 5.563,
+  "platform": "Windows-11-10.0.26200-SP0",
+  "tk": 8.6,
+  "kind": "real GUI; explicit desktop run"
+}

@@ -1,0 +1,5 @@
+(zno) canvas := sketch.canvas(800, 600, "P11 人工验收");
+(zno) pen := sketch.pen(canvas, "主画笔");
+io.print(sketch.show(canvas));
+io.print(sketch.save_project(canvas, "manual.zzysketch"));
+io.print(sketch.save_svg(canvas, "manual.svg"));

@@ -88,6 +88,47 @@ class LazyLocationTests(unittest.TestCase):
                 self.assertEqual(caught.exception.diagnostic.file,display_path(node.token.source.path))
             finally:os.chdir(original)
 
+    def test_nested_calls_keep_quota_when_note_location_or_allocation_fails(self):
+        from tests.test_interpreter import prepared
+        source='(addnew) inner(){(return)1+1;}(addnew) outer(){(return)inner();}outer();'
+        for failure in ('span','path','allocation'):
+            with self.subTest(failure=failure):
+                program,out=prepared(source)
+                out.meter.policy=ResourcePolicy({'integer_bits':1})
+                r=Interpreter(program,out)
+                def fail_notes(diagnostic,**changes):
+                    if 'notes' in changes:raise MemoryError('note allocation')
+                    return replace(diagnostic,**changes)
+                context=(patch.object(Source,'span',side_effect=MemoryError('source span')) if failure=='span'
+                         else patch.object(r,'location',side_effect=OSError('cwd')) if failure=='path'
+                         else patch('zzy.interpreter.replace',side_effect=fail_notes))
+                with context:
+                    with self.assertRaises(ResourceExceeded) as caught:r.run()
+                error=caught.exception
+                self.assertEqual((error.key,error.limit,error.requested,error.phase,error.exit_code),
+                                 ('integer_bits',1,2,Phase.EXECUTION,1))
+                self.assertEqual(error.diagnostic.code,'E211');self.assertEqual(error.diagnostic.notes,())
+                self.assertEqual(error.diagnostic.span is None,failure!='allocation')
+                self.assertIsNone(r.frame);self.assertEqual(r.call_depth,0)
+                self.assertFalse(r.bindings);self.assertFalse(r.reservations)
+                self.assertTrue(all(r.meter.used(k)==0 for k in ('runtime_objects','runtime_slots','runtime_payload_bytes')))
+        # Recovery uses a fresh context with no injected provider fault.
+        program,out=prepared(source);Interpreter(program,out).run()
+
+    def test_query_note_allocation_preserves_original_quota_and_cleanup(self):
+        from tests.test_interpreter import prepared
+        program,out=prepared('io.print([1] ?>{(yield):@+1;});')
+        out.meter.policy=ResourcePolicy({'integer_bits':1})
+        r=Interpreter(program,out);sentinel=object();r.current_item=sentinel
+        with patch('zzy.features.replace',side_effect=MemoryError('query note allocation')):
+            with self.assertRaises(ResourceExceeded) as caught:r.run()
+        error=caught.exception
+        self.assertEqual((error.key,error.limit,error.requested,error.phase),('integer_bits',1,2,Phase.EXECUTION))
+        self.assertEqual(error.diagnostic.code,'E211');self.assertIsNotNone(error.diagnostic.span)
+        self.assertEqual(error.diagnostic.notes,())
+        self.assertIs(r.current_item,sentinel);self.assertIsNone(r.frame);self.assertFalse(r.bindings)
+        self.assertTrue(all(r.meter.used(k)==0 for k in ('runtime_objects','runtime_slots','runtime_payload_bytes')))
+
     def test_real_cli_cross_module_notes_and_check_no_execution(self):
         with tempfile.TemporaryDirectory(prefix='ZZY P11 中文 ') as directory:
             root=Path(directory);dep=root/'dep.zzy';entry=root/'main.zzy';limits=root/'limits.json'

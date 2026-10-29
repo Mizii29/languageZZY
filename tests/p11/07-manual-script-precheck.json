@@ -1,0 +1,29 @@
+{
+  "checks": [
+    {
+      "file": "docs\\manual-tests\\p11-20261030\\cancel.zzy",
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "file": "docs\\manual-tests\\p11-20261030\\canvas.zzy",
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "file": "docs\\manual-tests\\p11-20261030\\reopen.zzy",
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "file": "docs\\manual-tests\\p11-20261030\\recover.zzy",
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "initial_cancel_fixture_error": "(zvar) rejected E103; corrected to documented (zyes); no manual run claimed"
+}

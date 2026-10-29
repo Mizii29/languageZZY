@@ -10,7 +10,7 @@
 - 想了解完整方案：读 [设计详细版](design详细版.md)，它串起语法、特色、运行机制和交付要求。
 - 准备写解释器：先读 [阶段计划](development/roadmap.md) 与 [待办状态](development/todo.md)，再对照 [语法契约](language/syntax.md)、[标准库契约](language/stdlib.md) 和 [实现流程](runtime/interpreter.md)。
 - 准备落实补充设计：看 [资源限额](runtime/resources.md)、[诊断样例](language/diagnostics.md)、[性能基准清单](runtime/performance.md) 和 [应用保存/恢复](development/campus-app.md)。
-- 准备接手续做：先看 [开发记录](development/development-log.md) 的最新条目，再核对实际文件；P07实测见性能报告，P09应用实现与验收见最新记录和[应用说明](../apps/zzy-campus/README.md)，E1—E4、P08及P10-01/06已有验收。下一项是 **P11-01冻结基线**，随后按[优化计划](runtime/optimization-plan.md)推进五项优化；原交付阶段顺延为P12，实际状态以todo为准。
+- 准备接手续做：先看 [开发记录](development/development-log.md) 的最新条目，再核对实际文件；P07实测见性能报告，P09应用实现与验收见最新记录和[应用说明](../apps/zzy-campus/README.md)，E1—E4、P08及P10-01/06已有验收。P11-01—07已按[优化计划](runtime/optimization-plan.md)评估及自动验收，04/05撤回，人工按用户授权延期且未验证；下一项 **P12-01交付物索引**；原交付阶段顺延为P12，实际状态以todo为准。
 - 准备最终完整测试：读 [最终测试计划](development/final-test-plan.md)；[人工测试统一目录](manual-tests/README.md)保存上次 VS Code 详细指南、原始结果和证据，以及本次 [P08 简要人工方案](manual-tests/p08-20261028/manual-test-plan.md)、原始 DOCX 与[已完成核验记录](manual-tests/p08-20261028/manual-test-review.md)。持续回归的实际工作流和本机复现见 [CI设计与实施](development/ci-design.md)；本地结果见最新开发记录，云端首跑及人工验收单独记录。
 - 配置输出与日志：读 [日志配置说明](runtime/logging.md)；[logging.json](runtime/logging.json) 已用于 CI 回归日志的大小轮转、压缩和自动淘汰，CLI 错误码与 stdout/stderr 协议沿用正式契约。
 
@@ -71,7 +71,7 @@ docs/
 | 运行 | [resources.md](runtime/resources.md) | default-v1 容量、配置、取消、测试超时和扩展限额 |
 | 运行 | [logging.md](runtime/logging.md)、[logging.json](runtime/logging.json) | 输出/诊断规则、CI日志轮转/压缩/淘汰的生效配置和本机查看方法 |
 | 开发 | [roadmap.md](development/roadmap.md) | 阶段依赖、开发顺序、完成标准和交付路径 |
-| 开发 | [todo.md](development/todo.md) | 唯一任务状态清单；原70项加P11七项，共77项，当前59项完成 |
+| 开发 | [todo.md](development/todo.md) | 唯一任务状态清单；原70项加P11七项，共77项，P11评估后撤回单列；当前勾选及待验见清单 |
 | 开发 | [test-coverage.md](development/test-coverage.md) | 黑盒覆盖计划及扩展/资源验证要求 |
 | 开发 | [final-test-plan.md](development/final-test-plan.md) | 最终测试阶段、自动化命令、18项人工清单、证据与放行标准 |
 | 开发 | [ci-design.md](development/ci-design.md) | GitHub Actions触发、环境、回归/安装作业、汇总门禁及实施验收 |
@@ -87,7 +87,7 @@ docs/
 
 resources 细化容量策略，diagnostics 细化诊断格式，campus-app 只规定默认应用，不给核心语言添加任务业务。语法仍为 v0.6，标准库 v0.6.1 仅新增 data.kind；资源策略、诊断与应用文件各有独立版本。已实现的基准与CLI用法见对应README及实际代码；文档中的后续设计不能视为已实现命令。final-test-plan规定最终验收组织，manual-test-guide给出本机详细步骤，ci-design说明持续集成实现及尚待验证的云端范围，均复用现有契约与测试。
 
-A/C/D 已纳入 P04；E 已按 E1—E4 实现并验收。P08互联及P10-01/06已有验收，P10未选候选保留并说明取舍；B自动依赖刷新及其他兴趣场景未采用。当前先实施P11五项解释器优化，再做P12验收交付；新计划不代表优化已实现，E不替换P09的不少于200行ZZY应用。
+A/C/D 已纳入 P04；E 已按 E1—E4 实现并验收。P08互联及P10-01/06已有验收，P10未选候选保留并说明取舍；B自动依赖刷新及其他兴趣场景未采用。P11的保留、撤回及验收证据见优化报告，人工待补；随后做P12验收交付，E不替换P09的不少于200行ZZY应用。
 
 ## 4. 旧文件位置对照
 

@@ -237,9 +237,16 @@ class Interpreter(Features, Library):
                     self.frame = previous
                     self.call_depth -= 1
         except (DiagnosticError, ResourceExceeded) as error:
-            position = call.token.span.start
-            note = f"调用 {closure.name}：{self.location(call)}:{position.line}:{position.column}"
-            diagnostic = replace(error.diagnostic, notes=(*error.diagnostic.notes, note))
+            try:
+                position = call.token.span.start
+                note = f"调用 {closure.name}：{self.location(call)}:{position.line}:{position.column}"
+                diagnostic = replace(error.diagnostic, notes=(*error.diagnostic.notes, note))
+            except Exception:
+                # Optional metadata must not replace the original quota abort,
+                # including when allocating its call note fails during unwind.
+                if isinstance(error, ResourceExceeded):
+                    raise error from None
+                raise
             if isinstance(error, ResourceExceeded):
                 # Keep quota aborts outside ordinary language-error handlers.
                 error.diagnostic = diagnostic

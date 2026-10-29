@@ -43,3 +43,29 @@
 `tests.test_p11_query`的7项覆盖真实CLI固定升降序、±2^53附近混合Int/Float、负零/重复键、Unicode、Quantity通用路径、浅别名、完整阶段及take0后部错误、原输入下标notes、44档槽位、真实比较栈取消与四个共享Program上下文屏障交错。GenericSort只在测试中保留原比较器，固定答案不依赖它产生。24专项/23HTTP通过；06-source为计时前身份，06-delivery-source含最后增加的负数/交错用例，运行时不变。306条计时记录见06-query，B07/Q01支持保留，其他小幅变化不夸大。完整回归结果另列06-core.json，不以专项代替全量。
 
 06-core：最终交付状态2070/2070，983.422秒；零失败/错误/跳过。static门禁通过，06保留，07尚未验收。
+
+## P11-07 最终累计验收
+
+- `07-source.json`：冻结44个运行时、6个P11测试模块及实验驱动的归一LF哈希；`07-supporting-source.json`补公共worker/CI/配置身份；`07-runtime.patch.gz`是接手基线a480ecc到累计运行时的完整差异。测量、回归、wheel的运行时一致，版本仍0.6.0a1，以Git/哈希区分。
+- `07-id-retention.json`：旧2041 ID全保留，新增31至2072，外部CLI仍1738。新增两项位置测试在三种调用备注故障和查询备注分配故障下保留原E211及净计量；旧实现失败日志07-notes-before.log.gz保留，初稿测试自身subTest作用域错误另存initial日志，不隐去失败。
+- `07-specialist.json`：37/37，4.656秒；`07-core.json`：2072/2072，931.875秒，零失败/错误/跳过；原完整输出07-core.log.gz。
+- `07-http.json`：23/23，6.687秒，真实TCP默认/shared/合约/SQLite/恢复；`07-gui.json`：真实Tk11/11，5.563秒，GUI几何/交互/关闭和线程清理；GUI自动操作不作为人工记录。核心含headless/校园/嵌入/SQLite/自动取消。
+- `07-installed-core.json`：隔离无第三方核心环境，中文/空格路径、check无副作用、headless/校园/SQLite/嵌入/合约；`07-installed-http.json`：新wheel重装到独立Web环境（复用dist/p10-web-installed这个目录名），Python -I在源码目录外运行23/23、6.578秒，44源码全部一致；不是复用P10旧结果。
+- `07-ci-{static,regression,package,gate}.json`：同一源码指纹的最终本地门禁全部通过；云端未推送/未执行。归档新增报告文件后指纹会包含新证据，运行时/用例仍按07-source逐文件确认未变；归档后另做static审查，不把其新元数据身份混入旧汇总门禁。
+- `07-manual-script-precheck.json`及`07-manual-powershell-parse.json`只证明四个ZZY脚本check和三段PowerShell解析通过。[人工方案与待填结果](../../docs/manual-tests/p11-20261030/README.md)的M01/M02仍未验证；用户明确要求先勾选07、稍后补做，不能当作已人工通过。
+- `benchmarks/results/p11/07-cumulative`：25组、1800条成功测量记录，全部正式组15，3次独立预热；累计收益/冷路径退化和全部离散程度见优化报告；07-error-profile只作独立诊断，不作速度样本。
+
+本轮实际最终命令（项目根目录，生成目录不得与历史结果冲突）：
+
+```powershell
+& ./.venv/Scripts/python.exe -X utf8 -m tests.web_http --report dist/p11-final/http.json
+& ./.venv/Scripts/python.exe -X utf8 -m tests.gui_sketch --report dist/p11-final/gui.json
+& ./.venv/Scripts/python.exe -X utf8 -m benchmarks.p11 --before a480ecc --after WORKTREE --output benchmarks/results/p11/07-cumulative
+& ./.venv/Scripts/python.exe -X utf8 -m scripts.ci static --output dist/p11-final/static
+& ./.venv/Scripts/python.exe -X utf8 -m scripts.ci regression --output dist/p11-final/regression
+& ./.venv/Scripts/python.exe -X utf8 -m scripts.ci package --output dist/p11-final/package --installer C:/Users/13691/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe
+& ./dist/p10-web-installed/Scripts/python.exe -I -X utf8 scripts/ci_web_installed_probe.py --report dist/p11-final/installed-http.json
+& ./.venv/Scripts/python.exe -X utf8 -m scripts.ci gate --artifacts dist/p11-final --output dist/p11-final/gate
+```
+
+regression实际调用完整`python -X utf8 -m tests --report ...`，没有缩减测试。安装HTTP前已用bundled pip向独立Web环境执行`install --force-reinstall --no-index --no-deps`安装本轮wheel，具体wheel SHA/包源码在报告中。重跑请整体更换输出目录，保留历史证据；正式测量与回归分开。

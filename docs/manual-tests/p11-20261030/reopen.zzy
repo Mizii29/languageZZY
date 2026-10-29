@@ -1,0 +1,4 @@
+(?_?) sketch.load_project("manual.zzysketch") {
+    (^_^)(canvas) => { io.print(sketch.show(canvas)); }
+    (T_T)(message) => { io.print(message); }
+}

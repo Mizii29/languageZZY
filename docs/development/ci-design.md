@@ -96,7 +96,7 @@ PowerShell 中调用外部命令后立即判断 `$LASTEXITCODE`；尤其不能�
 5. 把实际校园应用七个模块和 `limits.json` 复制到临时目录，驱动真实菜单完成保存、退出、另一进程读取；用外部固定期望核对状态/文件。不得从源码目录误导入包，也不得用 Python 重写业务。
 6. 保存每个子命令、cwd、双流、退出码和安装来源；结束后清理新 venv 与进程。
 
-步骤 2—6 已由 `scripts.ci package` 和 [ci_installed_probe.py](../../scripts/ci_installed_probe.py) 实现，输出 `report.json`、`probe.json`、wheel 与哈希。会核对全部 39 个包源码文件，正常完成后清理临时环境，不重装调用它的项目 venv。现有 `tests/e4/install.py` 会真实开窗、重装调用它的 Python 并覆盖固定历史报告，仍保留给独立桌面验收，不用于 PR 的 package job。
+步骤 2—6 已由 `scripts.ci package` 和 [ci_installed_probe.py](../../scripts/ci_installed_probe.py) 实现，输出 `report.json`、`probe.json`、wheel 与哈希。会核对全部包源码文件（当前44个，以实际清单为准），正常完成后清理临时环境，不重装调用它的项目 venv。现有 `tests/e4/install.py` 会真实开窗、重装调用它的 Python 并覆盖固定历史报告，仍保留给独立桌面验收，不用于 PR 的 package job。
 
 ### D. ci-gate：唯一稳定的必需检查
 
@@ -187,9 +187,9 @@ CI 接入完成的标准是“真实触发、真实执行、错误能阻止通�
 
 核心discovery新增tests/test_contracts.py的14项，原2027项及1738外部CLI保留。核心package探针增加静态合约生成且用户文件副作用不发生，不装Web/Schema依赖。Web job额外安装[schema验证依赖](../../scripts/ci/contract-requirements.txt)，执行[安装探针](../../scripts/ci_web_installed_probe.py)：核对wheel全部运行时源码，复制必要测试/夹具到源码目录外，在Python -I下运行全部23项HTTP/Schema专项。导入来源必须是当前Python安装目录；不能把checkout源码当安装成功。云端结果须推送后另验，本轮只提交本地。静态、完整回归、安装证据见tests/p10和开发记录，旧章节历史数量不作为当前测试基线。
 
-## P11优化与P12交付的门禁安排（计划）
+## P11优化与P12交付的门禁安排
 
-2026-10-29新增P11优化、原交付阶段顺延P12，具体范围见[优化计划](../runtime/optimization-plan.md)。本轮仅更新文档，不新增CI作业或预填优化结果。P11实现时维持现有核心/独立Web依赖边界及static/regression/package/gate身份校验；2041核心、23HTTP/Schema是当前核对起点，新测试按实际清单增加，禁止少收集、skip或放宽契约。
+2026-10-29新增P11优化、原交付阶段顺延P12，具体范围见[优化计划](../runtime/optimization-plan.md)。初始规划不代表完成。P11沿用现有CI作业，维持现有核心/独立Web依赖边界及static/regression/package/gate身份校验；2041核心、23HTTP/Schema是接手核对起点，新测试按实际清单增加，禁止少收集、skip或放宽契约。
 
 每项先做适用专项与完整回归，最终冻结保留代码后确认完整核心、真实HTTP/Schema及源码外wheel安装都对应最终运行时/用例。低层优化同样要覆盖默认/shared、合约前置拒绝、SQLite/嵌入、失败/取消恢复；需要时增加安装探针而非只测源码。单项对照可用已验收相邻修订/内部参考路径，不能在共享服务中使用进程全局可变优化开关。
 

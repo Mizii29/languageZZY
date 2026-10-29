@@ -201,6 +201,11 @@ class Features:
         try:
             return (yield from self.evaluate(expression))
         except (DiagnosticError, ResourceExceeded) as error:
-            error.diagnostic = replace(error.diagnostic,
-                notes=(*error.diagnostic.notes, f"查询输入下标 {index}"))
+            try:
+                error.diagnostic = replace(error.diagnostic,
+                    notes=(*error.diagnostic.notes, f"查询输入下标 {index}"))
+            except Exception:
+                if isinstance(error, ResourceExceeded):
+                    raise error from None
+                raise
             raise

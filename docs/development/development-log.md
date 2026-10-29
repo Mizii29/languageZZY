@@ -798,3 +798,17 @@ Git 提交：真实标识 / 未提交
 - 06-query的306条记录全部成功，4组×15正式：B07执行−28.0%、Q01−14.3%，Q02/Q03约−8%但处于MAD内，CLI−2.4%..+4.3%；保留专用比较器，完整阶段与边界不变。随后补负大整数/负零稳定答案及共享Program四请求屏障交错，第7个测试接入清单；专项24/24、3.922秒，HTTP23/23、6.766秒。清单2070；正在跑最终核心回归，性能测量与回归没有并行。
 
 - 最终完整核心2070/2070、983.422秒，零失败/错误/跳过，06-core.json；static --output dist/p11-06-static通过。保留06并勾选，06-delivery-source锁定最终测试/源码；准备本地阶段提交。下一项07：先修复已复现的notes定位故障，再冻结累计版本测量及最终门禁，人工结果不提前填写。
+
+## 2026-10-30：P11-07 累计验收进行中
+
+- 06提交be9eba2后，先为嵌套调用Source.span/路径/备注分配故障和查询备注分配故障新增两项回归。旧实现四个子情形均失败，dist/p11-07-notes-before-final.log；首次测试自身subTest作用域有误另留before.log，修正测试后才修产品。调用/查询只在原ResourceExceeded的附加备注生成失败时保留原错误，普通错误与取消分支不变。37专项/23真实HTTP（6.687秒）/11真实Tk（5.563秒）通过；Tk自动操作不当人工验收。
+- 新人工目录p11-20261030包含可执行Ctrl+C、恢复、画图保存及重开程序，结果模板保持待填。cancel初稿误写zvar，check报E103后对照语法改为zyes，四程序check均退出0，dist/p11-final/manual-script-precheck.json；没有把check当人工执行。
+- 清单2072，冻结全部44运行时及P11测试/驱动哈希到dist/p11-final/source.json。接下来先单独运行基线a480ecc到累计版本的25组配对测量，然后最终static/regression/package/gate，不与正式性能混跑。
+
+- 累计07-cumulative：25组1800记录全成功，每组15正式；B04/1000执行−57.9%、B07−43.9%，D02唯一超过20%退化为+42.5%（约2.584微秒/失败），独立07-error-profile复核补定位/复制成本，完整离散程度和所有阶段见报告。随后启动最终static/regression/package/gate，性能与回归不并行。核心wheel安装已通过，全部44源码一致；基线2041 ID全部保留，新2072，外部CLI仍1738。
+- 用户在真实人工结果请求中明确回复“勾选了吧，我等会会补上的”：据此调整本轮验收门槛，最终自动门禁通过后可勾选P11-07并交接P12-01，M01/M02仍作为用户延期的未验证项；不将授权、自动Tk或自动Ctrl+C当人工通过，不预填结果表。当前完整回归仍运行，尚未提前勾选。
+
+- 最终命令scripts.ci regression --output dist/p11-final/regression实际运行完整python -X utf8 -m tests：2072/2072、931.875秒，失败/错误/跳过/expected failure全0；scripts.ci static、package（bundled Python作为installer）和gate --artifacts dist/p11-final均退出0/passed=true，三份报告源码指纹一致。新wheel在独立Web环境重新安装后，python -I -X utf8 scripts/ci_web_installed_probe.py验证23/23、6.578秒及44源码；actionlint退出0。GUI和HTTP报告如上，其他OS/云端CI/人工本轮未验证。
+- tests/p11归档最终15份JSON、完整回归日志、故障前日志和累计runtime patch；07-source逐文件确认归档前后冻结代码未变。证据归档本身改变CI元数据指纹，因此保留原同身份gate，并另跑归档后static检查文档/清单，不复写旧报告。当前66/77，按用户最新人工延期授权勾选07，其余P10/P12未勾选；README/路由/计划/指南同步真实保留及撤回结果，下一项P12-01。本轮不推送、不合并、不制作P12材料，requirement哈希未变，人工原件未改。
+
+- 归档后scripts.ci static --output dist/p11-after-archive-static及actionlint通过。提交前计数脚本初稿只匹配P编号而漏掉7项E，断言失败；改为匹配P/E编号后核实77项中66项勾选，未改清单迎合统计，P10延期六项/P12五项仍未勾选。原人工目录仅导航README有差异，既有原件无改动；07-source与测量后44运行时一致。准备审查本阶段显式暂存文件后本地提交。

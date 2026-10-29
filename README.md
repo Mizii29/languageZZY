@@ -2,7 +2,7 @@
 
 P10-01 / P10-06 已完成并验收：显式 shape 合约使用同一静态描述完成字段校验、Map 默认值填充和 OpenAPI 3.1.1 生成。入口为 `python -m zzy.contracts` 与 Web `--contracts FILE`；核心无需 Web/GUI 依赖。见[独立演示](examples/contracts/README.md)、[正式契约](docs/runtime/web.md)、[测试与测量](tests/p10/README.md)。最终阶段结果以 todo/开发记录为准；不包含 VM、热更新、自动缓存或其他 P10 项。
 
-2026-10-29后续安排：已选诊断位置、资源计量、小整数、sum/stats和查询排序五项优化，编排为新 **P11**，原验收交付阶段顺延为 **P12**。P11正在按[优化实施计划](docs/runtime/optimization-plan.md)逐项实施；保留改动、撤回实验与真实数据见[优化实测](docs/runtime/optimization-report.md)，当前任务状态以todo为准。未选P10候选保留，收益、成本及暂缓原因见[创新取舍](docs/features/innovation.md#6-p10-候选保留与取舍2026-10-29)，勾选以[todo](docs/development/todo.md)为准。
+2026-10-29后续安排：已选诊断位置、资源计量、小整数、sum/stats和查询排序五项优化，编排为新 **P11**，原验收交付阶段顺延为 **P12**。P11-01—06已评估：保留按需定位、资源计量和标量键比较；小整数守卫及sum/stats分离未证实收益而撤回。P11-07自动累计验收已通过，按用户最新授权勾选；人工Ctrl+C/绘图项目仍待补做，未验证。下一项P12-01；保留改动、撤回实验与真实数据见[优化实测](docs/runtime/optimization-report.md)，当前任务状态以todo为准。未选P10候选保留，收益、成本及暂缓原因见[创新取舍](docs/features/innovation.md#6-p10-候选保留与取舍2026-10-29)，勾选以[todo](docs/development/todo.md)为准。
 
 ZZY 是赵梓伊在程序设计实践课程中设计的通用脚本语言，使用 Python 实现解释器，用 ZZY 编写测试、性能脚本和完整应用。
 

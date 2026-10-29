@@ -2002,6 +2002,8 @@
     "tests.test_p11_integers.SmallIntegerTests.test_released_path_matches_fixed_candidate_answers",
     "tests.test_p11_locations.LazyLocationTests.test_fixed_unicode_bom_crlf_token_and_eof_records",
     "tests.test_p11_locations.LazyLocationTests.test_location_failure_preserves_original_quota_abort_and_notes",
+    "tests.test_p11_locations.LazyLocationTests.test_nested_calls_keep_quota_when_note_location_or_allocation_fails",
+    "tests.test_p11_locations.LazyLocationTests.test_query_note_allocation_preserves_original_quota_and_cleanup",
     "tests.test_p11_locations.LazyLocationTests.test_real_cli_cross_module_notes_and_check_no_execution",
     "tests.test_p11_locations.LazyLocationTests.test_shared_program_concurrent_errors_and_changing_cwd",
     "tests.test_p11_locations.LazyLocationTests.test_success_and_cancellation_do_not_evaluate_location",
@@ -3835,6 +3837,6 @@
       "run_cli.e4-undo-fill"
     ]
   },
-  "collected": 2070,
+  "collected": 2072,
   "blackbox": 1738
 }

@@ -271,7 +271,7 @@ Web 使用 Python 适配 HTTP，ZZY 执行业务，每请求独立上下文；�
 
 shape驱动接口合约已按P10-01/06验收；请求步数配额、完整VM、纯函数缓存、版本切换、数组类型缓存和完整引擎/变形扩展保留延期，逐项利弊与重启条件见[创新取舍](features/innovation.md#6-p10-候选保留与取舍2026-10-29)。自动依赖刷新B及其他兴趣场景未采用；新P11未实施，不冒充性能成果。
 
-阶段细项、依赖与完成标准见[roadmap](development/roadmap.md)；共77项代码任务、当前59项完成，以[todo](development/todo.md)为唯一状态清单。下一项P11-01冻结基线，五项优化的实现/测试/测量统一见[优化计划](runtime/optimization-plan.md)。P12核对八项交付物、真实性能报告、Git历史、PPT及新环境演示。
+阶段细项、依赖与完成标准见[roadmap](development/roadmap.md)；共77项代码任务，以[todo](development/todo.md)为唯一状态清单。P11评估/自动验收已完成，04/05撤回，人工授权延期且未验证，下一项P12-01；五项优化的实现/测试/测量见[优化报告](runtime/optimization-report.md)。P12核对八项交付物、真实性能报告、Git历史、PPT及新环境演示。
 
 ## 10. 借鉴与创新表述
 
