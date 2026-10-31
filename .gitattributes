@@ -17,3 +17,5 @@ benchmarks/results/**/profile.txt whitespace=blank-at-eol,space-before-tab,cr-at
 # Raw PowerShell transcripts contain CRLF/control bytes; preserve evidence verbatim.
 docs/manual-tests/core-sketch-20261027/evidence/terminal.txt -text -diff
 docs/manual-tests/p08-20261028/runs/20261029-002147-330cf17/terminal.txt -text -diff
+docs/manual-tests/p11-20261030/runs/20261031-143117-4b4be85-3aae09/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+docs/manual-tests/p11-20261030/runs/20261031-143117-4b4be85-3aae09/terminal.txt -diff

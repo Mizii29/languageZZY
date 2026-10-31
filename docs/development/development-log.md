@@ -812,3 +812,22 @@ Git 提交：真实标识 / 未提交
 - tests/p11归档最终15份JSON、完整回归日志、故障前日志和累计runtime patch；07-source逐文件确认归档前后冻结代码未变。证据归档本身改变CI元数据指纹，因此保留原同身份gate，并另跑归档后static检查文档/清单，不复写旧报告。当前66/77，按用户最新人工延期授权勾选07，其余P10/P12未勾选；README/路由/计划/指南同步真实保留及撤回结果，下一项P12-01。本轮不推送、不合并、不制作P12材料，requirement哈希未变，人工原件未改。
 
 - 归档后scripts.ci static --output dist/p11-after-archive-static及actionlint通过。提交前计数脚本初稿只匹配P编号而漏掉7项E，断言失败；改为匹配P/E编号后核实77项中66项勾选，未改清单迎合统计，P10延期六项/P12五项仍未勾选。原人工目录仅导航README有差异，既有原件无改动；07-source与测量后44运行时一致。准备审查本阶段显式暂存文件后本地提交。
+
+## 2026-10-30：P11完成复核与人工补测方案完善
+
+- 用户要求检查P11完成及人工预勾选，编写人工方案。接手test/4b4be85eaf2addd01aafb49de43a4e6a8db581d2、工作区干净；核对当前P11为解释器优化、原交付顺延P12，保留已有授权的07勾选，M01/M02继续未验证。04/05是评估撤回，不改成保留实现；P12及未选P10不勾选。
+- 复核07-source的54个运行时/测试/驱动文件及07-supporting-source的8份记录均与当前规范LF哈希一致；验收wheel SHA256为8a4f1a21aba264c530fbac7124e9320273b9a478ea4323f2f70850bb0cb89055，44运行时源码与当前逐份一致。现存核心2072/2072、HTTP/Schema23/23、真实Tk自动11/11、安装后HTTP23/23通过；四份本地CI报告同指纹181b8aeb5ba0c6dd2a2ef256a66ec7e971b7e26cbd291574942466c0ab698fb8且passed。旧2041ID无丢失、新增31、CLI1738保留，25组1800计时记录全ok、正式统计均15样本。以上是现存证据核对，不是本轮重跑全量/GUI/HTTP/性能。
+- 按systematic-debugging查出现有人工方案的版本选择问题：原指令离开仓库后，默认导入.venv/Lib/site-packages/zzy，11份源码与冻结候选不符，可能测到旧安装包。最小复核在空cwd移除PYTHONPATH时确认旧来源；仅设置PYTHONPATH为仓库后来源恢复当前源码。未重装依赖、改运行时或改四个ZZY脚本。
+- 更新docs/manual-tests/p11-20261030/README.md为明确的VS Code方案：当前提交、独立runs目录、保存/恢复PYTHONPATH、断言导入路径及44份源码、check零执行；M01拆分亲手Ctrl+C后立即取退出码130与后续2/0；M02注明free/rectangle和主画笔、撤销重做、三成功Result及两个文件、新进程加载历史和退出0。result.md仍全部待执行；新增review.md记录完成证据与待补边界，统一索引/旧指南入口/覆盖统计/阶段导航同步。P10合约网页六项人工仍待填，明确留给P12前单独安排，不冒填通过。
+- 在Windows PowerShell5.1真实执行指南准备及结束块（只替换输出目录为dist/p11-review-20261030/ps5-preparation），SOURCE_OK44且仓库来源、check0、两文件False；另在隔离cwd显式仓库路径下四脚本check均静默退出0。没有执行真实人工Ctrl+C或绘图；没有把预检写为M01/M02通过。指南6个PowerShell块解析通过。
+- `.venv/Scripts/python.exe -X utf8 -m scripts.ci static --output dist/p11-review-20261030/static`通过；人工目录单独检查8份Markdown/52本地链接/围栏通过。四个人工ZZY与HEAD相同，requirement SHA256仍b099c19fc339ce1dc1aab7e9d6c8126a9c5c9ace3d31b969a0623df90f521d2b。仅修改Markdown、保留历次原件与既有报告，不提交/推送；复核和预检产物留dist/p11-review-20261030。
+
+## 2026-10-31：P11人工结果逐图核验与待补项关闭
+
+- 用户已完成测试，新增docs/manual-tests/p11-20261030/result.doc及runs/20261031-143117-4b4be85-3aae09，原待填result.md被移除。只读复制真实OLE DOC、转换QA副本并提取全部8张内嵌图片逐张查看；原件SHA256为9222e5d86624d21cca2535628405a98ffdd614ed545e5a6b5fe11aee8c0cf366，未改DOC及运行证据。QA副本、哈希和只读核验产物留dist/p11-manual-result-review-20261031。
+- 候选test/4b4be85eaf2addd01aafb49de43a4e6a8db581d2。准备截图/日志显示Windows11、PowerShell5.1、CPython3.12.14、SOURCE_OK44、check0、执行前两文件False；路径断言/源码断言均通过。本次再次核对07-source全部54个运行时/测试/驱动文件规范LF哈希一致，其中44运行时。SOURCE_OK中文路径乱码为管道显示问题，不改判成旧包来源。
+- M01图3显示READY后真实取消，退出130；随后输出2、恢复退出0。转录保留两次取消及PowerShell“管道已被停止”记录，无Python traceback且恢复正常，未据此误报解释器崩溃。M02图4—7显示自由线/矩形、三个成功Result、保存两文件True、浏览器SVG及新进程恢复；终端首窗及重开均退出0。最终项目两对象、free/rectangle两条历史，SVG的34点自由线及5点闭合矩形与项目坐标逐点一致。
+- 撤销/重做按操作者“实际测试无问题”的备注确认；保存历史已核对，没有操作前后独立截图，不把静态画面当完整按钮过程证明。三次绘图首窗导致早晚画面不同，DOC已注明中途重画；按最后保存及重开核对，不伪造此前被覆盖产物。保留GUI使用studio画笔的实际状态，不改用户原件迎合指南示例。
+- 新建result.md作为已核验结果摘要/原DOC及运行证据索引，修复原待填MD删除后的入口；review保留10月30日历史并追加31日结论，指南保留可复测命令。同步人工总目录、文档导航、todo、覆盖、优化计划/报告、阶段证据及项目技能当前状态。关闭P11两项人工待补，P10合约网页六项仍待验，P12五项和未选P10不勾选，66/77及下一项P12-01不变。
+- 仅整理Markdown及核验既有证据；未改运行时、四个ZZY脚本、原始结果、既有自动报告或requirement，没有代跑人工、全量/HTTP/Tk/性能，不提交或推送。
+- 整理后执行`.venv/Scripts/python.exe -X utf8 -m scripts.ci static --output dist/p11-manual-result-review-20261031/static`通过；人工目录8份Markdown、68个本地链接和围栏检查通过，git diff --check通过。7份原始证据哈希、4个ZZY脚本及requirement均保持不变，核验记录见同目录docs-check.json。

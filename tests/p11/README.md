@@ -52,7 +52,9 @@
 - `07-http.json`：23/23，6.687秒，真实TCP默认/shared/合约/SQLite/恢复；`07-gui.json`：真实Tk11/11，5.563秒，GUI几何/交互/关闭和线程清理；GUI自动操作不作为人工记录。核心含headless/校园/嵌入/SQLite/自动取消。
 - `07-installed-core.json`：隔离无第三方核心环境，中文/空格路径、check无副作用、headless/校园/SQLite/嵌入/合约；`07-installed-http.json`：新wheel重装到独立Web环境（复用dist/p10-web-installed这个目录名），Python -I在源码目录外运行23/23、6.578秒，44源码全部一致；不是复用P10旧结果。
 - `07-ci-{static,regression,package,gate}.json`：同一源码指纹的最终本地门禁全部通过；云端未推送/未执行。归档新增报告文件后指纹会包含新证据，运行时/用例仍按07-source逐文件确认未变；归档后另做static审查，不把其新元数据身份混入旧汇总门禁。
-- `07-manual-script-precheck.json`及`07-manual-powershell-parse.json`只证明四个ZZY脚本check和三段PowerShell解析通过。[人工方案与待填结果](../../docs/manual-tests/p11-20261030/README.md)的M01/M02仍未验证；用户明确要求先勾选07、稍后补做，不能当作已人工通过。
+- `07-manual-script-precheck.json`及`07-manual-powershell-parse.json`只证明四个ZZY脚本check和三段PowerShell解析通过；10月30日当时按用户授权先勾选07、人工M01/M02待补，这些预检报告不能当人工通过。
+- 2026-10-30另行[复核完成情况](../../docs/manual-tests/p11-20261030/review.md)，更新上述人工方案的当前提交号、源码来源/44文件哈希检查、独立工作目录及退出码/工具名。原方案在目录外会导入旧site-packages，现显式设置并恢复PYTHONPATH；本次只做命令预检，不覆盖原自动报告，也不预填人工通过。
+- 2026-10-31已核验新增DOC全部8张截图、真实终端记录和SVG/项目，M01/M02通过，见[结果摘要](../../docs/manual-tests/p11-20261030/result.md)；撤销/重做按操作人确认，项目保留两条历史，未单独保存变化过程截图。54冻结源码仍一致；本次只复核证据，没有重跑自动验收或改写这些07报告。
 - `benchmarks/results/p11/07-cumulative`：25组、1800条成功测量记录，全部正式组15，3次独立预热；累计收益/冷路径退化和全部离散程度见优化报告；07-error-profile只作独立诊断，不作速度样本。
 
 本轮实际最终命令（项目根目录，生成目录不得与历史结果冲突）：

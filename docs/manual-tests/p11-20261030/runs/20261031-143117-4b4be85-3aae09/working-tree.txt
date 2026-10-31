@@ -1,0 +1,11 @@
+﻿ M docs/README.md
+ M docs/development/development-log.md
+ M docs/development/manual-test-guide.md
+ M docs/development/test-coverage.md
+ M docs/development/todo.md
+ M docs/manual-tests/README.md
+ M docs/manual-tests/p11-20261030/README.md
+ M docs/manual-tests/p11-20261030/result.md
+ M tests/p11/README.md
+?? docs/manual-tests/p11-20261030/review.md
+?? docs/manual-tests/p11-20261030/runs/
