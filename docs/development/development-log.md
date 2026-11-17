@@ -835,8 +835,14 @@ Git 提交：真实标识 / 未提交
 ## 2026-11-17 N0-01：独立原生路线登记与现状盘点
 
 - 分支 codex/native-runtime-plan，接手 HEAD ff7e959；已有应用/文档/人工材料修改均保留。按当前工作区修订后的 native-runtime-plan 执行；本轮仅追加登记，不把其已有改稿夹带进提交。
-- 只读 inventory.py 实查 53 类 AST 节点（含动态分派）、24 类 Value、103 宿主函数、12 个默认 CLI manifest/1738 例，保存实际源码规范化 SHA-256、签名/ABI、Resolver 布局、资源生效记录及应用入口。发现 db 内建名字集合差异，登记而不改变 Python 行为。
-- 实际命令 `.\.venv\Scripts\python.exe -X utf8 native_runtime/tools/inventory.py --output native_runtime/tests/inventory.json` 及 `--check native_runtime/tests/inventory.json` 均退出 0；工具不加载 Tk/ASGI 或用户模块。期望不是此盘点工具生成的解释器输出。
+- 只读 inventory.py 实查 56 类 AST 节点（含动态分派）、24 类 Value、103 宿主函数、12 个默认 CLI manifest/1738 例，保存实际源码规范化 SHA-256、签名/ABI、Resolver 布局、资源生效记录及应用入口。发现 db 内建名字集合差异，登记而不改变 Python 行为。
+- 实际命令 `.\.venv\Scripts\python.exe -X utf8 native_runtime/tools/inventory.py --output native_runtime/tests/inventory.json` 退出 0；首次 `--check native_runtime/tests/inventory.json` 退出 1（JSON tuple/list 和节点提取误差），修复后复跑退出 0；工具不加载 Tk/ASGI 或用户模块。期望不是此盘点工具生成的解释器输出。
 - 未安装新工具链；已发现 GCC 8.1.0 x86_64-w64-mingw32，cmake/ctest/MSVC/clang-cl 在 PATH 和常见安装目录均未发现。构建证据待后续专项，不能将盘点通过计作 N0 整体完成。
 
 N0-01 自检修复：按 systematic-debugging 先定位 native_extensions/native_functions 的 tuple/list 差异及条件 Token 泄入节点清单，再修复序列化比较和条件分支值提取。新增独立固定数量/节点/Resolver 断言、JSON 往返及删除节点漂移反例；`python -X utf8 -m unittest native_runtime.tests.test_inventory -v` 3/3 通过。前一提交内错误计数/首检结果在本提交更正，不改写历史。
+
+## 2026-11-17 N0-02：能力矩阵与集中未支持协议
++
++- 为 56 AST/24 Value/103 宿主函数和 6 CLI 命令逐项登记 tier/phase/implemented/diagnostic；当前只有 info 声明可用，执行能力全部 E402。可选宿主是延期迁移而非从最终功能中删除；VM/AOT/JIT 不进入本路线实现。
++- 核对 syntax 集中表后新增 E402“当前后端尚未实现能力”，同步 diagnostics 与能力矩阵；N0 读源码前拒绝，schema v1、空 stdout、file/span=null、capability note、退出 2；不误用 E103/E214，也不改 Python 当前行为。
++- `.\.venv\Scripts\python.exe -X utf8 -m unittest native_runtime.tests.test_inventory -v` 4/4 通过，含逐项覆盖、唯一 ID、未实现状态/诊断、冻结数量和漂移反例；git diff --cached --check 通过。前次日志的计数和首检结果更正随本提交纳入。下一项 N0-03，正式构建工具缺失仍待验证。

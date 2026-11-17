@@ -1,0 +1,1329 @@
+{
+  "schema_version": 1,
+  "stage": "N0",
+  "features": [
+    {
+      "id": "ast.add",
+      "tier": "core",
+      "phase": "N3",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "ast.arm",
+      "tier": "core",
+      "phase": "N3",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "ast.array",
+      "tier": "core",
+      "phase": "N3",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "ast.assert",
+      "tier": "core",
+      "phase": "N3",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "ast.assignment",
+      "tier": "core",
+      "phase": "N3",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "ast.binary",
+      "tier": "core",
+      "phase": "N3",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "ast.binding",
+      "tier": "core",
+      "phase": "N3",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "ast.block",
+      "tier": "core",
+      "phase": "N3",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "ast.bool",
+      "tier": "core",
+      "phase": "N3",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "ast.break",
+      "tier": "core",
+      "phase": "N3",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "ast.call",
+      "tier": "core",
+      "phase": "N3",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "ast.constant_pattern",
+      "tier": "core",
+      "phase": "N3",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "ast.construct",
+      "tier": "core",
+      "phase": "N3",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "ast.continue",
+      "tier": "core",
+      "phase": "N3",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "ast.current",
+      "tier": "core",
+      "phase": "N3",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "ast.definition_field",
+      "tier": "core",
+      "phase": "N3",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "ast.edge",
+      "tier": "core",
+      "phase": "N3",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "ast.expression",
+      "tier": "core",
+      "phase": "N3",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "ast.field",
+      "tier": "core",
+      "phase": "N3",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "ast.float",
+      "tier": "core",
+      "phase": "N3",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "ast.for",
+      "tier": "core",
+      "phase": "N3",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "ast.function",
+      "tier": "core",
+      "phase": "N2",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "ast.group",
+      "tier": "core",
+      "phase": "N3",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "ast.if",
+      "tier": "core",
+      "phase": "N3",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "ast.index",
+      "tier": "core",
+      "phase": "N3",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "ast.initializer",
+      "tier": "core",
+      "phase": "N3",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "ast.integer",
+      "tier": "core",
+      "phase": "N3",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "ast.keep",
+      "tier": "core",
+      "phase": "N3",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "ast.lambda",
+      "tier": "core",
+      "phase": "N3",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "ast.lazy",
+      "tier": "core",
+      "phase": "N3",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "ast.machine",
+      "tier": "core",
+      "phase": "N3",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "ast.match",
+      "tier": "core",
+      "phase": "N3",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "ast.name",
+      "tier": "core",
+      "phase": "N3",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "ast.null",
+      "tier": "core",
+      "phase": "N3",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "ast.order",
+      "tier": "core",
+      "phase": "N3",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "ast.parameter",
+      "tier": "core",
+      "phase": "N3",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "ast.payload_pattern",
+      "tier": "core",
+      "phase": "N3",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "ast.pipe",
+      "tier": "core",
+      "phase": "N3",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "ast.program",
+      "tier": "core",
+      "phase": "N2",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "ast.propagate",
+      "tier": "core",
+      "phase": "N3",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "ast.quantity",
+      "tier": "core",
+      "phase": "N3",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "ast.query",
+      "tier": "core",
+      "phase": "N3",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "ast.result",
+      "tier": "core",
+      "phase": "N3",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "ast.return",
+      "tier": "core",
+      "phase": "N3",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "ast.send",
+      "tier": "core",
+      "phase": "N3",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "ast.shape",
+      "tier": "core",
+      "phase": "N2",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "ast.spec",
+      "tier": "core",
+      "phase": "N3",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "ast.string",
+      "tier": "core",
+      "phase": "N3",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "ast.take",
+      "tier": "core",
+      "phase": "N3",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "ast.trace",
+      "tier": "core",
+      "phase": "N3",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "ast.unary",
+      "tier": "core",
+      "phase": "N3",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "ast.use",
+      "tier": "core",
+      "phase": "N2",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "ast.while",
+      "tier": "core",
+      "phase": "N3",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "ast.wildcard",
+      "tier": "core",
+      "phase": "N3",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "ast.with",
+      "tier": "core",
+      "phase": "N3",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "ast.yield",
+      "tier": "core",
+      "phase": "N3",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "value.Null",
+      "tier": "core",
+      "phase": "N3",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "value.Bool",
+      "tier": "core",
+      "phase": "N3",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "value.Int",
+      "tier": "core",
+      "phase": "N3",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "value.Float",
+      "tier": "core",
+      "phase": "N3",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "value.String",
+      "tier": "core",
+      "phase": "N3",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "value.Array",
+      "tier": "core",
+      "phase": "N3",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "value.Map",
+      "tier": "core",
+      "phase": "N3",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "value.Shape",
+      "tier": "core",
+      "phase": "N3",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "value.Function",
+      "tier": "core",
+      "phase": "N3",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "value.Result",
+      "tier": "core",
+      "phase": "N3",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "value.Lazy",
+      "tier": "core",
+      "phase": "N3",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "value.Machine",
+      "tier": "core",
+      "phase": "N3",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "value.Quantity",
+      "tier": "core",
+      "phase": "N3",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "value.Range",
+      "tier": "core",
+      "phase": "N3",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "value.Module",
+      "tier": "core",
+      "phase": "N3",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "value.Namespace",
+      "tier": "core",
+      "phase": "N3",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "value.Definition",
+      "tier": "core",
+      "phase": "N3",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "value.MachineDefinition",
+      "tier": "core",
+      "phase": "N3",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "value.NativeType",
+      "tier": "core",
+      "phase": "N3",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "value.sketch.Canvas",
+      "tier": "optional-host",
+      "phase": "N4 Sketch",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "value.sketch.Pen",
+      "tier": "optional-host",
+      "phase": "N4 Sketch",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "value.sketch.Layer",
+      "tier": "optional-host",
+      "phase": "N4 Sketch",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "value.sketch.Color",
+      "tier": "optional-host",
+      "phase": "N4 Sketch",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "value.sketch.Drawing",
+      "tier": "optional-host",
+      "phase": "N4 Sketch",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.array.copy",
+      "tier": "core",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.array.filter",
+      "tier": "core",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.array.map",
+      "tier": "core",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.array.pop",
+      "tier": "core",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.array.push",
+      "tier": "core",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.array.sorted",
+      "tier": "core",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.array.stats",
+      "tier": "core",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.array.sum",
+      "tier": "core",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.data.get",
+      "tier": "core",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.data.has",
+      "tier": "core",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.data.keys",
+      "tier": "core",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.data.kind",
+      "tier": "core",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.data.map",
+      "tier": "core",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.data.parse",
+      "tier": "core",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.data.set",
+      "tier": "core",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.data.stringify",
+      "tier": "core",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.db.query",
+      "tier": "optional-host",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.db.transaction",
+      "tier": "optional-host",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.io.input",
+      "tier": "core",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.io.print",
+      "tier": "core",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.io.read_text",
+      "tier": "core",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.io.replace_file",
+      "tier": "core",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.io.write_atomic",
+      "tier": "core",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.io.write_text",
+      "tier": "core",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.len",
+      "tier": "core",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.math.abs",
+      "tier": "core",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.range",
+      "tier": "core",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.sketch.add_layer",
+      "tier": "optional-host",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.sketch.background",
+      "tier": "optional-host",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.sketch.backward",
+      "tier": "optional-host",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.sketch.begin_fill",
+      "tier": "optional-host",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.sketch.begin_group",
+      "tier": "optional-host",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.sketch.bezier_to",
+      "tier": "optional-host",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.sketch.cancel_fill",
+      "tier": "optional-host",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.sketch.cancel_timer",
+      "tier": "optional-host",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.sketch.canvas",
+      "tier": "optional-host",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.sketch.capture",
+      "tier": "optional-host",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.sketch.circle",
+      "tier": "optional-host",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.sketch.clear",
+      "tier": "optional-host",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.sketch.clear_history",
+      "tier": "optional-host",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.sketch.color",
+      "tier": "optional-host",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.sketch.copy_object",
+      "tier": "optional-host",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.sketch.delete_object",
+      "tier": "optional-host",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.sketch.dot",
+      "tier": "optional-host",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.sketch.drawing_from_json",
+      "tier": "optional-host",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.sketch.drawing_text",
+      "tier": "optional-host",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.sketch.end_fill",
+      "tier": "optional-host",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.sketch.end_group",
+      "tier": "optional-host",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.sketch.every",
+      "tier": "optional-host",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.sketch.fill_color",
+      "tier": "optional-host",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.sketch.font",
+      "tier": "optional-host",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.sketch.forward",
+      "tier": "optional-host",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.sketch.frame_interval",
+      "tier": "optional-host",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.sketch.heading",
+      "tier": "optional-host",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.sketch.hide_cursor",
+      "tier": "optional-host",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.sketch.home",
+      "tier": "optional-host",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.sketch.jump_to",
+      "tier": "optional-host",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.sketch.layer_info",
+      "tier": "optional-host",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.sketch.layer_visible",
+      "tier": "optional-host",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.sketch.left",
+      "tier": "optional-host",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.sketch.load_project",
+      "tier": "optional-host",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.sketch.lock_layer",
+      "tier": "optional-host",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.sketch.move_layer",
+      "tier": "optional-host",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.sketch.move_to",
+      "tier": "optional-host",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.sketch.on_click",
+      "tier": "optional-host",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.sketch.on_drag",
+      "tier": "optional-host",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.sketch.on_key",
+      "tier": "optional-host",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.sketch.on_release",
+      "tier": "optional-host",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.sketch.pen",
+      "tier": "optional-host",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.sketch.pen_down",
+      "tier": "optional-host",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.sketch.pen_up",
+      "tier": "optional-host",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.sketch.pick",
+      "tier": "optional-host",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.sketch.polyline",
+      "tier": "optional-host",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.sketch.position",
+      "tier": "optional-host",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.sketch.redo",
+      "tier": "optional-host",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.sketch.rename_layer",
+      "tier": "optional-host",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.sketch.rgb",
+      "tier": "optional-host",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.sketch.right",
+      "tier": "optional-host",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.sketch.save_function",
+      "tier": "optional-host",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.sketch.save_png",
+      "tier": "optional-host",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.sketch.save_project",
+      "tier": "optional-host",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.sketch.save_svg",
+      "tier": "optional-host",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.sketch.set_heading",
+      "tier": "optional-host",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.sketch.set_layer",
+      "tier": "optional-host",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.sketch.show",
+      "tier": "optional-host",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.sketch.show_cursor",
+      "tier": "optional-host",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.sketch.stamp",
+      "tier": "optional-host",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.sketch.svg_text",
+      "tier": "optional-host",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.sketch.text",
+      "tier": "optional-host",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.sketch.text_align",
+      "tier": "optional-host",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.sketch.translate_object",
+      "tier": "optional-host",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.sketch.undo",
+      "tier": "optional-host",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.sketch.width",
+      "tier": "optional-host",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.str",
+      "tier": "core",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.text.contains",
+      "tier": "core",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.text.join",
+      "tier": "core",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.text.replace",
+      "tier": "core",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.text.safe_int",
+      "tier": "core",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.text.split",
+      "tier": "core",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.text.trim",
+      "tier": "core",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.unit.format",
+      "tier": "core",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.unit.make",
+      "tier": "core",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "host.wake",
+      "tier": "core",
+      "phase": "N4",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "cli.source-info",
+      "tier": "core",
+      "phase": "N1",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "cli.lex",
+      "tier": "core",
+      "phase": "N1",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "cli.check",
+      "tier": "core",
+      "phase": "N2",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "cli.run",
+      "tier": "core",
+      "phase": "N5",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "cli.test",
+      "tier": "core",
+      "phase": "N5",
+      "implemented": false,
+      "diagnostic": "E402"
+    },
+    {
+      "id": "cli.info",
+      "tier": "core",
+      "phase": "N0",
+      "implemented": true,
+      "diagnostic": null
+    }
+  ]
+}

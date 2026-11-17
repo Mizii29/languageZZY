@@ -201,7 +201,7 @@ P11累计验收待修：调用notes定位故障可能掩盖原E211（已注入�
 依据 [原生计划](native-runtime-plan.md)；P12/P13 的任务和原状态保持。
 
 - [x] N0-01 真实实现、宿主元数据、全部 12 个 CLI 清单及应用入口盘点；见 [冻结清单](native-runtime-inventory.md)。
-- [ ] N0-02 逐特性能力矩阵与未支持诊断协议。
+- [x] N0-02 逐特性能力矩阵与 E402/schema v1 未支持协议；见 [能力矩阵](native-runtime-capability.md)。
 - [ ] N0-03 C++17/CMake 骨架、工具链验证与核心设计冻结。
 - [ ] N0-04 Array/Map/闭包环和逻辑配额原型，独立 golden。
 - [ ] N0-05 进程依赖、退出、取消/超时、安装验收与 N0 出口。

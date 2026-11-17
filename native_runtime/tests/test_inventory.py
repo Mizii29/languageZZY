@@ -9,6 +9,18 @@ from unittest.mock import patch
 
 
 class InventoryTests(unittest.TestCase):
+    def test_capability_matrix_covers_all_inventory_features(self):
+        folder=ROOT/'native_runtime/tests'
+        inventory=json.loads((folder/'inventory.json').read_text(encoding='utf-8'))
+        features=json.loads((folder/'capabilities.json').read_text(encoding='utf-8'))['features']
+        ids=[f['id'] for f in features]
+        self.assertEqual(len(ids),len(set(ids)))
+        for group,key in [('ast','ast_kinds'),('value','value_kinds'),('host','native_functions')]:
+            self.assertEqual({f['id'] for f in features if f['id'].startswith(group+'.')},
+                             {group+'.'+name for name in inventory[key]})
+        self.assertEqual([f['id'] for f in features if f['implemented']],['cli.info'])
+        self.assertTrue(all(f['diagnostic']=='E402' for f in features if not f['implemented']))
+
     def test_frozen_records_and_no_token_names_as_ast(self):
         record = snapshot()
         frozen = json.loads((ROOT/'native_runtime/tests/inventory.json').read_text(encoding='utf-8'))

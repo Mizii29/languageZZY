@@ -78,3 +78,7 @@ P01 起收录以上 .zzy 和期望清单，尚未支持的语法示例按阶段�
 P06 实际证据：四例在 tests/p06/inputs/diagnostic-*.zzy 和外部 cases.json；test_p06_diagnostics 核对两种格式、BOM/CRLF/Unicode/Tab/EOF 与 internal_error；test_p06_process 向独立隐藏控制台发送真实 Ctrl+C，验证 run/test 的 cancelled、130 和清理。其他宿主平台未验证；诊断规则及错误码没有改变。
 
 P08-04扩展既有E401的说明至SQLite宿主操作失败，主位置为db调用点，错误消息不包含SQL数据或数据库路径；类型/范围仍为E201/E208，资源/取消保持原信号。事务提交边界见Web集中契约。
+
+## 原生移植能力门禁（N0）
+
+新增 E402 的集中定义是“当前后端尚未实现能力”，不是 ZZY 语法错误。schema v1、notes、退出分类保持；准备阶段拒绝退出 2。N0 在读源码前拒绝尚未实现的命令，file/span=null，notes 含 capability=<命令>；输入文件有效与否均不触发执行或 Python 回退。未知命令/参数为 E401/2。逐项范围见[能力矩阵](../development/native-runtime-capability.md)。既有 Python 后端不因此新增或拒绝能力。
