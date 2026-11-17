@@ -117,3 +117,7 @@ P10-01/P10-06已选择：[集中契约](runtime/web.md)、[独立合约演示](.
 ## NATIVE-01 独立路线
 
 按[原生计划](development/native-runtime-plan.md)与 todo 执行；[盘点](development/native-runtime-inventory.md)、[能力矩阵](development/native-runtime-capability.md)、[实现决策](development/native-runtime-decisions.md)和[N0 原始证据索引](../native_runtime/tests/n0-report.md)分别维护。当前 info/堆原型可测，语言执行未移植；CMake/CTest 缺失使 N0 出口未过。P12/P13 状态不变。
+
+### N1 原生前端补充
+
+用户授权的 N0-03 顺序例外见原生计划/todo；当前 info/source-info/lex 的正式边界集中在 [原生前端契约](development/native-frontend-contract.md)，[N1报告](../native_runtime/tests/n1-report.md)与[原生命令](../native_runtime/README.md)提供实际 GCC 证据和以后需补的 CMake/CTest/install 门禁。N0 总出口未过，Python 默认入口及 P12/P13 保持。

@@ -206,10 +206,21 @@ P11累计验收待修：调用notes定位故障可能掩盖原E211（已注入�
 - [x] N0-04 Array/Map/闭包环、别名根/请求隔离、配额重试和异常归还原型；Debug/Release各12例通过，6条独立语言 golden 经稳定CLI核对。
 - [x] N0-05 进程依赖、退出、取消/超时清理、源码外 Windows 验收脚本与固定手册；Debug/Release 各32 个原生过程用例通过；CMake/CTest/安装/真实 Ctrl+C 未验证，N0 总出口仍未通过。
 
-N1—N8 尚未开始；N0 未达到出口前不进入 N1。
+N0 总出口未过；后续用户明确授权的 N1 顺序例外及实际状态见下方，不外推 N2—N8。
 
 ## N1 顺序例外（2026-11-17，用户明确授权）
 
 N0-01/02/04/05 的语义、逐特性能力、E402、所有权及固定 golden 证据已复核；N0-03 仍未完成，N0 总出口未通过。本轮仅暂缓 CMake configure/build、CTest 与安装验收，使用已有 GCC 8.1.0 实现并验证 N1-01—04。此授权覆盖原有“未过 N0 不进入 N1”的顺序限制，不覆盖正式构建门禁；不安装工具链，不进入 N2，不修改 Python 默认入口，不回退 Python。
 
 N1 通过时只能记录“N1 实现与 GCC 验证完成，正式 CMake/CTest 验收待补”。以后必须对最新代码重新执行 Debug/Release 配置、构建、非空 CTest、install 与源码外 smoke，不能沿用 N0 原型证据。
+
+## N1 最终交接（2026-11-18，按用户顺序例外）
+
+- [x] N1-01 严格UTF-8源码快照、字节/码点坐标、Token、source-info/lex；GCC实现与验证完成。
+- [x] N1-02 全部固定词法拼写/字面量/转义/注释/非法输入；原62项不变、新25项，87/87固定用例通过。
+- [x] N1-03 schema1错误/退出、BOM/CRLF/Tab/EOF/补充字符与动态前端配额/取消；原生12项与CLI62项通过。
+- [x] N1-04 固定golden/边界/坏输入/无用户代码执行/无Python与源码外运行；Debug/Release均通过，见 [N1报告](../../native_runtime/tests/n1-report.md)。
+
+**N1 实现与 GCC 验证完成，正式 CMake/CTest 验收待补。** 以上勾选仅表示用户授权的GCC范围；N0-03仍未勾选、N0总体未通过，不能改称完整正式构建验收。两种构建各47过程验收（含1个预期强杀超时单列）、固定87/87、CLI62/62、源码外smoke6/6；Python相关回归105/105、现有static退出0。未验证：CMake/CTest/install/MSVC/clang-cl/真实手动Ctrl+C/其他平台，未重跑核心全量/Web/GUI。原始证据 benchmarks/results/native/n1。
+
+下一项：补 N0-03，对最新代码运行 native_runtime/README.md 的配置→构建→非空CTest→安装→源码外smoke命令；本轮停止，不进入N2。P12/P13及用户未提交材料保留。

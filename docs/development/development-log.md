@@ -918,3 +918,17 @@ Release direct-GCC源码外验收46项通过，实际CLI模块和进程树无Pyt
 ### N1-04 验收前补强
 
 复核补上 cwd 的规范长路径解析，避免从8.3别名目录启动时相对文件名错误；补大小写别名快照、UTF-8解码/行表/SHA取消点的独立原生测试。当前前端12项通过。新增安装后源码外smoke脚本：针对直接GCC EXE的6命令测试通过，仅证明脚本与现有EXE，不能算cmake --install或CRT分发通过。CMake已登记32项（含纯PowerShell固定清单），没有执行，不作正式验收结论。
+
+## N1-04 最终验收与交付（2026-11-18）
+
+**N1 实现与 GCC 验证完成，正式 CMake/CTest 验收待补。** 实际完整命令、环境、输入/固定答案、失败修复和限制见 native_runtime/tests/n1-report.md 与 benchmarks/results/native/n1；不是仅设计或静态检查。
+
+最终 Debug/Release 重新构建均退出0，各47过程验收（46正常记录、1预期强杀超时独列），纯PowerShell固定清单87/87、Python开发协调器同87/87、CLI边界62/62、直接EXE源码外smoke6/6。原生前端12项和旧堆12项在过程验收内；实际扫描交错取消、解码/行表/哈希安全点、失败配额回滚/关闭/下一请求恢复通过。实际CLI模块/子进程及5个EXE的PE导入检查未发现Python/GUI，空PATH与无效PYTHONPATH、中文空格源码外路径通过。没有把预期强杀当语言运行通过。
+
+105项Python相关回归无跳过通过（33.644秒）；scripts.ci static --output dist/native-n1-work/ci-static 退出0；独立审计核对每配置42个原生文件指纹和5个EXE，全部报告对应同一产物SHA。requirement SHA不变；15个不属本轮的已有修改文件逐字节保留，共享文档仅本轮原生段/追加内容入索引，原始人工和P12/P13修改未提交。Debug CLI SHA 739035e630423b2e001e287e664bb39627cb4a093e5fc9c5f189560fd331b9ac；Release b4b9d8a2276380ed8649fb7f4df23d47998c02956fe85aa667c5d2271b7ac847。
+
+未执行正式CMake配置/构建/CTest/install（工具缺失、用户授权暂缓），未验证MSVC/clang-cl/CRT分发/手动Ctrl+C/其他平台/sanitizer；本轮未重跑全Python核心/Web/GUI。CMake已登记32个非空测试不等于通过。N0-03及N0总出口保持未完成，不进入N2。以后必须对最新代码补跑README中Debug/Release cmake --preset、--build、ctest --no-tests=error、--install及安装后的源码外smoke；不沿用N0旧证据。
+
+本地按小阶段保留 eec67ba（例外）、1673c89（源码）、93e9c08（词法）、ed09e9e（盘点期望修复）、d0b2186（诊断资源边界）、d7dbc4a（取消/别名/门禁补强），最终记录另行本地提交；不推送、不改写历史、不切默认入口。
+
+收尾补记：生成报告时一次误用 static.json 路径触发 FileNotFoundError，确认现有CI输出为report.json后修正；不属于测试失败或通过结果。完整文档落地后再次执行 scripts.ci static --output dist/native-n1-work/ci-static-final，退出0；git diff --check退出0。第二份static原始报告另存ci-static-final.json，保留首次快照，不改旧结果。

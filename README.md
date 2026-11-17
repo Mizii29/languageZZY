@@ -179,4 +179,4 @@ P08-04/05本轮新增SQLite事务与独立任务示例；实际db签名、提交
 
 ## 独立原生实验线 NATIVE-01
 
-原生阶段与 P12/P13 分开，Python 仍为默认入口。N0 已有 [C++17 info/堆原型与复现命令](native_runtime/README.md)、[能力矩阵](docs/development/native-runtime-capability.md)和[真实证据](native_runtime/tests/n0-report.md)。只有 info 可用，run/check/test 等明确 E402，不回退 Python。本机缺 CMake/CTest/正式工具链，N0 总出口未通过；不进入 N1，也不宣称已完成语言移植。
+原生阶段与 P12/P13 分开，Python 仍为默认入口。已按用户顺序例外实现 N1 的 info/source-info/lex、严格 UTF-8、码点定位与前端资源/诊断；run/check/test 仍 E402，无 Python fallback。[使用与正式门禁命令](native_runtime/README.md)、[集中契约](docs/development/native-frontend-contract.md)、[N1真实证据](native_runtime/tests/n1-report.md)。N1 实现与 GCC 验证完成，正式 CMake/CTest 验收待补；N0-03 及 N0 总出口未通过，不进入 N2，不宣称完整语言移植。

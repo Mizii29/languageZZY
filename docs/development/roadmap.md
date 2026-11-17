@@ -311,3 +311,7 @@ P00—P07、P09、E1—E4、P08及P10-01/06已有验收，P11评估/自动验收
 按 [原生计划](native-runtime-plan.md) 的 N0→N8 推进；不重编号、不改变 P12/P13 状态。
 N0 只做盘点、能力/所有权冻结和堆原型，N1 才开始 Lexer。阶段状态唯一登记在 todo。
 当前 Python 入口、应用和测试保留，原生不得静默回退。实际冻结清单见 [inventory](native-runtime-inventory.md)。
+
+### N1 顺序例外与当前交接（2026-11-18）
+
+用户明确授权暂缓 N0-03 CMake/CTest/install，先以已有 GCC 完成 N1-01—04；正式依赖门禁没有通过，N0 总体不标完成，P12/P13 不变。接口集中见 [原生前端契约](native-frontend-contract.md)，真实 GCC 证据见 [N1报告](../../native_runtime/tests/n1-report.md)。N1 实现与 GCC 验证完成，正式 CMake/CTest 验收待补；本轮不进入 N2。下一项先对最新代码补 N0-03，命令在 native_runtime/README.md。

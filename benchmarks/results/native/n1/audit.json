@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "passed": true,
+  "date": "2026-11-18",
+  "checks": [
+    {
+      "configuration": "debug",
+      "source_files": 42,
+      "artifacts": 5,
+      "process_cases": 47,
+      "fixed_cases": 87,
+      "cli_cases": 62,
+      "smoke_cases": 6,
+      "exe_sha256": "739035e630423b2e001e287e664bb39627cb4a093e5fc9c5f189560fd331b9ac"
+    },
+    {
+      "configuration": "release",
+      "source_files": 42,
+      "artifacts": 5,
+      "process_cases": 47,
+      "fixed_cases": 87,
+      "cli_cases": 62,
+      "smoke_cases": 6,
+      "exe_sha256": "b4b9d8a2276380ed8649fb7f4df23d47998c02956fe85aa667c5d2271b7ac847"
+    }
+  ],
+  "preserved_preexisting_files": [
+    "apps/zzy-campus/README.md",
+    "apps/zzy-campus/agent-log.md",
+    "apps/zzy-campus/line-count.json",
+    "apps/zzy-campus/main.zzy",
+    "apps/zzy-campus/tasks.zzy",
+    "docs/design详细版.md",
+    "docs/development/ci-design.md",
+    "docs/development/final-test-plan.md",
+    "docs/development/manual-test-guide.md",
+    "docs/features/innovation.md",
+    "docs/manual-tests/README.md",
+    "docs/runtime/optimization-plan.md",
+    "skills/README.md",
+    "skills/guide.md",
+    "tests/test_p09_app.py"
+  ],
+  "shared_docs": "only native owned paragraphs replaced and N1 additions appended; index built separately from preexisting changes",
+  "requirement_unchanged": true,
+  "formal_cmake_ctest_install": "not run; N0-03 remains unchecked"
+}

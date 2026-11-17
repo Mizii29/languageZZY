@@ -1,0 +1,1 @@
+Direct compiler prototype built in D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\build\native-direct-release; this is NOT CMake/CTest acceptance.

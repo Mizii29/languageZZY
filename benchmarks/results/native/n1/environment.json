@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "os": "Windows-11-10.0.26200-SP0",
+  "python_coordinator": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+  "compiler": "D:\\software\\mingw64\\bin\\g++.exe",
+  "compiler_sha256": "2a5a72df806256ce16b7dbb6667b2cace1669259dc9aa2874849ccfa40f593bb",
+  "compiler_version": "g++.exe (x86_64-win32-seh-rev0, Built by MinGW-W64 project) 8.1.0\r\nCopyright (C) 2018 Free Software Foundation, Inc.\r\nThis is free software; see the source for copying conditions.  There is NO\r\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\r\n\r\n",
+  "machine": "x86_64-w64-mingw32",
+  "native_runtime_uses_python": false,
+  "build_configurations": {
+    "Debug": [
+      "-std=c++17",
+      "-Wall",
+      "-Wextra",
+      "-Wpedantic",
+      "-Werror",
+      "-static-libgcc",
+      "-static-libstdc++",
+      "-D_WIN32_WINNT=0x0A00",
+      "-DWINVER=0x0A00",
+      "-O0",
+      "-g",
+      "-municode (CLI only)"
+    ],
+    "Release": [
+      "same common options",
+      "-O2",
+      "-DNDEBUG",
+      "-municode (CLI only)"
+    ]
+  },
+  "tools": {
+    "cmake.exe": null,
+    "ctest.exe": null,
+    "cl.exe": null,
+    "clang-cl.exe": null
+  },
+  "formal_cmake_ctest_install": "deferred by explicit user authorization; not passed",
+  "manual_ctrl_c": "unverified",
+  "gui": "not applicable to N1; not tested",
+  "sanitizer": "not tested",
+  "requirement_sha256": "b099c19fc339ce1dc1aab7e9d6c8126a9c5c9ace3d31b969a0623df90f521d2b"
+}
