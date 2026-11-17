@@ -1,0 +1,46 @@
+{
+  "cases": {
+    "X00": [
+      null
+    ],
+    "X01": [
+      1000,
+      10000
+    ],
+    "X02": [
+      100,
+      1000
+    ],
+    "X03": [
+      100,
+      1000
+    ]
+  },
+  "small_cases": {
+    "X00": [
+      null
+    ],
+    "X01": [
+      0,
+      1,
+      5
+    ],
+    "X02": [
+      0,
+      1,
+      5
+    ],
+    "X03": [
+      0,
+      1,
+      5
+    ]
+  },
+  "warmups": 3,
+  "samples": 15,
+  "seed": 20261117,
+  "timeout_seconds": 30,
+  "batch": "preflight target 50ms execute, max 1s total and 100000 calls",
+  "scope": "source read; prepare; fresh context initialization; bench() call; result validation; cleanup",
+  "exclusions": "child process startup and output JSON excluded from inner phases"
+}

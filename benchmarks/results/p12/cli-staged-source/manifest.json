@@ -1,0 +1,45 @@
+{
+  "cases": {
+    "X00": [
+      null
+    ],
+    "X01": [
+      1000,
+      10000
+    ],
+    "X02": [
+      100,
+      1000
+    ],
+    "X03": [
+      100,
+      1000
+    ]
+  },
+  "small_cases": {
+    "X00": [
+      null
+    ],
+    "X01": [
+      0,
+      1,
+      5
+    ],
+    "X02": [
+      0,
+      1,
+      5
+    ],
+    "X03": [
+      0,
+      1,
+      5
+    ]
+  },
+  "warmups": 3,
+  "samples": 15,
+  "timeout_seconds": 30,
+  "seed": 20261117,
+  "scope": "full child CLI start to exit including streams",
+  "cache": "new process each run; OS page cache uncontrolled"
+}

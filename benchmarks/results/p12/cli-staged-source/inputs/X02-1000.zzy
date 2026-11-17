@@ -1,0 +1,12 @@
+(zno) n := 1000;
+(addnew) term(i) {
+    (zif?:) i % 2 == 0 { (return) i + 1; }
+    (return) i - 1;
+}
+(addnew) bench() {
+    (zyes) i := 0;
+    (zyes) total := 0;
+    (while) i < n { total <- total + term(i); i <- i + 1; }
+    (return) total;
+}
+io.print(bench());

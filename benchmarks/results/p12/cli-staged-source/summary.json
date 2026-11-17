@@ -1,0 +1,160 @@
+{
+  "statistics": [
+    {
+      "case": "X00",
+      "n": null,
+      "language": "zzy",
+      "valid": 15,
+      "planned": 15,
+      "median_ms": 364.8977,
+      "mad_ms": 8.413099999999986,
+      "min_ms": 343.3552,
+      "max_ms": 445.8036
+    },
+    {
+      "case": "X00",
+      "n": null,
+      "language": "python",
+      "valid": 15,
+      "planned": 15,
+      "median_ms": 233.6975,
+      "mad_ms": 5.636600000000016,
+      "min_ms": 223.5775,
+      "max_ms": 277.0864
+    },
+    {
+      "case": "X01",
+      "n": 1000,
+      "language": "zzy",
+      "valid": 15,
+      "planned": 15,
+      "median_ms": 395.6961,
+      "mad_ms": 15.49169999999998,
+      "min_ms": 372.7728,
+      "max_ms": 539.7263
+    },
+    {
+      "case": "X01",
+      "n": 1000,
+      "language": "python",
+      "valid": 15,
+      "planned": 15,
+      "median_ms": 240.7993,
+      "mad_ms": 9.050999999999988,
+      "min_ms": 220.4335,
+      "max_ms": 291.468
+    },
+    {
+      "case": "X01",
+      "n": 10000,
+      "language": "zzy",
+      "valid": 15,
+      "planned": 15,
+      "median_ms": 631.6877,
+      "mad_ms": 29.431299999999965,
+      "min_ms": 598.4725,
+      "max_ms": 776.055
+    },
+    {
+      "case": "X01",
+      "n": 10000,
+      "language": "python",
+      "valid": 15,
+      "planned": 15,
+      "median_ms": 239.5523,
+      "mad_ms": 8.84190000000001,
+      "min_ms": 222.5587,
+      "max_ms": 268.4172
+    },
+    {
+      "case": "X02",
+      "n": 100,
+      "language": "zzy",
+      "valid": 15,
+      "planned": 15,
+      "median_ms": 372.7987,
+      "mad_ms": 14.7072,
+      "min_ms": 352.0502,
+      "max_ms": 456.7512
+    },
+    {
+      "case": "X02",
+      "n": 100,
+      "language": "python",
+      "valid": 15,
+      "planned": 15,
+      "median_ms": 243.0634,
+      "mad_ms": 12.269900000000007,
+      "min_ms": 229.2138,
+      "max_ms": 299.5495
+    },
+    {
+      "case": "X02",
+      "n": 1000,
+      "language": "zzy",
+      "valid": 15,
+      "planned": 15,
+      "median_ms": 445.8267,
+      "mad_ms": 24.652300000000025,
+      "min_ms": 407.7695,
+      "max_ms": 593.4582
+    },
+    {
+      "case": "X02",
+      "n": 1000,
+      "language": "python",
+      "valid": 15,
+      "planned": 15,
+      "median_ms": 246.7972,
+      "mad_ms": 12.179200000000009,
+      "min_ms": 227.3155,
+      "max_ms": 383.5796
+    },
+    {
+      "case": "X03",
+      "n": 100,
+      "language": "zzy",
+      "valid": 15,
+      "planned": 15,
+      "median_ms": 370.6666,
+      "mad_ms": 10.700999999999965,
+      "min_ms": 347.8592,
+      "max_ms": 406.0814
+    },
+    {
+      "case": "X03",
+      "n": 100,
+      "language": "python",
+      "valid": 15,
+      "planned": 15,
+      "median_ms": 243.822,
+      "mad_ms": 10.0103,
+      "min_ms": 227.6849,
+      "max_ms": 313.1986
+    },
+    {
+      "case": "X03",
+      "n": 1000,
+      "language": "zzy",
+      "valid": 15,
+      "planned": 15,
+      "median_ms": 398.5027,
+      "mad_ms": 9.216700000000003,
+      "min_ms": 377.5734,
+      "max_ms": 498.5792
+    },
+    {
+      "case": "X03",
+      "n": 1000,
+      "language": "python",
+      "valid": 15,
+      "planned": 15,
+      "median_ms": 240.3307,
+      "mad_ms": 9.91040000000001,
+      "min_ms": 230.4203,
+      "max_ms": 458.7912
+    }
+  ],
+  "failures": [],
+  "total_records": 286
+}

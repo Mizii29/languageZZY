@@ -1,0 +1,86 @@
+[
+  {
+    "case": "X00",
+    "n": null,
+    "language": "zzy",
+    "batch": 817
+  },
+  {
+    "case": "X00",
+    "n": null,
+    "language": "python",
+    "batch": 100000
+  },
+  {
+    "case": "X01",
+    "n": 1000,
+    "language": "zzy",
+    "batch": 1
+  },
+  {
+    "case": "X01",
+    "n": 1000,
+    "language": "python",
+    "batch": 957
+  },
+  {
+    "case": "X01",
+    "n": 10000,
+    "language": "zzy",
+    "batch": 1
+  },
+  {
+    "case": "X01",
+    "n": 10000,
+    "language": "python",
+    "batch": 35
+  },
+  {
+    "case": "X02",
+    "n": 100,
+    "language": "zzy",
+    "batch": 6
+  },
+  {
+    "case": "X02",
+    "n": 100,
+    "language": "python",
+    "batch": 2305
+  },
+  {
+    "case": "X02",
+    "n": 1000,
+    "language": "zzy",
+    "batch": 1
+  },
+  {
+    "case": "X02",
+    "n": 1000,
+    "language": "python",
+    "batch": 719
+  },
+  {
+    "case": "X03",
+    "n": 100,
+    "language": "zzy",
+    "batch": 15
+  },
+  {
+    "case": "X03",
+    "n": 100,
+    "language": "python",
+    "batch": 5435
+  },
+  {
+    "case": "X03",
+    "n": 1000,
+    "language": "zzy",
+    "batch": 1
+  },
+  {
+    "case": "X03",
+    "n": 1000,
+    "language": "python",
+    "batch": 259
+  }
+]
