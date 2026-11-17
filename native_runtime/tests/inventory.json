@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "source_sha": "ff7e959cbe5cbfc6a9f288236a1cbe8bf81a2449",
+  "source_sha": "b9294ef5cd7616d5c60e48e7eb758acc3c1482f3",
   "source_hashes": {
     "tests/check/cases.json": "5631699c99f75cd92ee90fcc9f1e8873c8f53690f53006092ac280d07bc6f6f5",
     "tests/e1/cases.json": "f1bd472a980ed00a7423616b85ca42a979f446873fa79d5530964e93699daee5",
@@ -162,8 +162,6 @@
     "zzz"
   ],
   "ast_kinds": [
-    "LAZY",
-    "PLUS",
     "add",
     "arm",
     "array",

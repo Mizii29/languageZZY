@@ -21,13 +21,18 @@ def snapshot():
     from tests.blackbox import DEFAULT_MANIFESTS, load_cases
 
     def calls(path, name, index=0):
+        def choices(value):
+            if isinstance(value, ast.Constant) and isinstance(value.value, str):
+                return [value.value]
+            if isinstance(value, ast.IfExp):
+                return choices(value.body) + choices(value.orelse)
+            return []
         tree = ast.parse((ROOT / path).read_text(encoding='utf-8'))
-        return sorted({value.value for node in ast.walk(tree)
+        return sorted({value for node in ast.walk(tree)
             if isinstance(node, ast.Call) and len(node.args) > index
             and ((isinstance(node.func, ast.Name) and node.func.id == name)
                  or (isinstance(node.func, ast.Attribute) and node.func.attr == name))
-            for value in ast.walk(node.args[index])
-            if isinstance(value, ast.Constant) and isinstance(value.value, str)})
+            for value in choices(node.args[index])})
 
     paths = sorted({*('zzy/' + p for p in ('ast_nodes.py', 'parser.py', 'resolver.py',
         'values.py', 'interpreter.py', 'resources.py', 'diagnostics.py', 'tokens.py')),
@@ -78,7 +83,7 @@ def main():
         previous = json.loads(args.check.read_text(encoding='utf-8'))
         # A later commit SHA alone does not change the frozen implementation.
         previous.pop('source_sha'); record.pop('source_sha')
-        if record != previous:
+        if json.loads(json.dumps(record)) != previous:
             raise SystemExit('Inventory drift: review the changed sources; do not regenerate golden expectations.')
     elif args.output:
         args.output.write_text(json.dumps(record, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')

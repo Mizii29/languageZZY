@@ -838,3 +838,5 @@ Git 提交：真实标识 / 未提交
 - 只读 inventory.py 实查 53 类 AST 节点（含动态分派）、24 类 Value、103 宿主函数、12 个默认 CLI manifest/1738 例，保存实际源码规范化 SHA-256、签名/ABI、Resolver 布局、资源生效记录及应用入口。发现 db 内建名字集合差异，登记而不改变 Python 行为。
 - 实际命令 `.\.venv\Scripts\python.exe -X utf8 native_runtime/tools/inventory.py --output native_runtime/tests/inventory.json` 及 `--check native_runtime/tests/inventory.json` 均退出 0；工具不加载 Tk/ASGI 或用户模块。期望不是此盘点工具生成的解释器输出。
 - 未安装新工具链；已发现 GCC 8.1.0 x86_64-w64-mingw32，cmake/ctest/MSVC/clang-cl 在 PATH 和常见安装目录均未发现。构建证据待后续专项，不能将盘点通过计作 N0 整体完成。
+
+N0-01 自检修复：按 systematic-debugging 先定位 native_extensions/native_functions 的 tuple/list 差异及条件 Token 泄入节点清单，再修复序列化比较和条件分支值提取。新增独立固定数量/节点/Resolver 断言、JSON 往返及删除节点漂移反例；`python -X utf8 -m unittest native_runtime.tests.test_inventory -v` 3/3 通过。前一提交内错误计数/首检结果在本提交更正，不改写历史。
