@@ -1,4 +1,4 @@
-# N0 Windows 验收与未完成门禁
+# Windows 验收与未完成门禁（N0历史 / N1当前）
 
 本文件是可复制步骤，不是人工通过记录。当前结果见 [N0 报告](n0-report.md)；未实操的项保持未验证。
 
@@ -8,14 +8,14 @@
 
 ```powershell
 & native_runtime/tools/build-direct.ps1 -Configuration Debug
-& native_runtime/tools/acceptance.ps1 -BuildDirectory build/native-direct-debug -Output dist/native-n0-new-debug
+& native_runtime/tools/acceptance.ps1 -BuildDirectory build/native-direct-debug -Output dist/native-n1-new-debug
 & native_runtime/tools/build-direct.ps1 -Configuration Release
-& native_runtime/tools/acceptance.ps1 -BuildDirectory build/native-direct-release -Output dist/native-n0-new-release
+& native_runtime/tools/acceptance.ps1 -BuildDirectory build/native-direct-release -Output dist/native-n1-new-release
 ```
 
-每个新 Output 目录必须不存在；脚本不覆盖旧证据。原生产物复制到仓库以外的系统临时目录 `ZZY N0 <GUID>/中文 路径/bin`；保留目录和报告以供审阅，不自动递归删除。
+每个新 Output 目录必须不存在；脚本不覆盖旧证据。原生产物复制到仓库以外的系统临时目录 `ZZY N1 <GUID>/中文 路径/bin`；保留目录和报告以供审阅，不自动递归删除。
 程序进程的 PATH 清空、PYTHONPATH 无效；依赖检查使用父 PowerShell 的现有 objdump，仅是测试工具，不是 exe 的依赖。
-固定预期为 32 条过程记录全部通过；其中一条是有意超时探针，必须记录 timed_out=true/实际强杀退出码/process_exited=true，不将其算作语言执行成功。
+N0归档固定预期为32条；当前脚本为N1，应按 [N1报告](n1-report.md) 的47条验收，旧N0报告不重写。其中一条是有意超时探针，必须记录 timed_out=true/实际强杀退出码/process_exited=true，不将其算作语言执行成功。
 超时探针只持有本进程堆、不创建语言子进程；父脚本终止该进程并验证退出，再运行 success。硬杀不会执行 C++ RAII；这与协作取消的三项计数归零测试分别记录。完整 test worker 进程树留 N5。
 
 ## 人工 Ctrl+C（本轮未执行）
@@ -46,4 +46,6 @@ cmake --install build/native-release --config Release --prefix dist/native-stage
 将 dist/native-stage/bin 复制到仓库以外的新建中文空格目录；从该目录运行 zzy-native.exe info、--help、run no-execute.zzy --diagnostic-format json。
 成功命令0；run必须E402/2且无用户副作用。该目录不含 Python、源码、虚拟环境，子进程PATH/PYTHONPATH清空。
 核对 release exe SHA、dumpbin /dependents（MSVC）或现有 objdump -p、模块枚举和进程树；记录 VC runtime 版本与缺失时的实际加载错误，不私装runtime或把 /MDd 发给用户。
-当前无工具链不能填写这些结果，N0-03 仍未完成，总出口未通过；不得据原型通过进入 N1。
+当前无工具链不能填写这些结果，N0-03 仍未完成，总出口未通过；本次用户已明确授权暂缓N0-03后实施N1；该例外不豁免正式门禁，也不授权进入N2。
+
+最新命令包括安装后源码外smoke，见 [原生使用说明](../README.md)。旧N0报告/原始产物身份保留，当前不能重跑新脚本却沿用旧32条结论。人工Ctrl+C仍未验证。

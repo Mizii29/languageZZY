@@ -19,3 +19,15 @@
 
 信息入口报告编译器、指针位数、CRT 和声明策略。正式构建、安装、Unicode 数据来源和完整语言执行均须其阶段实际验证。
 没有性能/内存相对 Python/C 的结论，本原型不等价于完整解释器。
+
+## N1 实施补充（用户顺序例外）
+
+N0-03 未过，按用户2026-11-17授权先实施 N1。以上 N0 冻结表是设计起点，以下覆盖其中的阶段性“未接线”状态，不改语义：
+
+- Unicode15.0.0分类表已按锁定 CPython3.12.14 离线生成，元数据见 native_runtime/tests/unicode-tables.json；EXE 不调用 Python。
+- 源码路径采用 Win32 W API/wmain，避开现有 GCC8.1 std::filesystem 编译错误；没有安装或修改工具链。
+- --limits、前端活动资源、规范JSON/SHA已接线；22键全部保留，尚未执行的AST/运行时/缓存键不宣称已验证。
+- 零第三方依赖保持；新增严格、有限深度的 limits 配置解析器，不是 N4 的语言JSON解码接口。
+- 源码为 const 快照/码点映射，Token持有const Source；每个 SourceLoader/FrontendMeter 独立，失败不发布费用，退出幂等清理。
+
+实现与证据见 [前端契约](native-frontend-contract.md)、[N1报告](../../native_runtime/tests/n1-report.md)。正式 CMake/CTest/install 仍待最新代码重跑，N0总体没有通过。

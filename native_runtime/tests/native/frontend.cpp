@@ -66,6 +66,7 @@ void loader() {
         zzy::SourceLoader sources(meter);
         const auto old=sources.load(a);write(a,"changed");
         require(sources.load(root+L"/./a.zzy")==old,"immutable canonical snapshot");
+        require(sources.load(root+L"/A.ZZY")==old,"case alias does not re-read snapshot");
         require(old->raw=="ab" && meter.source_total==2 && meter.module_count==1,"snapshot charges");
         expect_error("E211",[&]{sources.load(b);},"source_total_bytes");
         expect_error("E401",[&]{sources.load(root+L"/absent");});
@@ -203,11 +204,28 @@ void output_limits() {
     require(out.str()=="abc" && meter.stdout_used==3,"output failure must be atomic");
     zzy::FrontendMeter other(policy,cancel);require(other.stdout_used==0,"output states isolated");
 }
+void cancellation_points() {
+    unsigned checks=0;
+    try {
+        (void)zzy::decode_utf8(std::string(5000,'a'),false,[&]{if(++checks==2) throw zzy::Cancelled{};});
+        throw std::runtime_error("decode did not cancel");
+    }catch(const zzy::Cancelled&) {require(checks==2,"decode safe point");}
+    checks=0;
+    try {
+        (void)zzy::Source(L"cancel",std::string(5000,'a'),[&]{if(++checks==7) throw zzy::Cancelled{};});
+        throw std::runtime_error("line mapping did not cancel");
+    }catch(const zzy::Cancelled&) {require(checks==7,"line mapping safe point");}
+    checks=0;
+    try {
+        (void)zzy::sha256(std::string(5000,'a'),[&]{if(++checks==2) throw zzy::Cancelled{};});
+        throw std::runtime_error("hash did not cancel");
+    }catch(const zzy::Cancelled&) {require(checks==2,"hash safe point");}
+}
 
 }
 int main(int argc,char** argv) {
     zzy::configure_streams();
-    const std::pair<const char*,std::function<void()>> cases[]={{"sha256",hash},{"utf8",utf8},{"positions",positions},{"source-loader",loader},{"policy",policy},{"diagnostics",diagnostics},{"lexer-boundaries",lexer_boundaries},{"default-boundaries",default_boundaries},{"source-defaults",source_defaults},{"cancel-during-scan",cancel_scan},{"output",output_limits}};
+    const std::pair<const char*,std::function<void()>> cases[]={{"sha256",hash},{"utf8",utf8},{"positions",positions},{"source-loader",loader},{"policy",policy},{"diagnostics",diagnostics},{"lexer-boundaries",lexer_boundaries},{"default-boundaries",default_boundaries},{"source-defaults",source_defaults},{"cancel-during-scan",cancel_scan},{"output",output_limits},{"cancellation-points",cancellation_points}};
     unsigned count=0;
     try {
         if(argc>2) throw std::runtime_error("one case selector only");

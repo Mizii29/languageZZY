@@ -914,3 +914,7 @@ N1 通过时只能记录“N1 实现与 GCC 验证完成，正式 CMake/CTest �
 独立固定黑盒87/87（既有62、新增25）及纯PowerShell87/87；CLI专项首轮60/62，暴露参数错误时JSON格式选择及子命令help错误读取配置。按 zzy/cli.py 的 _requested_format 和 argparse help 行为修复后62/62；失败原样保存在 dist/native-n1-work/cli-first.json，最终将归档并注明旧产物。未放宽固定期望。
 
 Release direct-GCC源码外验收46项通过，实际CLI模块和进程树无Python/GUI，PATH空/PYTHONPATH无效；其中包括11前端、12堆、既有协议/取消/超时恢复等过程。Python相关前端与盘点回归105/105，33.644秒。N1-04最终Debug/Release匹配产物和证据重跑随后进行，CMake/CTest/install仍待补。
+
+### N1-04 验收前补强
+
+复核补上 cwd 的规范长路径解析，避免从8.3别名目录启动时相对文件名错误；补大小写别名快照、UTF-8解码/行表/SHA取消点的独立原生测试。当前前端12项通过。新增安装后源码外smoke脚本：针对直接GCC EXE的6命令测试通过，仅证明脚本与现有EXE，不能算cmake --install或CRT分发通过。CMake已登记32项（含纯PowerShell固定清单），没有执行，不作正式验收结论。

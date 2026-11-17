@@ -86,7 +86,7 @@ try {
     }
     $result=Invoke-Native 'native-heap-tests.exe' 'not-a-case' 1
     Require ($result.stderr.Trim() -eq 'no cases collected') 'empty test selection was not rejected'
-    foreach($case in @('sha256','utf8','positions','source-loader','policy','diagnostics','lexer-boundaries','default-boundaries','source-defaults','cancel-during-scan','output')) {
+    foreach($case in @('sha256','utf8','positions','source-loader','policy','diagnostics','lexer-boundaries','default-boundaries','source-defaults','cancel-during-scan','output','cancellation-points')) {
         $result=Invoke-Native 'native-frontend-tests.exe' $case
         Require ($result.stdout.Trim() -eq ($case+": passed`nfrontend: 1 cases passed")) ('frontend case missing: '+$case)
     }

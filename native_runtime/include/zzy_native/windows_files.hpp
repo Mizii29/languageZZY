@@ -70,6 +70,9 @@ inline std::string display_path(const std::wstring& path) {
     std::wstring cwd(size,L'\0');const auto length=GetCurrentDirectoryW(size,cwd.data());
     if(!length || length>=size) return narrow(absolute);
     cwd.resize(length);
+    FileHandle directory(CreateFileW(extended_path(cwd).c_str(),0,FILE_SHARE_READ|FILE_SHARE_WRITE|FILE_SHARE_DELETE,
+                                    nullptr,OPEN_EXISTING,FILE_FLAG_BACKUP_SEMANTICS,nullptr));
+    if(directory) cwd=final_path(directory.get());
     const auto parts=[](const std::wstring& value) {
         std::vector<std::wstring> result;
         std::size_t begin=0;
