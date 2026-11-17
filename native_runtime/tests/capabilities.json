@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "stage": "N0",
+  "stage": "N1",
   "features": [
     {
       "id": "ast.add",
@@ -1287,15 +1287,15 @@
       "id": "cli.source-info",
       "tier": "core",
       "phase": "N1",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "cli.lex",
       "tier": "core",
       "phase": "N1",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "cli.check",

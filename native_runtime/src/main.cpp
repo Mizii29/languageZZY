@@ -1,10 +1,13 @@
-#include "zzy_native/protocol.hpp"
-#include "zzy_native/policy.hpp"
+#include "zzy_native/lexer.hpp"
 #include <iostream>
-#include <string>
 #include <vector>
-
 namespace {
+std::atomic<bool> cancelled{false};
+static_assert(std::atomic<bool>::is_always_lock_free,"console handler requires lock-free cancellation");
+BOOL WINAPI console_handler(DWORD signal) {
+    if(signal==CTRL_C_EVENT || signal==CTRL_BREAK_EVENT) {cancelled.store(true,std::memory_order_relaxed);return TRUE;}
+    return FALSE;
+}
 const char* compiler() {
 #if defined(__clang__)
     return "clang " __clang_version__;
@@ -27,42 +30,84 @@ const char* crt() {
     return "unverified";
 #endif
 }
-int cli(int argc,char** argv) {
-    bool json=false;
+int cli(const std::vector<std::string>& argv,bool& json,zzy::ResourcePolicy& policy) {
+    bool options=true;
+    for(std::size_t i=0;i<argv.size() && options;++i) {
+        if(argv[i]=="--") options=false;
+        else if(argv[i]=="--diagnostic-format" && i+1<argv.size()) json=argv[++i]=="json";
+        else if(argv[i].find("--diagnostic-format=")==0) json=argv[i].substr(20)=="json";
+    }
     std::vector<std::string> arguments;
-    for(int i=1;i<argc;++i) {
-        std::string arg=argv[i];
-        if(arg=="--diagnostic-format") {
-            if(i+1>=argc || (std::string(argv[i+1])!="json" && std::string(argv[i+1])!="text")) {
-                zzy::diagnostic(std::cerr,"E401","invalid diagnostic format","expected text or json",json);return 2;
-            }
-            json=std::string(argv[++i])=="json";
+    std::optional<std::string> limits;
+    options=true;
+    for(std::size_t i=0;i<argv.size();++i) {
+        const auto& arg=argv[i];
+        if(options && arg=="--") {options=false;continue;}
+        if(options && (arg=="--diagnostic-format" || arg.find("--diagnostic-format=")==0)) {
+            std::string format;
+            if(arg=="--diagnostic-format") {if(i+1==argv.size()) throw zzy::FrontendError("E401","missing diagnostic format");format=argv[++i];}
+            else format=arg.substr(20);
+            if(format!="text" && format!="json") throw zzy::FrontendError("E401","expected diagnostic format text or json");
+            json=format=="json";
+        } else if(options && (arg=="--limits" || arg.find("--limits=")==0)) {
+            if(arg=="--limits") {if(i+1==argv.size()) throw zzy::FrontendError("E401","missing limits file");limits=argv[++i];}
+            else limits=arg.substr(9);
+            if(limits->empty()) throw zzy::FrontendError("E401","missing limits file");
         } else arguments.push_back(arg);
     }
-    if(arguments.empty() || arguments[0]=="--help") {
-        std::cout << "zzy-native 0.0.0-n0\nAvailable: info, --help, --version\n"
-                  << "Not implemented: source-info, lex, check, run, test (E402; no Python fallback)\n";
+    if(arguments.empty() || (arguments.size()==1 && arguments[0]=="--help")) {
+        std::cout<<"zzy-native 0.0.0-n1\nAvailable: info, source-info FILE, lex FILE, --help, --version\n"
+                 <<"Options (before or after command): --limits FILE --diagnostic-format text|json\n"
+                 <<"Not implemented: check, run, test (E402; no Python fallback)\n"
+                 <<"GCC validation only; formal CMake/CTest/install acceptance pending\n";
         return 0;
     }
     const auto& command=arguments[0];
-    if(command=="--version" && arguments.size()==1) {std::cout<<"0.0.0-n0\n";return 0;}
-    if(command=="info" && arguments.size()==1) {
-        std::cout << "{\"schema_version\":1,\"backend\":\"native-ast\",\"stage\":\"N0\","
-                  << "\"version\":\"0.0.0-n0\",\"cxx_standard\":17,\"pointer_bits\":"<<sizeof(void*)*8
-                  << ",\"compiler\":"<<zzy::quote(compiler())<<",\"crt\":"<<zzy::quote(crt())
-                  << ",\"supported_commands\":[\"info\"],\"python_fallback\":false,"
-                  << "\"policy_status\":\"declared; language execution unavailable\",\"resource_policy\":"
-                  << zzy::default_policy << ",\"resource_fingerprint\":"<<zzy::quote(zzy::default_policy_sha)<<"}\n";
-        return 0;
-    }
-    if(command=="source-info" || command=="lex" || command=="check" || command=="run" || command=="test") {
+    if(command=="--version" && arguments.size()==1) {std::cout<<"0.0.0-n1\n";return 0;}
+    if(command=="check" || command=="run" || command=="test") {
         zzy::diagnostic(std::cerr,"E402","capability is not implemented by this backend","capability="+command,json);return 2;
     }
-    zzy::diagnostic(std::cerr,"E401","invalid command or arguments","use --help",json);return 2;
+    if(!((command=="info" && arguments.size()==1) || ((command=="source-info" || command=="lex") && arguments.size()==2)))
+        throw zzy::FrontendError("E401","invalid command or arguments; use --help");
+    if(limits) policy=zzy::load_policy(zzy::widen(*limits));
+    zzy::FrontendMeter meter(policy,cancelled);
+    if(command=="info") {
+        meter.write(std::cout,"{\"schema_version\":1,\"backend\":\"native-ast\",\"stage\":\"N1\","
+            "\"version\":\"0.0.0-n1\",\"cxx_standard\":17,\"pointer_bits\":"+std::to_string(sizeof(void*)*8)+
+            ",\"compiler\":"+zzy::quote(compiler())+",\"crt\":"+zzy::quote(crt())+
+            ",\"supported_commands\":[\"info\",\"source-info\",\"lex\"],\"python_fallback\":false,\"unicode_version\":\"15.0.0\","
+            "\"policy_status\":\"frontend limits enforced; AST/execution/cache unavailable\",\"resource_policy\":"+
+            policy.canonical_json()+",\"resource_fingerprint\":"+zzy::quote(policy.fingerprint())+"}\n");
+        return 0;
+    }
+    zzy::SourceLoader sources(meter);
+    const auto source=sources.load(zzy::widen(arguments[1]));
+    if(command=="source-info") meter.write(std::cout,source->info(policy));
+    else {
+        // Scan succeeds completely before any token is published.
+        const auto tokens=zzy::Lexer(source,meter).scan();
+        for(const auto& token:tokens) meter.write(std::cout,token.record());
+    }
+    return 0;
 }
 }
-int main(int argc,char** argv) {
-    try {zzy::configure_streams();return cli(argc,argv);}
-    catch(const std::bad_alloc&) {zzy::diagnostic(std::cerr,"E211","allocation failed","phase=frontend");return 2;}
-    catch(...) {zzy::diagnostic(std::cerr,"","native internal error","phase=frontend",true,"internal_error");return 2;}
+int wmain(int argc,wchar_t** argv) {
+    bool json=false;zzy::ResourcePolicy policy;
+    const auto report=[&](const zzy::FrontendError& error,const std::string& kind="error") {
+        auto rendered=zzy::render_frontend(error,json,kind);
+        if(kind=="error" && rendered.size()>policy.limits.at("stderr_bytes"))
+            rendered=zzy::render_frontend(zzy::FrontendError("E211","resource limit exceeded: stderr_bytes, limit="+
+                std::to_string(policy.limits.at("stderr_bytes"))+", requested="+std::to_string(rendered.size())),json);
+        std::cerr<<rendered;std::cerr.flush();
+    };
+    try {
+        zzy::configure_streams();
+        if(!SetConsoleCtrlHandler(console_handler,TRUE)) throw std::runtime_error("cannot install cancellation handler");
+        std::vector<std::string> arguments;
+        for(int i=1;i<argc;++i) arguments.push_back(zzy::narrow(argv[i]));
+        return cli(arguments,json,policy);
+    } catch(const zzy::FrontendError& error) {report(error);return 2;}
+    catch(const zzy::Cancelled&) {report(zzy::FrontendError("","cancelled"),"cancelled");return 130;}
+    catch(const std::bad_alloc&) {report(zzy::FrontendError("E211","allocation failed; phase=frontend"));return 2;}
+    catch(...) {report(zzy::FrontendError("","native internal error; phase=frontend"),"internal_error");return 2;}
 }

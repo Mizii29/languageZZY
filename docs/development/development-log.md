@@ -896,3 +896,9 @@ N1 通过时只能记录“N1 实现与 GCC 验证完成，正式 CMake/CTest �
 实际编译：g++.exe -std=c++17 -Wall -Wextra -Wpedantic -Werror -static-libgcc -static-libstdc++ -D_WIN32_WINNT=0x0A00 -DWINVER=0x0A00 -O0 -g -I native_runtime/include native_runtime/tests/native/frontend.cpp -o build/native-direct-debug/native-frontend-tests.exe；退出 0。执行该 EXE：sha256/utf8/positions/source-loader/policy/diagnostics 六项通过；每项失败与空选择均为非零的测试入口已提供。CTest 已登记但未运行。
 
 失败与修复：最初使用 std::filesystem，现有 MinGW GCC 8.1 的 fs_path.h 自身缺少路径比较声明，fstream 宽路径重载也不可用。未修改或安装工具链，改用 Win32 W API、RAII HANDLE 和 UTF-16/UTF-8 严格转换后重跑通过。独立固定 SHA 向量（空串、abc、百万 a）及冻结策略 SHA 均通过。inventory.py --check native_runtime/tests/inventory.json 复核 56 AST、103 宿主、12 manifests/1738 cases。
+
+## N1-01/02：Token、Lexer 与公开观察命令（2026-11-17）
+
+源码层后接入不可变 Source 所有权的 Token、最长匹配固定拼写、Unicode 标识符、ASCII 数字、原/普通字符串与转义、注释边界及 EOF。CLI 现在支持 info/source-info/lex；Windows wmain 保留中文路径，MinGW 主入口使用 -municode；check/run/test 仍在读文件前 E402/2。info 声明 N1 与实际前端资源范围，不声称已实现 AST 或执行。
+
+实际命令：native_runtime/tools/build-direct.ps1 -Configuration Debug；退出 0。随后 .venv/Scripts/python.exe -X utf8 native_runtime/tools/test-frontend.py --exe build/native-direct-debug/zzy-native.exe --output dist/native-n1-work/lex-debug-first.json；62/62 通过（现有 tests/lex/cases.json 未修改，原生子进程 PATH 为空，协调器不调用 Python 解释器生成答案）。基础测试 6 项已通过；正式 CMake/CTest 尚未执行。N1-03/04 的额外边界、取消和源码外验收继续进行，最终证据尚待归档。

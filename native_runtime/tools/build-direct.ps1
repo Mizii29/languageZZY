@@ -9,7 +9,8 @@ $options=@('-std=c++17','-Wall','-Wextra','-Wpedantic','-Werror','-static-libgcc
 if($Configuration -eq 'Debug') {$options+=@('-O0','-g')} else {$options+=@('-O2','-DNDEBUG')}
 $targets=@(@('src/main.cpp','zzy-native.exe'),@('tests/native/protocol.cpp','native-protocol-tests.exe'),@('tests/native/heap.cpp','native-heap-tests.exe'),@('tests/native/lifecycle.cpp','native-lifecycle-probe.exe'),@('tests/native/frontend.cpp','native-frontend-tests.exe'))
 foreach($target in $targets) {
-    & $compiler @options (Join-Path $nativeRoot $target[0]) '-o' (Join-Path $nativeBuild $target[1])
+    $entryOptions=@();if($target[1] -eq 'zzy-native.exe') {$entryOptions+= '-municode'}
+    & $compiler @options @entryOptions (Join-Path $nativeRoot $target[0]) '-o' (Join-Path $nativeBuild $target[1])
     if($LASTEXITCODE -ne 0) {throw ('Compilation failed: '+$target[0])}
 }
 Write-Output ('Direct compiler prototype built in '+$nativeBuild+'; this is NOT CMake/CTest acceptance.')
