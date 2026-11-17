@@ -1,0 +1,99 @@
+{
+  "aot_build_ns": {
+    "sum_squares": 779077400,
+    "branch_calls": 827919600
+  },
+  "c_build_ns": 716043900,
+  "cells": {
+    "sum_squares/aot": {
+      "n": 10000,
+      "samples": 15,
+      "repeat": 10000,
+      "execute_ns_per_call_median": 6221.1,
+      "execute_ns_per_call_mad": 68.8799999999992,
+      "wall_ns_median": 75529900,
+      "wall_ns_mad": 752900,
+      "peak_working_set_bytes_median": 4485120,
+      "peak_working_set_bytes_mad": 0
+    },
+    "sum_squares/c": {
+      "n": 10000,
+      "samples": 15,
+      "repeat": 10000,
+      "execute_ns_per_call_median": 6236.57,
+      "execute_ns_per_call_mad": 91.55999999999949,
+      "wall_ns_median": 75438500,
+      "wall_ns_mad": 1664900,
+      "peak_working_set_bytes_median": 4485120,
+      "peak_working_set_bytes_mad": 0
+    },
+    "sum_squares/python": {
+      "n": 10000,
+      "samples": 15,
+      "repeat": 100,
+      "execute_ns_per_call_median": 443821.0,
+      "execute_ns_per_call_mad": 9884.0,
+      "wall_ns_median": 142043800,
+      "wall_ns_mad": 3111900,
+      "peak_working_set_bytes_median": 17424384,
+      "peak_working_set_bytes_mad": 139264
+    },
+    "sum_squares/zzy": {
+      "n": 10000,
+      "samples": 15,
+      "repeat": 1,
+      "execute_ns_per_call_median": 264224400.0,
+      "execute_ns_per_call_mad": 7471800.0,
+      "wall_ns_median": 423735700,
+      "wall_ns_mad": 10208100,
+      "peak_working_set_bytes_median": 23691264,
+      "peak_working_set_bytes_mad": 40960
+    },
+    "branch_calls/aot": {
+      "n": 1000,
+      "samples": 15,
+      "repeat": 100000,
+      "execute_ns_per_call_median": 384.45,
+      "execute_ns_per_call_mad": 5.448000000000036,
+      "wall_ns_median": 52249400,
+      "wall_ns_mad": 1112500,
+      "peak_working_set_bytes_median": 4485120,
+      "peak_working_set_bytes_mad": 0
+    },
+    "branch_calls/c": {
+      "n": 1000,
+      "samples": 15,
+      "repeat": 100000,
+      "execute_ns_per_call_median": 380.733,
+      "execute_ns_per_call_mad": 3.6340000000000146,
+      "wall_ns_median": 52640300,
+      "wall_ns_mad": 1197000,
+      "peak_working_set_bytes_median": 4485120,
+      "peak_working_set_bytes_mad": 0
+    },
+    "branch_calls/python": {
+      "n": 1000,
+      "samples": 15,
+      "repeat": 1000,
+      "execute_ns_per_call_median": 71141.2,
+      "execute_ns_per_call_mad": 1390.0999999999913,
+      "wall_ns_median": 168701500,
+      "wall_ns_mad": 5923000,
+      "peak_working_set_bytes_median": 17559552,
+      "peak_working_set_bytes_mad": 69632
+    },
+    "branch_calls/zzy": {
+      "n": 1000,
+      "samples": 15,
+      "repeat": 1,
+      "execute_ns_per_call_median": 62704000.0,
+      "execute_ns_per_call_mad": 833100.0,
+      "wall_ns_median": 219650300,
+      "wall_ns_mad": 4001800,
+      "peak_working_set_bytes_median": 23719936,
+      "peak_working_set_bytes_mad": 40960
+    }
+  },
+  "raw_records": 144,
+  "failures": 0
+}

@@ -1,0 +1,40 @@
+{
+  "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "machine": "AMD64",
+  "resource_fingerprint": "2e654aef52d3267bfecf0768bef9faee1eed942a329001ec455aee951c858bd2",
+  "gcc": "gcc.EXE (x86_64-win32-seh-rev0, Built by MinGW-W64 project) 8.1.0",
+  "samples_per_cell": 15,
+  "warmups_per_cell": 3,
+  "timeout_seconds": 35,
+  "native_compiler_flags": [
+    "-O3",
+    "-std=c11",
+    "-Wall",
+    "-Wextra",
+    "-Werror"
+  ],
+  "repeats": {
+    "sum_squares": {
+      "aot": 10000,
+      "c": 10000,
+      "python": 100,
+      "zzy": 1
+    },
+    "branch_calls": {
+      "aot": 100000,
+      "c": 100000,
+      "python": 1000,
+      "zzy": 1
+    }
+  },
+  "sources_sha256": {
+    "sum_squares.zzy": "fba9f517fba4142e0dbeb9e82c1871630255f95a51b5f3e9c75e0b42d128b317",
+    "branch_calls.zzy": "db7175849f00f02baafb0a541088fb78d3336d95464fc242fb8a16df9b421b37",
+    "reference.c": "8ecf99e8501b70382a2922930835a3dea8da4b341a6dd79e262bddfdd8ce392e",
+    "reference.py": "b1a3aed4b3eefe40a8e1403a4d261dc92d5f4e35d2e6e43959695b67b390824a",
+    "compile_int.py": "f82e0896cd40e6bd974dd550cfad64bf75b9e4efc24b09b7eb4972980572112c",
+    "measure.py": "589054fa0c8bce2b2672fb3ebf35bbd5871b4d6814fbbb90298c80247171e318",
+    "worker.py": "af0274109ed262884ca94acdf3a5deb4037a0566fa314696a8d4681a286f52a2"
+  }
+}

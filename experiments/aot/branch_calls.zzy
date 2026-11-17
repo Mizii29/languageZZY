@@ -1,0 +1,16 @@
+(addnew) term(i: (Int)) -> (Int) {
+    (zif?:) i % 2 == 0 {
+        (return) i + 1;
+    }
+    (return) i - 1;
+}
+
+(addnew) bench(n: (Int)) -> (Int) {
+    (zyes) i: (Int) := 0;
+    (zyes) total: (Int) := 0;
+    (while) i < n {
+        total <- total + term(i);
+        i <- i + 1;
+    }
+    (return) total;
+}
