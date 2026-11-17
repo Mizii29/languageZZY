@@ -880,3 +880,11 @@ N0-01 自检修复：按 systematic-debugging 先定位 native_extensions/native
 - 复核 resources.md 的逻辑对象定义及 Cell 现有槽存储，发现原型把Text/Cell物理GC节点都额外计成runtime_objects。先修固定断言（Map为1对象/2槽/4载荷），旧原型map-cycle实际退出1，再修分配入口；String只计载荷，Cell引用计槽。未将物理节点数偷换成语言配额；固定图/文档同步更正。审计原始文本见benchmarks/results/native/n0/resource-charge-audit.txt。
 - 重建最终Debug/Release后分别运行 `acceptance.ps1 -BuildDirectory build/native-direct-debug -Output dist/native-n0-debug-contract-final` 及release对应命令，各32条通过；源码外临时目录、empty PATH、invalid PYTHONPATH、PE模块/子进程和timeout/recovery均重新验证。归档debug.json/release.json已更新到该最终产物，重新计算源码与exe SHA逐项匹配；早期失败报告仍保留。
 - 最终静态交付复验 `python -X utf8 -m scripts.ci static --output dist/native-n0-static-delivery` passed=true；盘点--check退出0。未动requirement原字节，P12/P13及已有todo/log前缀与本轮前副本逐字节一致；其他不相关脏文件哈希一致。所有N0子任务本地提交，未推送；N0-03工具链阻塞与整体未验收状态不变。
+
+## N1 顺序例外（2026-11-17，用户明确授权）
+
+N0-01/02/04/05 的语义、逐特性能力、E402、所有权及固定 golden 证据已复核；N0-03 仍未完成，N0 总出口未通过。本轮仅暂缓 CMake configure/build、CTest 与安装验收，使用已有 GCC 8.1.0 实现并验证 N1-01—04。此授权覆盖原有“未过 N0 不进入 N1”的顺序限制，不覆盖正式构建门禁；不安装工具链，不进入 N2，不修改 Python 默认入口，不回退 Python。
+
+N1 通过时只能记录“N1 实现与 GCC 验证完成，正式 CMake/CTest 验收待补”。以后必须对最新代码重新执行 Debug/Release 配置、构建、非空 CTest、install 与源码外 smoke，不能沿用 N0 原型证据。
+
+复核：现有 native-heap-tests.exe 12/12；未修改冻结语义、requirement 原文或 P12/P13。一次 inventory.py --check 漏传路径，argparse 正常拒绝，未视为通过；随后使用显式清单复核。已有未提交应用、规划和人工材料另行保留，仅提交本轮追加段。
