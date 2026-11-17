@@ -902,3 +902,7 @@ N1 通过时只能记录“N1 实现与 GCC 验证完成，正式 CMake/CTest �
 源码层后接入不可变 Source 所有权的 Token、最长匹配固定拼写、Unicode 标识符、ASCII 数字、原/普通字符串与转义、注释边界及 EOF。CLI 现在支持 info/source-info/lex；Windows wmain 保留中文路径，MinGW 主入口使用 -municode；check/run/test 仍在读文件前 E402/2。info 声明 N1 与实际前端资源范围，不声称已实现 AST 或执行。
 
 实际命令：native_runtime/tools/build-direct.ps1 -Configuration Debug；退出 0。随后 .venv/Scripts/python.exe -X utf8 native_runtime/tools/test-frontend.py --exe build/native-direct-debug/zzy-native.exe --output dist/native-n1-work/lex-debug-first.json；62/62 通过（现有 tests/lex/cases.json 未修改，原生子进程 PATH 为空，协调器不调用 Python 解释器生成答案）。基础测试 6 项已通过；正式 CMake/CTest 尚未执行。N1-03/04 的额外边界、取消和源码外验收继续进行，最终证据尚待归档。
+
+### N1 盘点测试修复
+
+93e9c08 前运行的 4 项 inventory 单测中有 1 项失败：能力矩阵 features 的冻结顺序为 source-info/lex/info，新增测试误写 info/source-info/lex。PowerShell 未开启原生命令非零终止，提交仍发生；不隐瞒该失败、不改写提交，现修正准确的顺序期望并重跑 4/4。后续命令显式检查 LASTEXITCODE，未减少集合或放宽能力断言。
