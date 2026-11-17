@@ -1,10 +1,11 @@
 #pragma once
 #include <array>
 #include <cstdint>
+#include <functional>
 #include <string>
 #include <string_view>
 namespace zzy {
-inline std::string sha256(std::string_view input) {
+inline std::string sha256(std::string_view input,const std::function<void()>& safe_point={}) {
     constexpr std::uint32_t k[]={
         0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,
         0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,
@@ -18,6 +19,7 @@ inline std::string sha256(std::string_view input) {
     const auto rotate=[](std::uint32_t n,unsigned r){return (n>>r)|(n<<(32-r));};
     const std::size_t blocks=(input.size()+9+63)/64;
     for(std::size_t block=0;block<blocks;++block) {
+        if(block%16==0 && safe_point) safe_point();
         std::uint32_t w[64]={};
         for(std::size_t j=0;j<64;++j) {
             const auto index=block*64+j;

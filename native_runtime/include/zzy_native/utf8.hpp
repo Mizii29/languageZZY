@@ -1,5 +1,6 @@
 #pragma once
 #include <cstdint>
+#include <functional>
 #include <stdexcept>
 #include <string>
 #include <string_view>
@@ -10,10 +11,11 @@ struct Decoded {
     // Includes EOF; BOM is excluded from text but included in raw offsets.
     std::vector<std::size_t> byte_offsets;
 };
-inline Decoded decode_utf8(std::string_view bytes,bool strip_bom=false) {
+inline Decoded decode_utf8(std::string_view bytes,bool strip_bom=false,const std::function<void()>& safe_point={}) {
     Decoded out;
     std::size_t i=strip_bom && bytes.substr(0,3)=="\xef\xbb\xbf"?3:0;
     while(i<bytes.size()) {
+        if(out.text.size()%1024==0 && safe_point) safe_point();
         out.byte_offsets.push_back(i);
         const auto first=static_cast<unsigned char>(bytes[i++]);
         char32_t c=first;

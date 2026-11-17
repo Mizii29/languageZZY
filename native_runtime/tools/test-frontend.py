@@ -16,6 +16,11 @@ def check(condition,message):
 def span(value):
     return None if value is None else [value['start']['line'],value['start']['column'],value['end']['line'],value['end']['column']]
 
+def display(file,cwd):
+    absolute=(ROOT/file).resolve()
+    try: return os.path.relpath(absolute,ROOT/cwd).replace('\\','/')
+    except ValueError: return str(absolute).replace('\\','/')
+
 def run(exe,case,folder):
     command=[str(exe),case.get('mode','lex'),case['file'],'--diagnostic-format','json']
     if 'limits' in case:
@@ -38,7 +43,7 @@ def run(exe,case,folder):
             check(actual==case['tokens'],'fixed token expectation differs')
         elif 'info' in case:
             actual=json.loads(record['stdout'])
-            check(actual==case['info'],'fixed source-info differs')
+            check(actual==dict(case['info'],file=display(case['file'],case.get('cwd','.'))),'fixed source-info differs')
         else: check(record['stdout']==case.get('stdout',''),'stdout differs')
         if case['exit_code']==0: check(record['stderr']=='','unexpected stderr')
         else:
@@ -47,7 +52,7 @@ def run(exe,case,folder):
             check(diagnostic['schema_version']==1 and diagnostic['kind']=='error','diagnostic schema/kind differs')
             expected=case['diagnostic']
             check(diagnostic['code']==expected['code'] and span(diagnostic['span'])==expected['span'],'diagnostic code/span differs')
-            expected_file=expected.get('file',os.path.relpath((ROOT/case['file']).resolve(),ROOT/case.get('cwd','.')).replace('\\','/'))
+            expected_file=expected.get('file',display(case['file'],case.get('cwd','.')))
             check(diagnostic['file']==expected_file,'diagnostic file differs')
             check(expected.get('message_contains','') in diagnostic['message'],'diagnostic resource key differs')
             check(len(record['stderr'].encode())<=4096,'diagnostic reserve exceeded')
@@ -63,13 +68,18 @@ def main():
     args=parser.parse_args()
     exe=args.exe.resolve()
     if args.output.exists(): parser.error('evidence already exists; choose a new output')
-    cases=json.loads((ROOT/'tests/lex/cases.json').read_text(encoding='utf-8'))['cases']
+    manifests=[ROOT/'tests/lex/cases.json',ROOT/'native_runtime/tests/frontend/cases.json']
+    cases=[c for path in manifests for c in json.loads(path.read_text(encoding='utf-8'))['cases']]
     if not cases: parser.error('no fixed cases collected')
     records=[]
     with tempfile.TemporaryDirectory(prefix='ZZY native N1 中文 ') as temp:
         folder=Path(temp)
-        for case in cases: records.append(run(exe,case,folder))
-    report={'schema_version':1,'scope':'N1 native CLI against unchanged independent tests/lex/cases.json','exe':str(exe),'exe_sha256':hashlib.sha256(exe.read_bytes()).hexdigest(),'manifest_sha256':hashlib.sha256((ROOT/'tests/lex/cases.json').read_bytes().replace(b'\r\n',b'\n')).hexdigest(),'python_role':'development test coordinator only; native child PATH empty; no Python oracle','count':len(records),'passed':sum(r['passed'] for r in records),'records':records}
+        for case in cases:
+            if 'input_hex' in case:
+                file=folder/(case['id']+'.zzy');file.write_bytes(bytes.fromhex(case['input_hex']))
+                case=dict(case,file=str(file))
+            records.append(run(exe,case,folder))
+    report={'schema_version':1,'scope':'N1 native CLI against unchanged independent tests/lex/cases.json','exe':str(exe),'exe_sha256':hashlib.sha256(exe.read_bytes()).hexdigest(),'manifest_sha256':{str(p.relative_to(ROOT)):hashlib.sha256(p.read_bytes().replace(b'\r\n',b'\n')).hexdigest() for p in manifests},'python_role':'development test coordinator only; native child PATH empty; no Python oracle','count':len(records),'passed':sum(r['passed'] for r in records),'records':records}
     args.output.parent.mkdir(parents=True,exist_ok=True)
     args.output.write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
     print(json.dumps({k:report[k] for k in ['count','passed','exe_sha256']}))

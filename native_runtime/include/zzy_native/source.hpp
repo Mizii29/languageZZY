@@ -9,12 +9,16 @@ struct Source final {
     const std::string raw;
     const Decoded decoded;
     const std::vector<std::size_t> line_starts;
-    static std::vector<std::size_t> lines(const std::u32string& text) {
+    static std::vector<std::size_t> lines(const std::u32string& text,const std::function<void()>& safe_point={}) {
         std::vector<std::size_t> result{0};
-        for(std::size_t i=0;i<text.size();++i) if(text[i]==U'\n') result.push_back(i+1);
+        for(std::size_t i=0;i<text.size();++i) {
+            if(i%1024==0 && safe_point) safe_point();
+            if(text[i]==U'\n') result.push_back(i+1);
+        }
         return result;
     }
-    Source(std::wstring p,std::string bytes):path(std::move(p)),raw(std::move(bytes)),decoded(decode_utf8(raw,true)),line_starts(lines(decoded.text)) {}
+    Source(std::wstring p,std::string bytes,const std::function<void()>& safe_point={})
+        :path(std::move(p)),raw(std::move(bytes)),decoded(decode_utf8(raw,true,safe_point)),line_starts(lines(decoded.text,safe_point)) {}
     Position position(std::size_t offset) const {
         if(offset>decoded.text.size()) throw std::out_of_range("source offset");
         const auto upper=std::upper_bound(line_starts.begin(),line_starts.end(),offset);
@@ -31,10 +35,10 @@ struct Source final {
         if(it==offsets.end() || *it!=raw_offset) throw std::out_of_range("not a codepoint boundary (or stripped BOM)");
         return static_cast<std::size_t>(it-offsets.begin());
     }
-    std::string info(const ResourcePolicy& policy) const {
+    std::string info(const ResourcePolicy& policy,const std::function<void()>& safe_point={}) const {
         return "{\"file\":"+quote(display_path(path))+",\"bytes\":"+std::to_string(raw.size())+
             ",\"codepoints\":"+std::to_string(decoded.text.size())+",\"lines\":"+std::to_string(line_starts.size())+
-            ",\"sha256\":"+quote(sha256(raw))+",\"syntax_checked\":false,\"resource_fingerprint\":"+quote(policy.fingerprint())+"}\n";
+            ",\"sha256\":"+quote(sha256(raw,safe_point))+",\"syntax_checked\":false,\"resource_fingerprint\":"+quote(policy.fingerprint())+"}\n";
     }
 };
 class SourceLoader {
@@ -78,7 +82,7 @@ public:
             if(size==0) break;
         }
         std::shared_ptr<const Source> source;
-        try {source=std::make_shared<const Source>(canonical,std::move(bytes));}
+        try {source=std::make_shared<const Source>(canonical,std::move(bytes),[&]{meter.safe_point();});}
         catch(const std::invalid_argument&) {throw FrontendError("E401","source is not strict UTF-8",file);}
         meter.safe_point();
         cache.emplace(canonical,source);

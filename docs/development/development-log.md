@@ -906,3 +906,11 @@ N1 通过时只能记录“N1 实现与 GCC 验证完成，正式 CMake/CTest �
 ### N1 盘点测试修复
 
 93e9c08 前运行的 4 项 inventory 单测中有 1 项失败：能力矩阵 features 的冻结顺序为 source-info/lex/info，新增测试误写 info/source-info/lex。PowerShell 未开启原生命令非零终止，提交仍发生；不隐瞒该失败、不改写提交，现修正准确的顺序期望并重跑 4/4。后续命令显式检查 LASTEXITCODE，未减少集合或放宽能力断言。
+
+## N1-03：坐标、错误、资源与取消边界（2026-11-17）
+
+集中契约见 native-frontend-contract.md。11 个原生前端用例已验证固定 UTF-8/SHA、默认数字4095/4096/4097、Token249999/250000/250001、文本4194303/4194304/4194305、文件2MiB相邻边界、总源码16MiB、错误原子性/清理和线程实际取消。取消安全点已覆盖读取、解码、行表、哈希与扫描；不承诺同步系统I/O即时取消。
+
+独立固定黑盒87/87（既有62、新增25）及纯PowerShell87/87；CLI专项首轮60/62，暴露参数错误时JSON格式选择及子命令help错误读取配置。按 zzy/cli.py 的 _requested_format 和 argparse help 行为修复后62/62；失败原样保存在 dist/native-n1-work/cli-first.json，最终将归档并注明旧产物。未放宽固定期望。
+
+Release direct-GCC源码外验收46项通过，实际CLI模块和进程树无Python/GUI，PATH空/PYTHONPATH无效；其中包括11前端、12堆、既有协议/取消/超时恢复等过程。Python相关前端与盘点回归105/105，33.644秒。N1-04最终Debug/Release匹配产物和证据重跑随后进行，CMake/CTest/install仍待补。

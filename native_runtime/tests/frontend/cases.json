@@ -1,0 +1,424 @@
+{
+  "schema_version": 1,
+  "cases": [
+    {
+      "id": "embedded-nul-outside",
+      "input_hex": "00",
+      "mode": "lex",
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E101",
+        "span": [
+          1,
+          1,
+          1,
+          2
+        ]
+      }
+    },
+    {
+      "id": "embedded-nul-string",
+      "input_hex": "220022",
+      "mode": "lex",
+      "exit_code": 0,
+      "tokens": [
+        [
+          "STRING",
+          "\"\u0000\"",
+          "\u0000",
+          false,
+          [
+            1,
+            1,
+            1,
+            4
+          ]
+        ],
+        [
+          "EOF",
+          "",
+          null,
+          false,
+          [
+            1,
+            4,
+            1,
+            4
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "supplementary-identifier",
+      "input_hex": "f090908061",
+      "mode": "lex",
+      "exit_code": 0,
+      "tokens": [
+        [
+          "IDENT",
+          "𐐀a",
+          null,
+          false,
+          [
+            1,
+            1,
+            1,
+            3
+          ]
+        ],
+        [
+          "EOF",
+          "",
+          null,
+          false,
+          [
+            1,
+            3,
+            1,
+            3
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "unicode15-identifier",
+      "input_hex": "f091bc82",
+      "mode": "lex",
+      "exit_code": 0,
+      "tokens": [
+        [
+          "IDENT",
+          "𑼂",
+          null,
+          false,
+          [
+            1,
+            1,
+            1,
+            2
+          ]
+        ],
+        [
+          "EOF",
+          "",
+          null,
+          false,
+          [
+            1,
+            2,
+            1,
+            2
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "combining-spelling",
+      "input_hex": "61cc81",
+      "mode": "lex",
+      "exit_code": 0,
+      "tokens": [
+        [
+          "IDENT",
+          "á",
+          null,
+          false,
+          [
+            1,
+            1,
+            1,
+            3
+          ]
+        ],
+        [
+          "EOF",
+          "",
+          null,
+          false,
+          [
+            1,
+            3,
+            1,
+            3
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "combining-not-start",
+      "input_hex": "cc81",
+      "mode": "lex",
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E101",
+        "span": [
+          1,
+          1,
+          1,
+          2
+        ]
+      }
+    },
+    {
+      "id": "cr-tab-eof",
+      "input_hex": "610d0962",
+      "mode": "lex",
+      "exit_code": 0,
+      "tokens": [
+        [
+          "IDENT",
+          "a",
+          null,
+          false,
+          [
+            1,
+            1,
+            1,
+            2
+          ]
+        ],
+        [
+          "IDENT",
+          "b",
+          null,
+          false,
+          [
+            1,
+            4,
+            1,
+            5
+          ]
+        ],
+        [
+          "EOF",
+          "",
+          null,
+          false,
+          [
+            1,
+            5,
+            1,
+            5
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "supplementary-error",
+      "input_hex": "22f09f9880220923",
+      "mode": "lex",
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E101",
+        "span": [
+          1,
+          5,
+          1,
+          6
+        ]
+      }
+    },
+    {
+      "id": "source-info-bom-codepoints",
+      "input_hex": "efbbbfe4b8adf09f988009580d0ae5b0be0a",
+      "mode": "source-info",
+      "exit_code": 0,
+      "info": {
+        "bytes": 18,
+        "codepoints": 8,
+        "lines": 3,
+        "sha256": "126efe277b6e94cd919b4ecebe5ac03a267d85122e3fed019d30cf04f31d5e65",
+        "syntax_checked": false,
+        "resource_fingerprint": "c9a540b6ea917d42f3d6c915801dce802ee771a18b1ab6139eab2ebc8161b14d"
+      }
+    },
+    {
+      "id": "source-info-empty",
+      "input_hex": "",
+      "mode": "source-info",
+      "exit_code": 0,
+      "info": {
+        "bytes": 0,
+        "codepoints": 0,
+        "lines": 1,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "syntax_checked": false,
+        "resource_fingerprint": "c9a540b6ea917d42f3d6c915801dce802ee771a18b1ab6139eab2ebc8161b14d"
+      }
+    },
+    {
+      "id": "source-info-not-syntax",
+      "input_hex": "23",
+      "mode": "source-info",
+      "exit_code": 0,
+      "info": {
+        "bytes": 1,
+        "codepoints": 1,
+        "lines": 1,
+        "sha256": "334359b90efed75da5f0ada1d5e6b256f4a6bd0aee7eb39c0f90182a021ffc8b",
+        "syntax_checked": false,
+        "resource_fingerprint": "c9a540b6ea917d42f3d6c915801dce802ee771a18b1ab6139eab2ebc8161b14d"
+      }
+    },
+    {
+      "id": "source-info-second-bom",
+      "input_hex": "efbbbfefbbbf",
+      "mode": "source-info",
+      "exit_code": 0,
+      "info": {
+        "bytes": 6,
+        "codepoints": 1,
+        "lines": 1,
+        "sha256": "637b2c8da853bb1832c130f7e3bf70d07d3801190af1b8c77a8346faee3bfbb9",
+        "syntax_checked": false,
+        "resource_fingerprint": "c9a540b6ea917d42f3d6c915801dce802ee771a18b1ab6139eab2ebc8161b14d"
+      }
+    },
+    {
+      "id": "malformed-utf8-0",
+      "input_hex": "80",
+      "mode": "source-info",
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E401",
+        "span": null
+      }
+    },
+    {
+      "id": "malformed-utf8-1",
+      "input_hex": "c080",
+      "mode": "source-info",
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E401",
+        "span": null
+      }
+    },
+    {
+      "id": "malformed-utf8-2",
+      "input_hex": "c1bf",
+      "mode": "source-info",
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E401",
+        "span": null
+      }
+    },
+    {
+      "id": "malformed-utf8-3",
+      "input_hex": "c2",
+      "mode": "source-info",
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E401",
+        "span": null
+      }
+    },
+    {
+      "id": "malformed-utf8-4",
+      "input_hex": "c278",
+      "mode": "source-info",
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E401",
+        "span": null
+      }
+    },
+    {
+      "id": "malformed-utf8-5",
+      "input_hex": "e08080",
+      "mode": "source-info",
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E401",
+        "span": null
+      }
+    },
+    {
+      "id": "malformed-utf8-6",
+      "input_hex": "eda080",
+      "mode": "source-info",
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E401",
+        "span": null
+      }
+    },
+    {
+      "id": "malformed-utf8-7",
+      "input_hex": "f0808080",
+      "mode": "source-info",
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E401",
+        "span": null
+      }
+    },
+    {
+      "id": "malformed-utf8-8",
+      "input_hex": "f4908080",
+      "mode": "source-info",
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E401",
+        "span": null
+      }
+    },
+    {
+      "id": "malformed-utf8-9",
+      "input_hex": "f5808080",
+      "mode": "source-info",
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E401",
+        "span": null
+      }
+    },
+    {
+      "id": "malformed-utf8-10",
+      "input_hex": "e282",
+      "mode": "source-info",
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E401",
+        "span": null
+      }
+    },
+    {
+      "id": "malformed-utf8-11",
+      "input_hex": "ff",
+      "mode": "source-info",
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E401",
+        "span": null
+      }
+    },
+    {
+      "id": "malformed-utf8-12",
+      "input_hex": "efbbbf80",
+      "mode": "source-info",
+      "exit_code": 2,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E401",
+        "span": null
+      }
+    }
+  ]
+}

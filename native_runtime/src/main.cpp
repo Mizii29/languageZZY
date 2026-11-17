@@ -34,28 +34,36 @@ int cli(const std::vector<std::string>& argv,bool& json,zzy::ResourcePolicy& pol
     bool options=true;
     for(std::size_t i=0;i<argv.size() && options;++i) {
         if(argv[i]=="--") options=false;
-        else if(argv[i]=="--diagnostic-format" && i+1<argv.size()) json=argv[++i]=="json";
-        else if(argv[i].find("--diagnostic-format=")==0) json=argv[i].substr(20)=="json";
+        else {
+            std::string format;
+            if(argv[i]=="--diagnostic-format" && i+1<argv.size()) format=argv[i+1];
+            else if(argv[i].find("--diagnostic-format=")==0) format=argv[i].substr(20);
+            if(format=="json" || format=="text") json=format=="json";
+        }
     }
     std::vector<std::string> arguments;
     std::optional<std::string> limits;
     options=true;
+    bool help=false;
     for(std::size_t i=0;i<argv.size();++i) {
         const auto& arg=argv[i];
         if(options && arg=="--") {options=false;continue;}
+        if(options && arg=="--help") {help=true;continue;}
         if(options && (arg=="--diagnostic-format" || arg.find("--diagnostic-format=")==0)) {
             std::string format;
             if(arg=="--diagnostic-format") {if(i+1==argv.size()) throw zzy::FrontendError("E401","missing diagnostic format");format=argv[++i];}
             else format=arg.substr(20);
             if(format!="text" && format!="json") throw zzy::FrontendError("E401","expected diagnostic format text or json");
-            json=format=="json";
         } else if(options && (arg=="--limits" || arg.find("--limits=")==0)) {
             if(arg=="--limits") {if(i+1==argv.size()) throw zzy::FrontendError("E401","missing limits file");limits=argv[++i];}
             else limits=arg.substr(9);
             if(limits->empty()) throw zzy::FrontendError("E401","missing limits file");
-        } else arguments.push_back(arg);
+        } else {
+            if(options && arg.size()>1 && arg[0]=='-' && arg!="--help" && arg!="--version") throw zzy::FrontendError("E401","unknown option");
+            arguments.push_back(arg);
+        }
     }
-    if(arguments.empty() || (arguments.size()==1 && arguments[0]=="--help")) {
+    if(help || arguments.empty()) {
         std::cout<<"zzy-native 0.0.0-n1\nAvailable: info, source-info FILE, lex FILE, --help, --version\n"
                  <<"Options (before or after command): --limits FILE --diagnostic-format text|json\n"
                  <<"Not implemented: check, run, test (E402; no Python fallback)\n"
@@ -82,7 +90,7 @@ int cli(const std::vector<std::string>& argv,bool& json,zzy::ResourcePolicy& pol
     }
     zzy::SourceLoader sources(meter);
     const auto source=sources.load(zzy::widen(arguments[1]));
-    if(command=="source-info") meter.write(std::cout,source->info(policy));
+    if(command=="source-info") meter.write(std::cout,source->info(policy,[&]{meter.safe_point();}));
     else {
         // Scan succeeds completely before any token is published.
         const auto tokens=zzy::Lexer(source,meter).scan();
@@ -102,6 +110,8 @@ int wmain(int argc,wchar_t** argv) {
     };
     try {
         zzy::configure_streams();
+        // Clear an inherited ignore-Ctrl+C flag before installing our handler.
+        if(!SetConsoleCtrlHandler(nullptr,FALSE)) throw std::runtime_error("cannot configure cancellation");
         if(!SetConsoleCtrlHandler(console_handler,TRUE)) throw std::runtime_error("cannot install cancellation handler");
         std::vector<std::string> arguments;
         for(int i=1;i<argc;++i) arguments.push_back(zzy::narrow(argv[i]));
