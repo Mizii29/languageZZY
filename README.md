@@ -176,3 +176,7 @@ P09最终全量回归1791/1791、806.968秒通过（包括1588项既有外部CLI
 P08已选，P08-01 HTTP已验收，P08-02共享冻结与并发隔离已验收（显式--shared）；P08-03公开Python嵌入已验收，SQLite实现、整体验收与人工验收已通过并交付；P10扩展见文首。[启动和演示](examples/web/README.md)、[集中接口契约](docs/runtime/web.md)、[专项证据](tests/p08/README.md)。可选安装`pip install ".[web]"`，核心依赖保持为空。
 
 P08-04/05本轮新增SQLite事务与独立任务示例；实际db签名、提交/回滚与取消边界以[集中契约](docs/runtime/web.md)为准。SQLite专项、真实HTTP重启、安装和完整回归证据见tests/p08；当前验收状态见todo。
+
+## 独立原生实验线 NATIVE-01
+
+原生阶段与 P12/P13 分开，Python 仍为默认入口。N0 已有 [C++17 info/堆原型与复现命令](native_runtime/README.md)、[能力矩阵](docs/development/native-runtime-capability.md)和[真实证据](native_runtime/tests/n0-report.md)。只有 info 可用，run/check/test 等明确 E402，不回退 Python。本机缺 CMake/CTest/正式工具链，N0 总出口未通过；不进入 N1，也不宣称已完成语言移植。

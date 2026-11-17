@@ -204,6 +204,6 @@ P11累计验收待修：调用notes定位故障可能掩盖原E211（已注入�
 - [x] N0-02 逐特性能力矩阵与 E402/schema v1 未支持协议；见 [能力矩阵](native-runtime-capability.md)。
 - [ ] N0-03 C++17/CMake 骨架和设计已建立；GCC 直接编译通过，缺 CMake/CTest/MSVC，正式配置/构建/CTest/安装尚未验证，保持未勾选。
 - [x] N0-04 Array/Map/闭包环、别名根/请求隔离、配额重试和异常归还原型；Debug/Release各12例通过，6条独立语言 golden 经稳定CLI核对。
-- [ ] N0-05 进程依赖、退出、取消/超时、安装验收与 N0 出口。
+- [x] N0-05 进程依赖、退出、取消/超时清理、源码外 Windows 验收脚本与固定手册；Debug/Release 各32 个原生过程用例通过；CMake/CTest/安装/真实 Ctrl+C 未验证，N0 总出口仍未通过。
 
 N1—N8 尚未开始；N0 未达到出口前不进入 N1。

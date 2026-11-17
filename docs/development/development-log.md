@@ -842,21 +842,41 @@ Git 提交：真实标识 / 未提交
 N0-01 自检修复：按 systematic-debugging 先定位 native_extensions/native_functions 的 tuple/list 差异及条件 Token 泄入节点清单，再修复序列化比较和条件分支值提取。新增独立固定数量/节点/Resolver 断言、JSON 往返及删除节点漂移反例；`python -X utf8 -m unittest native_runtime.tests.test_inventory -v` 3/3 通过。前一提交内错误计数/首检结果在本提交更正，不改写历史。
 
 ## 2026-11-17 N0-02：能力矩阵与集中未支持协议
-+
-+- 为 56 AST/24 Value/103 宿主函数和 6 CLI 命令逐项登记 tier/phase/implemented/diagnostic；当前只有 info 声明可用，执行能力全部 E402。可选宿主是延期迁移而非从最终功能中删除；VM/AOT/JIT 不进入本路线实现。
-+- 核对 syntax 集中表后新增 E402“当前后端尚未实现能力”，同步 diagnostics 与能力矩阵；N0 读源码前拒绝，schema v1、空 stdout、file/span=null、capability note、退出 2；不误用 E103/E214，也不改 Python 当前行为。
-+- `.\.venv\Scripts\python.exe -X utf8 -m unittest native_runtime.tests.test_inventory -v` 4/4 通过，含逐项覆盖、唯一 ID、未实现状态/诊断、冻结数量和漂移反例；git diff --cached --check 通过。前次日志的计数和首检结果更正随本提交纳入。下一项 N0-03，正式构建工具缺失仍待验证。
+
+- 为 56 AST/24 Value/103 宿主函数和 6 CLI 命令逐项登记 tier/phase/implemented/diagnostic；当前只有 info 声明可用，执行能力全部 E402。可选宿主是延期迁移而非从最终功能中删除；VM/AOT/JIT 不进入本路线实现。
+- 核对 syntax 集中表后新增 E402“当前后端尚未实现能力”，同步 diagnostics 与能力矩阵；N0 读源码前拒绝，schema v1、空 stdout、file/span=null、capability note、退出 2；不误用 E103/E214，也不改 Python 当前行为。
+- `.\.venv\Scripts\python.exe -X utf8 -m unittest native_runtime.tests.test_inventory -v` 4/4 通过，含逐项覆盖、唯一 ID、未实现状态/诊断、冻结数量和漂移反例；git diff --cached --check 通过。前次日志的计数和首检结果更正随本提交纳入。下一项 N0-03，正式构建工具缺失仍待验证。
 
 ## 2026-11-17 N0-03：C++17 骨架与设计冻结（工具链门禁未完成）
-+
-+- 新增 native_runtime CMake/presets、真实 info、schema v1 E402/E401 和协议测试；现有默认入口/pyproject/CI 均未替换。正式 VS2022 x64 /MD(/MDd)，N0 现有 MinGW 原型使用静态 libgcc/libstdc++、msvcrt；Win10 最低编译目标，当前 Win11 实测；无项目级第三方依赖/下载。
-+- 冻结自有 uint32 limb BigInt（N3 才实现与验收）、严格 UTF-8/Unicode15 表方案、只读 AST Program、每请求图、显式根标记清扫、默认资源事务计量、异常/取消边界。info 原生十进制宿主上限诚实为 0，默认有效4096，指纹 c9a540b6ea917d42f3d6c915801dce802ee771a18b1ab6139eab2ebc8161b14d；标明语言执行尚不可用。
-+- 实际 `& native_runtime/tools/build-direct.ps1 -Configuration Debug`（GCC8.1.0、C++17、-O0 -g、-Wall -Wextra -Wpedantic -Werror）退出0；info退出0；native-protocol-tests.exe 的3项固定协议检查通过；run examples/hello.zzy --diagnostic-format json 返回 E402/退出2。objdump导入表只列KERNEL32.dll/msvcrt.dll，未链接Python。
-+- Get-Command 及 Program Files/VS、D:\software、用户本地Programs/.vscode目录查找未发现 CMake/CTest/MSVC/clang-cl。没有自动安装。离线 configure/build/CTest/install 未能执行，不能伪报通过；N0-03 保持未勾选。后续只继续可用编译器能够独立验证的 N0 堆/协议原型，不进入 N1。
+
+- 新增 native_runtime CMake/presets、真实 info、schema v1 E402/E401 和协议测试；现有默认入口/pyproject/CI 均未替换。正式 VS2022 x64 /MD(/MDd)，N0 现有 MinGW 原型使用静态 libgcc/libstdc++、msvcrt；Win10 最低编译目标，当前 Win11 实测；无项目级第三方依赖/下载。
+- 冻结自有 uint32 limb BigInt（N3 才实现与验收）、严格 UTF-8/Unicode15 表方案、只读 AST Program、每请求图、显式根标记清扫、默认资源事务计量、异常/取消边界。info 原生十进制宿主上限诚实为 0，默认有效4096，指纹 c9a540b6ea917d42f3d6c915801dce802ee771a18b1ab6139eab2ebc8161b14d；标明语言执行尚不可用。
+- 实际 `& native_runtime/tools/build-direct.ps1 -Configuration Debug`（GCC8.1.0、C++17、-O0 -g、-Wall -Wextra -Wpedantic -Werror）退出0；info退出0；native-protocol-tests.exe 的3项固定协议检查通过；run examples/hello.zzy --diagnostic-format json 返回 E402/退出2。objdump导入表只列KERNEL32.dll/msvcrt.dll，未链接Python。
+- Get-Command 及 Program Files/VS、D:\software、用户本地Programs/.vscode目录查找未发现 CMake/CTest/MSVC/clang-cl。没有自动安装。离线 configure/build/CTest/install 未能执行，不能伪报通过；N0-03 保持未勾选。后续只继续可用编译器能够独立验证的 N0 堆/协议原型，不进入 N1。
 
 ## 2026-11-17 N0-04：真实环堆与独立 golden
-+
-+- 新增非移动标记清扫堆原型、事务 Ticket、显式弱根登记及每请求 owner/id；验证 Array 自环、Map自环/键载荷、Closure→Cell→Array 环、可达别名、配额GC重试、uint64溢出防护、跨请求/过期句柄、取消、异常、重复close、5000节点环及单请求1000轮回收。只计实验图三项逻辑配额，不虚构完整语言执行/资源支持。
-+- `& native_runtime/tools/build-direct.ps1 -Configuration Debug` 和 Release均退出0（警告即错误）；对应 native-heap-tests.exe 各12/12通过；unknown case选择实际退出1。后续登记CTest逐例测试，但CTest仍未运行。
-+- 人工推导scalars/aliases/order/closure-cycle/type-error与check共6条固定期望。首次误用黑盒 --manifest 参数退出2；修正为位置参数后首次5/6通过，失败为data.kind预期错误：stdlib正式约定小写map，不能混同内部Map标签。按契约修正夹具后 `.\.venv\Scripts\python.exe -X utf8 -m tests.blackbox native_runtime/tests/golden/cases.json --report dist/native-n0-work/golden-python-final.json` 6/6通过、退出0。期望不是运行时回写，原生语言执行仍未实现。
-+- 原型可由现有GCC独立验证，因此在缺CMake时完成N0-04，但N0-03和整体出口继续未完成；无RSS/性能优越或Sanitizer通过结论。
+
+- 新增非移动标记清扫堆原型、事务 Ticket、显式弱根登记及每请求 owner/id；验证 Array 自环、Map自环/键载荷、Closure→Cell→Array 环、可达别名、配额GC重试、uint64溢出防护、跨请求/过期句柄、取消、异常、重复close、5000节点环及单请求1000轮回收。只计实验图三项逻辑配额，不虚构完整语言执行/资源支持。
+- `& native_runtime/tools/build-direct.ps1 -Configuration Debug` 和 Release均退出0（警告即错误）；对应 native-heap-tests.exe 各12/12通过；unknown case选择实际退出1。后续登记CTest逐例测试，但CTest仍未运行。
+- 人工推导scalars/aliases/order/closure-cycle/type-error与check共6条固定期望。首次误用黑盒 --manifest 参数退出2；修正为位置参数后首次5/6通过，失败为data.kind预期错误：stdlib正式约定小写map，不能混同内部Map标签。按契约修正夹具后 `.\.venv\Scripts\python.exe -X utf8 -m tests.blackbox native_runtime/tests/golden/cases.json --report dist/native-n0-work/golden-python-final.json` 6/6通过、退出0。期望不是运行时回写，原生语言执行仍未实现。
+- 原型可由现有GCC独立验证，因此在缺CMake时完成N0-04，但N0-03和整体出口继续未完成；无RSS/性能优越或Sanitizer通过结论。
+
+## 2026-11-17 N0-05：无 Python 过程、资源/取消清理与源码外验收
+
+- 新增 Windows lifecycle probe、PE import/模块/子进程检查、固定 PATH/PYTHONPATH、中文空格源码外复制和一次请求失败后的恢复验证；原生 `info`/E402/E401、0/1/2/130、E211、cancelled、internal_error 均有固定协议断言。`acceptance.ps1` 不自动安装依赖，已有 evidence 目录拒绝覆盖。
+- 实际 `native_runtime/tools/acceptance.ps1 -BuildDirectory build/native-direct-debug -Output dist/native-n0-debug-attempt04` 退出0，报告为 `passed=true`、30个过程用例、PE imports/产物和源码指纹已保存；`cmake_available=false`、`ctest_available=false`、`cmake_install=not run`、`manual_ctrl_c=not run`、`sanitizer=not run` 如实记录。Windows conhost 作为系统辅助进程单独排除，未发现 Python 子进程/模块/导入。
+- N0-05 的脚本/协议/手册交付完成并勾选；N0-03 仍因 CMake/CTest/MSVC 缺失保持未勾选，N0 总出口未通过，不进入 N1。
+
+### N0-05 最终复验与交付边界
+
+- 首轮过程验收失败保留三份原始报告：CRT 的 CRLF 固定输出错误、仅 PID 的依赖误判及补名后的 conhost.exe 系统辅助进程证据。原生流改为二进制 UTF-8/LF；未放宽输出期望。子进程门禁只允许 Windows conhost，PE直接导入限定已核对的 KERNEL32/msvcrt/USER32，继续禁止 Python/Tk/Tcl；不把系统 USER32 的加载等同于创建 GUI。
+- 最终 Debug/Release 重新构建后，`acceptance.ps1 -BuildDirectory build/native-direct-debug -Output dist/native-n0-debug-source-external` 和对应 release 各32条固定过程记录通过。实际工作目录为仓库以外临时中文空格路径，PATH为空，PYTHONPATH无效；一条明确的有意超时记录 timed_out=true/真实强杀退出码/进程已退出，随后 success 成功；协作取消与强杀的清理边界分开。原始报告/编译工具记录归档 benchmarks/results/native/n0，源码和产物SHA独立复算匹配。
+- `.\.venv\Scripts\python.exe -X utf8 -m unittest native_runtime.tests.test_inventory tests.test_resources tests.test_diagnostics tests.test_p02_runtime tests.test_p03_runtime tests.test_p04_runtime -q`：51/51，1.820秒、退出0。6条独立语言golden再次核对为Python通过，不算原生执行。`-m scripts.ci static --output dist/native-n0-static-final` 退出0/passed=true；git diff --check和暂存差异检查通过。
+- 真正尝试 cmake --preset native-debug -S native_runtime 与 ctest --test-dir build/native-debug -C Debug --output-on-failure --no-tests=error：均CommandNotFoundException，进程未启动、exit_code=null；无安装/下载。提供19项非空CTest注册与人工/安装步骤，但没有伪报运行。N0-01/02/04/05任务交付，03及整个N0出口未完成；下一项唯一推荐为补齐已有/用户提供的CMake/CTest与正式编译器后复验N0-03，不进入N1。
+- 未重跑完整核心/HTTP/GUI/wheel/性能，也没有RSS/加速结论。requirement、Python运行时、P12/P13及人工原件保留；只提交本轮新增代码/契约/记录的增量，已有应用与规划改稿仍未纳入。
+
+### N0 最终资源契约审计
+
+- 复核 resources.md 的逻辑对象定义及 Cell 现有槽存储，发现原型把Text/Cell物理GC节点都额外计成runtime_objects。先修固定断言（Map为1对象/2槽/4载荷），旧原型map-cycle实际退出1，再修分配入口；String只计载荷，Cell引用计槽。未将物理节点数偷换成语言配额；固定图/文档同步更正。审计原始文本见benchmarks/results/native/n0/resource-charge-audit.txt。
+- 重建最终Debug/Release后分别运行 `acceptance.ps1 -BuildDirectory build/native-direct-debug -Output dist/native-n0-debug-contract-final` 及release对应命令，各32条通过；源码外临时目录、empty PATH、invalid PYTHONPATH、PE模块/子进程和timeout/recovery均重新验证。归档debug.json/release.json已更新到该最终产物，重新计算源码与exe SHA逐项匹配；早期失败报告仍保留。
+- 最终静态交付复验 `python -X utf8 -m scripts.ci static --output dist/native-n0-static-delivery` passed=true；盘点--check退出0。未动requirement原字节，P12/P13及已有todo/log前缀与本轮前副本逐字节一致；其他不相关脏文件哈希一致。所有N0子任务本地提交，未推送；N0-03工具链阻塞与整体未验收状态不变。

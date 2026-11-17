@@ -11,7 +11,7 @@ cases.json 使用现有 tests.blackbox schema；输入和期望在运行前人�
 | order | mark(1)、mark(2) 从左到右打印，和3；false and 不调用 mark(99) |
 | type-error | Bool 不参与加法，E201 运算符 + 第1行[12,13)，退出1；check只准备，不执行且退出0 |
 
-另有原生 heap.cpp 的固定图与计数断言：Array(1对象1槽0载荷)、Map+单字符键(2对象2槽4载荷)、Array→Closure→Cell→Array(3对象3槽0载荷)。这些断言独立于运行时实际计数生成。
+另有原生 heap.cpp 的固定图与计数断言：Array(1对象1槽0载荷)、Map+单字符键(1对象2槽4载荷)、Array→Closure→Cell→Array(2对象3槽0载荷)。这些断言独立于运行时实际计数生成，来源为 resources.md 的逻辑对象/引用槽/标量载荷定义；String与Cell可被GC追踪，但不额外计runtime_objects。
 与 Language golden 的联系是所有权图；没有声称堆原型已实现数组写入/Map 覆盖/闭包执行等语言规则。
 
 复核：` .\.venv\Scripts\python.exe -X utf8 -m tests.blackbox native_runtime/tests/golden/cases.json`。

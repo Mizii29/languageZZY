@@ -1,0 +1,116 @@
+{
+  "schema_version": 1,
+  "passed": false,
+  "scope": "N0 direct MinGW prototype; NOT CMake/CTest acceptance",
+  "os": "Microsoft Windows NT 10.0.26200.0",
+  "process_bits": 64,
+  "cwd": "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\dist\\native-n0-debug-attempt01\\中文 路径\\bin",
+  "path_empty": true,
+  "pythonpath": "unusable-python-path",
+  "cmake_available": false,
+  "ctest_available": false,
+  "records": [
+    {
+      "exe": "zzy-native.exe",
+      "arguments": "info",
+      "exit_code": 0,
+      "stdout": "{\"schema_version\":1,\"backend\":\"native-ast\",\"stage\":\"N0\",\"version\":\"0.0.0-n0\",\"cxx_standard\":17,\"pointer_bits\":64,\"compiler\":\"GCC 8.1.0\",\"crt\":\"MinGW msvcrt; static libgcc/libstdc++ (prototype only)\",\"supported_commands\":[\"info\"],\"python_fallback\":false,\"policy_status\":\"declared; language execution unavailable\",\"resource_policy\":{\"effective_decimal_digits\":4096,\"host_decimal_digits\":0,\"limits\":{\"ast_nodes_total\":500000,\"call_depth\":64,\"container_items\":1000000,\"import_depth\":32,\"integer_bits\":65536,\"io_payload_bytes\":16777216,\"module_count\":128,\"numeric_digits\":4096,\"program_cache_bytes\":67108864,\"program_cache_entries\":32,\"quantity_exponent_abs\":64,\"runtime_objects\":200000,\"runtime_payload_bytes\":134217728,\"runtime_slots\":2000000,\"source_file_bytes\":2097152,\"source_total_bytes\":16777216,\"stderr_bytes\":1048576,\"stdout_bytes\":1048576,\"syntax_depth\":64,\"text_codepoints\":4194304,\"tokens_per_file\":250000,\"value_depth\":64},\"policy_version\":1,\"profile\":\"default-v1\"},\"resource_fingerprint\":\"c9a540b6ea917d42f3d6c915801dce802ee771a18b1ab6139eab2ebc8161b14d\"}\r\n",
+      "stderr": "",
+      "timed_out": false
+    },
+    {
+      "exe": "zzy-native.exe",
+      "arguments": "--help",
+      "exit_code": 0,
+      "stdout": "zzy-native 0.0.0-n0\r\nAvailable: info, --help, --version\r\nNot implemented: source-info, lex, check, run, test (E402; no Python fallback)\r\n",
+      "stderr": "",
+      "timed_out": false
+    },
+    {
+      "exe": "zzy-native.exe",
+      "arguments": "--version",
+      "exit_code": 0,
+      "stdout": "0.0.0-n0\r\n",
+      "stderr": "",
+      "timed_out": false
+    },
+    {
+      "exe": "zzy-native.exe",
+      "arguments": "source-info no-execute.zzy --diagnostic-format json",
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E402\",\"file\":null,\"span\":null,\"message\":\"capability is not implemented by this backend\",\"notes\":[\"capability=source-info\"]}\r\n",
+      "timed_out": false
+    },
+    {
+      "exe": "zzy-native.exe",
+      "arguments": "lex no-execute.zzy --diagnostic-format json",
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E402\",\"file\":null,\"span\":null,\"message\":\"capability is not implemented by this backend\",\"notes\":[\"capability=lex\"]}\r\n",
+      "timed_out": false
+    },
+    {
+      "exe": "zzy-native.exe",
+      "arguments": "check no-execute.zzy --diagnostic-format json",
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E402\",\"file\":null,\"span\":null,\"message\":\"capability is not implemented by this backend\",\"notes\":[\"capability=check\"]}\r\n",
+      "timed_out": false
+    },
+    {
+      "exe": "zzy-native.exe",
+      "arguments": "run no-execute.zzy --diagnostic-format json",
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E402\",\"file\":null,\"span\":null,\"message\":\"capability is not implemented by this backend\",\"notes\":[\"capability=run\"]}\r\n",
+      "timed_out": false
+    },
+    {
+      "exe": "zzy-native.exe",
+      "arguments": "test no-execute.zzy --diagnostic-format json",
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E402\",\"file\":null,\"span\":null,\"message\":\"capability is not implemented by this backend\",\"notes\":[\"capability=test\"]}\r\n",
+      "timed_out": false
+    },
+    {
+      "exe": "zzy-native.exe",
+      "arguments": "unknown --diagnostic-format json",
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E401\",\"file\":null,\"span\":null,\"message\":\"invalid command or arguments\",\"notes\":[\"use --help\"]}\r\n",
+      "timed_out": false
+    },
+    {
+      "exe": "zzy-native.exe",
+      "arguments": "info --limits missing.json --diagnostic-format json",
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E401\",\"file\":null,\"span\":null,\"message\":\"invalid command or arguments\",\"notes\":[\"use --help\"]}\r\n",
+      "timed_out": false
+    },
+    {
+      "exe": "native-protocol-tests.exe",
+      "arguments": "",
+      "exit_code": 0,
+      "stdout": "protocol: 3 checks passed\r\n",
+      "stderr": "",
+      "timed_out": false
+    },
+    {
+      "exe": "native-heap-tests.exe",
+      "arguments": "array-cycle",
+      "exit_code": 0,
+      "stdout": "array-cycle: passed\r\nheap: 1 cases passed\r\n",
+      "stderr": "",
+      "timed_out": false
+    }
+  ],
+  "imports": null,
+  "artifacts": null,
+  "sources": null,
+  "manual_ctrl_c": "not run",
+  "cmake_install": "not run",
+  "sanitizer": "not run"
+}

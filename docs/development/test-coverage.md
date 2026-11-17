@@ -16,6 +16,13 @@ P05 实际映射见 [tests/p05/README.md](../../tests/p05/README.md)：369 项�
 
 P06 当前汇总见 [tests/p06/README.md](../../tests/p06/README.md)：33 条核心规则逐项列出实际正常/边界/错误用例，九组变形 spec、15 个指南片段、真实 Ctrl+C/进程树、20 个生效限额的小配置相邻边界及关键默认边界。最大默认容器/对象/槽/载荷压力、其他 OS、缓存优化未验证；历史段落只描述当时范围，现状以此映射及最新日志为准。
 
+## NATIVE-01 N0 原生实验覆盖
+
+N0 的盘点、能力矩阵、固定 `.zzy` golden、堆图和源码外过程验收分别见 [inventory](native-runtime-inventory.md)、[capabilities](native-runtime-capability.md)、`native_runtime/tests/golden/`、[heap evidence](../../native_runtime/tests/heap-evidence.md) 和 [N0 report](../../native_runtime/tests/n0-report.md)。
+这组测试不替代 Python 核心黑盒：原生只有 `info`，其余命令按 E402 拒绝；堆实验只证明对象环/配额/清理，不证明语言执行。
+固定覆盖包含 Array/Map/Closure 环、别名根、每请求 owner、事务预算、取消/内部错误/恢复、空集合失败、PE/模块无 Python 和源码无副作用。
+Debug/Release 直接 GCC 原型 12/12 堆例与 Debug/Release 各32 条过程验收通过；CMake/CTest、MSVC、安装、真实 Ctrl+C、Sanitizer、完整 run/check/test 仍是未验证证据，不能从脚本通过推断。
+
 ## 1. 核心覆盖矩阵
 
 | 编号 | 范围 | 正常与边界 | 必测错误/副作用 |

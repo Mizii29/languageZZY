@@ -32,6 +32,7 @@ requirement 原文、Python 默认入口和所有既有测试保留。P12/P13 �
 - Python 的 Int 十进制宿主上限是 4300，default-v1 的有效 numeric_digits 是 4096；原生不伪报 CPython 宿主限制。
 - Sketch PNG 原本不可用；Web 文档中的 web.get 等方向示例不是已登记语言接口。
 - 盘点 JSON 的 source_sha 是盘点时基线，source_hashes 冻结实际运行时代码；不以脏工作区上的 HEAD 冒充全部文件来源。
+- 除12个统一CLI清单之外，tests/p09/validation-cases.json 是应用数据校验夹具、tests/p06/guide/manifest.json 是指南片段清单；它们不是 lex/run/check schema，分别由 test_p09_app 和 test_p06_guides 读取。P12 应用场景在 test_p12_app 的独立固定输入中，HTTP/GUI 使用独立运行器；不纳入1738默认CLI数字，也不删除或视为已原生化。
 
 复核命令：` .\.venv\Scripts\python.exe -X utf8 native_runtime/tools/inventory.py --check native_runtime/tests/inventory.json`。
 原生 capability 和 N0 出口证据另行维护，不将盘点成功写成移植完成。

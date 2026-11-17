@@ -123,7 +123,9 @@ public:
         return Root(roots_,id,handle);
     }
     Root allocate(Kind kind,std::uint64_t payload=0) {
-        const Amount charge{1,0,payload};
+        // Scalar payloads and internal Cells are GC nodes, but NOT logical
+        // runtime_objects. Cell references are charged by their outgoing slot.
+        const Amount charge{kind==Kind::text || kind==Kind::cell ? 0u:1u,0,payload};
         auto ticket=reserve(charge);
         if(fail_allocate_){fail_allocate_=false;throw std::bad_alloc();}
         auto object=std::make_unique<Node>(kind,charge);

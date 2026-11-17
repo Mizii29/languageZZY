@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "timestamp": "2026-11-17T13:58:58.1393240Z",
+  "powershell": "7.6.5",
+  "compiler": "g++.exe (x86_64-win32-seh-rev0, Built by MinGW-W64 project) 8.1.0\r\nCopyright (C) 2018 Free Software Foundation, Inc.\r\nThis is free software; see the source for copying conditions.  There is NO\r\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.",
+  "target": "x86_64-w64-mingw32",
+  "commands": [
+    {
+      "status": "blocked",
+      "reason": "CommandNotFoundException",
+      "exit_code": null,
+      "command": "cmake --preset native-debug -S native_runtime"
+    },
+    {
+      "status": "blocked",
+      "reason": "CommandNotFoundException",
+      "exit_code": null,
+      "command": "ctest --test-dir build/native-debug -C Debug --output-on-failure --no-tests=error"
+    }
+  ],
+  "no_download_or_install": true
+}

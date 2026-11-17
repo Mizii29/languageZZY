@@ -113,3 +113,7 @@ P08现已选择：集中接口见[Web契约](runtime/web.md)，实际HTTP演示�
 
 
 P10-01/P10-06已选择：[集中契约](runtime/web.md)、[独立合约演示](../examples/contracts/README.md)、[覆盖与测量](../tests/p10/README.md)。其余P10候选保持延期，实际完成情况见todo。
+
+## NATIVE-01 独立路线
+
+按[原生计划](development/native-runtime-plan.md)与 todo 执行；[盘点](development/native-runtime-inventory.md)、[能力矩阵](development/native-runtime-capability.md)、[实现决策](development/native-runtime-decisions.md)和[N0 原始证据索引](../native_runtime/tests/n0-report.md)分别维护。当前 info/堆原型可测，语言执行未移植；CMake/CTest 缺失使 N0 出口未过。P12/P13 状态不变。

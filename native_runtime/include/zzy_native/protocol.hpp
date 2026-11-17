@@ -4,8 +4,19 @@
 #include <stdexcept>
 #include <string>
 #include <string_view>
+#include <cstdio>
+#ifdef _WIN32
+#include <fcntl.h>
+#include <io.h>
+#endif
 
 namespace zzy {
+inline void configure_streams() {
+#ifdef _WIN32
+    if(_setmode(_fileno(stdout),_O_BINARY)==-1 || _setmode(_fileno(stderr),_O_BINARY)==-1)
+        throw std::runtime_error("cannot configure native streams");
+#endif
+}
 enum class Exit : int { success=0, execution=1, frontend=2, cancelled=130 };
 struct Cancelled final {};
 struct LimitExceeded final : std::runtime_error {

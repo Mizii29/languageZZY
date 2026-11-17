@@ -1,0 +1,8 @@
+Contract sources: docs/runtime/resources.md section 1; zzy/interpreter.py define/make_function.
+Fixed map-cycle expectation: runtime_objects=1, runtime_slots=2, payload=4; physical GC nodes=2.
+Old prototype with every node charged one object: native-heap-tests.exe map-cycle
+stdout: empty
+stderr: assertion: h.used()==(Amount{1,2,4}) line 15
+exit_code: 1
+Repair: Text and Cell GC nodes do not add runtime_objects; Cell outgoing references add slots.
+Final Debug/Release: 12 heap cases each, 32 process cases each passed; see debug.json/release.json.

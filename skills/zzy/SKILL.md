@@ -73,3 +73,7 @@ P10-01/06已完成。用户选择诊断位置、资源计量、小整数、sum/s
 实施必读[优化计划](../../docs/runtime/optimization-plan.md)、[性能方法](../../docs/runtime/performance.md)、[资源](../../docs/runtime/resources.md)、[覆盖计划](../../docs/development/test-coverage.md)及相关诊断/stdlib/query/Web契约。顺序01基线→02诊断位置→03计量→04小整数→05sum/stats→06查询排序→07累计验收→P12交付。每项先验证再单独测量并记录去留，不预设加速倍数，不通过弱化配额/错误顺序/取消换速度；无收益可撤回并如实标注评估结论。
 
 P10未选项保留，逐项利弊见[创新取舍](../../docs/features/innovation.md#6-p10-候选保留与取舍2026-10-29)。小整数快路径和必要对照仅落实相关子范围，不将P10-03/08整体勾选，不擅自实现VM、结果缓存或热切换。优化证据和报告的计划路径不代表文件/命令已经存在；实际创建后补映射，人工结果只记录真实执行。
+
+## NATIVE-01 独立原生路线
+
+用户明确选择原生阶段时先读[原生计划](../../docs/development/native-runtime-plan.md)，再读 todo、[真实盘点](../../docs/development/native-runtime-inventory.md)、[能力矩阵](../../docs/development/native-runtime-capability.md)、[决策冻结](../../docs/development/native-runtime-decisions.md)和[阶段证据](../../native_runtime/tests/n0-report.md)。N0 原型为 C++17、每请求标记清扫堆，当前只有 info/拒绝协议；原生 run/check/test 均 E402/2。不得用 Python 当运行时 fallback，也不得把 Python golden 或直接 GCC 测试说成原生语言/CMake验收。CMake/CTest 工具缺失，N0-03 未完成，总出口未过，不进入 N1。保留 Python 默认入口、测试、P12/P13 和用户未提交规划/人工材料。

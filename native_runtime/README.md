@@ -51,3 +51,5 @@ source-info/lex/check/run/test 一律在读取源码前 E402/2；无 Python fall
 
 堆原型及独立 .zzy 固定期望见 tests；它们不代表 Parser/Resolver 已移植，也没有完整语言性能结论。
 原生依赖/取消/安装验证只能证明当前产物，未来 N5/N8 仍需完整 run/check/test 与宿主进程树验收。
+
+当前直接原型的逐命令、固定期望、源码外报告和未验证边界见 [N0 报告](tests/n0-report.md)。

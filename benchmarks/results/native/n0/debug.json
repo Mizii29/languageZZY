@@ -1,0 +1,328 @@
+{
+  "schema_version": 1,
+  "passed": true,
+  "scope": "N0 direct MinGW prototype; NOT CMake/CTest acceptance",
+  "os": "Microsoft Windows NT 10.0.26200.0",
+  "process_bits": 64,
+  "cwd": "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY N0 c5a15ae3af31458289697263f61b552d\\中文 路径\\bin",
+  "path_empty": true,
+  "pythonpath": "unusable-python-path",
+  "cmake_available": false,
+  "ctest_available": false,
+  "records": [
+    {
+      "exe": "zzy-native.exe",
+      "arguments": "info",
+      "exit_code": 0,
+      "stdout": "{\"schema_version\":1,\"backend\":\"native-ast\",\"stage\":\"N0\",\"version\":\"0.0.0-n0\",\"cxx_standard\":17,\"pointer_bits\":64,\"compiler\":\"GCC 8.1.0\",\"crt\":\"MinGW msvcrt; static libgcc/libstdc++ (prototype only)\",\"supported_commands\":[\"info\"],\"python_fallback\":false,\"policy_status\":\"declared; language execution unavailable\",\"resource_policy\":{\"effective_decimal_digits\":4096,\"host_decimal_digits\":0,\"limits\":{\"ast_nodes_total\":500000,\"call_depth\":64,\"container_items\":1000000,\"import_depth\":32,\"integer_bits\":65536,\"io_payload_bytes\":16777216,\"module_count\":128,\"numeric_digits\":4096,\"program_cache_bytes\":67108864,\"program_cache_entries\":32,\"quantity_exponent_abs\":64,\"runtime_objects\":200000,\"runtime_payload_bytes\":134217728,\"runtime_slots\":2000000,\"source_file_bytes\":2097152,\"source_total_bytes\":16777216,\"stderr_bytes\":1048576,\"stdout_bytes\":1048576,\"syntax_depth\":64,\"text_codepoints\":4194304,\"tokens_per_file\":250000,\"value_depth\":64},\"policy_version\":1,\"profile\":\"default-v1\"},\"resource_fingerprint\":\"c9a540b6ea917d42f3d6c915801dce802ee771a18b1ab6139eab2ebc8161b14d\"}\n",
+      "stderr": "",
+      "timed_out": false
+    },
+    {
+      "exe": "zzy-native.exe",
+      "arguments": "--help",
+      "exit_code": 0,
+      "stdout": "zzy-native 0.0.0-n0\nAvailable: info, --help, --version\nNot implemented: source-info, lex, check, run, test (E402; no Python fallback)\n",
+      "stderr": "",
+      "timed_out": false
+    },
+    {
+      "exe": "zzy-native.exe",
+      "arguments": "--version",
+      "exit_code": 0,
+      "stdout": "0.0.0-n0\n",
+      "stderr": "",
+      "timed_out": false
+    },
+    {
+      "exe": "zzy-native.exe",
+      "arguments": "source-info no-execute.zzy --diagnostic-format json",
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E402\",\"file\":null,\"span\":null,\"message\":\"capability is not implemented by this backend\",\"notes\":[\"capability=source-info\"]}\n",
+      "timed_out": false
+    },
+    {
+      "exe": "zzy-native.exe",
+      "arguments": "lex no-execute.zzy --diagnostic-format json",
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E402\",\"file\":null,\"span\":null,\"message\":\"capability is not implemented by this backend\",\"notes\":[\"capability=lex\"]}\n",
+      "timed_out": false
+    },
+    {
+      "exe": "zzy-native.exe",
+      "arguments": "check no-execute.zzy --diagnostic-format json",
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E402\",\"file\":null,\"span\":null,\"message\":\"capability is not implemented by this backend\",\"notes\":[\"capability=check\"]}\n",
+      "timed_out": false
+    },
+    {
+      "exe": "zzy-native.exe",
+      "arguments": "run no-execute.zzy --diagnostic-format json",
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E402\",\"file\":null,\"span\":null,\"message\":\"capability is not implemented by this backend\",\"notes\":[\"capability=run\"]}\n",
+      "timed_out": false
+    },
+    {
+      "exe": "zzy-native.exe",
+      "arguments": "test no-execute.zzy --diagnostic-format json",
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E402\",\"file\":null,\"span\":null,\"message\":\"capability is not implemented by this backend\",\"notes\":[\"capability=test\"]}\n",
+      "timed_out": false
+    },
+    {
+      "exe": "zzy-native.exe",
+      "arguments": "unknown --diagnostic-format json",
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E401\",\"file\":null,\"span\":null,\"message\":\"invalid command or arguments\",\"notes\":[\"use --help\"]}\n",
+      "timed_out": false
+    },
+    {
+      "exe": "zzy-native.exe",
+      "arguments": "info --limits missing.json --diagnostic-format json",
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E401\",\"file\":null,\"span\":null,\"message\":\"invalid command or arguments\",\"notes\":[\"use --help\"]}\n",
+      "timed_out": false
+    },
+    {
+      "exe": "native-protocol-tests.exe",
+      "arguments": "",
+      "exit_code": 0,
+      "stdout": "protocol: 3 checks passed\n",
+      "stderr": "",
+      "timed_out": false
+    },
+    {
+      "exe": "native-heap-tests.exe",
+      "arguments": "array-cycle",
+      "exit_code": 0,
+      "stdout": "array-cycle: passed\nheap: 1 cases passed\n",
+      "stderr": "",
+      "timed_out": false
+    },
+    {
+      "exe": "native-heap-tests.exe",
+      "arguments": "map-cycle",
+      "exit_code": 0,
+      "stdout": "map-cycle: passed\nheap: 1 cases passed\n",
+      "stderr": "",
+      "timed_out": false
+    },
+    {
+      "exe": "native-heap-tests.exe",
+      "arguments": "closure-cycle",
+      "exit_code": 0,
+      "stdout": "closure-cycle: passed\nheap: 1 cases passed\n",
+      "stderr": "",
+      "timed_out": false
+    },
+    {
+      "exe": "native-heap-tests.exe",
+      "arguments": "reachable-alias",
+      "exit_code": 0,
+      "stdout": "reachable-alias: passed\nheap: 1 cases passed\n",
+      "stderr": "",
+      "timed_out": false
+    },
+    {
+      "exe": "native-heap-tests.exe",
+      "arguments": "quota-gc-retry",
+      "exit_code": 0,
+      "stdout": "quota-gc-retry: passed\nheap: 1 cases passed\n",
+      "stderr": "",
+      "timed_out": false
+    },
+    {
+      "exe": "native-heap-tests.exe",
+      "arguments": "atomic-limits",
+      "exit_code": 0,
+      "stdout": "atomic-limits: passed\nheap: 1 cases passed\n",
+      "stderr": "",
+      "timed_out": false
+    },
+    {
+      "exe": "native-heap-tests.exe",
+      "arguments": "allocation-rollback",
+      "exit_code": 0,
+      "stdout": "allocation-rollback: passed\nheap: 1 cases passed\n",
+      "stderr": "",
+      "timed_out": false
+    },
+    {
+      "exe": "native-heap-tests.exe",
+      "arguments": "ownership",
+      "exit_code": 0,
+      "stdout": "ownership: passed\nheap: 1 cases passed\n",
+      "stderr": "",
+      "timed_out": false
+    },
+    {
+      "exe": "native-heap-tests.exe",
+      "arguments": "cancellation",
+      "exit_code": 0,
+      "stdout": "cancellation: passed\nheap: 1 cases passed\n",
+      "stderr": "",
+      "timed_out": false
+    },
+    {
+      "exe": "native-heap-tests.exe",
+      "arguments": "unwind-roots",
+      "exit_code": 0,
+      "stdout": "unwind-roots: passed\nheap: 1 cases passed\n",
+      "stderr": "",
+      "timed_out": false
+    },
+    {
+      "exe": "native-heap-tests.exe",
+      "arguments": "iterative-graph",
+      "exit_code": 0,
+      "stdout": "iterative-graph: passed\nheap: 1 cases passed\n",
+      "stderr": "",
+      "timed_out": false
+    },
+    {
+      "exe": "native-heap-tests.exe",
+      "arguments": "repeated-collection",
+      "exit_code": 0,
+      "stdout": "repeated-collection: passed\nheap: 1 cases passed\n",
+      "stderr": "",
+      "timed_out": false
+    },
+    {
+      "exe": "native-heap-tests.exe",
+      "arguments": "not-a-case",
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "no cases collected\n",
+      "timed_out": false
+    },
+    {
+      "exe": "native-lifecycle-probe.exe",
+      "arguments": "success",
+      "exit_code": 0,
+      "stdout": "{\"objects\":0,\"slots\":0,\"payload\":0}\n",
+      "stderr": "",
+      "timed_out": false
+    },
+    {
+      "exe": "native-lifecycle-probe.exe",
+      "arguments": "resource",
+      "exit_code": 1,
+      "stdout": "{\"objects\":0,\"slots\":0,\"payload\":0}\n",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E211\",\"file\":null,\"span\":null,\"message\":\"resource limit exceeded\",\"notes\":[\"limit=runtime_objects\"]}\n",
+      "timed_out": false
+    },
+    {
+      "exe": "native-lifecycle-probe.exe",
+      "arguments": "cancel",
+      "exit_code": 130,
+      "stdout": "{\"objects\":0,\"slots\":0,\"payload\":0}\n",
+      "stderr": "{\"schema_version\":1,\"kind\":\"cancelled\",\"code\":null,\"file\":null,\"span\":null,\"message\":\"execution cancelled\",\"notes\":[\"probe cleanup complete\"]}\n",
+      "timed_out": false
+    },
+    {
+      "exe": "native-lifecycle-probe.exe",
+      "arguments": "error",
+      "exit_code": 1,
+      "stdout": "{\"objects\":0,\"slots\":0,\"payload\":0}\n",
+      "stderr": "{\"schema_version\":1,\"kind\":\"internal_error\",\"code\":null,\"file\":null,\"span\":null,\"message\":\"native internal error\",\"notes\":[\"probe cleanup complete\"]}\n",
+      "timed_out": false
+    },
+    {
+      "exe": "native-lifecycle-probe.exe",
+      "arguments": "success",
+      "exit_code": 0,
+      "stdout": "{\"objects\":0,\"slots\":0,\"payload\":0}\n",
+      "stderr": "",
+      "timed_out": false
+    },
+    {
+      "exe": "native-lifecycle-probe.exe",
+      "arguments": "wait-timeout",
+      "exit_code": -1,
+      "stdout": "READY\n",
+      "stderr": "",
+      "timed_out": true,
+      "purpose": "expected timeout cleanup probe",
+      "process_exited": true
+    },
+    {
+      "exe": "native-lifecycle-probe.exe",
+      "arguments": "success",
+      "exit_code": 0,
+      "stdout": "{\"objects\":0,\"slots\":0,\"payload\":0}\n",
+      "stderr": "",
+      "timed_out": false
+    },
+    {
+      "exe": "native-lifecycle-probe.exe",
+      "arguments": "dependencies",
+      "exit_code": 0,
+      "stdout": "{\"pid\":13172,\"modules\":[\"native-lifecycle-probe.exe\",\"ntdll.dll\",\"KERNEL32.DLL\",\"KERNELBASE.dll\",\"msvcrt.dll\",\"USER32.dll\",\"win32u.dll\",\"GDI32.dll\",\"gdi32full.dll\",\"msvcp_win.dll\",\"ucrtbase.dll\",\"IMM32.DLL\"],\"children\":[{\"pid\":528,\"name\":\"conhost.exe\"}]}\n",
+      "stderr": "",
+      "timed_out": false
+    }
+  ],
+  "imports": {
+    "zzy-native.exe": [
+      "KERNEL32.dll",
+      "msvcrt.dll"
+    ],
+    "native-protocol-tests.exe": [
+      "KERNEL32.dll",
+      "msvcrt.dll"
+    ],
+    "native-heap-tests.exe": [
+      "KERNEL32.dll",
+      "msvcrt.dll",
+      "USER32.dll"
+    ],
+    "native-lifecycle-probe.exe": [
+      "KERNEL32.dll",
+      "msvcrt.dll",
+      "USER32.dll"
+    ]
+  },
+  "artifacts": {
+    "zzy-native.exe": "3f1a1092b0e7da75c919c23d9aadda3add4c68652bce6ecacb9e8ba24032b215",
+    "native-protocol-tests.exe": "1ec55effcb2eb5be1674431b4ecab120de86116d5ee6462613c24bd22471cd27",
+    "native-heap-tests.exe": "df25b50b3a3e4419c0d2ef469636965a3798e8f9e009ca6c482846752cf947c5",
+    "native-lifecycle-probe.exe": "f156bfbe3277dce58b7051cedfbb5e0a8de476edc996fc8a07accedc912be601"
+  },
+  "sources": {
+    "CMakeLists.txt": "2d6fe33185388b4ebeb1fa4b6dfcbdc52558f523ce3b2387d12a2d7d76f256fb",
+    "CMakePresets.json": "c79b28221877d6c047f7aa13c9f3f6e85d9890ce05a3b300a4676c18ce326731",
+    "dependencies.json": "f7c7d615e974f89a25d75af19b9fe45437e29c79b2aa145045eefd5fea8a8dd0",
+    "include/zzy_native/heap_prototype.hpp": "fc986b7741e7ce95e4df41166489f3221970b17bfa83d152cd0e45e586473d90",
+    "include/zzy_native/policy.hpp": "9d10635d1177e7b5f375f6afd1bf029ddc15ca233bfbb4a507c487defc8ec252",
+    "include/zzy_native/protocol.hpp": "1af21be93c6ca9e41fe1e0928d0482803021827826a3d2a96d18fb8d9fe9dbc6",
+    "src/main.cpp": "f78ea2c7b5f66c9845f304f449f09d0b332b7b98d274cf81f41a2ad898f2f641",
+    "tests/capabilities.json": "83a0d01e8b50225bef332b1b6481d20db02f9173f1f670cda40f12e1de87a44f",
+    "tests/cli.cmake": "3eb15651a6f48a780f658a1c19ca2e31b6f3069782393bde79cdd34ca6d39d28",
+    "tests/golden/aliases.zzy": "f01e5d5f180a422a52d71f81cbe6207fce717593f241a51cde57250de191a463",
+    "tests/golden/cases.json": "fac334b3737aeed678578d6ff66df1dd369f571c601ce9d3a074fca26ef91c27",
+    "tests/golden/closure-cycle.zzy": "1fbd3ea92095194214ea96c45e70999b47f79d88df99309af1b5a0ddb9d00b4a",
+    "tests/golden/no-execute.zzy": "b233c69fec2f40686e5e2555670a784ec543fc5d805043945f1eb6a4aed3b205",
+    "tests/golden/order.zzy": "a0c17872f1732447020a594f55a02b6596244dbc25486951111b8e25994dce91",
+    "tests/golden/scalars.zzy": "f066c687ff9451d662edcc9969cc8a46fb2709889a190363bb695e2504f492fe",
+    "tests/golden/type-error.zzy": "2580ac867e759d66d6277d8da31cfadd3fd47a98c1238a3cb2523ceb09d32ab9",
+    "tests/inventory.json": "749e9e0c7d1f15c7657b3abbbbf726dacadc5f00b435c1b70b8e1ff308d156b0",
+    "tests/native/heap.cpp": "c2c9a228949fc2051fdcb2e180c34aca1515f3ab747119c353932c1c7aa710a7",
+    "tests/native/lifecycle.cpp": "af4e91fa37099455de3b65de1daead25d9f73e18bbb429ebd4aed188ec0fcc97",
+    "tests/native/protocol.cpp": "25e69a9dcbd2a173c4ebb0eaabf95d5ad13eac7386306d9842940bd657d95be3",
+    "tests/probe.cmake": "8b9a6144bb9635eb5dd81e506866ad4e9376d81accfb157780adabdcafe4d627",
+    "tests/test_inventory.py": "8a66ea6f2237569c8883dbce71e474d357edc20c7d04ef139678e4b0439d008b",
+    "tools/acceptance.ps1": "47ee83f3e3011134e065e7a240d2c832bdb69cb5a3bb93de954013a684e87b88",
+    "tools/build-direct.ps1": "38f8465df3a23c40e79942619f739894188ccaced10070982604450698669fc9",
+    "tools/inventory.py": "cc7e0e210ed8eadb970f90595d95156112f24138cb68e615beb91b66216665a1"
+  },
+  "manual_ctrl_c": "not run",
+  "cmake_install": "not run",
+  "sanitizer": "not run"
+}

@@ -62,7 +62,7 @@ int cli(int argc,char** argv) {
 }
 }
 int main(int argc,char** argv) {
-    try {return cli(argc,argv);}
+    try {zzy::configure_streams();return cli(argc,argv);}
     catch(const std::bad_alloc&) {zzy::diagnostic(std::cerr,"E211","allocation failed","phase=frontend");return 2;}
     catch(...) {zzy::diagnostic(std::cerr,"","native internal error","phase=frontend",true,"internal_error");return 2;}
 }

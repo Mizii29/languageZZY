@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "language_standard": "C++17",
+  "cmake_minimum": "3.21",
+  "configure_downloads": false,
+  "project_third_party": [],
+  "toolchain_observed": {
+    "compiler": "GCC 8.1.0 x86_64-win32-seh-rev0",
+    "target": "x86_64-w64-mingw32",
+    "crt": "msvcrt (Windows system); static libgcc/libstdc++",
+    "msvc_clang_cl_cmake_ctest": "not found; no installation attempted",
+    "redistributed_toolchain_files": []
+  },
+  "bigint": {"provider": "in-tree signed uint32 limbs", "implemented": false, "phase": "N3"},
+  "unicode": {"version": "15.0.0", "tables_vendored": false, "phase": "N1"},
+  "optional_hosts": {"SQLite": "deferred N4", "Web": "deferred N4", "Sketch_GUI": "deferred N4"}
+}
