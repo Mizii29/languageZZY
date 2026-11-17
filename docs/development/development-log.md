@@ -831,3 +831,10 @@ Git 提交：真实标识 / 未提交
 - 新建result.md作为已核验结果摘要/原DOC及运行证据索引，修复原待填MD删除后的入口；review保留10月30日历史并追加31日结论，指南保留可复测命令。同步人工总目录、文档导航、todo、覆盖、优化计划/报告、阶段证据及项目技能当前状态。关闭P11两项人工待补，P10合约网页六项仍待验，P12五项和未选P10不勾选，66/77及下一项P12-01不变。
 - 仅整理Markdown及核验既有证据；未改运行时、四个ZZY脚本、原始结果、既有自动报告或requirement，没有代跑人工、全量/HTTP/Tk/性能，不提交或推送。
 - 整理后执行`.venv/Scripts/python.exe -X utf8 -m scripts.ci static --output dist/p11-manual-result-review-20261031/static`通过；人工目录8份Markdown、68个本地链接和围栏检查通过，git diff --check通过。7份原始证据哈希、4个ZZY脚本及requirement均保持不变，核验记录见同目录docs-check.json。
+
+## 2026-11-17 N0-01：独立原生路线登记与现状盘点
+
+- 分支 codex/native-runtime-plan，接手 HEAD ff7e959；已有应用/文档/人工材料修改均保留。按当前工作区修订后的 native-runtime-plan 执行；本轮仅追加登记，不把其已有改稿夹带进提交。
+- 只读 inventory.py 实查 53 类 AST 节点（含动态分派）、24 类 Value、103 宿主函数、12 个默认 CLI manifest/1738 例，保存实际源码规范化 SHA-256、签名/ABI、Resolver 布局、资源生效记录及应用入口。发现 db 内建名字集合差异，登记而不改变 Python 行为。
+- 实际命令 `.\.venv\Scripts\python.exe -X utf8 native_runtime/tools/inventory.py --output native_runtime/tests/inventory.json` 及 `--check native_runtime/tests/inventory.json` 均退出 0；工具不加载 Tk/ASGI 或用户模块。期望不是此盘点工具生成的解释器输出。
+- 未安装新工具链；已发现 GCC 8.1.0 x86_64-w64-mingw32，cmake/ctest/MSVC/clang-cl 在 PATH 和常见安装目录均未发现。构建证据待后续专项，不能将盘点通过计作 N0 整体完成。
