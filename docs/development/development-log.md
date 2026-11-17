@@ -853,3 +853,10 @@ N0-01 自检修复：按 systematic-debugging 先定位 native_extensions/native
 +- 冻结自有 uint32 limb BigInt（N3 才实现与验收）、严格 UTF-8/Unicode15 表方案、只读 AST Program、每请求图、显式根标记清扫、默认资源事务计量、异常/取消边界。info 原生十进制宿主上限诚实为 0，默认有效4096，指纹 c9a540b6ea917d42f3d6c915801dce802ee771a18b1ab6139eab2ebc8161b14d；标明语言执行尚不可用。
 +- 实际 `& native_runtime/tools/build-direct.ps1 -Configuration Debug`（GCC8.1.0、C++17、-O0 -g、-Wall -Wextra -Wpedantic -Werror）退出0；info退出0；native-protocol-tests.exe 的3项固定协议检查通过；run examples/hello.zzy --diagnostic-format json 返回 E402/退出2。objdump导入表只列KERNEL32.dll/msvcrt.dll，未链接Python。
 +- Get-Command 及 Program Files/VS、D:\software、用户本地Programs/.vscode目录查找未发现 CMake/CTest/MSVC/clang-cl。没有自动安装。离线 configure/build/CTest/install 未能执行，不能伪报通过；N0-03 保持未勾选。后续只继续可用编译器能够独立验证的 N0 堆/协议原型，不进入 N1。
+
+## 2026-11-17 N0-04：真实环堆与独立 golden
++
++- 新增非移动标记清扫堆原型、事务 Ticket、显式弱根登记及每请求 owner/id；验证 Array 自环、Map自环/键载荷、Closure→Cell→Array 环、可达别名、配额GC重试、uint64溢出防护、跨请求/过期句柄、取消、异常、重复close、5000节点环及单请求1000轮回收。只计实验图三项逻辑配额，不虚构完整语言执行/资源支持。
++- `& native_runtime/tools/build-direct.ps1 -Configuration Debug` 和 Release均退出0（警告即错误）；对应 native-heap-tests.exe 各12/12通过；unknown case选择实际退出1。后续登记CTest逐例测试，但CTest仍未运行。
++- 人工推导scalars/aliases/order/closure-cycle/type-error与check共6条固定期望。首次误用黑盒 --manifest 参数退出2；修正为位置参数后首次5/6通过，失败为data.kind预期错误：stdlib正式约定小写map，不能混同内部Map标签。按契约修正夹具后 `.\.venv\Scripts\python.exe -X utf8 -m tests.blackbox native_runtime/tests/golden/cases.json --report dist/native-n0-work/golden-python-final.json` 6/6通过、退出0。期望不是运行时回写，原生语言执行仍未实现。
++- 原型可由现有GCC独立验证，因此在缺CMake时完成N0-04，但N0-03和整体出口继续未完成；无RSS/性能优越或Sanitizer通过结论。

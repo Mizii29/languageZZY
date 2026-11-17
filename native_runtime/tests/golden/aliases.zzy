@@ -1,0 +1,9 @@
+(zno) a := [];
+(zno) alias := a;
+array.push(a, a);
+io.print(len(alias));
+io.print(alias[0] == a);
+(zno) m := data.map();
+data.set(m, "self", m);
+io.print(data.get(m, "self") == m);
+io.print(data.kind(m));

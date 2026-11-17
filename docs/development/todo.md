@@ -203,7 +203,7 @@ P11累计验收待修：调用notes定位故障可能掩盖原E211（已注入�
 - [x] N0-01 真实实现、宿主元数据、全部 12 个 CLI 清单及应用入口盘点；见 [冻结清单](native-runtime-inventory.md)。
 - [x] N0-02 逐特性能力矩阵与 E402/schema v1 未支持协议；见 [能力矩阵](native-runtime-capability.md)。
 - [ ] N0-03 C++17/CMake 骨架和设计已建立；GCC 直接编译通过，缺 CMake/CTest/MSVC，正式配置/构建/CTest/安装尚未验证，保持未勾选。
-- [ ] N0-04 Array/Map/闭包环和逻辑配额原型，独立 golden。
+- [x] N0-04 Array/Map/闭包环、别名根/请求隔离、配额重试和异常归还原型；Debug/Release各12例通过，6条独立语言 golden 经稳定CLI核对。
 - [ ] N0-05 进程依赖、退出、取消/超时、安装验收与 N0 出口。
 
 N1—N8 尚未开始；N0 未达到出口前不进入 N1。

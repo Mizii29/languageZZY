@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "cases": [
+    {
+      "id": "native-golden-scalars",
+      "file": "native_runtime/tests/golden/scalars.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 5,
+      "exit_code": 0,
+      "stdout": "18446744073709551617\n-3\n2\n3\nfalse\ntrue\n"
+    },
+    {
+      "id": "native-golden-aliases",
+      "file": "native_runtime/tests/golden/aliases.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 5,
+      "exit_code": 0,
+      "stdout": "1\ntrue\ntrue\nmap\n"
+    },
+    {
+      "id": "native-golden-closure-cycle",
+      "file": "native_runtime/tests/golden/closure-cycle.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 5,
+      "exit_code": 0,
+      "stdout": "1\ntrue\n"
+    },
+    {
+      "id": "native-golden-order",
+      "file": "native_runtime/tests/golden/order.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 5,
+      "exit_code": 0,
+      "stdout": "1\n2\n3\nfalse\n"
+    },
+    {
+      "id": "native-golden-type",
+      "file": "native_runtime/tests/golden/type-error.zzy",
+      "mode": "run",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 5,
+      "exit_code": 1,
+      "stdout": "",
+      "diagnostic": {
+        "code": "E201",
+        "span": [
+          1,
+          12,
+          1,
+          13
+        ]
+      }
+    },
+    {
+      "id": "native-golden-check",
+      "file": "native_runtime/tests/golden/type-error.zzy",
+      "mode": "check",
+      "cwd": ".",
+      "stdin": "",
+      "timeout_seconds": 5,
+      "exit_code": 0,
+      "stdout": ""
+    }
+  ]
+}

@@ -32,4 +32,11 @@ if(BUILD_TESTING)
   add_test(NAME cli-unsupported COMMAND "${CMAKE_COMMAND}" -DEXE=$<TARGET_FILE:zzy-native>
     -DMODE=run -P "${CMAKE_CURRENT_SOURCE_DIR}/tests/cli.cmake")
   set_tests_properties(protocol cli-info cli-unsupported PROPERTIES TIMEOUT 10)
+  add_executable(native-heap-tests tests/native/heap.cpp)
+  target_link_libraries(native-heap-tests PRIVATE zzy_native_options)
+  foreach(case array-cycle map-cycle closure-cycle reachable-alias quota-gc-retry atomic-limits
+      allocation-rollback ownership cancellation unwind-roots iterative-graph repeated-collection)
+    add_test(NAME heap-${case} COMMAND native-heap-tests "${case}")
+    set_tests_properties(heap-${case} PROPERTIES TIMEOUT 10)
+  endforeach()
 endif()

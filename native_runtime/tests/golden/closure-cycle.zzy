@@ -1,0 +1,10 @@
+(addnew) make() {
+    (zyes) a := [];
+    (zno) f := (addnew) () => a;
+    array.push(a, f);
+    (return) f;
+}
+(zno) closure := make();
+(zno) result := closure();
+io.print(len(result));
+io.print(result[0] == closure);
