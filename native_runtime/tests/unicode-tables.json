@@ -1,0 +1,12 @@
+{
+  "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+  "unicode": "15.0.0",
+  "generator_sha256": "4f2d5eff4197e0039d6b1517a072f3016e6f809280bd640d5b0a4e3a8a5583a2",
+  "tables_sha256": "2695e437ca9d5201f9662e91b906f1db66307e7ac0bfad613d01e8f00aefe698",
+  "range_counts": {
+    "identifier_start": 667,
+    "identifier_continue": 775,
+    "space": 10
+  },
+  "purpose": "Offline implementation data, not a runtime dependency or golden oracle"
+}

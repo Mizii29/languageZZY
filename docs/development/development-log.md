@@ -888,3 +888,11 @@ N0-01/02/04/05 的语义、逐特性能力、E402、所有权及固定 golden �
 N1 通过时只能记录“N1 实现与 GCC 验证完成，正式 CMake/CTest 验收待补”。以后必须对最新代码重新执行 Debug/Release 配置、构建、非空 CTest、install 与源码外 smoke，不能沿用 N0 原型证据。
 
 复核：现有 native-heap-tests.exe 12/12；未修改冻结语义、requirement 原文或 P12/P13。一次 inventory.py --check 漏传路径，argparse 正常拒绝，未视为通过；随后使用显式清单复核。已有未提交应用、规划和人工材料另行保留，仅提交本轮追加段。
+
+## N1-01 子步骤：源码基础（2026-11-17）
+
+已实现 C++17 严格 UTF-8、单前导 BOM、码点/原始字节双向边界映射、LF 行坐标、Windows 宽字符文件载入、规范路径不可变快照、SHA-256 和前端配额所有权。Token/公开命令随后接续，本条不提前勾选整个 N1-01。
+
+实际编译：g++.exe -std=c++17 -Wall -Wextra -Wpedantic -Werror -static-libgcc -static-libstdc++ -D_WIN32_WINNT=0x0A00 -DWINVER=0x0A00 -O0 -g -I native_runtime/include native_runtime/tests/native/frontend.cpp -o build/native-direct-debug/native-frontend-tests.exe；退出 0。执行该 EXE：sha256/utf8/positions/source-loader/policy/diagnostics 六项通过；每项失败与空选择均为非零的测试入口已提供。CTest 已登记但未运行。
+
+失败与修复：最初使用 std::filesystem，现有 MinGW GCC 8.1 的 fs_path.h 自身缺少路径比较声明，fstream 宽路径重载也不可用。未修改或安装工具链，改用 Win32 W API、RAII HANDLE 和 UTF-16/UTF-8 严格转换后重跑通过。独立固定 SHA 向量（空串、abc、百万 a）及冻结策略 SHA 均通过。inventory.py --check native_runtime/tests/inventory.json 复核 56 AST、103 宿主、12 manifests/1738 cases。
