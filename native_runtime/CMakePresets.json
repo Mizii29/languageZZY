@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "cmakeMinimumRequired": {"major": 3, "minor": 21, "patch": 0},
+  "configurePresets": [
+    {"name":"native-debug","generator":"Visual Studio 17 2022","architecture":"x64","binaryDir":"${sourceDir}/../build/native-debug","cacheVariables":{"BUILD_TESTING":"ON"}},
+    {"name":"native-release","inherits":"native-debug","binaryDir":"${sourceDir}/../build/native-release"},
+    {"name":"native-mingw-debug","generator":"MinGW Makefiles","binaryDir":"${sourceDir}/../build/native-mingw-debug","cacheVariables":{"CMAKE_BUILD_TYPE":"Debug","BUILD_TESTING":"ON"}},
+    {"name":"native-mingw-release","inherits":"native-mingw-debug","binaryDir":"${sourceDir}/../build/native-mingw-release","cacheVariables":{"CMAKE_BUILD_TYPE":"Release"}}
+  ]
+}

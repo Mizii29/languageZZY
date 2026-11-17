@@ -846,3 +846,10 @@ N0-01 自检修复：按 systematic-debugging 先定位 native_extensions/native
 +- 为 56 AST/24 Value/103 宿主函数和 6 CLI 命令逐项登记 tier/phase/implemented/diagnostic；当前只有 info 声明可用，执行能力全部 E402。可选宿主是延期迁移而非从最终功能中删除；VM/AOT/JIT 不进入本路线实现。
 +- 核对 syntax 集中表后新增 E402“当前后端尚未实现能力”，同步 diagnostics 与能力矩阵；N0 读源码前拒绝，schema v1、空 stdout、file/span=null、capability note、退出 2；不误用 E103/E214，也不改 Python 当前行为。
 +- `.\.venv\Scripts\python.exe -X utf8 -m unittest native_runtime.tests.test_inventory -v` 4/4 通过，含逐项覆盖、唯一 ID、未实现状态/诊断、冻结数量和漂移反例；git diff --cached --check 通过。前次日志的计数和首检结果更正随本提交纳入。下一项 N0-03，正式构建工具缺失仍待验证。
+
+## 2026-11-17 N0-03：C++17 骨架与设计冻结（工具链门禁未完成）
++
++- 新增 native_runtime CMake/presets、真实 info、schema v1 E402/E401 和协议测试；现有默认入口/pyproject/CI 均未替换。正式 VS2022 x64 /MD(/MDd)，N0 现有 MinGW 原型使用静态 libgcc/libstdc++、msvcrt；Win10 最低编译目标，当前 Win11 实测；无项目级第三方依赖/下载。
++- 冻结自有 uint32 limb BigInt（N3 才实现与验收）、严格 UTF-8/Unicode15 表方案、只读 AST Program、每请求图、显式根标记清扫、默认资源事务计量、异常/取消边界。info 原生十进制宿主上限诚实为 0，默认有效4096，指纹 c9a540b6ea917d42f3d6c915801dce802ee771a18b1ab6139eab2ebc8161b14d；标明语言执行尚不可用。
++- 实际 `& native_runtime/tools/build-direct.ps1 -Configuration Debug`（GCC8.1.0、C++17、-O0 -g、-Wall -Wextra -Wpedantic -Werror）退出0；info退出0；native-protocol-tests.exe 的3项固定协议检查通过；run examples/hello.zzy --diagnostic-format json 返回 E402/退出2。objdump导入表只列KERNEL32.dll/msvcrt.dll，未链接Python。
++- Get-Command 及 Program Files/VS、D:\software、用户本地Programs/.vscode目录查找未发现 CMake/CTest/MSVC/clang-cl。没有自动安装。离线 configure/build/CTest/install 未能执行，不能伪报通过；N0-03 保持未勾选。后续只继续可用编译器能够独立验证的 N0 堆/协议原型，不进入 N1。
