@@ -16,4 +16,6 @@
 
 父进程还独立检查总墙钟预算，即使子进程返回成功，超过 30 秒也记失败。2026-11-17 首次分段数据中 X03/n=1000 有一条约 1055 秒的异常，已保留于 `benchmarks/results/p12/invalid-first-stage`，审计拒绝该轮；完整重跑通过，见 `benchmarks/results/p12/execute-stages`。匹配源码的 CLI 原始记录在相邻 `cli-staged-source`；`audit` 检查文件哈希、14 个正式单元各 15 条、答案/超时和无缺样本。
 
+小型优化实验：`python -X utf8 -m benchmarks.p12.reserve_demo --output dist/p12-reserve-demo-new` 用同一 X01/X02/X03 输入配对比较产品基线与**仅实验类**的显式循环预检查；两轮原始样本在 `benchmarks/results/p12/optimization-demo`，结论见[优化方案](../../docs/runtime/p12-optimization-options.md)。该候选未改产品运行时，第二轮收益未稳定，不能宣称已提速。
+
 X01 同为 `while i<n` 的显式平方乘加；X02 每轮调用一次奇偶分支函数；X03 逐项构建数组并顺序遍历。X00 只输出常量。规模和答案见清单及生成源码。当前仅 ZZY/CPython 原生 Windows 配对；标准 PUC-Lua/Ruby 尚无合格可执行文件。X04—X06、应用压力、P11 同机前后、分段与空间测量仍按正式计划待办，当前报告不能称为 P12 完整性能验收。

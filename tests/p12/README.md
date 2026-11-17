@@ -15,3 +15,5 @@
 2026-11-17 实跑：`./.venv/Scripts/python.exe -X utf8 -m unittest tests.test_p09_app tests.test_p12_app -q` 为 **26/26，65.076 秒，退出 0**；完整一键回归 `./.venv/Scripts/python.exe -X utf8 -m tests --report dist/p12-20261117-core.json` 为 **2076/2076，978.131 秒，零失败/错误/跳过/预期失败，退出 0**。新增四项相对原 2072 项递增，旧测试未删。
 
 P12 分段补测：`tests.test_p12_benchmarks` 3 项验证 X00—X03 小样例在真实 CLI 与分段 worker 中都满足固定公式；X03 批内三次重建数组；错答案必须失败；返回成功但父进程墙钟超预算必须拒绝。`python -X utf8 -m unittest tests.test_p12_benchmarks -v` 实跑 3/3、7.574 秒。完整一键回归 **未在新增这三项之后重跑**，上述 2076/2076 仅对应补测前的源码；不把历史报告冒充当前清单。
+
+2026-11-17 优化小实验新增第4项，验证实验预留循环与基线在X01/X03固定答案一致；`./.venv/Scripts/python.exe -X utf8 -m unittest tests.test_p12_benchmarks -v`实跑4/4、10.368秒、退出0。产品代码未改，全量一键回归仍未复跑。两轮候选性能与未保留决定见[优化方案](../../docs/runtime/p12-optimization-options.md)。

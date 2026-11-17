@@ -1,0 +1,99 @@
+{
+  "statistics": [
+    {
+      "case": "X01",
+      "n": 10000,
+      "variant": "baseline",
+      "valid": 15,
+      "planned": 15,
+      "median_ms": 297.7351,
+      "mad_ms": 15.355399999999975,
+      "min_ms": 262.3841,
+      "max_ms": 444.4538
+    },
+    {
+      "case": "X01",
+      "n": 10000,
+      "variant": "reserve-loop",
+      "valid": 15,
+      "planned": 15,
+      "median_ms": 292.2958,
+      "mad_ms": 26.057900000000018,
+      "min_ms": 247.8111,
+      "max_ms": 404.4372
+    },
+    {
+      "case": "X01",
+      "n": 10000,
+      "variant": "paired_change_percent",
+      "valid": 15,
+      "median": -1.0207194461419933,
+      "mad": 12.841090836015233,
+      "faster_pairs": 8
+    },
+    {
+      "case": "X02",
+      "n": 1000,
+      "variant": "baseline",
+      "valid": 15,
+      "planned": 15,
+      "median_ms": 69.7965,
+      "mad_ms": 4.8934,
+      "min_ms": 62.2666,
+      "max_ms": 94.1129
+    },
+    {
+      "case": "X02",
+      "n": 1000,
+      "variant": "reserve-loop",
+      "valid": 15,
+      "planned": 15,
+      "median_ms": 68.7237,
+      "mad_ms": 7.775500000000008,
+      "min_ms": 57.6358,
+      "max_ms": 84.6551
+    },
+    {
+      "case": "X02",
+      "n": 1000,
+      "variant": "paired_change_percent",
+      "valid": 15,
+      "median": -7.790554139272777,
+      "mad": 6.882204101026867,
+      "faster_pairs": 10
+    },
+    {
+      "case": "X03",
+      "n": 1000,
+      "variant": "baseline",
+      "valid": 15,
+      "planned": 15,
+      "median_ms": 37.849,
+      "mad_ms": 2.002199999999995,
+      "min_ms": 33.6022,
+      "max_ms": 49.8775
+    },
+    {
+      "case": "X03",
+      "n": 1000,
+      "variant": "reserve-loop",
+      "valid": 15,
+      "planned": 15,
+      "median_ms": 35.0392,
+      "mad_ms": 1.8995999999999995,
+      "min_ms": 32.2272,
+      "max_ms": 44.0522
+    },
+    {
+      "case": "X03",
+      "n": 1000,
+      "variant": "paired_change_percent",
+      "valid": 15,
+      "median": -5.980874919359447,
+      "mad": 7.8238053640572796,
+      "faster_pairs": 11
+    }
+  ],
+  "failures": [],
+  "total_records": 114
+}

@@ -1,0 +1,33 @@
+Tue Nov 17 17:07:48 2026    dist/p12-x01-10000-profile.pstats
+
+         3334570 function calls (3222921 primitive calls) in 1.313 seconds
+
+   Ordered by: cumulative time
+   List reduced from 1184 to 25 due to restriction <25>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+    212/1    0.009    0.000    1.314    1.314 {built-in method builtins.exec}
+        1    0.000    0.000    1.314    1.314 <frozen runpy>:201(run_module)
+        1    0.000    0.000    1.312    1.312 <frozen runpy>:65(_run_code)
+        1    0.000    0.000    1.312    1.312 stage_worker.py:1(<module>)
+        1    0.000    0.000    1.184    1.184 stage_worker.py:100(main)
+        1    0.000    0.000    1.182    1.182 stage_worker.py:42(measure)
+        1    0.000    0.000    1.175    1.175 interpreter.py:109(run)
+        1    0.000    0.000    1.175    1.175 interpreter.py:144(drive)
+        3    0.000    0.000    1.175    0.392 {method 'send' of 'generator' objects}
+  20006/6    0.072    0.000    1.174    0.196 interpreter.py:327(statement)
+        1    0.000    0.000    1.174    1.174 interpreter.py:208(execute_user)
+  10001/1    0.028    0.000    1.174    1.174 interpreter.py:285(block)
+110010/30007    0.116    0.000    0.964    0.000 interpreter.py:535(evaluate)
+    40001    0.034    0.000    0.676    0.000 interpreter.py:680(binary)
+    30000    0.090    0.000    0.634    0.000 interpreter.py:733(integer_operation)
+    70008    0.097    0.000    0.425    0.000 interpreter.py:80(reserve)
+    70042    0.093    0.000    0.187    0.000 resources.py:159(reserve)
+    20003    0.029    0.000    0.176    0.000 interpreter.py:96(scalar)
+   120/10    0.001    0.000    0.130    0.013 <frozen importlib._bootstrap>:1349(_find_and_load)
+   120/10    0.000    0.000    0.130    0.013 <frozen importlib._bootstrap>:1304(_find_and_load_unlocked)
+   118/11    0.000    0.000    0.127    0.012 <frozen importlib._bootstrap>:911(_load_unlocked)
+    94/10    0.000    0.000    0.126    0.013 <frozen importlib._bootstrap_external>:993(exec_module)
+        2    0.000    0.000    0.124    0.062 run.py:1(<module>)
+   259/22    0.000    0.000    0.123    0.006 <frozen importlib._bootstrap>:480(_call_with_frames_removed)
+    70029    0.034    0.000    0.091    0.000 {built-in method builtins.any}

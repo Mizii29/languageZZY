@@ -1,0 +1,26 @@
+{
+  "cases": [
+    [
+      "X01",
+      10000
+    ],
+    [
+      "X02",
+      1000
+    ],
+    [
+      "X03",
+      1000
+    ]
+  ],
+  "variants": [
+    "baseline",
+    "reserve-loop"
+  ],
+  "warmups": 3,
+  "samples": 15,
+  "seed": 20261117,
+  "timeout_seconds": 30,
+  "scope": "one ZZY bench() call with fresh interpreter per child; no CLI startup",
+  "candidate": "loop precheck only, no runtime product change"
+}

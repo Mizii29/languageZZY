@@ -10,7 +10,7 @@ from time import perf_counter_ns
 from benchmarks.common import POLICY
 from benchmarks.p12.run import expected
 from benchmarks.worker import plain
-from zzy.diagnostics import Phase
+from zzy.diagnostics import Phase, ResourceExceeded
 from zzy.interpreter import Interpreter
 from zzy.output import Output
 from zzy.prepare import prepare
@@ -39,7 +39,28 @@ class TimedInterpreter(Interpreter):
         self.timings['validate_ns'] = perf_counter_ns() - stopped
 
 
-def measure(path, language, case, n, batch):
+class LoopReserveInterpreter(TimedInterpreter):
+    """Experimental reservation precheck only; not a product runtime change."""
+    def reserve(self, node, **amounts):
+        limits = self.meter.policy.limits
+        for key, count in amounts.items():
+            if self.meter.used(key) + count > limits[key]:
+                gc.collect()
+                break
+        try:
+            reservation = self.meter.reserve(**amounts)
+        except ResourceExceeded as error:
+            self.locate_resource_error(error, node)
+            raise
+        try:
+            self.reservations.add(reservation)
+        except BaseException:
+            reservation.release()
+            raise
+        return reservation
+
+
+def measure(path, language, case, n, batch, variant='baseline'):
     if not 1 <= batch <= 100000:
         raise ValueError('batch out of range')
     gc.enable()
@@ -62,7 +83,8 @@ def measure(path, language, case, n, batch):
         start = perf_counter_ns()
         if language == 'zzy':
             output = Output(io.StringIO(), io.StringIO(), ResourceMeter(POLICY, Phase.EXECUTION))
-            runtime = TimedInterpreter(program, output, io.StringIO())
+            cls = TimedInterpreter if variant == 'baseline' else LoopReserveInterpreter
+            runtime = cls(program, output, io.StringIO())
             runtime.started = start
             runtime.timings = {}
             runtime.oracle = oracle
@@ -92,7 +114,7 @@ def measure(path, language, case, n, batch):
             timings['execute_ns'] += stopped - ready
             timings['validate_ns'] += validated - stopped
             timings['cleanup_ns'] += cleaned - validated
-    return dict(status='ok', batch=batch, timings=timings,
+    return dict(status='ok', batch=batch, variant=variant, timings=timings,
                 value_sha256=sha256(expected(case, n).encode()).hexdigest(),
                 gc_enabled=gc.isenabled(), source_sha256=sha256(raw).hexdigest())
 
@@ -104,10 +126,11 @@ def main(argv=None):
     parser.add_argument('n')
     parser.add_argument('path', type=Path)
     parser.add_argument('--batch', type=int, default=1)
+    parser.add_argument('--variant', choices=('baseline', 'reserve-loop'), default='baseline')
     args = parser.parse_args(argv)
     n = None if args.n == 'none' else int(args.n)
     try:
-        record = measure(args.path, args.language, args.case, n, args.batch)
+        record = measure(args.path, args.language, args.case, n, args.batch, args.variant)
     except Exception as error:
         record = dict(status='error', error=f'{type(error).__name__}: {error}')
     print(json.dumps(record, ensure_ascii=False, separators=(',', ':')))

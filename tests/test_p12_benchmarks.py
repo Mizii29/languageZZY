@@ -62,6 +62,21 @@ class P12StageTests(unittest.TestCase):
         self.assertFalse(wall_budget_exceeded(30_000_000_000))
         self.assertTrue(wall_budget_exceeded(30_000_000_001))
 
+    def test_experimental_reserve_loop_keeps_fixed_answers(self):
+        for case in ('X01', 'X03'):
+            with self.subTest(case=case):
+                path = self.directory/f'{case}-5.zzy'
+                path.write_bytes(source(case, 5, 'zzy'))
+                hashes = []
+                for variant in ('baseline', 'reserve-loop'):
+                    code, out, err = self.command(['-m', 'benchmarks.p12.stage_worker',
+                        'zzy', case, '5', str(path), '--variant', variant])
+                    self.assertEqual((code, err), (0, b''), out.decode('utf-8'))
+                    record = json.loads(out)
+                    self.assertEqual(record['status'], 'ok')
+                    hashes.append(record['value_sha256'])
+                self.assertEqual(hashes[0], hashes[1])
+
 
 if __name__ == '__main__':
     unittest.main()
