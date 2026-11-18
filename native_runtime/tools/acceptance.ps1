@@ -1,4 +1,4 @@
-﻿param(
+param(
     [Parameter(Mandatory=$true)][string]$BuildDirectory,
     [Parameter(Mandatory=$true)][string]$Output,
     [ValidateSet('DirectGCC','CMakeMSVC','DirectMSVC')][string]$BuildOrigin='DirectGCC',
@@ -43,7 +43,7 @@ if([IO.Path]::GetFullPath($stage).StartsWith($repoRoot,[StringComparison]::Ordin
     throw 'The source-external stage must be outside the repository.'
 }
 New-Item -ItemType Directory -Path $stage -Force | Out-Null
-$names=@('zzy-native.exe','native-protocol-tests.exe','native-heap-tests.exe','native-lifecycle-probe.exe','native-frontend-tests.exe','native-program-tests.exe','native-runtime-values-tests.exe','native-execution-tests.exe')
+$names=@('zzy-native.exe','native-protocol-tests.exe','native-heap-tests.exe','native-lifecycle-probe.exe','native-frontend-tests.exe','native-program-tests.exe','native-runtime-values-tests.exe','native-execution-tests.exe','native-library-tests.exe')
 foreach($name in $names) {Copy-Item -LiteralPath (Join-Path $build $name) -Destination $stage}
 $cliExecutable=if($InstalledExecutable) {$InstalledExecutable} else {Join-Path $stage 'zzy-native.exe'}
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot '../tests/golden/no-execute.zzy') -Destination (Join-Path $stage 'no-execute.zzy')
@@ -86,7 +86,7 @@ try {
         $expectedCrt=if($Configuration -eq 'Debug') {'MSVC /MDd (debug runtime, not redistributable)'} else {'MSVC /MD (VC Redistributable required)'}
         Require ($value.crt -eq $expectedCrt) 'selected configuration CRT mismatch'
     }
-    Require ($value.stage -eq 'N3-dev' -and $value.pointer_bits -eq 64 -and $value.cxx_standard -eq 17) 'incorrect info'
+    Require ($value.stage -eq 'N4-01' -and $value.pointer_bits -eq 64 -and $value.cxx_standard -eq 17) 'incorrect info'
     Require ($value.python_fallback -eq $false -and @($value.supported_commands).Count -eq 6 -and $value.supported_commands[0] -eq 'info' -and 'run' -in $value.supported_commands) 'incorrect capabilities'
     Require ($value.resource_policy.host_decimal_digits -eq 0 -and $value.resource_policy.effective_decimal_digits -eq 4096) 'incorrect decimal policy'
     # Fixed independently from default-v1 contract and documented native host bound.
@@ -112,6 +112,10 @@ try {
     foreach($case in @('recovery','lazy','cycles','input','resources')) {
         $result=Invoke-Native 'native-execution-tests.exe' $case
         Require ($result.stdout.Replace("`r`n","`n") -ceq ($case+": PASS`n") -and $result.stderr -eq '') ('runtime execution case missing: '+$case)
+    }
+    foreach($case in @('callbacks','identity','budgets','cancellation','text')) {
+        $result=Invoke-Native 'native-library-tests.exe' $case
+        Require ($result.stdout.Replace("`r`n","`n") -ceq ($case+": PASS`n") -and $result.stderr -eq '') ('library case missing: '+$case)
     }
     $sample='(zno) 名 := "😀";'
     [IO.File]::WriteAllText((Join-Path $stage '中文 source.zzy'),$sample,[Text.UTF8Encoding]::new($false))
@@ -269,8 +273,8 @@ try {
     }
     $passed=$true
 } finally {
-    $scope=if($BuildOrigin -eq 'CMakeMSVC') {'N3 CMake/MSVC '+$Configuration+' executable acceptance; CTest/install results are separate evidence'} elseif($BuildOrigin -eq 'DirectMSVC') {'N3 direct MSVC '+$Configuration+'; NOT CMake/CTest/install acceptance'} else {'N3 direct MinGW validation; NOT CMake/CTest/install acceptance'}
+    $scope=if($BuildOrigin -eq 'CMakeMSVC') {'N4-01 CMake/MSVC '+$Configuration+' executable acceptance; CTest/install results are separate evidence'} elseif($BuildOrigin -eq 'DirectMSVC') {'N4-01 direct MSVC '+$Configuration+'; NOT CMake/CTest/install acceptance'} else {'N4-01 direct MinGW validation; NOT CMake/CTest/install acceptance'}
     $report=[ordered]@{schema_version=1;passed=$passed;scope=$scope;provenance=$provenance;os=[Environment]::OSVersion.VersionString;process_bits=([IntPtr]::Size*8);cwd=$stage;path_empty=$true;pythonpath='unusable-python-path';cmake_available=([bool](Get-Command cmake -ErrorAction SilentlyContinue));ctest_available=([bool](Get-Command ctest -ErrorAction SilentlyContinue));records=@($records.ToArray());imports=$imports;allowed_direct_imports=$allowed;artifacts=$artifacts;sources=$sources;manual_ctrl_c='not run';cmake_install=$(if($BuildOrigin -eq 'CMakeMSVC') {'see separate install log and published-copy smoke'} else {'not run'});sanitizer='not run'}
     [IO.File]::WriteAllText((Join-Path $out 'report.json'),($report | ConvertTo-Json -Depth 30),[Text.UTF8Encoding]::new($false))
 }
-Write-Output ('N3 native: '+$records.Count+' process cases passed; evidence='+$out)
+Write-Output ('N4-01 native: '+$records.Count+' process cases passed; evidence='+$out)

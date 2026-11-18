@@ -10,13 +10,14 @@ import tempfile
 ROOT = Path(__file__).resolve().parents[2]
 MANIFESTS = ("run", "p02", "p03", "p04", "p06")
 # This is a frozen stage split, not a filter on what currently passes.
-DEFERRED = {"p02-unimplemented-library": "array.sum belongs to N4-01"}
+DEFERRED = {}
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--exe", required=True, type=Path)
     parser.add_argument("--output", required=True, type=Path)
+    parser.add_argument("--library", action="store_true", help="N4-01 retained P05 core-library selection")
     options = parser.parse_args()
     exe = options.exe.resolve(strict=True)
     if options.output.exists():
@@ -27,6 +28,13 @@ def main():
              if case["mode"] == "run" and (stage != "p06" or case["id"].startswith("p06-resource-"))]
     if len(cases) != 550 or len({(stage, case["id"]) for stage, case in cases}) != len(cases):
         raise SystemExit("frozen core selection changed or is empty")
+    if options.library:
+        selection = json.loads((ROOT / "native_runtime/tests/library/selection.json").read_text(encoding="utf-8"))
+        available = {case["id"]: case for case in json.loads((ROOT / "tests/p05/cases.json").read_text(encoding="utf-8"))["cases"] if case["mode"] == "run"}
+        ids = selection["ids"]
+        if not ids or len(ids) != selection["count"] or len(set(ids)) != len(ids):
+            raise SystemExit("empty or inconsistent library selection")
+        cases = [("p05", available[identity]) for identity in ids]
     records = []
     with tempfile.TemporaryDirectory(prefix="ZZY N3 core 中文 ") as folder:
         config = Path(folder) / "limits.json"

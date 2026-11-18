@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "stage": "N3-dev",
+  "stage": "N4-01",
   "features": [
     {
       "id": "ast.add",
@@ -573,15 +573,15 @@
       "id": "host.array.filter",
       "tier": "core",
       "phase": "N4",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "host.array.map",
       "tier": "core",
       "phase": "N4",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "host.array.pop",
@@ -601,22 +601,22 @@
       "id": "host.array.sorted",
       "tier": "core",
       "phase": "N4",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "host.array.stats",
       "tier": "core",
       "phase": "N4",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "host.array.sum",
       "tier": "core",
       "phase": "N4",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "host.data.get",
@@ -1231,29 +1231,29 @@
       "id": "host.text.join",
       "tier": "core",
       "phase": "N4",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "host.text.replace",
       "tier": "core",
       "phase": "N4",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "host.text.safe_int",
       "tier": "core",
       "phase": "N4",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "host.text.split",
       "tier": "core",
       "phase": "N4",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "host.text.trim",

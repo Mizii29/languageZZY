@@ -23,8 +23,9 @@ class InventoryTests(unittest.TestCase):
         core_cli = {'cli.' + name for name in ('source-info', 'lex', 'check', 'info', 'program-info', 'run')}
         core_hosts = {'host.' + name for name in (
             'len', 'str', 'range', 'wake', 'io.input', 'io.print', 'array.copy', 'array.pop', 'array.push',
+            'array.sum', 'array.stats', 'array.sorted', 'array.map', 'array.filter',
             'data.get', 'data.has', 'data.keys', 'data.kind', 'data.map', 'data.set',
-            'math.abs', 'text.contains', 'text.trim', 'unit.format', 'unit.make',
+            'math.abs', 'text.contains', 'text.trim', 'text.join', 'text.split', 'text.replace', 'text.safe_int', 'unit.format', 'unit.make',
         )}
         self.assertEqual({f['id'] for f in features if f['implemented']}, core_ast | core_values | core_cli | core_hosts)
         self.assertEqual(json.loads((folder/'capabilities.json').read_text(encoding='utf-8'))['frontend']['parse_resolve_ast_kinds'],inventory['ast_kinds'])

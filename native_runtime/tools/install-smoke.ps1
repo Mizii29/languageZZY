@@ -1,4 +1,4 @@
-﻿param([Parameter(Mandatory=$true)][string]$Executable,[Parameter(Mandatory=$true)][string]$Output)
+param([Parameter(Mandatory=$true)][string]$Executable,[Parameter(Mandatory=$true)][string]$Output)
 $ErrorActionPreference='Stop'
 $exe=(Resolve-Path -LiteralPath $Executable).Path
 $out=[IO.Path]::GetFullPath($Output)
@@ -30,7 +30,7 @@ try {
             if($record.exit_code -ne 2 -or $record.stdout -ne '' -or ($record.stderr | ConvertFrom-Json).code -ne 'E402') {throw 'Unsupported capability smoke failed'}
         } else {
             if($record.exit_code -ne 0 -or $record.stderr -ne '') {throw 'Smoke command failed'}
-            if($command -eq 'info' -and ($record.stdout | ConvertFrom-Json).stage -ne 'N3-dev') {throw 'Wrong installed stage'}
+            if($command -eq 'info' -and ($record.stdout | ConvertFrom-Json).stage -ne 'N4-01') {throw 'Wrong installed stage'}
             if($command -eq 'run' -and $record.stdout -cne "18446744073709551617`n") {throw 'Installed arbitrary integer run mismatch'}
             if($command -eq 'check' -and $record.stdout -ne '') {throw 'check unexpectedly printed'}
             if($command -eq 'source-info') {

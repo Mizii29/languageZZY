@@ -1,0 +1,14 @@
+zzysay: N4-01: run this file with the native executable.
+(zno) scores := [7, -2, 7, 1];
+(zno) summary := array.stats(scores);
+io.print([summary.count, summary.sum, summary.min, summary.max]);
+io.print(array.sorted(scores));
+io.print(array.map(scores, math.abs));
+(addnew) positive(value: (Int)) -> (Bool) {
+    (return) value > 0;
+}
+io.print(array.filter(scores, positive));
+io.print(text.join(["ZZY", "native"], " "));
+io.print(text.split("a,,b,", ","));
+io.print(text.replace("a", "A", "banana"));
+io.print(text.safe_int(" +0042 "));

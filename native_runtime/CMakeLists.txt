@@ -46,7 +46,18 @@ if(BUILD_TESTING)
     add_test(NAME execution-${case} COMMAND native-execution-tests "${case}")
     set_tests_properties(execution-${case} PROPERTIES TIMEOUT 30)
   endforeach()
+  add_executable(native-library-tests tests/native/library.cpp)
+  target_link_libraries(native-library-tests PRIVATE zzy_native_options)
+  foreach(case callbacks identity budgets cancellation text)
+    add_test(NAME library-${case} COMMAND native-library-tests "${case}")
+    set_tests_properties(library-${case} PROPERTIES TIMEOUT 30)
+  endforeach()
+  add_test(NAME library-empty-selection COMMAND "${CMAKE_COMMAND}" -DEXE=$<TARGET_FILE:native-library-tests>
+    -P "${CMAKE_CURRENT_SOURCE_DIR}/tests/runtime-selection.cmake")
   find_program(NATIVE_POWERSHELL NAMES pwsh powershell REQUIRED)
+  add_test(NAME library-fixed COMMAND "${NATIVE_POWERSHELL}" -NoProfile -File
+    "${CMAKE_CURRENT_SOURCE_DIR}/tools/test-library.ps1" -Executable $<TARGET_FILE:zzy-native>)
+  set_tests_properties(library-fixed PROPERTIES TIMEOUT 900)
   add_test(NAME runtime-fixed COMMAND "${NATIVE_POWERSHELL}" -NoProfile -File
     "${CMAKE_CURRENT_SOURCE_DIR}/tools/test-runtime.ps1" -Executable $<TARGET_FILE:zzy-native>)
   set_tests_properties(runtime-fixed PROPERTIES TIMEOUT 900)

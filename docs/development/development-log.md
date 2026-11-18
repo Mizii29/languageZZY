@@ -1003,3 +1003,15 @@ N0/N1构建与N2-01—04静态出口已满足。未验证真实手动Ctrl+C、Sa
 运行 `cmake --install build/native-release --config Release --prefix dist/native-n3-work/final-release/install`，实际安装和源码外中文空格目录发布副本各 9/9。acceptance.ps1 以 CMakeMSVC、实际 Debug/Release 构建目录、正式 dumpbin 运行，各 70 记录，含各 1 个隔离进程预期强杀；PE 导入、真实加载模块/进程树和应用 stdout 验证未见 Python。修复首轮脚本 CRLF 断言后保留失败原件。相关环境、实际运行记录、结果及 EXE SHA-256 见 [N3 报告](../../native_runtime/tests/n3-report.md) 与 [正式证据](../../benchmarks/results/native/n3-msvc-20261118/README.md)。
 
 按 N3 出口完成核心运行和资源验收；不据此宣称真实终端 Ctrl+C、Sanitizer、其他平台和全量应用/性能已验收。Web、GUI、SQLite、完整标准库和 test 未移植。仅本地阶段提交，本轮停止于 N3；下一项 N4-01。
+
+## N4-01：核心标准库原生迁移与验收（2026-11-18）
+
+接手时已核对 N3 出口：最新原生核心实现、MSVC Debug/Release CTest 57/57 证据和 N3 提交均在工作区；本轮只增加 N4-01，不进入 N4-02。新增集中契约 `docs/development/native-stdlib-contract.md`，冻结 C++17/MSVC 依赖、线程为请求所属线程、协作取消、资源预留、回调活动计数和请求关闭规则。文件/严格 JSON、SQLite、Web、Sketch、GUI 仍保持 E402 延期。
+
+实现文件为 `native_runtime/include/zzy_native/core_hosts.hpp`、`core_library.hpp`、`execution.hpp`，固定测试为 `native_runtime/tests/native/library.cpp`、`native_runtime/tools/test-library.ps1`、`native_runtime/tests/library/selection.json`，演示为 `native_runtime/examples/core-library.zzy`。本阶段接入 29 个冻结宿主签名：array 聚合/排序/map/filter、文本 trim/contains/join/split/replace/safe_int、Map keys/copy、math.abs 及已有 core/io/unit 路径；不新增 Python、网络、GUI、线程或进程缓存，不改变校园应用和 Python 默认入口。
+
+实际环境为 Windows x64、PowerShell 7.6.9、CMake/CTest 4.5.0、VS2022 Build Tools、MSVC 19.40.33812.0、SDK 10.0.22000.0、Python 3.12.14。Debug 和 Release 配置、构建、CTest 均退出 0，CTest 实收各 64/64，分别 123.45 秒和 61.97 秒。固定库黑盒在 Debug/Release 各 126/126；`test-core-existing.py` 各 550/550，`test-cli.py` 各 72/72；`python -X utf8 -m unittest tests.test_p05_cli tests.test_p05_integration native_runtime.tests.test_inventory -q` 实收 391/391，退出 0，无跳过。Release 安装 smoke 实收 9/9；Debug/Release acceptance 报告均 passed=true，PE、实际加载模块和空 PATH/无效 PYTHONPATH 未发现 Python。未实现宿主拒绝专项在两配置完成 22/22，check 均为 0 且 run 均为 E402，未创建文件。
+
+保留的失败原件包括 `dist/native-n4-01-work/build-library.txt`（首轮探针 C++ 字符串夹具错误）和 `library-release-final.json`（并行构建尚未完成时使用旧二进制，126 项失败，不计最终结果）。修复夹具并等待最终构建后，`library-debug-final-2.json` 与 `library-release-final-2.json` 均为 126/126。核心 demo Release 输出固定为 `[4, 13, -2, 7]`、`[-2, 1, 7, 7]`、`[7, 2, 7, 1]`、`[7, 7, 1]`、`ZZY native`、`[a, , b, ]`、`bAnAnA`、`(^_^)(42)`。
+
+未验证或延期：N4-02—06、N5 test、N6 全量清单、真实人工 Ctrl+C、Sanitizer、其他平台、干净缺 CRT 主机和真实性能。N4-01 不等于完整 N4。下一项为 N4-02 文件与严格 JSON。本条证据目录为 `dist/native-n4-01-work`，待本地提交后不推送。
