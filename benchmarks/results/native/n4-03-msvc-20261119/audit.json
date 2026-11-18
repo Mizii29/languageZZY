@@ -1,0 +1,655 @@
+{
+  "schema_version": 1,
+  "passed": true,
+  "scope": "N4-03 final source/artifact/count/install and user-work preservation audit",
+  "base_commit": "b31a45e906a2323ccec0729722e00057dd3d3d8a",
+  "requirement_preserved": true,
+  "preserved_unrelated_files": {
+    "apps/zzy-campus/README.md": "cbbeb265c09d1963d9dcb1603eb1e69815d0d894c727605a2d6a6f365ace3317",
+    "apps/zzy-campus/agent-log.md": "c09ceda08b7f05efc26b49d5665464ba7821a9f59275f462fff918455ca8841e",
+    "apps/zzy-campus/line-count.json": "d437a75e09be1c4f554bc0829750333eba28a1745489638f29e72aa4df9cf24b",
+    "apps/zzy-campus/main.zzy": "caa29382f34b8f91ba496d8415eee011bb790ed9ff0a3730f5d662fb0bd97067",
+    "apps/zzy-campus/tasks.zzy": "57c34c5f2a3d401d81ef3084a366712666110c8d00310e92df286f1def5c7aad",
+    "docs/README.md": "ee413e576884945f0433723bcea44d572bd2425c8d51607fc246a9dcec2ac5b2",
+    "docs/design详细版.md": "73c63967d5e18de17637003a81d8147dca9231e9908c8cafddd09b54da246f24",
+    "docs/development/ci-design.md": "84433329dda99d6749e34ffdf8bfd4eef36e4b252a22c053b0b6de5477bedcae",
+    "docs/development/final-test-plan.md": "47142fc1b3011ca4af85f14d79f9c093890c1d1417adc77a9b5e87184e02fd16",
+    "docs/development/manual-test-guide.md": "5c773667370c08f9460780dc4d8a32c0dcd5b09df379983a2d623614432d9afd",
+    "docs/development/roadmap.md": "1f9c1bd4d1d166364286f955f279339144e13af86f61c13f852a662bf86852b1",
+    "docs/features/innovation.md": "24e6de7c78b324527c86eb99762f3ee6c4b354ac172c88b8c6d525409d44101b",
+    "docs/manual-tests/README.md": "6b3f9b6457cefa854a8b2f6cd5eca0b167b2f97f1ad0296582f7dc8c60be6f57",
+    "docs/runtime/optimization-plan.md": "76c4a95841fcf6601d8f177c81483a57f4d0bb47eba1b3daab639fb5d7854d4d",
+    "skills/README.md": "ddb2f89aaf7614841af71d8ed993cb725126d1580e1e5398328ce65ada9c53ee",
+    "skills/guide.md": "e4ebced2000145eb3fead111cce48c5b8241668b9549d85236063a0872e10973",
+    "tests/test_p09_app.py": "30372bf21356733d43415aa2da9df2b7eacbc5db826fdd62e97365cbfefc8619",
+    "docs/development/p12-evaluation-plan.md": "cb26e81ac4ad872e087bc53cb2fb43f8190fdbde0a9ea9be73d5bd2f3dd95ccb",
+    "docs/final_requirement.md": "a5d73e9ad61534fcae5f1a587f6069d1094c85c6ba6df94db65fa87083bfb08d",
+    "docs/final_requirement.pdf": "7ab8daaf5bdd802769e2e9760505576b75c3c78155ddb3fa98e8fd22ab08ad77",
+    "docs/final_requirement_pages/page-01.png": "63bf1ca29013f9f41216a0d12e1339658c93b962876dcb206915a059b262b422",
+    "docs/final_requirement_pages/page-02.png": "216619815126c7c4b472e638338098067e727266ef535cef3e3b116da6007caf",
+    "docs/final_requirement_pages/page-03.png": "4aedec071d866b8b6d6f289e758694ba29170d3e534488b3483b46dd6ba0a5a6",
+    "docs/final_requirement_pages/page-04.png": "47e7cfc62609adcb67822e48a8d8c7d477352df3fbeaba73473067b5936b3d6d",
+    "docs/final_requirement_pages/page-05.png": "4aedec071d866b8b6d6f289e758694ba29170d3e534488b3483b46dd6ba0a5a6",
+    "docs/final_requirement_pages/page-06.png": "2f74550b094c35cdb6db3dc9a3b3717c06262b9c3724d87f76570140e40b04fb",
+    "docs/final_requirement_pages/page-07.png": "4aedec071d866b8b6d6f289e758694ba29170d3e534488b3483b46dd6ba0a5a6",
+    "docs/final_requirement_pages/page-08.png": "81db83aed558e1d7540122ccaaaad0bb5a11e5bccb294f83ef59fcc34baaedf0",
+    "docs/final_requirement_pages/page-09.png": "9519f6834ad94306359cf65dc74c9faabbd001ae57703087f43fb36499c1dbc6",
+    "docs/final_requirement_pages/page-10.png": "90092a03f7eb21c8e11eec24b7b43e02bb3ae278e0cf269325c022107847c8a0",
+    "docs/final_requirement_pages/page-11.png": "143eba552d439bb077ea625eddd599ce4c399b25f863be428ff813182b004ece",
+    "docs/final_requirement_pages/page-12.png": "a92cae77a5f2fd75f14040f39da56e0fdcbd4e6c99bfa1a8a24d4c8ea1354d45",
+    "docs/final_requirement_pages/page-13.png": "383d287d09dac66ed8a4dd2d0f396a64c280e0b9faa3782535979c8b2fa85e9f",
+    "docs/final_requirement_pages/page-14.png": "fadeb0aba8b21064768cd89307c6155fdd7571bc4fcac9b4bf246971e4e021c0",
+    "docs/final_requirement_pages/page-15.png": "6b0901e7e77742e86f4b9cb8815e4f6010dd5bcd0a64b99887400fcc28dd9744",
+    "docs/final_requirement_pages/page-16.png": "71b62b850b1c6f8876ebaa40fa37c732aa232b75057b7d9ec13995896df93df8",
+    "docs/final_requirement_pages/page-17.png": "35ba86cdea042a69cc08e44602fc830d43958e4ec054351b3a8c7f476cb3763f",
+    "docs/final_requirement_pages/page-18.png": "e2c4bc5b6ee08e1e54295bf21b7a97a2106962be5c65cba6ef03983e65acf1b8",
+    "docs/final_requirement_pages/page-19.png": "c8d206fb4ffe8afdd23e3971169331249acf3922c9c08a588bdd32dbd7330e4f",
+    "docs/final_requirement_pages/page-20.png": "6c32717b0e93ee74d49eaf602d5b7417e2935bb62344cfbb663cebc430a5e1d5",
+    "docs/final_requirement_pages/page-21.png": "c9edb94191c9d0e8a5a971bcd14f3b0c763a695ba4ac42369b6a6d8b88c38cc7",
+    "docs/final_requirement_pages/page-22.png": "e8beafe0cb137a8a1c1f18fdfc7cb546b309e1ffd783a7b8fd91df4933f0447a",
+    "docs/final_requirement_pages/page-23.png": "71ab6851283e75ceb5249f6306aabab464706c73047633068b2ec89f48b66b2e",
+    "docs/final_requirement_pages/page-24.png": "4cb0c993ea09bc94aea99bb1b22eef2f3b0e1136e94844d4401f0e0027892dd4",
+    "docs/final_requirement_pages/page-25.png": "7d02b54146a7db28e24f8fa324319f25a5ed4e1e58044c78b9d3c590f495b8c1",
+    "docs/final_requirement_pages/page-26.png": "4e01f8e858cb7898c0b40670a544e2f611e3daeb3b4f9caa83a0955b3135bab8",
+    "docs/final_requirement_pages/page-27.png": "c6140d5b4f32d642b5f145ddb3a0ef41d78e9568e46467c5ce09307ad0976c4f",
+    "docs/final_requirement_pages/page-28.png": "9d96808058a9a7519ce85921877ed07f15e64619d504b9b5fc64ac5606ab548c",
+    "docs/final_requirement_pages/page-29.png": "0215b101eaeb5deadcc8eca37d22c5499ce9afbec7a01fbe3b4f69fde8321328",
+    "docs/runtime/final-performance-plan.md": "667a554072c8f72bc6e2c3e630db3cbab33346c8cf8e8abc3f500deae2999147",
+    "tests/test_p12_app.py": "68a388ee9f109938c1d1e926d174882e3648993140b7875428d7cbf055587400"
+  },
+  "native_source_normalization": "UTF-8 BOM removed and CRLF normalized to LF; matches acceptance producer",
+  "native_sources": {
+    "CMakeLists.txt": "ad5b8d9260625feab3cee635becbc6b11a35063512c7ea5d7fded28e4f6e39aa",
+    "CMakePresets.json": "c79b28221877d6c047f7aa13c9f3f6e85d9890ce05a3b300a4676c18ce326731",
+    "dependencies.json": "ac1ece4bced26c01623d83a82c72049fa1504fce990b40d3088a6b927b8db956",
+    "examples/core-library.zzy": "1b8731d0d57a98b9d3e3fad923ba132efd5fb1bbc3d4ec8de47b1817508c39a4",
+    "examples/file-json.zzy": "c82af5ae35e0a1bbad96fa7bd7fa6c76b5ea8566f113428d63e2b3a34bc87985",
+    "examples/sqlite.zzy": "387afd7b3653b081749a71339d9b47b1fde4e37c3b10c66bfb8d769719548617",
+    "include/zzy_native/ast.hpp": "838f64f76b2f64dad5c07593ae0f9c0f883eb2d627e461347a8a392d76c331b7",
+    "include/zzy_native/bigint.hpp": "59f0758315573a8d154d91010abf60f4b14142793cf35dac36decebeb777731a",
+    "include/zzy_native/core_hosts.hpp": "a6713360004a30ffd0f5210251320fcc01e930f2660a6545df8226de4ca6b986",
+    "include/zzy_native/core_library.hpp": "a3809b2c4e4a60e0bb8ec63b8e76e1dbfdedf2fcc264ff71457aaf50aa82279a",
+    "include/zzy_native/database_library.hpp": "12f0de7fccf4beaf721a7a78d47f3da647753f02df3dc74102d2e0775bf05e87",
+    "include/zzy_native/execution.hpp": "72a6af62da00bfe865e4d105ab007fc113988094c9419c0974e4993f03650d1b",
+    "include/zzy_native/file_library.hpp": "daa2aa21caa83f98e04d108313ac0e22e18ea616521b681ae351b0b71560148c",
+    "include/zzy_native/frontend_diagnostic.hpp": "4064559e899848983164375b8ed901e048666a566fe9d3fc13a9675e99d2c9f1",
+    "include/zzy_native/frontend_resources.hpp": "770caa1f6fd540d0a0ea719aa7d4619f8d1c1e54d4372da033102a1df78227ac",
+    "include/zzy_native/heap_prototype.hpp": "fc986b7741e7ce95e4df41166489f3221970b17bfa83d152cd0e45e586473d90",
+    "include/zzy_native/host_metadata.hpp": "e4622c57160ec4c628024ad909c628774db072fb1810afaacc28421b52714e1c",
+    "include/zzy_native/json_library.hpp": "68bca1dae2cadf4abf4426f5f439aea6cf7b09f70328ea72289b5d899e939b68",
+    "include/zzy_native/lexer.hpp": "8cb921bbeb111782fd3cd07c88bcac245dc799b16ff926528ac71e535e026c1c",
+    "include/zzy_native/literals.hpp": "a61bcb34a97ff681a3b5fd8a5b03f336ed66d7d686ae04b777dc431c84777f27",
+    "include/zzy_native/parser.hpp": "089f1f5fd5a7e4881a50ecf96238d99b76209736f8abda8024285e03eb023747",
+    "include/zzy_native/policy.hpp": "9d10635d1177e7b5f375f6afd1bf029ddc15ca233bfbb4a507c487defc8ec252",
+    "include/zzy_native/prepare.hpp": "c86241c5953f9fbf7e431fe6aa280e12707ca24b6edb38b28930a9672f9e90b6",
+    "include/zzy_native/program_dump.hpp": "fa17b9536cf4b0f0e3d7fa43a8910142032a0fec84cd2aa1052950dc1aa0dccf",
+    "include/zzy_native/program.hpp": "9a05935fdbf77facca7aa4451aab1f0097ee9ae788fd9b194f4ea99ab55e2d0c",
+    "include/zzy_native/protocol.hpp": "cab00b43050f6582cd08ee4e1113f266e8ac2306ca267d6a5c9b8b02f683507d",
+    "include/zzy_native/resolver.hpp": "a0ebcd3598a061e376d2b4604b24b2abe4db30ab19a323c285f90b4d4c10a417",
+    "include/zzy_native/runtime_heap.hpp": "d2e79c5b12d1bb49981a244d237a49a39f6aea72cd5b839f03bdf1098c7526d2",
+    "include/zzy_native/sha256.hpp": "9f94558ae364a9179bebaf90bd7f2f0a33f90103353c11dfcde2ba40f3fe0e23",
+    "include/zzy_native/source.hpp": "b0322c38579752c2336aaf1f968892acfb44eb3c7c7215dc3b7410dae77d6792",
+    "include/zzy_native/sqlite_host.hpp": "e37e8d8cca7e7cdf55480d738cb34cbadb9f2fa2b679ca4c72384d8d9bf45f52",
+    "include/zzy_native/tokens.hpp": "df387d68f43fef075c2f238b1fb4a850c02329834fbe5bd10df0cb9445b36b10",
+    "include/zzy_native/unicode_tables.hpp": "2695e437ca9d5201f9662e91b906f1db66307e7ac0bfad613d01e8f00aefe698",
+    "include/zzy_native/utf8.hpp": "67879791cc18e48a1a37b4a6d9303322690a8f7c250b4badaea228f2425417b6",
+    "include/zzy_native/windows_files.hpp": "13f37f84ce441e09a76c895237a11acfeef13821efd3a4b1f4d6e4b5dfaf02a9",
+    "src/main.cpp": "7efb2f40e3f8f19a561aab026bccbfcc8ac59d8ac6831e40e21ece7830f73872",
+    "tests/capabilities.json": "1bed1b42dd68fb0a9168e046db9f822ca055fe3269f1f55f53afbe3ee34cfcd8",
+    "tests/cli.cmake": "bda82ca69926d48952b46bf0373245bf481e266f8431f9800b0304d9a077db4f",
+    "tests/frontend/cases.json": "f88e83afda782098f1672f0218690b05c572bd29fc2ec9d2fe984e372aeca4e7",
+    "tests/golden/aliases.zzy": "f01e5d5f180a422a52d71f81cbe6207fce717593f241a51cde57250de191a463",
+    "tests/golden/cases.json": "fac334b3737aeed678578d6ff66df1dd369f571c601ce9d3a074fca26ef91c27",
+    "tests/golden/closure-cycle.zzy": "1fbd3ea92095194214ea96c45e70999b47f79d88df99309af1b5a0ddb9d00b4a",
+    "tests/golden/no-execute.zzy": "b233c69fec2f40686e5e2555670a784ec543fc5d805043945f1eb6a4aed3b205",
+    "tests/golden/order.zzy": "a0c17872f1732447020a594f55a02b6596244dbc25486951111b8e25994dce91",
+    "tests/golden/scalars.zzy": "f066c687ff9451d662edcc9969cc8a46fb2709889a190363bb695e2504f492fe",
+    "tests/golden/type-error.zzy": "2580ac867e759d66d6277d8da31cfadd3fd47a98c1238a3cb2523ceb09d32ab9",
+    "tests/inventory.json": "749e9e0c7d1f15c7657b3abbbbf726dacadc5f00b435c1b70b8e1ff308d156b0",
+    "tests/library/selection.json": "f88440e6ed93966ea4f3495cfc1bbc067220cb86f9b3e56323318e94eb466ac6",
+    "tests/native/execution.cpp": "82ccccdc6501fd3ac1c9c672ca1dd24adaf4bdc512bb97c615cc75309201653d",
+    "tests/native/frontend.cpp": "ff16146605aa6e7e25394f6142eea889a6908b5dc6e0d31444e249e18812bf1e",
+    "tests/native/heap.cpp": "c2c9a228949fc2051fdcb2e180c34aca1515f3ab747119c353932c1c7aa710a7",
+    "tests/native/library.cpp": "f9d9a74ca2802cf72425e1cffdbdc36587ec97925b03f9284780e7f54d82a4ac",
+    "tests/native/lifecycle.cpp": "af4e91fa37099455de3b65de1daead25d9f73e18bbb429ebd4aed188ec0fcc97",
+    "tests/native/program.cpp": "65754ce556efea7fb6a8cf44deeb2412a0950f4c08427c1c7352818a28ea2320",
+    "tests/native/protocol.cpp": "85dc44304eb46119ccf054b54c8cabb401f9c7eb5fd4052d158ef61e3274fcb0",
+    "tests/native/runtime_values.cpp": "28a3c7033df456ef7f499cd221d5a2af5a9306489c8c459f7292bd32a3ed3819",
+    "tests/native/sqlite.cpp": "671189d156f97b575dc8ab237900d6c33c3298d9aaf6124896141530168c8319",
+    "tests/probe.cmake": "8b9a6144bb9635eb5dd81e506866ad4e9376d81accfb157780adabdcafe4d627",
+    "tests/program/all-syntax.zzy": "06360a6b7e31d3c379a20008687be32f796bec705988af3f69adc5b69b8e2be8",
+    "tests/program/effects.zzy": "c7696f6791aa331589242e86d79996cd04496fe5efe2965869a565078f902da5",
+    "tests/program/manifests.json": "50a88794b000fcb198193e63b0af4769b906f96756a5e89ac7617589d7fe40d2",
+    "tests/program/module.zzy": "2e87794b7ee6bb86551b5bc1e107669738d444986a3582982cffc8f360c1696c",
+    "tests/program/no-execute.zzy": "c5d91a6d3f18d2f50960e03da799dada5cfe93d280015e4b47c4872689570c23",
+    "tests/runtime-selection.cmake": "42be2fb1bb051168470ab350045ad7053ab7feee01f3a448deefd6dafce664f8",
+    "tests/runtime/active-pop.zzy": "a390fc4bf8a37d5ca34bd6d3e588f77a94b47417cef0abc9fb0be0349a1e6a96",
+    "tests/runtime/active-push.zzy": "499ed266c29395df8efbc9784e2e51fcfe88492685cb9a637f35e446a6520435",
+    "tests/runtime/active-replace.zzy": "553591c53503a0a66e65ccab49fcdc09106fabde3c73d5665acba10eb8cae7f8",
+    "tests/runtime/alias.zzy": "a391c6e6d5db027f1517807551f5a97ba998585e2d4901b297c327180fc54a9b",
+    "tests/runtime/annotation.zzy": "0594d38c706bcbeda5443a1d012be024f19f475a94c21eb48bd9df122a43ea59",
+    "tests/runtime/arg-order.zzy": "0a6323644a353ddb0a2ea81f0afe21d6a5087e843cd9e5db77ecc2e9a5558daa",
+    "tests/runtime/arity.zzy": "d58224c93a9c1ba8c652d17c5f1848f0422166a270ebb48e4d497e51d04ec6ec",
+    "tests/runtime/assert.zzy": "3381b769b189482bf646d3ddc31f5008115ddde800eb6538cd9ed4d056cb2da4",
+    "tests/runtime/assignment-order.zzy": "6dd6947906015cf58b0d5235047bad0ae480d5f71ba0d85d3d5cfb437244f75d",
+    "tests/runtime/bigint.zzy": "2261023dc3747f3d7ed6b4fbb3f0f198f51276c3d20c2c609b057f8506db159c",
+    "tests/runtime/bool-number.zzy": "89f407f476e695aad6b1a6509b659556c02430e243b734f6d3a7f8c87a08e319",
+    "tests/runtime/capture-annotation.zzy": "8bb421dd22e8dedb23137f38a391b1090e76f694a960711e872ed540a449dc52",
+    "tests/runtime/cases.json": "a579952b58baf12f95e3c1e2400d80b0acced61beb995e77ce33ffc8303e13ec",
+    "tests/runtime/closure-cell.zzy": "3a53d945398f9b6eaa2c5719b029e3634f4349a1cf9ccde5298668965e4b141b",
+    "tests/runtime/codepoint-loop.zzy": "72c60d6fc623d429eeaa960dba41878dea4ff8ca841c78d4f07c4e13e7e114be",
+    "tests/runtime/division-zero.zzy": "15828bd43112e4c3c3857ee79924f09b3c4e36af8ee588fe77abc1204ed5a8d4",
+    "tests/runtime/early-return-cleanup.zzy": "3ddf16efbeb61e6b4bb97f50d55917cf0a4b77224f3ed24c0e906c18da4e83bd",
+    "tests/runtime/explicit-stack.zzy": "54316b632b7fb39eef7121bcccba16c14928c21263eddb6f5d475c0ec8d87318",
+    "tests/runtime/factorial.zzy": "d11c5adb4ccfe543870fa5addc7adde91fc94efffb9a94c58a962ca408799281",
+    "tests/runtime/float-format.zzy": "218e56bbf58ab8baabd968b10ff3f6904764c7833bcf0c241afc6fca813f0024",
+    "tests/runtime/float-overflow.zzy": "06dc8ff1c23327885d38c7b0f5620fcb28bf15369623cb95dc2a3186df3e7606",
+    "tests/runtime/floor.zzy": "47971d481a570fcd2fdc23f377c82becf7b00ced1a7c26905c74eceb3ea2ec26",
+    "tests/runtime/function-recursion-limit.zzy": "3b46b109a897fac7d73bccc383c09e1a4ec3a5955896c83974ad073f923866cc",
+    "tests/runtime/index-recheck.zzy": "566b1d5835486f06b15229a1d972143ee5bc28dc081ce474a16fb89b3925fec2",
+    "tests/runtime/iteration-captures.zzy": "b055c3c5fabe0918abb3e3525eb4afdd38e4fd304c487192f2537423d62f30d0",
+    "tests/runtime/lambda.zzy": "15c9336af2b68daca8732c4c7a292ecd3ce861698a3be4d4908d7a21707294d0",
+    "tests/runtime/lazy-cache.zzy": "9747da27fca383964f16d11087a897aebcf1d3830921a28cb5a42655ab7607c3",
+    "tests/runtime/lazy-cycle.zzy": "92ad9b00a139af0fea12738d4367490e36e42c0b426982aea12883f75e288417",
+    "tests/runtime/lazy-result.zzy": "7c82f9bc3a70f282df9cf73610c5b4e88de40a3e3de88240fb14e4908eb718d8",
+    "tests/runtime/loops.zzy": "166b41858d854d4d5d9b388da093db93452beab3aa0f23359006e733c654bc89",
+    "tests/runtime/machine-initial.zzy": "9c49529548f1face19ab2480f8a8b667d257be9b59d7c078c1389eece09681ca",
+    "tests/runtime/machine.zzy": "e992764330b939cef4ab7facdb2c5afa975a5399eb10c843a26f3d74fecbe3ed",
+    "tests/runtime/map-cycle-print.zzy": "db64b452c139f85bca6138162ef8c686f886126d05d2c22e3eb1db4615632b35",
+    "tests/runtime/map-order.zzy": "02ef36c014349a7632b0244b4d69d8352753ac3817e762a0a9bb03772cdf754d",
+    "tests/runtime/match-missing.zzy": "8f144441d270e4da6f610947526ea2eebc60230b1417ff5d2c1a77db9272dbc4",
+    "tests/runtime/mixed-compare.zzy": "eb0e31621f021f33cd774ad03ac02991f107d32966520f0bd21c18d806b46ef5",
+    "tests/runtime/module-dep.zzy": "292c5d3d2b891a7e1f79048bfdc0486ac683477e4b8256f79c13ef3f956240c4",
+    "tests/runtime/module-error.zzy": "285ec5fe071327bb2264669020df0c0a7af97cd2a0d32f7ced3452ba6c18b999",
+    "tests/runtime/module-init.zzy": "15f8e92ddec4b31f538d15242fd26543e1029877ed64205cf515d89f8b79bb17",
+    "tests/runtime/module-missing.zzy": "a9e9c084770fe81035feba4645b0c84bb8f828d6739e58fa830c377ecfacb343",
+    "tests/runtime/negative-index.zzy": "d40486ca0baae2ff267e0580d401560be0e90085cd2aa8ac98e1511fd9da8afa",
+    "tests/runtime/pipe-order.zzy": "f6651f49a71acfd6d5487db446faf12175e3220a5b0cd96beef89523f8c65b91",
+    "tests/runtime/quantity-dimension.zzy": "c060f466a432c62e7edceaa91f5bb92cc160c4a0d8dd97ab8792798dc95a63ec",
+    "tests/runtime/quantity-same-den.zzy": "3ae2da4e246eef956deb63432e62bb759e4a074fdf1a8382e787737ab8650980",
+    "tests/runtime/quantity.zzy": "f220645722b8a8190f77a9356a2d1416fd976d39494ae09ec4a44d153c3a9ff6",
+    "tests/runtime/query-early-take.zzy": "35a47bd42a4d771885411ed9ea7a0e54b75ecfb629e828c3f92fdc39489b0ec3",
+    "tests/runtime/query-keep-before-sort.zzy": "9c2a64b82a45fe8ad01aa4c3ef5428a0003ac7abf03cac2ce43fdf60386c2364",
+    "tests/runtime/query-stable.zzy": "880ca4b0f7797fd1ba404cd65968a22f53b773ce3e5449c5e91cbb06ab997f78",
+    "tests/runtime/query-validate-before-take.zzy": "dfdb6db1706e02f6b7376695e4a2c14f08af14c30de5a9caa4574feb70304c8c",
+    "tests/runtime/query-yield-path.zzy": "147dd79a265350c6b06b8cd2ae762cbbeb8ad3814d84aea184645c8a4289155c",
+    "tests/runtime/range-negative.zzy": "6d21943204f929c08e8f81ad2b58e989055cbf82f981456f5c889a14f7b26163",
+    "tests/runtime/range-step.zzy": "dc8f54de20516b70ed9e3d528efc7af48e0fd9a95fb5ad264c3d3b481c73a858",
+    "tests/runtime/range.zzy": "3e42dc8321b4064bc332e64fa2e059cf1bb16ceca32ee54729355c0ed1fec27b",
+    "tests/runtime/released-iterator.zzy": "9420e05a9fd4a425c8d3d384e7e5fbe8ee9e8f0fe4030ac785a20d41d7699aaa",
+    "tests/runtime/result-match.zzy": "168b9972d5b22ede0ea709658faa1a73fc4ef9410a829fd0e48c273a96f57d43",
+    "tests/runtime/result-propagation.zzy": "2cad5a31f1fa39d6e63a2ed7ea4aa3827e210411e5360f312659f9b4ff896819",
+    "tests/runtime/return-type.zzy": "ac400849ad1a7b1e90ccf2e70f25e8d9aad2fcda995e984d66e7c1add294eccf",
+    "tests/runtime/shape-default.zzy": "e80f233f66cc112f530268776e2701538c64585459560f3dceaeb78f4a532f41",
+    "tests/runtime/shape-invalid.zzy": "3d2bd56e8b76b2cc2696f280b047cb9d674f5d5fc2701f629bbb41c24673fb40",
+    "tests/runtime/shape-write.zzy": "60630a265db0c9ecd0fda822eafdb0615399b3228f5c23789f0c17cbe62c2c27",
+    "tests/runtime/short-circuit.zzy": "df47606f32f95dad9c14824e9f9aa7670756e5c7476b34fcc915768e5a62d45e",
+    "tests/runtime/spec-no-run.zzy": "42841d7250cae1c7082c9a7413fbfcd338d38f54cf28d661e08d1cf6dad7755c",
+    "tests/runtime/strict-bool.zzy": "fe641304254cf2c0a1c1fbb8cec4a020be64f31ed16aa50c61b2f31b085af623",
+    "tests/runtime/unavailable-host.zzy": "0df4ef48aae5dd63a3a7059dd28d3dc57f1d89d4af85f8c87890a8ef2acfd2dc",
+    "tests/runtime/unicode.zzy": "1bec77a3108fd1c5f698b515d9c702314c354e5b40669861f057715d773aa7a6",
+    "tests/selection.cmake": "9d7fbc67018eb997bfbb25b4a37f1331da6bbfb71597dbc050171324d78f9f42",
+    "tests/test_inventory.py": "3c0bb53f0c6e0add71afe32384eb4353aadc43bcd100fdaf677fe1415989e981",
+    "tests/unicode-tables.json": "e5b46b62c1a885afb6ec072bfd81ec9797ff452b02d7977a9c8aa176ca1a5d35",
+    "tools/acceptance.ps1": "6a9c11b961efc25e49277a8d21522a560665960e9a85b4a035fb1a4c44073519",
+    "tools/build-direct.ps1": "fd8f5a181b75c01bc4785867e44e8714af2ae38628cb79d000c2e99ff67ac472",
+    "tools/build-msvc-direct.ps1": "7f2be5065a83223c7605d868d29b63a1c691df7beb78a44f04345b1aa56bc2f7",
+    "tools/generate-unicode.py": "4f2d5eff4197e0039d6b1517a072f3016e6f809280bd640d5b0a4e3a8a5583a2",
+    "tools/install-smoke.ps1": "8be8e1b2f85de9a034c3537573659167b5d7612c879d708a98328b0a0e784fd9",
+    "tools/inventory.py": "cc7e0e210ed8eadb970f90595d95156112f24138cb68e615beb91b66216665a1",
+    "tools/test-check.ps1": "eed4a43d133a1814c55ccd89ee311b7b48aab622eaf1e7e343ab84aa75205b3d",
+    "tools/test-cli.py": "fda8dc00630bc8b618add68a7ef250642599ad6c6659d5d76fcd95781a5db315",
+    "tools/test-core-existing.py": "e1cb1e23e091ec24c0171b1c65d9a91eea4c425e596f8c4caa72bcaa626f4f06",
+    "tools/test-files.ps1": "7a2709ceb3e3c10865c95c9acb393f112849958ce0c4683226467f4995243eee",
+    "tools/test-fixed.ps1": "2d98a2e50b8d166377996ddf4a1d34b2b837865f67f45ad4f5d6bc59fd0d9c22",
+    "tools/test-frontend.py": "f637fd92e585495e7877fb65321efdb503c3b79b4818066c42ffa9dd3658d0f4",
+    "tools/test-library.ps1": "3b0fcfdd819526b79d718de3768850593722e22dff10e8b4b2d70a43f692daa4",
+    "tools/test-n2.ps1": "726dbc88e11d27a6a4ab5878e76021b1c989ebf2d1ac9c13ade6fc4a802403f3",
+    "tools/test-program-observer.py": "1a2f184d3c0d75d7d526a74226ef9234fc6b2f01a65765ed75eafd41c8c6385b",
+    "tools/test-program.py": "29692b6e8d9dd119a04652b32d306a49e6f92f8c0a3b6f341e398efcb23f0849",
+    "tools/test-runtime.ps1": "b20d558d2e13fc0653f5708002dde51fc45d4f3bbba7e7875de915c0067c6c8d",
+    "tools/test-sqlite-disabled.ps1": "ae99989172a74776b7304b0846b1710f1c3d3d490375bd4e7ffdbbf6f0eb8ce7",
+    "tools/test-sqlite-modules.ps1": "db1a52d35f8889608c7ec08ff9ac2546a06d56a756419c454ef5af14d0a34223",
+    "tools/test-sqlite.ps1": "fb9c133545df3742c1f8c182bb6367f6c6915fa27ea08097fc85061b6080127a"
+  },
+  "builds": {
+    "debug": {
+      "cli_sha256": "6b1a2c2a313738669f7caa3cf5e4a9f1ef5b3a21118ba3aa6bf3534e11971749",
+      "process_records": 82,
+      "expected_kill": 1
+    },
+    "release": {
+      "cli_sha256": "8c31073acfa2af1009a8036c20d214bf5dca74ad1a6bd452271a5b4b25d5277f",
+      "process_records": 82,
+      "expected_kill": 1
+    }
+  },
+  "archives": [
+    {
+      "path": "acceptance-debug-delivery.txt.gz",
+      "raw_sha256": "8a4dbfd3d3d80d42d63033c183bb94d24e28bd8ea4073375c0c9847858f8b99a",
+      "gzip_sha256": "bd50b5ff1b1a56a35c8f46ebc6d296e80ce19baa4b94700f345235079f63280b",
+      "raw_bytes": 208
+    },
+    {
+      "path": "acceptance-debug-final/loaded-modules.json.gz",
+      "raw_sha256": "791c7dc71ccc28b657a06c3ca3ba11ab63c7f36da21ee8773c2bfe3ade649f02",
+      "gzip_sha256": "cb0d01bb6b2e5db4dbe100fd96c86ad3117698f76dc236f13ba5943410e0bb98",
+      "raw_bytes": 2655
+    },
+    {
+      "path": "acceptance-debug-final/native-execution-tests.exe.imports.txt.gz",
+      "raw_sha256": "251743b8cfae49bdf3bbc66073710f13e3abea4e2744575a53282e44819b23ab",
+      "gzip_sha256": "9508a1e2e21f390f6963150bc672a5f0e1dae119ff1353d4e3c1139f742e7a53",
+      "raw_bytes": 631
+    },
+    {
+      "path": "acceptance-debug-final/native-frontend-tests.exe.imports.txt.gz",
+      "raw_sha256": "89c785ea862ebbc37504ca726d29a2cb353609edc08804d1d06a301ebbd4c875",
+      "gzip_sha256": "3e3c189f9e5e59304e725eaa90958e6c8c9f71ff22cccbcb425a017be63b3ca8",
+      "raw_bytes": 611
+    },
+    {
+      "path": "acceptance-debug-final/native-heap-tests.exe.imports.txt.gz",
+      "raw_sha256": "2e86e194e8d418736e3338fd1e98a0340a874857dc3db75c8c136dff28bcbb48",
+      "gzip_sha256": "0e6047389ba1c96bf44b979cf21d4127fbea9c3dd69522c4a449e0f8df54f2f8",
+      "raw_bytes": 607
+    },
+    {
+      "path": "acceptance-debug-final/native-library-tests.exe.imports.txt.gz",
+      "raw_sha256": "fd3c3ecb6d8e3fe442de84c0faa091024ba575123051921dd2e8212ff462b3ac",
+      "gzip_sha256": "408d9daeae10bd8c88eb268f528ecb2dfa827797cb5e63645b44f394df4c373b",
+      "raw_bytes": 629
+    },
+    {
+      "path": "acceptance-debug-final/native-lifecycle-probe.exe.imports.txt.gz",
+      "raw_sha256": "5c9d5c6be6a73e3394c4272d678a608d8be5a138853b31b153466cf0e19c944b",
+      "gzip_sha256": "35d9a4c4a7e667feb14195c7fe35742e56da738eba78ad75e51670f57b185c57",
+      "raw_bytes": 612
+    },
+    {
+      "path": "acceptance-debug-final/native-program-tests.exe.imports.txt.gz",
+      "raw_sha256": "6764580cd8e3f02c6c4e94ed9f4c781b2b812788c7f1bc63c49d67ad631c17b1",
+      "gzip_sha256": "dfa690d7872434cf860f1a7b726a29b4a4f3c7d444a87959aff602f141a0e00c",
+      "raw_bytes": 629
+    },
+    {
+      "path": "acceptance-debug-final/native-protocol-tests.exe.imports.txt.gz",
+      "raw_sha256": "e4abda803f738a257a6534caeb95987afe39923b586e2557536c6251f3b5c500",
+      "gzip_sha256": "b1b43afd796b02f0c1f2a617148348101b02e6aa15f594710f0b5fc5e64a5c40",
+      "raw_bytes": 611
+    },
+    {
+      "path": "acceptance-debug-final/native-runtime-values-tests.exe.imports.txt.gz",
+      "raw_sha256": "6dc5bcce0681b789171e465896ba1dff24bae21546a2d2ba8e9e72af4c706655",
+      "gzip_sha256": "89dbb417f71300475580d1f82fe24456f415750d0914da1154d6c4cc3103c6b2",
+      "raw_bytes": 617
+    },
+    {
+      "path": "acceptance-debug-final/native-sqlite-tests.exe.imports.txt.gz",
+      "raw_sha256": "b6c25f1d72b5e2057532c8be379fab8cc6afa38e62116c726c1e11000e89a70b",
+      "gzip_sha256": "6f46205e06a4701834abc94cc93e4baae78646d473a5a91a1efef90ad522a418",
+      "raw_bytes": 628
+    },
+    {
+      "path": "acceptance-debug-final/report.json.gz",
+      "raw_sha256": "76dd9e6a9a58f305f259850ed6028dbba9b910fbb35b0342268c59d9f5a44e50",
+      "gzip_sha256": "413ad1cc56ef3c220730e3978312f5425716f3a6e9140b5b1bac266640aff2a8",
+      "raw_bytes": 923675
+    },
+    {
+      "path": "acceptance-debug-final/sqlite-modules.json.gz",
+      "raw_sha256": "722e557e6f274ab9f047ee240294979d9455532b896e635fd016983ce3c6be55",
+      "gzip_sha256": "ebc259140054cffb08b410d082a24633bc4968e294bcb67be94cd9a48a1ef7d4",
+      "raw_bytes": 3459
+    },
+    {
+      "path": "acceptance-debug-final/zzy-native.exe.imports.txt.gz",
+      "raw_sha256": "067582b55555568863e484aa37e2c026449485b2bb2568506abb7fe3959243b8",
+      "gzip_sha256": "90d884fe437f664563fcb876f09647fc6bb3528da9a6be69ca8e525a34589350",
+      "raw_bytes": 619
+    },
+    {
+      "path": "acceptance-debug-final.txt.gz",
+      "raw_sha256": "7ba373be23c3b82720a1eab671179b29f29ed2353c4027f01817d123bc552af1",
+      "gzip_sha256": "de68a1b33e45121cb0539e97bc21295ddbf75989e7607f750bbde10a81c25199",
+      "raw_bytes": 205
+    },
+    {
+      "path": "acceptance-debug.txt.gz",
+      "raw_sha256": "545f84fa1690f8c2dee86e10cc01564c975d74b2e3b38055fef06f50946d1942",
+      "gzip_sha256": "184be93c1abc20fd575272c45028d56f8c95d3d2f24a59584ce1028f8c7d9cf6",
+      "raw_bytes": 199
+    },
+    {
+      "path": "acceptance-release-delivery.txt.gz",
+      "raw_sha256": "933d640597964a0b3e04f9c7a24e7f45bdb165a7f02ca638e4e30cf285d47e57",
+      "gzip_sha256": "2beaefc6b0354dcb3828cbf445c8f7a3da81f3bd9fd74753a255e4c509d1ed58",
+      "raw_bytes": 210
+    },
+    {
+      "path": "acceptance-release-final/loaded-modules.json.gz",
+      "raw_sha256": "1872ce2167ca88e65eb47b44eb5d0762627fd1a51fa359da19457f5a12ab19f8",
+      "gzip_sha256": "d176678c56758f280b115be19ecc56be7c2f5bee83a67c7af3f63f8932c0b539",
+      "raw_bytes": 2650
+    },
+    {
+      "path": "acceptance-release-final/native-execution-tests.exe.imports.txt.gz",
+      "raw_sha256": "11d5524a408e01e228c02fdb2ccee37f25920bea99ab5ffc197077bdd0042b65",
+      "gzip_sha256": "5565a7e1c41b8bee50a1c76488611ec44a6c8ecd5292a732720f9d6a4d62c84a",
+      "raw_bytes": 773
+    },
+    {
+      "path": "acceptance-release-final/native-frontend-tests.exe.imports.txt.gz",
+      "raw_sha256": "849ea650bdaded0e0c118caa93467db602b43b724e30156d03f873a4fb39f783",
+      "gzip_sha256": "6e12b67f021a6c8705f26eb99c7f821a3f34088c359eae36b3898739ec691898",
+      "raw_bytes": 733
+    },
+    {
+      "path": "acceptance-release-final/native-heap-tests.exe.imports.txt.gz",
+      "raw_sha256": "0333343cb6798fc8ea7b42fffc86a229026fe69930265ae7f93d653055f0736d",
+      "gzip_sha256": "77ac0d49017a87e26aa9c895cb93459037cfd237a0c0bb5c30d924e9bc92ab5d",
+      "raw_bytes": 729
+    },
+    {
+      "path": "acceptance-release-final/native-library-tests.exe.imports.txt.gz",
+      "raw_sha256": "a74f6a297357392fa78d5a3db6159d736a808b3f060ed75253756263706dc4d8",
+      "gzip_sha256": "eace935942d36524c65e2f22b9f6312fe753cf9ffad6eeb017bc1826b4064e03",
+      "raw_bytes": 813
+    },
+    {
+      "path": "acceptance-release-final/native-lifecycle-probe.exe.imports.txt.gz",
+      "raw_sha256": "607d2b23bd59dd44c347d568986a24a71f7dfebaa2d140f9a47f05b0ef865fe3",
+      "gzip_sha256": "a2aa3e8f1d9e5e57cb7b0f8e22635a6ae58bd287c105db8905f7b2408df4a4d2",
+      "raw_bytes": 734
+    },
+    {
+      "path": "acceptance-release-final/native-program-tests.exe.imports.txt.gz",
+      "raw_sha256": "c2d5747019b3097b4a6b0209432c7202e741a6c75ef802abc2da84377b250573",
+      "gzip_sha256": "245ae11a19f92fdd25712e17294b85430186a2d48793eb952a9d29f5818f527b",
+      "raw_bytes": 771
+    },
+    {
+      "path": "acceptance-release-final/native-protocol-tests.exe.imports.txt.gz",
+      "raw_sha256": "9332ef52036796ef84e2c7a0323ceeda7c105ef173be17ce34283578234ac225",
+      "gzip_sha256": "fb25aba4cc48a77bffac5036dd052092b08ac99485581ff8aa6164c2b0a92638",
+      "raw_bytes": 733
+    },
+    {
+      "path": "acceptance-release-final/native-runtime-values-tests.exe.imports.txt.gz",
+      "raw_sha256": "9edcb58833e69fe98b27b615f637e7952912c5257ab4cdcd7e131877e181df7b",
+      "gzip_sha256": "4f51024f3c049fe5a40dac7f71c684bb60c8c7a882a0dd8d24e6633bf2f386e2",
+      "raw_bytes": 739
+    },
+    {
+      "path": "acceptance-release-final/native-sqlite-tests.exe.imports.txt.gz",
+      "raw_sha256": "d9b89aed4355973166da0988a1fb209e2ce90d013898360e6d8b0dab02373cdb",
+      "gzip_sha256": "52e5e7c25eda4b90c0ff5704ae7f8f50da144466f927680fad471a4206887139",
+      "raw_bytes": 770
+    },
+    {
+      "path": "acceptance-release-final/report.json.gz",
+      "raw_sha256": "2aee0090f46c5f345275a40588310154468ddc8c964b66e8d2214a93d998f04e",
+      "gzip_sha256": "20e30922fa1d7291324f076e6450ae990e3fa64ee69e70e3e8bfebfd01382bc1",
+      "raw_bytes": 928461
+    },
+    {
+      "path": "acceptance-release-final/sqlite-modules.json.gz",
+      "raw_sha256": "0ba655a7aeda319755bf7a698d268eb5e370e78cdc4ee0a021ad246c76db55ca",
+      "gzip_sha256": "02c07118e1f75c95815a50af3df1b93f39506a4ea0a659f9ea2d756a0e389d7e",
+      "raw_bytes": 3167
+    },
+    {
+      "path": "acceptance-release-final/zzy-native.exe.imports.txt.gz",
+      "raw_sha256": "8d44834634dbd2b49808d70649aaf378ce5e7d2e008e7c9fe1494db8be42f48f",
+      "gzip_sha256": "e923e996c9e441c92f47eb07c1e7e4cafd7cd7fc50131ce6997440d1181d4ceb",
+      "raw_bytes": 761
+    },
+    {
+      "path": "acceptance-release-final.txt.gz",
+      "raw_sha256": "b97382588707a6a4cd9a40286e5d45944bf56570fb2d2c60c46002ec75fb339b",
+      "gzip_sha256": "dc64e52211321315cc62447c203c1a335e4d6813a498b5e4018ef2fb35d69047",
+      "raw_bytes": 207
+    },
+    {
+      "path": "acceptance-release.txt.gz",
+      "raw_sha256": "269bfe1de6a30e352925f03e2ce2c716f08aaa39cb1d0d602954feb6865f43b8",
+      "gzip_sha256": "f57ed7c69e1ba01f0d2021cf37f1287dc3cb55fc73690a4e517f2bc5a52bce23",
+      "raw_bytes": 201
+    },
+    {
+      "path": "baseline.json.gz",
+      "raw_sha256": "8ec4e344493d9738ca2f3cc2bde3173d4fd5aa42161831207e97d52e3b89c598",
+      "gzip_sha256": "eb73a79930b37a8f56d4d8b217b29a4aa845e24e8ae934e64b4d35bff84378a2",
+      "raw_bytes": 6183
+    },
+    {
+      "path": "build-cli-first.txt.gz",
+      "raw_sha256": "348b1572f9f231e97eeab1020ae88b1ce76655e09672742042c4613d056589ae",
+      "gzip_sha256": "bb94f5f70f7cc23507b8eabe6e665b41935ad35d95194e7b129837b45a244ba7",
+      "raw_bytes": 373
+    },
+    {
+      "path": "build-debug-final.txt.gz",
+      "raw_sha256": "b65ca7ff81a1c14c7b1189303a6bbacb5b631e32bd7460882aa1dfad9043cf71",
+      "gzip_sha256": "6dc162efbe9e38678d9242842981cb4a9c76f257b7dadcbe1ea5c4ea244230b0",
+      "raw_bytes": 3147
+    },
+    {
+      "path": "build-debug.txt.gz",
+      "raw_sha256": "914f69d9c88ee79d385e00f93c0ba3c8a6e507e42de3b8660a53c0b41fdf89ea",
+      "gzip_sha256": "0ce6332d31654612230c25671a918d3f36bdd845e1e90687441366615d02edc7",
+      "raw_bytes": 3303
+    },
+    {
+      "path": "build-disabled.txt.gz",
+      "raw_sha256": "529bcafc98baa89bcde4a9b11c60c9617c0c11834478314646af28536c568c05",
+      "gzip_sha256": "8dee02a62fe9eb4541170d4db50846a937950f6dc157fbdf3c4e20a710851b8a",
+      "raw_bytes": 380
+    },
+    {
+      "path": "build-release.txt.gz",
+      "raw_sha256": "dfa1d1a086fcf3b02534cd1c7bfe97702697796c91c256b334bf8f383b8f9522",
+      "gzip_sha256": "c60882a0ce675162554a800d60ba9d4f0ab4f25fdbf8de2679db9da756641c97",
+      "raw_bytes": 3343
+    },
+    {
+      "path": "build-sqlite-first.txt.gz",
+      "raw_sha256": "fbcca780135b2baad77a1fc409142847c47c8580ecbcdb1ac18f1beef512f58a",
+      "gzip_sha256": "87ebf51a7d7ec6714ecbd27bac137ffa213ff36a5f327fe816587d381c030ed9",
+      "raw_bytes": 1863
+    },
+    {
+      "path": "build-sqlite-second.txt.gz",
+      "raw_sha256": "63112bba0dc46765faed512e85649f1fe20f8b3c010af8935fde18d4f1336e87",
+      "gzip_sha256": "4879de9d77e3cb5a666ce6ef863b1d62191c8bb546a0d77215c932a507e49cf0",
+      "raw_bytes": 393
+    },
+    {
+      "path": "build-sqlite-third.txt.gz",
+      "raw_sha256": "63112bba0dc46765faed512e85649f1fe20f8b3c010af8935fde18d4f1336e87",
+      "gzip_sha256": "4879de9d77e3cb5a666ce6ef863b1d62191c8bb546a0d77215c932a507e49cf0",
+      "raw_bytes": 393
+    },
+    {
+      "path": "ci-static-final/report.json.gz",
+      "raw_sha256": "8ef0b89db76c760a7fac6f66e16ec5d151ac52d8afed427dda3874d1f1509e9e",
+      "gzip_sha256": "b0a5972632f4b3bf104c4532a0ce96e3b97e45128fe9865987d8e177893ec2b8",
+      "raw_bytes": 180641
+    },
+    {
+      "path": "ci-static-final.txt.gz",
+      "raw_sha256": "cec442d784f5fe4c1dc3bbedadfcdc05f29aa850c22c51d56e5ee1960b90f1de",
+      "gzip_sha256": "02e95279e238d83c2d8bde6f85523d30e571db4db890d69805f90b0869a10e84",
+      "raw_bytes": 36
+    },
+    {
+      "path": "ci-static.json/report.json.gz",
+      "raw_sha256": "d3e57b5cf64c9eac8d3e4151c661f1d889cf1cdfeaa19a200f2f4c4e8549dde4",
+      "gzip_sha256": "1ce1142622d5131d81af45f5383aa4b04a1b65e898135bc269f00f2d017e64c1",
+      "raw_bytes": 180503
+    },
+    {
+      "path": "ci-static.txt.gz",
+      "raw_sha256": "cec442d784f5fe4c1dc3bbedadfcdc05f29aa850c22c51d56e5ee1960b90f1de",
+      "gzip_sha256": "02e95279e238d83c2d8bde6f85523d30e571db4db890d69805f90b0869a10e84",
+      "raw_bytes": 36
+    },
+    {
+      "path": "cli-debug.json.gz",
+      "raw_sha256": "c5846018f32beeb8352d3a48477d4ad29d110892e638d8391ed17c34f742a379",
+      "gzip_sha256": "a5c559986e7acd921a7bd486fb09f94a64e260bd3453c672a8b76f2c8737629d",
+      "raw_bytes": 58820
+    },
+    {
+      "path": "cli-release.json.gz",
+      "raw_sha256": "7eca0fd83445b6f24613117971c2933fc459293ccc26f263eb004d408260760a",
+      "gzip_sha256": "d853d57e378f3b93bb730e2450d83e5f216258eaed4c56be00311a84c085f95a",
+      "raw_bytes": 59088
+    },
+    {
+      "path": "collection-debug.json.gz",
+      "raw_sha256": "d363c5fe3dc6d44173c99e190068a0f888832e355a366b7bbff6c5ba71e7ce3d",
+      "gzip_sha256": "4df42826c52bc62d90c471be21a524a5e28d4626762ce539916d9a85dd64ae90",
+      "raw_bytes": 72888
+    },
+    {
+      "path": "collection-release.json.gz",
+      "raw_sha256": "fc0365062031b39c3174d1a0d2c8f190991a77a189c21e677711dea9bb4b88a5",
+      "gzip_sha256": "326568f846cd4ed0c5e226aaea8f4d122c1ad7389fde7ec45880501939f005c0",
+      "raw_bytes": 73488
+    },
+    {
+      "path": "configure-debug-tests.txt.gz",
+      "raw_sha256": "78834d9d55522a8dc6ba355f9ff9900c6035d0cae3f73dbf9d846bc38f6273bb",
+      "gzip_sha256": "147d7300d5187a83381e3f460be043a563ecc6a9e492eda5ad1914a8ff27ad4a",
+      "raw_bytes": 266
+    },
+    {
+      "path": "configure-debug.txt.gz",
+      "raw_sha256": "351e77b0944039dc936731289958616d4070356b056cc1b1ff74fe6fc0b81b34",
+      "gzip_sha256": "f80c7413fa226f1fdfc2d56a9700dad4421c0b482dc4c8855b0b6e7bc561643c",
+      "raw_bytes": 266
+    },
+    {
+      "path": "configure-disabled.txt.gz",
+      "raw_sha256": "37fc24b90b095d49ab66e30a6fe5587acc03fb642f011f3d75b59fe54c75cadf",
+      "gzip_sha256": "cddc5d446bf22b6f85ccfb69dc0cc6510993831bc0dcac6799107cd908e97c49",
+      "raw_bytes": 643
+    },
+    {
+      "path": "configure-release.txt.gz",
+      "raw_sha256": "57c5485d5fc7d03ff55b7bdbb9931a77b468db31d6d3fde5c516d006b620f73c",
+      "gzip_sha256": "69c3437acf7840917eb84cab068836b8a0185829cc959b1eb4f64563ddc8255b",
+      "raw_bytes": 268
+    },
+    {
+      "path": "core-debug.json.gz",
+      "raw_sha256": "1da4310f13d3d79eb5cf2ac6b9edf166d6cf140d4c708fce0eb54ebc3507dbef",
+      "gzip_sha256": "5ecaa3719fe22c4f22e905db3685735f9d4af2e58c8319c45faa6aea3692aae8",
+      "raw_bytes": 430241
+    },
+    {
+      "path": "core-release.json.gz",
+      "raw_sha256": "d831d332b160793368ad1fd593d978dd61c5b2b31225f38a2e2dafc92617a1a4",
+      "gzip_sha256": "4a800c67562235a98141b65b833a41989ded700737f5c33500ce60d40fb1a869",
+      "raw_bytes": 432441
+    },
+    {
+      "path": "ctest-debug.txt.gz",
+      "raw_sha256": "efa585081850b8db6edf602ce7b0ae44796a2b6dbb4583b052d2d12f072d07c4",
+      "gzip_sha256": "0c5e84d81b815a741620839aa20aae7a7e4fd4606947e8fd893a768f6582c82b",
+      "raw_bytes": 8331
+    },
+    {
+      "path": "ctest-disabled.txt.gz",
+      "raw_sha256": "7a589ad9cd60415c1a197197211100781e047afa863b9991c1562433a71d5ed4",
+      "gzip_sha256": "fba2bd9ab53da1a07d2121ff222b0b858d6025d38c780b3a7d78b8b12c54868a",
+      "raw_bytes": 381
+    },
+    {
+      "path": "ctest-release.txt.gz",
+      "raw_sha256": "9d2d1ae7fc0d93229bc188cb31eb43738b08d8529f372bd28ed908d5253f6849",
+      "gzip_sha256": "2a6a1c1f6f79e16098f24497207494c5484896f214c9c5220b5e5c45fc1eb62b",
+      "raw_bytes": 8333
+    },
+    {
+      "path": "demo.json.gz",
+      "raw_sha256": "1b5d415f95ae0d032e22a56fa941d68424860e076a680fc3e28b5ce010b02aa0",
+      "gzip_sha256": "5685cb26c12fb9c11ac0eabb5870dd7e745ff96ccf366f011031b9a97cfcbd1c",
+      "raw_bytes": 541
+    },
+    {
+      "path": "install.txt.gz",
+      "raw_sha256": "85443dd82ab2255c34ada0cbc8178c0c2a1e2be0e586fe01d044a27583f2bcde",
+      "gzip_sha256": "04572fbff8047c614131b9899a76a917e5ab3eb31d1281de93b92d6566d5a4a2",
+      "raw_bytes": 143
+    },
+    {
+      "path": "publish-path.txt.gz",
+      "raw_sha256": "b769be289822aaa8710d45e7f345f0ed3cba3ba80c777bf8d29d135d52abf7d4",
+      "gzip_sha256": "6eec2810aa45f4c326a9e31ba44593a802ba11f7982e85ccf611c53687400725",
+      "raw_bytes": 97
+    },
+    {
+      "path": "published-smoke.json.gz",
+      "raw_sha256": "e362dca3856a1f383b6c99bd7a5468cbaa0efa07e97383e7c987f5e10e290c09",
+      "gzip_sha256": "21ba3ccacc86df1f1f6a20155d0684bb7df38b8bd5fdf2cbc8de619e68e9fef2",
+      "raw_bytes": 51293
+    },
+    {
+      "path": "python-related.txt.gz",
+      "raw_sha256": "d4c3f88ec983bc39a6582560390d5539ba6da3bdbf2ab30cd212abc778e09d07",
+      "gzip_sha256": "f459efe11b702ddb22fca0cd13d6bfee8914708d6af86de57f006cfb9870d2c6",
+      "raw_bytes": 181
+    },
+    {
+      "path": "sqlite-debug-first.json.gz",
+      "raw_sha256": "c6c274a9c5bda05d4fd65326ce200ef0359d7bc96815a70e916535217e0d350b",
+      "gzip_sha256": "e79091b7f52da6357e7119ce719dd44f23e443f8038fd6eca06298040ac20a86",
+      "raw_bytes": 2461
+    },
+    {
+      "path": "sqlite-debug-second.json.gz",
+      "raw_sha256": "eb62d6e4118e43a421b958b8d116375796ff92fa1670785f17e698f010bee59e",
+      "gzip_sha256": "979aac0ec3cf3974fb4d322b6eb87e9d2b9003832248541f4b5d1aefa5f4c1dc",
+      "raw_bytes": 26763
+    },
+    {
+      "path": "sqlite-debug-third.json.gz",
+      "raw_sha256": "67052491a0016104f3c7b4b84ec611ca3586947aba3bcbd24fa1f09cd6061fa7",
+      "gzip_sha256": "4788ca9c6f74c7798612df92d82ebeb40c739b1db07c249701563621783a15f7",
+      "raw_bytes": 27115
+    },
+    {
+      "path": "sqlite-dependency.json.gz",
+      "raw_sha256": "f7911dd46e22eb499ee259c74394036c44cfd38c23c9fc4d4729308ecb4511c3",
+      "gzip_sha256": "e538a6e55fcc35dfdcee1f0d887fdcd100e10f110e8f873f3030edc636c74425",
+      "raw_bytes": 354
+    },
+    {
+      "path": "sqlite-modules-debug.json.gz",
+      "raw_sha256": "09906be7ea03ed0a845551be2fbed3eb065b7908bb2db96f32724c55e9b25a73",
+      "gzip_sha256": "948010d2598ff5053cbbac9e5a00bda0acf17d564f3944fb3d9953c8fcf23678",
+      "raw_bytes": 3473
+    },
+    {
+      "path": "sqlite-modules-release.json.gz",
+      "raw_sha256": "9164ea13650c18719775db29ed3fefd9b191cefd2c536cfc17154ebaea87f314",
+      "gzip_sha256": "6303f2486b3e963957c92a53144c5ff902a4d30a70937e4d56547a30ac972bb1",
+      "raw_bytes": 3187
+    },
+    {
+      "path": "sqlite-release.json.gz",
+      "raw_sha256": "559b70e5c91a4f5a1f20a0819937fc78cdf7f9522b4c636fb36f33b7ff136528",
+      "gzip_sha256": "9ef3f7da0d4937a35f2ddd2fb1f01f32362b0a8108bcd068add10361d8c55f71",
+      "raw_bytes": 27119
+    },
+    {
+      "path": "sqlite-version.txt.gz",
+      "raw_sha256": "4a621451270c25cb08d5136bf1cf1808b7b3e8d819f6bc012a53443e663cfb90",
+      "gzip_sha256": "ac64668f18f5531aa15e9326a544a78fd18c24a2a791b72d4122067355a0db8e",
+      "raw_bytes": 126
+    }
+  ]
+}

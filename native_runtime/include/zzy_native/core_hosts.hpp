@@ -16,6 +16,9 @@ inline constexpr CoreHost core_hosts[]={
     {"data.map",0,{""}},{"data.kind",1,{""}},{"data.has",2,{"Map","String"}},
     {"data.get",2,{"Map","String"}},{"data.set",3,{"Map","String",""}},{"data.keys",1,{"Map"}},
     {"data.parse",1,{"String"}},{"data.stringify",1,{""}},
+#ifdef ZZY_NATIVE_SQLITE
+    {"db.transaction",2,{"String","Function"}},{"db.query",2,{"String","Array"}},
+#endif
     {"text.trim",1,{"String"}},{"text.contains",2,{"String","String"}},
     {"text.join",2,{"Array","String"}},{"text.split",2,{"String","String"}},
     {"text.replace",3,{"String","String","String"}},{"text.safe_int",1,{"String"}},

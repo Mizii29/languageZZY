@@ -1,0 +1,9 @@
+zzysay: 从工作目录保存独立示例，不改校园应用或 Web 示例的数据格式。
+(addnew) save() {
+    db.query("CREATE TABLE IF NOT EXISTS notes(id INTEGER PRIMARY KEY, title TEXT NOT NULL)",[]);
+    (zno) title := text.trim("原生 SQLite 留言");
+    (zif?:) len(title)==0 (or) len(title)>80 { (return) (T_T)("标题长度必须为1至80"); }
+    db.query("INSERT INTO notes(title) VALUES(?)",[title]);
+    (return) (^_^)(db.query("SELECT id,title FROM notes ORDER BY id",[]));
+}
+io.print(db.transaction("native-notes.sqlite3",save));

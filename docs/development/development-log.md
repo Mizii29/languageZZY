@@ -1023,3 +1023,15 @@ N0/N1构建与N2-01—04静态出口已满足。未验证真实手动Ctrl+C、Sa
 最终命令与结果：`cmake --preset native-debug/native-release -S native_runtime`、两配置构建及 `ctest --test-dir build/native-<配置> -C <配置> --output-on-failure --no-tests=error` 均退出 0，CTest 各 `69/69`；`tools/test-library.ps1` 固定各 `126/126`、`-FileJson` 各 `58/58`；`tools/test-files.ps1` CLI 各 `33/33`；`test-core-existing.py` 各 `550/550`、`test-cli.py` 各 `72/72`；Python `unittest tests.test_p05_cli tests.test_p05_integration native_runtime.tests.test_inventory -q` 为 `391/391`；Release 安装 smoke 为 `9` 条通用命令加 `33/33` 文件/JSON；独立 `examples/file-json.zzy` 实际生成并解析 JSON 成功。`git diff --check` 通过。
 
 本轮实现未改变 Python 默认入口、requirement、P12/P13 或可选宿主；真实手动 Ctrl+C、Sanitizer、其他平台、缺 CRT 主机、SQLite/Web/Sketch/GUI、N5 test 和性能仍未验证。下一项为 N4-03 SQLite。
+
+## N4-03 SQLite 原生迁移与验收（2026-11-19）
+
+接手时保留 N4-02 及用户未提交修改，记录了本轮前 57 个文件指纹和 requirement SHA `b099c19fc339ce1dc1aab7e9d6c8126a9c5c9ace3d31b969a0623df90f521d2b`。先核对 N4-02 完成、P08 SQLite 契约、资源/诊断、能力矩阵和实际 C++ 入口。没有复用 Python sqlite3 作为原生运行时，也没有修改校园任务管家格式。
+
+实现 `sqlite_host.hpp` 的固定 API 表和 System32 安全加载、同线程连接 RAII、authorizer、busy/progress 回调及版本下限；`database_library.hpp` 接入绑定参数、单语句、结果转换、事务提交/回滚和连接关闭；`execution.hpp`、宿主元数据、CMake `ZZY_NATIVE_SQLITE`、info 能力字段和 OFF 的 E402 路径同步更新。新增 `tests/native/sqlite.cpp` 四个同进程探针，`tools/test-sqlite.ps1` 50 个独立外部期望、`test-sqlite-modules.ps1` 实际模块/签名/无 Python 检查、OFF 门禁脚本和 `examples/sqlite.zzy`。首次测试编译失败原件保存在 `dist/native-n4-03-work/build-sqlite-first.txt`，原因是 Windows SDK `small` 宏与测试变量重名；改名后重新构建。资源注入首次因 stdout flush 时序未触发，保留失败记录并把注入改为初始化后的固定配额边界；之后四探针全部通过。
+
+实际命令与结果：`cmake --preset native-debug/native-release -S native_runtime`、两配置构建均退出 0；Debug/Release `ctest --output-on-failure --no-tests=error` 实收 `75/75`；`test-sqlite.ps1` 各 `50/50`；`test-sqlite-modules.ps1` 各通过；acceptance 两配置各 82 条过程；Release `cmake --install` 后通用 smoke `9/9`、文件/JSON `33/33`、SQLite `50/50` 和模块检查通过。既有核心 Debug/Release 各 `550/550`、CLI 各 `72/72`；Python 相关 `unittest` 实收 `379` 项、无跳过；独立演示两个新进程读回 1、2 条持久化记录。OFF 构建 `sqlite-disabled`/`cli-info` `2/2` 通过。SQLite 组件实际为 System32 `winsqlite3.dll` 3.53.4，微软签名 Valid，sourceid/SHA 见报告；核心 run/check 在模块探针中没有加载 SQLite/Python/Tk。
+
+本阶段出口满足，todo 已勾选 N4-03；N4-04 Web、N4-05 Sketch headless、N4-06 GUI 保持未完成。真实人工 Ctrl+C、Sanitizer、其他 OS、缺 VC Runtime 干净主机、Windows 更新后的其他 SQLite 组合、完整 N5 test 和性能未验证。下一项 N4-04。
+
+收尾：`scripts.ci static --output dist/native-n4-03-work/ci-static-final` 实际 `passed=true`；2083 项只是清单核对，没有声称完整执行。`git diff --check` 通过。证据归档 `benchmarks/results/native/n4-03-msvc-20261119` 保留 71 份 gzip 原始记录，审计确认 152 个原生文件、两配置各 10 个 EXE、安装/发布 SHA 和 51 个无关用户文件指纹一致。Debug/Release CLI SHA 分别 `6b1a2c2a313738669f7caa3cf5e4a9f1ef5b3a21118ba3aa6bf3534e11971749`、`8c31073acfa2af1009a8036c20d214bf5dca74ad1a6bd452271a5b4b25d5277f`。82 过程各含一条单列的预期父进程强杀，不据此声称 RAII 清理；同进程取消/回滚探针才是资源归还依据。本轮只暂存 N4-03 及共享文档相关段落，本地提交不推送；最终 SHA 见 Git 历史。

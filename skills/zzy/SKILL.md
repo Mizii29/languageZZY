@@ -89,3 +89,7 @@ N2-01—04现已实现，正式静态边界读取[Program契约](../../docs/deve
 ## N4-02 当前状态（2026-11-18）
 
 文件与严格 JSON 已完成并验收。原生支持 `io.read_text`、`io.write_text`、`io.write_atomic`、`io.replace_file`、`data.parse`、`data.stringify`；契约集中于 `docs/development/native-stdlib-contract.md`，能力矩阵和报告已更新。仅 N4-02 相关 C++、PowerShell、JSON、文档与证据进入本轮提交；N4-03 SQLite 仍未开始。
+
+## N4-03 当前状态（2026-11-19）
+
+上文阶段性状态以本条为准：N4-03 SQLite 已实现并验收。读取 `docs/development/native-stdlib-contract.md` 和 `native_runtime/tests/n4-03-report.md`；db 语义仍以 `docs/runtime/web.md` 集中契约为准。MSVC 默认 SQLite ON，OFF 运行 E402/1，check 不初始化宿主；固定 System32 DLL、同线程连接、参数绑定、事务回滚、取消/资源/关闭、并发和持久化均有专项证据。原生 Web、Sketch headless、GUI 保持未完成，下一项 N4-04，不称完整 N4；Python 默认入口不变。

@@ -38,12 +38,13 @@ if($InstalledExecutable) {
 $out=[IO.Path]::GetFullPath((Join-Path $repoRoot $Output))
 if(Test-Path -LiteralPath $out) {throw 'Choose a new evidence directory; existing evidence is preserved.'}
 New-Item -ItemType Directory -Path $out | Out-Null
-$stage=Join-Path ([IO.Path]::GetTempPath()) ('ZZY N4-02 '+[Guid]::NewGuid().ToString('N')+'/中文 路径/bin')
+$stage=Join-Path ([IO.Path]::GetTempPath()) ('ZZY N4-03 '+[Guid]::NewGuid().ToString('N')+'/中文 路径/bin')
 if([IO.Path]::GetFullPath($stage).StartsWith($repoRoot,[StringComparison]::OrdinalIgnoreCase)) {
     throw 'The source-external stage must be outside the repository.'
 }
 New-Item -ItemType Directory -Path $stage -Force | Out-Null
 $names=@('zzy-native.exe','native-protocol-tests.exe','native-heap-tests.exe','native-lifecycle-probe.exe','native-frontend-tests.exe','native-program-tests.exe','native-runtime-values-tests.exe','native-execution-tests.exe','native-library-tests.exe')
+if(Test-Path -LiteralPath (Join-Path $build 'native-sqlite-tests.exe')) {$names+='native-sqlite-tests.exe'}
 foreach($name in $names) {Copy-Item -LiteralPath (Join-Path $build $name) -Destination $stage}
 $cliExecutable=if($InstalledExecutable) {$InstalledExecutable} else {Join-Path $stage 'zzy-native.exe'}
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot '../tests/golden/no-execute.zzy') -Destination (Join-Path $stage 'no-execute.zzy')
@@ -86,7 +87,8 @@ try {
         $expectedCrt=if($Configuration -eq 'Debug') {'MSVC /MDd (debug runtime, not redistributable)'} else {'MSVC /MD (VC Redistributable required)'}
         Require ($value.crt -eq $expectedCrt) 'selected configuration CRT mismatch'
     }
-    Require ($value.stage -eq 'N4-02' -and $value.pointer_bits -eq 64 -and $value.cxx_standard -eq 17) 'incorrect info'
+    Require ($value.stage -eq 'N4-03' -and $value.pointer_bits -eq 64 -and $value.cxx_standard -eq 17) 'incorrect info'
+    Require ($value.sqlite_enabled -eq ('native-sqlite-tests.exe' -in $names)) 'SQLite test/build capabilities disagree'
     Require ($value.python_fallback -eq $false -and @($value.supported_commands).Count -eq 6 -and $value.supported_commands[0] -eq 'info' -and 'run' -in $value.supported_commands) 'incorrect capabilities'
     Require ($value.resource_policy.host_decimal_digits -eq 0 -and $value.resource_policy.effective_decimal_digits -eq 4096) 'incorrect decimal policy'
     # Fixed independently from default-v1 contract and documented native host bound.
@@ -100,7 +102,7 @@ try {
     Require ($result.stdout -eq '' -and $errorRecord.schema_version -eq 1 -and $errorRecord.code -eq 'E402' -and $errorRecord.kind -eq 'error') 'unsupported protocol mismatch'
     Require ($null -eq $errorRecord.file -and $null -eq $errorRecord.span -and $errorRecord.notes[0] -eq 'capability=test') 'unsupported location/capability mismatch'
     Require (-not (Test-Path -LiteralPath (Join-Path $stage 'native-side-effect.txt'))) 'check/test executed source'
-    [IO.File]::WriteAllText((Join-Path $stage 'unavailable.zzy'),'db.query("SELECT 1",[]);',[Text.UTF8Encoding]::new($false))
+    [IO.File]::WriteAllText((Join-Path $stage 'unavailable.zzy'),'sketch.color("#ff0000");',[Text.UTF8Encoding]::new($false))
     $result=Invoke-Native 'zzy-native.exe' 'run unavailable.zzy --diagnostic-format json' 1
     $errorRecord=$result.stderr | ConvertFrom-Json
     Require ($result.stdout -eq '' -and $errorRecord.schema_version -eq 1 -and $errorRecord.code -eq 'E402' -and $errorRecord.kind -eq 'error' -and $errorRecord.span.start.line -eq 1) 'unported host must fail at the call without side effects'
@@ -118,6 +120,13 @@ try {
     foreach($case in @('callbacks','identity','budgets','cancellation','text','files','file-commit','json')) {
         $result=Invoke-Native 'native-library-tests.exe' $case
         Require ($result.stdout.Replace("`r`n","`n") -ceq ($case+": PASS`n") -and $result.stderr -eq '') ('library case missing: '+$case)
+    }
+    if($value.sqlite_enabled) {
+        foreach($case in @('lifecycle','cancellation','concurrency','resources')) {
+            $result=Invoke-Native 'native-sqlite-tests.exe' $case
+            Require ($result.stdout.Replace("`r`n","`n").EndsWith($case+": PASS`n") -and $result.stderr -eq '') ('SQLite case missing: '+$case)
+        }
+        & (Join-Path $PSScriptRoot 'test-sqlite-modules.ps1') -Executable $cliExecutable -Output (Join-Path $out 'sqlite-modules.json')
     }
     $sample='(zno) 名 := "😀";'
     [IO.File]::WriteAllText((Join-Path $stage '中文 source.zzy'),$sample,[Text.UTF8Encoding]::new($false))
@@ -226,7 +235,7 @@ try {
             [ordered]@{name=$_.ModuleName;path=$_.FileName;version=$file.VersionInfo.FileVersion;company=$file.VersionInfo.CompanyName;sha256=(Get-FileHash -LiteralPath $_.FileName).Hash.ToLowerInvariant()}
         })
         Require ($cliModules.Count -gt 0) 'actual CLI module snapshot empty'
-        Require (@($cliModules | Where-Object {$_ -match '^(python|_tkinter|tcl|tk\d)'}).Count -eq 0) 'actual CLI loaded Python/GUI'
+        Require (@($cliModules | Where-Object {$_ -match '^(python|_tkinter|tcl|tk\d|winsqlite3)'}).Count -eq 0) 'core CLI loaded Python/GUI/SQLite'
         # Preserve the independently observed module evidence even if the
         # separate system CIM process-tree permission is unavailable.
         [IO.File]::WriteAllText((Join-Path $out 'loaded-modules.json'),([ordered]@{
@@ -284,8 +293,8 @@ try {
     }
     $passed=$true
 } finally {
-    $scope=if($BuildOrigin -eq 'CMakeMSVC') {'N4-02 CMake/MSVC '+$Configuration+' executable acceptance; CTest/install results are separate evidence'} elseif($BuildOrigin -eq 'DirectMSVC') {'N4-02 direct MSVC '+$Configuration+'; NOT CMake/CTest/install acceptance'} else {'N4-02 direct MinGW validation; NOT CMake/CTest/install acceptance'}
+    $scope=if($BuildOrigin -eq 'CMakeMSVC') {'N4-03 CMake/MSVC '+$Configuration+' executable acceptance; CTest/install results are separate evidence'} elseif($BuildOrigin -eq 'DirectMSVC') {'N4-03 direct MSVC '+$Configuration+'; NOT CMake/CTest/install acceptance'} else {'N4-03 direct MinGW validation; NOT CMake/CTest/install acceptance'}
     $report=[ordered]@{schema_version=1;passed=$passed;scope=$scope;provenance=$provenance;os=[Environment]::OSVersion.VersionString;process_bits=([IntPtr]::Size*8);cwd=$stage;path_empty=$true;pythonpath='unusable-python-path';cmake_available=([bool](Get-Command cmake -ErrorAction SilentlyContinue));ctest_available=([bool](Get-Command ctest -ErrorAction SilentlyContinue));records=@($records.ToArray());imports=$imports;allowed_direct_imports=$allowed;allowed_by_executable=$allowedByExe;artifacts=$artifacts;sources=$sources;manual_ctrl_c='not run';cmake_install=$(if($BuildOrigin -eq 'CMakeMSVC') {'see separate install log and published-copy smoke'} else {'not run'});sanitizer='not run'}
     [IO.File]::WriteAllText((Join-Path $out 'report.json'),($report | ConvertTo-Json -Depth 30),[Text.UTF8Encoding]::new($false))
 }
-Write-Output ('N4-02 native: '+$records.Count+' process cases passed; evidence='+$out)
+Write-Output ('N4-03 native: '+$records.Count+' process cases passed; evidence='+$out)

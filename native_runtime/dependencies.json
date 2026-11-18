@@ -5,13 +5,32 @@
   "configure_downloads": false,
   "project_third_party": [],
   "toolchain_observed": {
+    "compiler": "MSVC 19.40.33812.0 (Visual Studio Build Tools 2022)",
+    "target": "Windows x64",
+    "sdk": "10.0.22000.0",
+    "cmake_ctest": "4.5.0; offline configuration, build, tests and install verified",
+    "crt": "Debug /MDd, Release /MD; no CRT redistribution attempted",
+    "redistributed_toolchain_files": []
+  },
+  "historical_n0_toolchain": {
     "compiler": "GCC 8.1.0 x86_64-win32-seh-rev0",
     "target": "x86_64-w64-mingw32",
     "crt": "msvcrt (Windows system); static libgcc/libstdc++",
     "msvc_clang_cl_cmake_ctest": "not found; no installation attempted",
     "redistributed_toolchain_files": []
   },
-  "bigint": {"provider": "in-tree signed uint32 limbs", "implemented": false, "phase": "N3"},
-  "unicode": {"version": "15.0.0", "tables_vendored": false, "phase": "N1"},
-  "optional_hosts": {"SQLite": "deferred N4", "Web": "deferred N4", "Sketch_GUI": "deferred N4"}
+  "bigint": {"provider": "in-tree signed uint32 limbs", "implemented": true, "phase": "N3"},
+  "unicode": {"version": "15.0.0", "tables_vendored": true, "phase": "N1"},
+  "optional_hosts": {
+    "SQLite": {
+      "status": "implemented N4-03 for MSVC ON builds; explicit OFF returns E402",
+      "header": "Windows SDK 10.0.22000.0 winsqlite/winsqlite3.h (API floor 3.29.0)",
+      "runtime": "System32/winsqlite3.dll",
+      "observed": "3.53.4; sourceid 2026-07-24 19:02:57 bf7c7f30031888f4e796e429ab3978879485813aaca6f641c7b33e4e09459bcc",
+      "sha256": "a9148fbbbb59e40e0be60b6f0f85d286ac55a4558a8a3b1e4ccdcac41bfacfab",
+      "signature": "Microsoft Windows / Valid; OS component, not redistributed"
+    },
+    "Web": "deferred N4",
+    "Sketch_GUI": "deferred N4"
+  }
 }

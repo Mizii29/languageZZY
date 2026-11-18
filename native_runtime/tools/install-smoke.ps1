@@ -30,7 +30,7 @@ try {
             if($record.exit_code -ne 2 -or $record.stdout -ne '' -or ($record.stderr | ConvertFrom-Json).code -ne 'E402') {throw 'Unsupported capability smoke failed'}
         } else {
             if($record.exit_code -ne 0 -or $record.stderr -ne '') {throw 'Smoke command failed'}
-            if($command -eq 'info' -and ($record.stdout | ConvertFrom-Json).stage -ne 'N4-02') {throw 'Wrong installed stage'}
+            if($command -eq 'info') {$info=$record.stdout | ConvertFrom-Json;if($info.stage -ne 'N4-03') {throw 'Wrong installed stage'}}
             if($command -eq 'run' -and $record.stdout -cne "18446744073709551617`n") {throw 'Installed arbitrary integer run mismatch'}
             if($command -eq 'check' -and $record.stdout -ne '') {throw 'check unexpectedly printed'}
             if($command -eq 'source-info') {
@@ -67,9 +67,17 @@ try {
     & (Join-Path $PSScriptRoot 'test-files.ps1') -Executable $exe -Output (Join-Path $folder 'files.json')
     $fileJson=Get-Content -LiteralPath (Join-Path $folder 'files.json') -Raw | ConvertFrom-Json
     if(-not $fileJson.passed) {throw 'Installed file/JSON integration failed'}
+    if($info.sqlite_enabled) {
+        & (Join-Path $PSScriptRoot 'test-sqlite.ps1') -Executable $exe -Output (Join-Path $folder 'sqlite.json')
+        $sqlite=Get-Content -LiteralPath (Join-Path $folder 'sqlite.json') -Raw | ConvertFrom-Json
+        if(-not $sqlite.passed) {throw 'Installed SQLite integration failed'}
+        & (Join-Path $PSScriptRoot 'test-sqlite-modules.ps1') -Executable $exe -Output (Join-Path $folder 'sqlite-modules.json')
+        $sqliteModules=Get-Content -LiteralPath (Join-Path $folder 'sqlite-modules.json') -Raw | ConvertFrom-Json
+        if(-not $sqliteModules.passed) {throw 'Installed SQLite module probe failed'}
+    }
     $passed=$true
 } finally {
-    $report=[ordered]@{schema_version=1;passed=$passed;scope='source-external executable smoke; installation provenance is provided by caller';executable=$exe;exe_sha256=(Get-FileHash -LiteralPath $exe).Hash.ToLowerInvariant();cwd=$folder;path_empty=$true;pythonpath='unusable-smoke';check_test_no_side_effects=$passed;run_file_write_correct=$passed;file_json=$fileJson;records=@($records.ToArray())}
+    $report=[ordered]@{schema_version=1;passed=$passed;scope='source-external executable smoke; installation provenance is provided by caller';executable=$exe;exe_sha256=(Get-FileHash -LiteralPath $exe).Hash.ToLowerInvariant();cwd=$folder;path_empty=$true;pythonpath='unusable-smoke';check_test_no_side_effects=$passed;run_file_write_correct=$passed;file_json=$fileJson;sqlite=$sqlite;sqlite_modules=$sqliteModules;records=@($records.ToArray())}
     [IO.File]::WriteAllText($out,($report | ConvertTo-Json -Depth 20),[Text.UTF8Encoding]::new($false))
 }
 if(-not $passed) {throw 'Source-external smoke failed; report preserves the observed records.'}

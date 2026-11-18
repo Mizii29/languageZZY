@@ -35,3 +35,7 @@ N0-03 未过，按用户2026-11-17授权先实施 N1。以上 N0 冻结表是设
 ## N2 表示补充（2026-11-18）
 
 Program采用移动发布到const独立分配的节点表，NodeId为后序索引；Reference和Symbol/FunctionPlan记录静态绑定与捕获，不持有请求数据。模块图按SourceLoader规范路径去重，每次prepare重新读取有界快照。静态数字描述保留任意精度uint32 limbs，Quantity保留精确分数及量纲；不复用N0堆原型作为运行时容器。MSVC Debug实测默认深度需要更大宿主主线程栈，CLI/Program测试链接时预留8MiB、按需提交；语言syntax_depth=64不变。完整接口只维护于[Program契约](native-program-contract.md)。
+
+## N4-03 系统 SQLite 依赖（2026-11-19）
+
+沿用已有 Windows SDK 10.0.22000.0 的公开头文件及 System32 的微软 SQLite 组件，最低 API 3.29.0；固定导入表、绝对系统目录及按连接加载/释放。系统 DLL 不随项目分发；来源、版本、签名和 SHA 每次验收记录，OS 补丁后不假定旧证据继续适用。`dependencies.json` 的 N0 工具链条目保留为历史，当前 MSVC 及 SQLite 观察追加在新字段中。连接/逻辑资源/取消/事务策略只维护于 [N4集中契约](native-stdlib-contract.md#n4-03-sqlite)，不复制第二份语言接口。

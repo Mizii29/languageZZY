@@ -12,3 +12,5 @@ htmlcov/
 
 # SQLite demo state (not coursework CLI data)
 examples/sqlite/*.sqlite3*
+# Independent native SQLite example, when started from the repository root
+/native-notes.sqlite3*

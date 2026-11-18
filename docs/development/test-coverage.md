@@ -156,6 +156,10 @@ P08-03：tests/test_embedding.py执行真实ZZY夹具，覆盖严格Python类型
 P08-04/05本轮新增SQLite事务与独立任务示例；实际db签名、提交/回滚与取消边界以docs/runtime/web.md为准。SQLite专项、真实HTTP重启、安装和完整回归证据见tests/p08；当前验收状态见todo。
 
 
+## N4-03 原生 SQLite（2026-11-19）
+
+`native_runtime/tests/native/sqlite.cpp` 的 `lifecycle`、`cancellation`、`concurrency`、`resources` 四项必须按名称收集；CTest 空选择门禁拒绝零用例。`native_runtime/tools/test-sqlite.ps1` 保留 50 个独立程序和外部答案，覆盖参数绑定、事务成功/回滚、锁/并发、Unicode/持久化、禁止 SQL、坏结果、资源边界、超时和后续恢复；错误路径检查稳定错误码和无后端堆栈。`test-sqlite-modules.ps1` 独立核对 System32 DLL、签名、空 PATH/无效 PYTHONPATH、进程树及无 Python/Tk。Debug/Release 各 75/75 CTest、50/50 SQLite CLI；OFF 构建 `sqlite-disabled`/`cli-info` 为 2/2。安装副本再次执行通用、文件/JSON 和 SQLite 专项。未验证人工 Ctrl+C、Sanitizer、其他 OS、干净缺 CRT 主机及 Web/Sketch/GUI。
+
 ## P10-01 / P10-06 实际覆盖
 
 完整映射与命令见[tests/p10](../../tests/p10/README.md)：14项核心方法覆盖固定答案、真实ZZY执行、生成CLI及check零执行、默认/Null/严格数值/拒绝/路径/资源/确定性；新增5项真实HTTP覆盖默认/shared、交错并发、可变容器隔离、输入前置拒绝、业务与响应错误及恢复。另4项独立Draft202012Validator检查标准子集并明确Int/Float差异，显式纳入Web专项。原有14项HTTP和全部核心用例保留；不把本次必要验证勾选成P10-08。

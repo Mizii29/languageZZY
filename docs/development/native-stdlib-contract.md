@@ -28,6 +28,18 @@ JSON 由请求内的迭代读写器处理。读取按 JSON 拼写区分 Int 和 
 
 Win32 提交规则参见 [MoveFileExW](https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-movefileexw)；Float 转换参见 [CRT strtod 系列](https://learn.microsoft.com/en-us/cpp/c-runtime-library/reference/strtod-strtod-l-wcstod-wcstod-l)。这些是宿主实现依据，不能覆盖本项目更严格的 JSON 及资源规则。
 
+## N4-03 SQLite
+
+接口和语言行为只沿用 [Web 集中契约的 SQLite 节](../runtime/web.md#p08-04-sqlite契约)：`db.transaction(String, Function)`、`db.query(String, Array)`，不添加 open/close 或任意符号入口。每次事务独立同线程连接、BEGIN IMMEDIATE、零参数 ZZY 回调及 Result 提交/回滚。SQL/I/O 为 E401，参数/结果类型为 E201，超出有符号 64 位的 Int 为 E208，取消与资源错误保持原类别。提交点在成功回调之后、transaction 返回之前；之后的输出/编码失败不能撤销已提交数据。
+
+原生依赖采用本机 Windows SDK 10.0.22000.0 的 `winsqlite/winsqlite3.h`（公开 API 3.29.0），通过固定函数表从系统目录加载微软 Windows SQLite 组件 `winsqlite3.dll`，最低 API 版本 3.29.0。系统组件由 Windows 更新维护，不复制进仓库或锁死其 OS 补丁；每次验收记录实际 SQLite sourceid、DLL 版本、签名及 SHA。此方案是 N0“后续依赖锁定”的系统组件细化，不引入下载、CMake 网络请求、Python 或第三方运行库。DLL 在首个事务中加载并在连接关闭后释放；info/check/不调用 db 的核心执行不初始化或加载 SQLite。CMake `ZZY_NATIVE_SQLITE=OFF` 可构建不含该宿主的核心，执行 db 明确 E402，不回退。
+
+事务状态属于 ExecutionContext，回调使用既有显式调用帧；失败先关闭游标、解除 authorizer/progress、回滚及关闭连接，再清请求堆。连接预留 1 个对象和 1 个槽；参数列表、UTF-8 转换和结果逐行计入逻辑资源。SQLite 页缓存、准备语句等内部内存由 SQLite 长度/SQL 限额约束，不冒充精确 RSS 预算。
+
+每条 query 的一秒期限覆盖 prepare/step/逐行转换，进度回调每 1000 SQLite 指令观察取消与期限；锁等待上限 250ms，使用同一线程的 busy 回调检查取消。C 回调不抛 C++ 异常。手工事务、SAVEPOINT、ATTACH/DETACH、PRAGMA、加载扩展由 authorizer 拒绝；参数全部绑定，一次只准备/执行一条语句，多语句在执行前拒绝。回滚清理阶段关闭取消/查询期限回调，保留原始错误；文件系统永久阻塞不承诺硬抢占。
+
+参照 [SQLite authorizer](https://www.sqlite.org/c3ref/set_authorizer.html)、[progress handler](https://www.sqlite.org/c3ref/progress_handler.html) 与 [微软系统 SQLite](https://learn.microsoft.com/en-us/dotnet/standard/data/sqlite/custom-versions)。业务校验仍由 ZZY 实现，原有校园文件格式不变。
+
 ## 后续宿主
 
-N4-03 SQLite、N4-04 Web、N4-05 Sketch headless、N4-06 GUI 分别验收。每项开始前须登记原生依赖、线程、取消、资源及关闭规则。SQLite/Web 以 [互联契约](../runtime/web.md) 为准，Sketch 以 [独立契约](../features/sketch.md) 为准。
+N4-04 Web、N4-05 Sketch headless、N4-06 GUI 分别验收。每项开始前须登记原生依赖、线程、取消、资源及关闭规则。Web 以 [互联契约](../runtime/web.md) 为准，Sketch 以 [独立契约](../features/sketch.md) 为准。

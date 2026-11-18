@@ -106,7 +106,7 @@ def main():
         run('check-no-effects',['check',str(source),'--diagnostic-format','json'],stdout='')
         run('unsupported-test',['test',str(source),'--diagnostic-format','json'],2,'','E402')
         assert not (folder/'side-effect.txt').exists(),'user code executed'
-        source.write_text('io.print("UNEXPECTED");db.query("SELECT 1",[]);',encoding='utf-8')
+        source.write_text('io.print("UNEXPECTED");sketch.color("#ff0000");',encoding='utf-8')
         run('run-unsupported-host',['run',str(source),'--diagnostic-format','json'],1,'UNEXPECTED\n','E402')
         # Stop-option marker permits a filename which resembles a flag.
         (folder/'--help').write_bytes(b'a')

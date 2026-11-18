@@ -1,6 +1,7 @@
 {
   "schema_version": 1,
-  "stage": "N4-02",
+  "stage": "N4-03",
+  "profile": "Windows MSVC default build with ZZY_NATIVE_SQLITE=ON; OFF rejects db with E402",
   "features": [
     {
       "id": "ast.add",
@@ -677,16 +678,16 @@
     {
       "id": "host.db.query",
       "tier": "optional-host",
-      "phase": "N4",
-      "implemented": false,
-      "diagnostic": "E402"
+      "phase": "N4-03",
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "host.db.transaction",
       "tier": "optional-host",
-      "phase": "N4",
-      "implemented": false,
-      "diagnostic": "E402"
+      "phase": "N4-03",
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "host.io.input",
@@ -1394,6 +1395,6 @@
     ],
     "evaluation": true,
     "module_graph": true,
-    "request_execution_isolation": "verified for successive core ExecutionContexts; host integration deferred to N6"
+    "request_execution_isolation": "successive core/file/SQLite contexts and concurrent SQLite transactions verified; Web/shared hosts deferred"
   }
 }

@@ -179,4 +179,4 @@ P08-04/05本轮新增SQLite事务与独立任务示例；实际db签名、提交
 
 ## 独立原生实验线 NATIVE-01
 
-原生阶段与 P12/P13 分开，Python 仍为默认入口。N1 正式验收证据保留，N2 已实现全部现有语法的 Parser、Resolver、不可变 Program、绑定/捕获布局、模块依赖图及原生 `check`/`program-info`；check 不求值，run/test仍 E402/2，无Python回退。[使用命令](native_runtime/README.md)、[Program契约](docs/development/native-program-contract.md)、[N2证据](native_runtime/tests/n2-report.md)记录当前状态。未实现运行时求值；最新N2正式CMake/MSVC Debug、Release各44/44 CTest、固定check850/850、58条过程验收及Release安装/源码外各9/9已补跑通过，原始证据见benchmarks/results/native/n2-msvc-20261118。人工Ctrl+C、Sanitizer、其他平台和缺CRT主机仍未验证。
+原生阶段与 P12/P13 分开，Python 仍为默认入口。原生 `run` 已执行核心 ZZY 和 N4-01/02 标准库、文件与严格 JSON；N4-03 已接入 `db.transaction`、`db.query`。MSVC 默认按需加载 Windows 系统 SQLite，不加载 Python；可显式关闭该能力。`check` 仅静态准备，不执行用户代码或初始化宿主；`test` 仍 E402/2。最新 Debug/Release 各 75/75 CTest，SQLite CLI 各 50/50，事务、并发、取消、资源、清理和源码外发布副本已验收。见[启动与独立 SQLite 演示](native_runtime/README.md)、[集中原生契约](docs/development/native-stdlib-contract.md)、[N4-03报告](native_runtime/tests/n4-03-report.md)。Web、Sketch headless/GUI、真实人工 Ctrl+C、Sanitizer、其他 OS 和缺 CRT 主机未验收；下一项 N4-04，不宣称完整 N4。

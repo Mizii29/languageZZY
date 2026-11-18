@@ -2,6 +2,7 @@
 #include "runtime_heap.hpp"
 #include "host_metadata.hpp"
 #include "core_hosts.hpp"
+#include "sqlite_host.hpp"
 #include <deque>
 #include <iomanip>
 #include <sstream>
@@ -26,6 +27,9 @@ private:
     std::shared_ptr<Frame> frame;
     std::map<std::string,Value> builtins;
     std::map<NodeId,Value> modules;
+#ifdef ZZY_NATIVE_SQLITE
+    std::shared_ptr<sqlite_host::Connection> database;
+#endif
     Value null_,true_,false_,zero_,current;
     std::ostream& output;std::ostream& errors;
     std::istream* input;
@@ -406,6 +410,8 @@ private:
     Value text_library(const std::string& name,const std::vector<Value>& args,NodeId site);
     Value file_library(const std::string& name,const std::vector<Value>& args,NodeId site);
     Value json_library(const std::string& name,const Value& value,NodeId site);
+    void database_transaction(const std::vector<Value>& args,NodeId site,Done done);
+    Value database_query(const std::vector<Value>& args,NodeId site);
     struct JsonReader;
     struct JsonWriter;
     void map_insert(const Value& map,std::string key,const Value& key_value,const Value& value,NodeId site);
@@ -452,6 +458,7 @@ private:
 public:
     ExecutionContext(const Program& p,const ResourcePolicy& policy,std::atomic<bool>& cancel,std::ostream& out,std::ostream& err,bool json=false,std::istream* in=nullptr)
         :snapshot(p),program(snapshot.data()),heap(policy,cancel),output(out),errors(err),input(in),diagnostic_json(json) {}
+    ~ExecutionContext() {cleanup();}
     void execute() {
         try {
             initialize();block(program.root,[]{});drain();
@@ -468,7 +475,13 @@ public:
                 std::to_string(limit)+", requested="+std::to_string(stderr_used+record.size())),diagnostic_json);
         errors<<record;errors.flush();
     }
-    void cleanup() noexcept {tasks.clear();calls.clear();frame.reset();globals.clear();builtins.clear();modules.clear();current={};returned={};null_={};true_={};false_={};zero_={};heap.state->close();}
+    void cleanup() noexcept {
+        tasks.clear();calls.clear();frame.reset();
+#ifdef ZZY_NATIVE_SQLITE
+        database.reset();
+#endif
+        globals.clear();builtins.clear();modules.clear();current={};returned={};null_={};true_={};false_={};zero_={};heap.state->close();
+    }
 };
 inline void ExecutionContext::eval(NodeId id,Done done) {
     push([this,id,done=std::move(done)]() mutable {
@@ -710,6 +723,8 @@ inline void ExecutionContext::call(Value fn,std::vector<Value> args,NodeId site,
     if(name=="array.sum" || name=="array.stats" || name=="array.sorted" || name=="array.map" || name=="array.filter") {
         array_library(name,args,site,std::move(done));return;
     }
+    if(name=="db.transaction") {database_transaction(args,site,std::move(done));return;}
+    if(name=="db.query") {done(database_query(args,site));return;}
     if(name.compare(0,5,"text.")==0) {
         done(text_library(name,args,site));return;
     }
@@ -887,3 +902,4 @@ inline void ExecutionContext::query(NodeId id,Value source,Done done) {
 #include "core_library.hpp"
 #include "file_library.hpp"
 #include "json_library.hpp"
+#include "database_library.hpp"

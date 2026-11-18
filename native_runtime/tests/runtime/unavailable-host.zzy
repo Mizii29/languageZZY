@@ -1,1 +1,1 @@
-io.print(db.query("SELECT 1",[]));
+io.print(sketch.color("#ff0000"));

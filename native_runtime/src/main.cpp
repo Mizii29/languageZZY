@@ -33,6 +33,11 @@ const char* crt() {
 #endif
 }
 int cli(const std::vector<std::string>& argv,bool& json,zzy::ResourcePolicy& policy) {
+#ifdef ZZY_NATIVE_SQLITE
+    constexpr auto sqlite_enabled="true";
+#else
+    constexpr auto sqlite_enabled="false";
+#endif
     bool options=true;
     for(std::size_t i=0;i<argv.size() && options;++i) {
         if(argv[i]=="--") options=false;
@@ -66,14 +71,14 @@ int cli(const std::vector<std::string>& argv,bool& json,zzy::ResourcePolicy& pol
         }
     }
     if(help || arguments.empty()) {
-        std::cout<<"zzy-native 0.0.0-n4-02-dev\nAvailable: info, source-info FILE, lex FILE, check FILE, program-info FILE, run FILE, --help, --version\n"
+        std::cout<<"zzy-native 0.0.0-n4-03-dev\nAvailable: info, source-info FILE, lex FILE, check FILE, program-info FILE, run FILE, --help, --version\n"
                  <<"Options (before or after command): --limits FILE --diagnostic-format text|json\n"
                  <<"run executes core ZZY; unported host capabilities and test report E402\n"
                  <<"check prepares an immutable Program without executing user code\n";
         return 0;
     }
     const auto& command=arguments[0];
-    if(command=="--version" && arguments.size()==1) {std::cout<<"0.0.0-n4-02-dev\n";return 0;}
+    if(command=="--version" && arguments.size()==1) {std::cout<<"0.0.0-n4-03-dev\n";return 0;}
     if(command=="test") {
         zzy::diagnostic(std::cerr,"E402","capability is not implemented by this backend","capability="+command,json);return 2;
     }
@@ -82,11 +87,11 @@ int cli(const std::vector<std::string>& argv,bool& json,zzy::ResourcePolicy& pol
     if(limits) policy=zzy::load_policy(zzy::widen(*limits));
     zzy::FrontendMeter meter(policy,cancelled);
     if(command=="info") {
-        meter.write(std::cout,"{\"schema_version\":1,\"backend\":\"native-ast\",\"stage\":\"N4-02\","
-            "\"version\":\"0.0.0-n4-02-dev\",\"cxx_standard\":17,\"pointer_bits\":"+std::to_string(sizeof(void*)*8)+
+        meter.write(std::cout,"{\"schema_version\":1,\"backend\":\"native-ast\",\"stage\":\"N4-03\","
+            "\"version\":\"0.0.0-n4-03-dev\",\"cxx_standard\":17,\"pointer_bits\":"+std::to_string(sizeof(void*)*8)+
             ",\"compiler\":"+zzy::quote(compiler())+",\"crt\":"+zzy::quote(crt())+
             ",\"supported_commands\":[\"info\",\"source-info\",\"lex\",\"check\",\"program-info\",\"run\"],\"python_fallback\":false,\"unicode_version\":\"15.0.0\","
-            "\"policy_status\":\"frontend and core execution limits enforced; program cache configuration only\",\"resource_policy\":"+
+            "\"sqlite_enabled\":"+sqlite_enabled+",\"policy_status\":\"frontend and core execution limits enforced; program cache configuration only\",\"resource_policy\":"+
             policy.canonical_json()+",\"resource_fingerprint\":"+zzy::quote(policy.fingerprint())+"}\n");
         return 0;
     }
