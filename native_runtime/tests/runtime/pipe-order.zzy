@@ -1,0 +1,1 @@
+(addnew) mark(n:(Int))->(Int){io.print(n);(return) n;}(addnew) f(a:(Int), b:(Int))->(Int){(return) a+b;}io.print(mark(1) ~> f(mark(2),@));

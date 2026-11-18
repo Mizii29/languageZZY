@@ -1,0 +1,2 @@
+(shape) Box { n:(Int); }
+(zno) b:=Box::{n:1};b.n <- (true);

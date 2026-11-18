@@ -1,0 +1,2 @@
+(addnew) f(a:(Array))->(Result){(for) x (in) a {(T_T)("stop")?;}(return) (^_^)(0);}
+(zno) a:=[1];io.print(f(a));array.push(a,2);io.print(a);

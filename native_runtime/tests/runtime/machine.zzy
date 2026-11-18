@@ -1,0 +1,3 @@
+(machine) Gate {closed -- "open" --> opened; opened -- "close" --> closed;}
+(zno) a:=Gate("closed");(zno) b:=a;
+io.print(a << "open");io.print(b.state);io.print(b << "open");io.print(a.state);

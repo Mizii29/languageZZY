@@ -1,0 +1,3 @@
+(addnew) mark()->(Int){io.print("bad");(return) 1;}
+(addnew) run(x:(Result))->(Result){(return) (^_^)(x?+mark());}
+(?_?) run((T_T)("oops")) {(T_T)(msg)=> {io.print(msg);} _=>{io.print("wrong");}}

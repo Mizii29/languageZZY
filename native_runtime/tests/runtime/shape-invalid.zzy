@@ -1,0 +1,3 @@
+(addnew) bad()->(Int){io.print("bad");(return) 1;}
+(shape) Box { required:(Int); }
+Box::{extra:bad()};

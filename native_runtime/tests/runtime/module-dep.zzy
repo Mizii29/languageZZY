@@ -1,0 +1,4 @@
+io.print("init");
+(zyes) counter := 0;
+(addnew) next()->(Int){counter <- counter+1; (return) counter;}
+(addnew) divide(n:(Int))->(Float){(return) 10/n;}

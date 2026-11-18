@@ -30,6 +30,12 @@ try {
         if($case.code) {
             $diagnostic=$r.stderr | ConvertFrom-Json
             if($diagnostic.schema_version -ne 1 -or $diagnostic.kind -ne 'error' -or $diagnostic.code -ne $case.code -or @($diagnostic.PSObject.Properties).Count -ne 7 -or -not $diagnostic.file -or -not $diagnostic.span) {throw ('Runtime diagnostic mismatch: '+$case.id)}
+            if($case.file_suffix -and -not $diagnostic.file.EndsWith($case.file_suffix,[StringComparison]::Ordinal)) {throw ('Wrong diagnostic file: '+$case.id)}
+            if($case.span -and (@($diagnostic.span.start.line,$diagnostic.span.start.column,$diagnostic.span.end.line,$diagnostic.span.end.column) -join ',') -ne ($case.span -join ',')) {throw ('Wrong diagnostic span: '+$case.id+' '+($diagnostic.span | ConvertTo-Json -Compress))}
+            if($case.notes) {
+                if(@($diagnostic.notes).Count -ne @($case.notes).Count) {throw ('Wrong diagnostic note count: '+$case.id)}
+                for($i=0;$i -lt @($case.notes).Count;++$i) {if(-not $diagnostic.notes[$i].StartsWith($case.notes[$i],[StringComparison]::Ordinal)) {throw ('Wrong diagnostic note: '+$case.id)}}
+            }
         } elseif($r.stderr -ne '') {throw ('Unexpected stderr: '+$case.id)}
     }
 } finally {

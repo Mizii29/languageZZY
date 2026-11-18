@@ -262,6 +262,204 @@
       "limits": {
         "call_depth": 1600
       }
+    },
+    {
+      "id": "shape-default",
+      "file": "shape-default.zzy",
+      "exit_code": 0,
+      "stdout": "1\n2\n3\n2\n4\n[9]\n5\n4\n",
+      "code": null
+    },
+    {
+      "id": "shape-invalid",
+      "file": "shape-invalid.zzy",
+      "exit_code": 1,
+      "stdout": "",
+      "code": "E203"
+    },
+    {
+      "id": "shape-write",
+      "file": "shape-write.zzy",
+      "exit_code": 1,
+      "stdout": "",
+      "code": "E201"
+    },
+    {
+      "id": "result-propagation",
+      "file": "result-propagation.zzy",
+      "exit_code": 0,
+      "stdout": "oops\n",
+      "code": null
+    },
+    {
+      "id": "result-match",
+      "file": "result-match.zzy",
+      "exit_code": 0,
+      "stdout": "3\n",
+      "code": null
+    },
+    {
+      "id": "match-missing",
+      "file": "match-missing.zzy",
+      "exit_code": 1,
+      "stdout": "",
+      "code": "E207"
+    },
+    {
+      "id": "pipe-order",
+      "file": "pipe-order.zzy",
+      "exit_code": 0,
+      "stdout": "1\n2\n3\n",
+      "code": null
+    },
+    {
+      "id": "lazy-cache",
+      "file": "lazy-cache.zzy",
+      "exit_code": 0,
+      "stdout": "2\n2\n2\n<lazy READY>\n",
+      "code": null
+    },
+    {
+      "id": "lazy-cycle",
+      "file": "lazy-cycle.zzy",
+      "exit_code": 1,
+      "stdout": "",
+      "code": "E209"
+    },
+    {
+      "id": "lazy-result",
+      "file": "lazy-result.zzy",
+      "exit_code": 0,
+      "stdout": "(T_T)(bad)\n(T_T)(bad)\n",
+      "code": null
+    },
+    {
+      "id": "machine",
+      "file": "machine.zzy",
+      "exit_code": 0,
+      "stdout": "(^_^)(opened)\nopened\n(T_T)(invalid transition: opened -- open)\nopened\n",
+      "code": null
+    },
+    {
+      "id": "machine-initial",
+      "file": "machine-initial.zzy",
+      "exit_code": 1,
+      "stdout": "",
+      "code": "E212"
+    },
+    {
+      "id": "quantity",
+      "file": "quantity.zzy",
+      "exit_code": 0,
+      "stdout": "5::m*s^-1\n1000/3::ms\n-1/10::s\n",
+      "code": null
+    },
+    {
+      "id": "quantity-dimension",
+      "file": "quantity-dimension.zzy",
+      "exit_code": 1,
+      "stdout": "",
+      "code": "E213"
+    },
+    {
+      "id": "quantity-same-den",
+      "file": "quantity-same-den.zzy",
+      "exit_code": 0,
+      "stdout": "1::s\n",
+      "code": null
+    },
+    {
+      "id": "float-format",
+      "file": "float-format.zzy",
+      "exit_code": 0,
+      "stdout": "0.1\n-0.0\n1e-05\n1000000000000000.0\n1e+16\n",
+      "code": null
+    },
+    {
+      "id": "query-stable",
+      "file": "query-stable.zzy",
+      "exit_code": 0,
+      "stdout": "[third, first, second]\n",
+      "code": null
+    },
+    {
+      "id": "query-early-take",
+      "file": "query-early-take.zzy",
+      "exit_code": 1,
+      "stdout": "",
+      "code": "E208"
+    },
+    {
+      "id": "query-validate-before-take",
+      "file": "query-validate-before-take.zzy",
+      "exit_code": 1,
+      "stdout": "",
+      "code": "E201"
+    },
+    {
+      "id": "query-keep-before-sort",
+      "file": "query-keep-before-sort.zzy",
+      "exit_code": 1,
+      "stdout": "",
+      "code": "E205",
+      "notes": [
+        "查询输入下标 1"
+      ]
+    },
+    {
+      "id": "query-yield-path",
+      "file": "query-yield-path.zzy",
+      "exit_code": 1,
+      "stdout": "",
+      "code": "E205",
+      "notes": [
+        "查询输入下标 1"
+      ]
+    },
+    {
+      "id": "map-cycle-print",
+      "file": "map-cycle-print.zzy",
+      "exit_code": 0,
+      "stdout": "{self: <cycle>}\n",
+      "code": null
+    },
+    {
+      "id": "module-init",
+      "file": "module-init.zzy",
+      "exit_code": 0,
+      "stdout": "init\ntrue\n1\n2\n",
+      "code": null
+    },
+    {
+      "id": "module-error",
+      "file": "module-error.zzy",
+      "exit_code": 1,
+      "stdout": "init\n",
+      "code": "E205",
+      "file_suffix": "module-dep.zzy",
+      "span": [
+        4,
+        46,
+        4,
+        47
+      ],
+      "notes": [
+        "调用 divide："
+      ]
+    },
+    {
+      "id": "module-missing",
+      "file": "module-missing.zzy",
+      "exit_code": 1,
+      "stdout": "init\n",
+      "code": "E303"
+    },
+    {
+      "id": "early-return-cleanup",
+      "file": "early-return-cleanup.zzy",
+      "exit_code": 0,
+      "stdout": "(T_T)(stop)\n[1, 2]\n",
+      "code": null
     }
   ]
 }

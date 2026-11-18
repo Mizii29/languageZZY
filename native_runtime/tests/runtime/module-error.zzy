@@ -1,0 +1,2 @@
+(use) "module-dep.zzy" (as) dep;
+dep.divide(0);

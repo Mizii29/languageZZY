@@ -1,0 +1,12 @@
+(zyes) count := 0;
+(zno) shared := [];
+(addnew) mark(n:(Int))->(Int){count <- count+1; io.print(n); (return) n;}
+(shape) Box { x:(Int):=mark(2); y:(Int); items:(Array):=[]; same:(Array):=shared; }
+(zno) a := Box::{y:mark(1)};
+(zno) b := Box::{y:mark(3)};
+(zno) c := a (with) {x:mark(4)};
+array.push(c.items,9);
+(o_o) a.items == c.items;
+(o_o) a.items != b.items;
+(o_o) a.same == b.same;
+io.print(a.items);io.print(count);io.print(c.x);

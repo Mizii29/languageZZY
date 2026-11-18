@@ -1,0 +1,1 @@
+(use) "module-dep.zzy" (as) dep;dep.hidden;

@@ -1,0 +1,4 @@
+(zyes) n:=1;
+(addnew) make()->(Int){io.print(n);(return) n;}
+(zno) a:=(zzz)(make());
+n <- 2;io.print(wake(a));n <- 3;io.print(wake(a));io.print(a);

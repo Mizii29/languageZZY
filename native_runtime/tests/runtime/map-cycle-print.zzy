@@ -1,0 +1,1 @@
+(zno) m:=data.map();data.set(m,"self",m);io.print(m);

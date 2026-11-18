@@ -1,0 +1,4 @@
+(o_o) 0.1::s+0.2::s==0.3::s;
+(o_o) unit.make(0.1,"s")!=0.1::s;
+(o_o) 1::m/50::cm==2::one;
+io.print(10::m/2::s);io.print(unit.format(1::s/3,"ms"));io.print(-0.1::s);

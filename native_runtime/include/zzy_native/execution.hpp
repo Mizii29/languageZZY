@@ -4,6 +4,7 @@
 #include <deque>
 #include <iomanip>
 #include <sstream>
+#include <charconv>
 namespace zzy {
 class ExecutionContext {
 public:
@@ -14,11 +15,12 @@ public:
 private:
     struct Type {std::string name;Value nominal;};
     struct Binding {Value raw;Type type;Lease slot;};
-    struct Frame {Value function;std::vector<Value> locals;std::vector<Type> types;Lease space;NodeId call=no_node;bool lazy=false;};
+    struct Frame {Value function;std::vector<Value> locals;std::vector<Type> types;Lease space;NodeId call=no_node;bool lazy=false;std::size_t boundary=0;};
     struct Task {Next action;};
     std::vector<Task> tasks;
     std::map<NodeId,Binding> globals;
     std::vector<std::shared_ptr<Frame>> calls;
+    std::vector<std::size_t> query_items;
     std::shared_ptr<Frame> frame;
     std::map<std::string,Value> builtins;
     std::map<NodeId,Value> modules;
@@ -37,11 +39,11 @@ private:
         RuntimeNode n;n.kind=std::move(kind);for(const auto& v:children) n.edges.push_back(v.ref());return heap.allocate(std::move(n),charge,site);
     }
     Value boolean(bool b) const {return b?true_:false_;}
-    void typecheck(const Type& t,const Value& v,NodeId site) const {
+    void typecheck(const Type& t,const Value& v,NodeId site,bool full=true) const {
         if(t.name.empty()) return;
         const auto& n=object(v);bool valid=n.kind==t.name;
         if(t.nominal) valid=(n.kind=="Shape" || n.kind=="Machine") && !n.edges.empty() && n.edges[0]==t.nominal.ref();
-        if(!valid) {RuntimeError e("E201","expected "+t.name+", got "+n.kind,site);e.expression_span=true;throw e;}
+        if(!valid) {RuntimeError e("E201","expected "+t.name+", got "+n.kind,site);e.expression_span=full;throw e;}
     }
     void typecheck(const std::string& kind,const Value& v,NodeId site) const {typecheck(Type{kind,{}},v,site);}
     Value raw(const Reference& r,NodeId site) {
@@ -105,17 +107,17 @@ private:
         if(n.kind=="Machine") {if(name!="state") error(site,"E204","unknown Machine field");if(write) error(site,"E203","Machine state is read only");return heap.pin(n.edges.at(1));}
         if(n.kind!="Shape" && n.kind!="Module") error(site,"E201","field access needs a shape/module");
         if(write && n.kind=="Module") error(site,"E203","module is read only");
-        const auto it=std::find(n.names.begin(),n.names.end(),name);if(it==n.names.end()) error(site,"E204","unknown field: "+name);
+        const auto it=std::find(n.names.begin(),n.names.end(),name);if(it==n.names.end()) error(site,n.kind=="Module"?"E303":"E302","unknown field: "+name);
         return heap.pin(n.edges.at(static_cast<std::size_t>(it-n.names.begin())+(n.kind=="Shape"?1:0)));
     }
     std::size_t index_number(const Value& v,std::size_t count,NodeId site) const {
-        typecheck("Int",v,site);const auto& i=object(v).integer;
+        typecheck(Type{"Int",{}},v,site,false);const auto& i=object(v).integer;
         if(i.sign()<0 || i>=BigInt(static_cast<std::int64_t>(count))) error(site,"E204","index out of bounds");
         return static_cast<std::size_t>(std::stoull(i.decimal()));
     }
     Value index(const Value& owner,const Value& key,NodeId site,bool write=false) {
         auto& n=object(owner);if(n.kind!="Array" && n.kind!="String") error(site,"E201","index needs Array/String");
-        if(write && n.kind=="String") error(site,"E203","String is immutable");
+        typecheck(Type{"Int",{}},key,site,false);if(write && n.kind=="String") error(site,"E203","String is immutable");
         const auto i=index_number(key,n.kind=="Array"?n.edges.size():n.characters.size(),site);
         return n.kind=="Array"?heap.pin(n.edges[i]):string(std::u32string(1,n.characters[i]),site);
     }
@@ -166,9 +168,11 @@ private:
                 if(x.kind=="String") equal=x.characters==y.characters;
                 else if(x.kind=="Bool") equal=x.flag==y.flag;else if(x.kind=="Null") equal=true;
                 else if(x.kind=="Range") {equal=true;for(std::size_t i=0;i<3;++i) equal=equal && object(heap.pin(x.edges[i])).integer==object(heap.pin(y.edges[i])).integer;}
+                else if(x.kind=="Quantity") equal=x.length==y.length && x.time==y.time && x.rational.numerator==y.rational.numerator && x.rational.denominator==y.rational.denominator;
             }
             return boolean(op=="EQUAL"?equal:!equal);
         }
+        if(object(a).kind=="Quantity" || object(b).kind=="Quantity") return quantity_binary(op,a,b,site);
         if(op=="INTERVAL") return range({a,b,integer(BigInt(1),site)},site);
         if(op=="LESS" || op=="LESS_EQUAL" || op=="GREATER" || op=="GREATER_EQUAL") {const int c=compare(a,b,site);return boolean(op=="LESS"?c<0:op=="LESS_EQUAL"?c<=0:op=="GREATER"?c>0:c>=0);}
         const auto& x=object(a);const auto& y=object(b);
@@ -181,8 +185,52 @@ private:
         return real(op=="PLUS"?left+right:op=="MINUS"?left-right:op=="MULTIPLY"?left*right:left/right,site);
     }
     Value range(const std::vector<Value>& args,NodeId site) {
-        for(const auto& v:args) typecheck("Int",v,site);if(object(args[2]).integer.zero()) error(site,"E208","zero Range step");
+        for(std::size_t i=0;i<args.size();++i) typecheck(Type{"Int",{}},args[i],ast(site).kind=="call"?ast(site).children[i+1]:site,ast(site).kind=="call");
+        if(object(args[2]).integer.zero()) error(site,"E208","zero Range step");
         return make("Range",{1,3,0},site,args);
+    }
+    Value quantity(Rational value,int length,int time,NodeId site) {
+        check("integer_bits",value.numerator.bits(),site);check("integer_bits",value.denominator.bits(),site);
+        check("quantity_exponent_abs",static_cast<std::uint64_t>(std::abs(length)),site);check("quantity_exponent_abs",static_cast<std::uint64_t>(std::abs(time)),site);
+        const auto bytes=(value.numerator.bits()+7)/8+(value.denominator.bits()+7)/8+(BigInt(length).bits()+7)/8+(BigInt(time).bits()+7)/8;
+        RuntimeNode n;n.kind="Quantity";n.rational=std::move(value);n.length=length;n.time=time;return heap.allocate(std::move(n),{0,0,bytes},site);
+    }
+    Rational rational(const Value& v,NodeId site) {
+        const auto& n=object(v);if(n.kind=="Quantity") return n.rational;
+        if(n.kind=="Int") return Rational(n.integer);
+        if(n.kind=="Float") {const auto r=BigInt::ratio(n.real);return Rational(r.first,r.second);}
+        error(site,"E201","Quantity arithmetic requires numeric operands");
+    }
+    BigInt product(const BigInt& a,const BigInt& b,NodeId site) {
+        const auto width=a.zero() || b.zero()?0:a.bits()+b.bits();
+        Lease scratch(heap.state,{0,0,(width+7)/8},site);const auto r=a.multiply(b,[&] {point();});check("integer_bits",r.bits(),site);return r;
+    }
+    Value quantity_binary(const std::string& op,const Value& a,const Value& b,NodeId site) {
+        const auto& x=object(a);const auto& y=object(b);const auto u=rational(a,site),v=rational(b,site);
+        const auto al=x.kind=="Quantity"?x.length:0,at=x.kind=="Quantity"?x.time:0,bl=y.kind=="Quantity"?y.length:0,bt=y.kind=="Quantity"?y.time:0;
+        if(op=="PLUS" || op=="MINUS" || op=="LESS" || op=="LESS_EQUAL" || op=="GREATER" || op=="GREATER_EQUAL") {
+            if(x.kind!="Quantity" || y.kind!="Quantity") error(site,"E201","addition/order requires two Quantities");
+            if(al!=bl || at!=bt) error(site,"E213","incompatible dimensions");
+            const auto g=gcd(u.denominator,v.denominator,[&]{point();});
+            auto left=product(u.numerator,v.denominator/g,site),right=product(v.numerator,u.denominator/g,site);
+            if(op!="PLUS" && op!="MINUS") {const auto c=left.compare(right);return boolean(op=="LESS"?c<0:op=="LESS_EQUAL"?c<=0:op=="GREATER"?c>0:c>=0);}
+            auto num=arithmetic(op,left,right,site);auto den=product(u.denominator,v.denominator/g,site);return quantity(Rational(std::move(num),std::move(den)),al,at,site);
+        }
+        if(op!="MULTIPLY" && op!="DIVIDE") error(site,"E201","unsupported Quantity operator");
+        auto c=v.numerator,d=v.denominator;if(op=="DIVIDE") {if(c.zero()) error(site,"E205","zero divisor");std::swap(c,d);}
+        const auto g=gcd(u.numerator,d,[&]{point();}),h=gcd(c,u.denominator,[&]{point();});
+        auto num=product(u.numerator/g,c/h,site),den=product(u.denominator/h,d/g,site);
+        return quantity(Rational(std::move(num),std::move(den)),al+(op=="DIVIDE"?-bl:bl),at+(op=="DIVIDE"?-bt:bt),site);
+    }
+    static std::string float_text(double value) {
+        char buffer[128];const auto r=std::to_chars(buffer,buffer+sizeof(buffer),value,std::chars_format::scientific);
+        if(r.ec!=std::errc()) throw std::logic_error("Float formatting failed");std::string scientific(buffer,r.ptr);const auto at=scientific.find('e');
+        const int exponent=std::stoi(scientific.substr(at+1));if(exponent<-4 || exponent>=16) return scientific;
+        auto digits=scientific.substr(0,at);std::string sign;if(!digits.empty() && digits[0]=='-') {sign="-";digits.erase(0,1);}
+        const auto dot=digits.find('.');if(dot!=std::string::npos) digits.erase(dot,1);const int point=exponent+1;
+        if(point<=0) return sign+"0."+std::string(static_cast<std::size_t>(-point),'0')+digits;
+        if(static_cast<std::size_t>(point)>=digits.size()) return sign+digits+std::string(static_cast<std::size_t>(point)-digits.size(),'0')+".0";
+        digits.insert(static_cast<std::size_t>(point),".");return sign+digits;
     }
     std::string display(const Value& value,NodeId site,std::size_t depth=0,std::set<std::uint64_t>* active=nullptr) {
         point();std::set<std::uint64_t> own;if(!active) active=&own;const auto& n=object(value);
@@ -190,7 +238,12 @@ private:
         if(n.kind=="Int") {const auto s=n.integer.decimal();check("numeric_digits",s.size()-(n.integer.sign()<0?1:0),site);return s;}
         if(n.kind=="String") return encode_utf8(n.characters);
         if(n.kind=="Bool") return n.flag?"true":"false";if(n.kind=="Null") return "null";
-        if(n.kind=="Float") {std::ostringstream s;s<<std::setprecision(17)<<n.real;auto t=s.str();if(t.find_first_of(".eE")==std::string::npos) t+=".0";return t;}
+        if(n.kind=="Float") return float_text(n.real);
+        if(n.kind=="Quantity") {
+            auto text=n.rational.numerator.decimal();if(n.rational.denominator!=BigInt(1)) text+="/"+n.rational.denominator.decimal();text+="::";
+            if(!n.length && !n.time) return text+"one";
+            for(const auto dim:{std::pair<const char*,int>{"m",n.length},{"s",n.time}}) if(dim.second) {if(text.back()!=':') text+='*';text+=dim.first;if(dim.second!=1) text+='^'+std::to_string(dim.second);}return text;
+        }
         if(n.kind=="Function") return "<function "+n.name+">";if(n.kind=="Namespace") return "<module "+n.name+">";
         if(n.kind=="Definition") return "<shape "+n.name+">";if(n.kind=="Module") return "<module>";
         if(n.kind=="Lazy") return "<lazy "+n.state+">";
@@ -199,7 +252,7 @@ private:
         check("value_depth",depth+1,site);active->insert(value.ref().id);
         std::string s=n.kind=="Array"?"[":n.kind=="Result"?(n.flag?"(^_^)(":"(T_T)("):n.kind=="Range"?"range(":n.kind=="Map"?"{":object(heap.pin(n.edges[0])).name+"::{";
         const auto start=n.kind=="Shape"?1U:0U;
-        for(std::size_t i=start;i<n.edges.size();++i) {if(i>start) s+=", ";if(n.kind=="Shape" || n.kind=="Map") s+=n.names[i-start]+": ";s+=display(heap.pin(n.edges[i]),site,depth+1,active);check("text_codepoints",decode_utf8(s).text.size(),site);}
+        for(std::size_t i=start;i<n.edges.size();i+=n.kind=="Map"?2:1) {if(i>start) s+=", ";if(n.kind=="Shape" || n.kind=="Map") s+=n.names[n.kind=="Map"?i/2:i-start]+": ";s+=display(heap.pin(n.edges[i+(n.kind=="Map"?1:0)]),site,depth+1,active);check("text_codepoints",decode_utf8(s).text.size(),site);}
         s+=n.kind=="Array"?"]":n.kind=="Map" || n.kind=="Shape"?"}":")";active->erase(value.ref().id);return s;
     }
     void write(std::ostream& stream,const std::string& text,bool err,NodeId site) {
@@ -211,6 +264,23 @@ private:
     void call(Value fn,std::vector<Value> args,NodeId site,Done done);
     void construct(NodeId id,Value base,Done done);
     void query(NodeId id,Value source,Done done);
+    void wake(Value value,NodeId site,Done done);
+    void begin_query_item(std::size_t i) {query_items.push_back(i);}
+    void end_query_item() {query_items.pop_back();}
+    void unwind(RuntimeError* error) {
+        for(auto it=calls.rbegin();it!=calls.rend();++it) {
+            auto& active=**it;const auto& n=ast(active.call);const auto p=n.token.source->position(n.token.start);
+            const auto note=(active.lazy?"wake：":"调用 "+object(active.function).name+"：")+display_path(n.token.source->path)+":"+std::to_string(p.line)+":"+std::to_string(p.column);
+            if(active.lazy) {
+                auto& lazy=object(active.function);
+                if(error && error->code!="E211") {lazy.failure=std::make_shared<RuntimeError>(*error);lazy.state="FAILED";}else {lazy.failure.reset();lazy.state="NEW";}
+            }
+            if(error) error->notes.push_back(note);
+        }
+        if(error) for(auto it=query_items.rbegin();it!=query_items.rend();++it) error->notes.push_back("查询输入下标 "+std::to_string(*it));
+        query_items.clear();
+        tasks.clear();calls.clear();frame.reset();flow.clear();returned={};return_site=no_node;current={};
+    }
     struct Arguments {std::vector<Value> values;Lease space;Arguments(std::shared_ptr<HeapState> h,std::size_t n,NodeId site):space(h,{0,n,0},site) {values.reserve(n);}};
     void arguments(std::vector<NodeId> ids,std::shared_ptr<Arguments> values,std::size_t i,Next done) {
         if(i==ids.size()) {push(std::move(done));return;}
@@ -228,9 +298,9 @@ public:
             while(!tasks.empty()) {point();auto task=std::move(tasks.back());tasks.pop_back();task.action();if(heap.state->nodes.size()>heap.state->roots.size()+4096) heap.collect();}
             cleanup();
         } catch(RuntimeError& e) {
-            for(auto it=calls.rbegin();it!=calls.rend();++it) {const auto& n=ast((*it)->call);e.notes.push_back(((*it)->lazy?"wake: ":"call: ")+display_path(n.token.source->path)+":"+std::to_string(n.token.source->position(n.token.start).line));}
+            unwind(&e);
             cleanup();throw;
-        } catch(...) {cleanup();throw;}
+        } catch(...) {unwind(nullptr);cleanup();throw;}
     }
     void cleanup() noexcept {tasks.clear();calls.clear();frame.reset();globals.clear();builtins.clear();modules.clear();current={};returned={};null_={};true_={};false_={};zero_={};heap.state->close();}
 };
@@ -244,7 +314,21 @@ inline void ExecutionContext::eval(NodeId id,Done done) {
         else if(k=="name") done(read(program.references.at(id),id));
         else if(k=="current") {if(!current) throw std::logic_error("current item not installed");done(current);}
         else if(k=="group") eval(n.children[0],std::move(done));
-        else if(k=="lambda") done(make_function(id));
+        else if(k=="lambda" || k=="lazy") done(make_function(id));
+        else if(k=="quantity") {const auto& q=program.quantities.at(id);done(quantity(Rational(BigInt(q.numerator),BigInt(q.denominator)),q.length,q.time,id));}
+        else if(k=="construct" || k=="with") eval(n.children[0],[this,id,done](Value base) {construct(id,base,done);});
+        else if(k=="query") eval(n.children[0],[this,id,done](Value source) {query(id,source,done);});
+        else if(k=="result") eval(n.children[0],[this,id,done](Value v) {done(result(ast(id).text=="SUCCESS",v,ast(id).children[0]));});
+        else if(k=="propagate") eval(n.children[0],[this,id,done](Value v) {typecheck("Result",v,ast(id).children[0]);if(!object(v).flag) {flow="return";returned=v;return_site=id;tasks.resize(frame->boundary);}else done(heap.pin(object(v).edges[0]));});
+        else if(k=="pipe") eval(n.children[0],[this,id,done](Value source) {
+            const auto call_id=ast(id).children[1];const auto previous=current;current=source;eval(call_id,[this,previous,done](Value v) {current=previous;done(v);});
+        });
+        else if(k=="send") eval(n.children[0],[this,id,done](Value machine) {eval(ast(id).children[1],[this,id,machine,done](Value event) {
+            typecheck("Machine",machine,ast(id).children[0]);typecheck("String",event,ast(id).children[1]);auto& n=object(machine);const auto definition=heap.pin(n.edges[0]);const auto state=heap.pin(n.edges[1]);
+            const auto& transitions=program.machines.at(object(definition).syntax).edges;const auto current_state=encode_utf8(object(state).characters),event_text=encode_utf8(object(event).characters);
+            const auto it=transitions.find({current_state,event_text});if(it==transitions.end()) done(result(false,string("invalid transition: "+current_state+" -- "+event_text,id),id));
+            else {const auto next=string(it->second,id);const auto r=result(true,next,id);n.edges[1]=next.ref();done(r);}
+        });});
         else if(k=="field") eval(n.children[0],[this,id,done=std::move(done)](Value v) {done(field(v,ast(id).text,id));});
         else if(k=="index") eval(n.children[0],[this,id,done=std::move(done)](Value owner) {eval(ast(id).children[1],[this,id,owner,done](Value key) {done(index(owner,key,id));});});
         else if(k=="array") {
@@ -255,7 +339,8 @@ inline void ExecutionContext::eval(NodeId id,Done done) {
         }
         else if(k=="unary") eval(n.children[0],[this,id,done](Value v) {
             const auto& op=ast(id).token.kind;const auto& x=object(v);
-            if(op=="NOT") {typecheck("Bool",v,id);done(boolean(!x.flag));}
+            if(op=="NOT") {typecheck(Type{"Bool",{}},v,id,false);done(boolean(!x.flag));}
+            else if(x.kind=="Quantity") done(quantity(Rational(op=="PLUS"?x.rational.numerator:-x.rational.numerator,x.rational.denominator),x.length,x.time,id));
             else if(x.kind!="Int" && x.kind!="Float") error(id,"E201","unary sign needs a number");
             else if(op=="PLUS") done(v);else done(x.kind=="Int"?integer(-x.integer,id):real(-x.real,id));
         });
@@ -298,6 +383,38 @@ inline void ExecutionContext::statement(NodeId id,Next done) {
         else if(k=="binding") {auto type=annotation(id);eval(n.children[0],[this,id,type,done](Value v) {if(flow.empty()) {typecheck(type,v,ast(id).children[0]);define(id,v,type);}push(done);});}
         else if(k=="assert") eval(n.children[0],[this,id,done](Value v) {typecheck("Bool",v,ast(id).children[0]);if(!object(v).flag) error(id,"E210","assertion failed");push(done);});
         else if(k=="function") {define(id,make_function(id));push(done);}
+        else if(k=="machine") {auto v=make("MachineDefinition",{1,0,0},id);object(v).syntax=id;object(v).name=spelling(n.token);define(id,v);push(done);}
+        else if(k=="shape") {
+            auto v=make("Definition",{1,0,0},id);auto& definition=object(v);definition.syntax=id;definition.name=spelling(n.token);define(id,v);
+            std::vector<Type> types;std::vector<Value> edges;
+            for(auto field:n.children) types.push_back(annotation(field));
+            Lease space(heap.state,{0,static_cast<std::uint64_t>(std::count_if(types.begin(),types.end(),[](const Type& t){return bool(t.nominal);})),0},id);
+            for(std::size_t i=0;i<types.size();++i) {definition.names.push_back(spelling(ast(n.children[i]).token));definition.type_names.push_back(types[i].name);definition.type_nominals.push_back(types[i].nominal?edges.size():no_node);if(types[i].nominal) edges.push_back(types[i].nominal);}
+            for(const auto& edge:edges) definition.edges.push_back(edge.ref());definition.charge.slots+=space.transfer().slots;push(done);
+        }
+        else if(k=="use") {
+            const auto root=program.imports.at(id);const auto it=modules.find(root);
+            if(it!=modules.end()) {define(id,it->second);push(done);}
+            else {
+                std::vector<NodeId> exports;for(auto child:ast(root).children) if(ast(child).kind=="function" || ast(child).kind=="shape" || ast(child).kind=="machine") exports.push_back(child);
+                auto module=make("Module",{1,exports.size(),0},id);modules.emplace(root,module);
+                block(root,[this,id,module,exports,done] {auto& n=object(module);for(auto child:exports) {n.names.push_back(spelling(ast(child).token));const auto& v=globals.at(child).raw;n.edges.push_back(object(v).kind=="Cell"?object(v).edges[0]:v.ref());}define(id,module);push(done);});
+            }
+        }
+        else if(k=="match") eval(n.children[0],[this,id,done](Value target) {
+            auto next=std::make_shared<std::function<void(std::size_t)>>();std::weak_ptr<std::function<void(std::size_t)>> weak=next;
+            *next=[this,id,done,target,weak](std::size_t i) {
+                if(i==ast(id).children.size()) error(id,"E207","no match arm selected");
+                const auto& arm=ast(ast(id).children[i]);const auto p=arm.children[0],body=arm.children[1];const auto& pattern=ast(p);
+                if(pattern.kind=="wildcard") {block(body,done);return;}
+                auto keep=weak.lock();
+                if(pattern.kind=="payload_pattern") {auto& n=object(target);if(n.kind=="Result" && n.flag==(pattern.text=="SUCCESS")) {define(p,heap.pin(n.edges[0]));block(body,[this,p,done] {if(!frame) globals.erase(p);push(done);});}else push([keep,i] {(*keep)(i+1);});}
+                else eval(pattern.children[0],[this,target,p,body,done,keep,i](Value v) {if(object(binary("EQUAL",target,v,p)).flag) block(body,done);else push([keep,i] {(*keep)(i+1);});});
+            };(*next)(1);
+        });
+        else if(k=="trace") eval(n.children[0],[this,id,done](Value value) {
+            const auto child=ast(id).children[0];const auto& n=ast(child);auto rendered=render_frontend(FrontendError("",display(value,id),display_path(n.token.source->path),n.token.source->span(n.start,n.end)),diagnostic_json,"trace");write(errors,rendered,true,id);push(done);
+        });
         else if(k=="return") {
             const auto finish=[this,id,done](Value v) {flow="return";returned=v;return_site=ast(id).children.empty()?id:ast(id).children[0];push(done);};
             if(n.children.empty()) finish(null_);else eval(n.children[0],finish);
@@ -326,7 +443,10 @@ inline void ExecutionContext::statement(NodeId id,Next done) {
                     index(owner,key,target,true);eval(rhs,[this,target,owner,key,done](Value value) {const auto i=index_number(key,object(owner).edges.size(),target);object(owner).edges[i]=value.ref();++object(owner).version;push(done);});
                 });
             });
-            else error(target,"E402","field assignment awaits shape batch");
+            else eval(t.children[0],[this,target,rhs,done](Value owner) {
+                const auto name=ast(target).text;field(owner,name,target,true);auto& instance=object(owner);const auto i=static_cast<std::size_t>(std::find(instance.names.begin(),instance.names.end(),name)-instance.names.begin());
+                const auto type=stored_type(heap.pin(instance.edges[0]),i);eval(rhs,[this,owner,i,type,rhs,done](Value value) {typecheck(type,value,rhs);object(owner).edges[i+1]=value.ref();push(done);});
+            });
         }
         else if(k=="if") {
             auto step=std::make_shared<std::function<void(std::size_t)>>();std::weak_ptr<std::function<void(std::size_t)>> weak=step;
@@ -346,7 +466,7 @@ inline void ExecutionContext::statement(NodeId id,Next done) {
             };push([loop] {(*loop)();});
         }
         else if(k=="for") eval(n.children[0],[this,id,done](Value source) {
-            const auto kind=object(source).kind;if(kind!="Array" && kind!="Range" && kind!="String") error(ast(id).children[0],"E201","for requires Array/Range/String");
+            const auto kind=object(source).kind;if(kind!="Array" && kind!="Range" && kind!="String") error(id,"E201","for requires Array/Range/String");
             struct Iteration {Value source;std::size_t offset=0;BigInt position;std::shared_ptr<HeapState> heap;bool active=false;~Iteration() {if(active && !heap->closed) --heap->get(source.ref()).active;}};
             auto state=std::make_shared<Iteration>();state->source=source;state->heap=heap.state;
             if(kind=="Array") {++object(source).active;state->active=true;}
@@ -366,7 +486,13 @@ inline void ExecutionContext::statement(NodeId id,Next done) {
     });
 }
 inline void ExecutionContext::call(Value fn,std::vector<Value> args,NodeId site,Done done) {
-    const auto& f=object(fn);if(f.kind!="Function") error(site,"E202","value is not callable");
+    const auto& f=object(fn);
+    if(f.kind=="MachineDefinition") {
+        if(args.size()!=1) error(site,"E202","Machine constructor expects one argument");const auto arg=ast(site).children[1];typecheck("String",args[0],arg);
+        if(!program.machines.at(f.syntax).states.count(encode_utf8(object(args[0]).characters))) error(arg,"E212","unknown initial state");
+        done(make("Machine",{1,2,0},site,{fn,args[0]}));return;
+    }
+    if(f.kind!="Function") error(site,"E202","value is not callable");
     if(f.syntax!=no_node) {
         const auto id=f.syntax;const auto& node=ast(id);const auto count=node.children.size()-1;
         if(args.size()!=count) error(site,"E202","wrong argument count: "+f.name);
@@ -376,20 +502,33 @@ inline void ExecutionContext::call(Value fn,std::vector<Value> args,NodeId site,
         const auto& plan=program.functions.at(id);next->space=Lease(heap.state,{0,plan.locals.size()+1,0},site);
         next->locals.resize(plan.locals.size());next->types.resize(plan.locals.size());auto previous=frame;frame=next;
         for(std::size_t i=0;i<count;++i) define(node.children[i],args[i],stored_type(fn,i));
-        const auto finish=[this,fn,id,previous,next,done](Value v) {
+        const auto previous_item=current;
+        const auto finish=[this,fn,id,previous,next,done,previous_item](Value v) {
             const auto site=flow=="return"?return_site:ast(id).kind=="lambda"?ast(id).children.back():id;
             if(flow=="return") v=returned;
-            typecheck(stored_type(fn,ast(id).children.size()-1),v,site);
-            flow.clear();returned={};return_site=no_node;next->locals.clear();next->types.clear();next->space.release();frame=previous;calls.pop_back();push([done,v] {done(v);});
+            typecheck(stored_type(fn,ast(id).children.size()-1),v,site,flow=="return" || ast(id).kind=="lambda");
+            flow.clear();returned={};return_site=no_node;current=previous_item;next->locals.clear();next->types.clear();next->space.release();frame=previous;calls.pop_back();push([done,v] {done(v);});
         };
-        if(node.kind=="lambda") eval(node.children.back(),finish);else block(node.children.back(),[this,finish] {finish(null_);});return;
+        if(node.kind=="lambda") eval(node.children.back(),finish);
+        else {push([this,finish] {finish(null_);});next->boundary=tasks.size();block(node.children.back(),[] {});}return;
     }
     const auto& name=f.name;
     const std::map<std::string,std::size_t> arities={{"io.print",1},{"len",1},{"str",1},{"range",3},
         {"array.push",2},{"array.pop",1},{"array.copy",1},{"data.map",0},{"data.set",3},{"data.get",2},{"data.has",2},{"data.keys",1},{"data.kind",1},
-        {"math.abs",1},{"text.contains",2},{"text.trim",1}};
+        {"math.abs",1},{"text.contains",2},{"text.trim",1},{"wake",1},{"unit.make",2},{"unit.format",2}};
     const auto signature=arities.find(name);if(signature==arities.end()) error(site,"E402","native host capability not implemented: "+name);
     if(args.size()!=signature->second) error(site,"E202","wrong argument count: "+name);
+    if(name=="wake") {typecheck("Lazy",args[0],ast(site).children[1]);wake(args[0],site,done);return;}
+    if(name=="unit.make" || name=="unit.format") {
+        typecheck("String",args[1],ast(site).children[2]);const auto unit=encode_utf8(object(args[1]).characters);
+        const std::map<std::string,std::tuple<int,int,int,int>> units={{"one",{1,1,0,0}},{"m",{1,1,1,0}},{"mm",{1,1000,1,0}},{"cm",{1,100,1,0}},{"km",{1000,1,1,0}},{"s",{1,1,0,1}},{"ms",{1,1000,0,1}},{"min",{60,1,0,1}},{"h",{3600,1,0,1}}};
+        const auto& n=object(args[0]);if(name=="unit.make" && n.kind!="Int" && n.kind!="Float") error(ast(site).children[1],"E201","unit.make requires Int/Float");
+        if(name=="unit.format") typecheck("Quantity",args[0],ast(site).children[1]);
+        const auto it=units.find(unit);if(it==units.end()) {RuntimeError e("E306","unknown unit",ast(site).children[2]);e.expression_span=true;throw e;}const auto [num,den,l,t]=it->second;
+        const auto multiplier=quantity(Rational(BigInt(num),BigInt(den)),l,t,site);
+        if(name=="unit.make") done(quantity_binary("MULTIPLY",args[0],multiplier,site));
+        else {if(n.length!=l || n.time!=t) error(site,"E213","incompatible dimensions");const auto q=quantity_binary("DIVIDE",args[0],multiplier,site);const auto text=display(q,site);done(string(text.substr(0,text.find("::"))+"::"+unit,site));}return;
+    }
     if(name=="array.push" || name=="array.pop" || name=="array.copy") {
         typecheck("Array",args[0],ast(site).children[1]);auto& n=object(args[0]);
         if(name=="array.push") {append(args[0],args[1],site);done(null_);}
@@ -422,7 +561,7 @@ inline void ExecutionContext::call(Value fn,std::vector<Value> args,NodeId site,
     } else if(name=="range") done(range(args,site));
     else if(name=="str") {
         const auto& kind=object(args[0]).kind;
-        if(kind!="Int" && kind!="Float" && kind!="String" && kind!="Bool" && kind!="Null") error(site,"E201","str requires a scalar");
+        if(kind!="Int" && kind!="Float" && kind!="String" && kind!="Bool" && kind!="Null" && kind!="Quantity") error(site,"E201","str requires a scalar");
         done(kind=="String"?args[0]:string(display(args[0],site),site));
     } else {
         const auto& n=object(args[0]);BigInt size;
@@ -445,5 +584,98 @@ inline std::string runtime_diagnostic(const ProgramData& program,const RuntimeEr
         notes+=']';if(at!=std::string::npos && record.size()+notes.size()-2<=4096) record.replace(at,2,notes);
     } else for(const auto& note:error.notes) if(record.size()+note.size()+8<=4096) record+="  note: "+one_line(note)+"\n";
     return record;
+}
+inline void ExecutionContext::wake(Value value,NodeId site,Done done) {
+    auto& lazy=object(value);
+    if(lazy.state=="READY") {done(heap.pin(lazy.edges.back()));return;}
+    if(lazy.state=="FAILED") {
+        auto e=*lazy.failure;const auto& n=ast(site);const auto p=n.token.source->position(n.token.start);
+        e.notes.push_back("wake："+display_path(n.token.source->path)+":"+std::to_string(p.line)+":"+std::to_string(p.column));throw e;
+    }
+    if(lazy.state=="RUNNING") error(site,"E209","cyclic Lazy wake");
+    check("call_depth",calls.size()+1,site);
+    const auto& plan=program.functions.at(lazy.syntax);
+    auto next=std::make_shared<Frame>();next->function=value;next->lazy=true;next->call=site;next->space=Lease(heap.state,{0,plan.locals.size()+1,0},site);
+    next->locals.resize(plan.locals.size());next->types.resize(plan.locals.size());lazy.edges.reserve(lazy.edges.size()+1);
+    auto previous=frame;calls.push_back(next);frame=next;lazy.state="RUNNING";
+    eval(ast(lazy.syntax).children[0],[this,next,previous,value,done](Value result) {
+        auto& lazy=object(value);lazy.edges.push_back(result.ref());lazy.state="READY";next->space.release();frame=previous;calls.pop_back();push([done,result] {done(result);});
+    });
+}
+inline void ExecutionContext::construct(NodeId id,Value base,Done done) {
+    const auto& n=ast(id);const bool copy=n.kind=="with";const auto& b=object(base);
+    if(copy?b.kind!="Shape":b.kind!="Definition") error(id,"E201",copy?"with requires a shape instance":"construction requires a shape definition");
+    const auto definition=copy?heap.pin(b.edges[0]):base;const auto& def=object(definition);const auto& fields=ast(def.syntax).children;
+    std::vector<std::pair<std::size_t,NodeId>> updates;std::vector<bool> supplied(fields.size());
+    for(std::size_t i=1;i<n.children.size();++i) {
+        const auto& init=ast(n.children[i]);const auto match=std::find(def.names.begin(),def.names.end(),init.text);
+        if(match==def.names.end()) error(n.children[i],"E203","unknown initializer field: "+init.text);
+        const auto index=static_cast<std::size_t>(match-def.names.begin());
+        if(supplied[index]) error(n.children[i],"E203","duplicate initializer field: "+init.text);
+        supplied[index]=true;updates.emplace_back(index,init.children[0]);
+    }
+    if(!copy) for(std::size_t i=0;i<fields.size();++i) if(!supplied[i]) {if(ast(fields[i]).children.empty()) error(id,"E203","missing required field: "+def.names[i]);updates.emplace_back(i,ast(fields[i]).children[0]);}
+    check("container_items",fields.size(),id);
+    std::vector<Value> edges{definition};for(std::size_t i=0;i<fields.size();++i) edges.push_back(copy?heap.pin(b.edges[i+1]):null_);
+    auto instance=make("Shape",{1,edges.size(),0},id,edges);object(instance).names=def.names;
+    auto step=std::make_shared<std::function<void(std::size_t)>>();std::weak_ptr<std::function<void(std::size_t)>> weak=step;
+    *step=[this,instance,definition,done,updates=std::move(updates),weak](std::size_t i) {
+        if(i==updates.size()) {done(instance);return;}
+        const auto [index,expr]=updates[i];auto keep=weak.lock();
+        eval(expr,[this,instance,definition,index,expr,keep,i](Value v) {typecheck(stored_type(definition,index),v,expr);object(instance).edges[index+1]=v.ref();push([keep,i] {(*keep)(i+1);});});
+    };(*step)(0);
+}
+inline void ExecutionContext::query(NodeId id,Value source,Done done) {
+    const auto& n=ast(id);typecheck("Array",source,n.children[0]);const auto count=object(source).edges.size();
+    struct Query {
+        std::vector<Value> snapshot;std::vector<std::size_t> selected;std::vector<std::pair<std::size_t,Value>> keys;
+        Lease snapshot_space,selected_space,key_space;std::size_t take=0;Value previous,result;
+        NodeId keep=no_node,order=no_node,take_expr=no_node,yield=no_node;bool descending=false;
+        std::string category;int length=0,time=0;
+    };
+    auto q=std::make_shared<Query>();q->previous=current;q->take=count;
+    q->snapshot_space=Lease(heap.state,{0,count,0},id);for(auto edge:object(source).edges) q->snapshot.push_back(heap.pin(edge));
+    for(std::size_t i=1;i<n.children.size();++i) {const auto& clause=ast(n.children[i]);const auto expr=clause.children[0];
+        if(clause.kind=="keep") q->keep=expr;else if(clause.kind=="order") {q->order=expr;q->descending=clause.text=="DESC";}else if(clause.kind=="take") q->take_expr=expr;else if(clause.kind=="yield") q->yield=expr;
+    }
+    enum class Phase {Keep,Keys,Yield};using Step=std::function<void(Phase,std::size_t)>;
+    auto step=std::make_shared<Step>();std::weak_ptr<Step> weak=step;
+    *step=[this,q,id,done,weak](Phase phase,std::size_t i) {
+        auto keep=weak.lock();
+        const auto proceed=[this,keep](Phase next,std::size_t at) {push([keep,next,at] {(*keep)(next,at);});};
+        if(phase==Phase::Keep) {
+            if(i==q->snapshot.size()) {
+                if(q->order!=no_node) {q->key_space=Lease(heap.state,{0,3*q->selected.size(),0},id);proceed(Phase::Keys,0);}
+                else {q->result=array({},id);proceed(Phase::Yield,0);}return;
+            }
+            current=q->snapshot[i];
+            if(q->keep==no_node) {q->selected.push_back(i);proceed(Phase::Keep,i+1);}
+            else {begin_query_item(i);eval(q->keep,[this,q,i,proceed](Value value) {end_query_item();typecheck("Bool",value,q->keep);if(object(value).flag) q->selected.push_back(i);proceed(Phase::Keep,i+1);});}
+        } else if(phase==Phase::Keys) {
+            if(i==q->selected.size()) {
+                std::stable_sort(q->keys.begin(),q->keys.end(),[this,q](const auto& a,const auto& b) {point();if(q->category=="Quantity") return object(quantity_binary(q->descending?"GREATER":"LESS",a.second,b.second,q->order)).flag;const int c=compare(a.second,b.second,q->order);return q->descending?c>0:c<0;});
+                for(std::size_t k=0;k<q->keys.size();++k) q->selected[k]=q->keys[k].first;
+                q->keys.clear();q->key_space.release();q->result=array({},id);proceed(Phase::Yield,0);return;
+            }
+            const auto index=q->selected[i];current=q->snapshot[index];begin_query_item(index);
+            eval(q->order,[this,q,index,i,proceed](Value value) {
+                end_query_item();const auto& n=object(value);const auto category=n.kind=="Int" || n.kind=="Float"?"number":n.kind;
+                if((category!="number" && category!="String" && category!="Quantity") || (!q->category.empty() && q->category!=category)) error(q->order,"E201","incompatible query order keys");
+                if(category=="Quantity" && !q->category.empty() && (q->length!=n.length || q->time!=n.time)) error(q->order,"E213","incompatible query key dimensions");
+                q->category=category;q->length=n.length;q->time=n.time;q->keys.emplace_back(index,value);proceed(Phase::Keys,i+1);
+            });
+        } else {
+            if(i==q->selected.size() || i==q->take) {current=q->previous;done(q->result);return;}
+            const auto index=q->selected[i];current=q->snapshot[index];begin_query_item(index);
+            eval(q->yield,[this,q,i,proceed](Value value) {end_query_item();append(q->result,value,q->yield);proceed(Phase::Yield,i+1);});
+        }
+    };
+    const auto start=[this,q,step,count,id] {q->selected_space=Lease(heap.state,{0,count,0},id);push([step] {(*step)(Phase::Keep,0);});};
+    if(q->take_expr==no_node) start();
+    else eval(q->take_expr,[this,q,count,start](Value value) {
+        typecheck("Int",value,q->take_expr);const auto& amount=object(value).integer;
+        if(amount.sign()<0) error(q->take_expr,"E208","take cannot be negative");
+        if(amount<BigInt(static_cast<std::int64_t>(count))) q->take=static_cast<std::size_t>(std::stoull(amount.decimal()));start();
+    });
 }
 }
