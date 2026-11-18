@@ -126,6 +126,142 @@
       "exit_code": 0,
       "stdout": "ok\n",
       "code": null
+    },
+    {
+      "id": "loops",
+      "file": "loops.zzy",
+      "exit_code": 0,
+      "stdout": "13\n20\n",
+      "code": null
+    },
+    {
+      "id": "factorial",
+      "file": "factorial.zzy",
+      "exit_code": 0,
+      "stdout": "15511210043330985984000000\n",
+      "code": null
+    },
+    {
+      "id": "arg-order",
+      "file": "arg-order.zzy",
+      "exit_code": 1,
+      "stdout": "2\n",
+      "code": "E201"
+    },
+    {
+      "id": "return-type",
+      "file": "return-type.zzy",
+      "exit_code": 1,
+      "stdout": "",
+      "code": "E201"
+    },
+    {
+      "id": "assignment-order",
+      "file": "assignment-order.zzy",
+      "exit_code": 1,
+      "stdout": "",
+      "code": "E203"
+    },
+    {
+      "id": "active-replace",
+      "file": "active-replace.zzy",
+      "exit_code": 0,
+      "stdout": "1\n9\n3\n[1, 9, 3]\n",
+      "code": null
+    },
+    {
+      "id": "active-push",
+      "file": "active-push.zzy",
+      "exit_code": 1,
+      "stdout": "",
+      "code": "E206"
+    },
+    {
+      "id": "active-pop",
+      "file": "active-pop.zzy",
+      "exit_code": 1,
+      "stdout": "",
+      "code": "E206"
+    },
+    {
+      "id": "released-iterator",
+      "file": "released-iterator.zzy",
+      "exit_code": 0,
+      "stdout": "[1, 2]\n",
+      "code": null
+    },
+    {
+      "id": "index-recheck",
+      "file": "index-recheck.zzy",
+      "exit_code": 1,
+      "stdout": "",
+      "code": "E204"
+    },
+    {
+      "id": "closure-cell",
+      "file": "closure-cell.zzy",
+      "exit_code": 0,
+      "stdout": "1\n2\n",
+      "code": null
+    },
+    {
+      "id": "iteration-captures",
+      "file": "iteration-captures.zzy",
+      "exit_code": 0,
+      "stdout": "0\n1\n2\n",
+      "code": null
+    },
+    {
+      "id": "capture-annotation",
+      "file": "capture-annotation.zzy",
+      "exit_code": 1,
+      "stdout": "",
+      "code": "E201"
+    },
+    {
+      "id": "range-negative",
+      "file": "range-negative.zzy",
+      "exit_code": 0,
+      "stdout": "4\n2\n0\n",
+      "code": null
+    },
+    {
+      "id": "codepoint-loop",
+      "file": "codepoint-loop.zzy",
+      "exit_code": 0,
+      "stdout": "中\n😀\n",
+      "code": null
+    },
+    {
+      "id": "map-order",
+      "file": "map-order.zzy",
+      "exit_code": 0,
+      "stdout": "[a, b]\n3\n2\n",
+      "code": null
+    },
+    {
+      "id": "function-recursion-limit",
+      "file": "function-recursion-limit.zzy",
+      "exit_code": 1,
+      "stdout": "",
+      "code": "E211"
+    },
+    {
+      "id": "lambda",
+      "file": "lambda.zzy",
+      "exit_code": 0,
+      "stdout": "42\n",
+      "code": null
+    },
+    {
+      "id": "explicit-stack",
+      "file": "explicit-stack.zzy",
+      "exit_code": 0,
+      "stdout": "1500\n",
+      "code": null,
+      "limits": {
+        "call_depth": 1600
+      }
     }
   ]
 }

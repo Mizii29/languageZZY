@@ -1,0 +1,1 @@
+(zno) a:=[1,2];(zno) b:=a;(for) x (in) a {array.push(b,3);}

@@ -1,5 +1,6 @@
 #pragma once
 #include "runtime_heap.hpp"
+#include "host_metadata.hpp"
 #include <deque>
 #include <iomanip>
 #include <sstream>
@@ -62,7 +63,10 @@ private:
     }
     void define(NodeId id,Value value,Type type={}) {
         const auto& info=program.symbols.at(id);
-        if(info.cell) {auto cell=make("Cell",{0,1,0},id,{value});value=std::move(cell);}
+        if(info.cell) {
+            std::vector<Value> edges{value};if(type.nominal) edges.push_back(type.nominal);
+            auto cell=make("Cell",{0,edges.size(),0},id,edges);object(cell).type_names={type.name};object(cell).type_nominals={type.nominal?1U:no_node};value=std::move(cell);
+        }
         if(info.owner==no_node) {Binding b{std::move(value),std::move(type),Lease(heap.state,{0,1,0},id)};globals.insert_or_assign(id,std::move(b));}
         else {if(!frame) throw std::logic_error("missing local frame");frame->locals.at(info.slot)=std::move(value);frame->types.at(info.slot)=std::move(type);}
     }
@@ -93,7 +97,11 @@ private:
     }
     Value field(const Value& owner,const std::string& name,NodeId site,bool write=false) {
         auto& n=object(owner);
-        if(n.kind=="Namespace") {if(write) error(site,"E203","namespace is read only");return builtin(n.name+"."+name,site);}
+        if(n.kind=="Namespace") {
+            if(write) error(site,"E203","namespace is read only");const auto qualified=n.name+"."+name;bool known=false;
+            for(const auto& h:static_hosts) if(h.name==qualified) {known=true;break;}
+            if(!known) error(site,"E302","unknown namespace member: "+name);return builtin(qualified,site);
+        }
         if(n.kind=="Machine") {if(name!="state") error(site,"E204","unknown Machine field");if(write) error(site,"E203","Machine state is read only");return heap.pin(n.edges.at(1));}
         if(n.kind!="Shape" && n.kind!="Module") error(site,"E201","field access needs a shape/module");
         if(write && n.kind=="Module") error(site,"E203","module is read only");
@@ -236,6 +244,7 @@ inline void ExecutionContext::eval(NodeId id,Done done) {
         else if(k=="name") done(read(program.references.at(id),id));
         else if(k=="current") {if(!current) throw std::logic_error("current item not installed");done(current);}
         else if(k=="group") eval(n.children[0],std::move(done));
+        else if(k=="lambda") done(make_function(id));
         else if(k=="field") eval(n.children[0],[this,id,done=std::move(done)](Value v) {done(field(v,ast(id).text,id));});
         else if(k=="index") eval(n.children[0],[this,id,done=std::move(done)](Value owner) {eval(ast(id).children[1],[this,id,owner,done](Value key) {done(index(owner,key,id));});});
         else if(k=="array") {
@@ -288,17 +297,125 @@ inline void ExecutionContext::statement(NodeId id,Next done) {
         else if(k=="block" || k=="program") block(id,done);
         else if(k=="binding") {auto type=annotation(id);eval(n.children[0],[this,id,type,done](Value v) {if(flow.empty()) {typecheck(type,v,ast(id).children[0]);define(id,v,type);}push(done);});}
         else if(k=="assert") eval(n.children[0],[this,id,done](Value v) {typecheck("Bool",v,ast(id).children[0]);if(!object(v).flag) error(id,"E210","assertion failed");push(done);});
+        else if(k=="function") {define(id,make_function(id));push(done);}
+        else if(k=="return") {
+            const auto finish=[this,id,done](Value v) {flow="return";returned=v;return_site=ast(id).children.empty()?id:ast(id).children[0];push(done);};
+            if(n.children.empty()) finish(null_);else eval(n.children[0],finish);
+        }
+        else if(k=="break" || k=="continue") {flow=k;push(done);}
+        else if(k=="assignment") {
+            const auto target=n.children[0],rhs=n.children[1];const auto& t=ast(target);
+            if(t.kind=="name") {
+                const auto ref=program.references.at(target);const auto info=program.symbols.find(ref.symbol);
+                if(info==program.symbols.end() || !info->second.mutable_binding) error(target,"E203","binding is immutable");
+                auto cell=raw(ref,target);Type type;
+                if(ref.kind=="global") type=globals.at(ref.symbol).type;
+                else if(ref.kind=="local") type=frame->types.at(ref.key);
+                // Captured mutable annotations are held by the Cell itself.
+                if(object(cell).kind=="Cell" && !object(cell).type_names.empty()) type=stored_type(cell,0);
+                const auto active_frame=frame;
+                eval(rhs,[this,ref,cell,type,rhs,done,active_frame](Value value) {
+                    typecheck(type,value,rhs);
+                    if(object(cell).kind=="Cell") object(cell).edges[0]=value.ref();
+                    else if(ref.kind=="global") globals.at(ref.symbol).raw=value;
+                    else active_frame->locals.at(ref.key)=value;
+                    push(done);
+                });
+            } else if(t.kind=="index") eval(t.children[0],[this,target,rhs,done](Value owner) {
+                eval(ast(target).children[1],[this,target,rhs,owner,done](Value key) {
+                    index(owner,key,target,true);eval(rhs,[this,target,owner,key,done](Value value) {const auto i=index_number(key,object(owner).edges.size(),target);object(owner).edges[i]=value.ref();++object(owner).version;push(done);});
+                });
+            });
+            else error(target,"E402","field assignment awaits shape batch");
+        }
+        else if(k=="if") {
+            auto step=std::make_shared<std::function<void(std::size_t)>>();std::weak_ptr<std::function<void(std::size_t)>> weak=step;
+            *step=[this,id,done,weak](std::size_t i) {
+                if(i>=ast(id).children.size()) {push(done);return;}
+                const auto child=ast(id).children[i];if(ast(child).kind=="block") {block(child,done);return;}
+                auto keep=weak.lock();eval(child,[this,id,i,child,done,keep](Value v) {typecheck("Bool",v,child);if(object(v).flag) block(ast(id).children[i+1],done);else push([keep,i] {(*keep)(i+2);});});
+            };(*step)(0);
+        }
+        else if(k=="while") {
+            auto loop=std::make_shared<Next>();std::weak_ptr<Next> weak=loop;
+            *loop=[this,id,done,weak] {
+                auto keep=weak.lock();eval(ast(id).children[0],[this,id,done,keep](Value v) {
+                    typecheck("Bool",v,ast(id).children[0]);if(!object(v).flag) {push(done);return;}
+                    block(ast(id).children[1],[this,keep,done] {if(flow=="break") {flow.clear();push(done);}else if(flow=="return") push(done);else {flow.clear();push([keep] {(*keep)();});}});
+                });
+            };push([loop] {(*loop)();});
+        }
+        else if(k=="for") eval(n.children[0],[this,id,done](Value source) {
+            const auto kind=object(source).kind;if(kind!="Array" && kind!="Range" && kind!="String") error(ast(id).children[0],"E201","for requires Array/Range/String");
+            struct Iteration {Value source;std::size_t offset=0;BigInt position;std::shared_ptr<HeapState> heap;bool active=false;~Iteration() {if(active && !heap->closed) --heap->get(source.ref()).active;}};
+            auto state=std::make_shared<Iteration>();state->source=source;state->heap=heap.state;
+            if(kind=="Array") {++object(source).active;state->active=true;}
+            if(kind=="Range") state->position=object(heap.pin(object(source).edges[0])).integer;
+            auto loop=std::make_shared<Next>();std::weak_ptr<Next> weak=loop;
+            *loop=[this,id,done,state,kind,weak] {
+                point();const auto& src=object(state->source);Value value;bool finished=false;
+                if(kind=="Array") {finished=state->offset==src.edges.size();if(!finished) value=heap.pin(src.edges[state->offset++]);}
+                else if(kind=="String") {finished=state->offset==src.characters.size();if(!finished) value=string(std::u32string(1,src.characters[state->offset++]),id);}
+                else {const auto& stop=object(heap.pin(src.edges[1])).integer;const auto& step=object(heap.pin(src.edges[2])).integer;finished=step.sign()>0?state->position>=stop:state->position<=stop;if(!finished) {value=integer(state->position,id);state->position=state->position+step;}}
+                if(finished) {if(!frame) globals.erase(id);push(done);return;}
+                define(id,value);auto keep=weak.lock();block(ast(id).children[1],[this,id,keep,done] {if(flow=="break") {flow.clear();if(!frame) globals.erase(id);push(done);}else if(flow=="return") {if(!frame) globals.erase(id);push(done);}else {flow.clear();push([keep] {(*keep)();});}});
+            };push([loop] {(*loop)();});
+        });
         else if(k=="expression") eval(n.children[0],[this,done](Value) {push(done);});
         else error(id,"E402","native statement not yet implemented: "+k);
     });
 }
 inline void ExecutionContext::call(Value fn,std::vector<Value> args,NodeId site,Done done) {
     const auto& f=object(fn);if(f.kind!="Function") error(site,"E202","value is not callable");
-    if(f.syntax!=no_node) error(site,"E402","user calls are not available in this execution batch");
+    if(f.syntax!=no_node) {
+        const auto id=f.syntax;const auto& node=ast(id);const auto count=node.children.size()-1;
+        if(args.size()!=count) error(site,"E202","wrong argument count: "+f.name);
+        check("call_depth",calls.size()+1,site);
+        auto next=std::make_shared<Frame>();next->function=fn;next->call=site;calls.push_back(next);
+        for(std::size_t i=0;i<count;++i) typecheck(stored_type(fn,i),args[i],ast(site).children[i+1]);
+        const auto& plan=program.functions.at(id);next->space=Lease(heap.state,{0,plan.locals.size()+1,0},site);
+        next->locals.resize(plan.locals.size());next->types.resize(plan.locals.size());auto previous=frame;frame=next;
+        for(std::size_t i=0;i<count;++i) define(node.children[i],args[i],stored_type(fn,i));
+        const auto finish=[this,fn,id,previous,next,done](Value v) {
+            const auto site=flow=="return"?return_site:ast(id).kind=="lambda"?ast(id).children.back():id;
+            if(flow=="return") v=returned;
+            typecheck(stored_type(fn,ast(id).children.size()-1),v,site);
+            flow.clear();returned={};return_site=no_node;next->locals.clear();next->types.clear();next->space.release();frame=previous;calls.pop_back();push([done,v] {done(v);});
+        };
+        if(node.kind=="lambda") eval(node.children.back(),finish);else block(node.children.back(),[this,finish] {finish(null_);});return;
+    }
     const auto& name=f.name;
-    const std::map<std::string,std::size_t> arities={{"io.print",1},{"len",1},{"str",1},{"range",3}};
+    const std::map<std::string,std::size_t> arities={{"io.print",1},{"len",1},{"str",1},{"range",3},
+        {"array.push",2},{"array.pop",1},{"array.copy",1},{"data.map",0},{"data.set",3},{"data.get",2},{"data.has",2},{"data.keys",1},{"data.kind",1},
+        {"math.abs",1},{"text.contains",2},{"text.trim",1}};
     const auto signature=arities.find(name);if(signature==arities.end()) error(site,"E402","native host capability not implemented: "+name);
     if(args.size()!=signature->second) error(site,"E202","wrong argument count: "+name);
+    if(name=="array.push" || name=="array.pop" || name=="array.copy") {
+        typecheck("Array",args[0],ast(site).children[1]);auto& n=object(args[0]);
+        if(name=="array.push") {append(args[0],args[1],site);done(null_);}
+        else if(name=="array.copy") {std::vector<Value> copy;for(auto h:n.edges) copy.push_back(heap.pin(h));done(array(copy,site));}
+        else {if(n.active) error(site,"E206","cannot resize an actively traversed Array");if(n.edges.empty()) error(site,"E204","empty Array");auto v=heap.pin(n.edges.back());n.edges.pop_back();--n.charge.slots;heap.state->refund({0,1,0});++n.version;done(v);}return;
+    }
+    if(name=="data.map") {done(make("Map",{1,0,0},site));return;}
+    if(name=="data.kind") {auto kind=object(args[0]).kind;const std::map<std::string,std::string> names={{"Int","int"},{"Float","float"},{"String","string"},{"Bool","bool"},{"Null","null"},{"Array","array"},{"Map","map"}};done(string(names.count(kind)?names.at(kind):"other",site));return;}
+    if(name=="data.set" || name=="data.get" || name=="data.has" || name=="data.keys") {
+        typecheck("Map",args[0],ast(site).children[1]);auto& n=object(args[0]);
+        if(name=="data.keys") {std::vector<Value> keys;for(std::size_t i=0;i<n.names.size();++i) keys.push_back(heap.pin(n.edges[2*i]));done(array(keys,site));return;}
+        typecheck("String",args[1],ast(site).children[2]);const auto key=encode_utf8(object(args[1]).characters);const auto it=std::find(n.names.begin(),n.names.end(),key);const auto index=static_cast<std::size_t>(it-n.names.begin());
+        if(name=="data.has") done(boolean(it!=n.names.end()));
+        else if(name=="data.get") {if(it==n.names.end()) error(site,"E204","missing Map key");done(heap.pin(n.edges[2*index+1]));}
+        else {if(it!=n.names.end()) n.edges[2*index+1]=args[2].ref();else {
+            check("container_items",n.names.size()+1,site);Lease space(heap.state,{0,2,0},site);
+            // Reserve all host vector capacity before changing either vector.
+            n.names.reserve(n.names.size()+1);n.edges.reserve(n.edges.size()+2);n.names.push_back(key);n.edges.push_back(args[1].ref());n.edges.push_back(args[2].ref());n.charge.slots+=space.transfer().slots;
+        }done(null_);}return;
+    }
+    if(name=="math.abs") {auto& n=object(args[0]);if(n.kind=="Int") done(integer(n.integer.abs(),site));else if(n.kind=="Float") done(real(std::abs(n.real),site));else error(ast(site).children[1],"E201","abs requires Int/Float");return;}
+    if(name=="text.contains" || name=="text.trim") {
+        typecheck("String",args[0],ast(site).children[1]);const auto& t=object(args[0]).characters;
+        if(name=="text.contains") {typecheck("String",args[1],ast(site).children[2]);done(boolean(t.find(object(args[1]).characters)!=std::u32string::npos));}
+        else {const auto space=[](char32_t c) {return (c>=9 && c<=13) || (c>=28 && c<=32) || c==133 || c==160 || c==5760 || (c>=8192 && c<=8202) || c==8232 || c==8233 || c==8239 || c==8287 || c==12288;};std::size_t a=0,b=t.size();while(a<b && space(t[a])) ++a;while(b>a && space(t[b-1])) --b;done(string(t.substr(a,b-a),site));}return;
+    }
     if(name=="io.print") {
         auto text=display(args[0],site);const auto count=decode_utf8(text).text.size();check("text_codepoints",count,site);
         Lease formatting(heap.state,{0,0,4*(count+1)},site);write(output,text+"\n",false,site);done(null_);
@@ -310,7 +427,7 @@ inline void ExecutionContext::call(Value fn,std::vector<Value> args,NodeId site,
     } else {
         const auto& n=object(args[0]);BigInt size;
         if(n.kind=="String") size=BigInt(static_cast<std::int64_t>(n.characters.size()));
-        else if(n.kind=="Array" || n.kind=="Map") size=BigInt(static_cast<std::int64_t>(n.edges.size()));
+        else if(n.kind=="Array" || n.kind=="Map") size=BigInt(static_cast<std::int64_t>(n.kind=="Map"?n.names.size():n.edges.size()));
         else if(n.kind=="Range") {
             const auto& start=object(heap.pin(n.edges[0])).integer;const auto& stop=object(heap.pin(n.edges[1])).integer;const auto& step=object(heap.pin(n.edges[2])).integer;
             size=(stop-start+step-BigInt(step.sign()>0?1:-1))/step;if(size.sign()<0) size=BigInt();

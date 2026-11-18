@@ -1,0 +1,1 @@
+(zno) a:=[1,2,3];(zno) b:=a;(for) x (in) a {io.print(x);b[1]<-9;}io.print(a);

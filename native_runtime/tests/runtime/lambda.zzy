@@ -1,0 +1,1 @@
+(zno) f:=(addnew)(x:(Int))=>x+1;io.print(f(41));

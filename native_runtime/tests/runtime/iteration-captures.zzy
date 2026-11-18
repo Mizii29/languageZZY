@@ -1,0 +1,1 @@
+(zno) fs:=[];(for) n (in) 0..<3 {array.push(fs,(addnew)()=>n);}io.print(fs[0]());io.print(fs[1]());io.print(fs[2]());

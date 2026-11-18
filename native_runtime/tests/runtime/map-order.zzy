@@ -1,0 +1,1 @@
+(zno) m:=data.map();data.set(m,"a",1);data.set(m,"b",2);data.set(m,"a",3);io.print(data.keys(m));io.print(data.get(m,"a"));io.print(len(m));

@@ -1,0 +1,1 @@
+(addnew) f(a:(Int),b:(Int))->(Null){}(addnew) mark(x:(Int))->(Int){io.print(x);(return) x;}f((true),mark(2));

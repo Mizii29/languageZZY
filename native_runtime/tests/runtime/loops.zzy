@@ -1,0 +1,1 @@
+(zyes) total:=0;(for) i (in) 0..<8 {(zif?:) i==2 {(continue);}(zif?:) i==6 {(break);}total<-total+i;}io.print(total);(while) total<20 {total<-total+1;}io.print(total);
