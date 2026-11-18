@@ -1,10 +1,33 @@
 ﻿param(
     [Parameter(Mandatory=$true)][string]$BuildDirectory,
-    [Parameter(Mandatory=$true)][string]$Output
+    [Parameter(Mandatory=$true)][string]$Output,
+    [ValidateSet('DirectGCC','CMakeMSVC')][string]$BuildOrigin='DirectGCC',
+    [ValidateSet('Debug','Release')][string]$Configuration='Debug',
+    [string]$CMakeBuildDirectory,
+    [string]$Dumpbin,
+    [string]$InstalledExecutable
 )
 $ErrorActionPreference='Stop'
 $repoRoot=Split-Path -Parent (Split-Path -Parent $PSScriptRoot)
 $build=(Resolve-Path -LiteralPath $BuildDirectory).Path
+$provenance=[ordered]@{origin=$BuildOrigin;configuration=$Configuration;build_directory=$build}
+if($BuildOrigin -eq 'CMakeMSVC') {
+    if(-not $CMakeBuildDirectory -or -not $Dumpbin) {throw 'CMakeMSVC requires CMakeBuildDirectory and the reviewed VS dumpbin path'}
+    $cache=(Resolve-Path -LiteralPath (Join-Path $CMakeBuildDirectory 'CMakeCache.txt')).Path
+    $cacheText=[IO.File]::ReadAllText($cache)
+    if($cacheText -notmatch '(?m)^BUILD_TESTING:BOOL=ON\r?$' -or $cacheText -notmatch '(?m)^CMAKE_GENERATOR:INTERNAL=Visual Studio 17 2022\r?$') {throw 'CMake cache must enable tests and use VS2022'}
+    if($build -ne (Join-Path (Split-Path -Parent $cache) $Configuration)) {throw 'BuildDirectory must be the selected CMake configuration'}
+    $Dumpbin=(Resolve-Path -LiteralPath $Dumpbin).Path
+    $provenance.cache=$cache;$provenance.cache_sha256=(Get-FileHash -LiteralPath $cache).Hash.ToLowerInvariant()
+    $provenance.dumpbin=$Dumpbin;$provenance.dumpbin_version=(Get-Item -LiteralPath $Dumpbin).VersionInfo.FileVersion
+}
+if($InstalledExecutable) {
+    if($BuildOrigin -ne 'CMakeMSVC' -or $Configuration -ne 'Release') {throw 'Only CMake MSVC Release can be the installed package'}
+    $InstalledExecutable=(Resolve-Path -LiteralPath $InstalledExecutable).Path
+    if($InstalledExecutable.StartsWith($repoRoot,[StringComparison]::OrdinalIgnoreCase)) {throw 'Published executable must be outside the source repository'}
+    if((Get-FileHash -LiteralPath $InstalledExecutable).Hash -ne (Get-FileHash -LiteralPath (Join-Path $build 'zzy-native.exe')).Hash) {throw 'Published executable differs from the tested Release build'}
+    $provenance.published_executable=$InstalledExecutable
+}
 $out=[IO.Path]::GetFullPath((Join-Path $repoRoot $Output))
 if(Test-Path -LiteralPath $out) {throw 'Choose a new evidence directory; existing evidence is preserved.'}
 New-Item -ItemType Directory -Path $out | Out-Null
@@ -15,11 +38,12 @@ if([IO.Path]::GetFullPath($stage).StartsWith($repoRoot,[StringComparison]::Ordin
 New-Item -ItemType Directory -Path $stage -Force | Out-Null
 $names=@('zzy-native.exe','native-protocol-tests.exe','native-heap-tests.exe','native-lifecycle-probe.exe','native-frontend-tests.exe')
 foreach($name in $names) {Copy-Item -LiteralPath (Join-Path $build $name) -Destination $stage}
+$cliExecutable=if($InstalledExecutable) {$InstalledExecutable} else {Join-Path $stage 'zzy-native.exe'}
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot '../tests/golden/no-execute.zzy') -Destination (Join-Path $stage 'no-execute.zzy')
 $records=New-Object System.Collections.Generic.List[object]
 function Invoke-Native([string]$Name,[string]$Arguments,[int]$Expected=0) {
     $start=New-Object Diagnostics.ProcessStartInfo
-    $start.FileName=Join-Path $stage $Name
+    $start.FileName=if($Name -eq 'zzy-native.exe') {$cliExecutable} else {Join-Path $stage $Name}
     $start.Arguments=$Arguments
     $start.WorkingDirectory=$stage
     $start.UseShellExecute=$false
@@ -49,6 +73,12 @@ try {
     $info=Invoke-Native 'zzy-native.exe' 'info'
     Require ($info.stderr -eq '') 'info emitted stderr'
     $value=$info.stdout | ConvertFrom-Json
+    $provenance.info=$value
+    if($BuildOrigin -eq 'CMakeMSVC') {
+        Require ($value.compiler -eq 'MSVC') 'CMake MSVC provenance disagrees with the executable'
+        $expectedCrt=if($Configuration -eq 'Debug') {'MSVC /MDd (debug runtime, not redistributable)'} else {'MSVC /MD (VC Redistributable required)'}
+        Require ($value.crt -eq $expectedCrt) 'selected configuration CRT mismatch'
+    }
     Require ($value.stage -eq 'N1' -and $value.pointer_bits -eq 64 -and $value.cxx_standard -eq 17) 'incorrect info'
     Require ($value.python_fallback -eq $false -and @($value.supported_commands).Count -eq 3 -and $value.supported_commands[0] -eq 'info') 'incorrect capabilities'
     Require ($value.resource_policy.host_decimal_digits -eq 0 -and $value.resource_policy.effective_decimal_digits -eq 4096) 'incorrect decimal policy'
@@ -144,7 +174,7 @@ try {
     [IO.File]::WriteAllText((Join-Path $stage 'modules.zzy'),('+'*5000),[Text.UTF8Encoding]::new($false))
     [IO.File]::WriteAllText((Join-Path $stage 'module-limits.json'),'{"policy_version":1,"limits":{"stdout_bytes":10000000}}',[Text.UTF8Encoding]::new($false))
     $start=[Diagnostics.ProcessStartInfo]::new()
-    $start.FileName=Join-Path $stage 'zzy-native.exe'
+    $start.FileName=$cliExecutable
     $start.Arguments='lex modules.zzy --limits module-limits.json --diagnostic-format json'
     $start.WorkingDirectory=$stage;$start.UseShellExecute=$false;$start.CreateNoWindow=$true
     $start.RedirectStandardOutput=$true;$start.RedirectStandardError=$true
@@ -157,6 +187,10 @@ try {
         $first=$running.StandardOutput.ReadLineAsync()
         Require ($first.Wait(10000) -and $first.Result.Contains('"kind":"PLUS"')) 'CLI never reached output safe point'
         $cliModules=@($running.Modules | ForEach-Object {$_.ModuleName})
+        $moduleDetails=@($running.Modules | ForEach-Object {
+            $file=Get-Item -LiteralPath $_.FileName
+            [ordered]@{name=$_.ModuleName;path=$_.FileName;version=$file.VersionInfo.FileVersion;company=$file.VersionInfo.CompanyName;sha256=(Get-FileHash -LiteralPath $_.FileName).Hash.ToLowerInvariant()}
+        })
         Require ($cliModules.Count -gt 0) 'actual CLI module snapshot empty'
         Require (@($cliModules | Where-Object {$_ -match '^(python|_tkinter|tcl|tk\d)'}).Count -eq 0) 'actual CLI loaded Python/GUI'
         $children=@(Get-CimInstance Win32_Process -Filter ('ParentProcessId='+$running.Id) | Select-Object -ExpandProperty Name)
@@ -164,19 +198,29 @@ try {
         $tail=$running.StandardOutput.ReadToEndAsync();$stderr=$running.StandardError.ReadToEndAsync()
         Require ($running.WaitForExit(10000)) 'inspected CLI failed to terminate'
         Require ($running.ExitCode -eq 0 -and $stderr.Result -eq '') 'inspected CLI failed'
-        $records.Add([ordered]@{exe='zzy-native.exe';arguments=$start.Arguments;exit_code=$running.ExitCode;stdout=($first.Result+"`n"+$tail.Result);stderr=$stderr.Result;timed_out=$false;modules=$cliModules;children=$children;purpose='actual CLI runtime inspection'})
+        $records.Add([ordered]@{exe='zzy-native.exe';executable=$cliExecutable;arguments=$start.Arguments;exit_code=$running.ExitCode;stdout=($first.Result+"`n"+$tail.Result);stderr=$stderr.Result;timed_out=$false;modules=$cliModules;module_details=$moduleDetails;children=$children;purpose='actual CLI runtime inspection'})
     } finally {
         if(-not $running.HasExited) {$running.Kill();$running.WaitForExit()}
         $running.Dispose()
     }
     $imports=[ordered]@{}
-    $objdump=(Get-Command objdump.exe -ErrorAction Stop).Source
+    # Exact reviewed direct imports, not an arbitrary MSVC/API-set wildcard.
+    $allowed=if($BuildOrigin -eq 'DirectGCC') {@('KERNEL32.dll','msvcrt.dll','USER32.dll')}
+        elseif($Configuration -eq 'Debug') {@('KERNEL32.dll','MSVCP140D.dll','VCRUNTIME140D.dll','VCRUNTIME140_1D.dll','ucrtbased.dll')}
+        else {@('KERNEL32.dll','MSVCP140.dll','VCRUNTIME140.dll','VCRUNTIME140_1.dll','api-ms-win-crt-runtime-l1-1-0.dll','api-ms-win-crt-stdio-l1-1-0.dll','api-ms-win-crt-heap-l1-1-0.dll','api-ms-win-crt-math-l1-1-0.dll','api-ms-win-crt-locale-l1-1-0.dll')}
+    if($BuildOrigin -eq 'DirectGCC') {$objdump=(Get-Command objdump.exe -ErrorAction Stop).Source}
     foreach($name in $names) {
-        $lines=& $objdump -p (Join-Path $stage $name)
+        if($BuildOrigin -eq 'CMakeMSVC') {
+            $lines=& $Dumpbin /dependents (Join-Path $stage $name)
+            $dlls=@($lines | Where-Object {$_ -match '^\s+(\S+\.dll)\s*$'} | ForEach-Object {$_.Trim()})
+        } else {
+            $lines=& $objdump -p (Join-Path $stage $name)
+            $dlls=@($lines | Select-String 'DLL Name:' | ForEach-Object {$_.ToString().Split(':')[-1].Trim()})
+        }
         if($LASTEXITCODE -ne 0) {throw 'PE import check failed'}
-        $dlls=@($lines | Select-String 'DLL Name:' | ForEach-Object {$_.ToString().Split(':')[-1].Trim()})
+        [IO.File]::WriteAllLines((Join-Path $out ($name+'.imports.txt')),[string[]]$lines,[Text.UTF8Encoding]::new($false))
         Require ($dlls.Count -gt 0) 'empty PE imports'
-        Require (@($dlls | Where-Object {$_ -notmatch '^(KERNEL32|msvcrt|USER32)\.dll$'}).Count -eq 0) 'unreviewed direct DLL dependency'
+        Require (@($dlls | Where-Object {$_ -notin $allowed}).Count -eq 0) 'unreviewed direct DLL dependency'
         $imports[$name]=$dlls
     }
     $artifacts=[ordered]@{}
@@ -191,7 +235,8 @@ try {
     }
     $passed=$true
 } finally {
-    $report=[ordered]@{schema_version=1;passed=$passed;scope='N1 direct MinGW validation; NOT CMake/CTest/install acceptance';os=[Environment]::OSVersion.VersionString;process_bits=([IntPtr]::Size*8);cwd=$stage;path_empty=$true;pythonpath='unusable-python-path';cmake_available=([bool](Get-Command cmake -ErrorAction SilentlyContinue));ctest_available=([bool](Get-Command ctest -ErrorAction SilentlyContinue));records=@($records.ToArray());imports=$imports;artifacts=$artifacts;sources=$sources;manual_ctrl_c='not run';cmake_install='not run';sanitizer='not run'}
+    $scope=if($BuildOrigin -eq 'CMakeMSVC') {'N1 CMake/MSVC '+$Configuration+' executable acceptance; CTest/install results are separate evidence'} else {'N1 direct MinGW validation; NOT CMake/CTest/install acceptance'}
+    $report=[ordered]@{schema_version=1;passed=$passed;scope=$scope;provenance=$provenance;os=[Environment]::OSVersion.VersionString;process_bits=([IntPtr]::Size*8);cwd=$stage;path_empty=$true;pythonpath='unusable-python-path';cmake_available=([bool](Get-Command cmake -ErrorAction SilentlyContinue));ctest_available=([bool](Get-Command ctest -ErrorAction SilentlyContinue));records=@($records.ToArray());imports=$imports;allowed_direct_imports=$allowed;artifacts=$artifacts;sources=$sources;manual_ctrl_c='not run';cmake_install=$(if($BuildOrigin -eq 'CMakeMSVC') {'see separate install log and published-copy smoke'} else {'not run'});sanitizer='not run'}
     [IO.File]::WriteAllText((Join-Path $out 'report.json'),($report | ConvertTo-Json -Depth 30),[Text.UTF8Encoding]::new($false))
 }
 Write-Output ('N1 native: '+$records.Count+' process cases passed; evidence='+$out)

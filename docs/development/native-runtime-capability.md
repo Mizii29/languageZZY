@@ -2,11 +2,11 @@
 
 2026-11-17，原生版本 0.0.0-n1。Python v0.6 继续提供现有能力。
 逐项清单见 [capabilities.json](../../native_runtime/tests/capabilities.json)：每个 AST kind、实际 Value kind、宿主函数都有独立条目。
-`implemented=false` 表示没有实现，不代表测试跳过后通过。N1 已提供 info/source-info/lex，仍不能运行 ZZY；N0 堆原型继续保留。正式构建/安装门禁仍未通过。
+`implemented=false` 表示没有实现，不代表测试跳过后通过。N1 已提供 info/source-info/lex，仍不能运行 ZZY；N0 堆原型继续保留。2026-11-18正式CMake/MSVC Debug/Release各32项CTest、Release安装和源码外副本已通过，见[正式报告](../../native_runtime/tests/msvc-report.md)。
 
 | 类别 | 核心/可选 | 计划阶段 | 当前状态与保证 |
 |---|---|---|---|
-| UTF-8/源码位置/Token | 核心 | N1 | 已实现；严格 UTF-8/Unicode15.0.0、源码快照/码点位置与词法固定清单已验证（GCC） |
+| UTF-8/源码位置/Token | 核心 | N1 | 已实现；严格 UTF-8/Unicode15.0.0、源码快照/码点位置与固定清单已由GCC及MSVC Debug/Release验证 |
 | AST/Resolver/check | 核心 | N2 | 未实现；check 拒绝且不执行初始化 |
 | 标量、BigInt、Array/Map/Shape、分支/循环 | 核心 | N3 | 未实现；堆图原型不等于语言容器执行 |
 | 具名/匿名函数、Cell/闭包、Lazy、Result、管道 | 核心 | N3 | 未实现；原型只验证其环所有权 |

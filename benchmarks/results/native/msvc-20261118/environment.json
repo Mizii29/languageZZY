@@ -1,0 +1,49 @@
+{
+  "date": "2026-11-18T01:01:52.4941490+08:00",
+  "source_head": "2cb4649c2675c5b198b2642fec44651f0107c9bc",
+  "branch": "codex/native-runtime-plan",
+  "powershell": "7.6.9",
+  "os": "Microsoft Windows NT 10.0.26200.0",
+  "cmake": "cmake version 4.5.0\n\nCMake suite maintained and supported by Kitware (kitware.com/cmake).",
+  "ctest": "ctest version 4.5.0\n\nCMake suite maintained and supported by Kitware (kitware.com/cmake).",
+  "compiler": "C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.40.33807\\bin\\Hostx64\\x64\\cl.exe",
+  "compiler_file_version": "19.40.33812.0",
+  "compiler_sha256": "802872d02ab9c927c86774d688825914bf9496d86de496b7719cd1bff20ad00b",
+  "sdk": "10.0.22000.0",
+  "generator": "Visual Studio 17 2022",
+  "architecture": "x64",
+  "cxx_standard": 17,
+  "debug_crt": "/MDd",
+  "release_crt": "/MD",
+  "compile_options": [
+    "/W4",
+    "/WX",
+    "/utf-8",
+    "/EHsc",
+    "/permissive-"
+  ],
+  "project_dependencies": [],
+  "downloads": "none",
+  "toolchain_installation": "none in this session",
+  "path_changes": "CMake bin prepended only to current command sessions",
+  "runtime_registry": [
+    {
+      "PSPath": "Microsoft.PowerShell.Core\\Registry::HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\VisualStudio\\14.0\\VC\\Runtimes\\x64",
+      "Version": "v14.50.35719.00",
+      "Installed": 1,
+      "Major": 14,
+      "Minor": 50,
+      "Bld": 35719,
+      "Rbld": 0
+    },
+    {
+      "PSPath": "Microsoft.PowerShell.Core\\Registry::HKEY_LOCAL_MACHINE\\SOFTWARE\\WOW6432Node\\Microsoft\\VisualStudio\\14.0\\VC\\Runtimes\\x64",
+      "Version": "v14.50.35719.00",
+      "Installed": 1,
+      "Major": 14,
+      "Minor": 50,
+      "Bld": 35719,
+      "Rbld": 0
+    }
+  ]
+}

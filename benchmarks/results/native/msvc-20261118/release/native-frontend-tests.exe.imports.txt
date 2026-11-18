@@ -1,0 +1,28 @@
+Microsoft (R) COFF/PE Dumper Version 14.40.33812.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+Dump of file C:\Users\13691\AppData\Local\Temp\ZZY N1 f3d73743efeb46279a44c2e9a092eeb3\中文 路径\bin\native-frontend-tests.exe
+
+File Type: EXECUTABLE IMAGE
+
+  Image has the following dependencies:
+
+    KERNEL32.dll
+    MSVCP140.dll
+    VCRUNTIME140.dll
+    VCRUNTIME140_1.dll
+    api-ms-win-crt-runtime-l1-1-0.dll
+    api-ms-win-crt-stdio-l1-1-0.dll
+    api-ms-win-crt-heap-l1-1-0.dll
+    api-ms-win-crt-math-l1-1-0.dll
+    api-ms-win-crt-locale-l1-1-0.dll
+
+  Summary
+
+        1000 .data
+        2000 .pdata
+        D000 .rdata
+        1000 .reloc
+        1000 .rsrc
+       1F000 .text

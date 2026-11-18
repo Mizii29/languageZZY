@@ -932,3 +932,25 @@ Release direct-GCC源码外验收46项通过，实际CLI模块和进程树无Pyt
 本地按小阶段保留 eec67ba（例外）、1673c89（源码）、93e9c08（词法）、ed09e9e（盘点期望修复）、d0b2186（诊断资源边界）、d7dbc4a（取消/别名/门禁补强），最终记录另行本地提交；不推送、不改写历史、不切默认入口。
 
 收尾补记：生成报告时一次误用 static.json 路径触发 FileNotFoundError，确认现有CI输出为report.json后修正；不属于测试失败或通过结果。完整文档落地后再次执行 scripts.ci static --output dist/native-n1-work/ci-static-final，退出0；git diff --check退出0。第二份static原始报告另存ci-static-final.json，保留首次快照，不改旧结果。
+
+## N0-03 / N1 正式 CMake/MSVC 补验收（2026-11-18）
+
+本次范围只补正式构建与交付，不进入N2。接手分支codex/native-runtime-plan、HEAD 2cb4649c2675c5b198b2642fec44651f0107c9bc；保留已有应用/P12/P13/人工原件和requirement。起始57个已有修改/未跟踪文件先固定SHA，正式专项结束及暂停恢复后均逐项一致；共享文档随后仅替换原生段/追加本条，专属版本保存在dist/native-msvc-work/intended-index，未整文件吸收用户修改。
+
+实际环境CMake/CTest4.5.0、VS2022 Build Tools/MSBuild17.10.4、MSVC19.40.33812.0（工具目录14.40.33807）、SDK10.0.22000.0，Windows11 x64/PowerShell7.6.9。仅命令会话PATH增加用户已有CMake目录，没有下载、安装工具链或改系统PATH。原生C++17、/W4 /WX /utf-8 /EHsc /permissive-、Debug /MDd、Release /MD保持。
+
+依次实际执行cmake --preset native-debug -S native_runtime；cmake --build build/native-debug --config Debug；ctest --test-dir build/native-debug -C Debug --output-on-failure --no-tests=error；Release对应三条；cmake --install build/native-release --config Release --prefix dist/native-stage。两次配置从新build目录离线完成。首次Debug构建因protocol.cpp常量if触发C4127/C2220而退出1，原件build-debug-first.txt保留；按协议等价改static_assert，不取消/WX，重跑Debug构建/CTest 32/32（45.82秒）、Release构建/CTest 32/32（9.38秒）与安装均退出0。真实收集清单各32，BUILD_TESTING=ON，未删/禁用/忽略用例。
+
+对build/native-debug/Debug和build/native-release/Release实际EXE分别执行test-fixed.ps1（各87/87），test-frontend.py（相同固定清单各87/87，不重复计总数）、test-cli.py（各62/62）、acceptance.ps1（各47记录，46正常完成、1预期强杀超时单列）。前端12、堆12、协议/生命周期、扫描线程真实交错取消、解码/行表/SHA安全点、资源/异常清理三计数归零及下一次恢复均通过；空选择非零。强杀只证明OS回收/随后恢复，不声称RAII执行。
+
+先用VS dumpbin /dependents确认5个EXE/配置的导入，再让acceptance显式CMakeMSVC/config/cache/dumpbin来源，精确支持实际MSVC DLL，仍拒绝未知DLL，无任意微软/API-set通配。CLI输出管道稳定观察点记录实际模块路径、版本、公司、SHA及进程树，无Python/GUI。Release直接观察仓库外发布副本；System32既有VC runtime14.50.35719.0、系统ucrtbase10.0.26100.9711，Debug VC14.40.33810.0/ucrtbased10.0.22000.832。运行库来源记录为实际加载位置和已有注册表，未追溯旧安装包、未私装CRT，Debug不分发。
+
+安装目录EXE与新建仓库外“ZZY Native Published 20261118 中文 0582b719152c476f9644b6a5056524b8”目录内Release副本分别执行install-smoke.ps1，各9/9；info/source-info/lex正常，check/run/test对Unicode程序及固定副作用程序均E402/2、stdout空、无文件副作用。空子进程PATH、坏PYTHONPATH、中文/空格cwd、PE/加载模块/进程树检查通过。首次复制误用LiteralPath通配符失败，改用枚举并新建目录，不拿空目录当成功；失败说明保留。
+
+.venv/Scripts/python.exe -X utf8 -m unittest tests.test_source tests.test_lexer tests.test_lexer_cli tests.test_cli tests.test_resources tests.test_diagnostics native_runtime.tests.test_inventory -q：105/105、30.285秒、无跳过、退出0。项目scripts.ci static --output dist/native-msvc-work/ci-static-final：passed=true/退出0，包含文档、原测试清单、requirement及git diff --check；文档完整落地后再次复核。证据审计audit.py对42原生文件、每配置5个EXE、CTest清单、CRT加载文件、安装及发布副本SHA逐项一致。开发审计首版conhost空列表/BOM规范化两次失败已按既有规则定位，详见failure-notes.md，不改原始报告或语言期望。
+
+Debug CLI SHA 659854eb460ae5a5efa10cd7845cee54b2a827f0a15c39a9a0fe0d9d17eb831c；Release/安装/发布副本SHA d9928c543d28a353b5213414b23b4439404d7927d1ebfc253c25841034c7368f。环境、源码指纹、实际命令/输出/退出、失败、collection和静态记录在benchmarks/results/native/msvc-20261118，报告native_runtime/tests/msvc-report.md；旧N0/N1/GCC证据不覆盖。
+
+N0-03勾选，N0/N1技术出口已满足；手动Ctrl+C、Sanitizer、clang-cl、其他平台/Windows10实机、缺CRT干净主机未执行，继续明确未验证。按计划这些不阻塞当前N0/N1技术出口，但不能外推N5/N8发布验收。未重跑完整Python核心/Web/GUI/wheel/性能，没有性能提升结论；默认入口不变。下一项N2-01，本轮停止。
+
+本地Git交付尚未完成：恢复后的会话将.git设为只读；实际git add -- native_runtime/tests/native/protocol.cpp native_runtime/tools/acceptance.ps1 native_runtime/tools/install-smoke.ps1返回“Unable to create .git/index.lock: Permission denied”（退出1）。没有绕过权限、写替代Git库、推送或改写历史；索引仍空，HEAD不变。已整理本轮专属reviewed.patch及reviewed-files.json供权限恢复后审查并用git apply --cached暂存；不要git add整个共享文档而吸收原有修改。补丁在当前工作树已体现，只用于从原HEAD向索引应用，需先复核空索引和HEAD。完成相关本地提交后才闭合本轮交付，再进入N2。

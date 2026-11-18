@@ -202,19 +202,19 @@ P11累计验收待修：调用notes定位故障可能掩盖原E211（已注入�
 
 - [x] N0-01 真实实现、宿主元数据、全部 12 个 CLI 清单及应用入口盘点；见 [冻结清单](native-runtime-inventory.md)。
 - [x] N0-02 逐特性能力矩阵与 E402/schema v1 未支持协议；见 [能力矩阵](native-runtime-capability.md)。
-- [ ] N0-03 C++17/CMake 骨架和设计已建立；GCC 直接编译通过，缺 CMake/CTest/MSVC，正式配置/构建/CTest/安装尚未验证，保持未勾选。
+- [x] N0-03 C++17/CMake 骨架和冻结决策；2026-11-18 最新代码已通过 CMake4.5/MSVC19.40 Debug/Release 配置、构建、各32项CTest及Release安装/源码外发布副本；见 [正式报告](../../native_runtime/tests/msvc-report.md)。
 - [x] N0-04 Array/Map/闭包环、别名根/请求隔离、配额重试和异常归还原型；Debug/Release各12例通过，6条独立语言 golden 经稳定CLI核对。
-- [x] N0-05 进程依赖、退出、取消/超时清理、源码外 Windows 验收脚本与固定手册；Debug/Release 各32 个原生过程用例通过；CMake/CTest/安装/真实 Ctrl+C 未验证，N0 总出口仍未通过。
+- [x] N0-05 进程依赖、退出、取消/超时清理、源码外 Windows 验收脚本与固定手册；历史GCC N0各32过程保留，最新MSVC N1各47过程与安装已通过；真实手动Ctrl+C未验证，不冒充自动取消探针。
 
-N0 总出口未过；后续用户明确授权的 N1 顺序例外及实际状态见下方，不外推 N2—N8。
+N0/N1正式构建补验收已完成，当前状态见本文件末尾的MSVC交接；下列N1顺序例外和GCC交接保留为历史，不外推N2—N8。
 
-## N1 顺序例外（2026-11-17，用户明确授权）
+## N1 顺序例外（2026-11-17，历史授权，已于后续补齐正式门禁）
 
 N0-01/02/04/05 的语义、逐特性能力、E402、所有权及固定 golden 证据已复核；N0-03 仍未完成，N0 总出口未通过。本轮仅暂缓 CMake configure/build、CTest 与安装验收，使用已有 GCC 8.1.0 实现并验证 N1-01—04。此授权覆盖原有“未过 N0 不进入 N1”的顺序限制，不覆盖正式构建门禁；不安装工具链，不进入 N2，不修改 Python 默认入口，不回退 Python。
 
 N1 通过时只能记录“N1 实现与 GCC 验证完成，正式 CMake/CTest 验收待补”。以后必须对最新代码重新执行 Debug/Release 配置、构建、非空 CTest、install 与源码外 smoke，不能沿用 N0 原型证据。
 
-## N1 最终交接（2026-11-18，按用户顺序例外）
+## N1 GCC交接（2026-11-18，历史范围；正式补验收见下文）
 
 - [x] N1-01 严格UTF-8源码快照、字节/码点坐标、Token、source-info/lex；GCC实现与验证完成。
 - [x] N1-02 全部固定词法拼写/字面量/转义/注释/非法输入；原62项不变、新25项，87/87固定用例通过。
@@ -224,3 +224,15 @@ N1 通过时只能记录“N1 实现与 GCC 验证完成，正式 CMake/CTest �
 **N1 实现与 GCC 验证完成，正式 CMake/CTest 验收待补。** 以上勾选仅表示用户授权的GCC范围；N0-03仍未勾选、N0总体未通过，不能改称完整正式构建验收。两种构建各47过程验收（含1个预期强杀超时单列）、固定87/87、CLI62/62、源码外smoke6/6；Python相关回归105/105、现有static退出0。未验证：CMake/CTest/install/MSVC/clang-cl/真实手动Ctrl+C/其他平台，未重跑核心全量/Web/GUI。原始证据 benchmarks/results/native/n1。
 
 下一项：补 N0-03，对最新代码运行 native_runtime/README.md 的配置→构建→非空CTest→安装→源码外smoke命令；本轮停止，不进入N2。P12/P13及用户未提交材料保留。
+
+## N0-03 / N1 正式 MSVC 交接（2026-11-18）
+
+N0-01—05、N1-01—04的技术出口均已满足。CMake4.5.0/CTest4.5.0、VS2022/MSVC19.40.33812.0、SDK10.0.22000.0；Debug /MDd、Release /MD，未安装工具链或改系统PATH。
+
+Debug/Release各32/32非空CTest、固定词法/源码87/87、CLI62/62、47过程场景（46正常、1预期超时强杀单列）通过。安装与仓库外中文空格目录的Release副本各9/9 smoke；PE导入、实际模块/进程树无Python，子进程空PATH/无效PYTHONPATH。相关Python回归105/105。源码/产物/CRT路径版本及失败原件见[正式报告](../../native_runtime/tests/msvc-report.md)和benchmarks/results/native/msvc-20261118。
+
+真实手动Ctrl+C、Sanitizer、clang-cl、其他OS/旧版Windows、缺CRT干净主机未验证；按N0/N1出口不阻塞本阶段技术验收，不代表N5/N8发布门禁通过。Python默认入口、P12/P13及人工材料不变。下一项N2-01（Parser/AST），本轮停止；本地提交状态以最新开发日志为准。
+
+### 本轮Git交付限制
+
+技术门禁已通过；本地提交尚未完成。当前会话.git只读，git add创建index.lock被拒绝，索引仍空、HEAD保持2cb4649。专属补丁及文件清单保存在dist/native-msvc-work，未混入原有工作。先在允许Git写入的会话审查并提交本轮差异，再开展N2；不得把此限制写成本地提交成功。

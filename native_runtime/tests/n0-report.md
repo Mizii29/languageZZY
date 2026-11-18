@@ -2,6 +2,8 @@
 
 日期 2026-11-17，分支 `codex/native-runtime-plan`。这份报告只覆盖 N0 原型，不把它写成完整 ZZY 后端。
 
+**历史记录说明：** 下文“缺CMake/CTest/MSVC”和N0未过仅描述当时证据，原件不改写。2026-11-18已对最新N1代码完成[正式MSVC补验收](msvc-report.md)，N0-03和N0/N1技术出口已补齐；没有据此宣称完整语言或人工Ctrl+C通过。
+
 ## 环境
 
 - Windows 11 `10.0.26200`，Windows x64；当前 PowerShell 工作目录含中文与空格。
@@ -50,3 +52,9 @@ Debug/Release 直接编译退出 0；协议 3/3、堆 12/12。最终 [Debug 原�
 真实 Windows Ctrl+C、Sanitizer、源码外 CMake 安装、完整原生 run/check/test、Unicode 数据表、BigInt limb 算法、RSS/性能和所有宿主迁移均未验证。[人工与安装步骤](windows-acceptance.md)没有预填通过。真实超时强杀只验证 OS 回收与随后恢复，不能声称强杀执行了 RAII。
 
 Python 解释器、P12/P13、默认入口和所有原有测试未改变。只有 `info` 可用；原生路线仍不得称为完整 ZZY，N1 不应开始，直到工具链阻塞被解决并按计划重新验收。
+
+## 2026-11-18 正式构建补验收
+
+以上结尾为历史阶段限制。用户随后明确授权先以GCC实施N1，再要求补齐正式工具链门禁。最新N1在CMake/CTest4.5.0、MSVC19.40/SDK10.0.22000.0下，Debug/Release离线配置和构建、各32/32非空CTest、Release安装与源码外中文空格发布副本均通过。原生堆12项、协议、前端12项、取消/清理/恢复与无Python依赖均由正式EXE重新运行，不沿用旧GCC产物身份。
+
+完整[正式报告](msvc-report.md)、[独立审计](../../benchmarks/results/native/msvc-20261118/audit.json)和实际命令保留源码/EXE/CRT指纹及首次MSVC警告失败。真实手动Ctrl+C、Sanitizer、缺CRT主机与其他平台未验证。N0-03技术门禁闭合，下一阶段N2本轮未实施；本地提交状态见开发日志。

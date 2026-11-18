@@ -1,0 +1,1437 @@
+{
+  "schema_version": 1,
+  "scope": "N1 native CLI against unchanged independent tests/lex/cases.json",
+  "exe": "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+  "exe_sha256": "d9928c543d28a353b5213414b23b4439404d7927d1ebfc253c25841034c7368f",
+  "manifest_sha256": {
+    "tests\\lex\\cases.json": "43da80a1b907b7f287bd12c757cd127aaa98c0ae593746cc8bca50fad425a84c",
+    "native_runtime\\tests\\frontend\\cases.json": "f88e83afda782098f1672f0218690b05c572bd29fc2ec9d2fe984e372aeca4e7"
+  },
+  "python_role": "development test coordinator only; native child PATH empty; no Python oracle",
+  "count": 87,
+  "passed": 87,
+  "records": [
+    {
+      "id": "basic",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "lex",
+        "tests/lex/inputs/basic.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"schema_version\":1,\"kind\":\"IMMUTABLE_DECL\",\"lexeme\":\"(zno)\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":1},\"end\":{\"line\":1,\"column\":6}}}\n{\"schema_version\":1,\"kind\":\"IDENT\",\"lexeme\":\"total\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":7},\"end\":{\"line\":1,\"column\":12}}}\n{\"schema_version\":1,\"kind\":\"INIT\",\"lexeme\":\":=\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":13},\"end\":{\"line\":1,\"column\":15}}}\n{\"schema_version\":1,\"kind\":\"INTEGER\",\"lexeme\":\"1\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":16},\"end\":{\"line\":1,\"column\":17}}}\n{\"schema_version\":1,\"kind\":\"PLUS\",\"lexeme\":\"+\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":18},\"end\":{\"line\":1,\"column\":19}}}\n{\"schema_version\":1,\"kind\":\"INTEGER\",\"lexeme\":\"4\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":20},\"end\":{\"line\":1,\"column\":21}}}\n{\"schema_version\":1,\"kind\":\"SEMICOLON\",\"lexeme\":\";\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":21},\"end\":{\"line\":1,\"column\":22}}}\n{\"schema_version\":1,\"kind\":\"IDENT\",\"lexeme\":\"io\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":2,\"column\":1},\"end\":{\"line\":2,\"column\":3}}}\n{\"schema_version\":1,\"kind\":\"DOT\",\"lexeme\":\".\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":2,\"column\":3},\"end\":{\"line\":2,\"column\":4}}}\n{\"schema_version\":1,\"kind\":\"IDENT\",\"lexeme\":\"print\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":2,\"column\":4},\"end\":{\"line\":2,\"column\":9}}}\n{\"schema_version\":1,\"kind\":\"LEFT_PAREN\",\"lexeme\":\"(\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":2,\"column\":9},\"end\":{\"line\":2,\"column\":10}}}\n{\"schema_version\":1,\"kind\":\"IDENT\",\"lexeme\":\"total\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":2,\"column\":10},\"end\":{\"line\":2,\"column\":15}}}\n{\"schema_version\":1,\"kind\":\"RIGHT_PAREN\",\"lexeme\":\")\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":2,\"column\":15},\"end\":{\"line\":2,\"column\":16}}}\n{\"schema_version\":1,\"kind\":\"SEMICOLON\",\"lexeme\":\";\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":2,\"column\":16},\"end\":{\"line\":2,\"column\":17}}}\n{\"schema_version\":1,\"kind\":\"EOF\",\"lexeme\":\"\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":3,\"column\":1},\"end\":{\"line\":3,\"column\":1}}}\n",
+      "stderr": "",
+      "timed_out": false,
+      "seconds": 0.015915799973299727,
+      "passed": true
+    },
+    {
+      "id": "fixed-symbols",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "lex",
+        "tests/lex/inputs/fixed-symbols.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"schema_version\":1,\"kind\":\"IMMUTABLE_DECL\",\"lexeme\":\"(zno)\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":1},\"end\":{\"line\":1,\"column\":6}}}\n{\"schema_version\":1,\"kind\":\"MUTABLE_DECL\",\"lexeme\":\"(zyes)\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":7},\"end\":{\"line\":1,\"column\":13}}}\n{\"schema_version\":1,\"kind\":\"FUNCTION\",\"lexeme\":\"(addnew)\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":14},\"end\":{\"line\":1,\"column\":22}}}\n{\"schema_version\":1,\"kind\":\"RETURN\",\"lexeme\":\"(return)\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":23},\"end\":{\"line\":1,\"column\":31}}}\n{\"schema_version\":1,\"kind\":\"IF\",\"lexeme\":\"(zif?:)\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":32},\"end\":{\"line\":1,\"column\":39}}}\n{\"schema_version\":1,\"kind\":\"ELIF\",\"lexeme\":\"(zzif?:)\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":40},\"end\":{\"line\":1,\"column\":48}}}\n{\"schema_version\":1,\"kind\":\"ELSE\",\"lexeme\":\"(zzyf:)\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":49},\"end\":{\"line\":1,\"column\":56}}}\n{\"schema_version\":1,\"kind\":\"FOR\",\"lexeme\":\"(for)\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":57},\"end\":{\"line\":1,\"column\":62}}}\n{\"schema_version\":1,\"kind\":\"IN\",\"lexeme\":\"(in)\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":63},\"end\":{\"line\":1,\"column\":67}}}\n{\"schema_version\":1,\"kind\":\"WHILE\",\"lexeme\":\"(while)\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":68},\"end\":{\"line\":1,\"column\":75}}}\n{\"schema_version\":1,\"kind\":\"BREAK\",\"lexeme\":\"(break)\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":76},\"end\":{\"line\":1,\"column\":83}}}\n{\"schema_version\":1,\"kind\":\"CONTINUE\",\"lexeme\":\"(continue)\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":84},\"end\":{\"line\":1,\"column\":94}}}\n{\"schema_version\":1,\"kind\":\"SHAPE\",\"lexeme\":\"(shape)\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":95},\"end\":{\"line\":1,\"column\":102}}}\n{\"schema_version\":1,\"kind\":\"MACHINE\",\"lexeme\":\"(machine)\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":103},\"end\":{\"line\":1,\"column\":112}}}\n{\"schema_version\":1,\"kind\":\"WITH\",\"lexeme\":\"(with)\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":113},\"end\":{\"line\":1,\"column\":119}}}\n{\"schema_version\":1,\"kind\":\"AND\",\"lexeme\":\"(and)\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":120},\"end\":{\"line\":1,\"column\":125}}}\n{\"schema_version\":1,\"kind\":\"OR\",\"lexeme\":\"(or)\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":126},\"end\":{\"line\":1,\"column\":130}}}\n{\"schema_version\":1,\"kind\":\"NOT\",\"lexeme\":\"(not)\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":131},\"end\":{\"line\":1,\"column\":136}}}\n{\"schema_version\":1,\"kind\":\"TRUE\",\"lexeme\":\"(true)\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":137},\"end\":{\"line\":1,\"column\":143}}}\n{\"schema_version\":1,\"kind\":\"FALSE\",\"lexeme\":\"(false)\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":144},\"end\":{\"line\":1,\"column\":151}}}\n{\"schema_version\":1,\"kind\":\"NULL\",\"lexeme\":\"(null)\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":152},\"end\":{\"line\":1,\"column\":158}}}\n{\"schema_version\":1,\"kind\":\"RAW\",\"lexeme\":\"(raw)\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":159},\"end\":{\"line\":1,\"column\":164}}}\n{\"schema_version\":1,\"kind\":\"STRING\",\"lexeme\":\"\\\"\\\"\",\"value\":\"\",\"raw\":true,\"span\":{\"start\":{\"line\":1,\"column\":165},\"end\":{\"line\":1,\"column\":167}}}\n{\"schema_version\":1,\"kind\":\"LAZY\",\"lexeme\":\"(zzz)\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":168},\"end\":{\"line\":1,\"column\":173}}}\n{\"schema_version\":1,\"kind\":\"SPEC\",\"lexeme\":\"(spec)\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":174},\"end\":{\"line\":1,\"column\":180}}}\n{\"schema_version\":1,\"kind\":\"USE\",\"lexeme\":\"(use)\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":181},\"end\":{\"line\":1,\"column\":186}}}\n{\"schema_version\":1,\"kind\":\"AS\",\"lexeme\":\"(as)\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":187},\"end\":{\"line\":1,\"column\":191}}}\n{\"schema_version\":1,\"kind\":\"KEEP\",\"lexeme\":\"(keep)\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":192},\"end\":{\"line\":1,\"column\":198}}}\n{\"schema_version\":1,\"kind\":\"ORDER\",\"lexeme\":\"(order)\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":199},\"end\":{\"line\":1,\"column\":206}}}\n{\"schema_version\":1,\"kind\":\"TAKE\",\"lexeme\":\"(take)\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":207},\"end\":{\"line\":1,\"column\":213}}}\n{\"schema_version\":1,\"kind\":\"YIELD\",\"lexeme\":\"(yield)\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":214},\"end\":{\"line\":1,\"column\":221}}}\n{\"schema_version\":1,\"kind\":\"ASC\",\"lexeme\":\"(asc)\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":222},\"end\":{\"line\":1,\"column\":227}}}\n{\"schema_version\":1,\"kind\":\"DESC\",\"lexeme\":\"(desc)\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":228},\"end\":{\"line\":1,\"column\":234}}}\n{\"schema_version\":1,\"kind\":\"TYPE_INT\",\"lexeme\":\"(Int)\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":235},\"end\":{\"line\":1,\"column\":240}}}\n{\"schema_version\":1,\"kind\":\"TYPE_FLOAT\",\"lexeme\":\"(Float)\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":241},\"end\":{\"line\":1,\"column\":248}}}\n{\"schema_version\":1,\"kind\":\"TYPE_STRING\",\"lexeme\":\"(String)\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":249},\"end\":{\"line\":1,\"column\":257}}}\n{\"schema_version\":1,\"kind\":\"TYPE_BOOL\",\"lexeme\":\"(Bool)\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":258},\"end\":{\"line\":1,\"column\":264}}}\n{\"schema_version\":1,\"kind\":\"TYPE_NULL\",\"lexeme\":\"(Null)\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":265},\"end\":{\"line\":1,\"column\":271}}}\n{\"schema_version\":1,\"kind\":\"TYPE_ARRAY\",\"lexeme\":\"(Array)\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":272},\"end\":{\"line\":1,\"column\":279}}}\n{\"schema_version\":1,\"kind\":\"TYPE_MAP\",\"lexeme\":\"(Map)\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":280},\"end\":{\"line\":1,\"column\":285}}}\n{\"schema_version\":1,\"kind\":\"TYPE_FUNCTION\",\"lexeme\":\"(Function)\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":286},\"end\":{\"line\":1,\"column\":296}}}\n{\"schema_version\":1,\"kind\":\"TYPE_RESULT\",\"lexeme\":\"(Result)\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":297},\"end\":{\"line\":1,\"column\":305}}}\n{\"schema_version\":1,\"kind\":\"TYPE_LAZY\",\"lexeme\":\"(Lazy)\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":306},\"end\":{\"line\":1,\"column\":312}}}\n{\"schema_version\":1,\"kind\":\"TYPE_RANGE\",\"lexeme\":\"(Range)\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":313},\"end\":{\"line\":1,\"column\":320}}}\n{\"schema_version\":1,\"kind\":\"TYPE_MACHINE\",\"lexeme\":\"(Machine)\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":321},\"end\":{\"line\":1,\"column\":330}}}\n{\"schema_version\":1,\"kind\":\"TYPE_QUANTITY\",\"lexeme\":\"(Quantity)\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":331},\"end\":{\"line\":1,\"column\":341}}}\n{\"schema_version\":1,\"kind\":\"SUCCESS\",\"lexeme\":\"(^_^)\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":342},\"end\":{\"line\":1,\"column\":347}}}\n{\"schema_version\":1,\"kind\":\"FAILURE\",\"lexeme\":\"(T_T)\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":348},\"end\":{\"line\":1,\"column\":353}}}\n{\"schema_version\":1,\"kind\":\"MATCH\",\"lexeme\":\"(?_?)\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":354},\"end\":{\"line\":1,\"column\":359}}}\n{\"schema_version\":1,\"kind\":\"ASSERT\",\"lexeme\":\"(o_o)\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":360},\"end\":{\"line\":1,\"column\":365}}}\n{\"schema_version\":1,\"kind\":\"TRACE\",\"lexeme\":\"(@_@)\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":366},\"end\":{\"line\":1,\"column\":371}}}\n{\"schema_version\":1,\"kind\":\"EOF\",\"lexeme\":\"\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":2,\"column\":1},\"end\":{\"line\":2,\"column\":1}}}\n",
+      "stderr": "",
+      "timed_out": false,
+      "seconds": 0.014929299999494106,
+      "passed": true
+    },
+    {
+      "id": "operators",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "lex",
+        "tests/lex/inputs/operators.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"schema_version\":1,\"kind\":\"STATE_ARROW\",\"lexeme\":\"-->\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":1},\"end\":{\"line\":1,\"column\":4}}}\n{\"schema_version\":1,\"kind\":\"STATE_EDGE\",\"lexeme\":\"--\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":5},\"end\":{\"line\":1,\"column\":7}}}\n{\"schema_version\":1,\"kind\":\"ARROW\",\"lexeme\":\"->\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":8},\"end\":{\"line\":1,\"column\":10}}}\n{\"schema_version\":1,\"kind\":\"MINUS\",\"lexeme\":\"-\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":11},\"end\":{\"line\":1,\"column\":12}}}\n{\"schema_version\":1,\"kind\":\"SEND\",\"lexeme\":\"<<\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":13},\"end\":{\"line\":1,\"column\":15}}}\n{\"schema_version\":1,\"kind\":\"LESS\",\"lexeme\":\"<\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":16},\"end\":{\"line\":1,\"column\":17}}}\n{\"schema_version\":1,\"kind\":\"QUERY\",\"lexeme\":\"?>\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":18},\"end\":{\"line\":1,\"column\":20}}}\n{\"schema_version\":1,\"kind\":\"QUESTION\",\"lexeme\":\"?\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":21},\"end\":{\"line\":1,\"column\":22}}}\n{\"schema_version\":1,\"kind\":\"INIT\",\"lexeme\":\":=\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":23},\"end\":{\"line\":1,\"column\":25}}}\n{\"schema_version\":1,\"kind\":\"ASSIGN\",\"lexeme\":\"<-\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":26},\"end\":{\"line\":1,\"column\":28}}}\n{\"schema_version\":1,\"kind\":\"DOUBLE_COLON\",\"lexeme\":\"::\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":29},\"end\":{\"line\":1,\"column\":31}}}\n{\"schema_version\":1,\"kind\":\"FAT_ARROW\",\"lexeme\":\"=>\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":32},\"end\":{\"line\":1,\"column\":34}}}\n{\"schema_version\":1,\"kind\":\"INTERVAL\",\"lexeme\":\"..<\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":35},\"end\":{\"line\":1,\"column\":38}}}\n{\"schema_version\":1,\"kind\":\"PIPE\",\"lexeme\":\"~>\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":39},\"end\":{\"line\":1,\"column\":41}}}\n{\"schema_version\":1,\"kind\":\"FLOOR_DIVIDE\",\"lexeme\":\"//\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":42},\"end\":{\"line\":1,\"column\":44}}}\n{\"schema_version\":1,\"kind\":\"DIVIDE\",\"lexeme\":\"/\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":45},\"end\":{\"line\":1,\"column\":46}}}\n{\"schema_version\":1,\"kind\":\"LESS_EQUAL\",\"lexeme\":\"<=\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":47},\"end\":{\"line\":1,\"column\":49}}}\n{\"schema_version\":1,\"kind\":\"GREATER_EQUAL\",\"lexeme\":\">=\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":50},\"end\":{\"line\":1,\"column\":52}}}\n{\"schema_version\":1,\"kind\":\"GREATER\",\"lexeme\":\">\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":53},\"end\":{\"line\":1,\"column\":54}}}\n{\"schema_version\":1,\"kind\":\"EQUAL\",\"lexeme\":\"==\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":55},\"end\":{\"line\":1,\"column\":57}}}\n{\"schema_version\":1,\"kind\":\"NOT_EQUAL\",\"lexeme\":\"!=\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":58},\"end\":{\"line\":1,\"column\":60}}}\n{\"schema_version\":1,\"kind\":\"LEFT_PAREN\",\"lexeme\":\"(\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":61},\"end\":{\"line\":1,\"column\":62}}}\n{\"schema_version\":1,\"kind\":\"RIGHT_PAREN\",\"lexeme\":\")\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":63},\"end\":{\"line\":1,\"column\":64}}}\n{\"schema_version\":1,\"kind\":\"LEFT_BRACKET\",\"lexeme\":\"[\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":65},\"end\":{\"line\":1,\"column\":66}}}\n{\"schema_version\":1,\"kind\":\"RIGHT_BRACKET\",\"lexeme\":\"]\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":67},\"end\":{\"line\":1,\"column\":68}}}\n{\"schema_version\":1,\"kind\":\"LEFT_BRACE\",\"lexeme\":\"{\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":69},\"end\":{\"line\":1,\"column\":70}}}\n{\"schema_version\":1,\"kind\":\"RIGHT_BRACE\",\"lexeme\":\"}\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":71},\"end\":{\"line\":1,\"column\":72}}}\n{\"schema_version\":1,\"kind\":\"SEMICOLON\",\"lexeme\":\";\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":73},\"end\":{\"line\":1,\"column\":74}}}\n{\"schema_version\":1,\"kind\":\"COLON\",\"lexeme\":\":\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":75},\"end\":{\"line\":1,\"column\":76}}}\n{\"schema_version\":1,\"kind\":\"COMMA\",\"lexeme\":\",\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":77},\"end\":{\"line\":1,\"column\":78}}}\n{\"schema_version\":1,\"kind\":\"DOT\",\"lexeme\":\".\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":79},\"end\":{\"line\":1,\"column\":80}}}\n{\"schema_version\":1,\"kind\":\"AT\",\"lexeme\":\"@\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":81},\"end\":{\"line\":1,\"column\":82}}}\n{\"schema_version\":1,\"kind\":\"PLUS\",\"lexeme\":\"+\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":83},\"end\":{\"line\":1,\"column\":84}}}\n{\"schema_version\":1,\"kind\":\"MULTIPLY\",\"lexeme\":\"*\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":85},\"end\":{\"line\":1,\"column\":86}}}\n{\"schema_version\":1,\"kind\":\"REMAINDER\",\"lexeme\":\"%\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":87},\"end\":{\"line\":1,\"column\":88}}}\n{\"schema_version\":1,\"kind\":\"EOF\",\"lexeme\":\"\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":2,\"column\":1},\"end\":{\"line\":2,\"column\":1}}}\n",
+      "stderr": "",
+      "timed_out": false,
+      "seconds": 0.012614700011909008,
+      "passed": true
+    },
+    {
+      "id": "adjacent-operators",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "lex",
+        "tests/lex/inputs/adjacent-operators.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"schema_version\":1,\"kind\":\"STATE_EDGE\",\"lexeme\":\"--\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":1},\"end\":{\"line\":1,\"column\":3}}}\n{\"schema_version\":1,\"kind\":\"IDENT\",\"lexeme\":\"x\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":3},\"end\":{\"line\":1,\"column\":4}}}\n{\"schema_version\":1,\"kind\":\"SEMICOLON\",\"lexeme\":\";\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":4},\"end\":{\"line\":1,\"column\":5}}}\n{\"schema_version\":1,\"kind\":\"MINUS\",\"lexeme\":\"-\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":6},\"end\":{\"line\":1,\"column\":7}}}\n{\"schema_version\":1,\"kind\":\"LEFT_PAREN\",\"lexeme\":\"(\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":7},\"end\":{\"line\":1,\"column\":8}}}\n{\"schema_version\":1,\"kind\":\"MINUS\",\"lexeme\":\"-\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":8},\"end\":{\"line\":1,\"column\":9}}}\n{\"schema_version\":1,\"kind\":\"IDENT\",\"lexeme\":\"x\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":9},\"end\":{\"line\":1,\"column\":10}}}\n{\"schema_version\":1,\"kind\":\"RIGHT_PAREN\",\"lexeme\":\")\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":10},\"end\":{\"line\":1,\"column\":11}}}\n{\"schema_version\":1,\"kind\":\"SEMICOLON\",\"lexeme\":\";\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":11},\"end\":{\"line\":1,\"column\":12}}}\n{\"schema_version\":1,\"kind\":\"MINUS\",\"lexeme\":\"-\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":13},\"end\":{\"line\":1,\"column\":14}}}\n{\"schema_version\":1,\"kind\":\"MINUS\",\"lexeme\":\"-\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":15},\"end\":{\"line\":1,\"column\":16}}}\n{\"schema_version\":1,\"kind\":\"IDENT\",\"lexeme\":\"x\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":17},\"end\":{\"line\":1,\"column\":18}}}\n{\"schema_version\":1,\"kind\":\"SEMICOLON\",\"lexeme\":\";\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":18},\"end\":{\"line\":1,\"column\":19}}}\n{\"schema_version\":1,\"kind\":\"INTEGER\",\"lexeme\":\"0\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":20},\"end\":{\"line\":1,\"column\":21}}}\n{\"schema_version\":1,\"kind\":\"INTERVAL\",\"lexeme\":\"..<\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":21},\"end\":{\"line\":1,\"column\":24}}}\n{\"schema_version\":1,\"kind\":\"INTEGER\",\"lexeme\":\"5\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":24},\"end\":{\"line\":1,\"column\":25}}}\n{\"schema_version\":1,\"kind\":\"SEMICOLON\",\"lexeme\":\";\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":25},\"end\":{\"line\":1,\"column\":26}}}\n{\"schema_version\":1,\"kind\":\"INTEGER\",\"lexeme\":\"2\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":27},\"end\":{\"line\":1,\"column\":28}}}\n{\"schema_version\":1,\"kind\":\"DOUBLE_COLON\",\"lexeme\":\"::\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":28},\"end\":{\"line\":1,\"column\":30}}}\n{\"schema_version\":1,\"kind\":\"IDENT\",\"lexeme\":\"s\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":30},\"end\":{\"line\":1,\"column\":31}}}\n{\"schema_version\":1,\"kind\":\"SEMICOLON\",\"lexeme\":\";\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":31},\"end\":{\"line\":1,\"column\":32}}}\n{\"schema_version\":1,\"kind\":\"FLOAT\",\"lexeme\":\"0.10\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":33},\"end\":{\"line\":1,\"column\":37}}}\n{\"schema_version\":1,\"kind\":\"DOUBLE_COLON\",\"lexeme\":\"::\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":37},\"end\":{\"line\":1,\"column\":39}}}\n{\"schema_version\":1,\"kind\":\"IDENT\",\"lexeme\":\"s\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":39},\"end\":{\"line\":1,\"column\":40}}}\n{\"schema_version\":1,\"kind\":\"SEMICOLON\",\"lexeme\":\";\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":40},\"end\":{\"line\":1,\"column\":41}}}\n{\"schema_version\":1,\"kind\":\"IDENT\",\"lexeme\":\"T\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":42},\"end\":{\"line\":1,\"column\":43}}}\n{\"schema_version\":1,\"kind\":\"DOUBLE_COLON\",\"lexeme\":\"::\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":43},\"end\":{\"line\":1,\"column\":45}}}\n{\"schema_version\":1,\"kind\":\"LEFT_BRACE\",\"lexeme\":\"{\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":45},\"end\":{\"line\":1,\"column\":46}}}\n{\"schema_version\":1,\"kind\":\"IDENT\",\"lexeme\":\"x\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":46},\"end\":{\"line\":1,\"column\":47}}}\n{\"schema_version\":1,\"kind\":\"COLON\",\"lexeme\":\":\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":47},\"end\":{\"line\":1,\"column\":48}}}\n{\"schema_version\":1,\"kind\":\"INTEGER\",\"lexeme\":\"1\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":48},\"end\":{\"line\":1,\"column\":49}}}\n{\"schema_version\":1,\"kind\":\"RIGHT_BRACE\",\"lexeme\":\"}\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":49},\"end\":{\"line\":1,\"column\":50}}}\n{\"schema_version\":1,\"kind\":\"SEMICOLON\",\"lexeme\":\";\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":50},\"end\":{\"line\":1,\"column\":51}}}\n{\"schema_version\":1,\"kind\":\"EOF\",\"lexeme\":\"\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":51},\"end\":{\"line\":1,\"column\":51}}}\n",
+      "stderr": "",
+      "timed_out": false,
+      "seconds": 0.013068100000964478,
+      "passed": true
+    },
+    {
+      "id": "identifier-spelling",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "lex",
+        "tests/lex/inputs/identifier-spelling.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"schema_version\":1,\"kind\":\"IDENT\",\"lexeme\":\"总分\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":1},\"end\":{\"line\":1,\"column\":3}}}\n{\"schema_version\":1,\"kind\":\"IDENT\",\"lexeme\":\"K\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":4},\"end\":{\"line\":1,\"column\":5}}}\n{\"schema_version\":1,\"kind\":\"IDENT\",\"lexeme\":\"K\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":6},\"end\":{\"line\":1,\"column\":7}}}\n{\"schema_version\":1,\"kind\":\"IDENT\",\"lexeme\":\"é\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":8},\"end\":{\"line\":1,\"column\":9}}}\n{\"schema_version\":1,\"kind\":\"IDENT\",\"lexeme\":\"é\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":10},\"end\":{\"line\":1,\"column\":12}}}\n{\"schema_version\":1,\"kind\":\"IDENT\",\"lexeme\":\"x９\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":13},\"end\":{\"line\":1,\"column\":15}}}\n{\"schema_version\":1,\"kind\":\"WILDCARD\",\"lexeme\":\"_\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":16},\"end\":{\"line\":1,\"column\":17}}}\n{\"schema_version\":1,\"kind\":\"IDENT\",\"lexeme\":\"wake\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":18},\"end\":{\"line\":1,\"column\":22}}}\n{\"schema_version\":1,\"kind\":\"IDENT\",\"lexeme\":\"len\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":23},\"end\":{\"line\":1,\"column\":26}}}\n{\"schema_version\":1,\"kind\":\"IDENT\",\"lexeme\":\"str\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":27},\"end\":{\"line\":1,\"column\":30}}}\n{\"schema_version\":1,\"kind\":\"IDENT\",\"lexeme\":\"range\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":31},\"end\":{\"line\":1,\"column\":36}}}\n{\"schema_version\":1,\"kind\":\"IDENT\",\"lexeme\":\"io\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":37},\"end\":{\"line\":1,\"column\":39}}}\n{\"schema_version\":1,\"kind\":\"IDENT\",\"lexeme\":\"sketch\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":40},\"end\":{\"line\":1,\"column\":46}}}\n{\"schema_version\":1,\"kind\":\"RESERVED_NAME\",\"lexeme\":\"zno\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":47},\"end\":{\"line\":1,\"column\":50}}}\n{\"schema_version\":1,\"kind\":\"RESERVED_NAME\",\"lexeme\":\"Int\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":51},\"end\":{\"line\":1,\"column\":54}}}\n{\"schema_version\":1,\"kind\":\"RESERVED_NAME\",\"lexeme\":\"zzysay\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":55},\"end\":{\"line\":1,\"column\":61}}}\n{\"schema_version\":1,\"kind\":\"RESERVED_NAME\",\"lexeme\":\"zzysayalot\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":62},\"end\":{\"line\":1,\"column\":72}}}\n{\"schema_version\":1,\"kind\":\"IDENT\",\"lexeme\":\"myzzysay\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":73},\"end\":{\"line\":1,\"column\":81}}}\n{\"schema_version\":1,\"kind\":\"COLON\",\"lexeme\":\":\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":81},\"end\":{\"line\":1,\"column\":82}}}\n{\"schema_version\":1,\"kind\":\"EOF\",\"lexeme\":\"\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":82},\"end\":{\"line\":1,\"column\":82}}}\n",
+      "stderr": "",
+      "timed_out": false,
+      "seconds": 0.017301899992162362,
+      "passed": true
+    },
+    {
+      "id": "not-keyword-aliases",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "lex",
+        "tests/lex/inputs/not-keyword-aliases.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"schema_version\":1,\"kind\":\"LEFT_PAREN\",\"lexeme\":\"(\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":1},\"end\":{\"line\":1,\"column\":2}}}\n{\"schema_version\":1,\"kind\":\"IDENT\",\"lexeme\":\"let\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":2},\"end\":{\"line\":1,\"column\":5}}}\n{\"schema_version\":1,\"kind\":\"RIGHT_PAREN\",\"lexeme\":\")\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":5},\"end\":{\"line\":1,\"column\":6}}}\n{\"schema_version\":1,\"kind\":\"LEFT_PAREN\",\"lexeme\":\"(\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":7},\"end\":{\"line\":1,\"column\":8}}}\n{\"schema_version\":1,\"kind\":\"RESERVED_NAME\",\"lexeme\":\"zno\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":8},\"end\":{\"line\":1,\"column\":11}}}\n{\"schema_version\":1,\"kind\":\"RIGHT_PAREN\",\"lexeme\":\")\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":12},\"end\":{\"line\":1,\"column\":13}}}\n{\"schema_version\":1,\"kind\":\"LEFT_PAREN\",\"lexeme\":\"(\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":14},\"end\":{\"line\":1,\"column\":15}}}\n{\"schema_version\":1,\"kind\":\"RESERVED_NAME\",\"lexeme\":\"zyes\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":16},\"end\":{\"line\":1,\"column\":20}}}\n{\"schema_version\":1,\"kind\":\"RIGHT_PAREN\",\"lexeme\":\")\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":20},\"end\":{\"line\":1,\"column\":21}}}\n{\"schema_version\":1,\"kind\":\"LEFT_PAREN\",\"lexeme\":\"(\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":22},\"end\":{\"line\":1,\"column\":23}}}\n{\"schema_version\":1,\"kind\":\"IDENT\",\"lexeme\":\"ZNO\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":23},\"end\":{\"line\":1,\"column\":26}}}\n{\"schema_version\":1,\"kind\":\"RIGHT_PAREN\",\"lexeme\":\")\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":26},\"end\":{\"line\":1,\"column\":27}}}\n{\"schema_version\":1,\"kind\":\"LEFT_PAREN\",\"lexeme\":\"(\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":28},\"end\":{\"line\":1,\"column\":29}}}\n{\"schema_version\":1,\"kind\":\"EOF\",\"lexeme\":\"\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":55},\"end\":{\"line\":1,\"column\":55}}}\n",
+      "stderr": "",
+      "timed_out": false,
+      "seconds": 0.013455800013616681,
+      "passed": true
+    },
+    {
+      "id": "strings",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "lex",
+        "tests/lex/inputs/strings.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"schema_version\":1,\"kind\":\"STRING\",\"lexeme\":\"\\\"A[OoO]nB\\\"\",\"value\":\"A\\nB\",\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":1},\"end\":{\"line\":1,\"column\":11}}}\n{\"schema_version\":1,\"kind\":\"STRING\",\"lexeme\":\"\\\"[OoO]t[OoO]r[OoO]q[OoO]b\\\"\",\"value\":\"\\t\\r\\\"\\\\\",\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":12},\"end\":{\"line\":1,\"column\":38}}}\n{\"schema_version\":1,\"kind\":\"STRING\",\"lexeme\":\"\\\"[OoO][OoO]n\\\"\",\"value\":\"[OoO]n\",\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":39},\"end\":{\"line\":1,\"column\":52}}}\n{\"schema_version\":1,\"kind\":\"STRING\",\"lexeme\":\"\\\"[Oo\\\"\",\"value\":\"[Oo\",\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":53},\"end\":{\"line\":1,\"column\":58}}}\n{\"schema_version\":1,\"kind\":\"STRING\",\"lexeme\":\"\\\"https://x/a\\\\n\\\"\",\"value\":\"https://x/a\\\\n\",\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":59},\"end\":{\"line\":1,\"column\":74}}}\n{\"schema_version\":1,\"kind\":\"STRING\",\"lexeme\":\"\\\"zzysay: zzysayalot: zzyend (zif?:)\\\"\",\"value\":\"zzysay: zzysayalot: zzyend (zif?:)\",\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":75},\"end\":{\"line\":1,\"column\":111}}}\n{\"schema_version\":1,\"kind\":\"STRING\",\"lexeme\":\"\\\"😀中文\\\"\",\"value\":\"😀中文\",\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":112},\"end\":{\"line\":1,\"column\":117}}}\n{\"schema_version\":1,\"kind\":\"EOF\",\"lexeme\":\"\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":2,\"column\":1},\"end\":{\"line\":2,\"column\":1}}}\n",
+      "stderr": "",
+      "timed_out": false,
+      "seconds": 0.013606900000013411,
+      "passed": true
+    },
+    {
+      "id": "raw-comment-gap",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "lex",
+        "tests/lex/inputs/raw-comment-gap.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"schema_version\":1,\"kind\":\"RAW\",\"lexeme\":\"(raw)\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":1},\"end\":{\"line\":1,\"column\":6}}}\n{\"schema_version\":1,\"kind\":\"STRING\",\"lexeme\":\"\\\"[OoO]x\\\\n\\\"\",\"value\":\"[OoO]x\\\\n\",\"raw\":true,\"span\":{\"start\":{\"line\":2,\"column\":28},\"end\":{\"line\":2,\"column\":38}}}\n{\"schema_version\":1,\"kind\":\"SEMICOLON\",\"lexeme\":\";\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":2,\"column\":38},\"end\":{\"line\":2,\"column\":39}}}\n{\"schema_version\":1,\"kind\":\"EOF\",\"lexeme\":\"\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":2,\"column\":39},\"end\":{\"line\":2,\"column\":39}}}\n",
+      "stderr": "",
+      "timed_out": false,
+      "seconds": 0.013964700017822906,
+      "passed": true
+    },
+    {
+      "id": "raw-markers",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "lex",
+        "tests/lex/inputs/raw-markers.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"schema_version\":1,\"kind\":\"RAW\",\"lexeme\":\"(raw)\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":1},\"end\":{\"line\":1,\"column\":6}}}\n{\"schema_version\":1,\"kind\":\"STRING\",\"lexeme\":\"\\\"zzysay: zzysayalot: zzyend [OoO]q\\\"\",\"value\":\"zzysay: zzysayalot: zzyend [OoO]q\",\"raw\":true,\"span\":{\"start\":{\"line\":1,\"column\":6},\"end\":{\"line\":1,\"column\":41}}}\n{\"schema_version\":1,\"kind\":\"SEMICOLON\",\"lexeme\":\";\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":41},\"end\":{\"line\":1,\"column\":42}}}\n{\"schema_version\":1,\"kind\":\"EOF\",\"lexeme\":\"\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":42},\"end\":{\"line\":1,\"column\":42}}}\n",
+      "stderr": "",
+      "timed_out": false,
+      "seconds": 0.01587400000425987,
+      "passed": true
+    },
+    {
+      "id": "single-comment-eof",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "lex",
+        "tests/lex/inputs/single-comment-eof.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"schema_version\":1,\"kind\":\"EOF\",\"lexeme\":\"\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":25},\"end\":{\"line\":1,\"column\":25}}}\n",
+      "stderr": "",
+      "timed_out": false,
+      "seconds": 0.01443809998454526,
+      "passed": true
+    },
+    {
+      "id": "comment-does-not-join",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "lex",
+        "tests/lex/inputs/comment-does-not-join.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"schema_version\":1,\"kind\":\"IDENT\",\"lexeme\":\"alpha\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":1},\"end\":{\"line\":1,\"column\":6}}}\n{\"schema_version\":1,\"kind\":\"IDENT\",\"lexeme\":\"beta\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":41},\"end\":{\"line\":1,\"column\":45}}}\n{\"schema_version\":1,\"kind\":\"SEMICOLON\",\"lexeme\":\";\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":45},\"end\":{\"line\":1,\"column\":46}}}\n{\"schema_version\":1,\"kind\":\"EOF\",\"lexeme\":\"\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":46},\"end\":{\"line\":1,\"column\":46}}}\n",
+      "stderr": "",
+      "timed_out": false,
+      "seconds": 0.01448720000917092,
+      "passed": true
+    },
+    {
+      "id": "end-boundaries",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "lex",
+        "tests/lex/inputs/end-boundaries.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"schema_version\":1,\"kind\":\"IDENT\",\"lexeme\":\"x\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":73},\"end\":{\"line\":1,\"column\":74}}}\n{\"schema_version\":1,\"kind\":\"SEMICOLON\",\"lexeme\":\";\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":74},\"end\":{\"line\":1,\"column\":75}}}\n{\"schema_version\":1,\"kind\":\"EOF\",\"lexeme\":\"\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":75},\"end\":{\"line\":1,\"column\":75}}}\n",
+      "stderr": "",
+      "timed_out": false,
+      "seconds": 0.014542200020514429,
+      "passed": true
+    },
+    {
+      "id": "comment-not-nested",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "lex",
+        "tests/lex/inputs/comment-not-nested.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"schema_version\":1,\"kind\":\"TRUE\",\"lexeme\":\"(true)\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":52},\"end\":{\"line\":1,\"column\":58}}}\n{\"schema_version\":1,\"kind\":\"SEMICOLON\",\"lexeme\":\";\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":58},\"end\":{\"line\":1,\"column\":59}}}\n{\"schema_version\":1,\"kind\":\"EOF\",\"lexeme\":\"\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":59},\"end\":{\"line\":1,\"column\":59}}}\n",
+      "stderr": "",
+      "timed_out": false,
+      "seconds": 0.013856399978976697,
+      "passed": true
+    },
+    {
+      "id": "quoted-end",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "lex",
+        "tests/lex/inputs/quoted-end.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"schema_version\":1,\"kind\":\"STRING\",\"lexeme\":\"\\\"ok\\\"\",\"value\":\"ok\",\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":20},\"end\":{\"line\":1,\"column\":24}}}\n{\"schema_version\":1,\"kind\":\"SEMICOLON\",\"lexeme\":\";\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":24},\"end\":{\"line\":1,\"column\":25}}}\n{\"schema_version\":1,\"kind\":\"EOF\",\"lexeme\":\"\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":25},\"end\":{\"line\":1,\"column\":25}}}\n",
+      "stderr": "",
+      "timed_out": false,
+      "seconds": 0.014059699984500185,
+      "passed": true
+    },
+    {
+      "id": "empty-comment",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "lex",
+        "tests/lex/inputs/empty-comment.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"schema_version\":1,\"kind\":\"INTEGER\",\"lexeme\":\"1\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":19},\"end\":{\"line\":1,\"column\":20}}}\n{\"schema_version\":1,\"kind\":\"SEMICOLON\",\"lexeme\":\";\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":20},\"end\":{\"line\":1,\"column\":21}}}\n{\"schema_version\":1,\"kind\":\"EOF\",\"lexeme\":\"\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":21},\"end\":{\"line\":1,\"column\":21}}}\n",
+      "stderr": "",
+      "timed_out": false,
+      "seconds": 0.013548800023272634,
+      "passed": true
+    },
+    {
+      "id": "bom-crlf",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "lex",
+        "tests/lex/inputs/bom-crlf.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"schema_version\":1,\"kind\":\"IMMUTABLE_DECL\",\"lexeme\":\"(zno)\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":2,\"column\":2},\"end\":{\"line\":2,\"column\":7}}}\n{\"schema_version\":1,\"kind\":\"IDENT\",\"lexeme\":\"名\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":2,\"column\":8},\"end\":{\"line\":2,\"column\":9}}}\n{\"schema_version\":1,\"kind\":\"INIT\",\"lexeme\":\":=\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":2,\"column\":10},\"end\":{\"line\":2,\"column\":12}}}\n{\"schema_version\":1,\"kind\":\"STRING\",\"lexeme\":\"\\\"😀[OoO]n\\\"\",\"value\":\"😀\\n\",\"raw\":false,\"span\":{\"start\":{\"line\":2,\"column\":13},\"end\":{\"line\":2,\"column\":22}}}\n{\"schema_version\":1,\"kind\":\"SEMICOLON\",\"lexeme\":\";\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":2,\"column\":22},\"end\":{\"line\":2,\"column\":23}}}\n{\"schema_version\":1,\"kind\":\"EOF\",\"lexeme\":\"\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":3,\"column\":1},\"end\":{\"line\":3,\"column\":1}}}\n",
+      "stderr": "",
+      "timed_out": false,
+      "seconds": 0.013445200020214543,
+      "passed": true
+    },
+    {
+      "id": "comments-crlf",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "lex",
+        "tests/lex/inputs/comments-crlf.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"schema_version\":1,\"kind\":\"INTEGER\",\"lexeme\":\"42\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":5,\"column\":1},\"end\":{\"line\":5,\"column\":3}}}\n{\"schema_version\":1,\"kind\":\"SEMICOLON\",\"lexeme\":\";\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":5,\"column\":3},\"end\":{\"line\":5,\"column\":4}}}\n{\"schema_version\":1,\"kind\":\"EOF\",\"lexeme\":\"\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":5,\"column\":4},\"end\":{\"line\":5,\"column\":4}}}\n",
+      "stderr": "",
+      "timed_out": false,
+      "seconds": 0.013295500015374273,
+      "passed": true
+    },
+    {
+      "id": "中文 空格",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "lex",
+        "tests/lex/inputs/中文 空格.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"schema_version\":1,\"kind\":\"MUTABLE_DECL\",\"lexeme\":\"(zyes)\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":1},\"end\":{\"line\":1,\"column\":7}}}\n{\"schema_version\":1,\"kind\":\"IDENT\",\"lexeme\":\"中文\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":8},\"end\":{\"line\":1,\"column\":10}}}\n{\"schema_version\":1,\"kind\":\"INIT\",\"lexeme\":\":=\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":11},\"end\":{\"line\":1,\"column\":13}}}\n{\"schema_version\":1,\"kind\":\"LEFT_BRACKET\",\"lexeme\":\"[\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":14},\"end\":{\"line\":1,\"column\":15}}}\n{\"schema_version\":1,\"kind\":\"INTEGER\",\"lexeme\":\"1\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":15},\"end\":{\"line\":1,\"column\":16}}}\n{\"schema_version\":1,\"kind\":\"COMMA\",\"lexeme\":\",\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":16},\"end\":{\"line\":1,\"column\":17}}}\n{\"schema_version\":1,\"kind\":\"INTEGER\",\"lexeme\":\"2\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":17},\"end\":{\"line\":1,\"column\":18}}}\n{\"schema_version\":1,\"kind\":\"RIGHT_BRACKET\",\"lexeme\":\"]\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":18},\"end\":{\"line\":1,\"column\":19}}}\n{\"schema_version\":1,\"kind\":\"SEMICOLON\",\"lexeme\":\";\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":19},\"end\":{\"line\":1,\"column\":20}}}\n{\"schema_version\":1,\"kind\":\"EOF\",\"lexeme\":\"\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":20},\"end\":{\"line\":1,\"column\":20}}}\n",
+      "stderr": "",
+      "timed_out": false,
+      "seconds": 0.015150399995036423,
+      "passed": true
+    },
+    {
+      "id": "empty",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "lex",
+        "tests/lex/inputs/empty.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"schema_version\":1,\"kind\":\"EOF\",\"lexeme\":\"\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":1},\"end\":{\"line\":1,\"column\":1}}}\n",
+      "stderr": "",
+      "timed_out": false,
+      "seconds": 0.014576999994460493,
+      "passed": true
+    },
+    {
+      "id": "numbers-retain-text",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "lex",
+        "tests/lex/inputs/numbers-retain-text.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"schema_version\":1,\"kind\":\"INTEGER\",\"lexeme\":\"00012\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":1},\"end\":{\"line\":1,\"column\":6}}}\n{\"schema_version\":1,\"kind\":\"FLOAT\",\"lexeme\":\"1.20\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":7},\"end\":{\"line\":1,\"column\":11}}}\n{\"schema_version\":1,\"kind\":\"INTEGER\",\"lexeme\":\"1\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":12},\"end\":{\"line\":1,\"column\":13}}}\n{\"schema_version\":1,\"kind\":\"IDENT\",\"lexeme\":\"e3\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":13},\"end\":{\"line\":1,\"column\":15}}}\n{\"schema_version\":1,\"kind\":\"INTEGER\",\"lexeme\":\"0\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":16},\"end\":{\"line\":1,\"column\":17}}}\n{\"schema_version\":1,\"kind\":\"IDENT\",\"lexeme\":\"xFF\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":17},\"end\":{\"line\":1,\"column\":20}}}\n{\"schema_version\":1,\"kind\":\"INTEGER\",\"lexeme\":\"1\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":21},\"end\":{\"line\":1,\"column\":22}}}\n{\"schema_version\":1,\"kind\":\"IDENT\",\"lexeme\":\"_000\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":22},\"end\":{\"line\":1,\"column\":26}}}\n{\"schema_version\":1,\"kind\":\"DOT\",\"lexeme\":\".\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":27},\"end\":{\"line\":1,\"column\":28}}}\n{\"schema_version\":1,\"kind\":\"INTEGER\",\"lexeme\":\"5\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":28},\"end\":{\"line\":1,\"column\":29}}}\n{\"schema_version\":1,\"kind\":\"INTEGER\",\"lexeme\":\"1\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":30},\"end\":{\"line\":1,\"column\":31}}}\n{\"schema_version\":1,\"kind\":\"DOT\",\"lexeme\":\".\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":31},\"end\":{\"line\":1,\"column\":32}}}\n{\"schema_version\":1,\"kind\":\"EOF\",\"lexeme\":\"\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":32},\"end\":{\"line\":1,\"column\":32}}}\n",
+      "stderr": "",
+      "timed_out": false,
+      "seconds": 0.014791899971896783,
+      "passed": true
+    },
+    {
+      "id": "hash-is-illegal",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "lex",
+        "tests/lex/inputs/hash-is-illegal.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E101\",\"file\":\"tests/lex/inputs/hash-is-illegal.zzy\",\"span\":{\"start\":{\"line\":1,\"column\":15},\"end\":{\"line\":1,\"column\":16}},\"message\":\"illegal character\",\"notes\":[]}\n",
+      "timed_out": false,
+      "seconds": 0.014175300020724535,
+      "passed": true
+    },
+    {
+      "id": "bare-end",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "lex",
+        "tests/lex/inputs/bare-end.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E101\",\"file\":\"tests/lex/inputs/bare-end.zzy\",\"span\":{\"start\":{\"line\":1,\"column\":2},\"end\":{\"line\":1,\"column\":8}},\"message\":\"zzyend only terminates multiline comments\",\"notes\":[]}\n",
+      "timed_out": false,
+      "seconds": 0.01309439999749884,
+      "passed": true
+    },
+    {
+      "id": "unclosed-comment",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "lex",
+        "tests/lex/inputs/unclosed-comment.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E101\",\"file\":\"tests/lex/inputs/unclosed-comment.zzy\",\"span\":{\"start\":{\"line\":1,\"column\":1},\"end\":{\"line\":1,\"column\":12}},\"message\":\"unterminated multiline comment; expected whole word zzyend\",\"notes\":[]}\n",
+      "timed_out": false,
+      "seconds": 0.013671300024725497,
+      "passed": true
+    },
+    {
+      "id": "bad-escape",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "lex",
+        "tests/lex/inputs/bad-escape.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E102\",\"file\":\"tests/lex/inputs/bad-escape.zzy\",\"span\":{\"start\":{\"line\":1,\"column\":5},\"end\":{\"line\":1,\"column\":11}},\"message\":\"unknown or incomplete [OoO] escape\",\"notes\":[]}\n",
+      "timed_out": false,
+      "seconds": 0.012528899998869747,
+      "passed": true
+    },
+    {
+      "id": "dangling-escape-quote",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "lex",
+        "tests/lex/inputs/dangling-escape-quote.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E102\",\"file\":\"tests/lex/inputs/dangling-escape-quote.zzy\",\"span\":{\"start\":{\"line\":1,\"column\":2},\"end\":{\"line\":1,\"column\":7}},\"message\":\"unknown or incomplete [OoO] escape\",\"notes\":[]}\n",
+      "timed_out": false,
+      "seconds": 0.013812800025334582,
+      "passed": true
+    },
+    {
+      "id": "dangling-escape-eof",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "lex",
+        "tests/lex/inputs/dangling-escape-eof.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E102\",\"file\":\"tests/lex/inputs/dangling-escape-eof.zzy\",\"span\":{\"start\":{\"line\":1,\"column\":2},\"end\":{\"line\":1,\"column\":7}},\"message\":\"unknown or incomplete [OoO] escape\",\"notes\":[]}\n",
+      "timed_out": false,
+      "seconds": 0.013999000017065555,
+      "passed": true
+    },
+    {
+      "id": "unterminated-string",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "lex",
+        "tests/lex/inputs/unterminated-string.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E101\",\"file\":\"tests/lex/inputs/unterminated-string.zzy\",\"span\":{\"start\":{\"line\":1,\"column\":1},\"end\":{\"line\":1,\"column\":2}},\"message\":\"unterminated string\",\"notes\":[]}\n",
+      "timed_out": false,
+      "seconds": 0.013822599983541295,
+      "passed": true
+    },
+    {
+      "id": "physical-newline",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "lex",
+        "tests/lex/inputs/physical-newline.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E101\",\"file\":\"tests/lex/inputs/physical-newline.zzy\",\"span\":{\"start\":{\"line\":1,\"column\":1},\"end\":{\"line\":1,\"column\":2}},\"message\":\"physical newline in string\",\"notes\":[]}\n",
+      "timed_out": false,
+      "seconds": 0.012803399993572384,
+      "passed": true
+    },
+    {
+      "id": "physical-crlf",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "lex",
+        "tests/lex/inputs/physical-crlf.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E101\",\"file\":\"tests/lex/inputs/physical-crlf.zzy\",\"span\":{\"start\":{\"line\":1,\"column\":1},\"end\":{\"line\":1,\"column\":2}},\"message\":\"physical newline in string\",\"notes\":[]}\n",
+      "timed_out": false,
+      "seconds": 0.012794399983249605,
+      "passed": true
+    },
+    {
+      "id": "raw-newline",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "lex",
+        "tests/lex/inputs/raw-newline.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E101\",\"file\":\"tests/lex/inputs/raw-newline.zzy\",\"span\":{\"start\":{\"line\":1,\"column\":6},\"end\":{\"line\":1,\"column\":7}},\"message\":\"physical newline in string\",\"notes\":[]}\n",
+      "timed_out": false,
+      "seconds": 0.011759799992432818,
+      "passed": true
+    },
+    {
+      "id": "raw-missing",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "lex",
+        "tests/lex/inputs/raw-missing.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E101\",\"file\":\"tests/lex/inputs/raw-missing.zzy\",\"span\":{\"start\":{\"line\":1,\"column\":1},\"end\":{\"line\":1,\"column\":6}},\"message\":\"(raw) must precede a double-quoted string\",\"notes\":[]}\n",
+      "timed_out": false,
+      "seconds": 0.014554099994711578,
+      "passed": true
+    },
+    {
+      "id": "raw-wrong-next",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "lex",
+        "tests/lex/inputs/raw-wrong-next.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E101\",\"file\":\"tests/lex/inputs/raw-wrong-next.zzy\",\"span\":{\"start\":{\"line\":1,\"column\":1},\"end\":{\"line\":1,\"column\":6}},\"message\":\"(raw) must precede a double-quoted string\",\"notes\":[]}\n",
+      "timed_out": false,
+      "seconds": 0.014034899999387562,
+      "passed": true
+    },
+    {
+      "id": "raw-unclosed-comment",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "lex",
+        "tests/lex/inputs/raw-unclosed-comment.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E101\",\"file\":\"tests/lex/inputs/raw-unclosed-comment.zzy\",\"span\":{\"start\":{\"line\":1,\"column\":7},\"end\":{\"line\":1,\"column\":18}},\"message\":\"unterminated multiline comment; expected whole word zzyend\",\"notes\":[]}\n",
+      "timed_out": false,
+      "seconds": 0.01385290001053363,
+      "passed": true
+    },
+    {
+      "id": "fullwidth-parenthesis",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "lex",
+        "tests/lex/inputs/fullwidth-parenthesis.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E101\",\"file\":\"tests/lex/inputs/fullwidth-parenthesis.zzy\",\"span\":{\"start\":{\"line\":1,\"column\":1},\"end\":{\"line\":1,\"column\":2}},\"message\":\"illegal character\",\"notes\":[]}\n",
+      "timed_out": false,
+      "seconds": 0.012591100006829947,
+      "passed": true
+    },
+    {
+      "id": "non-ascii-digit",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "lex",
+        "tests/lex/inputs/non-ascii-digit.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E101\",\"file\":\"tests/lex/inputs/non-ascii-digit.zzy\",\"span\":{\"start\":{\"line\":1,\"column\":1},\"end\":{\"line\":1,\"column\":2}},\"message\":\"illegal character\",\"notes\":[]}\n",
+      "timed_out": false,
+      "seconds": 0.01428859998122789,
+      "passed": true
+    },
+    {
+      "id": "invalid-equals",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "lex",
+        "tests/lex/inputs/invalid-equals.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E101\",\"file\":\"tests/lex/inputs/invalid-equals.zzy\",\"span\":{\"start\":{\"line\":1,\"column\":3},\"end\":{\"line\":1,\"column\":4}},\"message\":\"illegal character\",\"notes\":[]}\n",
+      "timed_out": false,
+      "seconds": 0.013232600002083927,
+      "passed": true
+    },
+    {
+      "id": "first-error-only",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "lex",
+        "tests/lex/inputs/first-error-only.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E101\",\"file\":\"tests/lex/inputs/first-error-only.zzy\",\"span\":{\"start\":{\"line\":1,\"column\":1},\"end\":{\"line\":1,\"column\":2}},\"message\":\"illegal character\",\"notes\":[]}\n",
+      "timed_out": false,
+      "seconds": 0.012725799984764308,
+      "passed": true
+    },
+    {
+      "id": "digits-2",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "lex",
+        "tests/lex/inputs/digits-2.zzy",
+        "--diagnostic-format",
+        "json",
+        "--limits",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY native N1 中文 x1kxdox6\\limits.json"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"schema_version\":1,\"kind\":\"INTEGER\",\"lexeme\":\"00\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":1},\"end\":{\"line\":1,\"column\":3}}}\n{\"schema_version\":1,\"kind\":\"SEMICOLON\",\"lexeme\":\";\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":3},\"end\":{\"line\":1,\"column\":4}}}\n{\"schema_version\":1,\"kind\":\"EOF\",\"lexeme\":\"\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":4},\"end\":{\"line\":1,\"column\":4}}}\n",
+      "stderr": "",
+      "timed_out": false,
+      "seconds": 0.014425999979721382,
+      "passed": true
+    },
+    {
+      "id": "digits-3",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "lex",
+        "tests/lex/inputs/digits-3.zzy",
+        "--diagnostic-format",
+        "json",
+        "--limits",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY native N1 中文 x1kxdox6\\limits.json"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"schema_version\":1,\"kind\":\"INTEGER\",\"lexeme\":\"000\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":1},\"end\":{\"line\":1,\"column\":4}}}\n{\"schema_version\":1,\"kind\":\"SEMICOLON\",\"lexeme\":\";\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":4},\"end\":{\"line\":1,\"column\":5}}}\n{\"schema_version\":1,\"kind\":\"EOF\",\"lexeme\":\"\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":5},\"end\":{\"line\":1,\"column\":5}}}\n",
+      "stderr": "",
+      "timed_out": false,
+      "seconds": 0.013002399995457381,
+      "passed": true
+    },
+    {
+      "id": "digits-4",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "lex",
+        "tests/lex/inputs/digits-4.zzy",
+        "--diagnostic-format",
+        "json",
+        "--limits",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY native N1 中文 x1kxdox6\\limits.json"
+      ],
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E211\",\"file\":\"tests/lex/inputs/digits-4.zzy\",\"span\":{\"start\":{\"line\":1,\"column\":1},\"end\":{\"line\":1,\"column\":5}},\"message\":\"resource limit exceeded: numeric_digits, limit=3, requested=4\",\"notes\":[]}\n",
+      "timed_out": false,
+      "seconds": 0.013247900002170354,
+      "passed": true
+    },
+    {
+      "id": "float-digits-limit",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "lex",
+        "tests/lex/inputs/float-digits-limit.zzy",
+        "--diagnostic-format",
+        "json",
+        "--limits",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY native N1 中文 x1kxdox6\\limits.json"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"schema_version\":1,\"kind\":\"FLOAT\",\"lexeme\":\"0.00\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":1},\"end\":{\"line\":1,\"column\":5}}}\n{\"schema_version\":1,\"kind\":\"SEMICOLON\",\"lexeme\":\";\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":5},\"end\":{\"line\":1,\"column\":6}}}\n{\"schema_version\":1,\"kind\":\"EOF\",\"lexeme\":\"\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":6},\"end\":{\"line\":1,\"column\":6}}}\n",
+      "stderr": "",
+      "timed_out": false,
+      "seconds": 0.014324799994938076,
+      "passed": true
+    },
+    {
+      "id": "float-digits-over",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "lex",
+        "tests/lex/inputs/float-digits-over.zzy",
+        "--diagnostic-format",
+        "json",
+        "--limits",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY native N1 中文 x1kxdox6\\limits.json"
+      ],
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E211\",\"file\":\"tests/lex/inputs/float-digits-over.zzy\",\"span\":{\"start\":{\"line\":1,\"column\":1},\"end\":{\"line\":1,\"column\":6}},\"message\":\"resource limit exceeded: numeric_digits, limit=3, requested=4\",\"notes\":[]}\n",
+      "timed_out": false,
+      "seconds": 0.014161899976897985,
+      "passed": true
+    },
+    {
+      "id": "default-digits-4095",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "lex",
+        "tests/lex/inputs/default-digits-4095.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"schema_version\":1,\"kind\":\"INTEGER\",\"lexeme\":\"000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":1},\"end\":{\"line\":1,\"column\":4096}}}\n{\"schema_version\":1,\"kind\":\"SEMICOLON\",\"lexeme\":\";\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":4096},\"end\":{\"line\":1,\"column\":4097}}}\n{\"schema_version\":1,\"kind\":\"EOF\",\"lexeme\":\"\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":4097},\"end\":{\"line\":1,\"column\":4097}}}\n",
+      "stderr": "",
+      "timed_out": false,
+      "seconds": 0.014172800001688302,
+      "passed": true
+    },
+    {
+      "id": "default-digits-4096",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "lex",
+        "tests/lex/inputs/default-digits-4096.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"schema_version\":1,\"kind\":\"INTEGER\",\"lexeme\":\"0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":1},\"end\":{\"line\":1,\"column\":4097}}}\n{\"schema_version\":1,\"kind\":\"SEMICOLON\",\"lexeme\":\";\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":4097},\"end\":{\"line\":1,\"column\":4098}}}\n{\"schema_version\":1,\"kind\":\"EOF\",\"lexeme\":\"\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":4098},\"end\":{\"line\":1,\"column\":4098}}}\n",
+      "stderr": "",
+      "timed_out": false,
+      "seconds": 0.01367509999545291,
+      "passed": true
+    },
+    {
+      "id": "default-digits-4097",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "lex",
+        "tests/lex/inputs/default-digits-4097.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E211\",\"file\":\"tests/lex/inputs/default-digits-4097.zzy\",\"span\":{\"start\":{\"line\":1,\"column\":1},\"end\":{\"line\":1,\"column\":4098}},\"message\":\"resource limit exceeded: numeric_digits, limit=4096, requested=4097\",\"notes\":[]}\n",
+      "timed_out": false,
+      "seconds": 0.01399069998296909,
+      "passed": true
+    },
+    {
+      "id": "tokens-under",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "lex",
+        "tests/lex/inputs/tokens-under.zzy",
+        "--diagnostic-format",
+        "json",
+        "--limits",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY native N1 中文 x1kxdox6\\limits.json"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"schema_version\":1,\"kind\":\"IDENT\",\"lexeme\":\"x\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":1},\"end\":{\"line\":1,\"column\":2}}}\n{\"schema_version\":1,\"kind\":\"EOF\",\"lexeme\":\"\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":2},\"end\":{\"line\":1,\"column\":2}}}\n",
+      "stderr": "",
+      "timed_out": false,
+      "seconds": 0.013859400001820177,
+      "passed": true
+    },
+    {
+      "id": "tokens-limit",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "lex",
+        "tests/lex/inputs/tokens-limit.zzy",
+        "--diagnostic-format",
+        "json",
+        "--limits",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY native N1 中文 x1kxdox6\\limits.json"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"schema_version\":1,\"kind\":\"IDENT\",\"lexeme\":\"x\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":1},\"end\":{\"line\":1,\"column\":2}}}\n{\"schema_version\":1,\"kind\":\"SEMICOLON\",\"lexeme\":\";\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":2},\"end\":{\"line\":1,\"column\":3}}}\n{\"schema_version\":1,\"kind\":\"EOF\",\"lexeme\":\"\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":3},\"end\":{\"line\":1,\"column\":3}}}\n",
+      "stderr": "",
+      "timed_out": false,
+      "seconds": 0.013274500000989065,
+      "passed": true
+    },
+    {
+      "id": "tokens-over",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "lex",
+        "tests/lex/inputs/tokens-over.zzy",
+        "--diagnostic-format",
+        "json",
+        "--limits",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY native N1 中文 x1kxdox6\\limits.json"
+      ],
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E211\",\"file\":\"tests/lex/inputs/tokens-over.zzy\",\"span\":{\"start\":{\"line\":1,\"column\":3},\"end\":{\"line\":1,\"column\":4}},\"message\":\"resource limit exceeded: tokens_per_file, limit=2, requested=3\",\"notes\":[]}\n",
+      "timed_out": false,
+      "seconds": 0.013843699998687953,
+      "passed": true
+    },
+    {
+      "id": "comments-not-tokens",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "lex",
+        "tests/lex/inputs/comments-not-tokens.zzy",
+        "--diagnostic-format",
+        "json",
+        "--limits",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY native N1 中文 x1kxdox6\\limits.json"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"schema_version\":1,\"kind\":\"IDENT\",\"lexeme\":\"x\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":26},\"end\":{\"line\":1,\"column\":27}}}\n{\"schema_version\":1,\"kind\":\"EOF\",\"lexeme\":\"\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":40},\"end\":{\"line\":1,\"column\":40}}}\n",
+      "stderr": "",
+      "timed_out": false,
+      "seconds": 0.014886499993735924,
+      "passed": true
+    },
+    {
+      "id": "text-2",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "lex",
+        "tests/lex/inputs/text-2.zzy",
+        "--diagnostic-format",
+        "json",
+        "--limits",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY native N1 中文 x1kxdox6\\limits.json"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"schema_version\":1,\"kind\":\"STRING\",\"lexeme\":\"\\\"中中\\\"\",\"value\":\"中中\",\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":1},\"end\":{\"line\":1,\"column\":5}}}\n{\"schema_version\":1,\"kind\":\"SEMICOLON\",\"lexeme\":\";\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":5},\"end\":{\"line\":1,\"column\":6}}}\n{\"schema_version\":1,\"kind\":\"EOF\",\"lexeme\":\"\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":6},\"end\":{\"line\":1,\"column\":6}}}\n",
+      "stderr": "",
+      "timed_out": false,
+      "seconds": 0.013197799999034032,
+      "passed": true
+    },
+    {
+      "id": "text-3",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "lex",
+        "tests/lex/inputs/text-3.zzy",
+        "--diagnostic-format",
+        "json",
+        "--limits",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY native N1 中文 x1kxdox6\\limits.json"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"schema_version\":1,\"kind\":\"STRING\",\"lexeme\":\"\\\"中中中\\\"\",\"value\":\"中中中\",\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":1},\"end\":{\"line\":1,\"column\":6}}}\n{\"schema_version\":1,\"kind\":\"SEMICOLON\",\"lexeme\":\";\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":6},\"end\":{\"line\":1,\"column\":7}}}\n{\"schema_version\":1,\"kind\":\"EOF\",\"lexeme\":\"\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":7},\"end\":{\"line\":1,\"column\":7}}}\n",
+      "stderr": "",
+      "timed_out": false,
+      "seconds": 0.01368119998369366,
+      "passed": true
+    },
+    {
+      "id": "text-4",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "lex",
+        "tests/lex/inputs/text-4.zzy",
+        "--diagnostic-format",
+        "json",
+        "--limits",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY native N1 中文 x1kxdox6\\limits.json"
+      ],
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E211\",\"file\":\"tests/lex/inputs/text-4.zzy\",\"span\":{\"start\":{\"line\":1,\"column\":1},\"end\":{\"line\":1,\"column\":6}},\"message\":\"resource limit exceeded: text_codepoints, limit=3, requested=4\",\"notes\":[]}\n",
+      "timed_out": false,
+      "seconds": 0.013084199978038669,
+      "passed": true
+    },
+    {
+      "id": "decoded-text-limit",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "lex",
+        "tests/lex/inputs/decoded-text-limit.zzy",
+        "--diagnostic-format",
+        "json",
+        "--limits",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY native N1 中文 x1kxdox6\\limits.json"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"schema_version\":1,\"kind\":\"STRING\",\"lexeme\":\"\\\"[OoO][OoO]\\\"\",\"value\":\"[OoO]\",\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":1},\"end\":{\"line\":1,\"column\":13}}}\n{\"schema_version\":1,\"kind\":\"SEMICOLON\",\"lexeme\":\";\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":13},\"end\":{\"line\":1,\"column\":14}}}\n{\"schema_version\":1,\"kind\":\"EOF\",\"lexeme\":\"\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":14},\"end\":{\"line\":1,\"column\":14}}}\n",
+      "stderr": "",
+      "timed_out": false,
+      "seconds": 0.01514200001838617,
+      "passed": true
+    },
+    {
+      "id": "decoded-text-over",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "lex",
+        "tests/lex/inputs/decoded-text-over.zzy",
+        "--diagnostic-format",
+        "json",
+        "--limits",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY native N1 中文 x1kxdox6\\limits.json"
+      ],
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E211\",\"file\":\"tests/lex/inputs/decoded-text-over.zzy\",\"span\":{\"start\":{\"line\":1,\"column\":1},\"end\":{\"line\":1,\"column\":13}},\"message\":\"resource limit exceeded: text_codepoints, limit=5, requested=6\",\"notes\":[]}\n",
+      "timed_out": false,
+      "seconds": 0.01246190001256764,
+      "passed": true
+    },
+    {
+      "id": "comment-prefix-names",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "lex",
+        "tests/lex/inputs/comment-prefix-names.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"schema_version\":1,\"kind\":\"IDENT\",\"lexeme\":\"myzzysay\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":1},\"end\":{\"line\":1,\"column\":9}}}\n{\"schema_version\":1,\"kind\":\"COLON\",\"lexeme\":\":\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":9},\"end\":{\"line\":1,\"column\":10}}}\n{\"schema_version\":1,\"kind\":\"IDENT\",\"lexeme\":\"xzzysayalot\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":11},\"end\":{\"line\":1,\"column\":22}}}\n{\"schema_version\":1,\"kind\":\"COLON\",\"lexeme\":\":\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":22},\"end\":{\"line\":1,\"column\":23}}}\n{\"schema_version\":1,\"kind\":\"RESERVED_NAME\",\"lexeme\":\"zzysay\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":24},\"end\":{\"line\":1,\"column\":30}}}\n{\"schema_version\":1,\"kind\":\"COLON\",\"lexeme\":\":\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":31},\"end\":{\"line\":1,\"column\":32}}}\n{\"schema_version\":1,\"kind\":\"RESERVED_NAME\",\"lexeme\":\"zzysayalot\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":33},\"end\":{\"line\":1,\"column\":43}}}\n{\"schema_version\":1,\"kind\":\"COLON\",\"lexeme\":\":\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":44},\"end\":{\"line\":1,\"column\":45}}}\n{\"schema_version\":1,\"kind\":\"IDENT\",\"lexeme\":\"zzyending\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":46},\"end\":{\"line\":1,\"column\":55}}}\n{\"schema_version\":1,\"kind\":\"IDENT\",\"lexeme\":\"my_zzyend\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":56},\"end\":{\"line\":1,\"column\":65}}}\n{\"schema_version\":1,\"kind\":\"IDENT\",\"lexeme\":\"zzyend中文\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":66},\"end\":{\"line\":1,\"column\":74}}}\n{\"schema_version\":1,\"kind\":\"SEMICOLON\",\"lexeme\":\";\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":74},\"end\":{\"line\":1,\"column\":75}}}\n{\"schema_version\":1,\"kind\":\"EOF\",\"lexeme\":\"\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":75},\"end\":{\"line\":1,\"column\":75}}}\n",
+      "stderr": "",
+      "timed_out": false,
+      "seconds": 0.012791799992555752,
+      "passed": true
+    },
+    {
+      "id": "single-comment-after-token",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "lex",
+        "tests/lex/inputs/single-comment-after-token.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"schema_version\":1,\"kind\":\"INTEGER\",\"lexeme\":\"1\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":1},\"end\":{\"line\":1,\"column\":2}}}\n{\"schema_version\":1,\"kind\":\"SEMICOLON\",\"lexeme\":\";\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":2},\"end\":{\"line\":1,\"column\":3}}}\n{\"schema_version\":1,\"kind\":\"EOF\",\"lexeme\":\"\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":21},\"end\":{\"line\":1,\"column\":21}}}\n",
+      "stderr": "",
+      "timed_out": false,
+      "seconds": 0.013935299997683614,
+      "passed": true
+    },
+    {
+      "id": "backslash-not-escape",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "lex",
+        "tests/lex/inputs/backslash-not-escape.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"schema_version\":1,\"kind\":\"STRING\",\"lexeme\":\"\\\"a\\\\\\\"\",\"value\":\"a\\\\\",\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":1},\"end\":{\"line\":1,\"column\":5}}}\n{\"schema_version\":1,\"kind\":\"IDENT\",\"lexeme\":\"rest\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":5},\"end\":{\"line\":1,\"column\":9}}}\n{\"schema_version\":1,\"kind\":\"SEMICOLON\",\"lexeme\":\";\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":9},\"end\":{\"line\":1,\"column\":10}}}\n{\"schema_version\":1,\"kind\":\"EOF\",\"lexeme\":\"\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":10},\"end\":{\"line\":1,\"column\":10}}}\n",
+      "stderr": "",
+      "timed_out": false,
+      "seconds": 0.012224900012370199,
+      "passed": true
+    },
+    {
+      "id": "escape-marker-outside-string",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "lex",
+        "tests/lex/inputs/escape-marker-outside-string.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"schema_version\":1,\"kind\":\"LEFT_BRACKET\",\"lexeme\":\"[\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":1},\"end\":{\"line\":1,\"column\":2}}}\n{\"schema_version\":1,\"kind\":\"IDENT\",\"lexeme\":\"OoO\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":2},\"end\":{\"line\":1,\"column\":5}}}\n{\"schema_version\":1,\"kind\":\"RIGHT_BRACKET\",\"lexeme\":\"]\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":5},\"end\":{\"line\":1,\"column\":6}}}\n{\"schema_version\":1,\"kind\":\"SEMICOLON\",\"lexeme\":\";\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":6},\"end\":{\"line\":1,\"column\":7}}}\n{\"schema_version\":1,\"kind\":\"EOF\",\"lexeme\":\"\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":7},\"end\":{\"line\":1,\"column\":7}}}\n",
+      "stderr": "",
+      "timed_out": false,
+      "seconds": 0.014355499995872378,
+      "passed": true
+    },
+    {
+      "id": "second-bom",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "lex",
+        "tests/lex/inputs/second-bom.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E101\",\"file\":\"tests/lex/inputs/second-bom.zzy\",\"span\":{\"start\":{\"line\":1,\"column\":1},\"end\":{\"line\":1,\"column\":2}},\"message\":\"illegal character\",\"notes\":[]}\n",
+      "timed_out": false,
+      "seconds": 0.013123299984727055,
+      "passed": true
+    },
+    {
+      "id": "unicode-error-position",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "lex",
+        "tests/lex/inputs/unicode-error-position.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E101\",\"file\":\"tests/lex/inputs/unicode-error-position.zzy\",\"span\":{\"start\":{\"line\":1,\"column\":5},\"end\":{\"line\":1,\"column\":6}},\"message\":\"illegal character\",\"notes\":[]}\n",
+      "timed_out": false,
+      "seconds": 0.013026600005105138,
+      "passed": true
+    },
+    {
+      "id": "raw-quote-closes",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "lex",
+        "tests/lex/inputs/raw-quote-closes.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"schema_version\":1,\"kind\":\"RAW\",\"lexeme\":\"(raw)\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":1},\"end\":{\"line\":1,\"column\":6}}}\n{\"schema_version\":1,\"kind\":\"STRING\",\"lexeme\":\"\\\"[OoO]q\\\"\",\"value\":\"[OoO]q\",\"raw\":true,\"span\":{\"start\":{\"line\":1,\"column\":6},\"end\":{\"line\":1,\"column\":14}}}\n{\"schema_version\":1,\"kind\":\"IDENT\",\"lexeme\":\"name\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":14},\"end\":{\"line\":1,\"column\":18}}}\n{\"schema_version\":1,\"kind\":\"SEMICOLON\",\"lexeme\":\";\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":18},\"end\":{\"line\":1,\"column\":19}}}\n{\"schema_version\":1,\"kind\":\"EOF\",\"lexeme\":\"\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":19},\"end\":{\"line\":1,\"column\":19}}}\n",
+      "stderr": "",
+      "timed_out": false,
+      "seconds": 0.015797400003066286,
+      "passed": true
+    },
+    {
+      "id": "lex-output-over",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "lex",
+        "tests/lex/inputs/lex-output-over.zzy",
+        "--diagnostic-format",
+        "json",
+        "--limits",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY native N1 中文 x1kxdox6\\limits.json"
+      ],
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E211\",\"file\":null,\"span\":null,\"message\":\"resource limit exceeded: stdout_bytes, limit=1, requested=141\",\"notes\":[]}\n",
+      "timed_out": false,
+      "seconds": 0.013730400009080768,
+      "passed": true
+    },
+    {
+      "id": "embedded-nul-outside",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "lex",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY native N1 中文 x1kxdox6\\embedded-nul-outside.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E101\",\"file\":\"C:/Users/13691/AppData/Local/Temp/ZZY native N1 中文 x1kxdox6/embedded-nul-outside.zzy\",\"span\":{\"start\":{\"line\":1,\"column\":1},\"end\":{\"line\":1,\"column\":2}},\"message\":\"illegal character\",\"notes\":[]}\n",
+      "timed_out": false,
+      "seconds": 0.01678350000292994,
+      "passed": true
+    },
+    {
+      "id": "embedded-nul-string",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "lex",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY native N1 中文 x1kxdox6\\embedded-nul-string.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"schema_version\":1,\"kind\":\"STRING\",\"lexeme\":\"\\\"\\u0000\\\"\",\"value\":\"\\u0000\",\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":1},\"end\":{\"line\":1,\"column\":4}}}\n{\"schema_version\":1,\"kind\":\"EOF\",\"lexeme\":\"\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":4},\"end\":{\"line\":1,\"column\":4}}}\n",
+      "stderr": "",
+      "timed_out": false,
+      "seconds": 0.012062800000421703,
+      "passed": true
+    },
+    {
+      "id": "supplementary-identifier",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "lex",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY native N1 中文 x1kxdox6\\supplementary-identifier.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"schema_version\":1,\"kind\":\"IDENT\",\"lexeme\":\"𐐀a\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":1},\"end\":{\"line\":1,\"column\":3}}}\n{\"schema_version\":1,\"kind\":\"EOF\",\"lexeme\":\"\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":3},\"end\":{\"line\":1,\"column\":3}}}\n",
+      "stderr": "",
+      "timed_out": false,
+      "seconds": 0.015046900021843612,
+      "passed": true
+    },
+    {
+      "id": "unicode15-identifier",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "lex",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY native N1 中文 x1kxdox6\\unicode15-identifier.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"schema_version\":1,\"kind\":\"IDENT\",\"lexeme\":\"𑼂\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":1},\"end\":{\"line\":1,\"column\":2}}}\n{\"schema_version\":1,\"kind\":\"EOF\",\"lexeme\":\"\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":2},\"end\":{\"line\":1,\"column\":2}}}\n",
+      "stderr": "",
+      "timed_out": false,
+      "seconds": 0.01686049997806549,
+      "passed": true
+    },
+    {
+      "id": "combining-spelling",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "lex",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY native N1 中文 x1kxdox6\\combining-spelling.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"schema_version\":1,\"kind\":\"IDENT\",\"lexeme\":\"á\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":1},\"end\":{\"line\":1,\"column\":3}}}\n{\"schema_version\":1,\"kind\":\"EOF\",\"lexeme\":\"\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":3},\"end\":{\"line\":1,\"column\":3}}}\n",
+      "stderr": "",
+      "timed_out": false,
+      "seconds": 0.016043199982959777,
+      "passed": true
+    },
+    {
+      "id": "combining-not-start",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "lex",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY native N1 中文 x1kxdox6\\combining-not-start.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E101\",\"file\":\"C:/Users/13691/AppData/Local/Temp/ZZY native N1 中文 x1kxdox6/combining-not-start.zzy\",\"span\":{\"start\":{\"line\":1,\"column\":1},\"end\":{\"line\":1,\"column\":2}},\"message\":\"illegal character\",\"notes\":[]}\n",
+      "timed_out": false,
+      "seconds": 0.014405499998247251,
+      "passed": true
+    },
+    {
+      "id": "cr-tab-eof",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "lex",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY native N1 中文 x1kxdox6\\cr-tab-eof.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"schema_version\":1,\"kind\":\"IDENT\",\"lexeme\":\"a\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":1},\"end\":{\"line\":1,\"column\":2}}}\n{\"schema_version\":1,\"kind\":\"IDENT\",\"lexeme\":\"b\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":4},\"end\":{\"line\":1,\"column\":5}}}\n{\"schema_version\":1,\"kind\":\"EOF\",\"lexeme\":\"\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":5},\"end\":{\"line\":1,\"column\":5}}}\n",
+      "stderr": "",
+      "timed_out": false,
+      "seconds": 0.020185900008073077,
+      "passed": true
+    },
+    {
+      "id": "supplementary-error",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "lex",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY native N1 中文 x1kxdox6\\supplementary-error.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E101\",\"file\":\"C:/Users/13691/AppData/Local/Temp/ZZY native N1 中文 x1kxdox6/supplementary-error.zzy\",\"span\":{\"start\":{\"line\":1,\"column\":5},\"end\":{\"line\":1,\"column\":6}},\"message\":\"illegal character\",\"notes\":[]}\n",
+      "timed_out": false,
+      "seconds": 0.01412269999855198,
+      "passed": true
+    },
+    {
+      "id": "source-info-bom-codepoints",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "source-info",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY native N1 中文 x1kxdox6\\source-info-bom-codepoints.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"file\":\"C:/Users/13691/AppData/Local/Temp/ZZY native N1 中文 x1kxdox6/source-info-bom-codepoints.zzy\",\"bytes\":18,\"codepoints\":8,\"lines\":3,\"sha256\":\"126efe277b6e94cd919b4ecebe5ac03a267d85122e3fed019d30cf04f31d5e65\",\"syntax_checked\":false,\"resource_fingerprint\":\"c9a540b6ea917d42f3d6c915801dce802ee771a18b1ab6139eab2ebc8161b14d\"}\n",
+      "stderr": "",
+      "timed_out": false,
+      "seconds": 0.01477010000962764,
+      "passed": true
+    },
+    {
+      "id": "source-info-empty",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "source-info",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY native N1 中文 x1kxdox6\\source-info-empty.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"file\":\"C:/Users/13691/AppData/Local/Temp/ZZY native N1 中文 x1kxdox6/source-info-empty.zzy\",\"bytes\":0,\"codepoints\":0,\"lines\":1,\"sha256\":\"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\"syntax_checked\":false,\"resource_fingerprint\":\"c9a540b6ea917d42f3d6c915801dce802ee771a18b1ab6139eab2ebc8161b14d\"}\n",
+      "stderr": "",
+      "timed_out": false,
+      "seconds": 0.021020699990913272,
+      "passed": true
+    },
+    {
+      "id": "source-info-not-syntax",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "source-info",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY native N1 中文 x1kxdox6\\source-info-not-syntax.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"file\":\"C:/Users/13691/AppData/Local/Temp/ZZY native N1 中文 x1kxdox6/source-info-not-syntax.zzy\",\"bytes\":1,\"codepoints\":1,\"lines\":1,\"sha256\":\"334359b90efed75da5f0ada1d5e6b256f4a6bd0aee7eb39c0f90182a021ffc8b\",\"syntax_checked\":false,\"resource_fingerprint\":\"c9a540b6ea917d42f3d6c915801dce802ee771a18b1ab6139eab2ebc8161b14d\"}\n",
+      "stderr": "",
+      "timed_out": false,
+      "seconds": 0.02340209999238141,
+      "passed": true
+    },
+    {
+      "id": "source-info-second-bom",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "source-info",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY native N1 中文 x1kxdox6\\source-info-second-bom.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"file\":\"C:/Users/13691/AppData/Local/Temp/ZZY native N1 中文 x1kxdox6/source-info-second-bom.zzy\",\"bytes\":6,\"codepoints\":1,\"lines\":1,\"sha256\":\"637b2c8da853bb1832c130f7e3bf70d07d3801190af1b8c77a8346faee3bfbb9\",\"syntax_checked\":false,\"resource_fingerprint\":\"c9a540b6ea917d42f3d6c915801dce802ee771a18b1ab6139eab2ebc8161b14d\"}\n",
+      "stderr": "",
+      "timed_out": false,
+      "seconds": 0.022415699990233406,
+      "passed": true
+    },
+    {
+      "id": "malformed-utf8-0",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "source-info",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY native N1 中文 x1kxdox6\\malformed-utf8-0.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E401\",\"file\":\"C:/Users/13691/AppData/Local/Temp/ZZY native N1 中文 x1kxdox6/malformed-utf8-0.zzy\",\"span\":null,\"message\":\"source is not strict UTF-8\",\"notes\":[]}\n",
+      "timed_out": false,
+      "seconds": 0.019583499990403652,
+      "passed": true
+    },
+    {
+      "id": "malformed-utf8-1",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "source-info",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY native N1 中文 x1kxdox6\\malformed-utf8-1.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E401\",\"file\":\"C:/Users/13691/AppData/Local/Temp/ZZY native N1 中文 x1kxdox6/malformed-utf8-1.zzy\",\"span\":null,\"message\":\"source is not strict UTF-8\",\"notes\":[]}\n",
+      "timed_out": false,
+      "seconds": 0.01694669999415055,
+      "passed": true
+    },
+    {
+      "id": "malformed-utf8-2",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "source-info",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY native N1 中文 x1kxdox6\\malformed-utf8-2.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E401\",\"file\":\"C:/Users/13691/AppData/Local/Temp/ZZY native N1 中文 x1kxdox6/malformed-utf8-2.zzy\",\"span\":null,\"message\":\"source is not strict UTF-8\",\"notes\":[]}\n",
+      "timed_out": false,
+      "seconds": 0.013861199986422434,
+      "passed": true
+    },
+    {
+      "id": "malformed-utf8-3",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "source-info",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY native N1 中文 x1kxdox6\\malformed-utf8-3.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E401\",\"file\":\"C:/Users/13691/AppData/Local/Temp/ZZY native N1 中文 x1kxdox6/malformed-utf8-3.zzy\",\"span\":null,\"message\":\"source is not strict UTF-8\",\"notes\":[]}\n",
+      "timed_out": false,
+      "seconds": 0.014176299999235198,
+      "passed": true
+    },
+    {
+      "id": "malformed-utf8-4",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "source-info",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY native N1 中文 x1kxdox6\\malformed-utf8-4.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E401\",\"file\":\"C:/Users/13691/AppData/Local/Temp/ZZY native N1 中文 x1kxdox6/malformed-utf8-4.zzy\",\"span\":null,\"message\":\"source is not strict UTF-8\",\"notes\":[]}\n",
+      "timed_out": false,
+      "seconds": 0.013373800000408664,
+      "passed": true
+    },
+    {
+      "id": "malformed-utf8-5",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "source-info",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY native N1 中文 x1kxdox6\\malformed-utf8-5.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E401\",\"file\":\"C:/Users/13691/AppData/Local/Temp/ZZY native N1 中文 x1kxdox6/malformed-utf8-5.zzy\",\"span\":null,\"message\":\"source is not strict UTF-8\",\"notes\":[]}\n",
+      "timed_out": false,
+      "seconds": 0.012756399984937161,
+      "passed": true
+    },
+    {
+      "id": "malformed-utf8-6",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "source-info",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY native N1 中文 x1kxdox6\\malformed-utf8-6.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E401\",\"file\":\"C:/Users/13691/AppData/Local/Temp/ZZY native N1 中文 x1kxdox6/malformed-utf8-6.zzy\",\"span\":null,\"message\":\"source is not strict UTF-8\",\"notes\":[]}\n",
+      "timed_out": false,
+      "seconds": 0.012983599997824058,
+      "passed": true
+    },
+    {
+      "id": "malformed-utf8-7",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "source-info",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY native N1 中文 x1kxdox6\\malformed-utf8-7.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E401\",\"file\":\"C:/Users/13691/AppData/Local/Temp/ZZY native N1 中文 x1kxdox6/malformed-utf8-7.zzy\",\"span\":null,\"message\":\"source is not strict UTF-8\",\"notes\":[]}\n",
+      "timed_out": false,
+      "seconds": 0.013201000023400411,
+      "passed": true
+    },
+    {
+      "id": "malformed-utf8-8",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "source-info",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY native N1 中文 x1kxdox6\\malformed-utf8-8.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E401\",\"file\":\"C:/Users/13691/AppData/Local/Temp/ZZY native N1 中文 x1kxdox6/malformed-utf8-8.zzy\",\"span\":null,\"message\":\"source is not strict UTF-8\",\"notes\":[]}\n",
+      "timed_out": false,
+      "seconds": 0.01691679999930784,
+      "passed": true
+    },
+    {
+      "id": "malformed-utf8-9",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "source-info",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY native N1 中文 x1kxdox6\\malformed-utf8-9.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E401\",\"file\":\"C:/Users/13691/AppData/Local/Temp/ZZY native N1 中文 x1kxdox6/malformed-utf8-9.zzy\",\"span\":null,\"message\":\"source is not strict UTF-8\",\"notes\":[]}\n",
+      "timed_out": false,
+      "seconds": 0.013135599991073832,
+      "passed": true
+    },
+    {
+      "id": "malformed-utf8-10",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "source-info",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY native N1 中文 x1kxdox6\\malformed-utf8-10.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E401\",\"file\":\"C:/Users/13691/AppData/Local/Temp/ZZY native N1 中文 x1kxdox6/malformed-utf8-10.zzy\",\"span\":null,\"message\":\"source is not strict UTF-8\",\"notes\":[]}\n",
+      "timed_out": false,
+      "seconds": 0.014242899982491508,
+      "passed": true
+    },
+    {
+      "id": "malformed-utf8-11",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "source-info",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY native N1 中文 x1kxdox6\\malformed-utf8-11.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E401\",\"file\":\"C:/Users/13691/AppData/Local/Temp/ZZY native N1 中文 x1kxdox6/malformed-utf8-11.zzy\",\"span\":null,\"message\":\"source is not strict UTF-8\",\"notes\":[]}\n",
+      "timed_out": false,
+      "seconds": 0.013643800019053742,
+      "passed": true
+    },
+    {
+      "id": "malformed-utf8-12",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-release\\Release\\zzy-native.exe",
+        "source-info",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY native N1 中文 x1kxdox6\\malformed-utf8-12.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E401\",\"file\":\"C:/Users/13691/AppData/Local/Temp/ZZY native N1 中文 x1kxdox6/malformed-utf8-12.zzy\",\"span\":null,\"message\":\"source is not strict UTF-8\",\"notes\":[]}\n",
+      "timed_out": false,
+      "seconds": 0.014182900020387024,
+      "passed": true
+    }
+  ]
+}

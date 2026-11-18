@@ -1,0 +1,69 @@
+Test project D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-debug
+      Start  1: frontend-fixed
+ 1/32 Test  #1: frontend-fixed ...................   Passed    5.69 sec
+      Start  2: frontend-sha256
+ 2/32 Test  #2: frontend-sha256 ..................   Passed    0.05 sec
+      Start  3: frontend-utf8
+ 3/32 Test  #3: frontend-utf8 ....................   Passed    0.03 sec
+      Start  4: frontend-positions
+ 4/32 Test  #4: frontend-positions ...............   Passed    0.04 sec
+      Start  5: frontend-source-loader
+ 5/32 Test  #5: frontend-source-loader ...........   Passed    0.04 sec
+      Start  6: frontend-policy
+ 6/32 Test  #6: frontend-policy ..................   Passed    0.02 sec
+      Start  7: frontend-diagnostics
+ 7/32 Test  #7: frontend-diagnostics .............   Passed    0.03 sec
+      Start  8: frontend-lexer-boundaries
+ 8/32 Test  #8: frontend-lexer-boundaries ........   Passed    0.02 sec
+      Start  9: frontend-default-boundaries
+ 9/32 Test  #9: frontend-default-boundaries ......   Passed   36.95 sec
+      Start 10: frontend-source-defaults
+10/32 Test #10: frontend-source-defaults .........   Passed    1.55 sec
+      Start 11: frontend-cancel-during-scan
+11/32 Test #11: frontend-cancel-during-scan ......   Passed    0.30 sec
+      Start 12: frontend-output
+12/32 Test #12: frontend-output ..................   Passed    0.02 sec
+      Start 13: frontend-cancellation-points
+13/32 Test #13: frontend-cancellation-points .....   Passed    0.02 sec
+      Start 14: protocol
+14/32 Test #14: protocol .........................   Passed    0.02 sec
+      Start 15: cli-info
+15/32 Test #15: cli-info .........................   Passed    0.10 sec
+      Start 16: cli-unsupported
+16/32 Test #16: cli-unsupported ..................   Passed    0.11 sec
+      Start 17: heap-array-cycle
+17/32 Test #17: heap-array-cycle .................   Passed    0.02 sec
+      Start 18: heap-map-cycle
+18/32 Test #18: heap-map-cycle ...................   Passed    0.02 sec
+      Start 19: heap-closure-cycle
+19/32 Test #19: heap-closure-cycle ...............   Passed    0.02 sec
+      Start 20: heap-reachable-alias
+20/32 Test #20: heap-reachable-alias .............   Passed    0.02 sec
+      Start 21: heap-quota-gc-retry
+21/32 Test #21: heap-quota-gc-retry ..............   Passed    0.02 sec
+      Start 22: heap-atomic-limits
+22/32 Test #22: heap-atomic-limits ...............   Passed    0.02 sec
+      Start 23: heap-allocation-rollback
+23/32 Test #23: heap-allocation-rollback .........   Passed    0.02 sec
+      Start 24: heap-ownership
+24/32 Test #24: heap-ownership ...................   Passed    0.02 sec
+      Start 25: heap-cancellation
+25/32 Test #25: heap-cancellation ................   Passed    0.02 sec
+      Start 26: heap-unwind-roots
+26/32 Test #26: heap-unwind-roots ................   Passed    0.02 sec
+      Start 27: heap-iterative-graph
+27/32 Test #27: heap-iterative-graph .............   Passed    0.06 sec
+      Start 28: heap-repeated-collection
+28/32 Test #28: heap-repeated-collection .........   Passed    0.04 sec
+      Start 29: lifecycle-success
+29/32 Test #29: lifecycle-success ................   Passed    0.11 sec
+      Start 30: lifecycle-resource
+30/32 Test #30: lifecycle-resource ...............   Passed    0.11 sec
+      Start 31: lifecycle-cancel
+31/32 Test #31: lifecycle-cancel .................   Passed    0.12 sec
+      Start 32: lifecycle-error
+32/32 Test #32: lifecycle-error ..................   Passed    0.11 sec
+
+100% tests passed out of 32
+
+Total Test time (real) =  45.82 sec

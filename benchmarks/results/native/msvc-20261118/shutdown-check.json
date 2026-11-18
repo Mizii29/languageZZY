@@ -1,0 +1,10 @@
+{
+  "passed": true,
+  "method": "System.Diagnostics.Process.GetProcesses",
+  "inventory_nonempty": true,
+  "current_process_present": true,
+  "remaining_build_test_processes": [],
+  "cim_check": "unavailable: Cannot access CIM resources from the client; not treated as passing",
+  "git_delivery": "blocked: .git/index.lock permission denied",
+  "safe_to_stop": true
+}

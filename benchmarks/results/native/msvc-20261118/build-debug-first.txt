@@ -1,0 +1,19 @@
+适用于 .NET Framework MSBuild 版本 17.10.4+10fbfbf2e
+
+  1>Checking Build System
+  Building Custom Rule D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/native_runtime/CMakeLists.txt
+  frontend.cpp
+  native-frontend-tests.vcxproj -> D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\build\native-debug\Debug\native-frontend-tests.exe
+  Building Custom Rule D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/native_runtime/CMakeLists.txt
+  heap.cpp
+  native-heap-tests.vcxproj -> D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\build\native-debug\Debug\native-heap-tests.exe
+  Building Custom Rule D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/native_runtime/CMakeLists.txt
+  lifecycle.cpp
+  native-lifecycle-probe.vcxproj -> D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\build\native-debug\Debug\native-lifecycle-probe.exe
+  Building Custom Rule D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/native_runtime/CMakeLists.txt
+  protocol.cpp
+D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\native_runtime\tests\native\protocol.cpp(8,49): error C2220: 以下警告被视为错误 [D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\build\native-debug\native-protocol-tests.vcxproj]
+D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\native_runtime\tests\native\protocol.cpp(8,49): warning C4127: 条件表达式是常量 [D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\build\native-debug\native-protocol-tests.vcxproj]
+  Building Custom Rule D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/native_runtime/CMakeLists.txt
+  main.cpp
+  zzy-native.vcxproj -> D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\build\native-debug\Debug\zzy-native.exe

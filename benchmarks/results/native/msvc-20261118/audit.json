@@ -1,0 +1,24 @@
+{
+  "passed": true,
+  "configurations": {
+    "debug": {
+      "ctest": 32,
+      "normal_process_records": 46,
+      "intentional_timeout_records": 1,
+      "source_files": 42,
+      "executables": 5,
+      "cli_sha256": "659854eb460ae5a5efa10cd7845cee54b2a827f0a15c39a9a0fe0d9d17eb831c"
+    },
+    "release": {
+      "ctest": 32,
+      "normal_process_records": 46,
+      "intentional_timeout_records": 1,
+      "source_files": 42,
+      "executables": 5,
+      "cli_sha256": "d9928c543d28a353b5213414b23b4439404d7927d1ebfc253c25841034c7368f"
+    }
+  },
+  "installed_smoke": 9,
+  "published_copy_smoke": 9,
+  "requirement_unchanged": true
+}

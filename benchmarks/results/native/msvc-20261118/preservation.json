@@ -1,0 +1,7 @@
+{
+  "passed": true,
+  "initial_files": 57,
+  "native_shared_files": 8,
+  "untouched_files": 49,
+  "method": "exact replay of native-only edits on initial user bytes"
+}

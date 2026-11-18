@@ -191,3 +191,11 @@ P11-07新增2项故障回归（调用span/path/备注分配和查询备注分配
 [集中契约](native-frontend-contract.md)与[阶段证据](../../native_runtime/tests/n1-report.md)对应：原 tests/lex/cases.json 的62项不改期望，加25条固定十六进制/坐标/摘要夹具；同一87项分别用纯PowerShell与Python开发协调器直接启动原生EXE验证，不调用Python ZZY生成答案。test-cli.py 的62项覆盖配置64KiB/数字/重复键/Bool、输出半行禁止/最终诊断保留、源码容量、CLI/help/--和失败恢复；12项C++前端测试覆盖映射/默认预算/所有权/实际线程取消；N0堆/生命周期保留。
 
 新增入口已在原生CMake登记32项非空CTest（含纯PowerShell固定清单），但工具缺失未运行；现有GCC Debug/Release独立验证，详见原始结果。Python原前端及盘点105项已回归，本轮不宣称全核心/GUI/Web/正式安装全量重跑。原Python CI/测试清单不减少；原生独立云CI正式接入仍归N5-05，不能用Python源指纹代替原生源码指纹。
+
+## N0-03 / N1 MSVC正式覆盖补充（2026-11-18）
+
+原N0/GCC证据保持不变。CMake实际收集清单Debug/Release各32项，包含frontend-fixed（87条独立固定期望）、前端12、协议1、CLI2、堆12和生命周期4；collection-*.json与CTest日志均保留，--no-tests=error且BUILD_TESTING=ON。
+
+每个配置另以实际EXE验证固定87/87（PowerShell与Python协调器各一次，同一清单不相加）、CLI/配置/资源/输出62/62、过程47条（46正常+1预期强杀）；各5个PE导入和CLI实际模块/进程树检查。Release安装和源码外发布副本各9条smoke，含check/run/test副作用探针；空PATH/坏PYTHONPATH。相关Python源码/词法/CLI/资源/诊断/盘点回归105项通过。
+
+[正式报告](../../native_runtime/tests/msvc-report.md)与[证据审计](../../benchmarks/results/native/msvc-20261118/audit.json)对应42个原生文件、每配置5个EXE及安装/发布副本SHA。未重跑完整Python/Web/GUI或性能测试；人工Ctrl+C、Sanitizer和缺CRT主机未验证。没有新增原生云CI，独立native CI仍属N5-05。

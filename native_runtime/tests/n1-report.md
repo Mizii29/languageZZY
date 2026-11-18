@@ -1,5 +1,7 @@
 # N1：源码与词法 GCC 验收
 
+**当前状态：** 本文保留先前GCC阶段原始范围。2026-11-18另已完成[正式CMake/MSVC补验收](msvc-report.md)，N0-03和N1构建门禁已补齐；下文的“待补/缺工具链”均为历史，不能当作当前状态。
+
 2026-11-17开发，2026-11-18最终验收。**N1-01—04 实现与 GCC 验证完成，正式 CMake/CTest 验收待补。** 用户明确允许暂缓 N0-03 后先做 N1；N0-03 仍未完成，N0 总体出口未通过。本轮没有进入 N2，没有修改 Python 默认入口，没有安装工具链、推送或改写历史。
 
 ## 实现范围
@@ -78,3 +80,9 @@ cmake --install build/native-release --config Release --prefix dist/native-stage
 ```
 
 以上正式命令是待补步骤，**没有预填通过**。MinGW CMake辅助preset也可按README分别完整执行，仍不能用direct结果代替。N2需要后续授权。
+
+## 2026-11-18 正式构建补验收
+
+最新代码MSVC Debug/Release各32/32 CTest、固定87/87、CLI62/62、47过程（46正常+1预期强杀）通过；Release安装与仓库外中文空格目录副本各9/9 smoke。PE导入、实际CLI模块路径/版本/哈希与进程树、空PATH/无效PYTHONPATH重新验证无Python；原有GCC证据保留。
+
+本轮Python相关回归105/105、30.285秒。源码/产物/安装身份由[独立审计](../../benchmarks/results/native/msvc-20261118/audit.json)复核，完整环境/命令/失败修复与限制见[正式报告](msvc-report.md)。N0/N1技术出口满足；真实手动Ctrl+C、Sanitizer、clang-cl、其他平台及缺CRT主机仍未验证，未重跑完整核心/Web/GUI。下一项N2-01，本轮不实现。

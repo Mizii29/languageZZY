@@ -4,8 +4,8 @@
 
 | 决策 | 采用方案与理由 | 替代/风险与验收阶段 |
 |---|---|---|
-| 目标/工具链 | Windows x64、最低目标 Windows 10；C++17、CMake >=3.21；首选 MSVC 2022 或 clang-cl；N0 额外允许现有 GCC 8.1.0/MinGW 直接编译原型 | MinGW 不是正式发布工具链验收；本机缺 CMake/CTest/MSVC，不能宣称 preset 实测或 N0 出口通过 |
-| CRT | 正式 MSVC Debug /MDd、Release /MD；只发布 Release 并在安装时检测 VC runtime；不私自安装 | 当前 MinGW 原型静态链接 libgcc/libstdc++，系统 msvcrt/Win32 DLL；导入表实际检查。不把 MSVC 配置意图当作安装证据 |
+| 目标/工具链 | Windows x64、最低目标 Windows 10；C++17、CMake >=3.21；首选 MSVC 2022 或 clang-cl；保留现有 GCC 8.1.0/MinGW 原型 | 2026-11-18已有CMake/CTest4.5与MSVC19.40完成正式Debug/Release各32项CTest和安装；MinGW不代替此证据，clang-cl和Windows10实机未验证 |
+| CRT | 正式 MSVC Debug /MDd、Release /MD；只发布 Release，不私自安装运行库 | 已实测System32既有VC runtime14.50.35719.0与系统UCRT；精确DLL白名单、加载路径/版本/哈希见正式报告。缺CRT主机未验；MinGW原型保持静态libgcc/libstdc++与系统msvcrt |
 | BigInt | 采用自有符号 + uint32_t 小端 limb 的任意精度实现；中间乘积用 uint64_t；按 integer_bits/载荷预算提前检查，负 //、% 向下取整，精确比较/有理数共享此实现 | cpp_int 可减少工作但本机无已锁定离线 Boost；N0 不下载。自有实现需 N3 固定跨 limb、负数除法、超限、中间值测试后才能算 Int 可用；本轮不拿 uint64_t 冒充 Int |
 | UTF-8 | 严格 UTF-8 字节快照；Program 内保存码点→原字节/行列映射；BOM 不计列、CRLF 单换行、Tab 一码点、EOF 可零宽；String 按码点 | 不用 locale/wchar_t 长度当码点；Unicode 标识符/空白需冻结 Unicode 15.0.0 表，N1 离线提交有来源的数据后验收，不依赖运行时 Python |
 | AST Program | 首版不可变 AST/源码快照/绑定布局，Program 内索引 ID；不保存 Python id 或跨请求可变 Value，不生成 VM/缓存/AOT | 解析器/Resolver N2 实现；P12 的独立 AOT demo 不复用为原生解释器 |
@@ -30,4 +30,4 @@ N0-03 未过，按用户2026-11-17授权先实施 N1。以上 N0 冻结表是设
 - 零第三方依赖保持；新增严格、有限深度的 limits 配置解析器，不是 N4 的语言JSON解码接口。
 - 源码为 const 快照/码点映射，Token持有const Source；每个 SourceLoader/FrontendMeter 独立，失败不发布费用，退出幂等清理。
 
-实现与证据见 [前端契约](native-frontend-contract.md)、[N1报告](../../native_runtime/tests/n1-report.md)。正式 CMake/CTest/install 仍待最新代码重跑，N0总体没有通过。
+实现与证据见[前端契约](native-frontend-contract.md)、[N1 GCC历史报告](../../native_runtime/tests/n1-report.md)。以上顺序例外已在2026-11-18补齐正式CMake/MSVC/CTest/install，详见[正式报告](../../native_runtime/tests/msvc-report.md)；N0/N1技术出口满足，未扩展为完整语言或N5/N8发布验收。

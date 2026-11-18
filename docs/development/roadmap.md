@@ -315,3 +315,7 @@ N0 只做盘点、能力/所有权冻结和堆原型，N1 才开始 Lexer。阶�
 ### N1 顺序例外与当前交接（2026-11-18）
 
 用户明确授权暂缓 N0-03 CMake/CTest/install，先以已有 GCC 完成 N1-01—04；正式依赖门禁没有通过，N0 总体不标完成，P12/P13 不变。接口集中见 [原生前端契约](native-frontend-contract.md)，真实 GCC 证据见 [N1报告](../../native_runtime/tests/n1-report.md)。N1 实现与 GCC 验证完成，正式 CMake/CTest 验收待补；本轮不进入 N2。下一项先对最新代码补 N0-03，命令在 native_runtime/README.md。
+
+### N0-03 / N1 正式构建补验收（2026-11-18）
+
+先前仅GCC的状态为历史。最新N1已通过CMake4.5/MSVC19.40 Debug/Release各32项CTest、固定87/CLI62、资源/生命周期和Release安装/源码外无Python检查，见[正式报告](../../native_runtime/tests/msvc-report.md)。N0-03已补齐，N0/N1技术出口满足，下一项N2-01，本轮没有进入N2；P12/P13不变。真实手动Ctrl+C、Sanitizer与其他平台仍未验证。

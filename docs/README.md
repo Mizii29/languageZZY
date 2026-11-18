@@ -121,3 +121,7 @@ P10-01/P10-06已选择：[集中契约](runtime/web.md)、[独立合约演示](.
 ### N1 原生前端补充
 
 用户授权的 N0-03 顺序例外见原生计划/todo；当前 info/source-info/lex 的正式边界集中在 [原生前端契约](development/native-frontend-contract.md)，[N1报告](../native_runtime/tests/n1-report.md)与[原生命令](../native_runtime/README.md)提供实际 GCC 证据和以后需补的 CMake/CTest/install 门禁。N0 总出口未过，Python 默认入口及 P12/P13 保持。
+
+### 原生正式构建补验收（2026-11-18）
+
+前述“缺工具/待补”保留为当时记录；当前N0-03和N1的CMake/MSVC Debug/Release、CTest32/32及Release安装/源码外副本已通过。[正式证据与限制](../native_runtime/tests/msvc-report.md)、[复现命令](../native_runtime/README.md)、[当前todo](development/todo.md)为交接入口。下一阶段N2本轮未实现，Python默认入口和P12/P13不变。

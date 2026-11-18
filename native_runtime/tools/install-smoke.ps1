@@ -8,6 +8,7 @@ $folder=Join-Path ([IO.Path]::GetTempPath()) ('ZZY native install 中文 '+[Guid
 if([IO.Path]::GetFullPath($folder).StartsWith($repoRoot,[StringComparison]::OrdinalIgnoreCase)) {throw 'Smoke must run outside source'}
 New-Item -ItemType Directory -Path $folder | Out-Null
 [IO.File]::WriteAllText((Join-Path $folder '中文.zzy'),'(zno) 名 := "😀";',[Text.UTF8Encoding]::new($false))
+Copy-Item -LiteralPath (Join-Path $PSScriptRoot '../tests/golden/no-execute.zzy') -Destination (Join-Path $folder 'no-execute.zzy')
 $records=[Collections.Generic.List[object]]::new();$passed=$false
 try {
     foreach($command in @('info','source-info','lex','check','run','test')) {
@@ -39,9 +40,25 @@ try {
             }
         }
     }
+    foreach($command in @('check','run','test')) {
+        $start=[Diagnostics.ProcessStartInfo]::new();$start.FileName=$exe
+        $start.Arguments=$command+' no-execute.zzy --diagnostic-format json'
+        $start.WorkingDirectory=$folder;$start.UseShellExecute=$false;$start.CreateNoWindow=$true
+        $start.RedirectStandardOutput=$true;$start.RedirectStandardError=$true
+        $start.StandardOutputEncoding=[Text.UTF8Encoding]::new($false,$true);$start.StandardErrorEncoding=[Text.UTF8Encoding]::new($false,$true)
+        $start.EnvironmentVariables['PATH']='';$start.EnvironmentVariables['PYTHONPATH']='unusable-smoke'
+        $process=[Diagnostics.Process]::new();$process.StartInfo=$start;$null=$process.Start()
+        $stdout=$process.StandardOutput.ReadToEndAsync();$stderr=$process.StandardError.ReadToEndAsync()
+        if(-not $process.WaitForExit(15000)) {$process.Kill();$process.WaitForExit();throw 'No-execute smoke timeout'}
+        $record=[ordered]@{command=$start.Arguments;exit_code=$process.ExitCode;stdout=$stdout.Result;stderr=$stderr.Result;timed_out=$false}
+        $records.Add($record);$process.Dispose()
+        if($record.exit_code -ne 2 -or $record.stdout -ne '' -or ($record.stderr | ConvertFrom-Json).code -ne 'E402') {throw 'Unsupported command did not reject the fixed side-effect fixture'}
+        if(Test-Path -LiteralPath (Join-Path $folder 'native-side-effect.txt')) {throw 'check/run/test executed user code'}
+    }
     $passed=$true
 } finally {
-    $report=[ordered]@{schema_version=1;passed=$passed;scope='source-external executable smoke; installation provenance is provided by caller';executable=$exe;exe_sha256=(Get-FileHash -LiteralPath $exe).Hash.ToLowerInvariant();cwd=$folder;path_empty=$true;records=@($records.ToArray())}
+    $report=[ordered]@{schema_version=1;passed=$passed;scope='source-external executable smoke; installation provenance is provided by caller';executable=$exe;exe_sha256=(Get-FileHash -LiteralPath $exe).Hash.ToLowerInvariant();cwd=$folder;path_empty=$true;pythonpath='unusable-smoke';side_effect_absent=(-not (Test-Path -LiteralPath (Join-Path $folder 'native-side-effect.txt')));records=@($records.ToArray())}
     [IO.File]::WriteAllText($out,($report | ConvertTo-Json -Depth 20),[Text.UTF8Encoding]::new($false))
 }
+if(-not $passed) {throw 'Source-external smoke failed; report preserves the observed records.'}
 Write-Output ('Source-external smoke: '+$records.Count+' passed')
