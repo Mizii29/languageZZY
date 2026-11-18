@@ -19,18 +19,24 @@ try {
             $start.Arguments+=' --limits "'+$config+'"'
         }
         $start.UseShellExecute=$false;$start.CreateNoWindow=$true
-        $start.RedirectStandardOutput=$true;$start.RedirectStandardError=$true
+        $start.RedirectStandardOutput=$true;$start.RedirectStandardError=$true;$start.RedirectStandardInput=$true
         $start.StandardOutputEncoding=[Text.UTF8Encoding]::new($false,$true);$start.StandardErrorEncoding=[Text.UTF8Encoding]::new($false,$true)
         $start.EnvironmentVariables['PATH']='';$start.EnvironmentVariables['PYTHONPATH']='unusable-native-runtime'
         $p=[Diagnostics.Process]::new();$p.StartInfo=$start;$null=$p.Start()
+        if($case.stdin) {
+            $bytes=[Text.UTF8Encoding]::new($false).GetBytes($case.stdin)
+            $p.StandardInput.BaseStream.Write($bytes,0,$bytes.Length)
+        }
+        $p.StandardInput.Close()
         $stdout=$p.StandardOutput.ReadToEndAsync();$stderr=$p.StandardError.ReadToEndAsync()
         $timeout=-not $p.WaitForExit(15000);if($timeout) {$p.Kill();$p.WaitForExit()}
         $r=[ordered]@{id=$case.id;exit_code=$p.ExitCode;stdout=$stdout.Result;stderr=$stderr.Result;timeout=$timeout};$records.Add($r);$p.Dispose()
-        if($timeout -or $r.exit_code -ne $case.exit_code -or $r.stdout.Replace("`r`n","`n") -cne $case.stdout) {throw ('Runtime mismatch: '+$case.id+' '+($r | ConvertTo-Json -Compress))}
+        if($timeout -or $r.exit_code -ne $case.exit_code -or $r.stdout -cne $case.stdout) {throw ('Runtime mismatch: '+$case.id+' '+($r | ConvertTo-Json -Compress))}
         if($case.code) {
             $diagnostic=$r.stderr | ConvertFrom-Json
             if($diagnostic.schema_version -ne 1 -or $diagnostic.kind -ne 'error' -or $diagnostic.code -ne $case.code -or @($diagnostic.PSObject.Properties).Count -ne 7 -or -not $diagnostic.file -or -not $diagnostic.span) {throw ('Runtime diagnostic mismatch: '+$case.id)}
             if($case.file_suffix -and -not $diagnostic.file.EndsWith($case.file_suffix,[StringComparison]::Ordinal)) {throw ('Wrong diagnostic file: '+$case.id)}
+            if($case.key -and -not $diagnostic.message.Contains($case.key)) {throw ('Wrong resource key: '+$case.id)}
             if($case.span -and (@($diagnostic.span.start.line,$diagnostic.span.start.column,$diagnostic.span.end.line,$diagnostic.span.end.column) -join ',') -ne ($case.span -join ',')) {throw ('Wrong diagnostic span: '+$case.id+' '+($diagnostic.span | ConvertTo-Json -Compress))}
             if($case.notes) {
                 if(@($diagnostic.notes).Count -ne @($case.notes).Count) {throw ('Wrong diagnostic note count: '+$case.id)}

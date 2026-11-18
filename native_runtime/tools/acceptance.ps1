@@ -43,7 +43,7 @@ if([IO.Path]::GetFullPath($stage).StartsWith($repoRoot,[StringComparison]::Ordin
     throw 'The source-external stage must be outside the repository.'
 }
 New-Item -ItemType Directory -Path $stage -Force | Out-Null
-$names=@('zzy-native.exe','native-protocol-tests.exe','native-heap-tests.exe','native-lifecycle-probe.exe','native-frontend-tests.exe','native-program-tests.exe')
+$names=@('zzy-native.exe','native-protocol-tests.exe','native-heap-tests.exe','native-lifecycle-probe.exe','native-frontend-tests.exe','native-program-tests.exe','native-runtime-values-tests.exe','native-execution-tests.exe')
 foreach($name in $names) {Copy-Item -LiteralPath (Join-Path $build $name) -Destination $stage}
 $cliExecutable=if($InstalledExecutable) {$InstalledExecutable} else {Join-Path $stage 'zzy-native.exe'}
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot '../tests/golden/no-execute.zzy') -Destination (Join-Path $stage 'no-execute.zzy')
@@ -86,8 +86,8 @@ try {
         $expectedCrt=if($Configuration -eq 'Debug') {'MSVC /MDd (debug runtime, not redistributable)'} else {'MSVC /MD (VC Redistributable required)'}
         Require ($value.crt -eq $expectedCrt) 'selected configuration CRT mismatch'
     }
-    Require ($value.stage -eq 'N2' -and $value.pointer_bits -eq 64 -and $value.cxx_standard -eq 17) 'incorrect info'
-    Require ($value.python_fallback -eq $false -and @($value.supported_commands).Count -eq 5 -and $value.supported_commands[0] -eq 'info') 'incorrect capabilities'
+    Require ($value.stage -eq 'N3-dev' -and $value.pointer_bits -eq 64 -and $value.cxx_standard -eq 17) 'incorrect info'
+    Require ($value.python_fallback -eq $false -and @($value.supported_commands).Count -eq 6 -and $value.supported_commands[0] -eq 'info' -and 'run' -in $value.supported_commands) 'incorrect capabilities'
     Require ($value.resource_policy.host_decimal_digits -eq 0 -and $value.resource_policy.effective_decimal_digits -eq 4096) 'incorrect decimal policy'
     # Fixed independently from default-v1 contract and documented native host bound.
     Require ($value.resource_fingerprint -eq 'c9a540b6ea917d42f3d6c915801dce802ee771a18b1ab6139eab2ebc8161b14d') 'incorrect policy fingerprint'
@@ -95,11 +95,23 @@ try {
     $null=Invoke-Native 'zzy-native.exe' '--version'
     $result=Invoke-Native 'zzy-native.exe' 'check no-execute.zzy --diagnostic-format json'
     Require ($result.stdout -eq '' -and $result.stderr -eq '') 'check must prepare without side effects'
-    foreach($command in @('run','test')) {
-        $result=Invoke-Native 'zzy-native.exe' ($command+' no-execute.zzy --diagnostic-format json') 2
-        $errorRecord=$result.stderr | ConvertFrom-Json
-        Require ($result.stdout -eq '' -and $errorRecord.schema_version -eq 1 -and $errorRecord.code -eq 'E402' -and $errorRecord.kind -eq 'error') 'unsupported protocol mismatch'
-        Require ($null -eq $errorRecord.file -and $null -eq $errorRecord.span -and $errorRecord.notes[0] -eq ('capability='+$command)) 'unsupported location/capability mismatch'
+    $result=Invoke-Native 'zzy-native.exe' 'test no-execute.zzy --diagnostic-format json' 2
+    $errorRecord=$result.stderr | ConvertFrom-Json
+    Require ($result.stdout -eq '' -and $errorRecord.schema_version -eq 1 -and $errorRecord.code -eq 'E402' -and $errorRecord.kind -eq 'error') 'unsupported protocol mismatch'
+    Require ($null -eq $errorRecord.file -and $null -eq $errorRecord.span -and $errorRecord.notes[0] -eq 'capability=test') 'unsupported location/capability mismatch'
+    $result=Invoke-Native 'zzy-native.exe' 'run no-execute.zzy --diagnostic-format json' 1
+    $errorRecord=$result.stderr | ConvertFrom-Json
+    Require ($result.stdout -eq '' -and $errorRecord.schema_version -eq 1 -and $errorRecord.code -eq 'E402' -and $errorRecord.kind -eq 'error' -and $errorRecord.span.start.line -eq 1) 'unported host must fail at the call without side effects'
+    [IO.File]::WriteAllText((Join-Path $stage 'core.zzy'),'io.print(18446744073709551616+1);',[Text.UTF8Encoding]::new($false))
+    $result=Invoke-Native 'zzy-native.exe' 'run core.zzy'
+    Require ($result.stdout -ceq "18446744073709551617`n" -and $result.stderr -eq '') 'source-external core runtime failed'
+    foreach($case in @('integers','floating','cycles','budgets','ownership','opaque')) {
+        $result=Invoke-Native 'native-runtime-values-tests.exe' $case
+        Require ($result.stdout.Replace("`r`n","`n") -ceq ($case+": PASS`n") -and $result.stderr -eq '') ('runtime value case missing: '+$case)
+    }
+    foreach($case in @('recovery','lazy','cycles','input','resources')) {
+        $result=Invoke-Native 'native-execution-tests.exe' $case
+        Require ($result.stdout.Replace("`r`n","`n") -ceq ($case+": PASS`n") -and $result.stderr -eq '') ('runtime execution case missing: '+$case)
     }
     $sample='(zno) 名 := "😀";'
     [IO.File]::WriteAllText((Join-Path $stage '中文 source.zzy'),$sample,[Text.UTF8Encoding]::new($false))
@@ -257,8 +269,8 @@ try {
     }
     $passed=$true
 } finally {
-    $scope=if($BuildOrigin -eq 'CMakeMSVC') {'N2 CMake/MSVC '+$Configuration+' executable acceptance; CTest/install results are separate evidence'} elseif($BuildOrigin -eq 'DirectMSVC') {'N2 direct MSVC '+$Configuration+'; NOT CMake/CTest/install acceptance'} else {'N2 direct MinGW validation; NOT CMake/CTest/install acceptance'}
+    $scope=if($BuildOrigin -eq 'CMakeMSVC') {'N3 CMake/MSVC '+$Configuration+' executable acceptance; CTest/install results are separate evidence'} elseif($BuildOrigin -eq 'DirectMSVC') {'N3 direct MSVC '+$Configuration+'; NOT CMake/CTest/install acceptance'} else {'N3 direct MinGW validation; NOT CMake/CTest/install acceptance'}
     $report=[ordered]@{schema_version=1;passed=$passed;scope=$scope;provenance=$provenance;os=[Environment]::OSVersion.VersionString;process_bits=([IntPtr]::Size*8);cwd=$stage;path_empty=$true;pythonpath='unusable-python-path';cmake_available=([bool](Get-Command cmake -ErrorAction SilentlyContinue));ctest_available=([bool](Get-Command ctest -ErrorAction SilentlyContinue));records=@($records.ToArray());imports=$imports;allowed_direct_imports=$allowed;artifacts=$artifacts;sources=$sources;manual_ctrl_c='not run';cmake_install=$(if($BuildOrigin -eq 'CMakeMSVC') {'see separate install log and published-copy smoke'} else {'not run'});sanitizer='not run'}
     [IO.File]::WriteAllText((Join-Path $out 'report.json'),($report | ConvertTo-Json -Depth 30),[Text.UTF8Encoding]::new($false))
 }
-Write-Output ('N2 native: '+$records.Count+' process cases passed; evidence='+$out)
+Write-Output ('N3 native: '+$records.Count+' process cases passed; evidence='+$out)

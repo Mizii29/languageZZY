@@ -13,7 +13,7 @@
 namespace zzy {
 inline void configure_streams() {
 #ifdef _WIN32
-    if(_setmode(_fileno(stdout),_O_BINARY)==-1 || _setmode(_fileno(stderr),_O_BINARY)==-1)
+    if((_fileno(stdin)>=0 && _setmode(_fileno(stdin),_O_BINARY)==-1) || _setmode(_fileno(stdout),_O_BINARY)==-1 || _setmode(_fileno(stderr),_O_BINARY)==-1)
         throw std::runtime_error("cannot configure native streams");
 #endif
 }

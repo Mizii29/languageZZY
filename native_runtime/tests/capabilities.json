@@ -1,333 +1,333 @@
 {
   "schema_version": 1,
-  "stage": "N2",
+  "stage": "N3-dev",
   "features": [
     {
       "id": "ast.add",
       "tier": "core",
       "phase": "N3",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "ast.arm",
       "tier": "core",
       "phase": "N3",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "ast.array",
       "tier": "core",
       "phase": "N3",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "ast.assert",
       "tier": "core",
       "phase": "N3",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "ast.assignment",
       "tier": "core",
       "phase": "N3",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "ast.binary",
       "tier": "core",
       "phase": "N3",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "ast.binding",
       "tier": "core",
       "phase": "N3",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "ast.block",
       "tier": "core",
       "phase": "N3",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "ast.bool",
       "tier": "core",
       "phase": "N3",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "ast.break",
       "tier": "core",
       "phase": "N3",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "ast.call",
       "tier": "core",
       "phase": "N3",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "ast.constant_pattern",
       "tier": "core",
       "phase": "N3",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "ast.construct",
       "tier": "core",
       "phase": "N3",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "ast.continue",
       "tier": "core",
       "phase": "N3",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "ast.current",
       "tier": "core",
       "phase": "N3",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "ast.definition_field",
       "tier": "core",
       "phase": "N3",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "ast.edge",
       "tier": "core",
       "phase": "N3",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "ast.expression",
       "tier": "core",
       "phase": "N3",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "ast.field",
       "tier": "core",
       "phase": "N3",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "ast.float",
       "tier": "core",
       "phase": "N3",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "ast.for",
       "tier": "core",
       "phase": "N3",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "ast.function",
       "tier": "core",
       "phase": "N2",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "ast.group",
       "tier": "core",
       "phase": "N3",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "ast.if",
       "tier": "core",
       "phase": "N3",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "ast.index",
       "tier": "core",
       "phase": "N3",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "ast.initializer",
       "tier": "core",
       "phase": "N3",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "ast.integer",
       "tier": "core",
       "phase": "N3",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "ast.keep",
       "tier": "core",
       "phase": "N3",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "ast.lambda",
       "tier": "core",
       "phase": "N3",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "ast.lazy",
       "tier": "core",
       "phase": "N3",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "ast.machine",
       "tier": "core",
       "phase": "N3",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "ast.match",
       "tier": "core",
       "phase": "N3",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "ast.name",
       "tier": "core",
       "phase": "N3",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "ast.null",
       "tier": "core",
       "phase": "N3",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "ast.order",
       "tier": "core",
       "phase": "N3",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "ast.parameter",
       "tier": "core",
       "phase": "N3",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "ast.payload_pattern",
       "tier": "core",
       "phase": "N3",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "ast.pipe",
       "tier": "core",
       "phase": "N3",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "ast.program",
       "tier": "core",
       "phase": "N2",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "ast.propagate",
       "tier": "core",
       "phase": "N3",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "ast.quantity",
       "tier": "core",
       "phase": "N3",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "ast.query",
       "tier": "core",
       "phase": "N3",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "ast.result",
       "tier": "core",
       "phase": "N3",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "ast.return",
       "tier": "core",
       "phase": "N3",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "ast.send",
       "tier": "core",
       "phase": "N3",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "ast.shape",
       "tier": "core",
       "phase": "N2",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "ast.spec",
       "tier": "core",
-      "phase": "N3",
+      "phase": "N5",
       "implemented": false,
       "diagnostic": "E402"
     },
@@ -335,197 +335,197 @@
       "id": "ast.string",
       "tier": "core",
       "phase": "N3",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "ast.take",
       "tier": "core",
       "phase": "N3",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "ast.trace",
       "tier": "core",
       "phase": "N3",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "ast.unary",
       "tier": "core",
       "phase": "N3",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "ast.use",
       "tier": "core",
       "phase": "N2",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "ast.while",
       "tier": "core",
       "phase": "N3",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "ast.wildcard",
       "tier": "core",
       "phase": "N3",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "ast.with",
       "tier": "core",
       "phase": "N3",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "ast.yield",
       "tier": "core",
       "phase": "N3",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "value.Null",
       "tier": "core",
       "phase": "N3",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "value.Bool",
       "tier": "core",
       "phase": "N3",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "value.Int",
       "tier": "core",
       "phase": "N3",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "value.Float",
       "tier": "core",
       "phase": "N3",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "value.String",
       "tier": "core",
       "phase": "N3",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "value.Array",
       "tier": "core",
       "phase": "N3",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "value.Map",
       "tier": "core",
       "phase": "N3",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "value.Shape",
       "tier": "core",
       "phase": "N3",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "value.Function",
       "tier": "core",
       "phase": "N3",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "value.Result",
       "tier": "core",
       "phase": "N3",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "value.Lazy",
       "tier": "core",
       "phase": "N3",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "value.Machine",
       "tier": "core",
       "phase": "N3",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "value.Quantity",
       "tier": "core",
       "phase": "N3",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "value.Range",
       "tier": "core",
       "phase": "N3",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "value.Module",
       "tier": "core",
       "phase": "N3",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "value.Namespace",
       "tier": "core",
       "phase": "N3",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "value.Definition",
       "tier": "core",
       "phase": "N3",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "value.MachineDefinition",
       "tier": "core",
       "phase": "N3",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "value.NativeType",
       "tier": "core",
       "phase": "N3",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "value.sketch.Canvas",
@@ -566,8 +566,8 @@
       "id": "host.array.copy",
       "tier": "core",
       "phase": "N4",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "host.array.filter",
@@ -587,15 +587,15 @@
       "id": "host.array.pop",
       "tier": "core",
       "phase": "N4",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "host.array.push",
       "tier": "core",
       "phase": "N4",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "host.array.sorted",
@@ -622,36 +622,36 @@
       "id": "host.data.get",
       "tier": "core",
       "phase": "N4",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "host.data.has",
       "tier": "core",
       "phase": "N4",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "host.data.keys",
       "tier": "core",
       "phase": "N4",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "host.data.kind",
       "tier": "core",
       "phase": "N4",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "host.data.map",
       "tier": "core",
       "phase": "N4",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "host.data.parse",
@@ -664,8 +664,8 @@
       "id": "host.data.set",
       "tier": "core",
       "phase": "N4",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "host.data.stringify",
@@ -692,15 +692,15 @@
       "id": "host.io.input",
       "tier": "core",
       "phase": "N4",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "host.io.print",
       "tier": "core",
       "phase": "N4",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "host.io.read_text",
@@ -734,22 +734,22 @@
       "id": "host.len",
       "tier": "core",
       "phase": "N4",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "host.math.abs",
       "tier": "core",
       "phase": "N4",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "host.range",
       "tier": "core",
       "phase": "N4",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "host.sketch.add_layer",
@@ -1217,15 +1217,15 @@
       "id": "host.str",
       "tier": "core",
       "phase": "N4",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "host.text.contains",
       "tier": "core",
       "phase": "N4",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "host.text.join",
@@ -1259,29 +1259,29 @@
       "id": "host.text.trim",
       "tier": "core",
       "phase": "N4",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "host.unit.format",
       "tier": "core",
       "phase": "N4",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "host.unit.make",
       "tier": "core",
       "phase": "N4",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "host.wake",
       "tier": "core",
       "phase": "N4",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "cli.source-info",
@@ -1307,9 +1307,9 @@
     {
       "id": "cli.run",
       "tier": "core",
-      "phase": "N5",
-      "implemented": false,
-      "diagnostic": "E402"
+      "phase": "N3 core / N5 CLI",
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "cli.test",
@@ -1392,8 +1392,8 @@
       "with",
       "yield"
     ],
-    "evaluation": false,
+    "evaluation": true,
     "module_graph": true,
-    "request_execution_isolation": "not verified until N3/N6"
+    "request_execution_isolation": "verified for successive core ExecutionContexts; host integration deferred to N6"
   }
 }

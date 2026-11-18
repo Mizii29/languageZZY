@@ -45,6 +45,9 @@ struct RuntimeNode {
     std::size_t active=0,version=0;
     std::string state="NEW";
     std::shared_ptr<RuntimeError> failure;
+    // Opaque host ownership only; no language field lookup enters this payload.
+    std::shared_ptr<void> native_payload;
+    const void* native_type=nullptr;
     Charge charge;
 };
 struct HeapState : std::enable_shared_from_this<HeapState> {
@@ -100,6 +103,7 @@ public:
     Lease(Lease&& x) noexcept:heap_(std::move(x.heap_)),charge_(x.charge_) {x.charge_={};}
     Lease& operator=(Lease&& x) noexcept {if(this!=&x) {release();heap_=std::move(x.heap_);charge_=x.charge_;x.charge_={};}return *this;}
     ~Lease() {release();}
+    explicit operator bool() const {return bool(heap_);}
     void release() {if(heap_ && !heap_->closed) heap_->refund(charge_);heap_.reset();charge_={};}
     Charge transfer() {auto x=charge_;heap_.reset();charge_={};return x;}
 };
@@ -107,6 +111,8 @@ class RuntimeHeap {
 public:
     std::shared_ptr<HeapState> state;
     RuntimeHeap(const ResourcePolicy& policy,std::atomic<bool>& cancel):state(std::make_shared<HeapState>(policy,cancel)) {}
+    RuntimeHeap(const RuntimeHeap&)=delete;
+    RuntimeHeap& operator=(const RuntimeHeap&)=delete;
     ~RuntimeHeap() {state->close();}
     Value allocate(RuntimeNode node,Charge charge,NodeId site=no_node) {
         // Edges must remain rooted by the caller throughout reserve/collection.
@@ -121,6 +127,16 @@ public:
     }
     Value pin(Handle h) {return state->pin(h);}
     RuntimeNode& get(const Value& v) const {return state->get(v.ref());}
+    template<class T> static const void* type_identity() {static const char id=0;return &id;}
+    template<class T> Value native(std::string name,std::shared_ptr<T> value,Charge charge,NodeId site=no_node) {
+        if(!value || charge.objects!=1) throw std::logic_error("invalid opaque host allocation");
+        RuntimeNode n;n.kind="Native";n.name=std::move(name);n.native_type=type_identity<T>();n.native_payload=std::move(value);
+        return allocate(std::move(n),charge,site);
+    }
+    template<class T> T& native(const Value& value,NodeId site=no_node) const {
+        auto& n=get(value);if(n.kind!="Native" || n.native_type!=type_identity<T>()) throw RuntimeError("E201","opaque host type mismatch",site);
+        return *static_cast<T*>(n.native_payload.get());
+    }
     void collect() {state->collect();}
     void close() {state->close();}
 };

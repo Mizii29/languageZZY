@@ -53,6 +53,16 @@ def main():
             run('stdout-boundary-'+str(amount),lexargs(),0 if good else 2,whole if good else first if amount>=len(first.encode()) else '',None if good else 'E211',None if good else 'stdout_bytes')
         limits({'stderr_bytes':1,'stdout_bytes':1});source.write_bytes(b'#')
         run('final-stderr-reserve',lexargs(),2,'','E211','stderr_bytes')
+        source.write_bytes(b'io.print(1/0);')
+        run('runtime-final-stderr-reserve',['run',str(source),'--limits',str(config),'--diagnostic-format','json'],1,'','E211','stderr_bytes')
+        leaf=folder/'leaf.zzy';leaf.write_bytes(b' ')
+        middle=folder/'middle.zzy';middle.write_bytes(b'(use)"leaf.zzy"(as)leaf;')
+        source.write_bytes(b'(use)"middle.zzy"(as)mid;')
+        for key,usage in [('source_total_bytes',50),('module_count',3),('import_depth',3)]:
+            for cap in (usage-1,usage,usage+1):
+                limits({key:cap})
+                run(key+'-'+str(cap),['check',str(source),'--limits',str(config),'--diagnostic-format','json'],
+                    2 if cap<usage else 0,'','E303' if cap<usage else None,key if cap<usage else None)
         source.write_bytes(b'abc')
         for size in [2,3,4]:
             limits({'source_file_bytes':3});source.write_bytes(b' '*size)
@@ -90,12 +100,12 @@ def main():
         run('missing-file',['source-info',str(folder/'missing.zzy'),'--diagnostic-format','json'],2,'','E401')
         run('directory-source',['lex',str(folder),'--diagnostic-format','json'],2,'','E401')
         # A lexically valid program that would write a file and print if executed.
-        source.write_text('io.print("UNEXPECTED"); data.save_text("side-effect.txt", "bad");',encoding='utf-8')
+        source.write_text('io.print("UNEXPECTED"); io.write_text("side-effect.txt", "bad");',encoding='utf-8')
         run('source-info-no-effects',['source-info',str(source)])
         run('lex-no-effects',['lex',str(source)])
         run('check-no-effects',['check',str(source),'--diagnostic-format','json'],stdout='')
-        for command in ['run','test']:
-            run('unsupported-'+command,[command,str(source),'--diagnostic-format','json'],2,'','E402')
+        run('unsupported-test',['test',str(source),'--diagnostic-format','json'],2,'','E402')
+        run('run-unsupported-host',['run',str(source),'--diagnostic-format','json'],1,'UNEXPECTED\n','E402')
         assert not (folder/'side-effect.txt').exists(),'user code executed'
         # Stop-option marker permits a filename which resembles a flag.
         (folder/'--help').write_bytes(b'a')
@@ -103,7 +113,7 @@ def main():
         for i in range(3):
             source.write_bytes(b'#');run('failure-recovery-error-'+str(i),['lex',str(source),'--diagnostic-format','json'],2,'','E101')
             source.write_bytes(b'a');run('failure-recovery-success-'+str(i),['lex',str(source),'--diagnostic-format','json'],stdout=whole)
-    report=dict(schema_version=1,scope='N2 CLI configuration, output, source and no-execution boundaries',exe=str(exe),exe_sha256=hashlib.sha256(exe.read_bytes()).hexdigest(),count=len(records),passed=sum(r['passed'] for r in records),records=records)
+    report=dict(schema_version=1,scope='N3 CLI configuration, output, source and execution boundaries',exe=str(exe),exe_sha256=hashlib.sha256(exe.read_bytes()).hexdigest(),count=len(records),passed=sum(r['passed'] for r in records),records=records)
     args.output.parent.mkdir(exist_ok=True,parents=True)
     args.output.write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
     print(json.dumps({k:report[k] for k in ['count','passed','exe_sha256']}))

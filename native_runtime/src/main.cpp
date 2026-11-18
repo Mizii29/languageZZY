@@ -68,7 +68,7 @@ int cli(const std::vector<std::string>& argv,bool& json,zzy::ResourcePolicy& pol
     if(help || arguments.empty()) {
         std::cout<<"zzy-native 0.0.0-n3-dev\nAvailable: info, source-info FILE, lex FILE, check FILE, program-info FILE, run FILE, --help, --version\n"
                  <<"Options (before or after command): --limits FILE --diagnostic-format text|json\n"
-                 <<"Not implemented: test (E402; no Python fallback)\n"
+                 <<"run executes core ZZY; unported host capabilities and test report E402\n"
                  <<"check prepares an immutable Program without executing user code\n";
         return 0;
     }
@@ -86,7 +86,7 @@ int cli(const std::vector<std::string>& argv,bool& json,zzy::ResourcePolicy& pol
             "\"version\":\"0.0.0-n3-dev\",\"cxx_standard\":17,\"pointer_bits\":"+std::to_string(sizeof(void*)*8)+
             ",\"compiler\":"+zzy::quote(compiler())+",\"crt\":"+zzy::quote(crt())+
             ",\"supported_commands\":[\"info\",\"source-info\",\"lex\",\"check\",\"program-info\",\"run\"],\"python_fallback\":false,\"unicode_version\":\"15.0.0\","
-            "\"policy_status\":\"frontend and batch-B scalar execution; remaining N3 capabilities return E402; cache unavailable\",\"resource_policy\":"+
+            "\"policy_status\":\"frontend and core execution limits enforced; program cache configuration only\",\"resource_policy\":"+
             policy.canonical_json()+",\"resource_fingerprint\":"+zzy::quote(policy.fingerprint())+"}\n");
         return 0;
     }
@@ -97,10 +97,12 @@ int cli(const std::vector<std::string>& argv,bool& json,zzy::ResourcePolicy& pol
     }
     if(command=="run") {
         const auto program=zzy::prepare(zzy::widen(arguments[1]),meter);
-        zzy::ExecutionContext context(program,policy,cancelled,std::cout,std::cerr,json);
+        zzy::ExecutionContext context(program,policy,cancelled,std::cout,std::cerr,json,&std::cin);
         try {context.execute();return 0;}
-        catch(const zzy::RuntimeError& error) {std::cerr<<zzy::runtime_diagnostic(program.data(),error,json);return 1;}
+        catch(const zzy::RuntimeError& error) {context.failure(zzy::runtime_diagnostic(program.data(),error,json));return 1;}
         catch(const std::bad_alloc&) {std::cerr<<zzy::render_frontend(zzy::FrontendError("E211","allocation failed; phase=execution"),json);return 1;}
+        catch(const zzy::Cancelled&) {throw;}
+        catch(...) {std::cerr<<zzy::render_frontend(zzy::FrontendError("","native internal error; phase=execution"),json,"internal_error");return 1;}
     }
     zzy::SourceLoader sources(meter);
     const auto source=sources.load(zzy::widen(arguments[1]));

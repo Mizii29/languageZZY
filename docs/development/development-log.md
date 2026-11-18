@@ -993,3 +993,13 @@ Debug CLI SHA ea64b8a7e41c22f9b788bcc9db5b923802cab2e30b1c157afd6c7cf5486d5abd�
 N0/N1构建与N2-01—04静态出口已满足。未验证真实手动Ctrl+C、Sanitizer、clang-cl、其他平台/Windows10、缺CRT干净主机、全Python核心/Web/GUI/wheel及性能；没有运行期求值/状态隔离的结论，不提前豁免N5/N8。下一项N3-01，达到本次出口后停止并检查本轮子进程已退出。
 
 补跑最终收尾：scripts.ci static --output dist/native-n2-work/ci-msvc-formal-final实际passed=true/退出0，收集2083项（静态清单检查，不声称执行2083项）、固定黑盒1738项仍保留；git diff --check与git diff --cached --check退出0。报告static-delivery.json来自保留用户修改的当前工作区，不冒充干净发布分支全量CI。起始2044个文件中2026个逐字节未变，其余仅本轮原生/共享原生段与已压缩保留的原始空白展示差异，审查结果preservation.json。CI后仅归档报告及本条记录，不更改受测源码、构建选项或测试断言。CIM复查本轮六种原生测试EXE进程均已退出，无遗留服务。
+
+## N3-01—05：原生核心解释器与累计验收（2026-11-18）
+
+确认 N2 基线 156a85b 的 MSVC 正式验收后，按核心值/堆、最小 run/io.print、显式函数帧与控制流、闭包和特色值四批分别提交 211712f、6400632、2b04357、a517114。本批集中补足 BigInt/Quantity 工作预算、UTF-8 io.input、输出保留区、原生句柄所有权和连续请求断言。固定答案来自正式行为和既有清单；Python 源码、默认入口、已有测试与 requirement.md 未改。
+
+运行 `cmake --preset native-debug -S native_runtime`（Release 换 native-release），两配置分别 `cmake --build build/native-<配置> --config <配置>` 与 `ctest --test-dir build/native-<配置> -C <配置> --output-on-failure --no-tests=error`：最后源码两配置各 57/57。原生固定清单含 run 63、lex 87、check 850。test-cli.py 各 72/72，test-core-existing.py 各 549/549，另有 1 个 N4 延期用例明确验证 E402。104 项相关 Python unittest 与 4 项能力清单断言全部通过。
+
+运行 `cmake --install build/native-release --config Release --prefix dist/native-n3-work/final-release/install`，实际安装和源码外中文空格目录发布副本各 9/9。acceptance.ps1 以 CMakeMSVC、实际 Debug/Release 构建目录、正式 dumpbin 运行，各 70 记录，含各 1 个隔离进程预期强杀；PE 导入、真实加载模块/进程树和应用 stdout 验证未见 Python。修复首轮脚本 CRLF 断言后保留失败原件。相关环境、实际运行记录、结果及 EXE SHA-256 见 [N3 报告](../../native_runtime/tests/n3-report.md) 与 [正式证据](../../benchmarks/results/native/n3-msvc-20261118/README.md)。
+
+按 N3 出口完成核心运行和资源验收；不据此宣称真实终端 Ctrl+C、Sanitizer、其他平台和全量应用/性能已验收。Web、GUI、SQLite、完整标准库和 test 未移植。仅本地阶段提交，本轮停止于 N3；下一项 N4-01。

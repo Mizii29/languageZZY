@@ -252,3 +252,13 @@ N2 证据：`native_runtime/tests/native/program.cpp` 10/10；`benchmarks/result
 前文工具权限和Git只读是历史限制，现已解除。N0-03/N1正式门禁及N2-01—04技术出口均满足：最新CMake/MSVC Debug/Release各44/44、固定词法87/check850/CLI62/Program观察17、各58条过程（1条预期强杀独列）、Release安装/源码外副本各9/9、Python相关108/108。证据见[N2报告](../../native_runtime/tests/n2-report.md)与benchmarks/results/native/n2-msvc-20261118。
 
 N1已本地提交3bfc26d，并以d537ce2恢复原始证据字节；N2仅相关差异本地提交，不推送，最终SHA看git记录。真实手动Ctrl+C、Sanitizer、其他平台、缺CRT主机、完整Python/Web/GUI/wheel和性能未验证；不豁免N5/N8。下一项N3-01值模型/BigInt/容器；本轮不进入。用户P12/P13/人工材料保留。
+
+## NATIVE-01：N3 核心解释器（2026-11-18）
+
+- [x] N3-01 核心 Value、任意精度 Int、有限 Float、码点 String、容器、Range、精确 Quantity、定义/模块与原生不透明句柄协议。
+- [x] N3-02 每请求 ExecutionContext、显式调用帧、Cell、捕获、Lazy 与协作取消。
+- [x] N3-03 前端与核心资源边界、原子预留、算术临时空间、环回收、取消或失败后的配额归还。
+- [x] N3-04 原生 run/io.print 及控制流、函数、shape、Result、Machine、模块和查询求值。
+- [x] N3-05 活动遍历、别名/浅复制、Lazy 状态、查询阶段与稳定排序、跨文件与调用诊断固定答案。
+
+MSVC Debug/Release 各 57/57 CTest、63 个运行 golden、72/72 CLI、549/549 既有核心固定用例；1 个 N4 延期用例单列为 E402。源码外进程验收各 70 条（各含 1 条预期强杀），Release 安装与发布副本各 9/9。见 [N3 报告](../../native_runtime/tests/n3-report.md)。下一项 N4-01 尚未开始；完整宿主库、Web/GUI、N5 test、真实性能和人工 Ctrl+C 留待后续。Python 默认入口及 P12/P13 独立进度保留。

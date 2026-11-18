@@ -28,7 +28,11 @@ void floating() {
     require(BigInt().compare(-0.0)==0,"negative zero");
     require(BigInt().compare(std::numeric_limits<double>::denorm_min())<0,"subnormal ratio");
     const auto r=BigInt::ratio(0.5);require(r.first/r.second==BigInt(),"Float binary ratio");
-    const zzy::Rational f(r.first,r.second);require(f.numerator==BigInt(1) && f.denominator==BigInt(2),"ratio normalization");
+    require(r.first==BigInt(1) && r.second==BigInt(2),"ratio normalization");
+    const auto subnormal=BigInt::ratio(-std::numeric_limits<double>::denorm_min());
+    require(subnormal.first==BigInt(-1) && subnormal.second.bits()==1075,"subnormal ratio");
+    require(BigInt::decimal("9007199254740993").real()==9007199254740992.0 &&
+            BigInt::decimal("9007199254740995").real()==9007199254740996.0,"round halfway to even");
 }
 zzy::Value node(zzy::RuntimeHeap& heap,const std::string& kind,zzy::Charge charge,std::vector<zzy::Handle> edges={}) {
     zzy::RuntimeNode n;n.kind=kind;n.edges=std::move(edges);return heap.allocate(std::move(n),charge);
@@ -70,9 +74,19 @@ void ownership() {
     try {a.get(x);throw std::runtime_error("released accepted");}catch(const std::logic_error&) {}
     x={};a.close();
 }
+void opaque() {
+    struct Resource {int& released;explicit Resource(int& count):released(count) {}~Resource() {++released;}};
+    int released=0;zzy::ResourcePolicy policy;std::atomic<bool> cancel{false};zzy::RuntimeHeap h(policy,cancel),other(policy,cancel);
+    const auto opaque=h.native("probe.Thing",std::make_shared<Resource>(released),{1,0,16});
+    auto alias=opaque;require(alias.same(opaque) && &h.native<Resource>(alias)==&h.native<Resource>(opaque),"opaque identity");
+    try {h.native<int>(alias);throw std::runtime_error("wrong opaque type accepted");}catch(const zzy::RuntimeError& e) {require(e.code=="E201","opaque type diagnostic");}
+    try {other.native<Resource>(alias);throw std::runtime_error("foreign opaque accepted");}catch(const std::logic_error&) {}
+    require(h.state->used==zzy::Charge{1,0,16} && released==0,"native handle quota");
+    h.close();require(released==1 && h.state->used==zzy::Charge{},"request closes host payload with outstanding aliases");
+}
 }
 int main(int argc,char** argv) {
-    const std::map<std::string,void(*)()> cases={{"integers",integers},{"floating",floating},{"cycles",cycles},{"budgets",budgets},{"ownership",ownership}};
+    const std::map<std::string,void(*)()> cases={{"integers",integers},{"floating",floating},{"cycles",cycles},{"budgets",budgets},{"ownership",ownership},{"opaque",opaque}};
     try {if(argc!=2 || !cases.count(argv[1])) throw std::runtime_error("nonempty named selection required");cases.at(argv[1])();std::cout<<argv[1]<<": PASS\n";return 0;}
     catch(const std::exception& e) {std::cerr<<e.what()<<'\n';return 1;}
 }

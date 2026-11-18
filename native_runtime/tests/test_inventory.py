@@ -18,8 +18,15 @@ class InventoryTests(unittest.TestCase):
         for group,key in [('ast','ast_kinds'),('value','value_kinds'),('host','native_functions')]:
             self.assertEqual({f['id'] for f in features if f['id'].startswith(group+'.')},
                              {group+'.'+name for name in inventory[key]})
-        self.assertEqual([f['id'] for f in features if f['implemented']],
-                         ['cli.source-info', 'cli.lex', 'cli.check', 'cli.info', 'cli.program-info'])
+        core_ast = {'ast.' + kind for kind in inventory['ast_kinds'] if kind != 'spec'}
+        core_values = {'value.' + kind for kind in inventory['value_kinds'] if not kind.startswith('sketch.')}
+        core_cli = {'cli.' + name for name in ('source-info', 'lex', 'check', 'info', 'program-info', 'run')}
+        core_hosts = {'host.' + name for name in (
+            'len', 'str', 'range', 'wake', 'io.input', 'io.print', 'array.copy', 'array.pop', 'array.push',
+            'data.get', 'data.has', 'data.keys', 'data.kind', 'data.map', 'data.set',
+            'math.abs', 'text.contains', 'text.trim', 'unit.format', 'unit.make',
+        )}
+        self.assertEqual({f['id'] for f in features if f['implemented']}, core_ast | core_values | core_cli | core_hosts)
         self.assertEqual(json.loads((folder/'capabilities.json').read_text(encoding='utf-8'))['frontend']['parse_resolve_ast_kinds'],inventory['ast_kinds'])
         self.assertTrue(all(f['diagnostic']=='E402' for f in features if not f['implemented']))
 
