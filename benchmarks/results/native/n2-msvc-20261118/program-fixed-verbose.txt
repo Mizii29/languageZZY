@@ -1,0 +1,35 @@
+UpdateCTestConfiguration  from :D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-debug/DartConfiguration.tcl
+Parse Config file:D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-debug/DartConfiguration.tcl
+Test project D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-debug
+Constructing a list of tests
+Done constructing a list of tests
+Updating test list for fixtures
+Added 0 tests to meet fixture requirements
+Checking test dependency graph...
+Checking test dependency graph end
+test 2
+    Start 2: program-fixed
+
+2: Test command: "C:\Program Files\WindowsApps\OpenAI.CodexPrimaryRuntime.v26-1112-737-0_26.1112.737.0_x64__3k8sg7r9htsxt\dependencies\native\powershell\pwsh.exe" "-NoProfile" "-File" "D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/native_runtime/tools/test-check.ps1" "-Executable" "D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-debug/Debug/zzy-native.exe"
+2: Working Directory: D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-debug
+2: Test timeout computed to be: 900
+2: Exception: D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\native_runtime\tools\test-fixed.ps1:14
+2: Line |
+2:   14 |  … l]$Condition,[string]$Message) {if(-not $Condition) {throw $Message}}
+2:      |                                                         ~~~~~~~~~~~~~~
+2:      | diagnostic file: tests/check/cases.json::duplicate
+1/1 Test #2: program-fixed ....................***Failed    1.83 sec
+Exception: D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\native_runtime\tools\test-fixed.ps1:14
+Line |
+  14 |  … l]$Condition,[string]$Message) {if(-not $Condition) {throw $Message}}
+     |                                                         ~~~~~~~~~~~~~~
+     | diagnostic file: tests/check/cases.json::duplicate
+
+
+0% tests passed, 1 tests failed out of 1
+
+Total Test time (real) =   1.85 sec
+
+The following tests FAILED:
+	  2 - program-fixed (Failed)
+Errors while running CTest

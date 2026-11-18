@@ -1,0 +1,105 @@
+Test project D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-debug
+      Start  1: frontend-fixed
+ 1/44 Test  #1: frontend-fixed ...................   Passed    6.98 sec
+      Start  2: program-fixed
+ 2/44 Test  #2: program-fixed ....................***Failed    1.88 sec
+Exception: D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\native_runtime\tools\test-fixed.ps1:14
+Line |
+  14 |  … l]$Condition,[string]$Message) {if(-not $Condition) {throw $Message}}
+     |                                                         ~~~~~~~~~~~~~~
+     | diagnostic file: tests/check/cases.json::duplicate
+
+      Start  3: program-ast
+ 3/44 Test  #3: program-ast ......................   Passed    0.06 sec
+      Start  4: program-captures
+ 4/44 Test  #4: program-captures .................   Passed    0.03 sec
+      Start  5: program-scopes
+ 5/44 Test  #5: program-scopes ...................   Passed    0.06 sec
+      Start  6: program-purity
+ 6/44 Test  #6: program-purity ...................   Passed    0.07 sec
+      Start  7: program-literals
+ 7/44 Test  #7: program-literals .................   Passed    0.07 sec
+      Start  8: program-budgets
+ 8/44 Test  #8: program-budgets ..................   Passed    0.04 sec
+      Start  9: program-graph
+ 9/44 Test  #9: program-graph ....................   Passed    0.09 sec
+      Start 10: program-readonly
+10/44 Test #10: program-readonly .................   Passed    0.06 sec
+      Start 11: program-metadata
+11/44 Test #11: program-metadata .................   Passed    0.04 sec
+      Start 12: program-cancellation
+12/44 Test #12: program-cancellation .............   Passed    0.08 sec
+      Start 13: program-empty-selection
+13/44 Test #13: program-empty-selection ..........   Passed    0.16 sec
+      Start 14: frontend-sha256
+14/44 Test #14: frontend-sha256 ..................   Passed    0.06 sec
+      Start 15: frontend-utf8
+15/44 Test #15: frontend-utf8 ....................   Passed    0.02 sec
+      Start 16: frontend-positions
+16/44 Test #16: frontend-positions ...............   Passed    0.02 sec
+      Start 17: frontend-source-loader
+17/44 Test #17: frontend-source-loader ...........   Passed    0.03 sec
+      Start 18: frontend-policy
+18/44 Test #18: frontend-policy ..................   Passed    0.02 sec
+      Start 19: frontend-diagnostics
+19/44 Test #19: frontend-diagnostics .............   Passed    0.03 sec
+      Start 20: frontend-lexer-boundaries
+20/44 Test #20: frontend-lexer-boundaries ........   Passed    0.03 sec
+      Start 21: frontend-default-boundaries
+21/44 Test #21: frontend-default-boundaries ......***Timeout  60.03 sec
+
+      Start 22: frontend-source-defaults
+22/44 Test #22: frontend-source-defaults .........   Passed    1.56 sec
+      Start 23: frontend-cancel-during-scan
+23/44 Test #23: frontend-cancel-during-scan ......   Passed    0.30 sec
+      Start 24: frontend-output
+24/44 Test #24: frontend-output ..................   Passed    0.03 sec
+      Start 25: frontend-cancellation-points
+25/44 Test #25: frontend-cancellation-points .....   Passed    0.02 sec
+      Start 26: protocol
+26/44 Test #26: protocol .........................   Passed    0.25 sec
+      Start 27: cli-info
+27/44 Test #27: cli-info .........................   Passed    0.16 sec
+      Start 28: cli-unsupported
+28/44 Test #28: cli-unsupported ..................   Passed    0.16 sec
+      Start 29: heap-array-cycle
+29/44 Test #29: heap-array-cycle .................   Passed    0.25 sec
+      Start 30: heap-map-cycle
+30/44 Test #30: heap-map-cycle ...................   Passed    0.02 sec
+      Start 31: heap-closure-cycle
+31/44 Test #31: heap-closure-cycle ...............   Passed    0.02 sec
+      Start 32: heap-reachable-alias
+32/44 Test #32: heap-reachable-alias .............   Passed    0.02 sec
+      Start 33: heap-quota-gc-retry
+33/44 Test #33: heap-quota-gc-retry ..............   Passed    0.02 sec
+      Start 34: heap-atomic-limits
+34/44 Test #34: heap-atomic-limits ...............   Passed    0.02 sec
+      Start 35: heap-allocation-rollback
+35/44 Test #35: heap-allocation-rollback .........   Passed    0.03 sec
+      Start 36: heap-ownership
+36/44 Test #36: heap-ownership ...................   Passed    0.02 sec
+      Start 37: heap-cancellation
+37/44 Test #37: heap-cancellation ................   Passed    0.02 sec
+      Start 38: heap-unwind-roots
+38/44 Test #38: heap-unwind-roots ................   Passed    0.02 sec
+      Start 39: heap-iterative-graph
+39/44 Test #39: heap-iterative-graph .............   Passed    0.06 sec
+      Start 40: heap-repeated-collection
+40/44 Test #40: heap-repeated-collection .........   Passed    0.04 sec
+      Start 41: lifecycle-success
+41/44 Test #41: lifecycle-success ................   Passed    0.29 sec
+      Start 42: lifecycle-resource
+42/44 Test #42: lifecycle-resource ...............   Passed    0.15 sec
+      Start 43: lifecycle-cancel
+43/44 Test #43: lifecycle-cancel .................   Passed    0.13 sec
+      Start 44: lifecycle-error
+44/44 Test #44: lifecycle-error ..................   Passed    0.14 sec
+
+95% tests passed, 2 tests failed out of 44
+
+Total Test time (real) =  73.75 sec
+
+The following tests FAILED:
+	  2 - program-fixed (Failed)
+	 21 - frontend-default-boundaries (Timeout)
+Errors while running CTest

@@ -1,0 +1,1 @@
+fatal: Unable to create 'D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/.git/index.lock': Permission denied

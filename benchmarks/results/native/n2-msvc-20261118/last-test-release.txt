@@ -1,0 +1,734 @@
+Start testing: Nov 18 14:01 �й���׼ʱ��
+----------------------------------------------------------
+1/44 Testing: frontend-fixed
+1/44 Test: frontend-fixed
+Command: "C:/Program Files/WindowsApps/OpenAI.CodexPrimaryRuntime.v26-1112-737-0_26.1112.737.0_x64__3k8sg7r9htsxt/dependencies/native/powershell/pwsh.exe" "-NoProfile" "-File" "D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/native_runtime/tools/test-fixed.ps1" "-Executable" "D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release/Release/zzy-native.exe"
+Directory: D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release
+"frontend-fixed" start time: Nov 18 14:01 �й���׼ʱ��
+Output:
+----------------------------------------------------------
+Native fixed expectations: 87 passed
+<end of output>
+Test time =   5.70 sec
+----------------------------------------------------------
+Test Passed.
+"frontend-fixed" end time: Nov 18 14:01 �й���׼ʱ��
+"frontend-fixed" time elapsed: 00:00:05
+----------------------------------------------------------
+
+2/44 Testing: program-fixed
+2/44 Test: program-fixed
+Command: "C:/Program Files/WindowsApps/OpenAI.CodexPrimaryRuntime.v26-1112-737-0_26.1112.737.0_x64__3k8sg7r9htsxt/dependencies/native/powershell/pwsh.exe" "-NoProfile" "-File" "D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/native_runtime/tools/test-check.ps1" "-Executable" "D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release/Release/zzy-native.exe"
+Directory: D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release
+"program-fixed" start time: Nov 18 14:01 �й���׼ʱ��
+Output:
+----------------------------------------------------------
+Native fixed expectations: 850 passed
+<end of output>
+Test time =  47.00 sec
+----------------------------------------------------------
+Test Passed.
+"program-fixed" end time: Nov 18 14:02 �й���׼ʱ��
+"program-fixed" time elapsed: 00:00:46
+----------------------------------------------------------
+
+3/44 Testing: program-ast
+3/44 Test: program-ast
+Command: "D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release/Release/native-program-tests.exe" "ast"
+Directory: D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release
+"program-ast" start time: Nov 18 14:02 �й���׼ʱ��
+Output:
+----------------------------------------------------------
+ast: passed
+program: 1 cases passed
+<end of output>
+Test time =   0.03 sec
+----------------------------------------------------------
+Test Passed.
+"program-ast" end time: Nov 18 14:02 �й���׼ʱ��
+"program-ast" time elapsed: 00:00:00
+----------------------------------------------------------
+
+4/44 Testing: program-captures
+4/44 Test: program-captures
+Command: "D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release/Release/native-program-tests.exe" "captures"
+Directory: D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release
+"program-captures" start time: Nov 18 14:02 �й���׼ʱ��
+Output:
+----------------------------------------------------------
+captures: passed
+program: 1 cases passed
+<end of output>
+Test time =   0.03 sec
+----------------------------------------------------------
+Test Passed.
+"program-captures" end time: Nov 18 14:02 �й���׼ʱ��
+"program-captures" time elapsed: 00:00:00
+----------------------------------------------------------
+
+5/44 Testing: program-scopes
+5/44 Test: program-scopes
+Command: "D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release/Release/native-program-tests.exe" "scopes"
+Directory: D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release
+"program-scopes" start time: Nov 18 14:02 �й���׼ʱ��
+Output:
+----------------------------------------------------------
+scopes: passed
+program: 1 cases passed
+<end of output>
+Test time =   0.03 sec
+----------------------------------------------------------
+Test Passed.
+"program-scopes" end time: Nov 18 14:02 �й���׼ʱ��
+"program-scopes" time elapsed: 00:00:00
+----------------------------------------------------------
+
+6/44 Testing: program-purity
+6/44 Test: program-purity
+Command: "D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release/Release/native-program-tests.exe" "purity"
+Directory: D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release
+"program-purity" start time: Nov 18 14:02 �й���׼ʱ��
+Output:
+----------------------------------------------------------
+purity: passed
+program: 1 cases passed
+<end of output>
+Test time =   0.04 sec
+----------------------------------------------------------
+Test Passed.
+"program-purity" end time: Nov 18 14:02 �й���׼ʱ��
+"program-purity" time elapsed: 00:00:00
+----------------------------------------------------------
+
+7/44 Testing: program-literals
+7/44 Test: program-literals
+Command: "D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release/Release/native-program-tests.exe" "literals"
+Directory: D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release
+"program-literals" start time: Nov 18 14:02 �й���׼ʱ��
+Output:
+----------------------------------------------------------
+literals: passed
+program: 1 cases passed
+<end of output>
+Test time =   0.03 sec
+----------------------------------------------------------
+Test Passed.
+"program-literals" end time: Nov 18 14:02 �й���׼ʱ��
+"program-literals" time elapsed: 00:00:00
+----------------------------------------------------------
+
+8/44 Testing: program-budgets
+8/44 Test: program-budgets
+Command: "D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release/Release/native-program-tests.exe" "budgets"
+Directory: D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release
+"program-budgets" start time: Nov 18 14:02 �й���׼ʱ��
+Output:
+----------------------------------------------------------
+budgets: passed
+program: 1 cases passed
+<end of output>
+Test time =   0.03 sec
+----------------------------------------------------------
+Test Passed.
+"program-budgets" end time: Nov 18 14:02 �й���׼ʱ��
+"program-budgets" time elapsed: 00:00:00
+----------------------------------------------------------
+
+9/44 Testing: program-graph
+9/44 Test: program-graph
+Command: "D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release/Release/native-program-tests.exe" "graph"
+Directory: D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release
+"program-graph" start time: Nov 18 14:02 �й���׼ʱ��
+Output:
+----------------------------------------------------------
+graph: passed
+program: 1 cases passed
+<end of output>
+Test time =   0.05 sec
+----------------------------------------------------------
+Test Passed.
+"program-graph" end time: Nov 18 14:02 �й���׼ʱ��
+"program-graph" time elapsed: 00:00:00
+----------------------------------------------------------
+
+10/44 Testing: program-readonly
+10/44 Test: program-readonly
+Command: "D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release/Release/native-program-tests.exe" "readonly"
+Directory: D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release
+"program-readonly" start time: Nov 18 14:02 �й���׼ʱ��
+Output:
+----------------------------------------------------------
+readonly: passed
+program: 1 cases passed
+<end of output>
+Test time =   0.03 sec
+----------------------------------------------------------
+Test Passed.
+"program-readonly" end time: Nov 18 14:02 �й���׼ʱ��
+"program-readonly" time elapsed: 00:00:00
+----------------------------------------------------------
+
+11/44 Testing: program-metadata
+11/44 Test: program-metadata
+Command: "D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release/Release/native-program-tests.exe" "metadata"
+Directory: D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release
+"program-metadata" start time: Nov 18 14:02 �й���׼ʱ��
+Output:
+----------------------------------------------------------
+metadata: passed
+program: 1 cases passed
+<end of output>
+Test time =   0.02 sec
+----------------------------------------------------------
+Test Passed.
+"program-metadata" end time: Nov 18 14:02 �й���׼ʱ��
+"program-metadata" time elapsed: 00:00:00
+----------------------------------------------------------
+
+12/44 Testing: program-cancellation
+12/44 Test: program-cancellation
+Command: "D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release/Release/native-program-tests.exe" "cancellation"
+Directory: D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release
+"program-cancellation" start time: Nov 18 14:02 �й���׼ʱ��
+Output:
+----------------------------------------------------------
+cancellation: passed
+program: 1 cases passed
+<end of output>
+Test time =   0.03 sec
+----------------------------------------------------------
+Test Passed.
+"program-cancellation" end time: Nov 18 14:02 �й���׼ʱ��
+"program-cancellation" time elapsed: 00:00:00
+----------------------------------------------------------
+
+13/44 Testing: program-empty-selection
+13/44 Test: program-empty-selection
+Command: "C:/Users/13691/AppData/Local/Programs/CMake/4.5.0/bin/cmake.exe" "-DEXE=D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release/Release/native-program-tests.exe" "-P" "D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/native_runtime/tests/selection.cmake"
+Directory: D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release
+"program-empty-selection" start time: Nov 18 14:02 �й���׼ʱ��
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.14 sec
+----------------------------------------------------------
+Test Passed.
+"program-empty-selection" end time: Nov 18 14:02 �й���׼ʱ��
+"program-empty-selection" time elapsed: 00:00:00
+----------------------------------------------------------
+
+14/44 Testing: frontend-sha256
+14/44 Test: frontend-sha256
+Command: "D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release/Release/native-frontend-tests.exe" "sha256"
+Directory: D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release
+"frontend-sha256" start time: Nov 18 14:02 �й���׼ʱ��
+Output:
+----------------------------------------------------------
+sha256: passed
+frontend: 1 cases passed
+<end of output>
+Test time =   0.03 sec
+----------------------------------------------------------
+Test Passed.
+"frontend-sha256" end time: Nov 18 14:02 �й���׼ʱ��
+"frontend-sha256" time elapsed: 00:00:00
+----------------------------------------------------------
+
+15/44 Testing: frontend-utf8
+15/44 Test: frontend-utf8
+Command: "D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release/Release/native-frontend-tests.exe" "utf8"
+Directory: D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release
+"frontend-utf8" start time: Nov 18 14:02 �й���׼ʱ��
+Output:
+----------------------------------------------------------
+utf8: passed
+frontend: 1 cases passed
+<end of output>
+Test time =   0.02 sec
+----------------------------------------------------------
+Test Passed.
+"frontend-utf8" end time: Nov 18 14:02 �й���׼ʱ��
+"frontend-utf8" time elapsed: 00:00:00
+----------------------------------------------------------
+
+16/44 Testing: frontend-positions
+16/44 Test: frontend-positions
+Command: "D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release/Release/native-frontend-tests.exe" "positions"
+Directory: D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release
+"frontend-positions" start time: Nov 18 14:02 �й���׼ʱ��
+Output:
+----------------------------------------------------------
+positions: passed
+frontend: 1 cases passed
+<end of output>
+Test time =   0.02 sec
+----------------------------------------------------------
+Test Passed.
+"frontend-positions" end time: Nov 18 14:02 �й���׼ʱ��
+"frontend-positions" time elapsed: 00:00:00
+----------------------------------------------------------
+
+17/44 Testing: frontend-source-loader
+17/44 Test: frontend-source-loader
+Command: "D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release/Release/native-frontend-tests.exe" "source-loader"
+Directory: D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release
+"frontend-source-loader" start time: Nov 18 14:02 �й���׼ʱ��
+Output:
+----------------------------------------------------------
+source-loader: passed
+frontend: 1 cases passed
+<end of output>
+Test time =   0.03 sec
+----------------------------------------------------------
+Test Passed.
+"frontend-source-loader" end time: Nov 18 14:02 �й���׼ʱ��
+"frontend-source-loader" time elapsed: 00:00:00
+----------------------------------------------------------
+
+18/44 Testing: frontend-policy
+18/44 Test: frontend-policy
+Command: "D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release/Release/native-frontend-tests.exe" "policy"
+Directory: D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release
+"frontend-policy" start time: Nov 18 14:02 �й���׼ʱ��
+Output:
+----------------------------------------------------------
+policy: passed
+frontend: 1 cases passed
+<end of output>
+Test time =   0.02 sec
+----------------------------------------------------------
+Test Passed.
+"frontend-policy" end time: Nov 18 14:02 �й���׼ʱ��
+"frontend-policy" time elapsed: 00:00:00
+----------------------------------------------------------
+
+19/44 Testing: frontend-diagnostics
+19/44 Test: frontend-diagnostics
+Command: "D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release/Release/native-frontend-tests.exe" "diagnostics"
+Directory: D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release
+"frontend-diagnostics" start time: Nov 18 14:02 �й���׼ʱ��
+Output:
+----------------------------------------------------------
+diagnostics: passed
+frontend: 1 cases passed
+<end of output>
+Test time =   0.02 sec
+----------------------------------------------------------
+Test Passed.
+"frontend-diagnostics" end time: Nov 18 14:02 �й���׼ʱ��
+"frontend-diagnostics" time elapsed: 00:00:00
+----------------------------------------------------------
+
+20/44 Testing: frontend-lexer-boundaries
+20/44 Test: frontend-lexer-boundaries
+Command: "D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release/Release/native-frontend-tests.exe" "lexer-boundaries"
+Directory: D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release
+"frontend-lexer-boundaries" start time: Nov 18 14:02 �й���׼ʱ��
+Output:
+----------------------------------------------------------
+lexer-boundaries: passed
+frontend: 1 cases passed
+<end of output>
+Test time =   0.03 sec
+----------------------------------------------------------
+Test Passed.
+"frontend-lexer-boundaries" end time: Nov 18 14:02 �й���׼ʱ��
+"frontend-lexer-boundaries" time elapsed: 00:00:00
+----------------------------------------------------------
+
+21/44 Testing: frontend-default-boundaries
+21/44 Test: frontend-default-boundaries
+Command: "D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release/Release/native-frontend-tests.exe" "default-boundaries"
+Directory: D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release
+"frontend-default-boundaries" start time: Nov 18 14:02 �й���׼ʱ��
+Output:
+----------------------------------------------------------
+default-boundaries: passed
+frontend: 1 cases passed
+<end of output>
+Test time =   1.17 sec
+----------------------------------------------------------
+Test Passed.
+"frontend-default-boundaries" end time: Nov 18 14:02 �й���׼ʱ��
+"frontend-default-boundaries" time elapsed: 00:00:01
+----------------------------------------------------------
+
+22/44 Testing: frontend-source-defaults
+22/44 Test: frontend-source-defaults
+Command: "D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release/Release/native-frontend-tests.exe" "source-defaults"
+Directory: D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release
+"frontend-source-defaults" start time: Nov 18 14:02 �й���׼ʱ��
+Output:
+----------------------------------------------------------
+source-defaults: passed
+frontend: 1 cases passed
+<end of output>
+Test time =   0.37 sec
+----------------------------------------------------------
+Test Passed.
+"frontend-source-defaults" end time: Nov 18 14:02 �й���׼ʱ��
+"frontend-source-defaults" time elapsed: 00:00:00
+----------------------------------------------------------
+
+23/44 Testing: frontend-cancel-during-scan
+23/44 Test: frontend-cancel-during-scan
+Command: "D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release/Release/native-frontend-tests.exe" "cancel-during-scan"
+Directory: D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release
+"frontend-cancel-during-scan" start time: Nov 18 14:02 �й���׼ʱ��
+Output:
+----------------------------------------------------------
+cancel-during-scan: passed
+frontend: 1 cases passed
+<end of output>
+Test time =   0.08 sec
+----------------------------------------------------------
+Test Passed.
+"frontend-cancel-during-scan" end time: Nov 18 14:02 �й���׼ʱ��
+"frontend-cancel-during-scan" time elapsed: 00:00:00
+----------------------------------------------------------
+
+24/44 Testing: frontend-output
+24/44 Test: frontend-output
+Command: "D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release/Release/native-frontend-tests.exe" "output"
+Directory: D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release
+"frontend-output" start time: Nov 18 14:02 �й���׼ʱ��
+Output:
+----------------------------------------------------------
+output: passed
+frontend: 1 cases passed
+<end of output>
+Test time =   0.02 sec
+----------------------------------------------------------
+Test Passed.
+"frontend-output" end time: Nov 18 14:02 �й���׼ʱ��
+"frontend-output" time elapsed: 00:00:00
+----------------------------------------------------------
+
+25/44 Testing: frontend-cancellation-points
+25/44 Test: frontend-cancellation-points
+Command: "D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release/Release/native-frontend-tests.exe" "cancellation-points"
+Directory: D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release
+"frontend-cancellation-points" start time: Nov 18 14:02 �й���׼ʱ��
+Output:
+----------------------------------------------------------
+cancellation-points: passed
+frontend: 1 cases passed
+<end of output>
+Test time =   0.02 sec
+----------------------------------------------------------
+Test Passed.
+"frontend-cancellation-points" end time: Nov 18 14:02 �й���׼ʱ��
+"frontend-cancellation-points" time elapsed: 00:00:00
+----------------------------------------------------------
+
+26/44 Testing: protocol
+26/44 Test: protocol
+Command: "D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release/Release/native-protocol-tests.exe"
+Directory: D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release
+"protocol" start time: Nov 18 14:02 �й���׼ʱ��
+Output:
+----------------------------------------------------------
+protocol: 3 checks passed
+<end of output>
+Test time =   0.13 sec
+----------------------------------------------------------
+Test Passed.
+"protocol" end time: Nov 18 14:02 �й���׼ʱ��
+"protocol" time elapsed: 00:00:00
+----------------------------------------------------------
+
+27/44 Testing: cli-info
+27/44 Test: cli-info
+Command: "C:/Users/13691/AppData/Local/Programs/CMake/4.5.0/bin/cmake.exe" "-DEXE=D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release/Release/zzy-native.exe" "-DMODE=info" "-P" "D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/native_runtime/tests/cli.cmake"
+Directory: D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release
+"cli-info" start time: Nov 18 14:02 �й���׼ʱ��
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.17 sec
+----------------------------------------------------------
+Test Passed.
+"cli-info" end time: Nov 18 14:02 �й���׼ʱ��
+"cli-info" time elapsed: 00:00:00
+----------------------------------------------------------
+
+28/44 Testing: cli-unsupported
+28/44 Test: cli-unsupported
+Command: "C:/Users/13691/AppData/Local/Programs/CMake/4.5.0/bin/cmake.exe" "-DEXE=D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release/Release/zzy-native.exe" "-DMODE=run" "-P" "D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/native_runtime/tests/cli.cmake"
+Directory: D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release
+"cli-unsupported" start time: Nov 18 14:02 �й���׼ʱ��
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.14 sec
+----------------------------------------------------------
+Test Passed.
+"cli-unsupported" end time: Nov 18 14:02 �й���׼ʱ��
+"cli-unsupported" time elapsed: 00:00:00
+----------------------------------------------------------
+
+29/44 Testing: heap-array-cycle
+29/44 Test: heap-array-cycle
+Command: "D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release/Release/native-heap-tests.exe" "array-cycle"
+Directory: D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release
+"heap-array-cycle" start time: Nov 18 14:02 �й���׼ʱ��
+Output:
+----------------------------------------------------------
+array-cycle: passed
+heap: 1 cases passed
+<end of output>
+Test time =   0.13 sec
+----------------------------------------------------------
+Test Passed.
+"heap-array-cycle" end time: Nov 18 14:02 �й���׼ʱ��
+"heap-array-cycle" time elapsed: 00:00:00
+----------------------------------------------------------
+
+30/44 Testing: heap-map-cycle
+30/44 Test: heap-map-cycle
+Command: "D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release/Release/native-heap-tests.exe" "map-cycle"
+Directory: D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release
+"heap-map-cycle" start time: Nov 18 14:02 �й���׼ʱ��
+Output:
+----------------------------------------------------------
+map-cycle: passed
+heap: 1 cases passed
+<end of output>
+Test time =   0.02 sec
+----------------------------------------------------------
+Test Passed.
+"heap-map-cycle" end time: Nov 18 14:02 �й���׼ʱ��
+"heap-map-cycle" time elapsed: 00:00:00
+----------------------------------------------------------
+
+31/44 Testing: heap-closure-cycle
+31/44 Test: heap-closure-cycle
+Command: "D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release/Release/native-heap-tests.exe" "closure-cycle"
+Directory: D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release
+"heap-closure-cycle" start time: Nov 18 14:02 �й���׼ʱ��
+Output:
+----------------------------------------------------------
+closure-cycle: passed
+heap: 1 cases passed
+<end of output>
+Test time =   0.02 sec
+----------------------------------------------------------
+Test Passed.
+"heap-closure-cycle" end time: Nov 18 14:02 �й���׼ʱ��
+"heap-closure-cycle" time elapsed: 00:00:00
+----------------------------------------------------------
+
+32/44 Testing: heap-reachable-alias
+32/44 Test: heap-reachable-alias
+Command: "D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release/Release/native-heap-tests.exe" "reachable-alias"
+Directory: D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release
+"heap-reachable-alias" start time: Nov 18 14:02 �й���׼ʱ��
+Output:
+----------------------------------------------------------
+reachable-alias: passed
+heap: 1 cases passed
+<end of output>
+Test time =   0.02 sec
+----------------------------------------------------------
+Test Passed.
+"heap-reachable-alias" end time: Nov 18 14:02 �й���׼ʱ��
+"heap-reachable-alias" time elapsed: 00:00:00
+----------------------------------------------------------
+
+33/44 Testing: heap-quota-gc-retry
+33/44 Test: heap-quota-gc-retry
+Command: "D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release/Release/native-heap-tests.exe" "quota-gc-retry"
+Directory: D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release
+"heap-quota-gc-retry" start time: Nov 18 14:02 �й���׼ʱ��
+Output:
+----------------------------------------------------------
+quota-gc-retry: passed
+heap: 1 cases passed
+<end of output>
+Test time =   0.02 sec
+----------------------------------------------------------
+Test Passed.
+"heap-quota-gc-retry" end time: Nov 18 14:02 �й���׼ʱ��
+"heap-quota-gc-retry" time elapsed: 00:00:00
+----------------------------------------------------------
+
+34/44 Testing: heap-atomic-limits
+34/44 Test: heap-atomic-limits
+Command: "D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release/Release/native-heap-tests.exe" "atomic-limits"
+Directory: D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release
+"heap-atomic-limits" start time: Nov 18 14:02 �й���׼ʱ��
+Output:
+----------------------------------------------------------
+atomic-limits: passed
+heap: 1 cases passed
+<end of output>
+Test time =   0.02 sec
+----------------------------------------------------------
+Test Passed.
+"heap-atomic-limits" end time: Nov 18 14:02 �й���׼ʱ��
+"heap-atomic-limits" time elapsed: 00:00:00
+----------------------------------------------------------
+
+35/44 Testing: heap-allocation-rollback
+35/44 Test: heap-allocation-rollback
+Command: "D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release/Release/native-heap-tests.exe" "allocation-rollback"
+Directory: D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release
+"heap-allocation-rollback" start time: Nov 18 14:02 �й���׼ʱ��
+Output:
+----------------------------------------------------------
+allocation-rollback: passed
+heap: 1 cases passed
+<end of output>
+Test time =   0.02 sec
+----------------------------------------------------------
+Test Passed.
+"heap-allocation-rollback" end time: Nov 18 14:02 �й���׼ʱ��
+"heap-allocation-rollback" time elapsed: 00:00:00
+----------------------------------------------------------
+
+36/44 Testing: heap-ownership
+36/44 Test: heap-ownership
+Command: "D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release/Release/native-heap-tests.exe" "ownership"
+Directory: D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release
+"heap-ownership" start time: Nov 18 14:02 �й���׼ʱ��
+Output:
+----------------------------------------------------------
+ownership: passed
+heap: 1 cases passed
+<end of output>
+Test time =   0.02 sec
+----------------------------------------------------------
+Test Passed.
+"heap-ownership" end time: Nov 18 14:02 �й���׼ʱ��
+"heap-ownership" time elapsed: 00:00:00
+----------------------------------------------------------
+
+37/44 Testing: heap-cancellation
+37/44 Test: heap-cancellation
+Command: "D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release/Release/native-heap-tests.exe" "cancellation"
+Directory: D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release
+"heap-cancellation" start time: Nov 18 14:02 �й���׼ʱ��
+Output:
+----------------------------------------------------------
+cancellation: passed
+heap: 1 cases passed
+<end of output>
+Test time =   0.02 sec
+----------------------------------------------------------
+Test Passed.
+"heap-cancellation" end time: Nov 18 14:02 �й���׼ʱ��
+"heap-cancellation" time elapsed: 00:00:00
+----------------------------------------------------------
+
+38/44 Testing: heap-unwind-roots
+38/44 Test: heap-unwind-roots
+Command: "D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release/Release/native-heap-tests.exe" "unwind-roots"
+Directory: D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release
+"heap-unwind-roots" start time: Nov 18 14:02 �й���׼ʱ��
+Output:
+----------------------------------------------------------
+unwind-roots: passed
+heap: 1 cases passed
+<end of output>
+Test time =   0.02 sec
+----------------------------------------------------------
+Test Passed.
+"heap-unwind-roots" end time: Nov 18 14:02 �й���׼ʱ��
+"heap-unwind-roots" time elapsed: 00:00:00
+----------------------------------------------------------
+
+39/44 Testing: heap-iterative-graph
+39/44 Test: heap-iterative-graph
+Command: "D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release/Release/native-heap-tests.exe" "iterative-graph"
+Directory: D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release
+"heap-iterative-graph" start time: Nov 18 14:02 �й���׼ʱ��
+Output:
+----------------------------------------------------------
+iterative-graph: passed
+heap: 1 cases passed
+<end of output>
+Test time =   0.02 sec
+----------------------------------------------------------
+Test Passed.
+"heap-iterative-graph" end time: Nov 18 14:02 �й���׼ʱ��
+"heap-iterative-graph" time elapsed: 00:00:00
+----------------------------------------------------------
+
+40/44 Testing: heap-repeated-collection
+40/44 Test: heap-repeated-collection
+Command: "D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release/Release/native-heap-tests.exe" "repeated-collection"
+Directory: D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release
+"heap-repeated-collection" start time: Nov 18 14:02 �й���׼ʱ��
+Output:
+----------------------------------------------------------
+repeated-collection: passed
+heap: 1 cases passed
+<end of output>
+Test time =   0.02 sec
+----------------------------------------------------------
+Test Passed.
+"heap-repeated-collection" end time: Nov 18 14:02 �й���׼ʱ��
+"heap-repeated-collection" time elapsed: 00:00:00
+----------------------------------------------------------
+
+41/44 Testing: lifecycle-success
+41/44 Test: lifecycle-success
+Command: "C:/Users/13691/AppData/Local/Programs/CMake/4.5.0/bin/cmake.exe" "-DEXE=D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release/Release/native-lifecycle-probe.exe" "-DMODE=success" "-DEXPECTED=0" "-P" "D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/native_runtime/tests/probe.cmake"
+Directory: D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release
+"lifecycle-success" start time: Nov 18 14:02 �й���׼ʱ��
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.26 sec
+----------------------------------------------------------
+Test Passed.
+"lifecycle-success" end time: Nov 18 14:02 �й���׼ʱ��
+"lifecycle-success" time elapsed: 00:00:00
+----------------------------------------------------------
+
+42/44 Testing: lifecycle-resource
+42/44 Test: lifecycle-resource
+Command: "C:/Users/13691/AppData/Local/Programs/CMake/4.5.0/bin/cmake.exe" "-DEXE=D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release/Release/native-lifecycle-probe.exe" "-DMODE=resource" "-DEXPECTED=1" "-P" "D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/native_runtime/tests/probe.cmake"
+Directory: D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release
+"lifecycle-resource" start time: Nov 18 14:02 �й���׼ʱ��
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.15 sec
+----------------------------------------------------------
+Test Passed.
+"lifecycle-resource" end time: Nov 18 14:02 �й���׼ʱ��
+"lifecycle-resource" time elapsed: 00:00:00
+----------------------------------------------------------
+
+43/44 Testing: lifecycle-cancel
+43/44 Test: lifecycle-cancel
+Command: "C:/Users/13691/AppData/Local/Programs/CMake/4.5.0/bin/cmake.exe" "-DEXE=D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release/Release/native-lifecycle-probe.exe" "-DMODE=cancel" "-DEXPECTED=130" "-P" "D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/native_runtime/tests/probe.cmake"
+Directory: D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release
+"lifecycle-cancel" start time: Nov 18 14:02 �й���׼ʱ��
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.13 sec
+----------------------------------------------------------
+Test Passed.
+"lifecycle-cancel" end time: Nov 18 14:02 �й���׼ʱ��
+"lifecycle-cancel" time elapsed: 00:00:00
+----------------------------------------------------------
+
+44/44 Testing: lifecycle-error
+44/44 Test: lifecycle-error
+Command: "C:/Users/13691/AppData/Local/Programs/CMake/4.5.0/bin/cmake.exe" "-DEXE=D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release/Release/native-lifecycle-probe.exe" "-DMODE=error" "-DEXPECTED=1" "-P" "D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/native_runtime/tests/probe.cmake"
+Directory: D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release
+"lifecycle-error" start time: Nov 18 14:02 �й���׼ʱ��
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.13 sec
+----------------------------------------------------------
+Test Passed.
+"lifecycle-error" end time: Nov 18 14:02 �й���׼ʱ��
+"lifecycle-error" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Nov 18 14:02 �й���׼ʱ��

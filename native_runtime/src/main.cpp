@@ -1,4 +1,5 @@
-#include "zzy_native/lexer.hpp"
+#include "zzy_native/prepare.hpp"
+#include "zzy_native/program_dump.hpp"
 #include <iostream>
 #include <vector>
 namespace {
@@ -64,28 +65,33 @@ int cli(const std::vector<std::string>& argv,bool& json,zzy::ResourcePolicy& pol
         }
     }
     if(help || arguments.empty()) {
-        std::cout<<"zzy-native 0.0.0-n1\nAvailable: info, source-info FILE, lex FILE, --help, --version\n"
+        std::cout<<"zzy-native 0.0.0-n2\nAvailable: info, source-info FILE, lex FILE, check FILE, program-info FILE, --help, --version\n"
                  <<"Options (before or after command): --limits FILE --diagnostic-format text|json\n"
-                 <<"Not implemented: check, run, test (E402; no Python fallback)\n"
-                 <<"GCC validation only; formal CMake/CTest/install acceptance pending\n";
+                 <<"Not implemented: run, test (E402; no Python fallback)\n"
+                 <<"check prepares an immutable Program without executing user code\n";
         return 0;
     }
     const auto& command=arguments[0];
-    if(command=="--version" && arguments.size()==1) {std::cout<<"0.0.0-n1\n";return 0;}
-    if(command=="check" || command=="run" || command=="test") {
+    if(command=="--version" && arguments.size()==1) {std::cout<<"0.0.0-n2\n";return 0;}
+    if(command=="run" || command=="test") {
         zzy::diagnostic(std::cerr,"E402","capability is not implemented by this backend","capability="+command,json);return 2;
     }
-    if(!((command=="info" && arguments.size()==1) || ((command=="source-info" || command=="lex") && arguments.size()==2)))
+    if(!((command=="info" && arguments.size()==1) || ((command=="source-info" || command=="lex" || command=="check" || command=="program-info") && arguments.size()==2)))
         throw zzy::FrontendError("E401","invalid command or arguments; use --help");
     if(limits) policy=zzy::load_policy(zzy::widen(*limits));
     zzy::FrontendMeter meter(policy,cancelled);
     if(command=="info") {
-        meter.write(std::cout,"{\"schema_version\":1,\"backend\":\"native-ast\",\"stage\":\"N1\","
-            "\"version\":\"0.0.0-n1\",\"cxx_standard\":17,\"pointer_bits\":"+std::to_string(sizeof(void*)*8)+
+        meter.write(std::cout,"{\"schema_version\":1,\"backend\":\"native-ast\",\"stage\":\"N2\","
+            "\"version\":\"0.0.0-n2\",\"cxx_standard\":17,\"pointer_bits\":"+std::to_string(sizeof(void*)*8)+
             ",\"compiler\":"+zzy::quote(compiler())+",\"crt\":"+zzy::quote(crt())+
-            ",\"supported_commands\":[\"info\",\"source-info\",\"lex\"],\"python_fallback\":false,\"unicode_version\":\"15.0.0\","
-            "\"policy_status\":\"frontend limits enforced; AST/execution/cache unavailable\",\"resource_policy\":"+
+            ",\"supported_commands\":[\"info\",\"source-info\",\"lex\",\"check\",\"program-info\"],\"python_fallback\":false,\"unicode_version\":\"15.0.0\","
+            "\"policy_status\":\"frontend and static preparation limits enforced; execution/cache unavailable\",\"resource_policy\":"+
             policy.canonical_json()+",\"resource_fingerprint\":"+zzy::quote(policy.fingerprint())+"}\n");
+        return 0;
+    }
+    if(command=="check" || command=="program-info") {
+        const auto program=zzy::prepare(zzy::widen(arguments[1]),meter);
+        if(command=="program-info") zzy::dump_program(program,meter,std::cout);
         return 0;
     }
     zzy::SourceLoader sources(meter);

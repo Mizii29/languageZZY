@@ -1,0 +1,44 @@
+{
+  "passed": true,
+  "baseline_files": 2044,
+  "unchanged_files": 2026,
+  "changed_owned_files": [
+    "benchmarks/results/native/msvc-20261118/collection-debug.json",
+    "benchmarks/results/native/msvc-20261118/collection-release.json",
+    "benchmarks/results/native/n2-20261118/cmake-access-failure.txt",
+    "native_runtime/tests/msvc-report.md",
+    "native_runtime/tests/n2-report.md",
+    "README.md",
+    "docs/README.md",
+    "docs/development/development-log.md",
+    "docs/development/native-runtime-capability.md",
+    "docs/development/native-runtime-plan.md",
+    "docs/development/roadmap.md",
+    "docs/development/test-coverage.md",
+    "docs/development/todo.md",
+    "native_runtime/CMakeLists.txt",
+    "native_runtime/README.md",
+    "native_runtime/tools/acceptance.ps1",
+    "native_runtime/tools/test-fixed.ps1",
+    "skills/zzy/SKILL.md"
+  ],
+  "archived_originals": [
+    "benchmarks/results/native/msvc-20261118/collection-debug.json",
+    "benchmarks/results/native/msvc-20261118/collection-release.json",
+    "benchmarks/results/native/n2-20261118/cmake-access-failure.txt"
+  ],
+  "baseline_sha256": "ed7ec8f9305200bb94a6625d209d7cf0e68ca4516f62558c6bbb7a3ec79040e1",
+  "staged_files": 172,
+  "unrelated_files_unchanged": true,
+  "scoped_shared_files": [
+    "README.md",
+    "docs/README.md",
+    "docs/development/development-log.md",
+    "docs/development/native-runtime-plan.md",
+    "docs/development/roadmap.md",
+    "docs/development/test-coverage.md",
+    "docs/development/todo.md",
+    "skills/zzy/SKILL.md"
+  ],
+  "staged_json_parsed": 53
+}

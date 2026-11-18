@@ -1,0 +1,27 @@
+Microsoft (R) COFF/PE Dumper Version 14.40.33812.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+Dump of file D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\build\native-n2-msvc-direct-release\native-lifecycle-probe.exe
+
+File Type: EXECUTABLE IMAGE
+
+  Image has the following dependencies:
+
+    MSVCP140.dll
+    KERNEL32.dll
+    VCRUNTIME140.dll
+    VCRUNTIME140_1.dll
+    api-ms-win-crt-runtime-l1-1-0.dll
+    api-ms-win-crt-stdio-l1-1-0.dll
+    api-ms-win-crt-math-l1-1-0.dll
+    api-ms-win-crt-heap-l1-1-0.dll
+    api-ms-win-crt-locale-l1-1-0.dll
+
+  Summary
+
+        1000 .data
+        1000 .pdata
+        4000 .rdata
+        1000 .reloc
+        9000 .text

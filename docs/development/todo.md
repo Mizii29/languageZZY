@@ -236,3 +236,19 @@ Debug/Release各32/32非空CTest、固定词法/源码87/87、CLI62/62、47过�
 ### 本轮Git交付限制
 
 技术门禁已通过；本地提交尚未完成。当前会话.git只读，git add创建index.lock被拒绝，索引仍空、HEAD保持2cb4649。专属补丁及文件清单保存在dist/native-msvc-work，未混入原有工作。先在允许Git写入的会话审查并提交本轮差异，再开展N2；不得把此限制写成本地提交成功。
+
+## NATIVE-01：N2 Parser/Resolver/Program/check（2026-11-18）
+
+- [x] N2-01 不可变 AST 与 Parser：覆盖现有声明、表达式、控制流、函数、结构、Result、Lazy、Machine、Quantity、查询、spec 和模块语法；保留源码 Token/坐标、AST 后序索引及语法资源预算。
+- [x] N2-02 Resolver、绑定/捕获布局与完整模块依赖图：记录 global/local/self/capture、传递捕获、可变 Cell 标记、块槽位、静态导出和规范路径别名；Program 不含请求 Cell、容器或模块实例。
+- [x] N2-03 统一静态诊断、纯性、字面准备、资源/取消和首错规则；不新增静态类型系统，不提前检查运行期类型，不执行用户代码。
+- [x] N2-04 原生 `check` 和 `program-info`：check 静默成功/前端错误退出2，run/test仍E402/2；副作用探针与确定性结构观察通过。
+
+N2 证据：`native_runtime/tests/native/program.cpp` 10/10；`benchmarks/results/native/n2-20261118/` 保存 GCC/MSVC 直接构建、848/848既有check、850/850 PowerShell fixed、17/17观察器、CLI62/62。当前真实 MSVC 直接 Debug/Release 与 GCC Debug 已通过。CMake/CTest 访问在本会话被安装目录权限拒绝，尚未对N2最新源码正式重跑，不沿用N1旧32项结果；下一次先在可访问会话执行 `cmake --preset native-debug -S native_runtime`、Debug/Release build、`ctest --no-tests=error`、install 和源码外 smoke。N3-01 值模型/BigInt/容器执行是下一任务。
+最新收尾复核：静态 CI 已在报告补齐后单独重跑并通过（`dist/native-n2-work/ci-static-final/report.json`）；MSVC 直接 Debug/Release 的10项Program、850项check、17项观察器和CLI边界均对应最终EXE SHA，Release源码外smoke为9/9。以上是N2静态实现证据，不改变正式CMake/CTest/install未验证状态；下一步仍是补正式44项门禁和本地提交，然后才进入N3-01。
+
+### N2 正式补跑与本地交付（2026-11-18，当前交接）
+
+前文工具权限和Git只读是历史限制，现已解除。N0-03/N1正式门禁及N2-01—04技术出口均满足：最新CMake/MSVC Debug/Release各44/44、固定词法87/check850/CLI62/Program观察17、各58条过程（1条预期强杀独列）、Release安装/源码外副本各9/9、Python相关108/108。证据见[N2报告](../../native_runtime/tests/n2-report.md)与benchmarks/results/native/n2-msvc-20261118。
+
+N1已本地提交3bfc26d，并以d537ce2恢复原始证据字节；N2仅相关差异本地提交，不推送，最终SHA看git记录。真实手动Ctrl+C、Sanitizer、其他平台、缺CRT主机、完整Python/Web/GUI/wheel和性能未验证；不豁免N5/N8。下一项N3-01值模型/BigInt/容器；本轮不进入。用户P12/P13/人工材料保留。

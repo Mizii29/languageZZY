@@ -1,0 +1,15 @@
+(use) "effects.zzy" (as) effects;
+io.print("MUST NOT PRINT");
+io.write_text("n2-top.txt", "MUST NOT WRITE");
+(zno) blocked := io.input("MUST NOT READ");
+(shape) Probe {
+    value := io.write_text("n2-default.txt", "MUST NOT WRITE");
+    canvas := sketch.canvas(100, 100);
+}
+(addnew) side_effect() {
+    io.write_text("n2-function.txt", "MUST NOT WRITE");
+    sketch.show(sketch.canvas(100, 100));
+}
+(zno) deferred := (zzz)(io.write_text("n2-lazy.txt", "MUST NOT WRITE"));
+(zno) database := db.transaction("n2-database.sqlite", side_effect);
+(spec) "MUST NOT RUN" { (o_o) (false); side_effect(); }

@@ -199,3 +199,19 @@ P11-07新增2项故障回归（调用span/path/备注分配和查询备注分配
 每个配置另以实际EXE验证固定87/87（PowerShell与Python协调器各一次，同一清单不相加）、CLI/配置/资源/输出62/62、过程47条（46正常+1预期强杀）；各5个PE导入和CLI实际模块/进程树检查。Release安装和源码外发布副本各9条smoke，含check/run/test副作用探针；空PATH/坏PYTHONPATH。相关Python源码/词法/CLI/资源/诊断/盘点回归105项通过。
 
 [正式报告](../../native_runtime/tests/msvc-report.md)与[证据审计](../../benchmarks/results/native/msvc-20261118/audit.json)对应42个原生文件、每配置5个EXE及安装/发布副本SHA。未重跑完整Python/Web/GUI或性能测试；人工Ctrl+C、Sanitizer和缺CRT主机未验证。没有新增原生云CI，独立native CI仍属N5-05。
+
+## N2 原生静态 Program（2026-11-18）
+
+N2 的固定答案继续来自现有 `tests/*/cases.json`，`native_runtime/tests/program/manifests.json` 对清单路径做独立冻结；848 个 `mode=check` 用例全部由原生子进程核对，另有 `all-syntax.zzy`、`no-execute.zzy` 两个独立成功/副作用夹具。`test-program.py` 明确拒绝空集合，PATH 为空且 PYTHONPATH 为无效值，不从 Python 后端生成答案。
+
+原生 `native-program-tests.exe` 的10项固定选择覆盖 AST 后序索引/坐标、函数参数与 Result 注解、局部/跨层捕获和可变 Cell 标记、名称/控制流/query 纯性、精确 BigInt/Quantity/Machine、AST/语法/取消预算、规范路径模块图/别名/快照、只读 Program 并发观察、103 项宿主静态元数据和失败清理。空选择通过独立门禁失败，不能把零用例当成功。
+
+`test-program-observer.py` 的17项固定期望独立核对 program-info JSONL：56 种 AST kind、完整模块/导入、连续确定 NodeId、子节点后序顺序、字面量、BOM/CRLF/Tab/补充字符坐标、依赖错误文件、首错、AST/输出预算以及失败后恢复。副作用探针包含默认值、函数、Lazy、spec、I/O、SQLite 和 GUI 名称；check 全部成功且临时目录没有副作用文件。该结果只证明静态准备，不替代 N3 求值或 N3/N6 请求隔离。
+
+实际直接 MSVC Debug/Release 均执行 Program 10/10、固定 check 848/848、PowerShell fixed 850/850、CLI62/62；GCC Debug 原生 check 848/848。CMake/CTest 当前会话因 CMake 安装目录访问权限不可用，未把直接 MSVC 证据写成正式 CMake/CTest 通过；须在下一次可访问 CMake 的会话用当前源码重跑。未验证真实手动 Ctrl+C、Sanitizer、其他平台、完整 Python/Web/GUI 回归。
+
+### N2 最新正式构建覆盖（2026-11-18补跑）
+
+原始直接构建与权限失败不覆盖。最新CMake/MSVC Debug、Release各44/44：旧32项+Program固定清单1+原生Program10+空选择失败门禁1。各固定词法87/87、check850/850、CLI62/62、独立Program观察17/17，58条过程（57正常+1预期强杀超时独列）。Release正式安装和仓库外中文空格目录副本各9/9；各6个EXE的PE导入、CLI实际模块/进程树无Python，空PATH/无效PYTHONPATH，无用户副作用。
+
+补跑修复测试协调器相对路径按用例cwd解析；Debug完整4Mi码点边界实测72.218秒，仅等待上限60→180秒，不改配额、输入和断言。Python相关回归108/108、无跳过、42.061秒。源码/EXE/加载CRT审计见[报告](../../native_runtime/tests/n2-report.md)及benchmarks/results/native/n2-msvc-20261118/audit.json。未运行全Python/Web/GUI/wheel/性能、手动Ctrl+C或Sanitizer；原生云CI仍归N5-05。

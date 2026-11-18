@@ -1,0 +1,14 @@
+[
+  "tests/lex/cases.json",
+  "tests/run/cases.json",
+  "tests/check/cases.json",
+  "tests/p02/cases.json",
+  "tests/p03/cases.json",
+  "tests/p04/cases.json",
+  "tests/p05/cases.json",
+  "tests/p06/cases.json",
+  "tests/e1/cases.json",
+  "tests/e2/cases.json",
+  "tests/e3/cases.json",
+  "tests/e4/cases.json"
+]

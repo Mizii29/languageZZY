@@ -25,11 +25,12 @@ try {
         $record=[ordered]@{command=$start.Arguments;exit_code=$process.ExitCode;stdout=$stdout.Result;stderr=$stderr.Result;timed_out=$timedOut}
         $records.Add($record);$process.Dispose()
         if($timedOut) {throw 'Smoke timeout'}
-        if($command -in @('check','run','test')) {
+        if($command -in @('run','test')) {
             if($record.exit_code -ne 2 -or $record.stdout -ne '' -or ($record.stderr | ConvertFrom-Json).code -ne 'E402') {throw 'Unsupported capability smoke failed'}
         } else {
             if($record.exit_code -ne 0 -or $record.stderr -ne '') {throw 'Smoke command failed'}
-            if($command -eq 'info' -and ($record.stdout | ConvertFrom-Json).stage -ne 'N1') {throw 'Wrong installed stage'}
+            if($command -eq 'info' -and ($record.stdout | ConvertFrom-Json).stage -ne 'N2') {throw 'Wrong installed stage'}
+            if($command -eq 'check' -and $record.stdout -ne '') {throw 'check unexpectedly printed'}
             if($command -eq 'source-info') {
                 $source=$record.stdout | ConvertFrom-Json
                 if($source.bytes -ne 20 -or $source.codepoints -ne 15 -or $source.syntax_checked -ne $false) {throw 'Installed source-info mismatch'}
@@ -52,7 +53,9 @@ try {
         if(-not $process.WaitForExit(15000)) {$process.Kill();$process.WaitForExit();throw 'No-execute smoke timeout'}
         $record=[ordered]@{command=$start.Arguments;exit_code=$process.ExitCode;stdout=$stdout.Result;stderr=$stderr.Result;timed_out=$false}
         $records.Add($record);$process.Dispose()
-        if($record.exit_code -ne 2 -or $record.stdout -ne '' -or ($record.stderr | ConvertFrom-Json).code -ne 'E402') {throw 'Unsupported command did not reject the fixed side-effect fixture'}
+        if($command -eq 'check') {
+            if($record.exit_code -ne 0 -or $record.stdout -ne '' -or $record.stderr -ne '') {throw 'check did not prepare the fixed side-effect fixture'}
+        } elseif($record.exit_code -ne 2 -or $record.stdout -ne '' -or ($record.stderr | ConvertFrom-Json).code -ne 'E402') {throw 'Unsupported command did not reject the fixed side-effect fixture'}
         if(Test-Path -LiteralPath (Join-Path $folder 'native-side-effect.txt')) {throw 'check/run/test executed user code'}
     }
     $passed=$true

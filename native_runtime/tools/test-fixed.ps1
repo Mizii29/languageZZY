@@ -1,6 +1,7 @@
 ﻿param(
     [Parameter(Mandatory=$true)][string]$Executable,
-    [string]$Output
+    [string]$Output,
+    [ValidateSet('Lexer','Check')][string]$Suite='Lexer'
 )
 $ErrorActionPreference='Stop'
 $repoRoot=Split-Path -Parent (Split-Path -Parent $PSScriptRoot)
@@ -12,6 +13,7 @@ $records=[Collections.Generic.List[object]]::new()
 $passed=$false
 function Require([bool]$Condition,[string]$Message) {if(-not $Condition) {throw $Message}}
 function Display([string]$Path,[string]$Cwd) {
+    if(-not [IO.Path]::IsPathRooted($Path)) {$Path=Join-Path $Cwd $Path}
     $absolute=[IO.Path]::GetFullPath($Path)
     $base=[IO.Path]::GetFullPath($Cwd).TrimEnd('\')+'\'
     if([IO.Path]::GetPathRoot($absolute) -ine [IO.Path]::GetPathRoot($base)) {return $absolute.Replace('\','/')}
@@ -19,21 +21,30 @@ function Display([string]$Path,[string]$Cwd) {
 }
 try {
     $cases=@()
-    foreach($name in @('tests/lex/cases.json','native_runtime/tests/frontend/cases.json')) {
+    $manifests=if($Suite -eq 'Check') {@([IO.File]::ReadAllText((Join-Path $repoRoot 'native_runtime/tests/program/manifests.json')) | ConvertFrom-Json)} else {@('tests/lex/cases.json','native_runtime/tests/frontend/cases.json')}
+    foreach($name in $manifests) {
         $manifest=[IO.File]::ReadAllText((Join-Path $repoRoot $name)) | ConvertFrom-Json
         Require ($manifest.schema_version -eq 1 -and @($manifest.cases).Count -gt 0) 'Empty or invalid fixed manifest'
-        $cases+=@($manifest.cases)
+        if($Suite -eq 'Check') {
+            foreach($case in $manifest.cases) {if($case.mode -eq 'check') {$case.id=$name+'::'+$case.id;$cases+=$case}}
+        } else {$cases+=@($manifest.cases)}
+    }
+    if($Suite -eq 'Check') {
+        foreach($name in @('all-syntax','no-execute')) {
+            $cases+= [pscustomobject]@{id=('n2-'+$name);mode='check';file=(Join-Path $repoRoot ('native_runtime/tests/program/'+$name+'.zzy'));cwd=$folder;exit_code=0;stdout=''}
+        }
     }
     Require ($cases.Count -gt 0) 'No fixed cases collected'
     Require (@($cases.id | Select-Object -Unique).Count -eq $cases.Count) 'Duplicate fixed case IDs'
     foreach($case in $cases) {
-        $cwd=if($case.cwd) {Join-Path $repoRoot $case.cwd} else {$repoRoot}
+        $cwd=if($case.cwd) {if([IO.Path]::IsPathRooted($case.cwd)) {$case.cwd} else {Join-Path $repoRoot $case.cwd}} else {$repoRoot}
         if($null -ne $case.input_hex) {
             $file=Join-Path $folder ($case.id+'.zzy')
             $bytes=[byte[]]::new($case.input_hex.Length/2)
             for($i=0;$i -lt $bytes.Length;$i++) {$bytes[$i]=[Convert]::ToByte($case.input_hex.Substring($i*2,2),16)}
             [IO.File]::WriteAllBytes($file,$bytes)
-        } else {$file=Join-Path $repoRoot $case.file}
+        } elseif($Suite -eq 'Check') {$file=$case.file}
+        else {$file=Join-Path $repoRoot $case.file}
         $arguments=@($case.mode,$file,'--diagnostic-format','json')
         if($null -ne $case.limits) {
             $config=Join-Path $folder 'limits.json'
@@ -87,15 +98,16 @@ try {
                 Require (($coordinates -join ',') -ceq ($case.diagnostic.span -join ',')) ('diagnostic span: '+$case.id)
             }
             $expectedFile=if($case.diagnostic.PSObject.Properties.Name -contains 'file') {$case.diagnostic.file} else {Display $file $cwd}
-            Require ($actual.file -ceq $expectedFile) ('diagnostic file: '+$case.id)
+            Require ($actual.file -ceq $expectedFile) ('diagnostic file: '+$case.id+'; actual='+$actual.file+'; expected='+$expectedFile+'; cwd='+$cwd)
             if($case.diagnostic.message_contains) {Require ($actual.message.Contains($case.diagnostic.message_contains)) ('resource key: '+$case.id)}
             Require ([Text.Encoding]::UTF8.GetByteCount($record.stderr) -le 4096) ('diagnostic reserve: '+$case.id)
         }
     }
+    if($Suite -eq 'Check') {Require (@(Get-ChildItem -LiteralPath $folder -Filter 'n2-*').Count -eq 0) 'check executed user side effects'}
     $passed=$true
 } finally {
     if($Output) {
-        $report=[ordered]@{schema_version=1;passed=$passed;count=$records.Count;scope='PowerShell fixed N1 manifests, no Python coordinator';exe=$exe;exe_sha256=(Get-FileHash -LiteralPath $exe -Algorithm SHA256).Hash.ToLowerInvariant();records=@($records.ToArray())}
+        $report=[ordered]@{schema_version=1;passed=$passed;count=$records.Count;scope=('PowerShell fixed '+$Suite+' manifests, no Python coordinator');exe=$exe;exe_sha256=(Get-FileHash -LiteralPath $exe -Algorithm SHA256).Hash.ToLowerInvariant();records=@($records.ToArray())}
         [IO.File]::WriteAllText([IO.Path]::GetFullPath($Output),($report | ConvertTo-Json -Depth 30),[Text.UTF8Encoding]::new($false))
     }
     # Only this newly created, known temporary folder is removed.

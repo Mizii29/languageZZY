@@ -31,3 +31,7 @@ N0-03 未过，按用户2026-11-17授权先实施 N1。以上 N0 冻结表是设
 - 源码为 const 快照/码点映射，Token持有const Source；每个 SourceLoader/FrontendMeter 独立，失败不发布费用，退出幂等清理。
 
 实现与证据见[前端契约](native-frontend-contract.md)、[N1 GCC历史报告](../../native_runtime/tests/n1-report.md)。以上顺序例外已在2026-11-18补齐正式CMake/MSVC/CTest/install，详见[正式报告](../../native_runtime/tests/msvc-report.md)；N0/N1技术出口满足，未扩展为完整语言或N5/N8发布验收。
+
+## N2 表示补充（2026-11-18）
+
+Program采用移动发布到const独立分配的节点表，NodeId为后序索引；Reference和Symbol/FunctionPlan记录静态绑定与捕获，不持有请求数据。模块图按SourceLoader规范路径去重，每次prepare重新读取有界快照。静态数字描述保留任意精度uint32 limbs，Quantity保留精确分数及量纲；不复用N0堆原型作为运行时容器。MSVC Debug实测默认深度需要更大宿主主线程栈，CLI/Program测试链接时预留8MiB、按需提交；语言syntax_depth=64不变。完整接口只维护于[Program契约](native-program-contract.md)。

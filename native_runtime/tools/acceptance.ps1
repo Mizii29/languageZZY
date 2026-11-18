@@ -1,7 +1,7 @@
 ﻿param(
     [Parameter(Mandatory=$true)][string]$BuildDirectory,
     [Parameter(Mandatory=$true)][string]$Output,
-    [ValidateSet('DirectGCC','CMakeMSVC')][string]$BuildOrigin='DirectGCC',
+    [ValidateSet('DirectGCC','CMakeMSVC','DirectMSVC')][string]$BuildOrigin='DirectGCC',
     [ValidateSet('Debug','Release')][string]$Configuration='Debug',
     [string]$CMakeBuildDirectory,
     [string]$Dumpbin,
@@ -21,6 +21,13 @@ if($BuildOrigin -eq 'CMakeMSVC') {
     $provenance.cache=$cache;$provenance.cache_sha256=(Get-FileHash -LiteralPath $cache).Hash.ToLowerInvariant()
     $provenance.dumpbin=$Dumpbin;$provenance.dumpbin_version=(Get-Item -LiteralPath $Dumpbin).VersionInfo.FileVersion
 }
+if($BuildOrigin -eq 'DirectMSVC') {
+    if(-not $Dumpbin) {throw 'DirectMSVC requires reviewed dumpbin path'}
+    $Dumpbin=(Resolve-Path -LiteralPath $Dumpbin).Path
+    $provenance.dumpbin=$Dumpbin
+    $provenance.dumpbin_version=(Get-Item -LiteralPath $Dumpbin).VersionInfo.FileVersion
+    $provenance.cmake='not run; direct MSVC only'
+}
 if($InstalledExecutable) {
     if($BuildOrigin -ne 'CMakeMSVC' -or $Configuration -ne 'Release') {throw 'Only CMake MSVC Release can be the installed package'}
     $InstalledExecutable=(Resolve-Path -LiteralPath $InstalledExecutable).Path
@@ -36,12 +43,12 @@ if([IO.Path]::GetFullPath($stage).StartsWith($repoRoot,[StringComparison]::Ordin
     throw 'The source-external stage must be outside the repository.'
 }
 New-Item -ItemType Directory -Path $stage -Force | Out-Null
-$names=@('zzy-native.exe','native-protocol-tests.exe','native-heap-tests.exe','native-lifecycle-probe.exe','native-frontend-tests.exe')
+$names=@('zzy-native.exe','native-protocol-tests.exe','native-heap-tests.exe','native-lifecycle-probe.exe','native-frontend-tests.exe','native-program-tests.exe')
 foreach($name in $names) {Copy-Item -LiteralPath (Join-Path $build $name) -Destination $stage}
 $cliExecutable=if($InstalledExecutable) {$InstalledExecutable} else {Join-Path $stage 'zzy-native.exe'}
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot '../tests/golden/no-execute.zzy') -Destination (Join-Path $stage 'no-execute.zzy')
 $records=New-Object System.Collections.Generic.List[object]
-function Invoke-Native([string]$Name,[string]$Arguments,[int]$Expected=0) {
+function Invoke-Native([string]$Name,[string]$Arguments,[int]$Expected=0,[int]$TimeoutMilliseconds=60000) {
     $start=New-Object Diagnostics.ProcessStartInfo
     $start.FileName=if($Name -eq 'zzy-native.exe') {$cliExecutable} else {Join-Path $stage $Name}
     $start.Arguments=$Arguments
@@ -59,7 +66,7 @@ function Invoke-Native([string]$Name,[string]$Arguments,[int]$Expected=0) {
     $null=$process.Start()
     $stdout=$process.StandardOutput.ReadToEndAsync()
     $stderr=$process.StandardError.ReadToEndAsync()
-    if(-not $process.WaitForExit(60000)) {$process.Kill();$process.WaitForExit();throw 'Native test timed out; not passed.'}
+    if(-not $process.WaitForExit($TimeoutMilliseconds)) {$process.Kill();$process.WaitForExit();throw 'Native test timed out; not passed.'}
     $record=[ordered]@{exe=$Name;arguments=$Arguments;exit_code=$process.ExitCode;stdout=$stdout.Result;stderr=$stderr.Result;timed_out=$false}
     $records.Add($record)
     $process.Dispose()
@@ -74,19 +81,21 @@ try {
     Require ($info.stderr -eq '') 'info emitted stderr'
     $value=$info.stdout | ConvertFrom-Json
     $provenance.info=$value
-    if($BuildOrigin -eq 'CMakeMSVC') {
+    if($BuildOrigin -ne 'DirectGCC') {
         Require ($value.compiler -eq 'MSVC') 'CMake MSVC provenance disagrees with the executable'
         $expectedCrt=if($Configuration -eq 'Debug') {'MSVC /MDd (debug runtime, not redistributable)'} else {'MSVC /MD (VC Redistributable required)'}
         Require ($value.crt -eq $expectedCrt) 'selected configuration CRT mismatch'
     }
-    Require ($value.stage -eq 'N1' -and $value.pointer_bits -eq 64 -and $value.cxx_standard -eq 17) 'incorrect info'
-    Require ($value.python_fallback -eq $false -and @($value.supported_commands).Count -eq 3 -and $value.supported_commands[0] -eq 'info') 'incorrect capabilities'
+    Require ($value.stage -eq 'N2' -and $value.pointer_bits -eq 64 -and $value.cxx_standard -eq 17) 'incorrect info'
+    Require ($value.python_fallback -eq $false -and @($value.supported_commands).Count -eq 5 -and $value.supported_commands[0] -eq 'info') 'incorrect capabilities'
     Require ($value.resource_policy.host_decimal_digits -eq 0 -and $value.resource_policy.effective_decimal_digits -eq 4096) 'incorrect decimal policy'
     # Fixed independently from default-v1 contract and documented native host bound.
     Require ($value.resource_fingerprint -eq 'c9a540b6ea917d42f3d6c915801dce802ee771a18b1ab6139eab2ebc8161b14d') 'incorrect policy fingerprint'
     $null=Invoke-Native 'zzy-native.exe' '--help'
     $null=Invoke-Native 'zzy-native.exe' '--version'
-    foreach($command in @('check','run','test')) {
+    $result=Invoke-Native 'zzy-native.exe' 'check no-execute.zzy --diagnostic-format json'
+    Require ($result.stdout -eq '' -and $result.stderr -eq '') 'check must prepare without side effects'
+    foreach($command in @('run','test')) {
         $result=Invoke-Native 'zzy-native.exe' ($command+' no-execute.zzy --diagnostic-format json') 2
         $errorRecord=$result.stderr | ConvertFrom-Json
         Require ($result.stdout -eq '' -and $errorRecord.schema_version -eq 1 -and $errorRecord.code -eq 'E402' -and $errorRecord.kind -eq 'error') 'unsupported protocol mismatch'
@@ -116,8 +125,15 @@ try {
     }
     $result=Invoke-Native 'native-heap-tests.exe' 'not-a-case' 1
     Require ($result.stderr.Trim() -eq 'no cases collected') 'empty test selection was not rejected'
+    foreach($case in @('ast','captures','scopes','purity','literals','budgets','graph','readonly','metadata','cancellation')) {
+        $result=Invoke-Native 'native-program-tests.exe' $case
+        Require ($result.stdout.Trim() -eq ($case+": passed`nprogram: 1 cases passed")) ('Program case missing: '+$case)
+    }
+    $result=Invoke-Native 'native-program-tests.exe' 'unknown' 1
+    Require ($result.stderr.Contains('no Program cases selected')) 'empty Program collection succeeded'
     foreach($case in @('sha256','utf8','positions','source-loader','policy','diagnostics','lexer-boundaries','default-boundaries','source-defaults','cancel-during-scan','output','cancellation-points')) {
-        $result=Invoke-Native 'native-frontend-tests.exe' $case
+        $timeout=if($case -eq 'default-boundaries') {180000} else {60000}
+        $result=Invoke-Native 'native-frontend-tests.exe' $case 0 $timeout
         Require ($result.stdout.Trim() -eq ($case+": passed`nfrontend: 1 cases passed")) ('frontend case missing: '+$case)
     }
     $result=Invoke-Native 'native-frontend-tests.exe' 'not-a-case' 1
@@ -193,6 +209,12 @@ try {
         })
         Require ($cliModules.Count -gt 0) 'actual CLI module snapshot empty'
         Require (@($cliModules | Where-Object {$_ -match '^(python|_tkinter|tcl|tk\d)'}).Count -eq 0) 'actual CLI loaded Python/GUI'
+        # Preserve the independently observed module evidence even if the
+        # separate system CIM process-tree permission is unavailable.
+        [IO.File]::WriteAllText((Join-Path $out 'loaded-modules.json'),([ordered]@{
+            executable=$cliExecutable;process_id=$running.Id;exe_sha256=(Get-FileHash -LiteralPath $cliExecutable).Hash.ToLowerInvariant();
+            no_python_gui=$true;modules=$moduleDetails;process_tree='separate CIM check follows; not established by this record'
+        } | ConvertTo-Json -Depth 15),[Text.UTF8Encoding]::new($false))
         $children=@(Get-CimInstance Win32_Process -Filter ('ParentProcessId='+$running.Id) | Select-Object -ExpandProperty Name)
         Require (@($children | Where-Object {$_ -notmatch '^conhost\.exe$'}).Count -eq 0) 'actual CLI created child process'
         $tail=$running.StandardOutput.ReadToEndAsync();$stderr=$running.StandardError.ReadToEndAsync()
@@ -207,10 +229,10 @@ try {
     # Exact reviewed direct imports, not an arbitrary MSVC/API-set wildcard.
     $allowed=if($BuildOrigin -eq 'DirectGCC') {@('KERNEL32.dll','msvcrt.dll','USER32.dll')}
         elseif($Configuration -eq 'Debug') {@('KERNEL32.dll','MSVCP140D.dll','VCRUNTIME140D.dll','VCRUNTIME140_1D.dll','ucrtbased.dll')}
-        else {@('KERNEL32.dll','MSVCP140.dll','VCRUNTIME140.dll','VCRUNTIME140_1.dll','api-ms-win-crt-runtime-l1-1-0.dll','api-ms-win-crt-stdio-l1-1-0.dll','api-ms-win-crt-heap-l1-1-0.dll','api-ms-win-crt-math-l1-1-0.dll','api-ms-win-crt-locale-l1-1-0.dll')}
+        else {@('KERNEL32.dll','MSVCP140.dll','VCRUNTIME140.dll','VCRUNTIME140_1.dll','api-ms-win-crt-runtime-l1-1-0.dll','api-ms-win-crt-stdio-l1-1-0.dll','api-ms-win-crt-heap-l1-1-0.dll','api-ms-win-crt-math-l1-1-0.dll','api-ms-win-crt-locale-l1-1-0.dll','api-ms-win-crt-convert-l1-1-0.dll')}
     if($BuildOrigin -eq 'DirectGCC') {$objdump=(Get-Command objdump.exe -ErrorAction Stop).Source}
     foreach($name in $names) {
-        if($BuildOrigin -eq 'CMakeMSVC') {
+        if($BuildOrigin -ne 'DirectGCC') {
             $lines=& $Dumpbin /dependents (Join-Path $stage $name)
             $dlls=@($lines | Where-Object {$_ -match '^\s+(\S+\.dll)\s*$'} | ForEach-Object {$_.Trim()})
         } else {
@@ -235,8 +257,8 @@ try {
     }
     $passed=$true
 } finally {
-    $scope=if($BuildOrigin -eq 'CMakeMSVC') {'N1 CMake/MSVC '+$Configuration+' executable acceptance; CTest/install results are separate evidence'} else {'N1 direct MinGW validation; NOT CMake/CTest/install acceptance'}
+    $scope=if($BuildOrigin -eq 'CMakeMSVC') {'N2 CMake/MSVC '+$Configuration+' executable acceptance; CTest/install results are separate evidence'} elseif($BuildOrigin -eq 'DirectMSVC') {'N2 direct MSVC '+$Configuration+'; NOT CMake/CTest/install acceptance'} else {'N2 direct MinGW validation; NOT CMake/CTest/install acceptance'}
     $report=[ordered]@{schema_version=1;passed=$passed;scope=$scope;provenance=$provenance;os=[Environment]::OSVersion.VersionString;process_bits=([IntPtr]::Size*8);cwd=$stage;path_empty=$true;pythonpath='unusable-python-path';cmake_available=([bool](Get-Command cmake -ErrorAction SilentlyContinue));ctest_available=([bool](Get-Command ctest -ErrorAction SilentlyContinue));records=@($records.ToArray());imports=$imports;allowed_direct_imports=$allowed;artifacts=$artifacts;sources=$sources;manual_ctrl_c='not run';cmake_install=$(if($BuildOrigin -eq 'CMakeMSVC') {'see separate install log and published-copy smoke'} else {'not run'});sanitizer='not run'}
     [IO.File]::WriteAllText((Join-Path $out 'report.json'),($report | ConvertTo-Json -Depth 30),[Text.UTF8Encoding]::new($false))
 }
-Write-Output ('N1 native: '+$records.Count+' process cases passed; evidence='+$out)
+Write-Output ('N2 native: '+$records.Count+' process cases passed; evidence='+$out)

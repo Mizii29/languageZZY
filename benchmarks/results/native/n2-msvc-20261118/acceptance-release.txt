@@ -1,0 +1,1 @@
+N2 native: 58 process cases passed; evidence=D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\benchmarks\results\native\n2-msvc-20261118\release

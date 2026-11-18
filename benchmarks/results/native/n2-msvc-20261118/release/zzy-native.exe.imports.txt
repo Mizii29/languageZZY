@@ -1,0 +1,29 @@
+Microsoft (R) COFF/PE Dumper Version 14.40.33812.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+Dump of file C:\Users\13691\AppData\Local\Temp\ZZY N1 2495cea1a1c04ba1b0232fa1ce3fd8fe\中文 路径\bin\zzy-native.exe
+
+File Type: EXECUTABLE IMAGE
+
+  Image has the following dependencies:
+
+    KERNEL32.dll
+    MSVCP140.dll
+    VCRUNTIME140.dll
+    VCRUNTIME140_1.dll
+    api-ms-win-crt-runtime-l1-1-0.dll
+    api-ms-win-crt-math-l1-1-0.dll
+    api-ms-win-crt-heap-l1-1-0.dll
+    api-ms-win-crt-convert-l1-1-0.dll
+    api-ms-win-crt-stdio-l1-1-0.dll
+    api-ms-win-crt-locale-l1-1-0.dll
+
+  Summary
+
+        2000 .data
+        3000 .pdata
+       19000 .rdata
+        1000 .reloc
+        1000 .rsrc
+       41000 .text

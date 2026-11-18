@@ -1,0 +1,39 @@
+protocol: 3 checks passed
+sha256: passed
+utf8: passed
+positions: passed
+source-loader: passed
+policy: passed
+diagnostics: passed
+lexer-boundaries: passed
+default-boundaries: passed
+source-defaults: passed
+cancel-during-scan: passed
+output: passed
+cancellation-points: passed
+frontend: 12 cases passed
+array-cycle: passed
+map-cycle: passed
+closure-cycle: passed
+reachable-alias: passed
+quota-gc-retry: passed
+atomic-limits: passed
+allocation-rollback: passed
+ownership: passed
+cancellation: passed
+unwind-roots: passed
+iterative-graph: passed
+repeated-collection: passed
+heap: 12 cases passed
+ast: passed
+captures: passed
+scopes: passed
+purity: passed
+literals: passed
+budgets: passed
+graph: passed
+readonly: passed
+metadata: passed
+cancellation: passed
+program: 10 cases passed
+Program test failed: no Program cases selected

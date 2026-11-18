@@ -35,3 +35,7 @@ Ctrl+C/Break handler 只设置无锁原子标志；读块、UTF-8解码/行映�
 固定期望来自原 tests/lex/cases.json、独立额外字节夹具、已知 SHA 向量及独立预算公式；测试不调用 Python ZZY 生成答案。原生 C++ 测试、纯 PowerShell 固定清单和源码外验收均有显式非空门禁；Python 可作为开发协调器，不属于 EXE 运行依赖。
 
 历史GCC计数见[N1报告](../../native_runtime/tests/n1-report.md)，正式CMake/MSVC与Release安装的独立计数和CRT依赖见[正式报告](../../native_runtime/tests/msvc-report.md)。其他平台、clang-cl、Sanitizer、人工Ctrl+C/GUI、缺CRT干净主机不能由这些结果推断。本阶段不进入N2，不更改Python默认入口、requirement或P12/P13。
+
+## N2 当前命令（2026-11-18）
+
+N1章节描述其冻结版本。当前N2增加check/program-info并准备完整模块图，规范见[Program契约](native-program-contract.md)；run/test仍E402。N1语法/源码接口未改变，当前info stage=N2/version=0.0.0-n2、supported_commands为五项；新资源接线包含AST/语法深度、静态整数字面及Quantity。N2不求值、不创建请求对象，也没有VM/缓存。当前验收与限制见[N2报告](../../native_runtime/tests/n2-report.md)。

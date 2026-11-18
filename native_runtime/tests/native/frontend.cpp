@@ -179,7 +179,12 @@ void source_defaults() {
 struct CancelJob {std::atomic<bool>* cancelled;HANDLE ready;};
 DWORD WINAPI cancel_worker(void* argument) {
     const auto& job=*static_cast<CancelJob*>(argument);
-    if(WaitForSingleObject(job.ready,5000)==WAIT_OBJECT_0) {Sleep(1);job.cancelled->store(true,std::memory_order_relaxed);}
+    if(WaitForSingleObject(job.ready,5000)==WAIT_OBJECT_0) {
+        // No wall-clock sleep: Windows can round Sleep(1) beyond the entire
+        // optimized scan. The event synchronizes two real threads, and the
+        // worker publishes cancellation while the caller is entering scan.
+        job.cancelled->store(true,std::memory_order_relaxed);
+    }
     return 0;
 }
 void cancel_scan() {

@@ -1,0 +1,18 @@
+Test project D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-debug
+    Start 2: program-fixed
+1/1 Test #2: program-fixed ....................***Failed    1.95 sec
+Exception: D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\native_runtime\tools\test-fixed.ps1:14
+Line |
+  14 |  … l]$Condition,[string]$Message) {if(-not $Condition) {throw $Message}}
+     |                                                         ~~~~~~~~~~~~~~
+     | diagnostic file: tests/check/cases.json::duplicate; actual=tests/run/inputs/duplicate.zzy;
+     | expected=build/native-debug/tests/run/inputs/duplicate.zzy; cwd=D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\.
+
+
+0% tests passed, 1 tests failed out of 1
+
+Total Test time (real) =   1.97 sec
+
+The following tests FAILED:
+	  2 - program-fixed (Failed)
+Errors while running CTest

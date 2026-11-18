@@ -125,3 +125,11 @@ P10-01/P10-06已选择：[集中契约](runtime/web.md)、[独立合约演示](.
 ### 原生正式构建补验收（2026-11-18）
 
 前述“缺工具/待补”保留为当时记录；当前N0-03和N1的CMake/MSVC Debug/Release、CTest32/32及Release安装/源码外副本已通过。[正式证据与限制](../native_runtime/tests/msvc-report.md)、[复现命令](../native_runtime/README.md)、[当前todo](development/todo.md)为交接入口。下一阶段N2本轮未实现，Python默认入口和P12/P13不变。
+
+### N2 静态准备入口（2026-11-18）
+
+当前Parser/Resolver/Program/check已实现，集中读取[Program契约](development/native-program-contract.md)、[N2证据](../native_runtime/tests/n2-report.md)和最新todo。check不执行任何用户表达式或宿主初始化；run/test仍E402。旧N1正式报告只对应其冻结源码，不外推新N2产物。
+
+### N2 正式门禁补跑（2026-11-18）
+
+[N2报告](../native_runtime/tests/n2-report.md)补充最新CMake/MSVC Debug/Release各44项CTest、固定check850项、进程/依赖/安装与源码外副本。旧权限失败与GCC/直接MSVC证据保留；check不求值，下一项N3-01，默认Python入口不变。

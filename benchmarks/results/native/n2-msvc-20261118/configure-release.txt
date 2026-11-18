@@ -1,0 +1,4 @@
+-- Selecting Windows SDK version 10.0.22000.0 to target Windows 10.0.26200.
+-- Configuring done (0.1s)
+-- Generating done (0.2s)
+-- Build files have been written to: D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/build/native-release

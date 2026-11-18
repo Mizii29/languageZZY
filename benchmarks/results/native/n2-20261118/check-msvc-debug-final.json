@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "passed": false,
+  "count": 0,
+  "scope": "PowerShell fixed Check manifests, no Python coordinator",
+  "exe": "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-n2-msvc-direct-debug\\zzy-native.exe",
+  "exe_sha256": "635a1584807e60500cf0ec83321c455a5d83d388a9c2bb2fbab932f73e456cb7",
+  "records": []
+}

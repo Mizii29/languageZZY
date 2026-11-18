@@ -1,0 +1,65 @@
+{
+  "executable": "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY N1 dff34f6324f44dd380fe150b70dd1155\\中文 路径\\bin\\zzy-native.exe",
+  "process_id": 8904,
+  "exe_sha256": "40fd44f86a2b0e771bf6bb0cd8036c4c826226edb7b4baeccc51b76489afe8dd",
+  "no_python_gui": true,
+  "modules": [
+    {
+      "name": "zzy-native.exe",
+      "path": "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY N1 dff34f6324f44dd380fe150b70dd1155\\中文 路径\\bin\\zzy-native.exe",
+      "version": null,
+      "company": null,
+      "sha256": "40fd44f86a2b0e771bf6bb0cd8036c4c826226edb7b4baeccc51b76489afe8dd"
+    },
+    {
+      "name": "ntdll.dll",
+      "path": "C:\\WINDOWS\\SYSTEM32\\ntdll.dll",
+      "version": "10.0.26100.9974 (WinBuild.160101.0800)",
+      "company": "Microsoft Corporation",
+      "sha256": "a0f81bf5c610c0ff0a550adc020a58446f214790c748057bb575042e972e6a34"
+    },
+    {
+      "name": "KERNEL32.DLL",
+      "path": "C:\\WINDOWS\\System32\\KERNEL32.DLL",
+      "version": "10.0.26100.9974 (WinBuild.160101.0800)",
+      "company": "Microsoft Corporation",
+      "sha256": "970e5e15eed7d53c8b88e06ddc71884c31804f1cb5286abf01fbce39b7f0e29f"
+    },
+    {
+      "name": "KERNELBASE.dll",
+      "path": "C:\\WINDOWS\\System32\\KERNELBASE.dll",
+      "version": "10.0.26100.9974 (WinBuild.160101.0800)",
+      "company": "Microsoft Corporation",
+      "sha256": "9eb6768c3020992f8f616f7edfead6254dd6d4c6042d1468d790ec3004cb4bbc"
+    },
+    {
+      "name": "ucrtbase.dll",
+      "path": "C:\\WINDOWS\\System32\\ucrtbase.dll",
+      "version": "10.0.26100.9711 (WinBuild.160101.0800)",
+      "company": "Microsoft Corporation",
+      "sha256": "dedb7611e1abc1ff3852dcac3d4c93a048d729e25b061973b9969f22698f14ca"
+    },
+    {
+      "name": "MSVCP140.dll",
+      "path": "C:\\WINDOWS\\SYSTEM32\\MSVCP140.dll",
+      "version": "14.50.35719.0",
+      "company": "Microsoft Corporation",
+      "sha256": "def46aa6a8f72f27bafac0c43334419486a4d1dcdb6c479a8ef7034b3e1fa4cb"
+    },
+    {
+      "name": "VCRUNTIME140.dll",
+      "path": "C:\\WINDOWS\\SYSTEM32\\VCRUNTIME140.dll",
+      "version": "14.50.35719.0",
+      "company": "Microsoft Corporation",
+      "sha256": "184146852727a9db4eea06178716bec3cdbb1015c911f6b0f915b184ad7775b2"
+    },
+    {
+      "name": "VCRUNTIME140_1.dll",
+      "path": "C:\\WINDOWS\\SYSTEM32\\VCRUNTIME140_1.dll",
+      "version": "14.50.35719.0",
+      "company": "Microsoft Corporation",
+      "sha256": "e6bfb3662ab4b1969a73441dbe35c96d51441b6bff8cf1fe7430bd5b246ca605"
+    }
+  ],
+  "process_tree": "separate CIM check follows; not established by this record"
+}

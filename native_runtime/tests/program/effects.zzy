@@ -1,0 +1,3 @@
+io.write_text("n2-module.txt", "MUST NOT WRITE");
+(zno) waiting := io.input("MUST NOT READ MODULE INPUT");
+(addnew) exported() { (return) waiting; }

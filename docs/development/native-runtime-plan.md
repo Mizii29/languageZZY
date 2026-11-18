@@ -1,6 +1,6 @@
 # ZZY 全原生运行时开发阶段
 
-**阶段代号：NATIVE-01｜状态：设计阶段，尚未实现**
+**阶段代号：NATIVE-01｜当前已完成 N0/N1 正式验收及 N2 静态前端；未实现运行时求值，逐项状态以 todo 为准**
 
 建立：2026-11-17｜前置：现有 Python 解释器、黑盒测试、P12 性能证据和稳定版候选
 范围：让 ZZY 的发布运行时不加载 Python，同时保留现有解释器作为课程兼容实现
@@ -172,3 +172,15 @@ N1 通过时只能记录“N1 实现与 GCC 验证完成，正式 CMake/CTest �
 上文N1顺序例外保留为历史。用户本次明确要求对最新N1代码补齐正式构建：已有CMake4.5.0、VS2022/MSVC19.40，Debug/Release各32项非空CTest、Release安装及仓库外发布副本已实测。没有改变任务编号、依赖或出口标准；详细结果与未验证边界见[正式报告](../../native_runtime/tests/msvc-report.md)，当前状态只维护于todo。
 
 N0出口要求离线构建、非空CTest、冻结决策、环回收/配额和未支持能力拒绝；N1出口要求固定词法、位置/路径、无Python和坏输入。上述证据已具备。手动Ctrl+C、Sanitizer与干净缺CRT主机仍未执行，本阶段不声称这些验证通过；后续对应N5/N8门禁不得豁免。下一阶段N2需另行开展，本次不实现。
+
+## N2-01—04 实施记录（2026-11-18）
+
+用户确认 N1 技术验收后，按 N2-01→04 实际实现 Parser、不可变 AST、Resolver、绑定/传递捕获布局、精确静态字面描述、规范路径模块图和 `check`/`program-info`。不进入 N3，不求值、不创建 Cell/Frame/Value/模块实例，不执行默认表达式、函数、Lazy、spec、I/O、SQLite、Web 或 GUI。集中接口见 [Program契约](native-program-contract.md)。
+
+Parser/Resolver 由 `native_runtime/include/zzy_native/{ast,parser,program,resolver,literals,prepare,program_dump}.hpp` 提供；宿主仅以 `host_metadata.hpp` 的冻结描述参与名称/纯性判断。`main.cpp` 的 check 成功返回0且静默，run/test仍E402/2；program-info 是确定性 JSONL 观察接口，不是可读缓存。
+
+独立原生10项单测、848条既有check固定期望、850条PowerShell固定期望和17项Program观察器通过。GCC和直接MSVC Debug/Release构建均真实运行；CMake目录在当前会话访问被拒，正式 CMake/CTest/install 尚未对 N2 最新源码重跑，不能沿用 N1 的32项结论。AST/Resolver/模块图和check边界已验收，实际值执行、跨请求隔离及宿主运行能力留给N3/N6。
+
+## N2 正式构建与交付补跑（2026-11-18）
+
+上文N2实施记录中的CMake/CIM/Git权限限制是补跑前历史。用户恢复工具访问并要求补跑后，已对最新N2源码执行正式CMake/MSVC Debug、Release配置/构建，各44/44非空CTest、固定词法87/check850/CLI62/Program观察17、各58条过程验收及Release安装/源码外副本各9/9。没有沿用N1旧32项结果；失败修复、产物SHA与未验证范围见[N2报告](../../native_runtime/tests/n2-report.md)。N0-03/N1及N2静态出口已满足，下一项N3-01；本次不求值，不改P12/P13或默认入口。

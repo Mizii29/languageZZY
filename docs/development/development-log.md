@@ -954,3 +954,42 @@ Debug CLI SHA 659854eb460ae5a5efa10cd7845cee54b2a827f0a15c39a9a0fe0d9d17eb831c�
 N0-03勾选，N0/N1技术出口已满足；手动Ctrl+C、Sanitizer、clang-cl、其他平台/Windows10实机、缺CRT干净主机未执行，继续明确未验证。按计划这些不阻塞当前N0/N1技术出口，但不能外推N5/N8发布验收。未重跑完整Python核心/Web/GUI/wheel/性能，没有性能提升结论；默认入口不变。下一项N2-01，本轮停止。
 
 本地Git交付尚未完成：恢复后的会话将.git设为只读；实际git add -- native_runtime/tests/native/protocol.cpp native_runtime/tools/acceptance.ps1 native_runtime/tools/install-smoke.ps1返回“Unable to create .git/index.lock: Permission denied”（退出1）。没有绕过权限、写替代Git库、推送或改写历史；索引仍空，HEAD不变。已整理本轮专属reviewed.patch及reviewed-files.json供权限恢复后审查并用git apply --cached暂存；不要git add整个共享文档而吸收原有修改。补丁在当前工作树已体现，只用于从原HEAD向索引应用，需先复核空索引和HEAD。完成相关本地提交后才闭合本轮交付，再进入N2。
+
+## N2-01—04：Parser、Resolver、Program 与 check（2026-11-18）
+
+接手时 N1 已有正式报告，用户确认进入 N2；本轮没有覆盖或重置先前应用/P12/P13/人工修改。实现了 C++17 前端的不可变发布 AST、完整语法 Parser、词法作用域 Resolver、传递捕获/Cell 标记/块槽位、精确静态数字与 Quantity 描述、Machine 图、规范路径模块准备、冻结宿主元数据、Program JSONL 观察器和原生 `check`。Program 只保存只读 AST/绑定布局/源码快照描述，不包含请求 Cell、容器、模块实例、字节码、磁盘缓存或隐式进程缓存。
+
+主要文件：`native_runtime/include/zzy_native/ast.hpp`、`parser.hpp`、`program.hpp`、`resolver.hpp`、`literals.hpp`、`prepare.hpp`、`program_dump.hpp`、`host_metadata.hpp`；入口 `native_runtime/src/main.cpp`；固定测试 `native_runtime/tests/native/program.cpp`、`native_runtime/tests/program/*`、`native_runtime/tools/test-program.py`、`test-program-observer.py`、`test-check.ps1`；契约 `docs/development/native-program-contract.md`。能力矩阵升级为 N2，`cli.check`/`cli.program-info`已实现；run/test仍E402，无Python回退。
+
+真实验证：GCC Debug 直接编译退出0；MSVC 19.40 Direct Debug/Release 编译退出0。两配置 Program 单测10/10、GCC check清单848/848、MSVC check清单848/848、PowerShell固定850/850、Program独立观察17/17、CLI边界62/62。`all-syntax.zzy`涵盖56种AST kind，副作用夹具覆盖默认值、函数、Lazy、spec、I/O、SQLite/GUI名称；check未产生文件，坏输入首错/坐标/依赖文件/资源失败后恢复通过。一次管道callee误判和MSVC深度宿主栈边界均定位修复，失败原件保留在N2证据目录。
+
+正式 CMake/CTest/install 当前未能对 N2 最新代码执行：本会话访问 CMake 4.5.0 安装目录被沙箱拒绝；直接 MSVC 不是 CMake 替代。没有安装工具链、放宽断言或沿用 N1 的32项结论。真实 Ctrl+C、Sanitizer、其他平台、完整 Python/Web/GUI 回归、多请求值执行隔离未验证。下一项 N3-01 值模型/BigInt/容器执行；不实现 N2 以后的 VM/AOT/缓存。
+### N2 收尾复核（2026-11-18）
+
+在补齐 `native_runtime/tests/n2-report.md` 后重新运行 `scripts.ci static --output dist/native-n2-work/ci-static-final`，报告 `passed=true`、退出0，包含要求哈希、测试清单、Markdown 链接和 `git diff --check`。一次并行运行与原生证据写入同一未跟踪目录，触发 CI 的 checkout fingerprint 变化；该失败原件保留，停止并行写入后最终重跑通过，未放宽校验。
+
+最终 MSVC 直接产物身份为 Debug `1438b4b4d22e9733f15b311cbd97ade6dea2b4120a36948888f609ec60d264a2`、Release `40fd44f86a2b0e771bf6bb0cd8036c4c826226edb7b4baeccc51b76489afe8dd`。Debug/Release 的 Program 单测10/10、PowerShell check 850/850、Program observer 17/17；CLI边界分别复跑为 Debug 62/62、Release 62/62。直接构建脚本退出0，Python 相关固定回归108/108（39.672秒，无跳过）。Release 仓库外 smoke 9/9、PE/加载模块无 Python 或 GUI 的证据与失败过程报告均保留在 `benchmarks/results/native/n2-20261118`。
+
+N2-01—04 的实现与直接编译/固定黑盒验收完成，todo 中四项保持勾选。正式 CMake/CTest/install 仍未验证：本会话访问 CMake 安装目录失败；`acceptance.ps1` 的完整 CIM 进程树查询也被系统拒绝，报告保持 `passed=false`。`git add` 仍无法创建 `.git/index.lock`（退出128），HEAD `2cb4649c2675c5b198b2642fec44651f0107c9bc` 未变，因此本轮无法创建本地提交；没有替代 Git 库、推送或改写历史。先在可写 Git/CMake 会话补跑正式44项门禁和提交，再进入 N3-01；本轮不实现求值。
+
+## N2 正式 CMake/MSVC 补跑与权限恢复交付（2026-11-18）
+
+用户恢复完整工具权限，实际CMake/CTest4.5.0可访问，Git索引和CIM可用；本次沿用已有N2实现，不重写Lexer，不实现N3。分支codex/native-runtime-plan；补跑起点HEAD2cb4649，工作区2044个现有文件指纹留存dist/native-n2-work/formal-baseline.json。保留应用/P12/P13/人工原件；requirement SHA b099c19fc339ce1dc1aab7e9d6c8126a9c5c9ace3d31b969a0623df90f521d2b不变。
+
+先审查前次N1专属暂存补丁并本地提交3bfc26d14f9d8f069a585f075c4e3353b70c6f30。提交后逐JSON解析发现旧补丁拼接无末尾换行文件的边界损坏了7个JSON，并改变原始CRLF；对照intended-index恢复实际证据字节，全部JSON解析通过，独立修复提交d537ce2，不重置或改写历史。N1原CTest收集JSON的行尾空格原件另存raw.gz，展示文件仅去行尾空格、结构等值；历史报告与失败不覆盖。
+
+实际执行cmake --preset native-debug -S native_runtime；cmake --build build/native-debug --config Debug；ctest --test-dir build/native-debug -C Debug --show-only=json-v1；ctest --test-dir build/native-debug -C Debug --output-on-failure --no-tests=error。首次42/44失败：program-fixed按协调器而非用例cwd解析相对诊断文件，frontend-default-boundaries超过60秒等待。定位并修复test-fixed.ps1用例路径解析，原断言和固定答案不变；大边界独立实测72.2181479秒且退出0，仅将该CTest与acceptance等待上限改为180秒，保留/RTC1、4Mi码点L−1/L/L+1、默认配额及断言。再次配置/构建/正式CTest44/44，133.38秒、退出0。
+
+随后Release对应preset/build/show-only/CTest全部退出0，实际收集44项、通过44/44、56.61秒。BUILD_TESTING=ON，旧32项及新增12项全部保留，空选择门禁非零；未减少或静默跳过。CMake/CTest4.5.0、VS2022/MSVC19.40.33812.0（14.40.33807目录）、SDK10.0.22000.0、x64，Debug /MDd /RTC1和Release /MD /O2，/W4 /WX /utf-8 /EHsc /permissive-。没有下载、安装或修改系统PATH，无项目第三方库。
+
+对两配置实际EXE分别执行test-fixed.ps1各87/87、test-check.ps1各850/850、test-cli.py各62/62、test-program-observer.py各17/17。acceptance.ps1显式-BuildOrigin CMakeMSVC及配置/cache/dumpbin来源，各58过程记录（57正常、1预期200ms强杀超时独列），6个EXE的PE导入、CLI实际加载模块/进程树无Python/GUI，独立协作取消与失败清理/下一次恢复通过。预期强杀不算语言执行成功，不声称强杀会运行RAII。
+
+cmake --install build/native-release --config Release --prefix dist/native-stage退出0；install-smoke.ps1针对实际安装EXE及仓库外新建“ZZY N2 Published 中文 空格”副本分别9/9。info/source-info/lex正常、check静默0且无副作用、run/test E402/2；空子进程PATH、无效PYTHONPATH。Release acceptance直接观察该发布副本。Release现有System32 VC runtime14.50.35719.0、UCRT10.0.26100.9711，路径/公司/版本/SHA实录，无私装或分发CRT，Debug不作为发布包。
+
+.venv/Scripts/python.exe -X utf8 -m unittest tests.test_source tests.test_lexer tests.test_lexer_cli tests.test_cli tests.test_resources tests.test_diagnostics tests.test_native_program_contract native_runtime.tests.test_inventory -q：108/108、42.061秒、无跳过、退出0。独立audit.py逐项匹配两配置各62个原生文件、6个EXE、44项清单、安装/发布副本、实际加载CRT哈希，passed=true。项目静态门禁及git差异检查在文档落地后另跑，结果保存在同一证据目录。
+
+Debug CLI SHA ea64b8a7e41c22f9b788bcc9db5b923802cab2e30b1c157afd6c7cf5486d5abd；Release/安装/发布副本SHA 4fc0ff350bfd911f77a3817735616326c509bad88214689bc8f8d592e1e8b56f。新证据benchmarks/results/native/n2-msvc-20261118，旧GCC/直接MSVC/权限失败原件保留在n2-20261118；报告native_runtime/tests/n2-report.md。共享文档仅本轮原生段落进入索引，不整体纳入用户P12/P13修改；只本地提交，不推送。
+
+N0/N1构建与N2-01—04静态出口已满足。未验证真实手动Ctrl+C、Sanitizer、clang-cl、其他平台/Windows10、缺CRT干净主机、全Python核心/Web/GUI/wheel及性能；没有运行期求值/状态隔离的结论，不提前豁免N5/N8。下一项N3-01，达到本次出口后停止并检查本轮子进程已退出。
+
+补跑最终收尾：scripts.ci static --output dist/native-n2-work/ci-msvc-formal-final实际passed=true/退出0，收集2083项（静态清单检查，不声称执行2083项）、固定黑盒1738项仍保留；git diff --check与git diff --cached --check退出0。报告static-delivery.json来自保留用户修改的当前工作区，不冒充干净发布分支全量CI。起始2044个文件中2026个逐字节未变，其余仅本轮原生/共享原生段与已压缩保留的原始空白展示差异，审查结果preservation.json。CI后仅归档报告及本条记录，不更改受测源码、构建选项或测试断言。CIM复查本轮六种原生测试EXE进程均已退出，无遗留服务。

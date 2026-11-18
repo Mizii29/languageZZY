@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "stage": "N1",
+  "stage": "N2",
   "features": [
     {
       "id": "ast.add",
@@ -1301,8 +1301,8 @@
       "id": "cli.check",
       "tier": "core",
       "phase": "N2",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "cli.run",
@@ -1324,6 +1324,76 @@
       "phase": "N0",
       "implemented": true,
       "diagnostic": null
+    },
+    {
+      "id": "cli.program-info",
+      "tier": "core",
+      "phase": "N2",
+      "implemented": true,
+      "diagnostic": null
     }
-  ]
+  ],
+  "frontend": {
+    "parse_resolve_ast_kinds": [
+      "add",
+      "arm",
+      "array",
+      "assert",
+      "assignment",
+      "binary",
+      "binding",
+      "block",
+      "bool",
+      "break",
+      "call",
+      "constant_pattern",
+      "construct",
+      "continue",
+      "current",
+      "definition_field",
+      "edge",
+      "expression",
+      "field",
+      "float",
+      "for",
+      "function",
+      "group",
+      "if",
+      "index",
+      "initializer",
+      "integer",
+      "keep",
+      "lambda",
+      "lazy",
+      "machine",
+      "match",
+      "name",
+      "null",
+      "order",
+      "parameter",
+      "payload_pattern",
+      "pipe",
+      "program",
+      "propagate",
+      "quantity",
+      "query",
+      "result",
+      "return",
+      "send",
+      "shape",
+      "spec",
+      "string",
+      "take",
+      "trace",
+      "unary",
+      "use",
+      "while",
+      "wildcard",
+      "with",
+      "yield"
+    ],
+    "evaluation": false,
+    "module_graph": true,
+    "request_execution_isolation": "not verified until N3/N6"
+  }
 }

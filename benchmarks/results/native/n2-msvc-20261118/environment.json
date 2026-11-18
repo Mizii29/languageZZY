@@ -1,0 +1,41 @@
+{
+  "date": "2026-11-18T14:09:29.9490562+08:00",
+  "os": "Microsoft Windows NT 10.0.26200.0",
+  "powershell": "7.6.9",
+  "cmake": "cmake version 4.5.0",
+  "ctest": "ctest version 4.5.0",
+  "cmake_path": "C:\\Users\\13691\\AppData\\Local\\Programs\\CMake\\4.5.0\\bin\\cmake.exe",
+  "ctest_path": "C:\\Users\\13691\\AppData\\Local\\Programs\\CMake\\4.5.0\\bin\\ctest.exe",
+  "git": "git version 2.50.0.windows.1",
+  "head_before_n2_commit": "d537ce29e6b2cade4e11eebbff26906a79c521e9",
+  "branch": "codex/native-runtime-plan",
+  "compiler_tools": {
+    "cl.exe": {
+      "path": "C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.40.33807\\bin\\Hostx64\\x64\\cl.exe",
+      "version": "19.40.33812.0",
+      "sha256": "802872d02ab9c927c86774d688825914bf9496d86de496b7719cd1bff20ad00b"
+    },
+    "link.exe": {
+      "path": "C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.40.33807\\bin\\Hostx64\\x64\\link.exe",
+      "version": "14.40.33812.0",
+      "sha256": "67fe7b22a57171ecd10728231dd238b17cb1ad2d418e5bc02b9a1a0d20156cf4"
+    },
+    "dumpbin.exe": {
+      "path": "C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.40.33807\\bin\\Hostx64\\x64\\dumpbin.exe",
+      "version": "14.40.33812.0",
+      "sha256": "c199d7c18e89785634a2e82be0a60bd4f199d443bf4243ceb13b927e92e4882b"
+    }
+  },
+  "generator": "Visual Studio 17 2022",
+  "architecture": "x64",
+  "sdk": "10.0.22000.0",
+  "debug_options": "/Od /Zi /RTC1 /MDd /W4 /WX /utf-8 /EHsc /permissive-",
+  "release_options": "/O2 /Ob2 /DNDEBUG /MD /W4 /WX /utf-8 /EHsc /permissive-",
+  "cli_program_stack_reserve_bytes": 8388608,
+  "toolchain_install": "none; existing local toolchain only",
+  "system_path_modified": false,
+  "third_party_dependencies": [],
+  "cmake_build_testing": true,
+  "python_test_coordinator": "Python 3.12.14",
+  "crt_origin": "existing Microsoft VC runtime in System32; see exact loaded module paths, versions, hashes in debug/report.json and release/report.json; no CRT distributed"
+}

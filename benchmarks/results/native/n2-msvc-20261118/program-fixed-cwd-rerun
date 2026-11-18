@@ -1,0 +1,205 @@
+{
+  "schema_version": 1,
+  "passed": false,
+  "count": 15,
+  "scope": "PowerShell fixed Check manifests, no Python coordinator",
+  "exe": "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-debug\\Debug\\zzy-native.exe",
+  "exe_sha256": "ea64b8a7e41c22f9b788bcc9db5b923802cab2e30b1c157afd6c7cf5486d5abd",
+  "records": [
+    {
+      "id": "tests/check/cases.json::hello",
+      "arguments": [
+        "check",
+        "tests/run/inputs/hello.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "",
+      "timed_out": false
+    },
+    {
+      "id": "tests/check/cases.json::strings",
+      "arguments": [
+        "check",
+        "tests/run/inputs/strings.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "",
+      "timed_out": false
+    },
+    {
+      "id": "tests/check/cases.json::raw-once",
+      "arguments": [
+        "check",
+        "tests/run/inputs/raw-once.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "",
+      "timed_out": false
+    },
+    {
+      "id": "tests/check/cases.json::unicode-names",
+      "arguments": [
+        "check",
+        "tests/run/inputs/unicode-names.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "",
+      "timed_out": false
+    },
+    {
+      "id": "tests/check/cases.json::grouping",
+      "arguments": [
+        "check",
+        "tests/run/inputs/grouping.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "",
+      "timed_out": false
+    },
+    {
+      "id": "tests/check/cases.json::comments",
+      "arguments": [
+        "check",
+        "tests/run/inputs/comments.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "",
+      "timed_out": false
+    },
+    {
+      "id": "tests/check/cases.json::dynamic-rebind",
+      "arguments": [
+        "check",
+        "tests/run/inputs/dynamic-rebind.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "",
+      "timed_out": false
+    },
+    {
+      "id": "tests/check/cases.json::typed-string",
+      "arguments": [
+        "check",
+        "tests/run/inputs/typed-string.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "",
+      "timed_out": false
+    },
+    {
+      "id": "tests/check/cases.json::function-alias",
+      "arguments": [
+        "check",
+        "tests/run/inputs/function-alias.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "",
+      "timed_out": false
+    },
+    {
+      "id": "tests/check/cases.json::namespace-alias",
+      "arguments": [
+        "check",
+        "tests/run/inputs/namespace-alias.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "",
+      "timed_out": false
+    },
+    {
+      "id": "tests/check/cases.json::null-return",
+      "arguments": [
+        "check",
+        "tests/run/inputs/null-return.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "",
+      "timed_out": false
+    },
+    {
+      "id": "tests/check/cases.json::empty",
+      "arguments": [
+        "check",
+        "tests/run/inputs/empty.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "",
+      "timed_out": false
+    },
+    {
+      "id": "tests/check/cases.json::expression-statement",
+      "arguments": [
+        "check",
+        "tests/run/inputs/expression-statement.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "",
+      "timed_out": false
+    },
+    {
+      "id": "tests/check/cases.json::string-escapes",
+      "arguments": [
+        "check",
+        "tests/run/inputs/string-escapes.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "",
+      "timed_out": false
+    },
+    {
+      "id": "tests/check/cases.json::duplicate",
+      "arguments": [
+        "check",
+        "tests/run/inputs/duplicate.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E301\",\"file\":\"tests/run/inputs/duplicate.zzy\",\"span\":{\"start\":{\"line\":1,\"column\":45},\"end\":{\"line\":1,\"column\":46}},\"message\":\"duplicate declaration: x\",\"notes\":[]}\n",
+      "timed_out": false
+    }
+  ]
+}

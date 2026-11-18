@@ -1,0 +1,1027 @@
+{
+  "schema_version": 1,
+  "scope": "N2 CLI configuration, output, source and no-execution boundaries",
+  "exe": "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-n2-msvc-direct-debug\\zzy-native.exe",
+  "exe_sha256": "9136012d31a082ceb73e96029c4c7def92797c07ce92ec022e822ea410662de7",
+  "count": 62,
+  "passed": 62,
+  "records": [
+    {
+      "id": "stdout-boundary-140",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-n2-msvc-direct-debug\\zzy-native.exe",
+        "lex",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY N1 CLI 中文 7qell55h\\程序.zzy",
+        "--limits",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY N1 CLI 中文 7qell55h\\limits.json",
+        "--diagnostic-format=json"
+      ],
+      "expected_exit": 2,
+      "passed": true,
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E211\",\"file\":null,\"span\":null,\"message\":\"resource limit exceeded: stdout_bytes, limit=140, requested=141\",\"notes\":[]}\n",
+      "timed_out": false
+    },
+    {
+      "id": "stdout-boundary-141",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-n2-msvc-direct-debug\\zzy-native.exe",
+        "lex",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY N1 CLI 中文 7qell55h\\程序.zzy",
+        "--limits",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY N1 CLI 中文 7qell55h\\limits.json",
+        "--diagnostic-format=json"
+      ],
+      "expected_exit": 2,
+      "passed": true,
+      "exit_code": 2,
+      "stdout": "{\"schema_version\":1,\"kind\":\"IDENT\",\"lexeme\":\"a\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":1},\"end\":{\"line\":1,\"column\":2}}}\n",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E211\",\"file\":null,\"span\":null,\"message\":\"resource limit exceeded: stdout_bytes, limit=141, requested=279\",\"notes\":[]}\n",
+      "timed_out": false
+    },
+    {
+      "id": "stdout-boundary-278",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-n2-msvc-direct-debug\\zzy-native.exe",
+        "lex",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY N1 CLI 中文 7qell55h\\程序.zzy",
+        "--limits",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY N1 CLI 中文 7qell55h\\limits.json",
+        "--diagnostic-format=json"
+      ],
+      "expected_exit": 2,
+      "passed": true,
+      "exit_code": 2,
+      "stdout": "{\"schema_version\":1,\"kind\":\"IDENT\",\"lexeme\":\"a\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":1},\"end\":{\"line\":1,\"column\":2}}}\n",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E211\",\"file\":null,\"span\":null,\"message\":\"resource limit exceeded: stdout_bytes, limit=278, requested=279\",\"notes\":[]}\n",
+      "timed_out": false
+    },
+    {
+      "id": "stdout-boundary-279",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-n2-msvc-direct-debug\\zzy-native.exe",
+        "lex",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY N1 CLI 中文 7qell55h\\程序.zzy",
+        "--limits",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY N1 CLI 中文 7qell55h\\limits.json",
+        "--diagnostic-format=json"
+      ],
+      "expected_exit": 0,
+      "passed": true,
+      "exit_code": 0,
+      "stdout": "{\"schema_version\":1,\"kind\":\"IDENT\",\"lexeme\":\"a\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":1},\"end\":{\"line\":1,\"column\":2}}}\n{\"schema_version\":1,\"kind\":\"EOF\",\"lexeme\":\"\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":2},\"end\":{\"line\":1,\"column\":2}}}\n",
+      "stderr": "",
+      "timed_out": false
+    },
+    {
+      "id": "stdout-boundary-280",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-n2-msvc-direct-debug\\zzy-native.exe",
+        "lex",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY N1 CLI 中文 7qell55h\\程序.zzy",
+        "--limits",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY N1 CLI 中文 7qell55h\\limits.json",
+        "--diagnostic-format=json"
+      ],
+      "expected_exit": 0,
+      "passed": true,
+      "exit_code": 0,
+      "stdout": "{\"schema_version\":1,\"kind\":\"IDENT\",\"lexeme\":\"a\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":1},\"end\":{\"line\":1,\"column\":2}}}\n{\"schema_version\":1,\"kind\":\"EOF\",\"lexeme\":\"\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":2},\"end\":{\"line\":1,\"column\":2}}}\n",
+      "stderr": "",
+      "timed_out": false
+    },
+    {
+      "id": "final-stderr-reserve",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-n2-msvc-direct-debug\\zzy-native.exe",
+        "lex",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY N1 CLI 中文 7qell55h\\程序.zzy",
+        "--limits",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY N1 CLI 中文 7qell55h\\limits.json",
+        "--diagnostic-format=json"
+      ],
+      "expected_exit": 2,
+      "passed": true,
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E211\",\"file\":null,\"span\":null,\"message\":\"resource limit exceeded: stderr_bytes, limit=1, requested=178\",\"notes\":[]}\n",
+      "timed_out": false
+    },
+    {
+      "id": "file-cap-2",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-n2-msvc-direct-debug\\zzy-native.exe",
+        "source-info",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY N1 CLI 中文 7qell55h\\程序.zzy",
+        "--limits",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY N1 CLI 中文 7qell55h\\limits.json",
+        "--diagnostic-format",
+        "json"
+      ],
+      "expected_exit": 0,
+      "passed": true,
+      "exit_code": 0,
+      "stdout": "{\"file\":\"程序.zzy\",\"bytes\":2,\"codepoints\":2,\"lines\":1,\"sha256\":\"6c179f21e6f62b629055d8ab40f454ed02e48b68563913473b857d3638e23b28\",\"syntax_checked\":false,\"resource_fingerprint\":\"8ae33f2a1ebaa7fe50b4536489da5a0ada8e531cb6a0b0afabb86a146b2f622a\"}\n",
+      "stderr": "",
+      "timed_out": false
+    },
+    {
+      "id": "file-cap-3",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-n2-msvc-direct-debug\\zzy-native.exe",
+        "source-info",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY N1 CLI 中文 7qell55h\\程序.zzy",
+        "--limits",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY N1 CLI 中文 7qell55h\\limits.json",
+        "--diagnostic-format",
+        "json"
+      ],
+      "expected_exit": 0,
+      "passed": true,
+      "exit_code": 0,
+      "stdout": "{\"file\":\"程序.zzy\",\"bytes\":3,\"codepoints\":3,\"lines\":1,\"sha256\":\"0aad7da77d2ed59c396c99a74e49f3a4524dcdbcb5163251b1433d640247aeb4\",\"syntax_checked\":false,\"resource_fingerprint\":\"8ae33f2a1ebaa7fe50b4536489da5a0ada8e531cb6a0b0afabb86a146b2f622a\"}\n",
+      "stderr": "",
+      "timed_out": false
+    },
+    {
+      "id": "file-cap-4",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-n2-msvc-direct-debug\\zzy-native.exe",
+        "source-info",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY N1 CLI 中文 7qell55h\\程序.zzy",
+        "--limits",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY N1 CLI 中文 7qell55h\\limits.json",
+        "--diagnostic-format",
+        "json"
+      ],
+      "expected_exit": 2,
+      "passed": true,
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E211\",\"file\":\"程序.zzy\",\"span\":null,\"message\":\"resource limit exceeded: source_file_bytes, limit=3, requested=4\",\"notes\":[]}\n",
+      "timed_out": false
+    },
+    {
+      "id": "default-file-cap-2097151",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-n2-msvc-direct-debug\\zzy-native.exe",
+        "source-info",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY N1 CLI 中文 7qell55h\\程序.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "expected_exit": 0,
+      "passed": true,
+      "exit_code": 0,
+      "stdout": "{\"file\":\"程序.zzy\",\"bytes\":2097151,\"codepoints\":2097151,\"lines\":1,\"sha256\":\"6bd25202ef1be5aecb71ea0d6d58dedd3def8c1a08b3c55c0e6826d0dd9fbc29\",\"syntax_checked\":false,\"resource_fingerprint\":\"c9a540b6ea917d42f3d6c915801dce802ee771a18b1ab6139eab2ebc8161b14d\"}\n",
+      "stderr": "",
+      "timed_out": false
+    },
+    {
+      "id": "default-file-cap-2097152",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-n2-msvc-direct-debug\\zzy-native.exe",
+        "source-info",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY N1 CLI 中文 7qell55h\\程序.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "expected_exit": 0,
+      "passed": true,
+      "exit_code": 0,
+      "stdout": "{\"file\":\"程序.zzy\",\"bytes\":2097152,\"codepoints\":2097152,\"lines\":1,\"sha256\":\"77425418f716d4eb9761d512c835f387fc660f924588e08b360746fb9dd677f0\",\"syntax_checked\":false,\"resource_fingerprint\":\"c9a540b6ea917d42f3d6c915801dce802ee771a18b1ab6139eab2ebc8161b14d\"}\n",
+      "stderr": "",
+      "timed_out": false
+    },
+    {
+      "id": "default-file-cap-2097153",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-n2-msvc-direct-debug\\zzy-native.exe",
+        "source-info",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY N1 CLI 中文 7qell55h\\程序.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "expected_exit": 2,
+      "passed": true,
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E211\",\"file\":\"程序.zzy\",\"span\":null,\"message\":\"resource limit exceeded: source_file_bytes, limit=2097152, requested=2097153\",\"notes\":[]}\n",
+      "timed_out": false
+    },
+    {
+      "id": "invalid-config-0",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-n2-msvc-direct-debug\\zzy-native.exe",
+        "info",
+        "--limits",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY N1 CLI 中文 7qell55h\\limits.json",
+        "--diagnostic-format",
+        "json"
+      ],
+      "expected_exit": 2,
+      "passed": true,
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E401\",\"file\":\"limits.json\",\"span\":null,\"message\":\"invalid resource configuration\",\"notes\":[]}\n",
+      "timed_out": false
+    },
+    {
+      "id": "invalid-config-1",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-n2-msvc-direct-debug\\zzy-native.exe",
+        "info",
+        "--limits",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY N1 CLI 中文 7qell55h\\limits.json",
+        "--diagnostic-format",
+        "json"
+      ],
+      "expected_exit": 2,
+      "passed": true,
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E401\",\"file\":\"limits.json\",\"span\":null,\"message\":\"invalid resource configuration\",\"notes\":[]}\n",
+      "timed_out": false
+    },
+    {
+      "id": "invalid-config-2",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-n2-msvc-direct-debug\\zzy-native.exe",
+        "info",
+        "--limits",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY N1 CLI 中文 7qell55h\\limits.json",
+        "--diagnostic-format",
+        "json"
+      ],
+      "expected_exit": 2,
+      "passed": true,
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E401\",\"file\":\"limits.json\",\"span\":null,\"message\":\"invalid resource configuration\",\"notes\":[]}\n",
+      "timed_out": false
+    },
+    {
+      "id": "invalid-config-3",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-n2-msvc-direct-debug\\zzy-native.exe",
+        "info",
+        "--limits",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY N1 CLI 中文 7qell55h\\limits.json",
+        "--diagnostic-format",
+        "json"
+      ],
+      "expected_exit": 2,
+      "passed": true,
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E401\",\"file\":\"limits.json\",\"span\":null,\"message\":\"invalid resource configuration\",\"notes\":[]}\n",
+      "timed_out": false
+    },
+    {
+      "id": "invalid-config-4",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-n2-msvc-direct-debug\\zzy-native.exe",
+        "info",
+        "--limits",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY N1 CLI 中文 7qell55h\\limits.json",
+        "--diagnostic-format",
+        "json"
+      ],
+      "expected_exit": 2,
+      "passed": true,
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E401\",\"file\":\"limits.json\",\"span\":null,\"message\":\"invalid resource configuration\",\"notes\":[]}\n",
+      "timed_out": false
+    },
+    {
+      "id": "invalid-config-5",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-n2-msvc-direct-debug\\zzy-native.exe",
+        "info",
+        "--limits",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY N1 CLI 中文 7qell55h\\limits.json",
+        "--diagnostic-format",
+        "json"
+      ],
+      "expected_exit": 2,
+      "passed": true,
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E401\",\"file\":\"limits.json\",\"span\":null,\"message\":\"invalid resource configuration\",\"notes\":[]}\n",
+      "timed_out": false
+    },
+    {
+      "id": "invalid-config-6",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-n2-msvc-direct-debug\\zzy-native.exe",
+        "info",
+        "--limits",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY N1 CLI 中文 7qell55h\\limits.json",
+        "--diagnostic-format",
+        "json"
+      ],
+      "expected_exit": 2,
+      "passed": true,
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E401\",\"file\":\"limits.json\",\"span\":null,\"message\":\"invalid resource configuration\",\"notes\":[]}\n",
+      "timed_out": false
+    },
+    {
+      "id": "invalid-config-7",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-n2-msvc-direct-debug\\zzy-native.exe",
+        "info",
+        "--limits",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY N1 CLI 中文 7qell55h\\limits.json",
+        "--diagnostic-format",
+        "json"
+      ],
+      "expected_exit": 2,
+      "passed": true,
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E401\",\"file\":\"limits.json\",\"span\":null,\"message\":\"invalid resource configuration\",\"notes\":[]}\n",
+      "timed_out": false
+    },
+    {
+      "id": "invalid-config-8",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-n2-msvc-direct-debug\\zzy-native.exe",
+        "info",
+        "--limits",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY N1 CLI 中文 7qell55h\\limits.json",
+        "--diagnostic-format",
+        "json"
+      ],
+      "expected_exit": 2,
+      "passed": true,
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E401\",\"file\":\"limits.json\",\"span\":null,\"message\":\"invalid resource configuration\",\"notes\":[]}\n",
+      "timed_out": false
+    },
+    {
+      "id": "invalid-config-9",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-n2-msvc-direct-debug\\zzy-native.exe",
+        "info",
+        "--limits",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY N1 CLI 中文 7qell55h\\limits.json",
+        "--diagnostic-format",
+        "json"
+      ],
+      "expected_exit": 2,
+      "passed": true,
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E401\",\"file\":\"limits.json\",\"span\":null,\"message\":\"invalid resource configuration\",\"notes\":[]}\n",
+      "timed_out": false
+    },
+    {
+      "id": "invalid-config-10",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-n2-msvc-direct-debug\\zzy-native.exe",
+        "info",
+        "--limits",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY N1 CLI 中文 7qell55h\\limits.json",
+        "--diagnostic-format",
+        "json"
+      ],
+      "expected_exit": 2,
+      "passed": true,
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E401\",\"file\":\"limits.json\",\"span\":null,\"message\":\"invalid resource configuration\",\"notes\":[]}\n",
+      "timed_out": false
+    },
+    {
+      "id": "invalid-config-11",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-n2-msvc-direct-debug\\zzy-native.exe",
+        "info",
+        "--limits",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY N1 CLI 中文 7qell55h\\limits.json",
+        "--diagnostic-format",
+        "json"
+      ],
+      "expected_exit": 2,
+      "passed": true,
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E401\",\"file\":\"limits.json\",\"span\":null,\"message\":\"invalid resource configuration\",\"notes\":[]}\n",
+      "timed_out": false
+    },
+    {
+      "id": "invalid-config-12",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-n2-msvc-direct-debug\\zzy-native.exe",
+        "info",
+        "--limits",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY N1 CLI 中文 7qell55h\\limits.json",
+        "--diagnostic-format",
+        "json"
+      ],
+      "expected_exit": 2,
+      "passed": true,
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E401\",\"file\":\"limits.json\",\"span\":null,\"message\":\"invalid resource configuration\",\"notes\":[]}\n",
+      "timed_out": false
+    },
+    {
+      "id": "invalid-config-13",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-n2-msvc-direct-debug\\zzy-native.exe",
+        "info",
+        "--limits",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY N1 CLI 中文 7qell55h\\limits.json",
+        "--diagnostic-format",
+        "json"
+      ],
+      "expected_exit": 2,
+      "passed": true,
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E401\",\"file\":\"limits.json\",\"span\":null,\"message\":\"invalid resource configuration\",\"notes\":[]}\n",
+      "timed_out": false
+    },
+    {
+      "id": "invalid-config-14",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-n2-msvc-direct-debug\\zzy-native.exe",
+        "info",
+        "--limits",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY N1 CLI 中文 7qell55h\\limits.json",
+        "--diagnostic-format",
+        "json"
+      ],
+      "expected_exit": 2,
+      "passed": true,
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E401\",\"file\":\"limits.json\",\"span\":null,\"message\":\"invalid resource configuration\",\"notes\":[]}\n",
+      "timed_out": false
+    },
+    {
+      "id": "invalid-config-15",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-n2-msvc-direct-debug\\zzy-native.exe",
+        "info",
+        "--limits",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY N1 CLI 中文 7qell55h\\limits.json",
+        "--diagnostic-format",
+        "json"
+      ],
+      "expected_exit": 2,
+      "passed": true,
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E401\",\"file\":\"limits.json\",\"span\":null,\"message\":\"invalid resource configuration\",\"notes\":[]}\n",
+      "timed_out": false
+    },
+    {
+      "id": "invalid-config-16",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-n2-msvc-direct-debug\\zzy-native.exe",
+        "info",
+        "--limits",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY N1 CLI 中文 7qell55h\\limits.json",
+        "--diagnostic-format",
+        "json"
+      ],
+      "expected_exit": 2,
+      "passed": true,
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E401\",\"file\":\"limits.json\",\"span\":null,\"message\":\"invalid resource configuration\",\"notes\":[]}\n",
+      "timed_out": false
+    },
+    {
+      "id": "invalid-config-17",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-n2-msvc-direct-debug\\zzy-native.exe",
+        "info",
+        "--limits",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY N1 CLI 中文 7qell55h\\limits.json",
+        "--diagnostic-format",
+        "json"
+      ],
+      "expected_exit": 2,
+      "passed": true,
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E401\",\"file\":\"limits.json\",\"span\":null,\"message\":\"invalid resource configuration\",\"notes\":[]}\n",
+      "timed_out": false
+    },
+    {
+      "id": "invalid-config-18",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-n2-msvc-direct-debug\\zzy-native.exe",
+        "info",
+        "--limits",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY N1 CLI 中文 7qell55h\\limits.json",
+        "--diagnostic-format",
+        "json"
+      ],
+      "expected_exit": 2,
+      "passed": true,
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E401\",\"file\":\"limits.json\",\"span\":null,\"message\":\"invalid resource configuration\",\"notes\":[]}\n",
+      "timed_out": false
+    },
+    {
+      "id": "invalid-config-19",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-n2-msvc-direct-debug\\zzy-native.exe",
+        "info",
+        "--limits",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY N1 CLI 中文 7qell55h\\limits.json",
+        "--diagnostic-format",
+        "json"
+      ],
+      "expected_exit": 2,
+      "passed": true,
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E401\",\"file\":\"limits.json\",\"span\":null,\"message\":\"invalid resource configuration\",\"notes\":[]}\n",
+      "timed_out": false
+    },
+    {
+      "id": "config-size-65535",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-n2-msvc-direct-debug\\zzy-native.exe",
+        "--limits",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY N1 CLI 中文 7qell55h\\limits.json",
+        "info",
+        "--diagnostic-format=json"
+      ],
+      "expected_exit": 0,
+      "passed": true,
+      "exit_code": 0,
+      "stdout": "{\"schema_version\":1,\"backend\":\"native-ast\",\"stage\":\"N2\",\"version\":\"0.0.0-n2\",\"cxx_standard\":17,\"pointer_bits\":64,\"compiler\":\"MSVC\",\"crt\":\"MSVC /MDd (debug runtime, not redistributable)\",\"supported_commands\":[\"info\",\"source-info\",\"lex\",\"check\",\"program-info\"],\"python_fallback\":false,\"unicode_version\":\"15.0.0\",\"policy_status\":\"frontend and static preparation limits enforced; execution/cache unavailable\",\"resource_policy\":{\"effective_decimal_digits\":4096,\"host_decimal_digits\":0,\"limits\":{\"ast_nodes_total\":500000,\"call_depth\":64,\"container_items\":1000000,\"import_depth\":32,\"integer_bits\":65536,\"io_payload_bytes\":16777216,\"module_count\":128,\"numeric_digits\":4096,\"program_cache_bytes\":67108864,\"program_cache_entries\":32,\"quantity_exponent_abs\":64,\"runtime_objects\":200000,\"runtime_payload_bytes\":134217728,\"runtime_slots\":2000000,\"source_file_bytes\":2097152,\"source_total_bytes\":16777216,\"stderr_bytes\":1048576,\"stdout_bytes\":1048576,\"syntax_depth\":64,\"text_codepoints\":4194304,\"tokens_per_file\":250000,\"value_depth\":64},\"policy_version\":1,\"profile\":\"default-v1\"},\"resource_fingerprint\":\"c9a540b6ea917d42f3d6c915801dce802ee771a18b1ab6139eab2ebc8161b14d\"}\n",
+      "stderr": "",
+      "timed_out": false
+    },
+    {
+      "id": "config-size-65536",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-n2-msvc-direct-debug\\zzy-native.exe",
+        "--limits",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY N1 CLI 中文 7qell55h\\limits.json",
+        "info",
+        "--diagnostic-format=json"
+      ],
+      "expected_exit": 0,
+      "passed": true,
+      "exit_code": 0,
+      "stdout": "{\"schema_version\":1,\"backend\":\"native-ast\",\"stage\":\"N2\",\"version\":\"0.0.0-n2\",\"cxx_standard\":17,\"pointer_bits\":64,\"compiler\":\"MSVC\",\"crt\":\"MSVC /MDd (debug runtime, not redistributable)\",\"supported_commands\":[\"info\",\"source-info\",\"lex\",\"check\",\"program-info\"],\"python_fallback\":false,\"unicode_version\":\"15.0.0\",\"policy_status\":\"frontend and static preparation limits enforced; execution/cache unavailable\",\"resource_policy\":{\"effective_decimal_digits\":4096,\"host_decimal_digits\":0,\"limits\":{\"ast_nodes_total\":500000,\"call_depth\":64,\"container_items\":1000000,\"import_depth\":32,\"integer_bits\":65536,\"io_payload_bytes\":16777216,\"module_count\":128,\"numeric_digits\":4096,\"program_cache_bytes\":67108864,\"program_cache_entries\":32,\"quantity_exponent_abs\":64,\"runtime_objects\":200000,\"runtime_payload_bytes\":134217728,\"runtime_slots\":2000000,\"source_file_bytes\":2097152,\"source_total_bytes\":16777216,\"stderr_bytes\":1048576,\"stdout_bytes\":1048576,\"syntax_depth\":64,\"text_codepoints\":4194304,\"tokens_per_file\":250000,\"value_depth\":64},\"policy_version\":1,\"profile\":\"default-v1\"},\"resource_fingerprint\":\"c9a540b6ea917d42f3d6c915801dce802ee771a18b1ab6139eab2ebc8161b14d\"}\n",
+      "stderr": "",
+      "timed_out": false
+    },
+    {
+      "id": "config-size-65537",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-n2-msvc-direct-debug\\zzy-native.exe",
+        "--limits",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY N1 CLI 中文 7qell55h\\limits.json",
+        "info",
+        "--diagnostic-format=json"
+      ],
+      "expected_exit": 2,
+      "passed": true,
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E401\",\"file\":\"limits.json\",\"span\":null,\"message\":\"invalid resource configuration\",\"notes\":[]}\n",
+      "timed_out": false
+    },
+    {
+      "id": "dynamic-policy-fingerprint",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-n2-msvc-direct-debug\\zzy-native.exe",
+        "--diagnostic-format",
+        "json",
+        "--limits=C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY N1 CLI 中文 7qell55h\\limits.json",
+        "info"
+      ],
+      "expected_exit": 0,
+      "passed": true,
+      "exit_code": 0,
+      "stdout": "{\"schema_version\":1,\"backend\":\"native-ast\",\"stage\":\"N2\",\"version\":\"0.0.0-n2\",\"cxx_standard\":17,\"pointer_bits\":64,\"compiler\":\"MSVC\",\"crt\":\"MSVC /MDd (debug runtime, not redistributable)\",\"supported_commands\":[\"info\",\"source-info\",\"lex\",\"check\",\"program-info\"],\"python_fallback\":false,\"unicode_version\":\"15.0.0\",\"policy_status\":\"frontend and static preparation limits enforced; execution/cache unavailable\",\"resource_policy\":{\"effective_decimal_digits\":7,\"host_decimal_digits\":0,\"limits\":{\"ast_nodes_total\":500000,\"call_depth\":64,\"container_items\":1000000,\"import_depth\":32,\"integer_bits\":65536,\"io_payload_bytes\":16777216,\"module_count\":128,\"numeric_digits\":7,\"program_cache_bytes\":67108864,\"program_cache_entries\":32,\"quantity_exponent_abs\":64,\"runtime_objects\":200000,\"runtime_payload_bytes\":134217728,\"runtime_slots\":2000000,\"source_file_bytes\":2097152,\"source_total_bytes\":16777216,\"stderr_bytes\":1048576,\"stdout_bytes\":1048576,\"syntax_depth\":64,\"text_codepoints\":4194304,\"tokens_per_file\":250000,\"value_depth\":64},\"policy_version\":1,\"profile\":\"default-v1\"},\"resource_fingerprint\":\"f43bf8bc5dc1a96de7c63b73c4ce16630d5e46e1bed91c0fa0b4a33105f584e1\"}\n",
+      "stderr": "",
+      "timed_out": false
+    },
+    {
+      "id": "arguments-36",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-n2-msvc-direct-debug\\zzy-native.exe",
+        "unknown",
+        "--diagnostic-format",
+        "json"
+      ],
+      "expected_exit": 2,
+      "passed": true,
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E401\",\"file\":null,\"span\":null,\"message\":\"invalid command or arguments; use --help\",\"notes\":[]}\n",
+      "timed_out": false
+    },
+    {
+      "id": "arguments-37",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-n2-msvc-direct-debug\\zzy-native.exe",
+        "lex",
+        "--diagnostic-format",
+        "json"
+      ],
+      "expected_exit": 2,
+      "passed": true,
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E401\",\"file\":null,\"span\":null,\"message\":\"invalid command or arguments; use --help\",\"notes\":[]}\n",
+      "timed_out": false
+    },
+    {
+      "id": "arguments-38",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-n2-msvc-direct-debug\\zzy-native.exe",
+        "source-info",
+        "--diagnostic-format",
+        "json"
+      ],
+      "expected_exit": 2,
+      "passed": true,
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E401\",\"file\":null,\"span\":null,\"message\":\"invalid command or arguments; use --help\",\"notes\":[]}\n",
+      "timed_out": false
+    },
+    {
+      "id": "arguments-39",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-n2-msvc-direct-debug\\zzy-native.exe",
+        "lex",
+        "a",
+        "b",
+        "--diagnostic-format",
+        "json"
+      ],
+      "expected_exit": 2,
+      "passed": true,
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E401\",\"file\":null,\"span\":null,\"message\":\"invalid command or arguments; use --help\",\"notes\":[]}\n",
+      "timed_out": false
+    },
+    {
+      "id": "arguments-40",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-n2-msvc-direct-debug\\zzy-native.exe",
+        "info",
+        "--bogus",
+        "--diagnostic-format",
+        "json"
+      ],
+      "expected_exit": 2,
+      "passed": true,
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E401\",\"file\":null,\"span\":null,\"message\":\"unknown option\",\"notes\":[]}\n",
+      "timed_out": false
+    },
+    {
+      "id": "arguments-41",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-n2-msvc-direct-debug\\zzy-native.exe",
+        "--limits",
+        "--diagnostic-format",
+        "json"
+      ],
+      "expected_exit": 2,
+      "passed": true,
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E401\",\"file\":null,\"span\":null,\"message\":\"invalid command or arguments; use --help\",\"notes\":[]}\n",
+      "timed_out": false
+    },
+    {
+      "id": "arguments-42",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-n2-msvc-direct-debug\\zzy-native.exe",
+        "--diagnostic-format",
+        "--diagnostic-format",
+        "json"
+      ],
+      "expected_exit": 2,
+      "passed": true,
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E401\",\"file\":null,\"span\":null,\"message\":\"expected diagnostic format text or json\",\"notes\":[]}\n",
+      "timed_out": false
+    },
+    {
+      "id": "arguments-43",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-n2-msvc-direct-debug\\zzy-native.exe",
+        "info",
+        "--diagnostic-format",
+        "bad",
+        "--diagnostic-format",
+        "json"
+      ],
+      "expected_exit": 2,
+      "passed": true,
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E401\",\"file\":null,\"span\":null,\"message\":\"expected diagnostic format text or json\",\"notes\":[]}\n",
+      "timed_out": false
+    },
+    {
+      "id": "arguments-44",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-n2-msvc-direct-debug\\zzy-native.exe",
+        "--lim",
+        "x",
+        "info",
+        "--diagnostic-format",
+        "json"
+      ],
+      "expected_exit": 2,
+      "passed": true,
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E401\",\"file\":null,\"span\":null,\"message\":\"unknown option\",\"notes\":[]}\n",
+      "timed_out": false
+    },
+    {
+      "id": "bypass-config---help",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-n2-msvc-direct-debug\\zzy-native.exe",
+        "--help",
+        "--limits",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY N1 CLI 中文 7qell55h\\missing.json"
+      ],
+      "expected_exit": 0,
+      "passed": true,
+      "exit_code": 0,
+      "stdout": "zzy-native 0.0.0-n2\nAvailable: info, source-info FILE, lex FILE, check FILE, program-info FILE, --help, --version\nOptions (before or after command): --limits FILE --diagnostic-format text|json\nNot implemented: run, test (E402; no Python fallback)\ncheck prepares an immutable Program without executing user code\n",
+      "stderr": "",
+      "timed_out": false
+    },
+    {
+      "id": "bypass-config---version",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-n2-msvc-direct-debug\\zzy-native.exe",
+        "--version",
+        "--limits",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY N1 CLI 中文 7qell55h\\missing.json"
+      ],
+      "expected_exit": 0,
+      "passed": true,
+      "exit_code": 0,
+      "stdout": "0.0.0-n2\n",
+      "stderr": "",
+      "timed_out": false
+    },
+    {
+      "id": "help-subcommand",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-n2-msvc-direct-debug\\zzy-native.exe",
+        "lex",
+        "--help",
+        "--limits",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY N1 CLI 中文 7qell55h\\missing.json"
+      ],
+      "expected_exit": 0,
+      "passed": true,
+      "exit_code": 0,
+      "stdout": "zzy-native 0.0.0-n2\nAvailable: info, source-info FILE, lex FILE, check FILE, program-info FILE, --help, --version\nOptions (before or after command): --limits FILE --diagnostic-format text|json\nNot implemented: run, test (E402; no Python fallback)\ncheck prepares an immutable Program without executing user code\n",
+      "stderr": "",
+      "timed_out": false
+    },
+    {
+      "id": "missing-file",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-n2-msvc-direct-debug\\zzy-native.exe",
+        "source-info",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY N1 CLI 中文 7qell55h\\missing.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "expected_exit": 2,
+      "passed": true,
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E401\",\"file\":\"missing.zzy\",\"span\":null,\"message\":\"cannot open source\",\"notes\":[]}\n",
+      "timed_out": false
+    },
+    {
+      "id": "directory-source",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-n2-msvc-direct-debug\\zzy-native.exe",
+        "lex",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY N1 CLI 中文 7qell55h",
+        "--diagnostic-format",
+        "json"
+      ],
+      "expected_exit": 2,
+      "passed": true,
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E401\",\"file\":\".\",\"span\":null,\"message\":\"source is not a regular file\",\"notes\":[]}\n",
+      "timed_out": false
+    },
+    {
+      "id": "source-info-no-effects",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-n2-msvc-direct-debug\\zzy-native.exe",
+        "source-info",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY N1 CLI 中文 7qell55h\\程序.zzy"
+      ],
+      "expected_exit": 0,
+      "passed": true,
+      "exit_code": 0,
+      "stdout": "{\"file\":\"程序.zzy\",\"bytes\":65,\"codepoints\":65,\"lines\":1,\"sha256\":\"e8ddbc3113ff5fe058f9e1ec9bed4fbfbc2617d32b0a40b3ada90f3d986766ac\",\"syntax_checked\":false,\"resource_fingerprint\":\"c9a540b6ea917d42f3d6c915801dce802ee771a18b1ab6139eab2ebc8161b14d\"}\n",
+      "stderr": "",
+      "timed_out": false
+    },
+    {
+      "id": "lex-no-effects",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-n2-msvc-direct-debug\\zzy-native.exe",
+        "lex",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY N1 CLI 中文 7qell55h\\程序.zzy"
+      ],
+      "expected_exit": 0,
+      "passed": true,
+      "exit_code": 0,
+      "stdout": "{\"schema_version\":1,\"kind\":\"IDENT\",\"lexeme\":\"io\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":1},\"end\":{\"line\":1,\"column\":3}}}\n{\"schema_version\":1,\"kind\":\"DOT\",\"lexeme\":\".\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":3},\"end\":{\"line\":1,\"column\":4}}}\n{\"schema_version\":1,\"kind\":\"IDENT\",\"lexeme\":\"print\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":4},\"end\":{\"line\":1,\"column\":9}}}\n{\"schema_version\":1,\"kind\":\"LEFT_PAREN\",\"lexeme\":\"(\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":9},\"end\":{\"line\":1,\"column\":10}}}\n{\"schema_version\":1,\"kind\":\"STRING\",\"lexeme\":\"\\\"UNEXPECTED\\\"\",\"value\":\"UNEXPECTED\",\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":10},\"end\":{\"line\":1,\"column\":22}}}\n{\"schema_version\":1,\"kind\":\"RIGHT_PAREN\",\"lexeme\":\")\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":22},\"end\":{\"line\":1,\"column\":23}}}\n{\"schema_version\":1,\"kind\":\"SEMICOLON\",\"lexeme\":\";\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":23},\"end\":{\"line\":1,\"column\":24}}}\n{\"schema_version\":1,\"kind\":\"IDENT\",\"lexeme\":\"data\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":25},\"end\":{\"line\":1,\"column\":29}}}\n{\"schema_version\":1,\"kind\":\"DOT\",\"lexeme\":\".\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":29},\"end\":{\"line\":1,\"column\":30}}}\n{\"schema_version\":1,\"kind\":\"IDENT\",\"lexeme\":\"save_text\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":30},\"end\":{\"line\":1,\"column\":39}}}\n{\"schema_version\":1,\"kind\":\"LEFT_PAREN\",\"lexeme\":\"(\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":39},\"end\":{\"line\":1,\"column\":40}}}\n{\"schema_version\":1,\"kind\":\"STRING\",\"lexeme\":\"\\\"side-effect.txt\\\"\",\"value\":\"side-effect.txt\",\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":40},\"end\":{\"line\":1,\"column\":57}}}\n{\"schema_version\":1,\"kind\":\"COMMA\",\"lexeme\":\",\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":57},\"end\":{\"line\":1,\"column\":58}}}\n{\"schema_version\":1,\"kind\":\"STRING\",\"lexeme\":\"\\\"bad\\\"\",\"value\":\"bad\",\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":59},\"end\":{\"line\":1,\"column\":64}}}\n{\"schema_version\":1,\"kind\":\"RIGHT_PAREN\",\"lexeme\":\")\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":64},\"end\":{\"line\":1,\"column\":65}}}\n{\"schema_version\":1,\"kind\":\"SEMICOLON\",\"lexeme\":\";\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":65},\"end\":{\"line\":1,\"column\":66}}}\n{\"schema_version\":1,\"kind\":\"EOF\",\"lexeme\":\"\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":66},\"end\":{\"line\":1,\"column\":66}}}\n",
+      "stderr": "",
+      "timed_out": false
+    },
+    {
+      "id": "check-no-effects",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-n2-msvc-direct-debug\\zzy-native.exe",
+        "check",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY N1 CLI 中文 7qell55h\\程序.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "expected_exit": 0,
+      "passed": true,
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "",
+      "timed_out": false
+    },
+    {
+      "id": "unsupported-run",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-n2-msvc-direct-debug\\zzy-native.exe",
+        "run",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY N1 CLI 中文 7qell55h\\程序.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "expected_exit": 2,
+      "passed": true,
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E402\",\"file\":null,\"span\":null,\"message\":\"capability is not implemented by this backend\",\"notes\":[\"capability=run\"]}\n",
+      "timed_out": false
+    },
+    {
+      "id": "unsupported-test",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-n2-msvc-direct-debug\\zzy-native.exe",
+        "test",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY N1 CLI 中文 7qell55h\\程序.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "expected_exit": 2,
+      "passed": true,
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E402\",\"file\":null,\"span\":null,\"message\":\"capability is not implemented by this backend\",\"notes\":[\"capability=test\"]}\n",
+      "timed_out": false
+    },
+    {
+      "id": "end-options",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-n2-msvc-direct-debug\\zzy-native.exe",
+        "lex",
+        "--diagnostic-format",
+        "json",
+        "--",
+        "--help"
+      ],
+      "expected_exit": 0,
+      "passed": true,
+      "exit_code": 0,
+      "stdout": "{\"schema_version\":1,\"kind\":\"IDENT\",\"lexeme\":\"a\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":1},\"end\":{\"line\":1,\"column\":2}}}\n{\"schema_version\":1,\"kind\":\"EOF\",\"lexeme\":\"\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":2},\"end\":{\"line\":1,\"column\":2}}}\n",
+      "stderr": "",
+      "timed_out": false
+    },
+    {
+      "id": "failure-recovery-error-0",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-n2-msvc-direct-debug\\zzy-native.exe",
+        "lex",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY N1 CLI 中文 7qell55h\\程序.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "expected_exit": 2,
+      "passed": true,
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E101\",\"file\":\"程序.zzy\",\"span\":{\"start\":{\"line\":1,\"column\":1},\"end\":{\"line\":1,\"column\":2}},\"message\":\"illegal character\",\"notes\":[]}\n",
+      "timed_out": false
+    },
+    {
+      "id": "failure-recovery-success-0",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-n2-msvc-direct-debug\\zzy-native.exe",
+        "lex",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY N1 CLI 中文 7qell55h\\程序.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "expected_exit": 0,
+      "passed": true,
+      "exit_code": 0,
+      "stdout": "{\"schema_version\":1,\"kind\":\"IDENT\",\"lexeme\":\"a\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":1},\"end\":{\"line\":1,\"column\":2}}}\n{\"schema_version\":1,\"kind\":\"EOF\",\"lexeme\":\"\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":2},\"end\":{\"line\":1,\"column\":2}}}\n",
+      "stderr": "",
+      "timed_out": false
+    },
+    {
+      "id": "failure-recovery-error-1",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-n2-msvc-direct-debug\\zzy-native.exe",
+        "lex",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY N1 CLI 中文 7qell55h\\程序.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "expected_exit": 2,
+      "passed": true,
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E101\",\"file\":\"程序.zzy\",\"span\":{\"start\":{\"line\":1,\"column\":1},\"end\":{\"line\":1,\"column\":2}},\"message\":\"illegal character\",\"notes\":[]}\n",
+      "timed_out": false
+    },
+    {
+      "id": "failure-recovery-success-1",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-n2-msvc-direct-debug\\zzy-native.exe",
+        "lex",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY N1 CLI 中文 7qell55h\\程序.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "expected_exit": 0,
+      "passed": true,
+      "exit_code": 0,
+      "stdout": "{\"schema_version\":1,\"kind\":\"IDENT\",\"lexeme\":\"a\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":1},\"end\":{\"line\":1,\"column\":2}}}\n{\"schema_version\":1,\"kind\":\"EOF\",\"lexeme\":\"\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":2},\"end\":{\"line\":1,\"column\":2}}}\n",
+      "stderr": "",
+      "timed_out": false
+    },
+    {
+      "id": "failure-recovery-error-2",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-n2-msvc-direct-debug\\zzy-native.exe",
+        "lex",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY N1 CLI 中文 7qell55h\\程序.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "expected_exit": 2,
+      "passed": true,
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E101\",\"file\":\"程序.zzy\",\"span\":{\"start\":{\"line\":1,\"column\":1},\"end\":{\"line\":1,\"column\":2}},\"message\":\"illegal character\",\"notes\":[]}\n",
+      "timed_out": false
+    },
+    {
+      "id": "failure-recovery-success-2",
+      "command": [
+        "D:\\大学资料\\北邮\\课程\\程序设计实践\\程序设计实践大作业\\build\\native-n2-msvc-direct-debug\\zzy-native.exe",
+        "lex",
+        "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY N1 CLI 中文 7qell55h\\程序.zzy",
+        "--diagnostic-format",
+        "json"
+      ],
+      "expected_exit": 0,
+      "passed": true,
+      "exit_code": 0,
+      "stdout": "{\"schema_version\":1,\"kind\":\"IDENT\",\"lexeme\":\"a\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":1},\"end\":{\"line\":1,\"column\":2}}}\n{\"schema_version\":1,\"kind\":\"EOF\",\"lexeme\":\"\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":2},\"end\":{\"line\":1,\"column\":2}}}\n",
+      "stderr": "",
+      "timed_out": false
+    }
+  ]
+}

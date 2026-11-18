@@ -1,0 +1,1372 @@
+{
+  "backtraceGraph" :
+  {
+    "commands" :
+    [
+      "add_test"
+    ],
+    "files" :
+    [
+      "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/native_runtime/CMakeLists.txt"
+    ],
+    "nodes" :
+    [
+      {
+        "file" : 0
+      },
+      {
+        "command" : 0,
+        "file" : 0,
+        "line" : 36,
+        "parent" : 0
+      },
+      {
+        "file" : 0
+      },
+      {
+        "command" : 0,
+        "file" : 0,
+        "line" : 39,
+        "parent" : 2
+      },
+      {
+        "file" : 0
+      },
+      {
+        "command" : 0,
+        "file" : 0,
+        "line" : 50,
+        "parent" : 4
+      },
+      {
+        "file" : 0
+      },
+      {
+        "command" : 0,
+        "file" : 0,
+        "line" : 50,
+        "parent" : 6
+      },
+      {
+        "file" : 0
+      },
+      {
+        "command" : 0,
+        "file" : 0,
+        "line" : 50,
+        "parent" : 8
+      },
+      {
+        "file" : 0
+      },
+      {
+        "command" : 0,
+        "file" : 0,
+        "line" : 50,
+        "parent" : 10
+      },
+      {
+        "file" : 0
+      },
+      {
+        "command" : 0,
+        "file" : 0,
+        "line" : 50,
+        "parent" : 12
+      },
+      {
+        "file" : 0
+      },
+      {
+        "command" : 0,
+        "file" : 0,
+        "line" : 50,
+        "parent" : 14
+      },
+      {
+        "file" : 0
+      },
+      {
+        "command" : 0,
+        "file" : 0,
+        "line" : 50,
+        "parent" : 16
+      },
+      {
+        "file" : 0
+      },
+      {
+        "command" : 0,
+        "file" : 0,
+        "line" : 50,
+        "parent" : 18
+      },
+      {
+        "file" : 0
+      },
+      {
+        "command" : 0,
+        "file" : 0,
+        "line" : 50,
+        "parent" : 20
+      },
+      {
+        "file" : 0
+      },
+      {
+        "command" : 0,
+        "file" : 0,
+        "line" : 50,
+        "parent" : 22
+      },
+      {
+        "file" : 0
+      },
+      {
+        "command" : 0,
+        "file" : 0,
+        "line" : 53,
+        "parent" : 24
+      },
+      {
+        "file" : 0
+      },
+      {
+        "command" : 0,
+        "file" : 0,
+        "line" : 58,
+        "parent" : 26
+      },
+      {
+        "file" : 0
+      },
+      {
+        "command" : 0,
+        "file" : 0,
+        "line" : 58,
+        "parent" : 28
+      },
+      {
+        "file" : 0
+      },
+      {
+        "command" : 0,
+        "file" : 0,
+        "line" : 58,
+        "parent" : 30
+      },
+      {
+        "file" : 0
+      },
+      {
+        "command" : 0,
+        "file" : 0,
+        "line" : 58,
+        "parent" : 32
+      },
+      {
+        "file" : 0
+      },
+      {
+        "command" : 0,
+        "file" : 0,
+        "line" : 58,
+        "parent" : 34
+      },
+      {
+        "file" : 0
+      },
+      {
+        "command" : 0,
+        "file" : 0,
+        "line" : 58,
+        "parent" : 36
+      },
+      {
+        "file" : 0
+      },
+      {
+        "command" : 0,
+        "file" : 0,
+        "line" : 58,
+        "parent" : 38
+      },
+      {
+        "file" : 0
+      },
+      {
+        "command" : 0,
+        "file" : 0,
+        "line" : 58,
+        "parent" : 40
+      },
+      {
+        "file" : 0
+      },
+      {
+        "command" : 0,
+        "file" : 0,
+        "line" : 58,
+        "parent" : 42
+      },
+      {
+        "file" : 0
+      },
+      {
+        "command" : 0,
+        "file" : 0,
+        "line" : 58,
+        "parent" : 44
+      },
+      {
+        "file" : 0
+      },
+      {
+        "command" : 0,
+        "file" : 0,
+        "line" : 58,
+        "parent" : 46
+      },
+      {
+        "file" : 0
+      },
+      {
+        "command" : 0,
+        "file" : 0,
+        "line" : 58,
+        "parent" : 48
+      },
+      {
+        "file" : 0
+      },
+      {
+        "command" : 0,
+        "file" : 0,
+        "line" : 66,
+        "parent" : 50
+      },
+      {
+        "file" : 0
+      },
+      {
+        "command" : 0,
+        "file" : 0,
+        "line" : 67,
+        "parent" : 52
+      },
+      {
+        "file" : 0
+      },
+      {
+        "command" : 0,
+        "file" : 0,
+        "line" : 69,
+        "parent" : 54
+      },
+      {
+        "file" : 0
+      },
+      {
+        "command" : 0,
+        "file" : 0,
+        "line" : 76,
+        "parent" : 56
+      },
+      {
+        "file" : 0
+      },
+      {
+        "command" : 0,
+        "file" : 0,
+        "line" : 76,
+        "parent" : 58
+      },
+      {
+        "file" : 0
+      },
+      {
+        "command" : 0,
+        "file" : 0,
+        "line" : 76,
+        "parent" : 60
+      },
+      {
+        "file" : 0
+      },
+      {
+        "command" : 0,
+        "file" : 0,
+        "line" : 76,
+        "parent" : 62
+      },
+      {
+        "file" : 0
+      },
+      {
+        "command" : 0,
+        "file" : 0,
+        "line" : 76,
+        "parent" : 64
+      },
+      {
+        "file" : 0
+      },
+      {
+        "command" : 0,
+        "file" : 0,
+        "line" : 76,
+        "parent" : 66
+      },
+      {
+        "file" : 0
+      },
+      {
+        "command" : 0,
+        "file" : 0,
+        "line" : 76,
+        "parent" : 68
+      },
+      {
+        "file" : 0
+      },
+      {
+        "command" : 0,
+        "file" : 0,
+        "line" : 76,
+        "parent" : 70
+      },
+      {
+        "file" : 0
+      },
+      {
+        "command" : 0,
+        "file" : 0,
+        "line" : 76,
+        "parent" : 72
+      },
+      {
+        "file" : 0
+      },
+      {
+        "command" : 0,
+        "file" : 0,
+        "line" : 76,
+        "parent" : 74
+      },
+      {
+        "file" : 0
+      },
+      {
+        "command" : 0,
+        "file" : 0,
+        "line" : 76,
+        "parent" : 76
+      },
+      {
+        "file" : 0
+      },
+      {
+        "command" : 0,
+        "file" : 0,
+        "line" : 76,
+        "parent" : 78
+      },
+      {
+        "file" : 0
+      },
+      {
+        "command" : 0,
+        "file" : 0,
+        "line" : 89,
+        "parent" : 80
+      },
+      {
+        "file" : 0
+      },
+      {
+        "command" : 0,
+        "file" : 0,
+        "line" : 89,
+        "parent" : 82
+      },
+      {
+        "file" : 0
+      },
+      {
+        "command" : 0,
+        "file" : 0,
+        "line" : 89,
+        "parent" : 84
+      },
+      {
+        "file" : 0
+      },
+      {
+        "command" : 0,
+        "file" : 0,
+        "line" : 89,
+        "parent" : 86
+      }
+    ]
+  },
+  "kind" : "ctestInfo",
+  "tests" :
+  [
+    {
+      "backtrace" : 1,
+      "command" :
+      [
+        "C:/Program Files/WindowsApps/OpenAI.CodexPrimaryRuntime.v26-1112-737-0_26.1112.737.0_x64__3k8sg7r9htsxt/dependencies/native/powershell/pwsh.exe",
+        "-NoProfile",
+        "-File",
+        "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/native_runtime/tools/test-fixed.ps1",
+        "-Executable",
+        "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug/Debug/zzy-native.exe"
+      ],
+      "config" : "Debug",
+      "name" : "frontend-fixed",
+      "properties" :
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 180.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug"
+        }
+      ]
+    },
+    {
+      "backtrace" : 3,
+      "command" :
+      [
+        "C:/Program Files/WindowsApps/OpenAI.CodexPrimaryRuntime.v26-1112-737-0_26.1112.737.0_x64__3k8sg7r9htsxt/dependencies/native/powershell/pwsh.exe",
+        "-NoProfile",
+        "-File",
+        "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/native_runtime/tools/test-check.ps1",
+        "-Executable",
+        "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug/Debug/zzy-native.exe"
+      ],
+      "config" : "Debug",
+      "name" : "program-fixed",
+      "properties" :
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 900.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug"
+        }
+      ]
+    },
+    {
+      "backtrace" : 5,
+      "command" :
+      [
+        "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug/Debug/native-program-tests.exe",
+        "ast"
+      ],
+      "config" : "Debug",
+      "name" : "program-ast",
+      "properties" :
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 30.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug"
+        }
+      ]
+    },
+    {
+      "backtrace" : 7,
+      "command" :
+      [
+        "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug/Debug/native-program-tests.exe",
+        "captures"
+      ],
+      "config" : "Debug",
+      "name" : "program-captures",
+      "properties" :
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 30.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug"
+        }
+      ]
+    },
+    {
+      "backtrace" : 9,
+      "command" :
+      [
+        "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug/Debug/native-program-tests.exe",
+        "scopes"
+      ],
+      "config" : "Debug",
+      "name" : "program-scopes",
+      "properties" :
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 30.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug"
+        }
+      ]
+    },
+    {
+      "backtrace" : 11,
+      "command" :
+      [
+        "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug/Debug/native-program-tests.exe",
+        "purity"
+      ],
+      "config" : "Debug",
+      "name" : "program-purity",
+      "properties" :
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 30.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug"
+        }
+      ]
+    },
+    {
+      "backtrace" : 13,
+      "command" :
+      [
+        "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug/Debug/native-program-tests.exe",
+        "literals"
+      ],
+      "config" : "Debug",
+      "name" : "program-literals",
+      "properties" :
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 30.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug"
+        }
+      ]
+    },
+    {
+      "backtrace" : 15,
+      "command" :
+      [
+        "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug/Debug/native-program-tests.exe",
+        "budgets"
+      ],
+      "config" : "Debug",
+      "name" : "program-budgets",
+      "properties" :
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 30.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug"
+        }
+      ]
+    },
+    {
+      "backtrace" : 17,
+      "command" :
+      [
+        "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug/Debug/native-program-tests.exe",
+        "graph"
+      ],
+      "config" : "Debug",
+      "name" : "program-graph",
+      "properties" :
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 30.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug"
+        }
+      ]
+    },
+    {
+      "backtrace" : 19,
+      "command" :
+      [
+        "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug/Debug/native-program-tests.exe",
+        "readonly"
+      ],
+      "config" : "Debug",
+      "name" : "program-readonly",
+      "properties" :
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 30.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug"
+        }
+      ]
+    },
+    {
+      "backtrace" : 21,
+      "command" :
+      [
+        "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug/Debug/native-program-tests.exe",
+        "metadata"
+      ],
+      "config" : "Debug",
+      "name" : "program-metadata",
+      "properties" :
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 30.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug"
+        }
+      ]
+    },
+    {
+      "backtrace" : 23,
+      "command" :
+      [
+        "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug/Debug/native-program-tests.exe",
+        "cancellation"
+      ],
+      "config" : "Debug",
+      "name" : "program-cancellation",
+      "properties" :
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 30.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug"
+        }
+      ]
+    },
+    {
+      "backtrace" : 25,
+      "command" :
+      [
+        "C:/Users/13691/AppData/Local/Programs/CMake/4.5.0/bin/cmake.exe",
+        "-DEXE=D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug/Debug/native-program-tests.exe",
+        "-P",
+        "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/native_runtime/tests/selection.cmake"
+      ],
+      "config" : "Debug",
+      "name" : "program-empty-selection",
+      "properties" :
+      [
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug"
+        }
+      ]
+    },
+    {
+      "backtrace" : 27,
+      "command" :
+      [
+        "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug/Debug/native-frontend-tests.exe",
+        "sha256"
+      ],
+      "config" : "Debug",
+      "name" : "frontend-sha256",
+      "properties" :
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 60.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug"
+        }
+      ]
+    },
+    {
+      "backtrace" : 29,
+      "command" :
+      [
+        "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug/Debug/native-frontend-tests.exe",
+        "utf8"
+      ],
+      "config" : "Debug",
+      "name" : "frontend-utf8",
+      "properties" :
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 60.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug"
+        }
+      ]
+    },
+    {
+      "backtrace" : 31,
+      "command" :
+      [
+        "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug/Debug/native-frontend-tests.exe",
+        "positions"
+      ],
+      "config" : "Debug",
+      "name" : "frontend-positions",
+      "properties" :
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 60.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug"
+        }
+      ]
+    },
+    {
+      "backtrace" : 33,
+      "command" :
+      [
+        "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug/Debug/native-frontend-tests.exe",
+        "source-loader"
+      ],
+      "config" : "Debug",
+      "name" : "frontend-source-loader",
+      "properties" :
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 60.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug"
+        }
+      ]
+    },
+    {
+      "backtrace" : 35,
+      "command" :
+      [
+        "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug/Debug/native-frontend-tests.exe",
+        "policy"
+      ],
+      "config" : "Debug",
+      "name" : "frontend-policy",
+      "properties" :
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 60.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug"
+        }
+      ]
+    },
+    {
+      "backtrace" : 37,
+      "command" :
+      [
+        "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug/Debug/native-frontend-tests.exe",
+        "diagnostics"
+      ],
+      "config" : "Debug",
+      "name" : "frontend-diagnostics",
+      "properties" :
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 60.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug"
+        }
+      ]
+    },
+    {
+      "backtrace" : 39,
+      "command" :
+      [
+        "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug/Debug/native-frontend-tests.exe",
+        "lexer-boundaries"
+      ],
+      "config" : "Debug",
+      "name" : "frontend-lexer-boundaries",
+      "properties" :
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 60.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug"
+        }
+      ]
+    },
+    {
+      "backtrace" : 41,
+      "command" :
+      [
+        "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug/Debug/native-frontend-tests.exe",
+        "default-boundaries"
+      ],
+      "config" : "Debug",
+      "name" : "frontend-default-boundaries",
+      "properties" :
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 180.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug"
+        }
+      ]
+    },
+    {
+      "backtrace" : 43,
+      "command" :
+      [
+        "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug/Debug/native-frontend-tests.exe",
+        "source-defaults"
+      ],
+      "config" : "Debug",
+      "name" : "frontend-source-defaults",
+      "properties" :
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 60.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug"
+        }
+      ]
+    },
+    {
+      "backtrace" : 45,
+      "command" :
+      [
+        "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug/Debug/native-frontend-tests.exe",
+        "cancel-during-scan"
+      ],
+      "config" : "Debug",
+      "name" : "frontend-cancel-during-scan",
+      "properties" :
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 60.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug"
+        }
+      ]
+    },
+    {
+      "backtrace" : 47,
+      "command" :
+      [
+        "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug/Debug/native-frontend-tests.exe",
+        "output"
+      ],
+      "config" : "Debug",
+      "name" : "frontend-output",
+      "properties" :
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 60.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug"
+        }
+      ]
+    },
+    {
+      "backtrace" : 49,
+      "command" :
+      [
+        "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug/Debug/native-frontend-tests.exe",
+        "cancellation-points"
+      ],
+      "config" : "Debug",
+      "name" : "frontend-cancellation-points",
+      "properties" :
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 60.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug"
+        }
+      ]
+    },
+    {
+      "backtrace" : 51,
+      "command" :
+      [
+        "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug/Debug/native-protocol-tests.exe"
+      ],
+      "config" : "Debug",
+      "name" : "protocol",
+      "properties" :
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 10.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug"
+        }
+      ]
+    },
+    {
+      "backtrace" : 53,
+      "command" :
+      [
+        "C:/Users/13691/AppData/Local/Programs/CMake/4.5.0/bin/cmake.exe",
+        "-DEXE=D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug/Debug/zzy-native.exe",
+        "-DMODE=info",
+        "-P",
+        "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/native_runtime/tests/cli.cmake"
+      ],
+      "config" : "Debug",
+      "name" : "cli-info",
+      "properties" :
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 10.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug"
+        }
+      ]
+    },
+    {
+      "backtrace" : 55,
+      "command" :
+      [
+        "C:/Users/13691/AppData/Local/Programs/CMake/4.5.0/bin/cmake.exe",
+        "-DEXE=D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug/Debug/zzy-native.exe",
+        "-DMODE=run",
+        "-P",
+        "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/native_runtime/tests/cli.cmake"
+      ],
+      "config" : "Debug",
+      "name" : "cli-unsupported",
+      "properties" :
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 10.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug"
+        }
+      ]
+    },
+    {
+      "backtrace" : 57,
+      "command" :
+      [
+        "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug/Debug/native-heap-tests.exe",
+        "array-cycle"
+      ],
+      "config" : "Debug",
+      "name" : "heap-array-cycle",
+      "properties" :
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 10.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug"
+        }
+      ]
+    },
+    {
+      "backtrace" : 59,
+      "command" :
+      [
+        "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug/Debug/native-heap-tests.exe",
+        "map-cycle"
+      ],
+      "config" : "Debug",
+      "name" : "heap-map-cycle",
+      "properties" :
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 10.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug"
+        }
+      ]
+    },
+    {
+      "backtrace" : 61,
+      "command" :
+      [
+        "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug/Debug/native-heap-tests.exe",
+        "closure-cycle"
+      ],
+      "config" : "Debug",
+      "name" : "heap-closure-cycle",
+      "properties" :
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 10.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug"
+        }
+      ]
+    },
+    {
+      "backtrace" : 63,
+      "command" :
+      [
+        "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug/Debug/native-heap-tests.exe",
+        "reachable-alias"
+      ],
+      "config" : "Debug",
+      "name" : "heap-reachable-alias",
+      "properties" :
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 10.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug"
+        }
+      ]
+    },
+    {
+      "backtrace" : 65,
+      "command" :
+      [
+        "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug/Debug/native-heap-tests.exe",
+        "quota-gc-retry"
+      ],
+      "config" : "Debug",
+      "name" : "heap-quota-gc-retry",
+      "properties" :
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 10.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug"
+        }
+      ]
+    },
+    {
+      "backtrace" : 67,
+      "command" :
+      [
+        "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug/Debug/native-heap-tests.exe",
+        "atomic-limits"
+      ],
+      "config" : "Debug",
+      "name" : "heap-atomic-limits",
+      "properties" :
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 10.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug"
+        }
+      ]
+    },
+    {
+      "backtrace" : 69,
+      "command" :
+      [
+        "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug/Debug/native-heap-tests.exe",
+        "allocation-rollback"
+      ],
+      "config" : "Debug",
+      "name" : "heap-allocation-rollback",
+      "properties" :
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 10.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug"
+        }
+      ]
+    },
+    {
+      "backtrace" : 71,
+      "command" :
+      [
+        "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug/Debug/native-heap-tests.exe",
+        "ownership"
+      ],
+      "config" : "Debug",
+      "name" : "heap-ownership",
+      "properties" :
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 10.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug"
+        }
+      ]
+    },
+    {
+      "backtrace" : 73,
+      "command" :
+      [
+        "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug/Debug/native-heap-tests.exe",
+        "cancellation"
+      ],
+      "config" : "Debug",
+      "name" : "heap-cancellation",
+      "properties" :
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 10.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug"
+        }
+      ]
+    },
+    {
+      "backtrace" : 75,
+      "command" :
+      [
+        "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug/Debug/native-heap-tests.exe",
+        "unwind-roots"
+      ],
+      "config" : "Debug",
+      "name" : "heap-unwind-roots",
+      "properties" :
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 10.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug"
+        }
+      ]
+    },
+    {
+      "backtrace" : 77,
+      "command" :
+      [
+        "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug/Debug/native-heap-tests.exe",
+        "iterative-graph"
+      ],
+      "config" : "Debug",
+      "name" : "heap-iterative-graph",
+      "properties" :
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 10.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug"
+        }
+      ]
+    },
+    {
+      "backtrace" : 79,
+      "command" :
+      [
+        "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug/Debug/native-heap-tests.exe",
+        "repeated-collection"
+      ],
+      "config" : "Debug",
+      "name" : "heap-repeated-collection",
+      "properties" :
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 10.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug"
+        }
+      ]
+    },
+    {
+      "backtrace" : 81,
+      "command" :
+      [
+        "C:/Users/13691/AppData/Local/Programs/CMake/4.5.0/bin/cmake.exe",
+        "-DEXE=D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug/Debug/native-lifecycle-probe.exe",
+        "-DMODE=success",
+        "-DEXPECTED=0",
+        "-P",
+        "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/native_runtime/tests/probe.cmake"
+      ],
+      "config" : "Debug",
+      "name" : "lifecycle-success",
+      "properties" :
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 10.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug"
+        }
+      ]
+    },
+    {
+      "backtrace" : 83,
+      "command" :
+      [
+        "C:/Users/13691/AppData/Local/Programs/CMake/4.5.0/bin/cmake.exe",
+        "-DEXE=D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug/Debug/native-lifecycle-probe.exe",
+        "-DMODE=resource",
+        "-DEXPECTED=1",
+        "-P",
+        "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/native_runtime/tests/probe.cmake"
+      ],
+      "config" : "Debug",
+      "name" : "lifecycle-resource",
+      "properties" :
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 10.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug"
+        }
+      ]
+    },
+    {
+      "backtrace" : 85,
+      "command" :
+      [
+        "C:/Users/13691/AppData/Local/Programs/CMake/4.5.0/bin/cmake.exe",
+        "-DEXE=D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug/Debug/native-lifecycle-probe.exe",
+        "-DMODE=cancel",
+        "-DEXPECTED=130",
+        "-P",
+        "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/native_runtime/tests/probe.cmake"
+      ],
+      "config" : "Debug",
+      "name" : "lifecycle-cancel",
+      "properties" :
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 10.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug"
+        }
+      ]
+    },
+    {
+      "backtrace" : 87,
+      "command" :
+      [
+        "C:/Users/13691/AppData/Local/Programs/CMake/4.5.0/bin/cmake.exe",
+        "-DEXE=D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug/Debug/native-lifecycle-probe.exe",
+        "-DMODE=error",
+        "-DEXPECTED=1",
+        "-P",
+        "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/native_runtime/tests/probe.cmake"
+      ],
+      "config" : "Debug",
+      "name" : "lifecycle-error",
+      "properties" :
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 10.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "D:/\u5927\u5b66\u8d44\u6599/\u5317\u90ae/\u8bfe\u7a0b/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5/\u7a0b\u5e8f\u8bbe\u8ba1\u5b9e\u8df5\u5927\u4f5c\u4e1a/build/native-debug"
+        }
+      ]
+    }
+  ],
+  "version" :
+  {
+    "major" : 1,
+    "minor" : 0
+  }
+}

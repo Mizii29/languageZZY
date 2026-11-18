@@ -1,0 +1,19 @@
+适用于 .NET Framework MSBuild 版本 17.10.4+10fbfbf2e
+
+  1>Checking Build System
+  Building Custom Rule D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/native_runtime/CMakeLists.txt
+  frontend.cpp
+  native-frontend-tests.vcxproj -> D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\build\native-release\Release\native-frontend-tests.exe
+  Building Custom Rule D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/native_runtime/CMakeLists.txt
+  native-heap-tests.vcxproj -> D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\build\native-release\Release\native-heap-tests.exe
+  Building Custom Rule D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/native_runtime/CMakeLists.txt
+  native-lifecycle-probe.vcxproj -> D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\build\native-release\Release\native-lifecycle-probe.exe
+  Building Custom Rule D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/native_runtime/CMakeLists.txt
+  program.cpp
+  native-program-tests.vcxproj -> D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\build\native-release\Release\native-program-tests.exe
+  Building Custom Rule D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/native_runtime/CMakeLists.txt
+  native-protocol-tests.vcxproj -> D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\build\native-release\Release\native-protocol-tests.exe
+  Building Custom Rule D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/native_runtime/CMakeLists.txt
+  main.cpp
+  zzy-native.vcxproj -> D:\大学资料\北邮\课程\程序设计实践\程序设计实践大作业\build\native-release\Release\zzy-native.exe
+  Building Custom Rule D:/大学资料/北邮/课程/程序设计实践/程序设计实践大作业/native_runtime/CMakeLists.txt

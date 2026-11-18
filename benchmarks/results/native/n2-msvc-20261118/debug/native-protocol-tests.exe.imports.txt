@@ -1,0 +1,26 @@
+Microsoft (R) COFF/PE Dumper Version 14.40.33812.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+Dump of file C:\Users\13691\AppData\Local\Temp\ZZY N1 e8e852f9b4be49638043d732ae3dbf11\中文 路径\bin\native-protocol-tests.exe
+
+File Type: EXECUTABLE IMAGE
+
+  Image has the following dependencies:
+
+    MSVCP140D.dll
+    VCRUNTIME140D.dll
+    VCRUNTIME140_1D.dll
+    ucrtbased.dll
+    KERNEL32.dll
+
+  Summary
+
+        1000 .00cfg
+        1000 .data
+        3000 .idata
+        2000 .pdata
+        6000 .rdata
+        1000 .reloc
+        1000 .rsrc
+       11000 .text

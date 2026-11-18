@@ -1,0 +1,26 @@
+{
+  "passed": true,
+  "configurations": {
+    "debug": {
+      "ctest": 44,
+      "normal_process_records": 57,
+      "intentional_timeout_records": 1,
+      "source_files": 62,
+      "executables": 6,
+      "cli_sha256": "ea64b8a7e41c22f9b788bcc9db5b923802cab2e30b1c157afd6c7cf5486d5abd"
+    },
+    "release": {
+      "ctest": 44,
+      "normal_process_records": 57,
+      "intentional_timeout_records": 1,
+      "source_files": 62,
+      "executables": 6,
+      "cli_sha256": "4fc0ff350bfd911f77a3817735616326c509bad88214689bc8f8d592e1e8b56f"
+    }
+  },
+  "installed_smoke": 9,
+  "published_copy_smoke": 9,
+  "requirement_unchanged": true,
+  "python_regression": 108,
+  "scope": "N2 static frontend only; no runtime evaluation, manual Ctrl+C or sanitizer claim"
+}

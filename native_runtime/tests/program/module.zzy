@@ -1,0 +1,2 @@
+(shape) Item { label: (String) := "module default"; }
+(addnew) value() -> (Int) { (return) 3; }

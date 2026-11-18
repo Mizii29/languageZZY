@@ -319,3 +319,11 @@ N0 只做盘点、能力/所有权冻结和堆原型，N1 才开始 Lexer。阶�
 ### N0-03 / N1 正式构建补验收（2026-11-18）
 
 先前仅GCC的状态为历史。最新N1已通过CMake4.5/MSVC19.40 Debug/Release各32项CTest、固定87/CLI62、资源/生命周期和Release安装/源码外无Python检查，见[正式报告](../../native_runtime/tests/msvc-report.md)。N0-03已补齐，N0/N1技术出口满足，下一项N2-01，本轮没有进入N2；P12/P13不变。真实手动Ctrl+C、Sanitizer与其他平台仍未验证。
+
+### N2 静态准备（2026-11-18）
+
+依用户确认的N1技术出口，N2-01—04已完成：Parser、不可变Program、Resolver布局与完整模块图、静态check。契约见[Program](native-program-contract.md)，验证见[N2报告](../../native_runtime/tests/n2-report.md)，当前任务状态仅维护todo。没有进入N3求值，P12/P13和默认Python入口不变。
+
+### N2 正式补跑闭合（2026-11-18）
+
+最新N2 CMake/MSVC Debug、Release各44/44 CTest、固定check850/850、过程58条和Release安装/源码外副本各9/9通过。N0/N1原32项历史保留，权限失败与修复见[N2报告](../../native_runtime/tests/n2-report.md)。N2-01—04静态技术出口满足，下一项N3-01；未实现求值，未进入N3，P12/P13不变。

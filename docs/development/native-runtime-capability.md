@@ -1,13 +1,13 @@
 # 原生能力矩阵与延期协议（N0-02）
 
-2026-11-17，原生版本 0.0.0-n1。Python v0.6 继续提供现有能力。
+2026-11-18，原生版本 0.0.0-n2。Python v0.6 继续提供现有能力，原生 check 只做静态准备，不求值。
 逐项清单见 [capabilities.json](../../native_runtime/tests/capabilities.json)：每个 AST kind、实际 Value kind、宿主函数都有独立条目。
-`implemented=false` 表示没有实现，不代表测试跳过后通过。N1 已提供 info/source-info/lex，仍不能运行 ZZY；N0 堆原型继续保留。2026-11-18正式CMake/MSVC Debug/Release各32项CTest、Release安装和源码外副本已通过，见[正式报告](../../native_runtime/tests/msvc-report.md)。
+`implemented=false` 表示没有实现，不代表测试跳过后通过。N1 已提供 info/source-info/lex，仍不能运行 ZZY；N0 堆原型继续保留。N1正式历史为每配置32项CTest；2026-11-18最新N2 CMake/MSVC Debug/Release各44/44、固定check850/850、过程58条、Release安装/源码外各9/9已通过，见[N2报告](../../native_runtime/tests/n2-report.md)。
 
 | 类别 | 核心/可选 | 计划阶段 | 当前状态与保证 |
 |---|---|---|---|
 | UTF-8/源码位置/Token | 核心 | N1 | 已实现；严格 UTF-8/Unicode15.0.0、源码快照/码点位置与固定清单已由GCC及MSVC Debug/Release验证 |
-| AST/Resolver/check | 核心 | N2 | 未实现；check 拒绝且不执行初始化 |
+| AST/Resolver/check | 核心 | N2 | 已实现；只读 Program、绑定/捕获布局和完整模块图；check 不求值 |
 | 标量、BigInt、Array/Map/Shape、分支/循环 | 核心 | N3 | 未实现；堆图原型不等于语言容器执行 |
 | 具名/匿名函数、Cell/闭包、Lazy、Result、管道 | 核心 | N3 | 未实现；原型只验证其环所有权 |
 | Query/Machine/Quantity/模块/spec | 核心 | N3—N5 | 未实现；不退化为普通 Float/Map，不假装测试集合为空即成功 |
@@ -22,7 +22,7 @@
 ## 未支持行为
 
 集中错误码表新增 **E402：当前后端未实现能力**，仅用于能力门禁；JSON 仍是 schema v1。
-当前对已知但未实现的 check/run/test 在读源码之前返回：stdout 空，stderr 一条 error/E402，file/span=null，notes 含 `capability=<command>`，退出 **2**。
+当前对已知但未实现的 run/test 在读源码之前返回：stdout 空，stderr 一条 error/E402，file/span=null，notes 含 `capability=<command>`，退出 **2**。check 现已执行完整静态准备，成功0；不执行用户表达式。
 因此有效 ZZY 不会被误报 E103，也不会触发 Python 或 I/O。未知命令/非法 CLI 参数仍 E401/2。
 未实现能力在后续前端可识别时须在准备阶段拒绝；不得运行一半再回退。未来精确源码定位按 diagnostics 契约补齐。
 
@@ -32,8 +32,8 @@ N0 的 1/130 由独立生命周期探针验证，不能据此宣传 run 已实�
 
 ## 延期复核
 
-每个条目记录 tier/phase/status，未实现统一 E402，替代入口仍为显式 `python -m zzy`。
+每个条目记录 tier/phase/status，未实现统一 E402，替代入口仍为显式 `python -m zzy`。N2 的 `run/test` 仍为 E402；`check` 和 `program-info` 是静态入口，不表示 N3 运行时已实现。
 现有 1738 外部用例原地保留；N6 将全部映射为原生用例并单列延期数，绝不把未支持计作通过。
 重评估按计划对应阶段；N8 前默认入口不变。P12/P13 独立进度不因本矩阵调整。
 
-N1 用户顺序例外、公开边界见 [前端集中契约](native-frontend-contract.md)；[N1验收报告](../../native_runtime/tests/n1-report.md)分别列 GCC、正式构建与未验证范围。不能因 lex 成功宣称 AST/Resolver 或标准库可用。
+N1 用户顺序例外、N2公开边界见 [前端集中契约](native-frontend-contract.md) 与 [Program契约](native-program-contract.md)；[N1验收报告](../../native_runtime/tests/n1-report.md)保留历史构建证据，N2新证据见 `benchmarks/results/native/n2-20261118`。N2 check 通过不代表值执行、宿主标准库、Web/SQLite/Sketch或多请求隔离已经实现。

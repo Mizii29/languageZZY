@@ -1,0 +1,76 @@
+{
+  "schema_version": 1,
+  "passed": true,
+  "scope": "source-external executable smoke; installation provenance is provided by caller",
+  "executable": "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY N2 Published 中文 空格 d6bf4d3a88aa4ad995894025efef7519\\zzy-native.exe",
+  "exe_sha256": "4fc0ff350bfd911f77a3817735616326c509bad88214689bc8f8d592e1e8b56f",
+  "cwd": "C:\\Users\\13691\\AppData\\Local\\Temp\\ZZY native install 中文 81bc1b1df60747c8a51316ca7a2ab666",
+  "path_empty": true,
+  "pythonpath": "unusable-smoke",
+  "side_effect_absent": true,
+  "records": [
+    {
+      "command": "info",
+      "exit_code": 0,
+      "stdout": "{\"schema_version\":1,\"backend\":\"native-ast\",\"stage\":\"N2\",\"version\":\"0.0.0-n2\",\"cxx_standard\":17,\"pointer_bits\":64,\"compiler\":\"MSVC\",\"crt\":\"MSVC /MD (VC Redistributable required)\",\"supported_commands\":[\"info\",\"source-info\",\"lex\",\"check\",\"program-info\"],\"python_fallback\":false,\"unicode_version\":\"15.0.0\",\"policy_status\":\"frontend and static preparation limits enforced; execution/cache unavailable\",\"resource_policy\":{\"effective_decimal_digits\":4096,\"host_decimal_digits\":0,\"limits\":{\"ast_nodes_total\":500000,\"call_depth\":64,\"container_items\":1000000,\"import_depth\":32,\"integer_bits\":65536,\"io_payload_bytes\":16777216,\"module_count\":128,\"numeric_digits\":4096,\"program_cache_bytes\":67108864,\"program_cache_entries\":32,\"quantity_exponent_abs\":64,\"runtime_objects\":200000,\"runtime_payload_bytes\":134217728,\"runtime_slots\":2000000,\"source_file_bytes\":2097152,\"source_total_bytes\":16777216,\"stderr_bytes\":1048576,\"stdout_bytes\":1048576,\"syntax_depth\":64,\"text_codepoints\":4194304,\"tokens_per_file\":250000,\"value_depth\":64},\"policy_version\":1,\"profile\":\"default-v1\"},\"resource_fingerprint\":\"c9a540b6ea917d42f3d6c915801dce802ee771a18b1ab6139eab2ebc8161b14d\"}\n",
+      "stderr": "",
+      "timed_out": false
+    },
+    {
+      "command": "source-info 中文.zzy --diagnostic-format json",
+      "exit_code": 0,
+      "stdout": "{\"file\":\"中文.zzy\",\"bytes\":20,\"codepoints\":15,\"lines\":1,\"sha256\":\"2f7f0036854fe9e341fed080325f4b1d7a833a13d753cb3baa6cc24011895e9a\",\"syntax_checked\":false,\"resource_fingerprint\":\"c9a540b6ea917d42f3d6c915801dce802ee771a18b1ab6139eab2ebc8161b14d\"}\n",
+      "stderr": "",
+      "timed_out": false
+    },
+    {
+      "command": "lex 中文.zzy --diagnostic-format json",
+      "exit_code": 0,
+      "stdout": "{\"schema_version\":1,\"kind\":\"IMMUTABLE_DECL\",\"lexeme\":\"(zno)\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":1},\"end\":{\"line\":1,\"column\":6}}}\n{\"schema_version\":1,\"kind\":\"IDENT\",\"lexeme\":\"名\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":7},\"end\":{\"line\":1,\"column\":8}}}\n{\"schema_version\":1,\"kind\":\"INIT\",\"lexeme\":\":=\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":9},\"end\":{\"line\":1,\"column\":11}}}\n{\"schema_version\":1,\"kind\":\"STRING\",\"lexeme\":\"\\\"😀\\\"\",\"value\":\"😀\",\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":12},\"end\":{\"line\":1,\"column\":15}}}\n{\"schema_version\":1,\"kind\":\"SEMICOLON\",\"lexeme\":\";\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":15},\"end\":{\"line\":1,\"column\":16}}}\n{\"schema_version\":1,\"kind\":\"EOF\",\"lexeme\":\"\",\"value\":null,\"raw\":false,\"span\":{\"start\":{\"line\":1,\"column\":16},\"end\":{\"line\":1,\"column\":16}}}\n",
+      "stderr": "",
+      "timed_out": false
+    },
+    {
+      "command": "check 中文.zzy --diagnostic-format json",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "",
+      "timed_out": false
+    },
+    {
+      "command": "run 中文.zzy --diagnostic-format json",
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E402\",\"file\":null,\"span\":null,\"message\":\"capability is not implemented by this backend\",\"notes\":[\"capability=run\"]}\n",
+      "timed_out": false
+    },
+    {
+      "command": "test 中文.zzy --diagnostic-format json",
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E402\",\"file\":null,\"span\":null,\"message\":\"capability is not implemented by this backend\",\"notes\":[\"capability=test\"]}\n",
+      "timed_out": false
+    },
+    {
+      "command": "check no-execute.zzy --diagnostic-format json",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "",
+      "timed_out": false
+    },
+    {
+      "command": "run no-execute.zzy --diagnostic-format json",
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E402\",\"file\":null,\"span\":null,\"message\":\"capability is not implemented by this backend\",\"notes\":[\"capability=run\"]}\n",
+      "timed_out": false
+    },
+    {
+      "command": "test no-execute.zzy --diagnostic-format json",
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"schema_version\":1,\"kind\":\"error\",\"code\":\"E402\",\"file\":null,\"span\":null,\"message\":\"capability is not implemented by this backend\",\"notes\":[\"capability=test\"]}\n",
+      "timed_out": false
+    }
+  ]
+}

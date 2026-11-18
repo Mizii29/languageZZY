@@ -77,3 +77,11 @@ P10未选项保留，逐项利弊见[创新取舍](../../docs/features/innovatio
 ## NATIVE-01 独立原生路线
 
 用户明确选择原生阶段时先读[原生计划](../../docs/development/native-runtime-plan.md)、todo、[盘点](../../docs/development/native-runtime-inventory.md)、[能力矩阵](../../docs/development/native-runtime-capability.md)和[决策](../../docs/development/native-runtime-decisions.md)。N1 已有 info/source-info/lex、严格 UTF-8/Unicode15.0.0、源码位置与前端资源/诊断，见[集中契约](../../docs/development/native-frontend-contract.md)。2026-11-18 已对最新代码补齐 N0-03：CMake4.5/MSVC19.40 Debug/Release 各32项非空CTest、固定清单、资源/清理/无Python及Release安装和源码外副本；[正式报告](../../native_runtime/tests/msvc-report.md)保留旧GCC/失败记录和工具/CRT版本。N0/N1技术出口已满足，下一阶段为N2，本轮不实现。run/check/test仍E402/2，不回退Python；人工Ctrl+C、Sanitizer、其他平台、缺CRT主机未验证。后续修改代码必须重跑适用门禁，不沿用旧源码/产物指纹。保留Python默认入口、全部测试、P12/P13、requirement和用户材料；本地提交不得混入无关修改。
+
+## N2 接手入口（2026-11-18）
+
+N2-01—04现已实现，正式静态边界读取[Program契约](../../docs/development/native-program-contract.md)和[N2报告](../../native_runtime/tests/n2-report.md)。info/source-info/lex/check/program-info为当前公开命令；check只做完整依赖图静态准备，不执行默认值、函数、Lazy、spec、I/O或宿主初始化。Program只含只读描述与快照，run/test仍E402。后续只能在用户选择N3后实现值求值，不能把静态元数据解释为库已可运行。CMake/CTest与直接MSVC/GCC证据分列，N2报告记录未验证门禁。
+
+### N2 正式补跑状态（2026-11-18）
+
+以上N1“下一阶段N2”和N2正式门禁未验证说明保留为历史。当前最新N2正式CMake/MSVC Debug/Release各44/44 CTest、check850/850、58条过程及Release安装/源码外副本各9/9通过，见[N2报告](../../native_runtime/tests/n2-report.md)。check已实现；run/test仍E402。下一项N3-01，未获该阶段范围前不实现求值。手动Ctrl+C、Sanitizer及完整Python/Web/GUI未验证，不能外推。

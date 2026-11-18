@@ -179,4 +179,4 @@ P08-04/05本轮新增SQLite事务与独立任务示例；实际db签名、提交
 
 ## 独立原生实验线 NATIVE-01
 
-原生阶段与 P12/P13 分开，Python 仍为默认入口。N1 的 info/source-info/lex、严格 UTF-8、码点定位与前端资源/诊断已通过 GCC 及正式 CMake/MSVC Debug/Release 验收；每种配置 CTest 32/32，Release 安装及源码外发布副本通过，N0-03 构建门禁已补齐。run/check/test 仍 E402/2，无 Python fallback。[使用命令](native_runtime/README.md)、[集中契约](docs/development/native-frontend-contract.md)、[MSVC证据与限制](native_runtime/tests/msvc-report.md)。下一阶段为 N2，本轮未实现；人工 Ctrl+C、Sanitizer、其他平台和缺 CRT 主机仍未验证。
+原生阶段与 P12/P13 分开，Python 仍为默认入口。N1 正式验收证据保留，N2 已实现全部现有语法的 Parser、Resolver、不可变 Program、绑定/捕获布局、模块依赖图及原生 `check`/`program-info`；check 不求值，run/test仍 E402/2，无Python回退。[使用命令](native_runtime/README.md)、[Program契约](docs/development/native-program-contract.md)、[N2证据](native_runtime/tests/n2-report.md)记录当前状态。未实现运行时求值；最新N2正式CMake/MSVC Debug、Release各44/44 CTest、固定check850/850、58条过程验收及Release安装/源码外各9/9已补跑通过，原始证据见benchmarks/results/native/n2-msvc-20261118。人工Ctrl+C、Sanitizer、其他平台和缺CRT主机仍未验证。

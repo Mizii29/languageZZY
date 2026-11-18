@@ -1,0 +1,50 @@
+(use) "module.zzy" (as) library;
+(shape) Box {
+    value: (Int) := 3;
+    nested: library.Item;
+}
+(machine) Gate {
+    closed -- "open" --> opened;
+    opened -- "close" --> closed;
+}
+(zyes) total := 1;
+(zno) big := 18446744073709551616;
+(zno) ratio := (1.25);
+(zno) distance := 250::cm;
+(zno) empty := (null);
+(zno) truth := (true) (and) (not) (false) (or) (false);
+(zno) raw_text := (raw) "[OoO]n";
+(addnew) safe(v: (Int)) -> (Result) {
+    (zno) deferred := (zzz)(v + total);
+    (zno) identity := (addnew)(x: (Int)) => x;
+    (zif?:) v > 0 { total <- total + 1; }
+    (zzif?:) v == 0 { total <- 2; }
+    (zzyf:) { total <- 3; }
+    (while) (false) { (break); }
+    (for) j (in) 0..<3 { (continue); }
+    (zno) box := Box::{value: identity(1), nested: library.Item::{}};
+    box.value <- 2;
+    (zno) updated := box (with) {value: 3};
+    (zno) xs := [1, 2, 3,];
+    xs[0] <- 4;
+    (zno) stream := xs ?> {
+        (keep): @ > 0;
+        (order): math.abs(@) (desc);
+        (take): 2;
+        (yield): @ + 1;
+    };
+    (zno) pipeline := stream ~> len(@);
+    (zno) state := Gate();
+    state << "open";
+    (zno) result := (^_^)(pipeline);
+    (return) (^_^)(result?);
+}
+(?_?) safe(1) {
+    (^_^)(payload) => { (o_o) payload > 0; }
+    (T_T)(failure) => { (@_@) failure; }
+    -1 => { 1; }
+    "literal" => { 0.5; }
+    (true) => { (null); }
+    _ => { (false); }
+}
+(spec) "static only" { (o_o) (false); (@_@) safe(0); }
