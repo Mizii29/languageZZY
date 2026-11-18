@@ -1,5 +1,6 @@
 #include "zzy_native/prepare.hpp"
 #include "zzy_native/program_dump.hpp"
+#include "zzy_native/execution.hpp"
 #include <iostream>
 #include <vector>
 namespace {
@@ -65,27 +66,27 @@ int cli(const std::vector<std::string>& argv,bool& json,zzy::ResourcePolicy& pol
         }
     }
     if(help || arguments.empty()) {
-        std::cout<<"zzy-native 0.0.0-n2\nAvailable: info, source-info FILE, lex FILE, check FILE, program-info FILE, --help, --version\n"
+        std::cout<<"zzy-native 0.0.0-n3-dev\nAvailable: info, source-info FILE, lex FILE, check FILE, program-info FILE, run FILE, --help, --version\n"
                  <<"Options (before or after command): --limits FILE --diagnostic-format text|json\n"
-                 <<"Not implemented: run, test (E402; no Python fallback)\n"
+                 <<"Not implemented: test (E402; no Python fallback)\n"
                  <<"check prepares an immutable Program without executing user code\n";
         return 0;
     }
     const auto& command=arguments[0];
-    if(command=="--version" && arguments.size()==1) {std::cout<<"0.0.0-n2\n";return 0;}
-    if(command=="run" || command=="test") {
+    if(command=="--version" && arguments.size()==1) {std::cout<<"0.0.0-n3-dev\n";return 0;}
+    if(command=="test") {
         zzy::diagnostic(std::cerr,"E402","capability is not implemented by this backend","capability="+command,json);return 2;
     }
-    if(!((command=="info" && arguments.size()==1) || ((command=="source-info" || command=="lex" || command=="check" || command=="program-info") && arguments.size()==2)))
+    if(!((command=="info" && arguments.size()==1) || ((command=="source-info" || command=="lex" || command=="check" || command=="program-info" || command=="run") && arguments.size()==2)))
         throw zzy::FrontendError("E401","invalid command or arguments; use --help");
     if(limits) policy=zzy::load_policy(zzy::widen(*limits));
     zzy::FrontendMeter meter(policy,cancelled);
     if(command=="info") {
-        meter.write(std::cout,"{\"schema_version\":1,\"backend\":\"native-ast\",\"stage\":\"N2\","
-            "\"version\":\"0.0.0-n2\",\"cxx_standard\":17,\"pointer_bits\":"+std::to_string(sizeof(void*)*8)+
+        meter.write(std::cout,"{\"schema_version\":1,\"backend\":\"native-ast\",\"stage\":\"N3-dev\","
+            "\"version\":\"0.0.0-n3-dev\",\"cxx_standard\":17,\"pointer_bits\":"+std::to_string(sizeof(void*)*8)+
             ",\"compiler\":"+zzy::quote(compiler())+",\"crt\":"+zzy::quote(crt())+
-            ",\"supported_commands\":[\"info\",\"source-info\",\"lex\",\"check\",\"program-info\"],\"python_fallback\":false,\"unicode_version\":\"15.0.0\","
-            "\"policy_status\":\"frontend and static preparation limits enforced; execution/cache unavailable\",\"resource_policy\":"+
+            ",\"supported_commands\":[\"info\",\"source-info\",\"lex\",\"check\",\"program-info\",\"run\"],\"python_fallback\":false,\"unicode_version\":\"15.0.0\","
+            "\"policy_status\":\"frontend and batch-B scalar execution; remaining N3 capabilities return E402; cache unavailable\",\"resource_policy\":"+
             policy.canonical_json()+",\"resource_fingerprint\":"+zzy::quote(policy.fingerprint())+"}\n");
         return 0;
     }
@@ -93,6 +94,13 @@ int cli(const std::vector<std::string>& argv,bool& json,zzy::ResourcePolicy& pol
         const auto program=zzy::prepare(zzy::widen(arguments[1]),meter);
         if(command=="program-info") zzy::dump_program(program,meter,std::cout);
         return 0;
+    }
+    if(command=="run") {
+        const auto program=zzy::prepare(zzy::widen(arguments[1]),meter);
+        zzy::ExecutionContext context(program,policy,cancelled,std::cout,std::cerr,json);
+        try {context.execute();return 0;}
+        catch(const zzy::RuntimeError& error) {std::cerr<<zzy::runtime_diagnostic(program.data(),error,json);return 1;}
+        catch(const std::bad_alloc&) {std::cerr<<zzy::render_frontend(zzy::FrontendError("E211","allocation failed; phase=execution"),json);return 1;}
     }
     zzy::SourceLoader sources(meter);
     const auto source=sources.load(zzy::widen(arguments[1]));

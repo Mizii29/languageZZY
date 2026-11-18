@@ -1,0 +1,131 @@
+{
+  "schema_version": 1,
+  "cases": [
+    {
+      "id": "bigint",
+      "file": "bigint.zzy",
+      "exit_code": 0,
+      "stdout": "340282366920938463463374607431768211456\n",
+      "code": null
+    },
+    {
+      "id": "floor",
+      "file": "floor.zzy",
+      "exit_code": 0,
+      "stdout": "-3\n2\n-3\n-2\n",
+      "code": null
+    },
+    {
+      "id": "mixed-compare",
+      "file": "mixed-compare.zzy",
+      "exit_code": 0,
+      "stdout": "true\ntrue\nfalse\n",
+      "code": null
+    },
+    {
+      "id": "unicode",
+      "file": "unicode.zzy",
+      "exit_code": 0,
+      "stdout": "3\n😀\n",
+      "code": null
+    },
+    {
+      "id": "alias",
+      "file": "alias.zzy",
+      "exit_code": 0,
+      "stdout": "true\nfalse\n",
+      "code": null
+    },
+    {
+      "id": "range",
+      "file": "range.zzy",
+      "exit_code": 0,
+      "stdout": "range(10, 0, -3)\n4\ntrue\n",
+      "code": null
+    },
+    {
+      "id": "short-circuit",
+      "file": "short-circuit.zzy",
+      "exit_code": 0,
+      "stdout": "false\ntrue\n",
+      "code": null
+    },
+    {
+      "id": "bool-number",
+      "file": "bool-number.zzy",
+      "exit_code": 1,
+      "stdout": "",
+      "code": "E201"
+    },
+    {
+      "id": "division-zero",
+      "file": "division-zero.zzy",
+      "exit_code": 1,
+      "stdout": "",
+      "code": "E205"
+    },
+    {
+      "id": "float-overflow",
+      "file": "float-overflow.zzy",
+      "exit_code": 1,
+      "stdout": "",
+      "code": "E208"
+    },
+    {
+      "id": "negative-index",
+      "file": "negative-index.zzy",
+      "exit_code": 1,
+      "stdout": "",
+      "code": "E204"
+    },
+    {
+      "id": "strict-bool",
+      "file": "strict-bool.zzy",
+      "exit_code": 1,
+      "stdout": "",
+      "code": "E201"
+    },
+    {
+      "id": "range-step",
+      "file": "range-step.zzy",
+      "exit_code": 1,
+      "stdout": "",
+      "code": "E208"
+    },
+    {
+      "id": "arity",
+      "file": "arity.zzy",
+      "exit_code": 1,
+      "stdout": "",
+      "code": "E202"
+    },
+    {
+      "id": "annotation",
+      "file": "annotation.zzy",
+      "exit_code": 1,
+      "stdout": "",
+      "code": "E201"
+    },
+    {
+      "id": "assert",
+      "file": "assert.zzy",
+      "exit_code": 1,
+      "stdout": "",
+      "code": "E210"
+    },
+    {
+      "id": "unavailable-host",
+      "file": "unavailable-host.zzy",
+      "exit_code": 1,
+      "stdout": "",
+      "code": "E402"
+    },
+    {
+      "id": "spec-no-run",
+      "file": "spec-no-run.zzy",
+      "exit_code": 0,
+      "stdout": "ok\n",
+      "code": null
+    }
+  ]
+}

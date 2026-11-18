@@ -1,0 +1,1 @@
+io.print((false) (and) 1/0==1);io.print((true) (or) 1/0==1);

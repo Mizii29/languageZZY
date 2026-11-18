@@ -1,0 +1,1 @@
+(zno) x:="中😀文";io.print(len(x));io.print(x[1]);

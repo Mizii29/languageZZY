@@ -1,0 +1,1 @@
+io.print((true)+1);

@@ -1,0 +1,1 @@
+(zno) a:=[1];(zno) b:=a;io.print(a==b);io.print(a==[1]);

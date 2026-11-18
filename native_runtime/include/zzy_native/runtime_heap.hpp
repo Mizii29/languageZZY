@@ -6,7 +6,7 @@
 #include <unordered_set>
 namespace zzy {
 struct RuntimeError : std::runtime_error {
-    std::string code;NodeId site;std::vector<std::string> notes;
+    std::string code;NodeId site;bool expression_span=false;std::vector<std::string> notes;
     RuntimeError(std::string c,std::string message,NodeId n=no_node):std::runtime_error(std::move(message)),code(std::move(c)),site(n) {}
 };
 struct Charge {
@@ -39,6 +39,8 @@ struct RuntimeNode {
     Rational rational;int length=0,time=0;
     std::vector<Handle> edges;
     std::vector<std::string> names;
+    std::vector<std::string> type_names;
+    std::vector<std::size_t> type_nominals;
     NodeId syntax=no_node;
     std::size_t active=0,version=0;
     std::string state="NEW";

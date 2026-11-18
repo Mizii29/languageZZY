@@ -41,6 +41,9 @@ if(BUILD_TESTING)
   add_test(NAME runtime-values-empty-selection COMMAND "${CMAKE_COMMAND}" -DEXE=$<TARGET_FILE:native-runtime-values-tests>
     -P "${CMAKE_CURRENT_SOURCE_DIR}/tests/runtime-selection.cmake")
   find_program(NATIVE_POWERSHELL NAMES pwsh powershell REQUIRED)
+  add_test(NAME runtime-fixed COMMAND "${NATIVE_POWERSHELL}" -NoProfile -File
+    "${CMAKE_CURRENT_SOURCE_DIR}/tools/test-runtime.ps1" -Executable $<TARGET_FILE:zzy-native>)
+  set_tests_properties(runtime-fixed PROPERTIES TIMEOUT 900)
   add_test(NAME frontend-fixed COMMAND "${NATIVE_POWERSHELL}" -NoProfile -File
     "${CMAKE_CURRENT_SOURCE_DIR}/tools/test-fixed.ps1" -Executable $<TARGET_FILE:zzy-native>)
   set_tests_properties(frontend-fixed PROPERTIES TIMEOUT 180)
@@ -75,7 +78,7 @@ if(BUILD_TESTING)
   add_test(NAME cli-info COMMAND "${CMAKE_COMMAND}" -DEXE=$<TARGET_FILE:zzy-native>
     -DMODE=info -P "${CMAKE_CURRENT_SOURCE_DIR}/tests/cli.cmake")
   add_test(NAME cli-unsupported COMMAND "${CMAKE_COMMAND}" -DEXE=$<TARGET_FILE:zzy-native>
-    -DMODE=run -P "${CMAKE_CURRENT_SOURCE_DIR}/tests/cli.cmake")
+    -DMODE=test -P "${CMAKE_CURRENT_SOURCE_DIR}/tests/cli.cmake")
   set_tests_properties(protocol cli-info cli-unsupported PROPERTIES TIMEOUT 10)
   add_executable(native-heap-tests tests/native/heap.cpp)
   target_link_libraries(native-heap-tests PRIVATE zzy_native_options)
