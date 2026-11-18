@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "stage": "N4-01",
+  "stage": "N4-02",
   "features": [
     {
       "id": "ast.add",
@@ -656,9 +656,9 @@
     {
       "id": "host.data.parse",
       "tier": "core",
-      "phase": "N4",
-      "implemented": false,
-      "diagnostic": "E402"
+      "phase": "N4-02",
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "host.data.set",
@@ -670,9 +670,9 @@
     {
       "id": "host.data.stringify",
       "tier": "core",
-      "phase": "N4",
-      "implemented": false,
-      "diagnostic": "E402"
+      "phase": "N4-02",
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "host.db.query",
@@ -705,30 +705,30 @@
     {
       "id": "host.io.read_text",
       "tier": "core",
-      "phase": "N4",
-      "implemented": false,
-      "diagnostic": "E402"
+      "phase": "N4-02",
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "host.io.replace_file",
       "tier": "core",
-      "phase": "N4",
-      "implemented": false,
-      "diagnostic": "E402"
+      "phase": "N4-02",
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "host.io.write_atomic",
       "tier": "core",
-      "phase": "N4",
-      "implemented": false,
-      "diagnostic": "E402"
+      "phase": "N4-02",
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "host.io.write_text",
       "tier": "core",
-      "phase": "N4",
-      "implemented": false,
-      "diagnostic": "E402"
+      "phase": "N4-02",
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "host.len",

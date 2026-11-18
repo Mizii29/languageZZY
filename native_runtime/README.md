@@ -1,8 +1,8 @@
-# ZZY native runtime：N4-01 核心标准库
+# ZZY native runtime：N4-01/02 核心标准库与文件/JSON
 
-独立 C++17 AST 解释器。原生 `run` 执行核心 ZZY，并在 N4-01 接入 `io`、`array`、`text`、`math`、`data` 和 `unit` 的冻结核心接口。`check` 仍只静态准备。未移植的宿主能力执行时报告 E402/1；`test` 报告 E402/2，留给 N5。Python 仍为默认入口，原生进程不回退 Python。
+独立 C++17 AST 解释器。原生 `run` 执行核心 ZZY，已接入 `io`、`array`、`text`、`math`、`data` 和 `unit` 的 35 个冻结核心接口，含 UTF-8 文件/原子保存和严格 JSON。`check` 仍只静态准备。未移植的宿主能力执行时报告 E402/1；`test` 报告 E402/2，留给 N5。Python 仍为默认入口，原生进程不回退 Python。
 
-验收范围及产物见 [N4-01报告](tests/n4-01-report.md)、[N3报告](tests/n3-report.md) 与 [能力矩阵](../docs/development/native-runtime-capability.md)。前端历史保存在 [N2报告](tests/n2-report.md)；静态入口见 [Program契约](../docs/development/native-program-contract.md)。
+验收范围及产物见 [N4-02报告](tests/n4-02-report.md)、[N4-01报告](tests/n4-01-report.md)、[N3报告](tests/n3-report.md) 与 [能力矩阵](../docs/development/native-runtime-capability.md)。前端历史保存在 [N2报告](tests/n2-report.md)；静态入口见 [Program契约](../docs/development/native-program-contract.md)。
 
 ## 在本机运行核心程序
 
@@ -39,7 +39,7 @@ if ($LASTEXITCODE -ne 0) { throw 'Release install failed' }
 & native_runtime/tools/install-smoke.ps1 -Executable dist/native-stage/bin/zzy-native.exe -Output dist/native-installed-smoke-new.json
 ```
 
-Visual Studio 是多配置生成器；EXE 在 `build/native-debug/Debug` 和 `build/native-release/Release`。N4-01 CTest 清单为 64 项，包含 N3 的 57 项、5 个库探针、空选择检查和 126 项独立固定库清单；不能省略 `--no-tests=error`。配置、构建、CTest 和安装不下载依赖、不调用 Python。
+Visual Studio 是多配置生成器；EXE 在 `build/native-debug/Debug` 和 `build/native-release/Release`。N4-02 CTest 清单为 69 项，保留 N4-01 全部 64 项，新增文件/提交/JSON 三探针、58 项固定清单与 33 项 CLI 文件专项；不能省略 `--no-tests=error`。配置、构建、CTest 和安装不下载依赖、不调用 Python。
 
 源码外专项与发布副本复现（Output和发布目录必须新建）：
 
@@ -62,4 +62,30 @@ if ($LASTEXITCODE -ne 0) { throw 'CLI boundary tests failed' }
 
 MSVC Debug /MDd仅开发机测试，不分发；Release /MD使用本机已有Microsoft VC runtime14.50.35719.0与系统UCRT。发布目录只含Release EXE，未私装或附带运行库。缺CRT干净机器尚未验证，不能承诺任意Windows裸机直接运行。已有MinGW辅助preset和clang-cl没有在本轮验证。
 
-真实手动 Ctrl+C、Sanitizer、其他平台、完整 Python/Web/GUI 回归与性能未验收。文件/严格 JSON、SQLite、Web、Sketch headless/GUI 仍按 E402 延期；N4-01 不宣称完整 N4。N3 同进程连续请求探针和 N4-01 库探针覆盖错误、协作取消后恢复。下一项为 N4-02 文件与严格 JSON。
+真实手动 Ctrl+C、Sanitizer、其他平台、完整 Python/Web/GUI 回归与性能未验收。SQLite、Web、Sketch headless/GUI 仍延期；N4-01/02 满足 N4 核心子集，不宣称完整 N4。文件探针覆盖提交失败/取消/配额和同进程恢复；JSON 读写用显式栈。下一项为 N4-03 SQLite。
+
+## 文件与严格 JSON 演示
+
+从仓库根目录运行以下命令，在新建临时目录生成 `native-state.json`，不会修改应用数据：
+
+```powershell
+$nativeExe = (Resolve-Path build/native-release/Release/zzy-native.exe).Path
+$nativeExample = (Resolve-Path native_runtime/examples/file-json.zzy).Path
+$nativeDemo = Join-Path $env:TEMP ('ZZY 文件演示 '+[guid]::NewGuid().ToString('N'))
+New-Item -ItemType Directory -Path $nativeDemo -ErrorAction Stop | Out-Null
+Push-Location $nativeDemo
+try {
+    & $nativeExe run $nativeExample --diagnostic-format json
+    if ($LASTEXITCODE -ne 0) { throw 'File/JSON demo failed' }
+    Get-Content -LiteralPath native-state.json -Raw -Encoding utf8
+} finally { Pop-Location }
+```
+
+固定输出为 `(^_^)(ZZY 原生文件示例😀)`，文件含相同标题、`ids:[1,9007199254740993]` 和 `version:1`。路径相对工作目录；保存不创建父目录。文件保留 BOM/CRLF，JSON 拒绝重复键、孤立代理、不支持值和环；不自动解包 Result 或唤醒 Lazy。详细资源和取消/提交边界仅维护在[标准库原生契约](../docs/development/native-stdlib-contract.md)。
+
+专项复现（Output 必须新建）：
+
+```powershell
+& native_runtime/tools/test-library.ps1 -Executable build/native-release/Release/zzy-native.exe -FileJson -Output dist/native-json-new.json
+& native_runtime/tools/test-files.ps1 -Executable build/native-release/Release/zzy-native.exe -Output dist/native-files-new.json
+```

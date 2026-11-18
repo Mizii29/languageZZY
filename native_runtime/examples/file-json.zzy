@@ -1,0 +1,13 @@
+zzysay: Run in an empty working directory. Saves native-state.json atomically.
+(addnew) save() -> (Result) {
+    (zno) state := data.map();
+    data.set(state, "title", "ZZY 原生文件示例😀");
+    data.set(state, "ids", [1, 9007199254740993]);
+    data.set(state, "version", 1);
+    (zno) encoded := data.stringify(state)?;
+    io.write_atomic("native-state.json", encoded)?;
+    (zno) content := io.read_text("native-state.json")?;
+    (zno) restored := data.parse(content)?;
+    (return) (^_^)(data.get(restored, "title"));
+}
+io.print(save());

@@ -1015,3 +1015,11 @@ N0/N1构建与N2-01—04静态出口已满足。未验证真实手动Ctrl+C、Sa
 保留的失败原件包括 `dist/native-n4-01-work/build-library.txt`（首轮探针 C++ 字符串夹具错误）和 `library-release-final.json`（并行构建尚未完成时使用旧二进制，126 项失败，不计最终结果）。修复夹具并等待最终构建后，`library-debug-final-2.json` 与 `library-release-final-2.json` 均为 126/126。核心 demo Release 输出固定为 `[4, 13, -2, 7]`、`[-2, 1, 7, 7]`、`[7, 2, 7, 1]`、`[7, 7, 1]`、`ZZY native`、`[a, , b, ]`、`bAnAnA`、`(^_^)(42)`。
 
 未验证或延期：N4-02—06、N5 test、N6 全量清单、真实人工 Ctrl+C、Sanitizer、其他平台、干净缺 CRT 主机和真实性能。N4-01 不等于完整 N4。下一项为 N4-02 文件与严格 JSON。本条证据目录为 `dist/native-n4-01-work`，待本地提交后不推送。
+
+## N4-02 完成记录（2026-11-18）
+
+本轮从 N4-01 接手，先以 MSVC Debug 重新配置并构建，新增文件/提交/JSON C++ 探针及 CLI 文件/JSON 黑盒。首轮失败原件保留在 `dist/native-n4-02-work`：初版 check 夹具使用了错误 Lazy 拼写；随后文件配额探针把 Result 对象错误地当作独立对象预算；Release 短 JSON 取消探针存在调度竞态；发布验收又发现 `native-library-tests.exe` 的真实 UCRT filesystem API-set 导入。分别修正为正式 `(zzz)` 语法、按实际 Result 槽/载荷与 bad_alloc 注入、线程握手取消，并以 dumpbin 审核且只给测试 EXE 加精确 API-set 白名单。
+
+最终命令与结果：`cmake --preset native-debug/native-release -S native_runtime`、两配置构建及 `ctest --test-dir build/native-<配置> -C <配置> --output-on-failure --no-tests=error` 均退出 0，CTest 各 `69/69`；`tools/test-library.ps1` 固定各 `126/126`、`-FileJson` 各 `58/58`；`tools/test-files.ps1` CLI 各 `33/33`；`test-core-existing.py` 各 `550/550`、`test-cli.py` 各 `72/72`；Python `unittest tests.test_p05_cli tests.test_p05_integration native_runtime.tests.test_inventory -q` 为 `391/391`；Release 安装 smoke 为 `9` 条通用命令加 `33/33` 文件/JSON；独立 `examples/file-json.zzy` 实际生成并解析 JSON 成功。`git diff --check` 通过。
+
+本轮实现未改变 Python 默认入口、requirement、P12/P13 或可选宿主；真实手动 Ctrl+C、Sanitizer、其他平台、缺 CRT 主机、SQLite/Web/Sketch/GUI、N5 test 和性能仍未验证。下一项为 N4-03 SQLite。

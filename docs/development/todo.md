@@ -266,10 +266,10 @@ MSVC Debug/Release 各 57/57 CTest、63 个运行 golden、72/72 CLI、549/549 �
 ## N4 原生宿主迁移
 
 - [x] N4-01 核心标准库：接入冻结的 `io`、`array`、`text`、`math`、`data`、`unit` 签名，验证参数、稳定排序、回调活动遍历、资源、取消清理及同进程恢复；两配置 CTest 各 64/64、固定库各 126/126、核心固定清单各 550/550。
-- [ ] N4-02 文件与严格 JSON：原子保存、UTF-8、大小限制、错误及关闭顺序。
+- [x] N4-02 文件与严格 JSON：原子保存、UTF-8、大小限制、错误及关闭顺序；Debug/Release 各 69/69 CTest，固定库各 126/126，新增文件/JSON CLI 各 33/33，核心固定清单各 550/550，Python 相关回归 391/391，安装 smoke 9+33/33。见 [N4-02 报告](../../native_runtime/tests/n4-02-report.md)。
 - [ ] N4-03 SQLite：参数绑定、事务、连接生命周期、并发及持久化。
 - [ ] N4-04 Web：原生协议、请求隔离、显式 shared 及有界超时。
 - [ ] N4-05 Sketch headless：几何、事件、历史、SVG、持久化和回放。
 - [ ] N4-06 GUI：原生线程、事件循环、关闭及发布依赖。
 
-见 [N4-01 报告](../../native_runtime/tests/n4-01-report.md)。N4 核心出口还需要 N4-02；可选宿主分别验收。
+见 [N4-01 报告](../../native_runtime/tests/n4-01-report.md) 与 [N4-02 报告](../../native_runtime/tests/n4-02-report.md)。N4 核心文件/JSON 子集出口已满足；可选宿主分别验收，下一项 N4-03 SQLite。

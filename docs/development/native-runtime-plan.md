@@ -184,3 +184,7 @@ Parser/Resolver 由 `native_runtime/include/zzy_native/{ast,parser,program,resol
 ## N2 正式构建与交付补跑（2026-11-18）
 
 上文N2实施记录中的CMake/CIM/Git权限限制是补跑前历史。用户恢复工具访问并要求补跑后，已对最新N2源码执行正式CMake/MSVC Debug、Release配置/构建，各44/44非空CTest、固定词法87/check850/CLI62/Program观察17、各58条过程验收及Release安装/源码外副本各9/9。没有沿用N1旧32项结果；失败修复、产物SHA与未验证范围见[N2报告](../../native_runtime/tests/n2-report.md)。N0-03/N1及N2静态出口已满足，下一项N3-01；本次不求值，不改P12/P13或默认入口。
+
+### N4-02 交接更新（2026-11-18）
+
+N4-02 已按依赖完成：四个文件和两个 JSON 接口已在 C++17 原生运行时接线，使用请求所有权、Windows 宽字符文件 API、同目录临时文件和 MoveFileExW 提交；JSON 使用请求内显式栈，不依赖第三方解析器或用户代码。MSVC Debug/Release CTest、固定清单、CLI 文件黑盒、安装副本和相关 Python 回归均有新证据，详见 `native_runtime/tests/n4-02-report.md`。N4-03 SQLite、N4-04 Web、N4-05 Sketch headless、N4-06 GUI 继续保持未完成。

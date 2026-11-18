@@ -85,3 +85,7 @@ N2-01—04现已实现，正式静态边界读取[Program契约](../../docs/deve
 ### N2 正式补跑状态（2026-11-18）
 
 以上N1“下一阶段N2”和N2正式门禁未验证说明保留为历史。当前最新N2正式CMake/MSVC Debug/Release各44/44 CTest、check850/850、58条过程及Release安装/源码外副本各9/9通过，见[N2报告](../../native_runtime/tests/n2-report.md)。check已实现；run/test仍E402。下一项N3-01，未获该阶段范围前不实现求值。手动Ctrl+C、Sanitizer及完整Python/Web/GUI未验证，不能外推。
+
+## N4-02 当前状态（2026-11-18）
+
+文件与严格 JSON 已完成并验收。原生支持 `io.read_text`、`io.write_text`、`io.write_atomic`、`io.replace_file`、`data.parse`、`data.stringify`；契约集中于 `docs/development/native-stdlib-contract.md`，能力矩阵和报告已更新。仅 N4-02 相关 C++、PowerShell、JSON、文档与证据进入本轮提交；N4-03 SQLite 仍未开始。

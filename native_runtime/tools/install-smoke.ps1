@@ -30,7 +30,7 @@ try {
             if($record.exit_code -ne 2 -or $record.stdout -ne '' -or ($record.stderr | ConvertFrom-Json).code -ne 'E402') {throw 'Unsupported capability smoke failed'}
         } else {
             if($record.exit_code -ne 0 -or $record.stderr -ne '') {throw 'Smoke command failed'}
-            if($command -eq 'info' -and ($record.stdout | ConvertFrom-Json).stage -ne 'N4-01') {throw 'Wrong installed stage'}
+            if($command -eq 'info' -and ($record.stdout | ConvertFrom-Json).stage -ne 'N4-02') {throw 'Wrong installed stage'}
             if($command -eq 'run' -and $record.stdout -cne "18446744073709551617`n") {throw 'Installed arbitrary integer run mismatch'}
             if($command -eq 'check' -and $record.stdout -ne '') {throw 'check unexpectedly printed'}
             if($command -eq 'source-info') {
@@ -43,7 +43,7 @@ try {
             }
         }
     }
-    foreach($command in @('check','run','test')) {
+    foreach($command in @('check','test','run')) {
         $start=[Diagnostics.ProcessStartInfo]::new();$start.FileName=$exe
         $start.Arguments=$command+' no-execute.zzy --diagnostic-format json'
         $start.WorkingDirectory=$folder;$start.UseShellExecute=$false;$start.CreateNoWindow=$true
@@ -57,15 +57,19 @@ try {
         $records.Add($record);$process.Dispose()
         if($command -eq 'check') {
             if($record.exit_code -ne 0 -or $record.stdout -ne '' -or $record.stderr -ne '') {throw 'check did not prepare the fixed side-effect fixture'}
+        } elseif($command -eq 'test') {
+            if($record.exit_code -ne 2 -or $record.stdout -ne '' -or ($record.stderr | ConvertFrom-Json).code -ne 'E402') {throw 'Unsupported test capability did not reject the fixed side-effect fixture'}
         } else {
-            $expected=if($command -eq 'run') {1} else {2}
-            if($record.exit_code -ne $expected -or $record.stdout -ne '' -or ($record.stderr | ConvertFrom-Json).code -ne 'E402') {throw 'Unsupported capability did not reject the fixed side-effect fixture'}
+            if($record.exit_code -ne 0 -or $record.stdout -ne '' -or $record.stderr -ne '' -or [IO.File]::ReadAllText((Join-Path $folder 'native-side-effect.txt')) -cne 'MUST NOT EXECUTE') {throw 'Implemented file write did not execute through run'}
         }
-        if(Test-Path -LiteralPath (Join-Path $folder 'native-side-effect.txt')) {throw 'check/run/test executed user code'}
+        if($command -ne 'run' -and (Test-Path -LiteralPath (Join-Path $folder 'native-side-effect.txt'))) {throw 'check/test executed user code'}
     }
+    & (Join-Path $PSScriptRoot 'test-files.ps1') -Executable $exe -Output (Join-Path $folder 'files.json')
+    $fileJson=Get-Content -LiteralPath (Join-Path $folder 'files.json') -Raw | ConvertFrom-Json
+    if(-not $fileJson.passed) {throw 'Installed file/JSON integration failed'}
     $passed=$true
 } finally {
-    $report=[ordered]@{schema_version=1;passed=$passed;scope='source-external executable smoke; installation provenance is provided by caller';executable=$exe;exe_sha256=(Get-FileHash -LiteralPath $exe).Hash.ToLowerInvariant();cwd=$folder;path_empty=$true;pythonpath='unusable-smoke';side_effect_absent=(-not (Test-Path -LiteralPath (Join-Path $folder 'native-side-effect.txt')));records=@($records.ToArray())}
+    $report=[ordered]@{schema_version=1;passed=$passed;scope='source-external executable smoke; installation provenance is provided by caller';executable=$exe;exe_sha256=(Get-FileHash -LiteralPath $exe).Hash.ToLowerInvariant();cwd=$folder;path_empty=$true;pythonpath='unusable-smoke';check_test_no_side_effects=$passed;run_file_write_correct=$passed;file_json=$fileJson;records=@($records.ToArray())}
     [IO.File]::WriteAllText($out,($report | ConvertTo-Json -Depth 20),[Text.UTF8Encoding]::new($false))
 }
 if(-not $passed) {throw 'Source-external smoke failed; report preserves the observed records.'}

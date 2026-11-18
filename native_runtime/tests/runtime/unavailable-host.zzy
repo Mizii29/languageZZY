@@ -1,1 +1,1 @@
-io.print(data.parse("{}"));
+io.print(db.query("SELECT 1",[]));

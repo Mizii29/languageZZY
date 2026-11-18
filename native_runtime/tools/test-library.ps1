@@ -1,17 +1,24 @@
-param([Parameter(Mandatory=$true)][string]$Executable,[string]$Output)
+param([Parameter(Mandatory=$true)][string]$Executable,[string]$Output,[switch]$FileJson)
 $ErrorActionPreference='Stop'
 $exe=(Resolve-Path -LiteralPath $Executable).Path
 $root=Split-Path -Parent (Split-Path -Parent $PSScriptRoot)
 $selection=Get-Content -LiteralPath (Join-Path $root 'native_runtime/tests/library/selection.json') -Raw | ConvertFrom-Json
 $manifest=Get-Content -LiteralPath (Join-Path $root 'tests/p05/cases.json') -Raw | ConvertFrom-Json
 if($selection.count -ne 126 -or @($selection.ids).Count -ne 126 -or @($selection.ids | Select-Object -Unique).Count -ne 126){throw 'Invalid fixed library selection'}
+$ids=@($selection.ids)
+$expectedCount=126
+if($FileJson) {
+    $ids=@($manifest.cases | Where-Object {$_.mode -eq 'run' -and $_.id -notin $selection.ids} | ForEach-Object {$_.id})
+    $expectedCount=58
+    if($ids.Count -ne $expectedCount -or @($ids | Select-Object -Unique).Count -ne $expectedCount) {throw 'Invalid fixed file/JSON selection'}
+}
 if($Output -and (Test-Path -LiteralPath $Output)){throw 'Evidence already exists'}
 $records=[Collections.Generic.List[object]]::new()
 $temporary=Join-Path ([IO.Path]::GetTempPath()) ('ZZY N4 library '+[guid]::NewGuid().ToString('N'))
 New-Item -ItemType Directory -Path $temporary | Out-Null
 $passed=$false
 try {
-    foreach($id in $selection.ids) {
+    foreach($id in $ids) {
         $cases=@($manifest.cases | Where-Object {$_.id -eq $id -and $_.mode -eq 'run'})
         if($cases.Count -ne 1){throw ('Missing or duplicate library case: '+$id)}
         $case=$cases[0]
@@ -50,7 +57,7 @@ try {
     if([IO.Path]::GetFullPath($temporary).StartsWith([IO.Path]::GetTempPath(),[StringComparison]::OrdinalIgnoreCase)){Remove-Item -LiteralPath $temporary -Force -Recurse}
     if($Output) {
         $parent=Split-Path -Parent $Output;if($parent){New-Item -ItemType Directory -Path $parent -Force | Out-Null}
-        [IO.File]::WriteAllText([IO.Path]::GetFullPath($Output),(@{schema_version=1;passed=$passed;exe=$exe;exe_sha256=(Get-FileHash -LiteralPath $exe).Hash.ToLowerInvariant();expected=126;records=@($records)} | ConvertTo-Json -Depth 18),[Text.UTF8Encoding]::new($false))
+        [IO.File]::WriteAllText([IO.Path]::GetFullPath($Output),(@{schema_version=1;passed=$passed;exe=$exe;exe_sha256=(Get-FileHash -LiteralPath $exe).Hash.ToLowerInvariant();expected=$expectedCount;records=@($records)} | ConvertTo-Json -Depth 18),[Text.UTF8Encoding]::new($false))
     }
 }
-"Library fixed: $($records.Count)/126"
+"Library fixed: $($records.Count)/$expectedCount"

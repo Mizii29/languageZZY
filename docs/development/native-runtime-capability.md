@@ -1,6 +1,6 @@
 # 原生能力矩阵与延期协议（N0-02）
 
-2026-11-18，原生版本 0.0.0-n4-01-dev。Python 仍是默认入口。原生 check 仅做静态准备；run 已执行核心语言及 N4-01 核心标准库。
+2026-11-18，原生版本 0.0.0-n4-02-dev。Python 仍是默认入口。原生 check 仅做静态准备；run 已执行核心语言及 N4-01/02 核心标准库。
 逐项清单见 [capabilities.json](../../native_runtime/tests/capabilities.json)：每个 AST kind、实际 Value kind、宿主函数都有独立条目。
 `implemented=false` 表示当前原生后端未实现。[N3报告](../../native_runtime/tests/n3-report.md)保存核心运行验收范围；[N2报告](../../native_runtime/tests/n2-report.md)保存静态 Program 验收历史。
 
@@ -12,13 +12,13 @@
 | 具名/匿名函数、Cell/闭包、Lazy、Result、管道 | 核心 | N3 | 可执行；显式调用帧、捕获和请求内回收 |
 | Query/Machine/Quantity/模块 | 核心 | N3 | 可执行；查询分阶段，Quantity 用精确分数，模块按请求初始化 |
 | spec/test | 核心 | N5 | 可静态分析；run 跳过 spec 块，测试命令 E402/2 |
-| core/io/array/text/math/data/unit 全部登记函数 | 核心 | N4 核心 | N4-01 已接入 29 个冻结宿主签名；资源、取消、回调和错误清理见 [标准库契约](native-stdlib-contract.md) 与 N4-01 报告 |
-| 文件读写与原子提交、严格 JSON | 核心 | N4-02 | 延期；run 对 `io.read_text`、`io.write_atomic`、`data.parse`、`data.stringify` 保持 E402 |
+| core/io/array/text/math/data/unit 全部登记函数 | 核心 | N4 核心 | N4-01/02 已接入 35 个冻结宿主签名；资源、取消、回调和错误清理见 [标准库契约](native-stdlib-contract.md) |
+| 文件读写与原子提交、严格 JSON | 核心 | N4-02 | 已接入四个文件和两个 JSON 接口；编码、原子提交、严格值标签和同进程恢复见 [N4-02 报告](../../native_runtime/tests/n4-02-report.md) |
 | db.transaction/db.query | 可选宿主，完整迁移必需 | N4 SQLite | 延期；保留参数绑定/事务/每请求连接，不影响 Python 示例 |
 | Web/Python 嵌入/shape 合约 | 可选宿主，完整迁移必需 | N4 Web | 延期；不声称 Python embedding API 已原生化；ASGI 替代协议需该阶段决策 |
 | 所有 sketch 类型/函数、几何/SVG/历史/事件/GUI | 可选宿主，完整迁移必需 | N4 Sketch | 延期；headless 不加载 GUI；PNG 原本未支持，不算迁移退化 |
 | 资源/取消/JSON 诊断/0/1/2/130 | 核心 | N0 原型；N1—N5 正式接入 | 前端和核心运行配额、协作取消与恢复已验证；进程准备缓存未建立，真实终端 Ctrl+C 未验收 |
-| run/check/test 安装及无 Python 验收 | 核心 | N5—N8 | N4-01 核心入口与 126 项库清单在 MSVC Debug/Release 及安装副本验证；不外推到全库或 test |
+| run/check/test 安装及无 Python 验收 | 核心 | N5—N8 | N4-01/02 核心入口、184 项库清单和文件/JSON 专项在 MSVC Debug/Release 及安装副本验证；不外推到可选宿主或 test |
 | VM/AOT/JIT/热更新/磁盘 Program 缓存 | 本项目延期/非目标 | N7 仅评估 | 不新增 build 命令、不透明选择后端；已有独立 AOT 实验不算本路线实现 |
 
 ## 未支持行为

@@ -215,3 +215,11 @@ N2 的固定答案继续来自现有 `tests/*/cases.json`，`native_runtime/test
 原始直接构建与权限失败不覆盖。最新CMake/MSVC Debug、Release各44/44：旧32项+Program固定清单1+原生Program10+空选择失败门禁1。各固定词法87/87、check850/850、CLI62/62、独立Program观察17/17，58条过程（57正常+1预期强杀超时独列）。Release正式安装和仓库外中文空格目录副本各9/9；各6个EXE的PE导入、CLI实际模块/进程树无Python，空PATH/无效PYTHONPATH，无用户副作用。
 
 补跑修复测试协调器相对路径按用例cwd解析；Debug完整4Mi码点边界实测72.218秒，仅等待上限60→180秒，不改配额、输入和断言。Python相关回归108/108、无跳过、42.061秒。源码/EXE/加载CRT审计见[报告](../../native_runtime/tests/n2-report.md)及benchmarks/results/native/n2-msvc-20261118/audit.json。未运行全Python/Web/GUI/wheel/性能、手动Ctrl+C或Sanitizer；原生云CI仍归N5-05。
+
+## N4-02 原生文件与严格 JSON（2026-11-18）
+
+`native_runtime/tests/native/library.cpp` 的三个独立探针覆盖真实 Win32 文件句柄、UTF-8/BOM/CRLF、原子提交失败/取消/同目录并发、幂等关闭、资源预留和同进程下一请求；严格 JSON 覆盖 Int/Float/带符号下溢/次正规数、重复键、代理对、深度、循环/共享、显式栈和读写取消。固定库清单保持独立答案，新增 `tools/test-files.ps1` 从真实 CLI 检查相对工作目录、中文路径、坏文件、错误参数、check 无副作用、L-1/L/L+1 配额和恢复；收集为 33 条且拒绝空集合。
+
+MSVC Debug/Release CTest 各收集 69 项且 69/69 通过；固定库各 126/126，核心既有清单各 550/550，CLI 各 72/72，相关 Python 回归 391/391。Release 安装及仓库外中文/空格发布副本的 smoke 各执行 9 条通用命令和 33/33 文件/JSON 例；PE 导入、实际模块/进程树、空 PATH 和无效 PYTHONPATH 证据未见 Python。文件探针测试 EXE 额外使用经 dumpbin 审核的 `api-ms-win-crt-filesystem-l1-1-0.dll`，CLI 发布程序仍使用原白名单。
+
+文件与 JSON 的负面固定答案由独立 `.zzy` 程序和外部期望给出；check 不执行 I/O、默认值或 Lazy。尚未验证真实手动 Ctrl+C、Sanitizer、其他平台、缺 CRT 主机、SQLite/Web/Sketch/GUI 和真实性能。

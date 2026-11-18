@@ -46,6 +46,12 @@ public:
     FileHandle(const FileHandle&)=delete;
     FileHandle& operator=(const FileHandle&)=delete;
     ~FileHandle() {if(value_!=INVALID_HANDLE_VALUE) CloseHandle(value_);}
+    bool close() noexcept {
+        if(value_==INVALID_HANDLE_VALUE) return true;
+        if(!CloseHandle(value_)) return false;
+        value_=INVALID_HANDLE_VALUE;
+        return true;
+    }
     HANDLE get() const {return value_;}
     explicit operator bool() const {return value_!=INVALID_HANDLE_VALUE;}
 };

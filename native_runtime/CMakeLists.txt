@@ -48,7 +48,7 @@ if(BUILD_TESTING)
   endforeach()
   add_executable(native-library-tests tests/native/library.cpp)
   target_link_libraries(native-library-tests PRIVATE zzy_native_options)
-  foreach(case callbacks identity budgets cancellation text)
+  foreach(case callbacks identity budgets cancellation text files file-commit json)
     add_test(NAME library-${case} COMMAND native-library-tests "${case}")
     set_tests_properties(library-${case} PROPERTIES TIMEOUT 30)
   endforeach()
@@ -58,6 +58,12 @@ if(BUILD_TESTING)
   add_test(NAME library-fixed COMMAND "${NATIVE_POWERSHELL}" -NoProfile -File
     "${CMAKE_CURRENT_SOURCE_DIR}/tools/test-library.ps1" -Executable $<TARGET_FILE:zzy-native>)
   set_tests_properties(library-fixed PROPERTIES TIMEOUT 900)
+  add_test(NAME file-json-fixed COMMAND "${NATIVE_POWERSHELL}" -NoProfile -File
+    "${CMAKE_CURRENT_SOURCE_DIR}/tools/test-library.ps1" -Executable $<TARGET_FILE:zzy-native> -FileJson)
+  set_tests_properties(file-json-fixed PROPERTIES TIMEOUT 900)
+  add_test(NAME file-json-integration COMMAND "${NATIVE_POWERSHELL}" -NoProfile -File
+    "${CMAKE_CURRENT_SOURCE_DIR}/tools/test-files.ps1" -Executable $<TARGET_FILE:zzy-native>)
+  set_tests_properties(file-json-integration PROPERTIES TIMEOUT 180)
   add_test(NAME runtime-fixed COMMAND "${NATIVE_POWERSHELL}" -NoProfile -File
     "${CMAKE_CURRENT_SOURCE_DIR}/tools/test-runtime.ps1" -Executable $<TARGET_FILE:zzy-native>)
   set_tests_properties(runtime-fixed PROPERTIES TIMEOUT 900)

@@ -1,6 +1,8 @@
 #include "zzy_native/execution.hpp"
 #include "zzy_native/prepare.hpp"
 #include <chrono>
+#include <filesystem>
+#include <fstream>
 #include <iostream>
 #include <sstream>
 #include <thread>
@@ -113,11 +115,199 @@ struct ExecutionProbe {
             c.heap.collect();require(c.heap.state->used==before,"text temporary space leaked");c.cleanup();released(c);
         }
     }
+    struct Folder {
+        std::filesystem::path path=std::filesystem::temp_directory_path()/
+            (L"ZZY N4 \u6587\u4ef6 "+std::to_wstring(GetCurrentProcessId())+L"-"+std::to_wstring(GetTickCount64()));
+        Folder() {require(std::filesystem::create_directory(path),"cannot create probe folder");}
+        ~Folder() {std::error_code ignored;std::filesystem::remove_all(path,ignored);}
+        std::filesystem::path file(const wchar_t* name) const {return path/name;}
+        std::size_t temporary_files() const {
+            std::size_t count=0;
+            for(const auto& entry:std::filesystem::directory_iterator(path))
+                if(entry.path().filename().wstring().compare(0,5,L".zzy-")==0) ++count;
+            return count;
+        }
+    };
+    static std::string bytes(const std::filesystem::path& path) {
+        std::ifstream stream(path,std::ios::binary);require(bool(stream),"cannot read probe file");
+        return {std::istreambuf_iterator<char>(stream),std::istreambuf_iterator<char>()};
+    }
+    static void seed(const std::filesystem::path& path,std::string_view raw) {
+        std::ofstream stream(path,std::ios::binary);stream.write(raw.data(),static_cast<std::streamsize>(raw.size()));
+        stream.close();require(bool(stream),"cannot seed probe file");
+    }
+    static void files() {
+        Folder folder;ResourcePolicy p;std::atomic<bool> cancel{false};std::ostringstream out,err;
+        const auto program=parse("io.read_text(\"a\");",p,cancel);
+        ExecutionContext c(program,p,cancel,out,err);c.initialize();const auto site=c.program.root;
+        const auto target=folder.file(L"\u6587\u4ef6 \U0001f600.txt"),source=folder.file(L"source.txt");
+        const auto path=c.string(narrow(target.wstring()),site),source_path=c.string(narrow(source.wstring()),site);
+        auto read=[&] {return c.file_library("io.read_text",{path},site);};
+        auto get=[&](const Value& value) {require(c.object(value).flag,"unexpected failure Result");return c.heap.pin(c.object(value).edges[0]);};
+        require(!c.object(read()).flag,"missing path accepted");
+        seed(target,"\xc0\xaf");require(!c.object(read()).flag,"invalid encoding accepted");
+        const std::u32string points=U"\ufeff\u4e2d\U0001f600\r\n\t";
+        const auto payload=c.string(points,site);
+        require(get(c.file_library("io.write_text",{path,payload},site)).same(c.null_),"write_text did not return Null");
+        require(bytes(target)=="\xef\xbb\xbf\xe4\xb8\xad\xf0\x9f\x98\x80\r\n\t","UTF-8 bytes, BOM or line ending");
+        require(c.object(get(read())).characters==points,"file roundtrip changed text");
+        std::string split(65535,'a');split+="\xf0\x9f\x98\x80";
+        seed(target,split);
+        require(c.object(get(read())).characters.back()==U'\U0001f600',"UTF-8 across the read chunk boundary");
+        seed(source,"new");
+        require(get(c.file_library("io.replace_file",{source_path,path},site)).same(c.null_),"replace_file did not return Null");
+        require(bytes(target)=="new" && !std::filesystem::exists(source),"replacement did not move the source");
+        const auto atom=c.string(U"\u4e2d",site);
+        for(std::uint64_t cap:{2,3,4}) {
+            c.heap.state->policy.limits["io_payload_bytes"]=cap;
+            seed(target,"old");
+            try {
+                (void)get(c.file_library("io.write_atomic",{path,atom},site));
+                require(cap>=3 && bytes(target)=="\xe4\xb8\xad","atomic byte boundary");
+            } catch(const RuntimeError& e) {require(cap==2 && e.code=="E211" && bytes(target)=="old","wrong write boundary");}
+            seed(target,"\xe4\xb8\xad");
+            try {require(c.object(get(read())).characters==U"\u4e2d" && cap>=3,"read byte boundary");}
+            catch(const RuntimeError& e) {require(cap==2 && e.code=="E211","wrong read boundary");}
+            require(!folder.temporary_files(),"temporary file leaked");
+        }
+        c.heap.state->policy.limits["io_payload_bytes"]=p.limits.at("io_payload_bytes");
+        for(const auto key:{"runtime_slots","runtime_payload_bytes"}) {
+            c.heap.collect();const auto before=c.heap.state->used;
+            c.heap.state->policy.limits[key]=std::string(key)=="runtime_slots"?before.slots:before.payload;
+            seed(target,"old");
+            bool failed=false;
+            try {(void)c.file_library("io.write_atomic",{path,atom},site);}
+            catch(const RuntimeError& e) {failed=e.code=="E211";}
+            if(!failed || bytes(target)!="old" || folder.temporary_files())
+                throw std::runtime_error(std::string("allocation failure crossed file commit: ")+key+" failed="+std::to_string(failed));
+            c.heap.state->policy.limits[key]=ResourcePolicy{}.limits.at(key);
+            c.heap.collect();require(c.heap.state->used==before,"file allocation failure leaked quota");
+        }
+        seed(target,"old");c.heap.state->fail_allocation=true;
+        bool allocation_failed=false;
+        try {(void)c.file_library("io.write_atomic",{path,atom},site);}
+        catch(const std::bad_alloc&) {allocation_failed=true;}
+        require(allocation_failed && bytes(target)=="old" && !folder.temporary_files(),"bad_alloc crossed file commit");
+        c.cleanup();released(c);
+    }
+    static void file_commit() {
+        using file_detail::Step;
+        struct BrokenWriter {
+            int failure;unsigned writes=0;
+            bool write(HANDLE file,const char* data,DWORD count,DWORD& written) {
+                if(failure==0 && writes++==1) {SetLastError(ERROR_WRITE_FAULT);return false;}
+                return file_detail::SystemWriter{}.write(file,data,count,written);
+            }
+            bool close(FileHandle& file) {
+                if(failure==1) {SetLastError(ERROR_INVALID_HANDLE);return false;}
+                return file_detail::SystemWriter{}.close(file);
+            }
+        };
+        Folder folder;const auto target=folder.file(L"state.json");
+        const auto path=extended_path(target.wstring());
+        seed(target,"old");
+        const std::string data(65537,'x');
+        for(int phase=0;phase<2;++phase) {
+            try {file_detail::write(path,data,true,[](Step){},BrokenWriter{phase});throw std::logic_error("missing injected failure");}
+            catch(const file_detail::Failure& error) {
+                require(std::string(error.what()).find(phase==0?"cannot write":"cannot close")!=std::string::npos,"wrong injected fault");
+            }
+            require(bytes(target)=="old" && !folder.temporary_files(),"fault corrupted data or leaked temp");
+        }
+        {
+            FileHandle lock(CreateFileW(path.c_str(),GENERIC_READ,FILE_SHARE_READ,nullptr,OPEN_EXISTING,FILE_ATTRIBUTE_NORMAL,nullptr));
+            require(bool(lock),"cannot acquire real Windows sharing lock");
+            try {file_detail::write(path,data,true,[](Step){});throw std::logic_error("locked replacement succeeded");}
+            catch(const file_detail::Failure& error) {require(std::string(error.what()).find("cannot replace")!=std::string::npos,"did not reach Windows replacement");}
+            require(bytes(target)=="old" && !folder.temporary_files(),"locked replacement leaked or corrupted");
+            require(lock.close() && lock.close(),"repeated close did not succeed");
+        }
+        ResourcePolicy p;std::atomic<bool> cancel{false};std::ostringstream out,err;
+        const auto program=parse("io.read_text(\"a\");",p,cancel);
+        for(const auto boundary:{Step::write,Step::close,Step::commit}) {
+            ExecutionContext c(program,p,cancel,out,err);c.initialize();
+            try {
+                file_detail::write(path,data,true,[&](Step step){if(step==boundary){cancel=true;c.point();}});
+                throw std::logic_error("cancellation was not propagated");
+            } catch(const Cancelled&) {require(bytes(target)=="old" && !folder.temporary_files(),"cancel leaked or committed");}
+            c.cleanup();released(c);cancel=false;
+        }
+        // Interleave two genuine writers before either commits. The inner
+        // writer commits first while the outer temp is still exclusively open.
+        file_detail::write(path,"outer",true,[&](Step step){
+            if(step==Step::close) {
+                require(folder.temporary_files()==1 && bytes(target)=="old","first write published too early");
+                file_detail::write(path,"inner",true,[&](Step second){
+                    if(second==Step::close) require(folder.temporary_files()==2,"temporary names collided");
+                });
+                require(bytes(target)=="inner" && folder.temporary_files()==1,"first commit was not visible");
+            }
+        });
+        require(bytes(target)=="outer" && !folder.temporary_files(),"last successful replacement did not win");
+        ExecutionContext next(program,p,cancel,out,err);next.initialize();
+        const auto result=next.file_library("io.write_atomic",{next.string(narrow(target.wstring()),next.program.root),
+            next.string("next",next.program.root)},next.program.root);
+        require(next.object(result).flag && bytes(target)=="next","next request did not recover");
+        next.cleanup();released(next);
+    }
+    static void json() {
+        ResourcePolicy p;std::atomic<bool> cancel{false};std::ostringstream out,err;
+        const auto program=parse(R"(io.print(data.stringify([1,1.0,(true),(null)]));)",p,cancel);
+        ExecutionContext c(program,p,cancel,out,err);c.initialize();
+        const auto site=c.program.root;
+        auto decode=[&](const std::string& text){return c.json_library("data.parse",c.string(text,site),site);};
+        auto get=[&](const Value& result){require(c.object(result).flag,"unexpected JSON failure");return c.heap.pin(c.object(result).edges[0]);};
+        const auto items=get(decode("[0,-0,1.0,-1e-9999,5e-324,9007199254740993,true,null]"));
+        const auto& a=c.object(items);
+        require(c.heap.state->get(a.edges[1]).kind=="Int" && c.heap.state->get(a.edges[2]).kind=="Float","numeric tag changed");
+        require(std::signbit(c.heap.state->get(a.edges[3]).real) && c.heap.state->get(a.edges[3]).real==0.0,"signed underflow lost");
+        require(c.heap.state->get(a.edges[4]).real==std::numeric_limits<double>::denorm_min(),"subnormal rounded incorrectly");
+        const auto encoded=c.json_library("data.stringify",items,site);
+        require(c.object(get(encoded)).characters==U"[0,0,1.0,-0.0,5e-324,9007199254740993,true,null]","strict numeric layout");
+        require(!c.object(decode(R"({"x":"\u0000","x":null})")).flag,"duplicate key accepted");
+        require(!c.object(decode("[-]")).flag && !c.object(decode("[0,]")).flag,"invalid JSON accepted");
+        const auto input=c.string("[[0]]",site);
+        for(std::uint64_t cap:{1,2,3}) {
+            c.heap.state->policy.limits["value_depth"]=cap;
+            c.heap.collect();const auto before=c.heap.state->used;
+            try {require(c.object(c.json_library("data.parse",input,site)).flag && cap>=2,"JSON parse depth");}
+            catch(const RuntimeError& e) {require(cap==1 && e.code=="E211","wrong depth diagnostic");}
+            c.heap.collect();require(c.heap.state->used==before,"JSON partial data or buffer leaked");
+        }
+        const auto long_input=c.string(std::u32string(3000000,U' ')+U"0",site);
+        c.heap.collect();const auto before=c.heap.state->used;
+        std::atomic<bool> started{false},ready{false};
+        std::thread stop([&]{ready=true;while(!started) std::this_thread::yield();cancel=true;});
+        while(!ready) std::this_thread::yield();
+        bool cancelled=false;
+        // Repeat if an optimized call finishes before the other thread gets
+        // scheduled. Cancellation must come from that real thread, not a timer
+        // assumption about how long a single operation takes.
+        try {started=true;for(;;) (void)c.json_library("data.parse",long_input,site);}
+        catch(const Cancelled&) {cancelled=true;}
+        catch(...) {stop.join();throw;}
+        stop.join();cancel=false;c.heap.collect();
+        require(cancelled && c.heap.state->used==before,"JSON cancellation leaked");
+        const auto long_text=c.string(std::u32string(3000000,U'x'),site);
+        c.heap.collect();const auto encoding_before=c.heap.state->used;
+        started=false;ready=false;cancelled=false;
+        std::thread stop_encoding([&]{ready=true;while(!started) std::this_thread::yield();cancel=true;});
+        while(!ready) std::this_thread::yield();
+        try {started=true;for(;;) (void)c.json_library("data.stringify",long_text,site);}
+        catch(const Cancelled&) {cancelled=true;}
+        catch(...) {stop_encoding.join();throw;}
+        stop_encoding.join();cancel=false;c.heap.collect();
+        require(cancelled && c.heap.state->used==encoding_before,"JSON encoding cancellation leaked");
+        c.cleanup();released(c);
+        ExecutionContext next(program,p,cancel,out,err);next.execute();released(next);
+        require(out.str()=="(^_^)([1,1.0,true,null])\n" && err.str().empty(),"JSON next request did not recover");
+    }
 };
 }
 int main(int argc,char** argv) {
     const std::map<std::string,void(*)()> cases={{"callbacks",zzy::ExecutionProbe::callbacks},{"identity",zzy::ExecutionProbe::identity},
-        {"budgets",zzy::ExecutionProbe::budgets},{"cancellation",zzy::ExecutionProbe::cancellation},{"text",zzy::ExecutionProbe::text_boundaries}};
+        {"budgets",zzy::ExecutionProbe::budgets},{"cancellation",zzy::ExecutionProbe::cancellation},{"text",zzy::ExecutionProbe::text_boundaries},
+        {"files",zzy::ExecutionProbe::files},{"file-commit",zzy::ExecutionProbe::file_commit},{"json",zzy::ExecutionProbe::json}};
     try {if(argc!=2 || !cases.count(argv[1])) throw std::runtime_error("nonempty named selection required");cases.at(argv[1])();std::cout<<argv[1]<<": PASS\n";return 0;}
     catch(const std::exception& e) {std::cerr<<e.what()<<'\n';return 1;}
 }

@@ -104,6 +104,7 @@ public:
     Lease& operator=(Lease&& x) noexcept {if(this!=&x) {release();heap_=std::move(x.heap_);charge_=x.charge_;x.charge_={};}return *this;}
     ~Lease() {release();}
     explicit operator bool() const {return bool(heap_);}
+    void grow(Charge charge,NodeId site) {heap_->reserve(charge,site);charge_=charge_+charge;}
     void release() {if(heap_ && !heap_->closed) heap_->refund(charge_);heap_.reset();charge_={};}
     Charge transfer() {auto x=charge_;heap_.reset();charge_={};return x;}
 };

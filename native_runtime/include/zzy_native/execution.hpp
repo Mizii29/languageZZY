@@ -404,6 +404,12 @@ private:
     void call(Value fn,std::vector<Value> args,NodeId site,Done done,std::vector<NodeId> argument_sites={});
     void array_library(const std::string& name,const std::vector<Value>& args,NodeId site,Done done);
     Value text_library(const std::string& name,const std::vector<Value>& args,NodeId site);
+    Value file_library(const std::string& name,const std::vector<Value>& args,NodeId site);
+    Value json_library(const std::string& name,const Value& value,NodeId site);
+    struct JsonReader;
+    struct JsonWriter;
+    void map_insert(const Value& map,std::string key,const Value& key_value,const Value& value,NodeId site);
+    std::size_t utf8_size(std::u32string_view text) const;
     void construct(NodeId id,Value base,Done done);
     void query(NodeId id,Value source,Done done);
     void wake(Value value,NodeId site,Done done);
@@ -708,6 +714,10 @@ inline void ExecutionContext::call(Value fn,std::vector<Value> args,NodeId site,
         done(text_library(name,args,site));return;
     }
     if(name=="io.input") {typecheck("String",args[0],ast(site).children[1]);done(input_line(args[0],site));return;}
+    if(name=="data.parse" || name=="data.stringify") {done(json_library(name,args[0],site));return;}
+    if(name=="io.read_text" || name=="io.write_text" || name=="io.write_atomic" || name=="io.replace_file") {
+        done(file_library(name,args,site));return;
+    }
     if(name=="wake") {typecheck("Lazy",args[0],ast(site).children[1]);wake(args[0],site,done);return;}
     if(name=="unit.make" || name=="unit.format") {
         typecheck("String",args[1],ast(site).children[2]);const auto unit=encode_utf8(object(args[1]).characters);
@@ -730,14 +740,17 @@ inline void ExecutionContext::call(Value fn,std::vector<Value> args,NodeId site,
     if(name=="data.set" || name=="data.get" || name=="data.has" || name=="data.keys") {
         typecheck("Map",args[0],ast(site).children[1]);auto& n=object(args[0]);
         if(name=="data.keys") {auto keys=array({},site);for(std::size_t i=0;i<n.names.size();++i) {point();append(keys,heap.pin(n.edges[2*i]),site);}done(keys);return;}
-        typecheck("String",args[1],ast(site).children[2]);const auto key=encode_utf8(object(args[1]).characters);const auto it=std::find(n.names.begin(),n.names.end(),key);const auto index=static_cast<std::size_t>(it-n.names.begin());
+        typecheck("String",args[1],ast(site).children[2]);
+        Lease encoded_key(heap.state,{0,0,utf8_size(object(args[1]).characters)},site);
+        auto key=encode_utf8(object(args[1]).characters);const auto it=std::find(n.names.begin(),n.names.end(),key);const auto index=static_cast<std::size_t>(it-n.names.begin());
         if(name=="data.has") done(boolean(it!=n.names.end()));
         else if(name=="data.get") {if(it==n.names.end()) error(site,"E204","missing Map key");done(heap.pin(n.edges[2*index+1]));}
-        else {if(it!=n.names.end()) n.edges[2*index+1]=args[2].ref();else {
-            check("container_items",n.names.size()+1,site);Lease space(heap.state,{0,2,0},site);
-            // Reserve all host vector capacity before changing either vector.
-            n.names.reserve(n.names.size()+1);n.edges.reserve(n.edges.size()+2);n.names.push_back(key);n.edges.push_back(args[1].ref());n.edges.push_back(args[2].ref());n.charge.slots+=space.transfer().slots;
-        }done(null_);}return;
+        else {
+            if(it!=n.names.end()) {n.edges[2*index+1]=args[2].ref();++n.version;}
+            else {encoded_key.release();map_insert(args[0],std::move(key),args[1],args[2],site);}
+            done(null_);
+        }
+        return;
     }
     if(name=="math.abs") {auto& n=object(args[0]);if(n.kind=="Int") {Lease copy(heap.state,{0,0,int_bytes(n.integer)},site);auto value=n.integer.abs();copy.release();done(integer(std::move(value),site));}else if(n.kind=="Float") done(real(std::abs(n.real),site));else error(ast(site).children[1],"E201","abs requires Int/Float");return;}
     if(name=="io.print") {
@@ -872,3 +885,5 @@ inline void ExecutionContext::query(NodeId id,Value source,Done done) {
 }
 }
 #include "core_library.hpp"
+#include "file_library.hpp"
+#include "json_library.hpp"
