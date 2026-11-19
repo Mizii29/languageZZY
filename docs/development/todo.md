@@ -273,3 +273,7 @@ MSVC Debug/Release 各 57/57 CTest、63 个运行 golden、72/72 CLI、549/549 �
 - [ ] N4-06 GUI：原生线程、事件循环、关闭及发布依赖。
 
 见 [N4-01 报告](../../native_runtime/tests/n4-01-report.md)、[N4-02 报告](../../native_runtime/tests/n4-02-report.md)、[N4-03 报告](../../native_runtime/tests/n4-03-report.md)与 [N4-04 报告](../../native_runtime/tests/n4-04-report.md)。N4-01—04 已验收；下一项 N4-05 Sketch headless，GUI 后续单独验收。
+
+### N4-05 首批交接（2026-11-19）
+
+几何、图层、分组撤销/重做和 SVG 子集已实现并通过 MSVC 两配置各 78/78 CTest、画笔固定各 71/71、后补线程探针的库回归各 11/11、Python 相关 17/17、Release 安装/源码外副本及实际模块检查。见 [首批报告](../../native_runtime/tests/n4-05-geometry-report.md)。N4-05 保持未勾选；下一批项目 v1 双向读写、对象/图案编辑、回放和事件。N4-06 GUI、完整配额边界与人工验收仍待执行，Python 默认入口及 P12/P13 不变。

@@ -110,6 +110,8 @@ public:
     ~Lease() {release();}
     explicit operator bool() const {return bool(heap_);}
     void grow(Charge charge,NodeId site) {heap_->reserve(charge,site);charge_=charge_+charge;}
+    // Both leases refer to the same heap. Keep a successful, prepaid edit's charge.
+    void absorb(Lease&& other) noexcept {charge_=charge_+other.transfer();}
     void release() {if(heap_ && !heap_->closed) heap_->refund(charge_);heap_.reset();charge_={};}
     Charge transfer() {auto x=charge_;heap_.reset();charge_={};return x;}
 };

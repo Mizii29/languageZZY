@@ -281,7 +281,7 @@ struct ExecutionContext::JsonWriter {
                 if(http && n.kind=="Int" && !json_detail::safe_http_int(n.integer)) throw json_detail::Invalid("HTTP Int outside safe range");
                 if(n.kind=="String") quoted(n.characters);
                 else if(n.kind=="Int" || n.kind=="Float" || n.kind=="Bool" || n.kind=="Null") ascii(c.scalar_text(cursor.value,site));
-                else throw json_detail::Invalid(n.kind+" 不能序列化");
+                else throw json_detail::Invalid(c.tag(n)+" 不能序列化");
                 stack.pop_back();
                 continue;
             }

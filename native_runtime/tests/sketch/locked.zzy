@@ -1,0 +1,6 @@
+(zno)c := sketch.canvas(40,40,"lock");
+(zno)p := sketch.pen(c,"p");
+(zno)l := sketch.add_layer(c,"top");
+sketch.set_layer(p,l);
+sketch.lock_layer(l,(true));
+sketch.forward(p,1);

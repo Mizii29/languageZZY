@@ -1045,3 +1045,17 @@ Debug/Release CTest 各 76/76，专项 HTTP 6/6、安装与源码外副本、禁
 项目静态检查 `python -X utf8 -m scripts.ci static --output dist/native-n4-04-work/ci-static` 返回 `passed: true`。保留上游 MIT 许可证的原始末尾空行，仅对该文件登记 Git 空白检查例外，并用暂存区 SHA-256 验证头文件和许可证。
 
 已勾选 N4-04。真实人工浏览器/Ctrl+C、Sanitizer、其他平台和完整 Python 核心回归未执行。本地提交，不推送；下一项 N4-05 Sketch headless。
+
+## N4-05 首批几何、图层、历史与 SVG（2026-11-19）
+
+从 d123cca 接续，按 N4 大任务可分轮规则实现可独立验证子集。新增四个 C++17 Sketch 头文件、受控值/宿主接线、原子 SVG、固定 CLI 与同进程生命周期/资源/线程探针；接口不另定语法，不初始化 GUI，不回退 Python。48 个签名含 show/save_png 明确失败 Result。项目 v1、对象/Drawing、事件和回放尚未接入，N4-05 不勾选。
+
+实际 MSVC Debug/Release preset/build 退出 0，CTest 各 78/78，分别 67.93/46.46 秒；库探针新增跨线程 E203 后两配置各重跑 11/11。画笔黑盒各 71/71；独立 XML 比对导出，check 无副作用，资源失败保留旧文件及清理临时文件。同进程确认冻结别名、原子失败/取消、不倒退 ID、历史配额归还、幂等清理及下一请求恢复。Python 画笔及清单 17/17，无跳过。
+
+Release install 和仓库外中文/空格路径画笔 71/71；空 PATH/无效 PYTHONPATH。两配置 acceptance 各 82 条过程，其中各一条预期强杀独列；PE、实际核心/SQLite 模块和进程树通过，新增真实绘图后阻塞输入进程也无 Python/Tcl/Tk 并正常结束。Debug C1128 仅对 SQLite 测试目标加 /bigobj，Release 相关六项重跑通过；保留最初错误报告，修正夹具裸 true 和第 18 行定位，未放宽断言。
+
+详细命令、EXE SHA、环境、未验证项见 [首批报告](../../native_runtime/tests/n4-05-geometry-report.md)，原始记录 dist/native-n4-05-geometry，归档 benchmarks/results/native/n4-05-geometry-20261119。用户既有应用、规划和人工原件保持，requirement SHA 仍 b099c19fc339ce1dc1aab7e9d6c8126a9c5c9ace3d31b969a0623df90f521d2b。本批仅本地相关提交；下一项 N4-05 其余 headless 能力，不进入 GUI。
+
+收尾：`scripts.ci static --output dist/native-n4-05-geometry/ci-static` 退出 0、passed=true；独立演示实际生成三对象 SVG，check 无输出文件。五个共享文档仅暂存本批追加段落，既有正文以指纹核对保持。最终相关差异、归档及提交以本地 Git 核对为准。
+
+因本批触及核心类型处理，追加执行两配置 `native_runtime/tools/test-core-existing.py`，各 550/550、声明延期 0，全部固定答案保持；原始结果为 core-debug.json / core-release.json。

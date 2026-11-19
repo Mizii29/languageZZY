@@ -1,0 +1,254 @@
+[
+  {
+    "path": "accept-debug-final/loaded-modules.json",
+    "archive": "raw/accept-debug-final/loaded-modules.json.gz",
+    "bytes": 2655,
+    "sha256": "bf0da2f4b4732d9404923a43c08790eaaec30ce982707bba712bb9ef293931ab"
+  },
+  {
+    "path": "accept-debug-final/native-execution-tests.exe.imports.txt",
+    "archive": "raw/accept-debug-final/native-execution-tests.exe.imports.txt.gz",
+    "bytes": 631,
+    "sha256": "fc51aa885c1ca04f85ea706708457413e894fe7ffc595e011743451e5a59b720"
+  },
+  {
+    "path": "accept-debug-final/native-frontend-tests.exe.imports.txt",
+    "archive": "raw/accept-debug-final/native-frontend-tests.exe.imports.txt.gz",
+    "bytes": 611,
+    "sha256": "1ad72cd5926516a380addf20642d291e689c2eb75b23a3e8fb9d84925c2897e7"
+  },
+  {
+    "path": "accept-debug-final/native-heap-tests.exe.imports.txt",
+    "archive": "raw/accept-debug-final/native-heap-tests.exe.imports.txt.gz",
+    "bytes": 607,
+    "sha256": "46633bc3cc2a04b342f1237fa3a2adf2e5c4311837eb39dc8294a6525aef9cc6"
+  },
+  {
+    "path": "accept-debug-final/native-library-tests.exe.imports.txt",
+    "archive": "raw/accept-debug-final/native-library-tests.exe.imports.txt.gz",
+    "bytes": 629,
+    "sha256": "6ee8de7881088d03b2b68510232a09ff66fa458d4d605ecda46c2176610c3d3e"
+  },
+  {
+    "path": "accept-debug-final/native-lifecycle-probe.exe.imports.txt",
+    "archive": "raw/accept-debug-final/native-lifecycle-probe.exe.imports.txt.gz",
+    "bytes": 612,
+    "sha256": "e71c14157d92a4b1c7262fe6f343baa44e2d4a2c3c2464a6e7c770ae05b3c02b"
+  },
+  {
+    "path": "accept-debug-final/native-program-tests.exe.imports.txt",
+    "archive": "raw/accept-debug-final/native-program-tests.exe.imports.txt.gz",
+    "bytes": 629,
+    "sha256": "c57a16e3cfbe73d10cbce7080c833895d14b8461faf043f7ba2536a58c663ee6"
+  },
+  {
+    "path": "accept-debug-final/native-protocol-tests.exe.imports.txt",
+    "archive": "raw/accept-debug-final/native-protocol-tests.exe.imports.txt.gz",
+    "bytes": 611,
+    "sha256": "86ad711a53f1df2fb6dd0c5e07720a803eeb4bad63b39092774bdac72b4c86ff"
+  },
+  {
+    "path": "accept-debug-final/native-runtime-values-tests.exe.imports.txt",
+    "archive": "raw/accept-debug-final/native-runtime-values-tests.exe.imports.txt.gz",
+    "bytes": 617,
+    "sha256": "e3f9ac8e28b3e977560bd69c868f71c09669748ebdafc68f04461b2f56298ff4"
+  },
+  {
+    "path": "accept-debug-final/native-sqlite-tests.exe.imports.txt",
+    "archive": "raw/accept-debug-final/native-sqlite-tests.exe.imports.txt.gz",
+    "bytes": 628,
+    "sha256": "cd1fbdf509909f6a8c805f52d516a8450ba9c4e1d8a1d4ec4123aff771706609"
+  },
+  {
+    "path": "accept-debug-final/report.json",
+    "archive": "raw/accept-debug-final/report.json.gz",
+    "bytes": 925454,
+    "sha256": "9109c11f79add055abdf07d1a0caa1ff4f46a3c9fde653ebce3de92492a3977f"
+  },
+  {
+    "path": "accept-debug-final/sqlite-modules.json",
+    "archive": "raw/accept-debug-final/sqlite-modules.json.gz",
+    "bytes": 3459,
+    "sha256": "1d2ebc8384bce5f571adfd0102d24d808a9c956ed6e718bb3a05bed05bcfed62"
+  },
+  {
+    "path": "accept-debug-final/zzy-native.exe.imports.txt",
+    "archive": "raw/accept-debug-final/zzy-native.exe.imports.txt.gz",
+    "bytes": 619,
+    "sha256": "da6c9f56bd6e7af02d73667ffaeabc5b9a09af4676ed81f53deeb4046dc0316d"
+  },
+  {
+    "path": "accept-release-final/loaded-modules.json",
+    "archive": "raw/accept-release-final/loaded-modules.json.gz",
+    "bytes": 2630,
+    "sha256": "9e75c18184eed2fb651594ae29cc809b2b76bbca5b6401c562dbed82fe195d9a"
+  },
+  {
+    "path": "accept-release-final/native-execution-tests.exe.imports.txt",
+    "archive": "raw/accept-release-final/native-execution-tests.exe.imports.txt.gz",
+    "bytes": 773,
+    "sha256": "4d3281512d2e240bf4de58e9008abcfcc2a9fcfe2bf04e767ef09020a967940c"
+  },
+  {
+    "path": "accept-release-final/native-frontend-tests.exe.imports.txt",
+    "archive": "raw/accept-release-final/native-frontend-tests.exe.imports.txt.gz",
+    "bytes": 733,
+    "sha256": "f454686f6ee3f787bea241f8f610291deb5604ab9ab0ee66f16d95c278682f4b"
+  },
+  {
+    "path": "accept-release-final/native-heap-tests.exe.imports.txt",
+    "archive": "raw/accept-release-final/native-heap-tests.exe.imports.txt.gz",
+    "bytes": 729,
+    "sha256": "2a148987617d0e8332761c6728fc8f5ccaed87dfed5af6d55857fc3b45109ef5"
+  },
+  {
+    "path": "accept-release-final/native-library-tests.exe.imports.txt",
+    "archive": "raw/accept-release-final/native-library-tests.exe.imports.txt.gz",
+    "bytes": 813,
+    "sha256": "d6f70a2bc4f72bde4dcc1d5b37b24d3a0fa09278782d732daf9ade3cbc995fe9"
+  },
+  {
+    "path": "accept-release-final/native-lifecycle-probe.exe.imports.txt",
+    "archive": "raw/accept-release-final/native-lifecycle-probe.exe.imports.txt.gz",
+    "bytes": 734,
+    "sha256": "2f49e8e84147d8d42fab36cb2f1a2356d01cf4201494d373944c95122d43d3fa"
+  },
+  {
+    "path": "accept-release-final/native-program-tests.exe.imports.txt",
+    "archive": "raw/accept-release-final/native-program-tests.exe.imports.txt.gz",
+    "bytes": 771,
+    "sha256": "002e51e92875cb07a50bdcfb47b7628e55a437dbed52248ec64d8feaa990f4fc"
+  },
+  {
+    "path": "accept-release-final/native-protocol-tests.exe.imports.txt",
+    "archive": "raw/accept-release-final/native-protocol-tests.exe.imports.txt.gz",
+    "bytes": 733,
+    "sha256": "538cbba0edc65443077d323b94eaf5a9f8457f49e6427f6c001090925c9d3295"
+  },
+  {
+    "path": "accept-release-final/native-runtime-values-tests.exe.imports.txt",
+    "archive": "raw/accept-release-final/native-runtime-values-tests.exe.imports.txt.gz",
+    "bytes": 739,
+    "sha256": "bdd61c35c4a84c14e60fa35957c4236d02d0bcbe22612d247cd6962a136a3a06"
+  },
+  {
+    "path": "accept-release-final/native-sqlite-tests.exe.imports.txt",
+    "archive": "raw/accept-release-final/native-sqlite-tests.exe.imports.txt.gz",
+    "bytes": 770,
+    "sha256": "f0aeedf55403012b08213135be32384d4c9839933c1158428232f3afc0296d7b"
+  },
+  {
+    "path": "accept-release-final/report.json",
+    "archive": "raw/accept-release-final/report.json.gz",
+    "bytes": 930209,
+    "sha256": "9bb8a809bc1f3dd4906969ff22b831fd321baa325d7757898393d96f4e93fc61"
+  },
+  {
+    "path": "accept-release-final/sqlite-modules.json",
+    "archive": "raw/accept-release-final/sqlite-modules.json.gz",
+    "bytes": 3147,
+    "sha256": "df0c56d357c2e0dbac290d72d95777f8dd026aaf2e0ec5f605ef340c41547ed5"
+  },
+  {
+    "path": "accept-release-final/zzy-native.exe.imports.txt",
+    "archive": "raw/accept-release-final/zzy-native.exe.imports.txt.gz",
+    "bytes": 761,
+    "sha256": "c14caabb29a53df52d51642cad623ee96a7196771e7454b2dd4b2a2a6247eb99"
+  },
+  {
+    "path": "archive-evidence.py",
+    "archive": "raw/archive-evidence.py.gz",
+    "bytes": 3353,
+    "sha256": "8c234ef0ceef9e9633d753f69c92373820f43d30702fb3aef1ed46698adbb830"
+  },
+  {
+    "path": "ci-static-final/report.json",
+    "archive": "raw/ci-static-final/report.json.gz",
+    "bytes": 178792,
+    "sha256": "dacb9153d31cf647fb209000830b7eeabd1c71f2939ab32d53ab5cd348b86a74"
+  },
+  {
+    "path": "core-debug.json",
+    "archive": "raw/core-debug.json.gz",
+    "bytes": 430241,
+    "sha256": "4470a6c03ed68bfc57a20d985c85b9f5203011e7f9d30c00e8adea527be824b6"
+  },
+  {
+    "path": "core-release.json",
+    "archive": "raw/core-release.json.gz",
+    "bytes": 432441,
+    "sha256": "8485f54a4fa8195a77a5ed1b4c5fd5c1949da2ff08b239a09c54f692244f8cce"
+  },
+  {
+    "path": "ctest-debug.log",
+    "archive": "raw/ctest-debug.log.gz",
+    "bytes": 8656,
+    "sha256": "616990f1179230b881f2cf49fd15f6de448ae0778ff65bd885251a770ccdad08"
+  },
+  {
+    "path": "ctest-release-bigobj.log",
+    "archive": "raw/ctest-release-bigobj.log.gz",
+    "bytes": 806,
+    "sha256": "49089eccd876208109bc91a217033b0d4b7a3348c74f980de86c34f221998d3a"
+  },
+  {
+    "path": "ctest-release.log",
+    "archive": "raw/ctest-release.log.gz",
+    "bytes": 65276,
+    "sha256": "1a76ddb6fc7d4ade75c823fb3b163dbbc31730a741418c8f06ddc1b473585c33"
+  },
+  {
+    "path": "ctest-thread-debug.log",
+    "archive": "raw/ctest-thread-debug.log.gz",
+    "bytes": 1364,
+    "sha256": "175141b48ad11e420016808e7fd04ee3971e0e737ce5b4711832493c05c15348"
+  },
+  {
+    "path": "ctest-thread-release.log",
+    "archive": "raw/ctest-thread-release.log.gz",
+    "bytes": 1366,
+    "sha256": "a953989f53e658372ec30f572027bda6b711173b411c3f6550717a040a454d79"
+  },
+  {
+    "path": "debug-first.json",
+    "archive": "raw/debug-first.json.gz",
+    "bytes": 19357,
+    "sha256": "431fc312d1e30912f37fad3b721a3a2696d2deb84547e0c4b99c7c12d27183c4"
+  },
+  {
+    "path": "drawing-modules.json",
+    "archive": "raw/drawing-modules.json.gz",
+    "bytes": 1437,
+    "sha256": "3dbeac70d7923ba966068a40fc36db7ef7bddd1b410b0c751f2ec94b46883ee0"
+  },
+  {
+    "path": "pe-imports.txt",
+    "archive": "raw/pe-imports.txt.gz",
+    "bytes": 705,
+    "sha256": "07f3eddf728abe918b35cf4c67da9085f6e8dfa03e3f139a6b0c599c946b2831"
+  },
+  {
+    "path": "pre-doc-hashes.json",
+    "archive": "raw/pre-doc-hashes.json.gz",
+    "bytes": 3931,
+    "sha256": "7f145c764b79e5c298f26a49864ac3d3b745a30b8450abfedc35b54b0e3af754"
+  },
+  {
+    "path": "published.json",
+    "archive": "raw/published.json.gz",
+    "bytes": 19340,
+    "sha256": "ee8e82c17077dc55f09842bf3bb8985fa9e8f1d48f542937d1c924ce5b913b00"
+  },
+  {
+    "path": "stage-shared.py",
+    "archive": "raw/stage-shared.py.gz",
+    "bytes": 2172,
+    "sha256": "f9ffe5328f7f24c1af6343008cd82775e763e0b53500a50f471b57ac78cde970"
+  },
+  {
+    "path": "test-drawing-modules.ps1",
+    "archive": "raw/test-drawing-modules.ps1.gz",
+    "bytes": 2786,
+    "sha256": "5176948e160e19e036a60f34f464883a9174d96fd0ed98d2c6a8f53305386e6a"
+  }
+]

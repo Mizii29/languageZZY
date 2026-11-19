@@ -1,1 +1,1 @@
-io.print(sketch.color("#ff0000"));
+io.print(sketch.load_project("unavailable.zzysketch"));

@@ -29,7 +29,18 @@ class InventoryTests(unittest.TestCase):
             'io.read_text', 'io.write_text', 'io.write_atomic', 'io.replace_file', 'data.parse', 'data.stringify',
             'db.query', 'db.transaction',
         )}
-        self.assertEqual({f['id'] for f in features if f['implemented']}, core_ast | core_values | core_cli | core_hosts)
+        sketch_values = {'value.sketch.' + kind for kind in ('Canvas', 'Pen', 'Layer', 'Color')}
+        sketch_hosts = {'host.sketch.' + name for name in (
+            'canvas', 'pen', 'rgb', 'background', 'clear', 'begin_group', 'end_group', 'undo',
+            'redo', 'clear_history', 'save_png', 'show', 'add_layer', 'set_layer', 'layer_visible',
+            'lock_layer', 'rename_layer', 'move_layer', 'layer_info', 'font', 'text_align', 'text',
+            'svg_text', 'save_svg', 'color', 'fill_color', 'width', 'position', 'heading', 'forward',
+            'backward', 'left', 'right', 'set_heading', 'move_to', 'jump_to', 'circle', 'polyline',
+            'bezier_to', 'dot', 'pen_up', 'pen_down', 'show_cursor', 'hide_cursor', 'home',
+            'begin_fill', 'end_fill', 'cancel_fill',
+        )}
+        self.assertEqual({f['id'] for f in features if f['implemented']},
+                         core_ast | core_values | core_cli | core_hosts | sketch_values | sketch_hosts)
         self.assertEqual(json.loads((folder/'capabilities.json').read_text(encoding='utf-8'))['frontend']['parse_resolve_ast_kinds'],inventory['ast_kinds'])
         self.assertTrue(all(f['diagnostic']=='E402' for f in features if not f['implemented']))
 

@@ -1,0 +1,16 @@
+(zno)canvas := sketch.canvas(640,480,"ZZY 原生画笔");
+(zno)pen := sketch.pen(canvas,"main");
+sketch.color(pen,sketch.rgb(30,90,180));
+sketch.fill_color(pen,sketch.rgb(160,210,245));
+sketch.width(pen,3);
+sketch.begin_group(canvas,"triangle");
+sketch.begin_fill(pen);
+sketch.move_to(pen,100,0);
+sketch.move_to(pen,50,90);
+sketch.end_fill(pen);
+sketch.end_group(canvas);
+sketch.jump_to(pen,-100,0);
+sketch.circle(pen,40,360);
+sketch.jump_to(pen,-120,-80);
+sketch.text(pen,"ZZY native SVG",22);
+io.print(sketch.save_svg(canvas,"native-sketch.svg"));

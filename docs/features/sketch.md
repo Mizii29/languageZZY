@@ -273,3 +273,5 @@ A 查询用于 layer_info 的普通快照筛选；C 状态机可用于 ZZY 工�
 E1—E4 是用户已选的完整扩展实施目标；核心P05/P06已完成，E1—E4已全部验收，当前状态与后续任务见todo。E 可以在基础成熟后与 P07/P09 交错推进，不要求并行 Agent，不替代作业交付。未完成 E1—E4 不发布“完整 sketch 1.0”，延期时明确只交付设计/已有子集；PNG 缺依赖需明确标记。计划/状态分别见 [roadmap.md](../development/roadmap.md) 和 [todo.md](../development/todo.md)。
 
 当前66个接口、固定扩展配额、曲线0.25逻辑单位近似、真实GUI平台与PNG不可用状态见[使用指南](sketch-guide.md)。SKETCH-01—06的完整映射及各项真实证据见tests/e4；历史E1子集报告不代替最终验收。
+
+上述完整接口和 E1—E4 证据属于 Python 后端。C++ 原生后端的 N4-05 目前通过了几何、图层、分组撤销/重做和 SVG 子集；见 [原生宿主契约](../development/native-stdlib-contract.md#n4-05-原生-sketch-headless几何图层历史svg) 和 [专项报告](../../native_runtime/tests/n4-05-geometry-report.md)。

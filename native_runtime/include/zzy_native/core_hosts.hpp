@@ -3,7 +3,7 @@
 namespace zzy {
 // Execution subset of the frozen ABI. Empty type accepts any ZZY value.
 // Optional host modules remain outside this table.
-struct CoreHost {std::string_view name;std::size_t arity;std::string_view types[3];};
+struct CoreHost {std::string_view name;std::size_t arity;std::string_view types[7];};
 inline constexpr CoreHost core_hosts[]={
     {"len",1,{"Array|String|Map|Range"}},{"str",1,{"Int|Float|Bool|Null|String|Quantity"}},
     {"range",3,{"Int","Int","Int"}},{"wake",1,{"Lazy"}},

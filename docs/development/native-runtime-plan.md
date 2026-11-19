@@ -198,3 +198,7 @@ N4-03 已按集中 SQLite 契约完成。`db.transaction`/`db.query` 使用 Wind
 ### N4-04 交付更新（2026-11-19）
 
 原生 Web 已按 [集中契约](../runtime/web.md#n4-04-原生-http-宿主) 接入独立可选 EXE，离线构建使用固定版本 cpp-httplib 与 Winsock。真实 HTTP 覆盖默认/显式 shared、冻结与交错请求、shape 合约及静态 OpenAPI、容量/超时/断连/关闭、SQLite 取消回滚及重启。MSVC 两配置各 76/76 CTest，源码外安装副本和模块审计通过，见 [N4-04 报告](../../native_runtime/tests/n4-04-report.md)。下一项 N4-05，N4-06 仍待实现，Python 默认入口不变。
+
+### N4-05 首批交付（2026-11-19）
+
+几何、图层、分组历史与 SVG 已有 [首批实现/验收报告](../../native_runtime/tests/n4-05-geometry-report.md)。按 N4 分轮规则保留 N4-05 未完成；其余 headless 项目读写/对象/图案/回放/事件继续作为下一批，N4-06 不提前进入。

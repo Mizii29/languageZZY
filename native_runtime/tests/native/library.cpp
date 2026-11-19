@@ -302,12 +302,62 @@ struct ExecutionProbe {
         ExecutionContext next(program,p,cancel,out,err);next.execute();released(next);
         require(out.str()=="(^_^)([1,1.0,true,null])\n" && err.str().empty(),"JSON next request did not recover");
     }
+    static void sketch_geometry() {
+        ResourcePolicy p;std::atomic<bool> cancel{false};std::ostringstream out,err;
+        const auto program=parse("io.print(sketch.heading(sketch.pen(sketch.canvas(8,8,\"next\"),\"p\")));",p,cancel);
+        ExecutionContext c(program,p,cancel,out,err);c.initialize();
+        const auto site=c.program.root;
+        auto intv=[&](int v){return c.integer(BigInt(v),site);};
+        auto invoke=[&](const std::string& op,std::vector<Value> args){return c.sketch_library("sketch."+op,args,site);};
+        const auto canvas=invoke("canvas",{intv(40),intv(40),c.string("probe",site)});
+        const auto pen=invoke("pen",{canvas,c.string("p",site)});
+        auto& d=*c.heap.native<sketch::CanvasRef>(canvas).doc;
+        auto& state=d.pens.at("p").state;
+        const auto step=intv(10);c.heap.collect();
+        const auto initial=c.heap.state->used;
+        std::exception_ptr thread_error;
+        std::thread foreign([&] {
+            try {(void)invoke("heading",{pen});}
+            catch(...) {thread_error=std::current_exception();}
+        });
+        foreign.join();
+        require(thread_error!=nullptr,"foreign thread read the sketch document");
+        try {std::rethrow_exception(thread_error);}
+        catch(const RuntimeError& e) {require(e.code=="E203","foreign thread diagnostic");}
+        require(state.position==sketch::XY{} && d.objects.empty() && c.heap.state->used==initial,
+                "foreign thread changed the document or resources");
+        c.heap.state->policy.limits["runtime_objects"]=initial.objects;
+        try {invoke("forward",{pen,step});throw std::runtime_error("geometry object limit accepted");}
+        catch(const RuntimeError& e) {require(e.code=="E211","geometry resource diagnostic");}
+        require(d.objects.empty() && state.position==sketch::XY{} && d.undo.empty() && d.next_id==1,"failed geometry changed the document");
+        require(c.heap.state->used==initial,"failed geometry leaked a reservation");
+        c.heap.state->policy.limits["runtime_objects"]=p.limits.at("runtime_objects");
+        invoke("forward",{pen,step});
+        require(d.objects.size()==1 && state.position==sketch::XY{10.,0.} && d.next_id==2,"next drawing command did not recover");
+        const auto drawing=c.heap.state->used;
+        cancel=true;
+        try {invoke("undo",{canvas});throw std::runtime_error("cancelled undo ran");}
+        catch(const Cancelled&) {}
+        cancel=false;
+        require(d.objects.size()==1 && d.undo.size()==1 && d.redo.empty() && c.heap.state->used==drawing,"cancelled undo changed state or kept quota");
+        c.object(canvas).frozen=true;
+        try {invoke("forward",{pen,step});throw std::runtime_error("frozen canvas alias changed");}
+        catch(const RuntimeError& e) {require(e.code=="E203","frozen canvas alias diagnostic");}
+        c.object(canvas).frozen=false;
+        invoke("undo",{canvas});require(d.objects.empty() && state.position==sketch::XY{} && d.next_id==2,"undo failed or rewound ID");
+        invoke("clear_history",{canvas});c.heap.collect();
+        require(d.undo.empty() && d.redo.empty() && c.heap.state->used==initial,"clear_history retained geometry or delta charge");
+        c.cleanup();released(c);
+        ExecutionContext next(program,p,cancel,out,err);next.execute();released(next);
+        require(out.str()=="0.0\n" && err.str().empty(),"next sketch request did not recover");
+    }
 };
 }
 int main(int argc,char** argv) {
     const std::map<std::string,void(*)()> cases={{"callbacks",zzy::ExecutionProbe::callbacks},{"identity",zzy::ExecutionProbe::identity},
         {"budgets",zzy::ExecutionProbe::budgets},{"cancellation",zzy::ExecutionProbe::cancellation},{"text",zzy::ExecutionProbe::text_boundaries},
-        {"files",zzy::ExecutionProbe::files},{"file-commit",zzy::ExecutionProbe::file_commit},{"json",zzy::ExecutionProbe::json}};
+        {"files",zzy::ExecutionProbe::files},{"file-commit",zzy::ExecutionProbe::file_commit},{"json",zzy::ExecutionProbe::json},
+        {"sketch-geometry",zzy::ExecutionProbe::sketch_geometry}};
     try {if(argc!=2 || !cases.count(argv[1])) throw std::runtime_error("nonempty named selection required");cases.at(argv[1])();std::cout<<argv[1]<<": PASS\n";return 0;}
     catch(const std::exception& e) {std::cerr<<e.what()<<'\n';return 1;}
 }

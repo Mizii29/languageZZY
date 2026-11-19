@@ -102,7 +102,7 @@ try {
     Require ($result.stdout -eq '' -and $errorRecord.schema_version -eq 1 -and $errorRecord.code -eq 'E402' -and $errorRecord.kind -eq 'error') 'unsupported protocol mismatch'
     Require ($null -eq $errorRecord.file -and $null -eq $errorRecord.span -and $errorRecord.notes[0] -eq 'capability=test') 'unsupported location/capability mismatch'
     Require (-not (Test-Path -LiteralPath (Join-Path $stage 'native-side-effect.txt'))) 'check/test executed source'
-    [IO.File]::WriteAllText((Join-Path $stage 'unavailable.zzy'),'sketch.color("#ff0000");',[Text.UTF8Encoding]::new($false))
+    [IO.File]::WriteAllText((Join-Path $stage 'unavailable.zzy'),'sketch.load_project("unavailable.zzysketch");',[Text.UTF8Encoding]::new($false))
     $result=Invoke-Native 'zzy-native.exe' 'run unavailable.zzy --diagnostic-format json' 1
     $errorRecord=$result.stderr | ConvertFrom-Json
     Require ($result.stdout -eq '' -and $errorRecord.schema_version -eq 1 -and $errorRecord.code -eq 'E402' -and $errorRecord.kind -eq 'error' -and $errorRecord.span.start.line -eq 1) 'unported host must fail at the call without side effects'

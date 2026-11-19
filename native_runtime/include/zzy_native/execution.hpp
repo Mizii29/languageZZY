@@ -2,6 +2,7 @@
 #include "runtime_heap.hpp"
 #include "host_metadata.hpp"
 #include "core_hosts.hpp"
+#include "sketch_hosts.hpp"
 #include "sqlite_host.hpp"
 #include <deque>
 #include <iomanip>
@@ -40,6 +41,8 @@ private:
     friend struct WebRuntime;
     const AstNode& ast(NodeId id) const {return program.nodes.at(id);}
     RuntimeNode& object(const Value& v) const {return heap.get(v);}
+    static const std::string& tag(const RuntimeNode& n) {return n.kind=="Native"?n.name:n.kind;}
+    friend struct SketchHost;
     [[noreturn]] void error(NodeId site,const std::string& code,const std::string& text) const {throw RuntimeError(code,text,site);}
     void check(const std::string& key,std::uint64_t n,NodeId site) const {heap.state->check(key,n,site);}
     void point() const {heap.state->point();}
@@ -51,9 +54,9 @@ private:
     Value boolean(bool b) const {return b?true_:false_;}
     void typecheck(const Type& t,const Value& v,NodeId site,bool full=true) const {
         if(t.name.empty()) return;
-        const auto& n=object(v);bool valid=n.kind==t.name;
+        const auto& n=object(v);bool valid=tag(n)==t.name || (n.kind=="Shape" && n.name==t.name && t.name.compare(0,7,"sketch.")==0);
         if(t.nominal) valid=(n.kind=="Shape" || n.kind=="Machine") && !n.edges.empty() && n.edges[0]==t.nominal.ref();
-        if(!valid) {RuntimeError e("E201","expected "+t.name+", got "+n.kind,site);e.expression_span=full;throw e;}
+        if(!valid) {RuntimeError e("E201","expected "+t.name+", got "+tag(n),site);e.expression_span=full;throw e;}
     }
     void typecheck(const std::string& kind,const Value& v,NodeId site) const {typecheck(Type{kind,{}},v,site);}
     Value raw(const Reference& r,NodeId site) {
@@ -70,6 +73,7 @@ private:
         const auto it=program.annotations.find(site);if(it==program.annotations.end()) return {};
         const auto& a=it->second;if(!a.builtin.empty()) return {a.builtin,{}};
         auto v=read(a.binding,site);for(const auto& f:a.fields) v=field(v,f,site);
+        if(object(v).kind=="NativeType") return {object(v).name,{}};
         if(object(v).kind!="Definition" && object(v).kind!="MachineDefinition") error(site,"E201","annotation is not a definition");
         return {object(v).name,v};
     }
@@ -118,14 +122,18 @@ private:
     }
     Value builtin(const std::string& name,NodeId site) {
         auto it=builtins.find(name);if(it!=builtins.end()) return it->second;
-        if(name=="array.Stats") {
-            auto v=make("Definition",{1,4,0},site);auto& n=object(v);n.name=name;
-            n.names={"count","sum","min","max"};n.type_names={"Int","Int","",""};
-            n.type_nominals={no_node,no_node,no_node,no_node};
+        if(name=="array.Stats" || name=="sketch.Position" || name=="sketch.LayerInfo") {
+            const bool position=name=="sketch.Position", layer=name=="sketch.LayerInfo";
+            auto v=make("Definition",{1,position?2U:layer?5U:4U,0},site);auto& n=object(v);n.name=name;
+            if(position) {n.names={"x","y"};n.type_names={"Float","Float"};}
+            else if(layer) {n.names={"name","visible","locked","count","z"};n.type_names={"String","Bool","Bool","Int","Int"};}
+            else {n.names={"count","sum","min","max"};n.type_names={"Int","Int","",""};}
+            n.type_nominals.assign(n.names.size(),no_node);
             builtins.emplace(name,v);return v;
         }
         const bool ns=name=="io" || name=="array" || name=="data" || name=="text" || name=="math" || name=="unit" || name=="sketch" || name=="db";
-        auto v=make(ns?"Namespace":"Function",{1,1,0},site);object(v).name=name;builtins.emplace(name,v);return v;
+        const bool native_type=name=="sketch.Canvas" || name=="sketch.Pen" || name=="sketch.Layer" || name=="sketch.Color" || name=="sketch.Drawing";
+        auto v=make(ns?"Namespace":native_type?"NativeType":"Function",{1,1,0},site);object(v).name=name;builtins.emplace(name,v);return v;
     }
     Value field(const Value& owner,const std::string& name,NodeId site,bool write=false) {
         if(write) writable(owner,site);
@@ -133,11 +141,10 @@ private:
         if(n.kind=="Namespace") {
             if(write) error(site,"E203","namespace is read only");const auto qualified=n.name+"."+name;bool known=false;
             for(const auto& h:static_hosts) if(h.name==qualified) {known=true;break;}
-            if(qualified=="array.Stats") return builtin(qualified,site);
+            if(qualified=="array.Stats" || qualified=="sketch.Position" || qualified=="sketch.LayerInfo") return builtin(qualified,site);
             if(qualified=="sketch.Canvas" || qualified=="sketch.Pen" ||
-               qualified=="sketch.Layer" || qualified=="sketch.Color" || qualified=="sketch.Drawing" ||
-               qualified=="sketch.LayerInfo" || qualified=="sketch.Position")
-                error(site,"E402","native host capability not implemented: "+qualified);
+               qualified=="sketch.Layer" || qualified=="sketch.Color" || qualified=="sketch.Drawing")
+                return builtin(qualified,site);
             if(!known) error(site,"E302","unknown namespace member: "+name);return builtin(qualified,site);
         }
         if(n.kind=="Machine") {if(name!="state") error(site,"E204","unknown Machine field");if(write) error(site,"E203","Machine state is read only");return heap.pin(n.edges.at(1));}
@@ -228,6 +235,7 @@ private:
                 else if(x.kind=="Bool") equal=x.flag==y.flag;else if(x.kind=="Null") equal=true;
                 else if(x.kind=="Range") {equal=true;for(std::size_t i=0;i<3;++i) equal=equal && object(heap.pin(x.edges[i])).integer==object(heap.pin(y.edges[i])).integer;}
                 else if(x.kind=="Quantity") equal=x.length==y.length && x.time==y.time && x.rational.numerator==y.rational.numerator && x.rational.denominator==y.rational.denominator;
+                else if(x.kind=="Native" && x.name=="sketch.Color" && y.name==x.name) equal=x.integer==y.integer;
             }
             return boolean(op=="EQUAL"?equal:!equal);
         }
@@ -350,6 +358,7 @@ private:
         if(n.kind=="Definition") return "<shape "+n.name+">";if(n.kind=="Module") return "<module>";
         if(n.kind=="Lazy") return "<lazy "+n.state+">";
         if(n.kind=="Native") return "<"+n.name+">";
+        if(n.kind=="NativeType") return "<type "+n.name+">";
         if(n.kind=="MachineDefinition") return "<machine "+n.name+">";
         if(n.kind=="Machine") return "<machine "+object(heap.pin(n.edges[0])).name+": "+scalar_text(heap.pin(n.edges[1]),site)+">";
         throw std::logic_error("no scalar display");
@@ -416,6 +425,7 @@ private:
     Value json_library(const std::string& name,const Value& value,NodeId site);
     void database_transaction(const std::vector<Value>& args,NodeId site,Done done);
     Value database_query(const std::vector<Value>& args,NodeId site);
+    Value sketch_library(const std::string& name,const std::vector<Value>& args,NodeId site);
     struct JsonReader;
     struct JsonWriter;
     void map_insert(const Value& map,std::string key,const Value& key_value,const Value& value,NodeId site);
@@ -718,12 +728,14 @@ inline void ExecutionContext::call(Value fn,std::vector<Value> args,NodeId site,
     }
     const auto& name=f.name;
     const CoreHost* signature=nullptr;for(const auto& host:core_hosts) if(host.name==name) {signature=&host;break;}
+    if(!signature && name.compare(0,7,"sketch.")==0) for(const auto& host:sketch_hosts) if(host.name==name) {signature=&host;break;}
     if(!signature) error(site,"E402","native host capability not implemented: "+name);
     if(args.size()!=signature->arity) error(site,"E202","wrong argument count: "+name);
-    for(std::size_t i=0;i<args.size();++i) if(!core_host_accepts(signature->types[i],object(args[i]).kind)) {
+    for(std::size_t i=0;i<args.size();++i) if(!core_host_accepts(signature->types[i],tag(object(args[i])))) {
         RuntimeError e("E201","invalid argument for "+name,name=="len" || name=="str"?site:argument_site(i));
         e.expression_span=name!="len" && name!="str";throw e;
     }
+    if(name.compare(0,7,"sketch.")==0) {done(sketch_library(name,args,site));return;}
     if(name=="array.sum" || name=="array.stats" || name=="array.sorted" || name=="array.map" || name=="array.filter") {
         array_library(name,args,site,std::move(done));return;
     }
@@ -842,7 +854,7 @@ inline void ExecutionContext::construct(NodeId id,Value base,Done done) {
         const auto field=ast(def.syntax).children[i];if(ast(field).children.empty()) error(id,"E203","missing required field: "+def.names[i]);updates.emplace_back(i,ast(field).children[0]);
     }
     std::vector<Value> edges{definition};for(std::size_t i=0;i<count;++i) edges.push_back(copy?heap.pin(b.edges[i+1]):null_);
-    auto instance=make("Shape",{1,edges.size(),0},id,edges);object(instance).names=def.names;
+    auto instance=make("Shape",{1,edges.size(),0},id,edges);object(instance).names=def.names;object(instance).name=def.name;
     auto step=std::make_shared<std::function<void(std::size_t)>>();std::weak_ptr<std::function<void(std::size_t)>> weak=step;
     *step=[this,instance,definition,done,updates=std::move(updates),weak](std::size_t i) {
         if(i==updates.size()) {done(instance);return;}
@@ -908,3 +920,4 @@ inline void ExecutionContext::query(NodeId id,Value source,Done done) {
 #include "file_library.hpp"
 #include "json_library.hpp"
 #include "database_library.hpp"
+#include "sketch_library.hpp"

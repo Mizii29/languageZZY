@@ -1,0 +1,5 @@
+(zno)c := sketch.canvas(40,40,"one");
+(zno)d := sketch.canvas(40,40,"two");
+(zno)p := sketch.pen(c,"p");
+(zno)l := sketch.add_layer(d,"other");
+sketch.set_layer(p,l);

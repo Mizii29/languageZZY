@@ -1,0 +1,18 @@
+(zno)canvas := sketch.canvas(201,101,"<&>");
+(zno)pen := sketch.pen(canvas,"main");
+(zno)top := sketch.add_layer(canvas,"top");
+sketch.set_layer(pen,top);
+sketch.color(pen,sketch.rgb(1,2,3));
+sketch.width(pen,2);
+sketch.begin_group(canvas,"triangle");
+sketch.begin_fill(pen);
+sketch.move_to(pen,10,0);
+sketch.move_to(pen,10,10);
+sketch.end_fill(pen);
+sketch.end_group(canvas);
+io.print(sketch.undo(canvas));
+io.print(sketch.position(pen));
+io.print(sketch.redo(canvas));
+io.print(sketch.position(pen));
+sketch.text(pen,"中文<&>",12);
+io.print(sketch.save_svg(canvas,"drawing.svg"));

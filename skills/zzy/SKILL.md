@@ -97,3 +97,7 @@ N2-01—04现已实现，正式静态边界读取[Program契约](../../docs/deve
 ## N4-04 当前状态
 
 原生 Web 已验收。依赖、线程和公开入口以 [Web 集中契约](../../docs/runtime/web.md#n4-04-原生-http-宿主)为准；本地示例见 [原生指南](../../native_runtime/README.md)，门禁见 [N4-04 报告](../../native_runtime/tests/n4-04-report.md)。默认逐请求或显式 shared，核心 check 不加载 Web；Python 仅参与运行 HTTP 测试客户端。下一项 N4-05 Sketch headless。
+
+## N4-05 当前状态（首批）
+
+原生几何、图层、分组撤销/重做和 SVG 子集已通过专项、双配置回归、安装与实际模块检查，见 [首批报告](../../native_runtime/tests/n4-05-geometry-report.md)。集中规则在 [原生宿主契约](../../docs/development/native-stdlib-contract.md)，语言规则仍以 [Sketch](../../docs/features/sketch.md) 为准。N4-05 整项未完成，先继续项目/对象/Drawing/回放/事件和累计验收；不进入 N4-06 GUI，不称原生 Sketch 1.0。

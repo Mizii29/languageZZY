@@ -231,3 +231,9 @@ N2 的固定答案继续来自现有 `tests/*/cases.json`，`native_runtime/test
 MSVC Debug/Release CTest 各收集 69 项且 69/69 通过；固定库各 126/126，核心既有清单各 550/550，CLI 各 72/72，相关 Python 回归 391/391。Release 安装及仓库外中文/空格发布副本的 smoke 各执行 9 条通用命令和 33/33 文件/JSON 例；PE 导入、实际模块/进程树、空 PATH 和无效 PYTHONPATH 证据未见 Python。文件探针测试 EXE 额外使用经 dumpbin 审核的 `api-ms-win-crt-filesystem-l1-1-0.dll`，CLI 发布程序仍使用原白名单。
 
 文件与 JSON 的负面固定答案由独立 `.zzy` 程序和外部期望给出；check 不执行 I/O、默认值或 Lazy。尚未验证真实手动 Ctrl+C、Sanitizer、其他平台、缺 CRT 主机、SQLite/Web/Sketch/GUI 和真实性能。
+
+## N4-05 首批原生 Sketch（2026-11-19）
+
+独立固定答案复用 E1/E2/E3 已实现子集，原生 CLI 实收 71 条且断言非空/完整计数；另以系统 XML 核对 SVG 坐标、顺序、填充、描边和转义。check 无副作用，错类型/范围/锁定/跨画布/冻结/未配对错误、资源失败保留文件和无临时残留均实际执行。原生同进程探针覆盖线程归属 E203、失败原子性、撤销取消、ID 高水位、clear_history 退款和幂等清理后的下一请求。
+
+Debug/Release CTest 各 78/78，后补线程探针后的库回归各 11/11；Python 画笔及能力清单 17/17。安装发布副本 71/71，无 Python/Tcl/Tk 的实际绘图进程模块证据见 [报告](../../native_runtime/tests/n4-05-geometry-report.md)。N4-05 项目/对象/Drawing/回放/事件及全配额边界未覆盖，GUI/人工/全 Python 回归未运行，不据此勾选 N4-05。
