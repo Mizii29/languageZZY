@@ -173,3 +173,21 @@ try {
     Get-Item native-sketch.svg
 } finally { Pop-Location }
 ```
+
+## 原生 Sketch 窗口
+
+MSVC 默认构建独立的 `zzy-native-gui.exe`。从仓库根目录启动窗口。
+
+```powershell
+.\build\native-release\Release\zzy-native-gui.exe run native_runtime/examples/sketch-studio.zzy --gui
+```
+
+窗口菜单可绘制图形、编辑图层与对象、撤销重做、回放和打开或保存项目。SVG 和项目路径由 Windows 文件对话框选择。Windows x64 发行版使用 VC Redistributable，窗口附加依赖为系统 Win32 GDI 和 COM。设置 `ZZY_NATIVE_GUI=OFF` 可仅构建无窗口目标。
+
+真实窗口用例需要交互式 Windows 桌面。可直接运行，或配置 `ZZY_NATIVE_GUI_DESKTOP_TESTS=ON` 纳入 CTest。
+
+```powershell
+.\.venv\Scripts\python.exe -X utf8 native_runtime/tools/test-sketch-gui.py --exe build/native-release/Release/zzy-native-gui.exe --core build/native-release/Release/zzy-native.exe
+```
+
+使用 Python 运行测试客户端，原生窗口及核心程序进程独立启动。[N4-06 验收](tests/n4-06-report.md)

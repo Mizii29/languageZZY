@@ -1,0 +1,9 @@
+(zno)c:=sketch.canvas(680,440,"ZZY Sketch Studio");
+(zno)p:=sketch.pen(c,"pen");
+sketch.color(p,sketch.rgb(32,105,205));
+sketch.width(p,4);
+sketch.begin_group(c,"Triangle");
+sketch.jump_to(p,-95,-70);
+sketch.polyline(p,[[95,-70],[0,105],[-95,-70]]);
+sketch.end_group(c);
+io.print(sketch.show(c));

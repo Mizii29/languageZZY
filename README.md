@@ -180,3 +180,5 @@ P08-04/05本轮新增SQLite事务与独立任务示例；实际db签名、提交
 ## 独立原生实验线 NATIVE-01
 
 原生阶段与 P12/P13 分开，Python 仍为默认入口。原生 `run` 已执行核心语言、核心标准库和可选 SQLite；单独的 `zzy-native-web.exe` 提供本地 HTTP、逐请求和显式 shared、shape 合约与 OpenAPI，不加载 Python。`check` 只做静态准备，`test` 仍返回 E402/2。Debug/Release CTest 各 76/76，发布副本已在仓库外验证。见[启动和演示](native_runtime/README.md)、[集中原生契约](docs/development/native-stdlib-contract.md)及 [N4-04 报告](native_runtime/tests/n4-04-report.md)。下一项 N4-05 Sketch headless；GUI 待单独验收。
+
+N4-05 的 Sketch headless 包含项目保存/加载、图案、对象编辑、历史回放和事件登记。N4-06 增加独立 Windows 原生窗口程序，需传入 `--gui` 启动。两配置 CTest 各 80/80，headless 双向项目测试 8/8，GUI 安装副本真实窗口测试 4/4。PNG 后端仍未实现。见[运行指南](native_runtime/README.md)、[headless报告](native_runtime/tests/n4-05-report.md)及[GUI报告](native_runtime/tests/n4-06-report.md)。

@@ -15,6 +15,9 @@ struct Charge {
     bool operator==(const Charge& x) const {return objects==x.objects && slots==x.slots && payload==x.payload;}
 };
 struct Handle {std::uint64_t owner=0,id=0;bool operator==(const Handle& x) const {return owner==x.owner && id==x.id;}};
+#ifdef ZZY_NATIVE_GUI
+struct SketchSessionClosed {};
+#endif
 struct HeapState;
 struct RootToken {
     std::weak_ptr<HeapState> heap;Handle handle;
@@ -61,7 +64,16 @@ struct HeapState : std::enable_shared_from_this<HeapState> {
     std::shared_ptr<HeapState> shared;
     static std::uint64_t new_owner() {static std::atomic<std::uint64_t> next_owner{1};return next_owner.fetch_add(1);}
     HeapState(ResourcePolicy p,std::atomic<bool>& c):policy(std::move(p)),cancelled(c),owner(new_owner()) {}
-    void point() const {if(cancelled.load(std::memory_order_relaxed)) throw Cancelled{};if(closed) throw std::logic_error("closed execution heap");}
+#ifdef ZZY_NATIVE_GUI
+    const std::atomic<bool>* sketch_closed=nullptr;
+#endif
+    void point() const {
+        if(cancelled.load(std::memory_order_relaxed))throw Cancelled{};
+#ifdef ZZY_NATIVE_GUI
+        if(sketch_closed&&sketch_closed->load(std::memory_order_relaxed))throw SketchSessionClosed{};
+#endif
+        if(closed)throw std::logic_error("closed execution heap");
+    }
     void check(const std::string& key,std::uint64_t value,NodeId site=no_node) const {
         point();const auto limit=policy.limits.at(key);
         if(value>limit) throw RuntimeError("E211","resource limit exceeded: "+key+", limit="+std::to_string(limit)+", requested="+std::to_string(value),site);

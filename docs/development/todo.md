@@ -270,9 +270,9 @@ MSVC Debug/Release 各 57/57 CTest、63 个运行 golden、72/72 CLI、549/549 �
 - [x] N4-03 SQLite：参数绑定、事务、连接生命周期、并发及持久化；MSVC Debug/Release 各 75/75 CTest、SQLite CLI 各 50/50、同进程四探针及安装/模块检查通过，见 [N4-03 报告](../../native_runtime/tests/n4-03-report.md)。未验证人工 Ctrl+C、Sanitizer、其他 OS 和完整 N4。
 - [x] N4-04 Web：独立原生 HTTP、固定路由、严格 JSON、逐请求/shared、shape 合约及有界执行与关闭；Debug/Release 各 76/76，安装副本 Web 6/6。见 [N4-04 报告](../../native_runtime/tests/n4-04-report.md)。
 - [x] N4-05 Sketch headless：几何、事件、历史、SVG、持久化和回放。[验收报告](../../native_runtime/tests/n4-05-report.md)
-- [ ] N4-06 GUI：原生线程、事件循环、关闭及发布依赖。
+- [x] N4-06 GUI：原生线程、事件循环、关闭及发布依赖。[真实窗口验收](../../native_runtime/tests/n4-06-report.md)
 
-见 [N4-01 报告](../../native_runtime/tests/n4-01-report.md)、[N4-02 报告](../../native_runtime/tests/n4-02-report.md)、[N4-03 报告](../../native_runtime/tests/n4-03-report.md)与 [N4-04 报告](../../native_runtime/tests/n4-04-report.md)。N4-01—04 已验收；下一项 N4-05 Sketch headless，GUI 后续单独验收。
+见 [N4-01 报告](../../native_runtime/tests/n4-01-report.md)、[N4-02 报告](../../native_runtime/tests/n4-02-report.md)、[N4-03 报告](../../native_runtime/tests/n4-03-report.md)与 [N4-04 报告](../../native_runtime/tests/n4-04-report.md)。本轮补齐 N4-05 和 N4-06。下一项 N5-01 CLI 入口与协议。
 
 ### N4-05 首批交接（2026-11-19）
 

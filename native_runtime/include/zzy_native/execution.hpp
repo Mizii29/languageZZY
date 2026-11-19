@@ -10,7 +10,13 @@
 #include <charconv>
 namespace zzy {
 class ExecutionContext {
+#ifdef ZZY_NATIVE_GUI
+    bool sketch_gui=false,sketch_showing=false;
+#endif
 public:
+#ifdef ZZY_NATIVE_GUI
+    void enable_sketch_gui() {sketch_gui=true;}
+#endif
     using Done=std::function<void(Value)>;
     using Next=std::function<void()>;
     const Program snapshot;

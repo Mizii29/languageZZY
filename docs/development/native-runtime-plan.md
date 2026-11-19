@@ -202,3 +202,7 @@ N4-03 已按集中 SQLite 契约完成。`db.transaction`/`db.query` 使用 Wind
 ### N4-05 首批交付（2026-11-19）
 
 几何、图层、分组历史与 SVG 已有 [首批实现/验收报告](../../native_runtime/tests/n4-05-geometry-report.md)。按 N4 分轮规则保留 N4-05 未完成；其余 headless 项目读写/对象/图案/回放/事件继续作为下一批，N4-06 不提前进入。
+
+### N4-05 和 N4-06 交付（2026-11-19）
+
+项目 v1、对象、图案、回放及事件登记已通过 [N4-05 验收](../../native_runtime/tests/n4-05-report.md)。独立 Windows GUI 包完成窗口、事件及生命周期专项，见 [N4-06 验收](../../native_runtime/tests/n4-06-report.md)。下一项 N5-01。

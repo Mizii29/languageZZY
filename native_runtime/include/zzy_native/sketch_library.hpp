@@ -224,6 +224,9 @@ struct SketchHost {
     void clear_events(Doc& d) const;
     void unlink_event(Doc& d,Handle registration) const;
     Id interval(const Value& duration) const;
+#ifdef ZZY_NATIVE_GUI
+    Value show_native(Doc& d,const Value& canvas) const;
+#endif
     std::shared_ptr<Doc> canvas(Id width,Id height,std::string title) const {
         auto charge=reserve({0,3,128+4*title.size()});
         auto d=std::make_shared<Doc>();d->width=width;d->height=height;d->title=std::move(title);d->charge=std::move(charge);
@@ -387,3 +390,6 @@ struct SketchHost {
 #include "sketch_persistence.hpp"
 #include "sketch_events.hpp"
 #include "sketch_replay.hpp"
+#ifdef ZZY_NATIVE_GUI
+#include "sketch_gui.hpp"
+#endif

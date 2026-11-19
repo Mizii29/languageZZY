@@ -17,8 +17,8 @@
 | db.transaction/db.query | 可选宿主，完整迁移必需 | N4-03 SQLite | 已接入；MSVC 默认 ON、OFF 执行 E402/1。固定系统 SQLite、参数绑定/事务/同线程连接、取消/配额归还、并发及重启持久化见 [N4-03报告](../../native_runtime/tests/n4-03-report.md) |
 | Web 与 shape 合约 | 可选宿主，完整迁移必需 | N4-04 Web | 已接入独立回环 HTTP 服务；逐请求/shared、静态 OpenAPI、严格 JSON、有界执行和关闭见 [N4-04 报告](../../native_runtime/tests/n4-04-report.md)。`ZZY_NATIVE_WEB=OFF` 不构建该 EXE。 |
 | Python 嵌入 API | Python 宿主接口 | P08 | 仍由现有 Python 包提供；不承诺原生等价的公开嵌入 API。 |
-| Sketch 几何、图层、分组撤销/重做和 SVG | 可选宿主，完整迁移必需 | N4-05 第一批 | 已接入；`show` 返回 headless 失败 Result，`save_png` 返回缺后端失败 Result。见 [专项报告](../../native_runtime/tests/n4-05-geometry-report.md) |
-| Sketch 项目 v1、对象编辑、Drawing、回放、事件和 GUI | 可选宿主，完整迁移必需 | N4-05/06 | 未实现；执行未移植的函数返回 E402，不回退 Python；完整 Sketch 1.0 仍由 Python 后端提供 |
+| Sketch 几何、图层、历史、SVG、项目 v1、对象编辑、Drawing、回放和事件登记 | 可选宿主 | N4-05 | 已接入。Headless show 和无 PNG 后端返回明确的失败 Result。[验收报告](../../native_runtime/tests/n4-05-report.md) |
+| Sketch 窗口、事件派发和交互回放 | 可选宿主 | N4-06 | Windows x64 MSVC 独立原生窗口程序，需显式启用。真实窗口与安装副本均已验证。[验收报告](../../native_runtime/tests/n4-06-report.md) |
 | 资源/取消/JSON 诊断/0/1/2/130 | 核心 | N0 原型；N1—N5 正式接入 | 前端和核心运行配额、协作取消与恢复已验证；进程准备缓存未建立，真实终端 Ctrl+C 未验收 |
 | run/check/test 安装及无 Python 验收 | 核心 | N5—N8 | N4-03 最新两配置各 75 项 CTest、184 项库清单、SQLite 50 项与实际模块检查及安装副本已验证；不外推到其他可选宿主或 test |
 | VM/AOT/JIT/热更新/磁盘 Program 缓存 | 本项目延期/非目标 | N7 仅评估 | 不新增 build 命令、不透明选择后端；已有独立 AOT 实验不算本路线实现 |

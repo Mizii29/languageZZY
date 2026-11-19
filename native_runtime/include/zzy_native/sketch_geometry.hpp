@@ -177,6 +177,9 @@ inline Value SketchHost::invoke(const std::string& qualified,const std::vector<V
     if(op=="save_png"){idle(*d);return failure("PNG unavailable: no independent PNG backend is installed");}
     if(op=="show"){
         idle(*d);
+#ifdef ZZY_NATIVE_GUI
+        if(c.sketch_gui)return show_native(*d,receiver);
+#endif
         return failure("GUI unavailable: run requires --gui");
     }
     if(op=="svg_text"||op=="save_svg") {

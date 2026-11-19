@@ -38,6 +38,11 @@ int cli(const std::vector<std::string>& argv,bool& json,zzy::ResourcePolicy& pol
 #else
     constexpr auto sqlite_enabled="false";
 #endif
+#ifdef ZZY_NATIVE_GUI
+    constexpr auto gui_enabled="true";
+#else
+    constexpr auto gui_enabled="false";
+#endif
     bool options=true;
     for(std::size_t i=0;i<argv.size() && options;++i) {
         if(argv[i]=="--") options=false;
@@ -51,11 +56,14 @@ int cli(const std::vector<std::string>& argv,bool& json,zzy::ResourcePolicy& pol
     std::vector<std::string> arguments;
     std::optional<std::string> limits;
     options=true;
-    bool help=false;
+    bool help=false,gui=false;
     for(std::size_t i=0;i<argv.size();++i) {
         const auto& arg=argv[i];
         if(options && arg=="--") {options=false;continue;}
         if(options && arg=="--help") {help=true;continue;}
+#ifdef ZZY_NATIVE_GUI
+        if(options&&arg=="--gui") {gui=true;continue;}
+#endif
         if(options && (arg=="--diagnostic-format" || arg.find("--diagnostic-format=")==0)) {
             std::string format;
             if(arg=="--diagnostic-format") {if(i+1==argv.size()) throw zzy::FrontendError("E401","missing diagnostic format");format=argv[++i];}
@@ -75,9 +83,13 @@ int cli(const std::vector<std::string>& argv,bool& json,zzy::ResourcePolicy& pol
                  <<"Options (before or after command): --limits FILE --diagnostic-format text|json\n"
                  <<"run executes core ZZY; unported host capabilities and test report E402\n"
                  <<"check prepares an immutable Program without executing user code\n";
+#ifdef ZZY_NATIVE_GUI
+        std::cout<<"Use run FILE --gui to enable Sketch windows\n";
+#endif
         return 0;
     }
     const auto& command=arguments[0];
+    if(gui&&command!="run")throw zzy::FrontendError("E401","--gui requires run");
     if(command=="--version" && arguments.size()==1) {std::cout<<"0.0.0-n4-03-dev\n";return 0;}
     if(command=="test") {
         zzy::diagnostic(std::cerr,"E402","capability is not implemented by this backend","capability="+command,json);return 2;
@@ -91,7 +103,8 @@ int cli(const std::vector<std::string>& argv,bool& json,zzy::ResourcePolicy& pol
             "\"version\":\"0.0.0-n4-03-dev\",\"cxx_standard\":17,\"pointer_bits\":"+std::to_string(sizeof(void*)*8)+
             ",\"compiler\":"+zzy::quote(compiler())+",\"crt\":"+zzy::quote(crt())+
             ",\"supported_commands\":[\"info\",\"source-info\",\"lex\",\"check\",\"program-info\",\"run\"],\"python_fallback\":false,\"unicode_version\":\"15.0.0\","
-            "\"sqlite_enabled\":"+sqlite_enabled+",\"policy_status\":\"frontend and core execution limits enforced; program cache configuration only\",\"resource_policy\":"+
+            "\"sqlite_enabled\":"+sqlite_enabled+",\"sketch_headless\":true,\"sketch_native_gui\":"+gui_enabled+
+            ",\"policy_status\":\"frontend and core execution limits enforced; program cache configuration only\",\"resource_policy\":"+
             policy.canonical_json()+",\"resource_fingerprint\":"+zzy::quote(policy.fingerprint())+"}\n");
         return 0;
     }
@@ -103,6 +116,9 @@ int cli(const std::vector<std::string>& argv,bool& json,zzy::ResourcePolicy& pol
     if(command=="run") {
         const auto program=zzy::prepare(zzy::widen(arguments[1]),meter);
         zzy::ExecutionContext context(program,policy,cancelled,std::cout,std::cerr,json,&std::cin);
+#ifdef ZZY_NATIVE_GUI
+        if(gui)context.enable_sketch_gui();
+#endif
         try {context.execute();return 0;}
         catch(const zzy::RuntimeError& error) {context.failure(zzy::runtime_diagnostic(program.data(),error,json));return 1;}
         catch(const std::bad_alloc&) {std::cerr<<zzy::render_frontend(zzy::FrontendError("E211","allocation failed; phase=execution"),json);return 1;}

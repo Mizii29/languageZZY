@@ -101,3 +101,7 @@ N2-01—04现已实现，正式静态边界读取[Program契约](../../docs/deve
 ## N4-05 当前状态（首批）
 
 原生几何、图层、分组撤销/重做和 SVG 子集已通过专项、双配置回归、安装与实际模块检查，见 [首批报告](../../native_runtime/tests/n4-05-geometry-report.md)。集中规则在 [原生宿主契约](../../docs/development/native-stdlib-contract.md)，语言规则仍以 [Sketch](../../docs/features/sketch.md) 为准。N4-05 整项未完成，先继续项目/对象/Drawing/回放/事件和累计验收；不进入 N4-06 GUI，不称原生 Sketch 1.0。
+
+## N4-05 和 N4-06 交付状态
+
+上段为首批历史。项目 v1、对象和 Drawing、回放及事件登记已通过 [N4-05 验收](../../native_runtime/tests/n4-05-report.md)。使用独立 Windows GUI EXE 并显式传入 `--gui`，见 [N4-06 窗口验收](../../native_runtime/tests/n4-06-report.md) 和 [原生启动指南](../../native_runtime/README.md)。下一项 N5-01。

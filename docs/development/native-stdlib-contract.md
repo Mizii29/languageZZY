@@ -55,3 +55,7 @@ Sketch ABI 1.0 的语言层签名和几何规则见 [Sketch 契约](../features/
 项目 v1 与 Drawing 使用严格 JSON 和原子文件接口。读入时检查字段、对象引用、ID 高水位和撤销重做的前后状态，全部通过后才发布 Canvas。ID 高水位使用有符号 64 位字段。函数导出生成 ZZY 源码并经原生前端检查后提交。回放使用独立投影和有界检查点，只应用已提交的历史。回调及定时器归 Canvas 的请求堆所有，headless 不派发事件。时间 Quantity 向上取整为毫秒。
 
 headless show 返回失败 Result。save_png 在无独立后端时返回缺后端 Result。[逐接口矩阵](../../native_runtime/tests/capabilities.json) 和 [N4-05 验收](../../native_runtime/tests/n4-05-report.md) 记录了范围。
+
+## N4-06 原生 Sketch GUI
+
+独立入口为 `zzy-native-gui.exe run FILE --gui`。Windows 窗口线程负责 GDI、消息循环与 STA 文件对话框，解释器线程持有 Canvas、派发回调和处理 I/O。双方交换渲染投影和值数据。输入队列限 4096 条，溢出为 E211。长回调在执行检查点观察关窗，阻塞系统调用返回后才可继续协作取消。普通关窗清理当前会话登记、定时器和未完成的填充草稿，已提交的操作保留。定时器使用单调时钟并合并迟到触发。[启动指南](../../native_runtime/README.md) · [N4-06 验收](../../native_runtime/tests/n4-06-report.md)

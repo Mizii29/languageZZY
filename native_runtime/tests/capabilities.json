@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "stage": "N4-05 (headless)",
+  "stage": "N4-05 (headless) + N4-06 (Win32 GUI)",
   "profile": "Windows MSVC default build with ZZY_NATIVE_SQLITE=ON; OFF rejects db with E402",
   "features": [
     {
