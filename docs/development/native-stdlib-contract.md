@@ -42,4 +42,4 @@ Win32 提交规则参见 [MoveFileExW](https://learn.microsoft.com/en-us/windows
 
 ## 后续宿主
 
-N4-04 Web、N4-05 Sketch headless、N4-06 GUI 分别验收。每项开始前须登记原生依赖、线程、取消、资源及关闭规则。Web 以 [互联契约](../runtime/web.md) 为准，Sketch 以 [独立契约](../features/sketch.md) 为准。
+N4-04 原生 Web 由单独可选 EXE 提供，公开边界、线程、取消及关闭规则维护在 [Web 集中契约](../runtime/web.md#n4-04-原生-http-宿主)，不增添 ZZY 内置函数。N4-05 Sketch headless 和 N4-06 GUI 按 [Sketch 契约](../features/sketch.md) 分别验收。

@@ -1035,3 +1035,13 @@ N0/N1构建与N2-01—04静态出口已满足。未验证真实手动Ctrl+C、Sa
 本阶段出口满足，todo 已勾选 N4-03；N4-04 Web、N4-05 Sketch headless、N4-06 GUI 保持未完成。真实人工 Ctrl+C、Sanitizer、其他 OS、缺 VC Runtime 干净主机、Windows 更新后的其他 SQLite 组合、完整 N5 test 和性能未验证。下一项 N4-04。
 
 收尾：`scripts.ci static --output dist/native-n4-03-work/ci-static-final` 实际 `passed=true`；2083 项只是清单核对，没有声称完整执行。`git diff --check` 通过。证据归档 `benchmarks/results/native/n4-03-msvc-20261119` 保留 71 份 gzip 原始记录，审计确认 152 个原生文件、两配置各 10 个 EXE、安装/发布 SHA 和 51 个无关用户文件指纹一致。Debug/Release CLI SHA 分别 `6b1a2c2a313738669f7caa3cf5e4a9f1ef5b3a21118ba3aa6bf3534e11971749`、`8c31073acfa2af1009a8036c20d214bf5dca74ad1a6bd452271a5b4b25d5277f`。82 过程各含一条单列的预期父进程强杀，不据此声称 RAII 清理；同进程取消/回滚探针才是资源归还依据。本轮只暂存 N4-03 及共享文档相关段落，本地提交不推送；最终 SHA 见 Git 历史。
+
+## N4-04 原生 Web 迁移与验收（2026-11-19）
+
+从 `f8db7b1` 接续，在暂停前已有冻结堆桥接及固定依赖。续做独立 HTTP EXE、阶段边界、共享冻结、严格 JSON 转换、shape 布局与 OpenAPI，保留 Python 入口及手头其他修改。实现和命令见 [N4-04 报告](../../native_runtime/tests/n4-04-report.md)，错误路径与取消边界见 [集中契约](../runtime/web.md#n4-04-原生-http-宿主)。
+
+Debug/Release CTest 各 76/76，专项 HTTP 6/6、安装与源码外副本、禁用 Web 构建、PE/模块审计、独立 Schema 验证通过；Python Web 23/23，合约/嵌入/清单 29/29。实际处理并记录类型名冲突、MSVC Debug 节数限制、夹具保留字、临时响应拆包以及系统控制台子进程的审计差异。原始记录保存在 `dist/native-n4-04-work/`。
+
+项目静态检查 `python -X utf8 -m scripts.ci static --output dist/native-n4-04-work/ci-static` 返回 `passed: true`。保留上游 MIT 许可证的原始末尾空行，仅对该文件登记 Git 空白检查例外，并用暂存区 SHA-256 验证头文件和许可证。
+
+已勾选 N4-04。真实人工浏览器/Ctrl+C、Sanitizer、其他平台和完整 Python 核心回归未执行。本地提交，不推送；下一项 N4-05 Sketch headless。

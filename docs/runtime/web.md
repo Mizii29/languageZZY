@@ -103,3 +103,13 @@ Python整数保持int，受integer_bits约束，不经十进制/JSON字符串中
 每SQL执行期限1秒，进度检查每1000条SQLite指令；锁等待最多250ms。取消在SQLite检查点及取行之间检查；文件系统阻塞仍无硬终止保证。SQL及单行单元长度受io_payload_bytes/SQLite长度限额控制，结果按行转换并使用已有对象/槽/载荷预算，不fetchall。SQLite内部页缓存/RSS不属语言逻辑计量。只支持文本、整数、浮点、Null结果，Blob拒绝；Unicode和有限数沿用转换边界。SQLite使用Python自带sqlite3，核心check只解析，不打开数据库，不加载GUI/Web。
 
 P10补充：适配层错误不再通过业务响应shape验证；若业务显式绑定的状态码与适配错误重叠（如422/500/503），OpenAPI在该状态码生成anyOf（业务shape、适配错误包），同时描述两种合法传输结果。输入/响应合约错误包还要求path/reason，普通适配错误只有code。未列出的状态码保留默认响应描述。
+
+## N4-04 原生 HTTP 宿主
+
+Windows x64 单独入口：`zzy-native-web MODULE --route GET|POST /api/PATH FUNCTION [--route ...] [--port PORT] [--workers COUNT] [--timeout-ms MS] [--page FILE] [--shared] [--contracts FILE]`。固定 IPv4 回环 `127.0.0.1`，端口默认 8000，0 由系统分配，启动行公布实际端口。`--openapi` 要求 `--contracts`，只静态准备并向 stdout 导出同一 OpenAPI 3.1.1 文档后退出，不启动监听，不执行初始化。正常关闭退出 0，配置或启动失败退出 2，准备中取消退出 130。仍无语言层 Web 注册函数，不改 Python 入口或 Python 嵌入 API。
+
+协议解析由固定版本 [cpp-httplib](../../native_runtime/third_party/cpp-httplib/README.md) 处理，Windows 使用 Winsock。HTTP/1.0、1.1，每连接只处理一次请求。已解析的固定路由、Map 请求和响应、严格 JSON 和安全 Int、字段合约与状态码、页面、默认逐请求与显式 shared 沿用上文。本地页面是单文件启动快照，未提供 TLS、文件目录、WebSocket、代理或跨域能力。HTTP 语法错误在解释器入口前处理，`invalid_request` 是额外的传输层错误包；库级头数量（100）、单行或请求目标上限也可能先拒绝。应用计入框架提供的头键和值以及原始查询串。合约由同一静态布局生成和验证；组件名是原生快照内确定的标识。
+
+收体与解释执行各有独立期限（默认 5000ms，1–60000ms）。同时最多 1–16 个请求占用应用槽（默认 4）；额外四个传输线程用于识别并回复 503，传输排队也有固定上限，更外层的连接过载可能被直接关闭。解释器和支持取消的宿主在检查点响应超时、对端断连或服务关闭。408 表示已获准请求的收体超时；504 在执行线程完成协作清理后回送，应用槽持续占用到处理结束。停止监听后中断读体、取消执行并等待池退出；普通阻塞文件 I/O 等不会被硬终止。
+
+`--shared` 初始化成功后才发布；拒绝模块级可变绑定、可达 Lazy、Cell 捕获、宿主句柄和内置命名空间别名。服务持有冻结图，请求拥有独立根、调用帧、临时值、计量、标准流和 SQLite 事务；包括结构默认值引用的共享对象在内，写入报 E203，默认表达式创建的新值归当前请求。`zzy-native check` 只做静态准备，不加载 HTTP 宿主。验证见 [N4-04 报告](../../native_runtime/tests/n4-04-report.md)。

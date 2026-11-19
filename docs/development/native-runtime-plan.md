@@ -194,3 +194,7 @@ N4-02 已按依赖完成：四个文件和两个 JSON 接口已在 C++17 原生�
 N4-03 已按集中 SQLite 契约完成。`db.transaction`/`db.query` 使用 Windows SDK 系统 SQLite，连接和事务均请求所有权、同线程、幂等关闭；authorizer、绑定、1 秒查询期限、250ms 锁等待、取消和逻辑配额均有实现。MSVC Debug/Release CTest 各 75/75，四个同进程探针与 50 个独立 CLI 程序各通过；OFF 构建返回 E402/1；Release 安装和仓库外副本再次通过。报告、DLL sourceid/签名/哈希、失败原件及复现命令见 `native_runtime/tests/n4-03-report.md` 和本轮 `dist/native-n4-03-work`。没有把 SQLite 内部 RSS 当作语言配额，没有加载 Python，也没有修改 Python 应用文件格式。
 
 未验证人工 Ctrl+C、Sanitizer、其他 OS、缺 VC Runtime 主机、Web/Sketch/GUI 及全量 N5 test；下一项 N4-04 Web。
+
+### N4-04 交付更新（2026-11-19）
+
+原生 Web 已按 [集中契约](../runtime/web.md#n4-04-原生-http-宿主) 接入独立可选 EXE，离线构建使用固定版本 cpp-httplib 与 Winsock。真实 HTTP 覆盖默认/显式 shared、冻结与交错请求、shape 合约及静态 OpenAPI、容量/超时/断连/关闭、SQLite 取消回滚及重启。MSVC 两配置各 76/76 CTest，源码外安装副本和模块审计通过，见 [N4-04 报告](../../native_runtime/tests/n4-04-report.md)。下一项 N4-05，N4-06 仍待实现，Python 默认入口不变。

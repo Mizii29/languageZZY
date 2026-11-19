@@ -1,0 +1,8 @@
+(shape) Task { title: (String); id: (Int); ratio: (Float) := -(1.0); }
+(shape) Payload {
+    task: Task;
+    optional: (Null) := (null);
+    tags: (Array);
+    extras: (Map);
+    done: (Bool) := (false);
+}

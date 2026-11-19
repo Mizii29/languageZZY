@@ -1,6 +1,6 @@
 # 原生能力矩阵与延期协议（N0-02）
 
-2026-11-19，原生版本 0.0.0-n4-03-dev。Python 仍是默认入口。原生 check 仅做静态准备；run 已执行核心语言及 N4-01/02 核心标准库，MSVC 默认构建另启用 N4-03 SQLite。
+2026-11-19，核心原生产物版本 0.0.0-n4-03-dev，MSVC 默认构建包含 N4-03 SQLite 和独立 N4-04 Web EXE。Python 仍是默认入口。原生 check 仅做静态准备；run 已执行核心语言及 N4-01/02 核心标准库。
 逐项清单见 [capabilities.json](../../native_runtime/tests/capabilities.json)：每个 AST kind、实际 Value kind、宿主函数都有独立条目。
 `implemented=false` 表示当前原生后端未实现。[N3报告](../../native_runtime/tests/n3-report.md)保存核心运行验收范围；[N2报告](../../native_runtime/tests/n2-report.md)保存静态 Program 验收历史。
 
@@ -15,7 +15,8 @@
 | core/io/array/text/math/data/unit 全部登记函数 | 核心 | N4 核心 | N4-01/02 已接入 35 个冻结宿主签名；资源、取消、回调和错误清理见 [标准库契约](native-stdlib-contract.md) |
 | 文件读写与原子提交、严格 JSON | 核心 | N4-02 | 已接入四个文件和两个 JSON 接口；编码、原子提交、严格值标签和同进程恢复见 [N4-02 报告](../../native_runtime/tests/n4-02-report.md) |
 | db.transaction/db.query | 可选宿主，完整迁移必需 | N4-03 SQLite | 已接入；MSVC 默认 ON、OFF 执行 E402/1。固定系统 SQLite、参数绑定/事务/同线程连接、取消/配额归还、并发及重启持久化见 [N4-03报告](../../native_runtime/tests/n4-03-report.md) |
-| Web/Python 嵌入/shape 合约 | 可选宿主，完整迁移必需 | N4 Web | 延期；不声称 Python embedding API 已原生化；ASGI 替代协议需该阶段决策 |
+| Web 与 shape 合约 | 可选宿主，完整迁移必需 | N4-04 Web | 已接入独立回环 HTTP 服务；逐请求/shared、静态 OpenAPI、严格 JSON、有界执行和关闭见 [N4-04 报告](../../native_runtime/tests/n4-04-report.md)。`ZZY_NATIVE_WEB=OFF` 不构建该 EXE。 |
+| Python 嵌入 API | Python 宿主接口 | P08 | 仍由现有 Python 包提供；不承诺原生等价的公开嵌入 API。 |
 | 所有 sketch 类型/函数、几何/SVG/历史/事件/GUI | 可选宿主，完整迁移必需 | N4 Sketch | 延期；headless 不加载 GUI；PNG 原本未支持，不算迁移退化 |
 | 资源/取消/JSON 诊断/0/1/2/130 | 核心 | N0 原型；N1—N5 正式接入 | 前端和核心运行配额、协作取消与恢复已验证；进程准备缓存未建立，真实终端 Ctrl+C 未验收 |
 | run/check/test 安装及无 Python 验收 | 核心 | N5—N8 | N4-03 最新两配置各 75 项 CTest、184 项库清单、SQLite 50 项与实际模块检查及安装副本已验证；不外推到其他可选宿主或 test |
@@ -37,4 +38,4 @@ N0 的 1/130 由独立生命周期探针验证，不能据此宣传 run 已实�
 现有 1738 外部用例原地保留；N6 将全部映射为原生用例并单列延期数，绝不把未支持计作通过。
 重评估按计划对应阶段；N8 前默认入口不变。P12/P13 独立进度不因本矩阵调整。
 
-N1 用户顺序例外与 N2 公开边界见 [前端集中契约](native-frontend-contract.md) 与 [Program 契约](native-program-contract.md)。N3 同进程连续核心请求、N4 文件和 SQLite 错误/取消后的同进程恢复已验证；Web/其他宿主的跨请求验收留各自阶段及 N6。
+N1 用户顺序例外与 N2 公开边界见 [前端集中契约](native-frontend-contract.md) 与 [Program 契约](native-program-contract.md)。N3 同进程连续核心请求、N4 文件和 SQLite 错误/取消后的恢复及原生 Web 真实交错请求已验证；完整应用对照留 N6。

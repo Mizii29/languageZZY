@@ -160,6 +160,10 @@ P08-04/05本轮新增SQLite事务与独立任务示例；实际db签名、提交
 
 `native_runtime/tests/native/sqlite.cpp` 的 `lifecycle`、`cancellation`、`concurrency`、`resources` 四项必须按名称收集；CTest 空选择门禁拒绝零用例。`native_runtime/tools/test-sqlite.ps1` 保留 50 个独立程序和外部答案，覆盖参数绑定、事务成功/回滚、锁/并发、Unicode/持久化、禁止 SQL、坏结果、资源边界、超时和后续恢复；错误路径检查稳定错误码和无后端堆栈。`test-sqlite-modules.ps1` 独立核对 System32 DLL、签名、空 PATH/无效 PYTHONPATH、进程树及无 Python/Tk。Debug/Release 各 75/75 CTest、50/50 SQLite CLI；OFF 构建 `sqlite-disabled`/`cli-info` 为 2/2。安装副本再次执行通用、文件/JSON 和 SQLite 专项。未验证人工 Ctrl+C、Sanitizer、其他 OS、干净缺 CRT 主机及 Web/Sketch/GUI。
 
+## N4-04 原生 Web（2026-11-19）
+
+独立 [HTTP 观察器](../../native_runtime/tools/test-web.py) 接入 CTest `web-http`，实跑 6 组固定期望：原生 GET/POST 与静态页、严格 JSON 及错误恢复、默认/shared 合约与确定性生成、启动拒绝、基于同步点的并发隔离和冻结、收体/执行超时与断连/关闭、SQLite 回滚重启。Debug/Release 各 76/76，源码外副本同样运行 6 组并审计实际加载模块。原 Python Web 23/23 和合约/嵌入/盘点 29/29 通过。未执行人工浏览器、亲手 Ctrl+C、Sanitizer 或 GUI，详细边界见 [N4-04 报告](../../native_runtime/tests/n4-04-report.md)。
+
 ## P10-01 / P10-06 实际覆盖
 
 完整映射与命令见[tests/p10](../../tests/p10/README.md)：14项核心方法覆盖固定答案、真实ZZY执行、生成CLI及check零执行、默认/Null/严格数值/拒绝/路径/资源/确定性；新增5项真实HTTP覆盖默认/shared、交错并发、可变容器隔离、输入前置拒绝、业务与响应错误及恢复。另4项独立Draft202012Validator检查标准子集并明确Int/Float差异，显式纳入Web专项。原有14项HTTP和全部核心用例保留；不把本次必要验证勾选成P10-08。

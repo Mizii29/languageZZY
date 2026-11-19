@@ -1,0 +1,62 @@
+(use) "model.zzy" (as) model;
+(shape) Response { status; body; }
+(shape) Box { values := []; }
+(machine) Gate { closed -- "open" --> opened; }
+(zno) original := [7, 8];
+(zno) nested := [Gate("closed")];
+(zno) sharedMap := data.map();
+data.set(sharedMap, "items", original);
+io.write_text("started.txt", "initialized");
+
+(addnew) inspectRequest(request) { (return) Response::{status: 200, body: request}; }
+(addnew) echo(request) { (return) Response::{status: 200, body: data.get(request, "body")}; }
+(addnew) business(request) {
+    (zno) body := data.get(request, "body");
+    (zno) task := data.get(body, "task");
+    (zif?:) data.get(task, "title") == "" { (return) Response::{status: 409, body: "title required"}; }
+    (zif?:) data.get(task, "title") == "bad output" { (return) Response::{status: 200, body: data.map()}; }
+    (return) Response::{status: 200, body: body};
+}
+(addnew) mutate(request) {
+    array.push(original, 9);
+    (return) Response::{status: 200, body: original};
+}
+(addnew) mutateMap(request) {
+    data.set(sharedMap, "items", []);
+    (return) Response::{status: 200, body: sharedMap};
+}
+(addnew) moveGate(request) {
+    nested[0] << "open";
+    (return) Response::{status: 200, body: nested[0].state};
+}
+(addnew) local(request) {
+    (zno) box := Box::{};
+    array.push(box.values, data.get(request, "body"));
+    (return) Response::{status: 200, body: [array.sum(original), box.values]};
+}
+(addnew) rendezvous(request) {
+    (zno) body := data.get(request, "body");
+    (zyes) other := "ready-a.txt";
+    (zif?:) body == "a" { other <- "ready-b.txt"; }
+    (zno) box := Box::{};
+    array.push(box.values, body);
+    io.write_text("ready-" + body + ".txt", "ready");
+    (while) (true) {
+        (?_?) io.read_text(other) {
+            (^_^)(textValue) => { (return) Response::{status: 200, body: box.values}; }
+            (T_T)(error) => {}
+        }
+    }
+}
+(addnew) unsupported(request) { (return) Response::{status: 200, body: (^_^)(42)}; }
+(addnew) big(request) { (return) Response::{status: 200, body: 9007199254740992}; }
+(addnew) badStatus(request) { (return) Response::{status: (true), body: 1}; }
+(addnew) cycle(request) {
+    (zno) value := [];
+    array.push(value, value);
+    (return) Response::{status: 200, body: value};
+}
+(addnew) huge(request) {
+    (return) Response::{status: 200, body: [data.get(request, "body"), data.get(request, "body")]};
+}
+(addnew) spin(request) { (while) (true) {} }

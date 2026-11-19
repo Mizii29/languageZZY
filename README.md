@@ -179,4 +179,4 @@ P08-04/05本轮新增SQLite事务与独立任务示例；实际db签名、提交
 
 ## 独立原生实验线 NATIVE-01
 
-原生阶段与 P12/P13 分开，Python 仍为默认入口。原生 `run` 已执行核心 ZZY 和 N4-01/02 标准库、文件与严格 JSON；N4-03 已接入 `db.transaction`、`db.query`。MSVC 默认按需加载 Windows 系统 SQLite，不加载 Python；可显式关闭该能力。`check` 仅静态准备，不执行用户代码或初始化宿主；`test` 仍 E402/2。最新 Debug/Release 各 75/75 CTest，SQLite CLI 各 50/50，事务、并发、取消、资源、清理和源码外发布副本已验收。见[启动与独立 SQLite 演示](native_runtime/README.md)、[集中原生契约](docs/development/native-stdlib-contract.md)、[N4-03报告](native_runtime/tests/n4-03-report.md)。Web、Sketch headless/GUI、真实人工 Ctrl+C、Sanitizer、其他 OS 和缺 CRT 主机未验收；下一项 N4-04，不宣称完整 N4。
+原生阶段与 P12/P13 分开，Python 仍为默认入口。原生 `run` 已执行核心语言、核心标准库和可选 SQLite；单独的 `zzy-native-web.exe` 提供本地 HTTP、逐请求和显式 shared、shape 合约与 OpenAPI，不加载 Python。`check` 只做静态准备，`test` 仍返回 E402/2。Debug/Release CTest 各 76/76，发布副本已在仓库外验证。见[启动和演示](native_runtime/README.md)、[集中原生契约](docs/development/native-stdlib-contract.md)及 [N4-04 报告](native_runtime/tests/n4-04-report.md)。下一项 N4-05 Sketch headless；GUI 待单独验收。

@@ -2,7 +2,7 @@
 
 独立 C++17 AST 解释器。原生 `run` 执行核心 ZZY，已接入 `io`、`array`、`text`、`math`、`data` 和 `unit` 的 35 个冻结核心接口，含 UTF-8 文件/原子保存和严格 JSON；MSVC 默认构建另支持 `db.transaction`、`db.query`。`check` 仍只静态准备。未移植的宿主能力执行时报告 E402/1；`test` 报告 E402/2，留给 N5。Python 仍为默认入口，原生进程不回退 Python。
 
-验收范围及产物见 [N4-03报告](tests/n4-03-report.md)、[N4-02报告](tests/n4-02-report.md)、[N4-01报告](tests/n4-01-report.md)、[N3报告](tests/n3-report.md) 与 [能力矩阵](../docs/development/native-runtime-capability.md)。前端历史保存在 [N2报告](tests/n2-report.md)；静态入口见 [Program契约](../docs/development/native-program-contract.md)。
+验收范围及产物见 [N4-04报告](tests/n4-04-report.md)、[N4-03报告](tests/n4-03-report.md)、[N4-02报告](tests/n4-02-report.md)、[N4-01报告](tests/n4-01-report.md)、[N3报告](tests/n3-report.md) 与 [能力矩阵](../docs/development/native-runtime-capability.md)。前端历史保存在 [N2报告](tests/n2-report.md)；静态入口见 [Program契约](../docs/development/native-program-contract.md)。
 
 ## 在本机运行核心程序
 
@@ -39,7 +39,7 @@ if ($LASTEXITCODE -ne 0) { throw 'Release install failed' }
 & native_runtime/tools/install-smoke.ps1 -Executable dist/native-stage/bin/zzy-native.exe -Output dist/native-installed-smoke-new.json
 ```
 
-Visual Studio 是多配置生成器；EXE 在 `build/native-debug/Debug` 和 `build/native-release/Release`。N4-03 CTest 清单为 75 项，保留 N4-02 全部 69 项，新增 SQLite 四个同进程探针、空选择失败门禁和 50 条 CLI 固定期望；不能省略 `--no-tests=error`。配置、构建、CTest 和安装不下载依赖、不调用 Python。
+Visual Studio 是多配置生成器；EXE 在 `build/native-debug/Debug` 和 `build/native-release/Release`。N4-04 默认 CTest 清单为 76 项，保留 N4-03 的 75 项，另加真实 TCP 的 `web-http`；不能省略 `--no-tests=error`。构建和安装不下载依赖；启用 Web 且启用测试时，CTest 使用 Python 3.10+ 标准库作为 HTTP 测试客户端，可用 `-DZZY_NATIVE_WEB_TEST_PYTHON=绝对路径` 指定。两个原生程序运行时都不依赖 Python。
 
 源码外专项与发布副本复现（Output和发布目录必须新建）：
 
@@ -60,9 +60,33 @@ if ($LASTEXITCODE -ne 0) { throw 'CLI boundary tests failed' }
 
 每配置的验收包含静态检查、核心运行、生命周期及无 Python 检查。子进程 PATH 为空、PYTHONPATH 无效；报告保留 PE 导入、实际 CLI 模块/进程树、加载路径、版本、源码及 EXE 哈希。MSVC 需显式指定 BuildOrigin、Configuration 和 Dumpbin。Python 只协调既有固定清单，不提供原生运行时，也不生成答案。所有证据路径须为新路径。
 
-MSVC Debug /MDd仅开发机测试，不分发；Release /MD使用本机已有Microsoft VC runtime14.50.35719.0与系统UCRT。发布目录只含Release EXE，未私装或附带运行库。缺CRT干净机器尚未验证，不能承诺任意Windows裸机直接运行。已有MinGW辅助preset和clang-cl没有在本轮验证。
+MSVC Debug /MDd仅开发机测试，不分发；Release /MD使用本机已有Microsoft VC runtime14.50.35719.0与系统UCRT。发布目录包含 Release EXE，启用 Web 时附带 MIT 许可证。未私装或附带运行库。缺CRT干净机器尚未验证，不能承诺任意Windows裸机直接运行。已有MinGW辅助preset和clang-cl没有在本轮验证。
 
-真实手动 Ctrl+C、Sanitizer、其他平台、完整 Python/Web/GUI 回归与性能未验收。Web、Sketch headless/GUI 仍延期；N4-01—03 已满足各自子任务，不宣称完整 N4。文件和 SQLite 探针覆盖提交失败/取消/配额和同进程恢复；JSON 读写用显式栈。下一项为 N4-04 Web。
+真实手动 Ctrl+C、Sanitizer、其他平台、完整 Python/GUI 回归与性能未验收。N4-01—04 已满足各自子任务；下一项为 N4-05 Sketch headless，N4-06 GUI 仍待实现。
+
+## 原生 Web 演示
+
+MSVC 默认构建并安装独立 `zzy-native-web.exe`，仅监听本机。通过 `-DZZY_NATIVE_WEB=OFF` 关闭该产物，核心入口继续可用。正式接口和限制见 [Web 集中契约](../docs/runtime/web.md#n4-04-原生-http-宿主)。
+
+```powershell
+.\build\native-release\Release\zzy-native-web.exe examples/web/app.zzy --route GET /api/hello hello --route POST /api/greet greet --page examples/web/index.html --port 8001
+```
+
+打开 [http://127.0.0.1:8001/](http://127.0.0.1:8001/) 使用同源 GET/POST 页面，或在另一终端执行：
+
+```powershell
+curl.exe http://127.0.0.1:8001/api/hello
+Invoke-RestMethod http://127.0.0.1:8001/api/greet -Method Post -ContentType application/json -Body '{"name":"ZZY"}'
+```
+
+终端 Ctrl+C 关闭服务。shape 合约可静态导出，也可以在服务启动时启用：
+
+```powershell
+.\build\native-release\Release\zzy-native-web.exe examples/contracts/app.zzy --route POST /api/tasks submit --contracts examples/contracts/routes.json --openapi
+.\build\native-release\Release\zzy-native-web.exe examples/contracts/app.zzy --route POST /api/tasks submit --contracts examples/contracts/routes.json --shared --port 8002
+```
+
+在另一终端向 `http://127.0.0.1:8002/api/tasks` POST `{"task":{"title":"ZZY"}}`，或 GET `/openapi.json`。POST `{"task":{}}` 会得到 HTTP 422，路径为 `body.task.title`。省略 `--shared` 即回到默认逐请求初始化。
 
 ## 原生 SQLite 演示与依赖
 

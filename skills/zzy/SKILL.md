@@ -93,3 +93,7 @@ N2-01—04现已实现，正式静态边界读取[Program契约](../../docs/deve
 ## N4-03 当前状态（2026-11-19）
 
 上文阶段性状态以本条为准：N4-03 SQLite 已实现并验收。读取 `docs/development/native-stdlib-contract.md` 和 `native_runtime/tests/n4-03-report.md`；db 语义仍以 `docs/runtime/web.md` 集中契约为准。MSVC 默认 SQLite ON，OFF 运行 E402/1，check 不初始化宿主；固定 System32 DLL、同线程连接、参数绑定、事务回滚、取消/资源/关闭、并发和持久化均有专项证据。原生 Web、Sketch headless、GUI 保持未完成，下一项 N4-04，不称完整 N4；Python 默认入口不变。
+
+## N4-04 当前状态
+
+原生 Web 已验收。依赖、线程和公开入口以 [Web 集中契约](../../docs/runtime/web.md#n4-04-原生-http-宿主)为准；本地示例见 [原生指南](../../native_runtime/README.md)，门禁见 [N4-04 报告](../../native_runtime/tests/n4-04-report.md)。默认逐请求或显式 shared，核心 check 不加载 Web；Python 仅参与运行 HTTP 测试客户端。下一项 N4-05 Sketch headless。

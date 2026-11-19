@@ -4,11 +4,11 @@ inline void ExecutionContext::array_library(const std::string& name,const std::v
     const auto source=args[0];auto& input_array=object(source);
     if(name=="array.map" || name=="array.filter") {
         struct Iteration {
-            Value source,result,callback;std::shared_ptr<HeapState> heap;
-            ~Iteration() {if(heap && !heap->closed) --heap->get(source.ref()).active;}
+            Value source,result,callback;std::shared_ptr<HeapState> heap;bool active=false;
+            ~Iteration() {if(active && heap && !heap->closed) --heap->get(source.ref()).active;}
         };
         auto state=std::make_shared<Iteration>();state->source=source;state->callback=args[1];
-        state->result=array({},site);state->heap=heap.state;++input_array.active;
+        state->result=array({},site);state->heap=heap.state;if(!input_array.frozen) {++input_array.active;state->active=true;}
         auto step=std::make_shared<std::function<void(std::size_t)>>();std::weak_ptr<std::function<void(std::size_t)>> weak=step;
         *step=[this,state,name,site,done,weak](std::size_t index) {
             point();if(index==object(state->source).edges.size()) {done(state->result);return;}

@@ -1,0 +1,3 @@
+httplib.h -text
+# Preserve the upstream license's final blank line.
+LICENSE -text whitespace=-blank-at-eof

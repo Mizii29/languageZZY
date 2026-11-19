@@ -4,6 +4,10 @@
 namespace zzy {
 namespace json_detail {
 struct Invalid : std::runtime_error {using std::runtime_error::runtime_error;};
+inline bool safe_http_int(const BigInt& value) {
+    static const BigInt min(INT64_C(-9007199254740991)),max(INT64_C(9007199254740991));
+    return value>=min && value<=max;
+}
 inline bool digit(char32_t c) {return c>=U'0' && c<=U'9';}
 inline bool space(char32_t c) {return c==U' ' || c==U'\t' || c==U'\r' || c==U'\n';}
 struct NumericLocale {
@@ -16,6 +20,7 @@ struct NumericLocale {
 }
 
 inline void ExecutionContext::map_insert(const Value& map,std::string key,const Value& key_value,const Value& value,NodeId site) {
+    writable(map,site);
     auto& n=object(map);
     check("container_items",n.names.size()+1,site);
     Lease space(heap.state,{0,2,key.size()},site);
@@ -43,9 +48,10 @@ struct ExecutionContext::JsonReader {
     NodeId site;
     std::u32string_view text;
     std::size_t index=0;
+    bool http;
     std::vector<Frame> stack;
 
-    JsonReader(ExecutionContext& context,NodeId at,std::u32string_view input):c(context),site(at),text(input) {}
+    JsonReader(ExecutionContext& context,NodeId at,std::u32string_view input,bool http_=false):c(context),site(at),text(input),http(http_) {}
     char32_t peek() const {return index<text.size()?text[index]:U'\0';}
     void tick() const {if((index&4095)==0) c.point();}
     void spaces() {while(json_detail::space(peek())) {tick();++index;}}
@@ -143,6 +149,7 @@ struct ExecutionContext::JsonReader {
             if(end!=token.c_str()+token.size() || !std::isfinite(n)) throw json_detail::Invalid("JSON Float 必须有限");
             return c.real(n,site);
         }
+        if(http && digits>16) throw json_detail::Invalid("HTTP Int outside safe range");
         auto result=c.zero_;
         for(auto i=start+(negative?1:0);i<index;++i) {
             c.point();
@@ -155,6 +162,7 @@ struct ExecutionContext::JsonReader {
             scratch.release();
             result=c.integer(std::move(value),site);
         }
+        if(http && !json_detail::safe_http_int(c.object(result).integer)) throw json_detail::Invalid("HTTP Int outside safe range");
         return result;
     }
     Value value() {
@@ -219,8 +227,9 @@ struct ExecutionContext::JsonWriter {
     std::size_t bytes=0;
     Lease buffer;
     std::vector<Frame> stack;
-    std::set<std::uint64_t> active;
-    JsonWriter(ExecutionContext& context,NodeId at):c(context),site(at),buffer(context.heap.state,{},at) {}
+    std::set<std::pair<std::uint64_t,std::uint64_t>> active;
+    bool http;
+    JsonWriter(ExecutionContext& context,NodeId at,bool http_=false):c(context),site(at),buffer(context.heap.state,{},at),http(http_) {}
 
     void reserve(std::size_t points,std::size_t size) {
         c.check("text_codepoints",output.size()+points,site);
@@ -269,6 +278,7 @@ struct ExecutionContext::JsonWriter {
             const auto& n=c.object(cursor.value);
             const bool array=n.kind=="Array",map=n.kind=="Map",shape=n.kind=="Shape";
             if(!array && !map && !shape) {
+                if(http && n.kind=="Int" && !json_detail::safe_http_int(n.integer)) throw json_detail::Invalid("HTTP Int outside safe range");
                 if(n.kind=="String") quoted(n.characters);
                 else if(n.kind=="Int" || n.kind=="Float" || n.kind=="Bool" || n.kind=="Null") ascii(c.scalar_text(cursor.value,site));
                 else throw json_detail::Invalid(n.kind+" 不能序列化");
@@ -277,14 +287,14 @@ struct ExecutionContext::JsonWriter {
             }
             if(!cursor.entered) {
                 c.check("value_depth",stack.size(),site);
-                if(!active.insert(cursor.value.ref().id).second) throw json_detail::Invalid("循环引用不能序列化");
+                if(!active.insert({cursor.value.ref().owner,cursor.value.ref().id}).second) throw json_detail::Invalid("循环引用不能序列化");
                 cursor.entered=true;
                 punctuation(array?U'[':U'{');
             }
             const auto count=array?n.edges.size():n.names.size();
             if(cursor.index==count) {
                 punctuation(array?U']':U'}');
-                active.erase(cursor.value.ref().id);
+                active.erase({cursor.value.ref().owner,cursor.value.ref().id});
                 stack.pop_back();
                 continue;
             }

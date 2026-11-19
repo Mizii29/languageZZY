@@ -44,6 +44,7 @@ struct RuntimeNode {
     NodeId syntax=no_node;
     std::size_t active=0,version=0;
     std::string state="NEW";
+    bool frozen=false;
     std::shared_ptr<RuntimeError> failure;
     // Opaque host ownership only; no language field lookup enters this payload.
     std::shared_ptr<void> native_payload;
@@ -55,6 +56,9 @@ struct HeapState : std::enable_shared_from_this<HeapState> {
     std::uint64_t owner,next=1;bool closed=false,fail_allocation=false;
     std::unordered_map<std::uint64_t,std::unique_ptr<RuntimeNode>> nodes;
     std::unordered_map<std::uint64_t,std::size_t> roots;
+    // A published graph has no mutable nodes or root counters touched by readers.
+    // Its service owner outlives all attached requests. Quotas stay with that owner.
+    std::shared_ptr<HeapState> shared;
     static std::uint64_t new_owner() {static std::atomic<std::uint64_t> next_owner{1};return next_owner.fetch_add(1);}
     HeapState(ResourcePolicy p,std::atomic<bool>& c):policy(std::move(p)),cancelled(c),owner(new_owner()) {}
     void point() const {if(cancelled.load(std::memory_order_relaxed)) throw Cancelled{};if(closed) throw std::logic_error("closed execution heap");}
@@ -63,11 +67,12 @@ struct HeapState : std::enable_shared_from_this<HeapState> {
         if(value>limit) throw RuntimeError("E211","resource limit exceeded: "+key+", limit="+std::to_string(limit)+", requested="+std::to_string(value),site);
     }
     RuntimeNode& get(Handle h) const {
+        if(!closed && shared && h.owner==shared->owner) return shared->get(h);
         if(closed || h.owner!=owner || !nodes.count(h.id)) throw std::logic_error("foreign or released runtime value");
         return *nodes.at(h.id);
     }
     Value pin(Handle h) {
-        get(h);auto token=std::make_shared<RootToken>(weak_from_this(),h);++roots[h.id];return Value(std::move(token));
+        get(h);auto token=std::make_shared<RootToken>(weak_from_this(),h);if(h.owner==owner) ++roots[h.id];return Value(std::move(token));
     }
     void refund(Charge x) {used.objects-=x.objects;used.slots-=x.slots;used.payload-=x.payload;}
     bool fits(Charge x) const {
@@ -80,7 +85,7 @@ struct HeapState : std::enable_shared_from_this<HeapState> {
         while(!work.empty()) {
             point();const auto id=work.back();work.pop_back();if(!seen.insert(id).second) continue;
             const auto it=nodes.find(id);if(it==nodes.end()) throw std::logic_error("dangling root");
-            for(auto h:it->second->edges) {if(h.owner!=owner) throw std::logic_error("foreign heap edge");work.push_back(h.id);}
+            for(auto h:it->second->edges) {if(h.owner==owner) work.push_back(h.id);else if(!shared || h.owner!=shared->owner) throw std::logic_error("foreign heap edge");}
         }
         for(auto it=nodes.begin();it!=nodes.end();) {
             if(!seen.count(it->first)) {refund(it->second->charge);it=nodes.erase(it);}else ++it;
@@ -91,9 +96,9 @@ struct HeapState : std::enable_shared_from_this<HeapState> {
         check("runtime_objects",used.objects+x.objects,site);check("runtime_slots",used.slots+x.slots,site);check("runtime_payload_bytes",used.payload+x.payload,site);
         used=used+x;peak.objects=std::max(peak.objects,used.objects);peak.slots=std::max(peak.slots,used.slots);peak.payload=std::max(peak.payload,used.payload);
     }
-    void close() noexcept {nodes.clear();roots.clear();used={};closed=true;}
+    void close() noexcept {nodes.clear();roots.clear();shared.reset();used={};closed=true;}
 };
-inline RootToken::~RootToken() {if(auto h=heap.lock()) if(!h->closed) {const auto it=h->roots.find(handle.id);if(it!=h->roots.end() && --it->second==0) h->roots.erase(it);}}
+inline RootToken::~RootToken() {if(auto h=heap.lock()) if(!h->closed && handle.owner==h->owner) {const auto it=h->roots.find(handle.id);if(it!=h->roots.end() && --it->second==0) h->roots.erase(it);}}
 class Lease {
     std::shared_ptr<HeapState> heap_;Charge charge_;
 public:

@@ -37,11 +37,13 @@ private:
     std::string flow;Value returned;NodeId return_site=no_node;
     bool diagnostic_json;
     friend struct ExecutionProbe;
+    friend struct WebRuntime;
     const AstNode& ast(NodeId id) const {return program.nodes.at(id);}
     RuntimeNode& object(const Value& v) const {return heap.get(v);}
     [[noreturn]] void error(NodeId site,const std::string& code,const std::string& text) const {throw RuntimeError(code,text,site);}
     void check(const std::string& key,std::uint64_t n,NodeId site) const {heap.state->check(key,n,site);}
     void point() const {heap.state->point();}
+    void writable(const Value& value,NodeId site) const {if(object(value).frozen) error(site,"E203","shared value is frozen");}
     void push(Next action) {tasks.push_back({std::move(action)});}
     Value make(std::string kind,Charge charge,NodeId site,std::vector<Value> children={}) {
         RuntimeNode n;n.kind=std::move(kind);for(const auto& v:children) n.edges.push_back(v.ref());return heap.allocate(std::move(n),charge,site);
@@ -108,7 +110,7 @@ private:
     }
     Value array(const std::vector<Value>& values,NodeId site) {check("container_items",values.size(),site);return make("Array",{1,values.size(),0},site,values);}
     void append(const Value& a,const Value& v,NodeId site) {
-        auto& n=object(a);if(n.active) error(site,"E206","cannot resize an actively traversed Array");check("container_items",n.edges.size()+1,site);
+        writable(a,site);auto& n=object(a);if(n.active) error(site,"E206","cannot resize an actively traversed Array");check("container_items",n.edges.size()+1,site);
         Lease space(heap.state,{0,1,0},site);n.edges.push_back(v.ref());n.charge.slots+=space.transfer().slots;++n.version;
     }
     Value result(bool success,const Value& v,NodeId site) {
@@ -126,6 +128,7 @@ private:
         auto v=make(ns?"Namespace":"Function",{1,1,0},site);object(v).name=name;builtins.emplace(name,v);return v;
     }
     Value field(const Value& owner,const std::string& name,NodeId site,bool write=false) {
+        if(write) writable(owner,site);
         auto& n=object(owner);
         if(n.kind=="Namespace") {
             if(write) error(site,"E203","namespace is read only");const auto qualified=n.name+"."+name;bool known=false;
@@ -149,6 +152,7 @@ private:
         return static_cast<std::size_t>(std::stoull(i.decimal()));
     }
     Value index(const Value& owner,const Value& key,NodeId site,bool write=false) {
+        if(write) writable(owner,site);
         auto& n=object(owner);if(n.kind!="Array" && n.kind!="String") error(site,"E201","index needs Array/String");
         typecheck(Type{"Int",{}},key,site,false);if(write && n.kind=="String") error(site,"E203","String is immutable");
         const auto i=index_number(key,n.kind=="Array"?n.edges.size():n.characters.size(),site);
@@ -353,7 +357,7 @@ private:
     struct Display {std::string text;std::vector<Lease> pieces;std::size_t count=0;};
     Display display(const Value& value,NodeId site) {
         struct Cursor {Value value;std::size_t index=0;bool started=false;};
-        Display result;std::vector<Cursor> todo{{value}};std::set<std::uint64_t> active;
+        Display result;std::vector<Cursor> todo{{value}};std::set<std::pair<std::uint64_t,std::uint64_t>> active;
         const auto append_text=[this,site,&result](std::string_view text) {
             const auto size=codepoints(text);check("text_codepoints",result.count+size,site);
             result.pieces.emplace_back(heap.state,Charge{0,0,4*size},site);result.count+=size;result.text+=text;
@@ -361,7 +365,7 @@ private:
         while(!todo.empty()) {
             point();auto& cursor=todo.back();const auto& n=object(cursor.value);
             const bool composite=n.kind=="Array" || n.kind=="Shape" || n.kind=="Map" || n.kind=="Result" || n.kind=="Range";
-            const auto identity=cursor.value.ref().id;
+            const auto identity=std::make_pair(cursor.value.ref().owner,cursor.value.ref().id);
             if(!composite || (!cursor.started && active.count(identity))) {
                 append_text(composite?"<cycle>":scalar_text(cursor.value,site));todo.pop_back();continue;
             }
@@ -503,7 +507,7 @@ inline void ExecutionContext::eval(NodeId id,Done done) {
             const auto call_id=ast(id).children[1];const auto previous=current;current=source;eval(call_id,[this,previous,done](Value v) {current=previous;done(v);});
         });
         else if(k=="send") eval(n.children[0],[this,id,done](Value machine) {eval(ast(id).children[1],[this,id,machine,done](Value event) {
-            typecheck("Machine",machine,ast(id).children[0]);typecheck("String",event,ast(id).children[1]);auto& n=object(machine);const auto definition=heap.pin(n.edges[0]);const auto state=heap.pin(n.edges[1]);
+            typecheck("Machine",machine,ast(id).children[0]);typecheck("String",event,ast(id).children[1]);writable(machine,id);auto& n=object(machine);const auto definition=heap.pin(n.edges[0]);const auto state=heap.pin(n.edges[1]);
             const auto& transitions=program.machines.at(object(definition).syntax).edges;const auto current_state=encode_utf8(object(state).characters),event_text=encode_utf8(object(event).characters);
             const auto it=transitions.find({current_state,event_text});if(it==transitions.end()) done(result(false,string("invalid transition: "+current_state+" -- "+event_text,id),id));
             else {const auto next=string(it->second,id);const auto r=result(true,next,id);n.edges[1]=next.ref();done(r);}
@@ -655,7 +659,7 @@ inline void ExecutionContext::statement(NodeId id,Next done) {
             const auto kind=object(source).kind;if(kind!="Array" && kind!="Range" && kind!="String") error(id,"E201","for requires Array/Range/String");
             struct Iteration {Value source;std::size_t offset=0;HeldInt position;std::shared_ptr<HeapState> heap;bool active=false;~Iteration() {if(active && !heap->closed) --heap->get(source.ref()).active;}};
             auto state=std::make_shared<Iteration>();state->source=source;state->heap=heap.state;
-            if(kind=="Array") {++object(source).active;state->active=true;}
+            if(kind=="Array" && !object(source).frozen) {++object(source).active;state->active=true;}
             if(kind=="Range") {
                 const auto& start=object(heap.pin(object(source).edges[0])).integer;
                 state->position.space=Lease(heap.state,{0,0,int_bytes(start)},id);state->position.value=start;
@@ -748,7 +752,7 @@ inline void ExecutionContext::call(Value fn,std::vector<Value> args,NodeId site,
         typecheck("Array",args[0],ast(site).children[1]);auto& n=object(args[0]);
         if(name=="array.push") {append(args[0],args[1],site);done(null_);}
         else if(name=="array.copy") {auto copy=array({},site);for(auto h:n.edges) {point();append(copy,heap.pin(h),site);}done(copy);}
-        else {if(n.active) error(site,"E206","cannot resize an actively traversed Array");if(n.edges.empty()) error(site,"E204","empty Array");auto v=heap.pin(n.edges.back());n.edges.pop_back();--n.charge.slots;heap.state->refund({0,1,0});++n.version;done(v);}return;
+        else {writable(args[0],site);if(n.active) error(site,"E206","cannot resize an actively traversed Array");if(n.edges.empty()) error(site,"E204","empty Array");auto v=heap.pin(n.edges.back());n.edges.pop_back();--n.charge.slots;heap.state->refund({0,1,0});++n.version;done(v);}return;
     }
     if(name=="data.map") {done(make("Map",{1,0,0},site));return;}
     if(name=="data.kind") {auto kind=object(args[0]).kind;const std::map<std::string,std::string> names={{"Int","int"},{"Float","float"},{"String","string"},{"Bool","bool"},{"Null","null"},{"Array","array"},{"Map","map"}};done(string(names.count(kind)?names.at(kind):"other",site));return;}
@@ -761,6 +765,7 @@ inline void ExecutionContext::call(Value fn,std::vector<Value> args,NodeId site,
         if(name=="data.has") done(boolean(it!=n.names.end()));
         else if(name=="data.get") {if(it==n.names.end()) error(site,"E204","missing Map key");done(heap.pin(n.edges[2*index+1]));}
         else {
+            writable(args[0],site);
             if(it!=n.names.end()) {n.edges[2*index+1]=args[2].ref();++n.version;}
             else {encoded_key.release();map_insert(args[0],std::move(key),args[1],args[2],site);}
             done(null_);

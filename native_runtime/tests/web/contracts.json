@@ -1,0 +1,6 @@
+{
+  "POST /api/business": {
+    "request": "model.Payload",
+    "responses": {"200": "model.Payload", "500": "model.Payload"}
+  }
+}
