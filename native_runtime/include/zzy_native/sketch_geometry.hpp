@@ -41,7 +41,8 @@ inline Value SketchHost::render(const Doc& d,const Value& target) const {
                 }
                 for(const auto& s:leaf.strokes) {path(s.points);append("\" fill=\"none\" stroke=\""+rgb(s.color)+"\" stroke-width=\""+number(s.width)+"\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/>");}
             };
-            draw(g);append("</g>\n");
+            for(const auto* leaf:sketch::leaves(g))draw(*leaf);
+            append("</g>\n");
         }
     }
     append("</g></g>\n</svg>\n");
@@ -111,6 +112,8 @@ inline Value SketchHost::pen_call(Doc& d,sketch::Pen& p,const std::string& name,
 
 inline Value SketchHost::invoke(const std::string& qualified,const std::vector<Value>& args) const {
     const auto op=qualified.substr(7);
+    if(op=="drawing_from_json"||op=="drawing_text"||op=="save_function")return pattern(op,args);
+    if(op=="load_project")return project(op,args);
     if(op=="canvas"){
         const auto width=bounded(args[0],1,sketch::dimension),height=bounded(args[1],1,sketch::dimension);
         auto d=canvas(width,height,text(args[2]));auto v=canvas_value(d);
@@ -129,9 +132,11 @@ inline Value SketchHost::invoke(const std::string& qualified,const std::vector<V
     std::shared_ptr<Doc> d;
     if(kind=="sketch.Canvas")d=c.heap.native<sketch::CanvasRef>(receiver,site).doc;
     else if(kind=="sketch.Pen"){pen=&c.heap.native<sketch::PenRef>(receiver,site);d=pen->doc;}
-    else {layer=&c.heap.native<sketch::LayerRef>(receiver,site);d=layer->doc;}
+    else if(kind=="sketch.Layer"){layer=&c.heap.native<sketch::LayerRef>(receiver,site);d=layer->doc;}
+    else error("E201","expected a sketch handle");
     if(d->thread!=std::this_thread::get_id())error("E203","sketch document is thread owned");
-    const bool write=op!="position"&&op!="heading"&&op!="svg_text"&&op!="save_svg"&&op!="layer_info"&&op!="show"&&op!="save_png";
+    const bool write=op!="position"&&op!="heading"&&op!="svg_text"&&op!="save_svg"&&op!="layer_info"&&op!="show"&&
+        op!="save_png"&&op!="capture"&&op!="pick"&&op!="save_project";
     if(write&&(frozen(receiver.ref())||frozen(d->handle)))error("E203","sketch handle or document is frozen");
     if(layer&&!sketch::active(*d,layer->id))error("E203","layer is inactive");
     const auto read_position=op=="position"||op=="heading";
@@ -167,12 +172,92 @@ inline Value SketchHost::invoke(const std::string& qualified,const std::vector<V
         if(name_charge)d->layers.at(layer->id).charge.absorb(std::move(name_charge));
         return c.null_;
     }
-    if(op=="save_png"){idle(*d);return c.result(false,c.string("PNG backend unavailable",site),site);}
-    if(op=="show")return c.result(false,c.string("GUI unavailable: run requires --gui",site),site);
+    if(op=="save_project")return project(op,args,d.get());
+    if(op=="frame_interval"||op.compare(0,3,"on_")==0||op=="every"||op=="cancel_timer")return events(op,args,*d);
+    if(op=="save_png"){idle(*d);return failure("PNG unavailable: no independent PNG backend is installed");}
+    if(op=="show"){
+        idle(*d);
+        return failure("GUI unavailable: run requires --gui");
+    }
     if(op=="svg_text"||op=="save_svg") {
         idle(*d);
         try{return render(*d,op=="save_svg"?args[1]:Value{});}
         catch(const std::invalid_argument& e){return c.result(false,c.string(e.what(),site),site);}
+    }
+    if(op=="capture") {
+        idle(*d);auto scratch=reserve({0,d->objects.size(),0});sketch::Blocks objects;
+        for(auto layer_id:d->order)if(d->layers.at(layer_id).visible)
+            for(const auto& block:d->objects){c.point();if(block->value.layer==layer_id)objects.push_back(block);}
+        return drawing_value(std::move(objects));
+    }
+    if(op=="stamp") {
+        owned(args[1]);
+        const auto& drawing=c.heap.native<sketch::DrawingRef>(args[1],site);
+        if(layer_locked(*d,0))error("E203","default sketch layer is locked");
+        const double x=number(args[2]),y=number(args[3]),scale=number(args[4],sketch::coordinate,true),angle=number(args[5]);
+        auto scratch=reserve({});
+        std::vector<Geometry> children;
+        for(const auto& block:drawing.objects) {
+            std::size_t segments=0;auto charge=sketch::cost(block->value,segments);charge.objects=0;scratch.grow(charge,site);
+            for(const auto* leaf:sketch::leaves(block->value)) {
+                capacity("objects",children.size()+1,sketch::objects_limit);
+                auto transformed=transform(*leaf,x,y,scale,angle);transformed.id=0;transformed.layer=0;
+                children.push_back(std::move(transformed));
+            }
+        }
+        Geometry group;group.kind="group";group.layer=0;group.children=std::make_shared<const std::vector<Geometry>>(std::move(children));
+        Delta delta;add(*d,delta,std::move(group));auto result=integer(d->next_id);commit(*d,std::move(delta));return result;
+    }
+    if(op=="pick") {
+        const XY point_value{number(args[1]),number(args[2])};
+        for(auto order=d->order.rbegin();order!=d->order.rend();++order) {
+            if(!d->layers.at(*order).visible)continue;
+            for(auto object=d->objects.rbegin();object!=d->objects.rend();++object) {
+                c.point();const auto& g=(*object)->value;if(g.layer!=*order)continue;
+                bool found=false;
+                for(const auto* leaf:sketch::leaves(g)) {
+                    if(leaf->kind=="dot"&&std::hypot(point_value[0]-leaf->center[0],point_value[1]-leaf->center[1])<=leaf->diameter/2+4)found=true;
+                    if(leaf->kind=="text") {
+                        const double angle=sketch::radians(-leaf->angle),dx=point_value[0]-leaf->center[0],dy=point_value[1]-leaf->center[1];
+                        const double width=.6*leaf->size*static_cast<double>(c.codepoints(leaf->text));
+                        const double left=leaf->align=="left"?0:leaf->align=="center"?-width/2:-width;
+                        const double x=dx*std::cos(angle)-dy*std::sin(angle),y=dx*std::sin(angle)+dy*std::cos(angle);
+                        found=found||(x>=left-4&&x<=left+width+4&&std::abs(y)<=leaf->size/2+4);
+                    }
+                    for(const auto& stroke:leaf->strokes)for(std::size_t i=1;i<stroke.points.size()&&!found;++i) {
+                        c.point();if(sketch::distance(point_value,stroke.points[i-1],stroke.points[i])<=std::max(4.,stroke.width/2))found=true;
+                    }
+                    if(!leaf->boundary.empty()) {
+                        bool inside=false;for(std::size_t i=0,j=leaf->boundary.size()-1;i<leaf->boundary.size();j=i++) {
+                            c.point();const auto a=leaf->boundary[i],b=leaf->boundary[j];if((a[1]>point_value[1])!=(b[1]>point_value[1])&&
+                                point_value[0]<(b[0]-a[0])*(point_value[1]-a[1])/(b[1]-a[1])+a[0])inside=!inside;
+                        }found=found||inside;
+                    }
+                }
+                if(found)return integer(g.id);
+            }
+        }
+        return c.null_;
+    }
+    if(op=="delete_object"||op=="copy_object"||op=="translate_object") {
+        const auto id=bounded(args[1],1,INT64_MAX,"E204");
+        const auto at=std::find_if(d->objects.begin(),d->objects.end(),[&](const auto& block){return block->value.id==id;});
+        if(at==d->objects.end())error("E204","sketch object ID does not exist");
+        const auto index=static_cast<std::size_t>(at-d->objects.begin());const auto old=*at;
+        if(layer_locked(*d,old->value.layer))error("E203","sketch object layer is locked");
+        Delta delta;
+        if(op=="delete_object") {
+            delta.removed.emplace_back(index,old);sketch::attr(delta,*d,"canvas","segments",static_cast<Id>(d->segments-old->segments));
+            commit(*d,std::move(delta));return c.null_;
+        }
+        std::size_t count=0;auto storage=sketch::cost(old->value,count);storage.objects=0;auto scratch=reserve(storage);
+        if(op=="copy_object") {
+            auto result=integer(d->next_id);add(*d,delta,old->value);commit(*d,std::move(delta));return result;
+        }
+        const double dx=number(args[2]),dy=number(args[3]);
+        auto copy=transform(old->value,dx,dy,1,0);
+        delta.removed.emplace_back(index,old);delta.added.emplace_back(index,block(std::move(copy)));
+        commit(*d,std::move(delta));return c.null_;
     }
     if(op=="undo"||op=="redo"||op=="clear_history")return history(*d,op);
     if(op=="begin_group"){idle(*d);sketch::Entry group;group.label=text(args[1]);group.charge=reserve({0,1,4*group.label.size()});d->group=std::move(group);return c.null_;}
@@ -193,6 +278,7 @@ inline Value SketchHost::invoke(const std::string& qualified,const std::vector<V
     }
     if(op=="add_layer"){
         const auto name=text(args[1]);if(name.empty())error("E208","layer name cannot be empty");for(auto id:d->order)if(d->layers.at(id).name==name)error("E208","duplicate layer name");
+        if(d->next_layer==INT64_MAX)error("E211","sketch layer ID exhausted");
         capacity("layers",d->order.size()+1,sketch::entities_limit);const auto id=d->next_layer;auto handle=c.heap.native("sketch.Layer",std::make_shared<sketch::LayerRef>(sketch::LayerRef{d,id}),{1,0,0},site);
         sketch::Layer l;l.name=name;l.handle=handle.ref();l.charge=reserve({0,1,4*name.size()});d->layers.emplace(id,std::move(l));
         try {

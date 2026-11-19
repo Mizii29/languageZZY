@@ -1,4 +1,4 @@
-# ZZY native runtime：核心宿主与 Sketch headless 子集
+# ZZY native runtime：核心宿主与 Sketch
 
 独立 C++17 AST 解释器。原生 `run` 执行核心 ZZY，已接入 `io`、`array`、`text`、`math`、`data` 和 `unit` 的 35 个冻结核心接口，含 UTF-8 文件/原子保存和严格 JSON；MSVC 默认构建另支持 `db.transaction`、`db.query`。`check` 仍只静态准备。未移植的宿主能力执行时报告 E402/1；`test` 报告 E402/2，留给 N5。Python 仍为默认入口，原生进程不回退 Python。
 
@@ -39,7 +39,7 @@ if ($LASTEXITCODE -ne 0) { throw 'Release install failed' }
 & native_runtime/tools/install-smoke.ps1 -Executable dist/native-stage/bin/zzy-native.exe -Output dist/native-installed-smoke-new.json
 ```
 
-Visual Studio 是多配置生成器；EXE 在 `build/native-debug/Debug` 和 `build/native-release/Release`。当前默认 CTest 清单为 78 项，保留 N4-04 的 76 项，新增 `library-sketch-geometry` 和 `sketch-geometry-fixed`；不能省略 `--no-tests=error`。构建和安装不下载依赖；启用 Web 且启用测试时，CTest 使用 Python 3.10+ 标准库作为 HTTP 测试客户端，可用 `-DZZY_NATIVE_WEB_TEST_PYTHON=绝对路径` 指定。两个原生程序运行时都不依赖 Python。
+Visual Studio 是多配置生成器。EXE 在 `build/native-debug/Debug` 和 `build/native-release/Release`。默认 CTest 清单为 80 项，包括 Sketch 的项目互读和回放。保留 `--no-tests=error`。构建和安装无需下载依赖。启用测试时，CTest 使用 Python 3.10+ 执行互读和 HTTP 探针，可用 `-DZZY_NATIVE_WEB_TEST_PYTHON=绝对路径` 指定。原生程序运行时不依赖 Python。
 
 源码外专项与发布副本复现（Output和发布目录必须新建）：
 
@@ -151,13 +151,13 @@ try {
 
 ## 原生 Sketch headless
 
-现在可绘制图形、编辑图层、分组撤销/重做，并生成 SVG。用下列命令运行固定用例（输出报告路径需新建）：
+支持几何和图层、对象编辑、分组历史、SVG、项目 v1 和不可变图案。回放读取已提交历史，事件注册在图形会话中才派发。用下列命令运行固定用例（输出报告路径需新建）：
 
 ```powershell
 pwsh -NoProfile -File native_runtime/tools/test-sketch.ps1 -Executable build/native-release/Release/zzy-native.exe -Output dist/native-sketch-new.json
 ```
 
-原生 `check` 和绘图运行无需 GUI。项目 v1、对象编辑、Drawing、回放、事件与 GUI 未接入，详见 [N4-05 首批报告](tests/n4-05-geometry-report.md)。
+原生 `check` 和 headless 绘图均无需 GUI。默认 CTest 80 项。PNG 会返回缺后端 Result。[N4-05 验收报告](tests/n4-05-report.md)
 
 在新的临时目录执行独立示例，生成可用浏览器打开的 SVG：
 

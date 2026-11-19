@@ -40,7 +40,9 @@ $ids=[ordered]@{
         'fill-two-points','fill-other-pen','duplicate-name','canvas-zero','huge-int','snapshot-frozen','native-constructor',
         'native-method','native-call','svg-available','show-headless','undo-available')
     e2=@('layers','text','headless')
-    e3=@('history','fill-history')
+    e3=@('history','fill-history','interval','pattern')
+    e4=@('objects','bad-drawing','png','timer-cancel','callback-arity','timer-dimension','timer-zero',
+        'group-nested','undo-fill','missing-object','text-zero','layer-range','png-group')
 }
 $passed=$false
 try {
@@ -90,7 +92,7 @@ try {
     Check-Case 'svg-budget' run $program 1 $positions E211 18 $limit
     Require ([IO.File]::ReadAllText($svg) -ceq $original) 'budget failure changed the previous SVG'
     Require (@(Get-ChildItem -LiteralPath $folder -Filter '.zzy-*.tmp' -Force).Count -eq 0) 'temporary file leaked'
-    Require ($records.Count -eq (2*($ids.e1.Count+$ids.e2.Count+$ids.e3.Count)+5)) 'empty or incomplete fixed selection'
+    Require ($records.Count -eq (2*($ids.e1.Count+$ids.e2.Count+$ids.e3.Count+$ids.e4.Count)+5)) 'empty or incomplete fixed selection'
     $passed=$true
 } finally {
     if($Output) {

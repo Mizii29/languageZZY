@@ -351,13 +351,52 @@ struct ExecutionProbe {
         ExecutionContext next(program,p,cancel,out,err);next.execute();released(next);
         require(out.str()=="0.0\n" && err.str().empty(),"next sketch request did not recover");
     }
+    static void sketch_replay() {
+        ResourcePolicy policy;
+        std::atomic<bool> cancel{false};
+        std::ostringstream output,errors;
+        const auto code=parse("1;",policy,cancel);
+        ExecutionContext c(code,policy,cancel,output,errors);
+        c.initialize();
+        {
+            SketchHost host{c,c.program.root};
+            const auto call=[&](const std::string& name,const std::vector<Value>& args) {return host.invoke("sketch."+name,args);};
+            const auto canv=call("canvas",{host.integer(200),host.integer(100),host.string("replay")});
+            const auto pen=call("pen",{canv,host.string("p")});
+            auto& doc=*c.heap.native<sketch::CanvasRef>(canv,c.program.root).doc;
+            call("forward",{pen,host.integer(12)});
+            call("begin_group",{canv,host.string("corner")});
+            call("left",{pen,host.integer(90)});
+            call("forward",{pen,host.integer(15)});
+            call("end_group",{canv});
+            call("clear",{canv});
+            call("undo",{canv});
+            const auto used=c.heap.state->used;
+            {
+                SketchReplay replay(host,doc);
+                require(replay.position()==0&&replay.scene().objects.empty(),"bad start/redo leaked into replay");
+                replay.seek(1);
+                require(replay.scene().objects.size()==1&&replay.scene().pens.at("p").state.position==sketch::XY{12,0},"bad first replay frame");
+                replay.seek(replay.size());
+                require(replay.position()==replay.size()&&replay.scene().objects.size()>=2,"bad last replay frame");
+                replay.seek(0);
+                require(replay.scene().objects.empty()&&doc.objects.size()==2&&doc.redo.size()==1,"replay edited live document");
+                cancel=true;
+                try {replay.seek(1);throw std::logic_error("replay ignored cancellation");}catch(const Cancelled&) {}
+                cancel=false;
+            }
+            require(c.heap.state->used==used,"replay leaked quota");
+        }
+        c.cleanup();
+        released(c);
+    }
 };
 }
 int main(int argc,char** argv) {
     const std::map<std::string,void(*)()> cases={{"callbacks",zzy::ExecutionProbe::callbacks},{"identity",zzy::ExecutionProbe::identity},
         {"budgets",zzy::ExecutionProbe::budgets},{"cancellation",zzy::ExecutionProbe::cancellation},{"text",zzy::ExecutionProbe::text_boundaries},
         {"files",zzy::ExecutionProbe::files},{"file-commit",zzy::ExecutionProbe::file_commit},{"json",zzy::ExecutionProbe::json},
-        {"sketch-geometry",zzy::ExecutionProbe::sketch_geometry}};
+        {"sketch-geometry",zzy::ExecutionProbe::sketch_geometry},{"sketch-replay",zzy::ExecutionProbe::sketch_replay}};
     try {if(argc!=2 || !cases.count(argv[1])) throw std::runtime_error("nonempty named selection required");cases.at(argv[1])();std::cout<<argv[1]<<": PASS\n";return 0;}
     catch(const std::exception& e) {std::cerr<<e.what()<<'\n';return 1;}
 }

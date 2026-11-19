@@ -109,6 +109,7 @@ public:
     Lease& operator=(Lease&& x) noexcept {if(this!=&x) {release();heap_=std::move(x.heap_);charge_=x.charge_;x.charge_={};}return *this;}
     ~Lease() {release();}
     explicit operator bool() const {return bool(heap_);}
+    Charge amount() const {return charge_;}
     void grow(Charge charge,NodeId site) {heap_->reserve(charge,site);charge_=charge_+charge;}
     // Both leases refer to the same heap. Keep a successful, prepaid edit's charge.
     void absorb(Lease&& other) noexcept {charge_=charge_+other.transfer();}

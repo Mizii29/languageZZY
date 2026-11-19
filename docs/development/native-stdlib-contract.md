@@ -44,12 +44,14 @@ Win32 提交规则参见 [MoveFileExW](https://learn.microsoft.com/en-us/windows
 
 N4-04 原生 Web 由单独可选 EXE 提供，公开边界、线程、取消及关闭规则维护在 [Web 集中契约](../runtime/web.md#n4-04-原生-http-宿主)，不增添 ZZY 内置函数。N4-06 GUI 按 [Sketch 契约](../features/sketch.md) 单独验收。
 
-## N4-05 原生 Sketch headless（几何、图层、历史、SVG）
+## N4-05 原生 Sketch headless
 
-语言层签名、几何、公差、图层、历史和 SVG 继续以 [Sketch 契约](../features/sketch.md) 为准；[逐接口矩阵](../../native_runtime/tests/capabilities.json) 声明原生当前子集。Canvas、Pen、Layer、Color 是受控值；Position、LayerInfo 是只读快照。Pen 与 Layer 通过请求堆边引用所属 Canvas，跨 Canvas 绑定拒绝。共享冻结通过别名也有效。宿主在所属 ExecutionContext 线程执行，无后台线程或 GUI 依赖，`check` 只解析登记，不创建画布或写文件。
+Sketch ABI 1.0 的语言层签名和几何规则见 [Sketch 契约](../features/sketch.md)。Canvas、Pen、Layer、Color、Drawing 是受控值。Drawing 的几何块、Position、LayerInfo 只读。Pen 和 Layer 通过请求堆边引用 Canvas，跨 Canvas 绑定拒绝，共享冻结通过别名也有效。宿主在所属 ExecutionContext 线程执行。核心 check 只解析登记。
 
 图形记录、采样缓冲、图层/画笔、历史差量及 SVG 工作区计入请求资源。几何和历史先校验并预留，再发布更改；失败后释放临时预留。撤销、重做保留 ID 高水位。当前撤销创建图层后，可再次使用其 ID 所指的历史对象仅限重做；请求中保留失活图层的元数据及其句柄边，直到请求堆回收。名称、文字按 UTF-8 字节保守计量部分内部工作区。
 
 长采样、历史变更、SVG 构造和写入有协作取消点。SVG 沿用 N4-02 的同目录临时文件及原子提交，取消或资源失败不覆盖旧目标；同步系统调用返回后才观察取消。执行退出、执行错误及取消由同一套幂等请求关闭路径释放几何与历史。
 
-`show` 在 headless 返回失败 Result；`save_png` 返回缺后端失败 Result。其余未接入函数执行返回 E402/1。项目读写、对象编辑/Drawing、确定回放、事件/定时器仍待 N4-05 后续；本节不声明 GUI 或 Sketch 1.0 已完成。
+项目 v1 与 Drawing 使用严格 JSON 和原子文件接口。读入时检查字段、对象引用、ID 高水位和撤销重做的前后状态，全部通过后才发布 Canvas。ID 高水位使用有符号 64 位字段。函数导出生成 ZZY 源码并经原生前端检查后提交。回放使用独立投影和有界检查点，只应用已提交的历史。回调及定时器归 Canvas 的请求堆所有，headless 不派发事件。时间 Quantity 向上取整为毫秒。
+
+headless show 返回失败 Result。save_png 在无独立后端时返回缺后端 Result。[逐接口矩阵](../../native_runtime/tests/capabilities.json) 和 [N4-05 验收](../../native_runtime/tests/n4-05-report.md) 记录了范围。

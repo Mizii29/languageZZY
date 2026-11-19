@@ -29,7 +29,7 @@ class InventoryTests(unittest.TestCase):
             'io.read_text', 'io.write_text', 'io.write_atomic', 'io.replace_file', 'data.parse', 'data.stringify',
             'db.query', 'db.transaction',
         )}
-        sketch_values = {'value.sketch.' + kind for kind in ('Canvas', 'Pen', 'Layer', 'Color')}
+        sketch_values = {'value.sketch.' + kind for kind in ('Canvas', 'Pen', 'Layer', 'Color', 'Drawing')}
         sketch_hosts = {'host.sketch.' + name for name in (
             'canvas', 'pen', 'rgb', 'background', 'clear', 'begin_group', 'end_group', 'undo',
             'redo', 'clear_history', 'save_png', 'show', 'add_layer', 'set_layer', 'layer_visible',
@@ -37,7 +37,9 @@ class InventoryTests(unittest.TestCase):
             'svg_text', 'save_svg', 'color', 'fill_color', 'width', 'position', 'heading', 'forward',
             'backward', 'left', 'right', 'set_heading', 'move_to', 'jump_to', 'circle', 'polyline',
             'bezier_to', 'dot', 'pen_up', 'pen_down', 'show_cursor', 'hide_cursor', 'home',
-            'begin_fill', 'end_fill', 'cancel_fill',
+            'begin_fill', 'end_fill', 'cancel_fill', 'frame_interval', 'capture', 'stamp', 'drawing_text',
+            'drawing_from_json', 'save_function', 'pick', 'translate_object', 'copy_object', 'delete_object',
+            'on_click', 'on_drag', 'on_release', 'on_key', 'every', 'cancel_timer', 'save_project', 'load_project',
         )}
         self.assertEqual({f['id'] for f in features if f['implemented']},
                          core_ast | core_values | core_cli | core_hosts | sketch_values | sketch_hosts)

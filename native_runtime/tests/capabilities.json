@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "stage": "N4-05 (geometry subset)",
+  "stage": "N4-05 (headless)",
   "profile": "Windows MSVC default build with ZZY_NATIVE_SQLITE=ON; OFF rejects db with E402",
   "features": [
     {
@@ -560,8 +560,8 @@
       "id": "value.sketch.Drawing",
       "tier": "optional-host",
       "phase": "N4 Sketch",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "host.array.copy",
@@ -805,8 +805,8 @@
       "id": "host.sketch.cancel_timer",
       "tier": "optional-host",
       "phase": "N4",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "host.sketch.canvas",
@@ -819,8 +819,8 @@
       "id": "host.sketch.capture",
       "tier": "optional-host",
       "phase": "N4",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "host.sketch.circle",
@@ -854,15 +854,15 @@
       "id": "host.sketch.copy_object",
       "tier": "optional-host",
       "phase": "N4",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "host.sketch.delete_object",
       "tier": "optional-host",
       "phase": "N4",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "host.sketch.dot",
@@ -875,15 +875,15 @@
       "id": "host.sketch.drawing_from_json",
       "tier": "optional-host",
       "phase": "N4",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "host.sketch.drawing_text",
       "tier": "optional-host",
       "phase": "N4",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "host.sketch.end_fill",
@@ -903,8 +903,8 @@
       "id": "host.sketch.every",
       "tier": "optional-host",
       "phase": "N4",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "host.sketch.fill_color",
@@ -931,8 +931,8 @@
       "id": "host.sketch.frame_interval",
       "tier": "optional-host",
       "phase": "N4",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "host.sketch.heading",
@@ -987,8 +987,8 @@
       "id": "host.sketch.load_project",
       "tier": "optional-host",
       "phase": "N4",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "host.sketch.lock_layer",
@@ -1015,29 +1015,29 @@
       "id": "host.sketch.on_click",
       "tier": "optional-host",
       "phase": "N4",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "host.sketch.on_drag",
       "tier": "optional-host",
       "phase": "N4",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "host.sketch.on_key",
       "tier": "optional-host",
       "phase": "N4",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "host.sketch.on_release",
       "tier": "optional-host",
       "phase": "N4",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "host.sketch.pen",
@@ -1064,8 +1064,8 @@
       "id": "host.sketch.pick",
       "tier": "optional-host",
       "phase": "N4",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "host.sketch.polyline",
@@ -1113,8 +1113,8 @@
       "id": "host.sketch.save_function",
       "tier": "optional-host",
       "phase": "N4",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "host.sketch.save_png",
@@ -1127,8 +1127,8 @@
       "id": "host.sketch.save_project",
       "tier": "optional-host",
       "phase": "N4",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "host.sketch.save_svg",
@@ -1169,8 +1169,8 @@
       "id": "host.sketch.stamp",
       "tier": "optional-host",
       "phase": "N4",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "host.sketch.svg_text",
@@ -1197,8 +1197,8 @@
       "id": "host.sketch.translate_object",
       "tier": "optional-host",
       "phase": "N4",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "host.sketch.undo",

@@ -34,6 +34,7 @@ struct Geometry {
     XY center{};
     double diameter=0,size=12,angle=0;
     std::string text,font="sans-serif",align="left";
+    std::shared_ptr<const std::vector<Geometry>> children;
 };
 inline Charge cost(const Geometry& g,std::size_t& segments) {
     Charge charge{1,4+g.boundary.size(),128+16*g.boundary.size()+4*(g.text.size()+g.font.size())};
@@ -42,7 +43,18 @@ inline Charge cost(const Geometry& g,std::size_t& segments) {
         segments+=s.points.size()-1;
         charge=charge+Charge{0,1+s.points.size(),48+16*s.points.size()};
     }
+    if(g.kind=="group"&&g.children) for(const auto& child:*g.children) {
+        std::size_t count=0;const auto nested=cost(child,count);segments+=count;
+        charge.slots+=nested.slots;charge.payload+=nested.payload;
+    }
     return charge;
+}
+inline std::vector<const Geometry*> leaves(const Geometry& geometry) {
+    std::vector<const Geometry*> out;std::vector<const Geometry*> todo{&geometry};
+    while(!todo.empty()) {const auto* current=todo.back();todo.pop_back();if(current->kind=="group"&&current->children) {
+        for(auto it=current->children->rbegin();it!=current->children->rend();++it)todo.push_back(&*it);
+    } else out.push_back(current);}
+    return out;
 }
 struct Block {
     Geometry value;
@@ -76,10 +88,15 @@ struct Draft {
     std::size_t segments=0;
     Lease charge;
 };
+struct Registration {
+    Handle root,callback;
+    Id interval=0;
+};
 struct Document {
     std::thread::id thread=std::this_thread::get_id();
     Handle handle;
     Id width=0,height=0,next_id=1,next_layer=1;
+    Id interval_ms=40,next_timer=1;
     std::string title;
     RGB background{255,255,255};
     std::map<Id,Layer> layers;
@@ -90,11 +107,14 @@ struct Document {
     std::vector<Entry> undo,redo;
     std::optional<Entry> group;
     std::optional<Draft> draft;
+    std::map<std::string,Registration> callbacks;
+    std::map<Id,Registration> timers;
     Lease charge;
 };
 struct CanvasRef {std::shared_ptr<Document> doc;};
 struct PenRef {std::shared_ptr<Document> doc;std::string name;};
 struct LayerRef {std::shared_ptr<Document> doc;Id id;};
+struct DrawingRef {Blocks objects;};
 
 inline double radians(double a) {return a*pi/180;}
 inline double heading(double a) {a=std::fmod(a,360);return a<0?a+360:a==0?0:a;}

@@ -116,9 +116,9 @@
     {
       "id": "unavailable-host",
       "file": "unavailable-host.zzy",
-      "exit_code": 1,
-      "stdout": "",
-      "code": "E402"
+      "exit_code": 0,
+      "stdout": "missing project\n",
+      "code": null
     },
     {
       "id": "spec-no-run",

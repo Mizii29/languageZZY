@@ -1,1 +1,4 @@
-io.print(sketch.load_project("unavailable.zzysketch"));
+(?_?)sketch.load_project("unavailable.zzysketch"){
+    (^_^)(c)=>{io.print("unexpected document");}
+    (T_T)(m)=>{io.print("missing project");}
+}

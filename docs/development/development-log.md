@@ -1059,3 +1059,7 @@ Release install 和仓库外中文/空格路径画笔 71/71；空 PATH/无效 PY
 收尾：`scripts.ci static --output dist/native-n4-05-geometry/ci-static` 退出 0、passed=true；独立演示实际生成三对象 SVG，check 无输出文件。五个共享文档仅暂存本批追加段落，既有正文以指纹核对保持。最终相关差异、归档及提交以本地 Git 核对为准。
 
 因本批触及核心类型处理，追加执行两配置 `native_runtime/tools/test-core-existing.py`，各 550/550、声明延期 0，全部固定答案保持；原始结果为 core-debug.json / core-release.json。
+
+## N4-05 项目、对象、图案与回放（2026-11-19）
+
+从 748c667 接续，完成严格的项目 v1 双向读写、不可变 Drawing、对象编辑、回放投影与事件注册。Debug/Release 各 80/80 CTest、101/101 Sketch 固定用例、项目与函数互读各 8/8。Python 相关回归 43/43。Release 仓库外安装的项目互读、核心烟测和宿主检查通过。细节及限制见 [N4-05 报告](../../native_runtime/tests/n4-05-report.md)。

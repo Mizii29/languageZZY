@@ -27,5 +27,16 @@ inline constexpr CoreHost sketch_hosts[]={
     {"sketch.hide_cursor",1,{"sketch.Pen"}}, {"sketch.home",1,{"sketch.Pen"}},
     {"sketch.begin_fill",1,{"sketch.Pen"}}, {"sketch.end_fill",1,{"sketch.Pen"}},
     {"sketch.cancel_fill",1,{"sketch.Pen"}},
+    {"sketch.frame_interval",2,{"sketch.Canvas","Quantity"}},
+    {"sketch.capture",1,{"sketch.Canvas"}}, {"sketch.stamp",6,{"sketch.Canvas","sketch.Drawing","Int|Float","Int|Float","Int|Float","Int|Float"}},
+    {"sketch.drawing_text",1,{"sketch.Drawing"}}, {"sketch.drawing_from_json",1,{"String"}},
+    {"sketch.save_function",3,{"sketch.Drawing","String","String"}},
+    {"sketch.pick",3,{"sketch.Canvas","Int|Float","Int|Float"}},
+    {"sketch.translate_object",4,{"sketch.Canvas","Int","Int|Float","Int|Float"}},
+    {"sketch.copy_object",2,{"sketch.Canvas","Int"}}, {"sketch.delete_object",2,{"sketch.Canvas","Int"}},
+    {"sketch.on_click",2,{"sketch.Canvas","Function"}}, {"sketch.on_drag",2,{"sketch.Canvas","Function"}},
+    {"sketch.on_release",2,{"sketch.Canvas","Function"}}, {"sketch.on_key",2,{"sketch.Canvas","Function"}},
+    {"sketch.every",3,{"sketch.Canvas","Quantity","Function"}}, {"sketch.cancel_timer",2,{"sketch.Canvas","Int"}},
+    {"sketch.save_project",2,{"sketch.Canvas","String"}}, {"sketch.load_project",1,{"String"}},
 };
 }

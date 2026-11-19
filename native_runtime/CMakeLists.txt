@@ -19,7 +19,7 @@ endif()
 target_include_directories(zzy_native_options INTERFACE include)
 target_compile_definitions(zzy_native_options INTERFACE _WIN32_WINNT=0x0A00 WINVER=0x0A00)
 if(MSVC)
-  target_compile_options(zzy_native_options INTERFACE /W4 /WX /utf-8 /EHsc /permissive-)
+  target_compile_options(zzy_native_options INTERFACE /W4 /WX /utf-8 /EHsc /permissive- /bigobj)
 elseif(MINGW)
   message(WARNING "MinGW is an N0 prototype toolchain; MSVC/clang-cl release remains unverified")
   target_compile_options(zzy_native_options INTERFACE -Wall -Wextra -Wpedantic -Werror)
@@ -70,19 +70,23 @@ if(BUILD_TESTING)
   endforeach()
   add_executable(native-library-tests tests/native/library.cpp)
   target_link_libraries(native-library-tests PRIVATE zzy_native_options)
-  foreach(case callbacks identity budgets cancellation text files file-commit json sketch-geometry)
+  foreach(case callbacks identity budgets cancellation text files file-commit json sketch-geometry sketch-replay)
     add_test(NAME library-${case} COMMAND native-library-tests "${case}")
     set_tests_properties(library-${case} PROPERTIES TIMEOUT 30)
   endforeach()
   add_test(NAME library-empty-selection COMMAND "${CMAKE_COMMAND}" -DEXE=$<TARGET_FILE:native-library-tests>
     -P "${CMAKE_CURRENT_SOURCE_DIR}/tests/runtime-selection.cmake")
   find_program(NATIVE_POWERSHELL NAMES pwsh powershell REQUIRED)
+  find_program(ZZY_NATIVE_WEB_TEST_PYTHON NAMES python.exe python
+    HINTS "${CMAKE_CURRENT_SOURCE_DIR}/../.venv/Scripts" REQUIRED)
   add_test(NAME sketch-geometry-fixed COMMAND "${NATIVE_POWERSHELL}" -NoProfile -File
     "${CMAKE_CURRENT_SOURCE_DIR}/tools/test-sketch.ps1" -Executable $<TARGET_FILE:zzy-native>)
   set_tests_properties(sketch-geometry-fixed PROPERTIES TIMEOUT 180)
+  add_test(NAME sketch-project-fixed COMMAND "${ZZY_NATIVE_WEB_TEST_PYTHON}" -X utf8
+    "${CMAKE_CURRENT_SOURCE_DIR}/tools/test-sketch-project.py" --exe $<TARGET_FILE:zzy-native>
+    --python "${ZZY_NATIVE_WEB_TEST_PYTHON}")
+  set_tests_properties(sketch-project-fixed PROPERTIES TIMEOUT 60)
   if(ZZY_NATIVE_WEB)
-    find_program(ZZY_NATIVE_WEB_TEST_PYTHON NAMES python.exe python
-      HINTS "${CMAKE_CURRENT_SOURCE_DIR}/../.venv/Scripts" REQUIRED)
     add_test(NAME web-http COMMAND "${ZZY_NATIVE_WEB_TEST_PYTHON}" -X utf8
       "${CMAKE_CURRENT_SOURCE_DIR}/tools/test-web.py" --exe $<TARGET_FILE:zzy-native-web>
       --sqlite $<IF:$<BOOL:${ZZY_NATIVE_SQLITE}>,ON,OFF>)
