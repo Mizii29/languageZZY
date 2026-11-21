@@ -1093,3 +1093,21 @@ N5 最终数量门槛复核：native_ci.py 要求至少83项并点名三个新�
 相对路径两例初失败来自测试驱动改写了清单 `file`，按原输入复验通过。原生校园两个容量场景初次超过 180 秒，诊断复测超过 600 秒。修复原因为大量可达容器子节点导致主动堆扫描几乎每步重做。改为每次扫描后按新增分配计数，配额压力仍触发即时回收。用原断言和 180 秒期限复验。新增三个 CTest 入口，CI 指纹包含实际校园源文件和配置。Release 全门禁通过，Debug 的 86 项 CTest 和安装检查已完成，首轮外层超时与第二轮的指纹变更均保留在原始记录中。最终命令及结果以报告为准。
 
 本轮桌面验证由自动化驱动真实 Win32/Tk 窗口。人工验收、PNG 成功导出以及 Python 嵌入 API 的原生等价项单列。N6-01 至 N6-04 的当前能力出口已完成，停在 N6。
+
+## N7 性能测量与候选评估（2026-11-21）
+
+先核对 N6 报告、Release SHA、能力计划和当前 Git 工作区。原有校园、P12/P13、人工材料修改保留，没有暂存到本轮提交。N6 Release 原生程序 SHA-256 为 f697f08b0336bb34522ff036ca98cb7d72e2cf1adbb3993d940ae25e43279add。环境是 Windows 11 build 26200、Intel Core Ultra 5 125H、14/18 核线程、25,196,617,728 字节 RAM、插电平衡方案、MSVC 19.40.33812.0、Windows SDK 10.0.22000.0、CMake 4.5.0 和 CPython 3.12.14。原生源码和 Python ZZY tree、输入、资源策略及 CPython DLL 哈希冻结到 dist/native-n7/frozen/manifest.json。
+
+新增 benchmarks/n7 独立测量入口和 native-n7-probe 可选 CMake 目标。核心 CLI/check/headless 不加载它。四个独立夹具为 X00 常量函数、X01 平方和、X02 函数分支和 X03 数组，固定答案存于 benchmarks/n7/cases.json。阶段探针对读取、Lexer/Parser/Resolver 准备、请求初始化、执行、清理分别计时。完整 CLI 单独启动子进程。Windows 子进程句柄读取 GetProcessTimes 和 K32GetProcessMemoryInfo，逻辑配额在独立轮次中读取，物理内存和逻辑资源没有混列。
+
+实际命令与结果：
+
+- cmake --preset native-release -S native_runtime -DZZY_NATIVE_BENCHMARK=ON 成功。
+- cmake --build build/native-release --config Release --target native-n7-probe 成功，MSVC Release 探针生成。
+- .venv\Scripts\python.exe -X utf8 -m benchmarks.n7.run freeze ... 成功，校验 N6 Release SHA 与 CPython 版本。
+- 两轮 benchmarks.n7.run run，种子 701、702，各 432 次，3 warmup/15 formal，均 432/432 correct，失败、错误、超时为 0。逻辑轮种子 703 为 12/12，smoke 为 24/24。
+- 插桩副本用 MSVC Release 构建，四夹具固定答案通过。X02 记录 580041 次堆查找、735050 次资源检查和 410046 次 AST 任务。插桩结果不计入正式性能表。
+- 只评估 nodes.count 与 nodes.at 合并为一次 find 的候选。种子 711、712 两轮各 288 次，全部正确，0 失败/超时。执行阶段变化在 X01 为 -2.65%/-7.00%，X02 为 -1.62%/+2.25%，X03 为 -3.04%/+2.36%。X03 完整 CLI 为 +8.12%/+7.36%，未达到预设两轮稳定 5% 门槛，候选撤回，生产源码未保留。
+- 候选撤回后运行 ctest --test-dir build/native-release -C Release -E "^(external-parity|campus-parity)$" --output-on-failure --no-tests=error，84/84 通过，用时 145.27 秒。单独运行 native_runtime/tools/test-parity.py --backend native，固定清单为 1738/1738，失败/超时 0。
+
+原始样本和环境见 benchmarks/results/native-n7/baseline.tar.gz，插桩见 profile.tar.gz，候选 A/B 见 lookup.tar.gz。报告为 native_runtime/tests/n7-report.md，方法为 benchmarks/n7/README.md。已更新 todo 的 N7-01—04 并保持 N8/P12/P13 和未验证人工项目状态真实。没有实现 VM、AOT、JIT、磁盘缓存或新 build 命令。物理断网、Sanitizer、人工 Ctrl+C、其他机器/平台、缺少 VC Runtime 的干净主机、手写 C、Lua 与宿主主导负载仍未验证。

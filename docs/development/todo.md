@@ -295,3 +295,12 @@ MSVC Debug/Release 各 57/57 CTest、63 个运行 golden、72/72 CLI、549/549 �
 - [x] N6-04 修复相对路径测试驱动和高存活对象堆的重复扫描。按原期限复验校园相邻容量，保留失败原件。
 
 当前发布能力的自动化出口已验证。PNG 成功导出、Python 嵌入 API 的原生等价项继续延期，人工应用验收待做。后续阶段为 N7。命令、结果与原始证据索引见 [N6 报告](../../native_runtime/tests/n6-report.md)。
+
+## N7 性能、内存和 AOT 可行性评估
+
+- [x] N7-01 分离读取、准备、初始化、执行、清理、完整 CLI、CPU、峰值工作集、Private Bytes 和逻辑资源；保存冻结环境、固定输入、样本和失败记录。
+- [x] N7-02 原生 ZZY、Python 版 ZZY、直接 Python 各两轮 3 次预热/15 次正式样本；逐条核对固定答案，864 次正式运行全部通过。
+- [x] N7-03 完成独立插桩剖析，评估 AST 分派、堆查找、对象布局和资源计量热点；VM/AOT/JIT/磁盘缓存只形成证据化建议，不实现。
+- [x] N7-04 只评估一次句柄查找合并候选；两轮 A/B 无稳定收益且 X03 CLI 回退，候选撤回，N6 Release 回归保持通过。
+
+报告、复现说明、原始样本、环境清单和候选证据见 [N7 报告](../../native_runtime/tests/n7-report.md)、[N7 基线](../../benchmarks/n7/baseline.md) 和 [N7 热点记录](../../benchmarks/n7/experiments.md)。N7 未验证人工 Ctrl+C、Sanitizer、其他机器/平台、断网网卡、缺少 VC Runtime 的干净主机、手写 C、Lua 及宿主主导负载。下一阶段仍由 N8 发布门禁或经授权的新后端项目决定，不新增默认入口。
