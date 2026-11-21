@@ -243,3 +243,10 @@ Debug/Release CTest 各 78/78，后补线程探针后的库回归各 11/11；Pyt
 扩展固定清单至 101 项，包含对象操作、图案、事件注册、定时器和错误诊断。项目互读 8 项覆盖跨运行时往返、非法历史、ID 高水位、额外字段和 check 无副作用。回放探针验证分组位置、实时 Canvas 独立、取消及配额归还。[Headless 验收](../../native_runtime/tests/n4-05-report.md)
 
 Windows 桌面用独立 HWND 测试覆盖输入顺序、定时器、实际绘制像素、回放、撤销重做、文件对话框保存和重开、取消、拥塞和关窗。应用模块清单来自运行中的进程。[窗口验收](../../native_runtime/tests/n4-06-report.md)
+
+## N5 原生 CLI、进程与发布覆盖（2026-11-21）
+
+- `native_runtime/tools/test-cli.py`：83 个独立固定期望，参数、limits 边界、text/JSON、无副作用和错误恢复。
+- `native_runtime/tools/test-spec.py`：19 个场景，空/坏收集、失败、超时、超额、stdin、模块隔离、字节快照、UTF-8 管道、Ctrl+C/130、worker 异常退出、强杀父进程的树清理和恢复；Python 只编排原生 EXE。
+- CTest 接入 `spec-process`、`cli-boundaries`、`native-ci-fingerprint`，默认 83 项，两配置均实跑；install smoke 9 条加文件/JSON 33 与 SQLite 50，实际 PE/模块/worker 树共同核对无 Python。
+- `native_ci.py` 用开始/结束源码指纹核对 C++/构建/依赖/固定夹具，独立 Windows workflow 保留 Python CI。原始记录、复现命令与未测边界见 [N5 报告](../../native_runtime/tests/n5-report.md)。

@@ -206,3 +206,7 @@ N4-03 已按集中 SQLite 契约完成。`db.transaction`/`db.query` 使用 Wind
 ### N4-05 和 N4-06 交付（2026-11-19）
 
 项目 v1、对象、图案、回放及事件登记已通过 [N4-05 验收](../../native_runtime/tests/n4-05-report.md)。独立 Windows GUI 包完成窗口、事件及生命周期专项，见 [N4-06 验收](../../native_runtime/tests/n4-06-report.md)。下一项 N5-01。
+
+## N5 当前交接（2026-11-21）
+
+N5-01—05 本机技术出口已满足，详见 [N5 报告](../../native_runtime/tests/n5-report.md)、[CLI 契约](native-cli-contract.md) 和 [原生指南](../../native_runtime/README.md)。Debug/Release 各 83/83 CTest，安装副本 CLI 83/83、spec/进程 19/19；独立 native CI 和含 C++/构建/依赖/夹具的源码指纹均已接通。无 Python 结论包含 PE、实际模块、worker 树及受控环境。仅本地提交，未实跑 GitHub 远端任务；不将未测 Sanitizer/缺 CRT 主机/物理断网或人工操作写成通过。下一项 N6-01，不提前修改默认入口。

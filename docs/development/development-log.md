@@ -1075,3 +1075,13 @@ Release install 和仓库外中文/空格路径画笔 71/71；空 PATH/无效 PY
 本轮专项实际通过：Debug 原生 CLI/spec 黑盒、PE/模块/进程树探针；新增 CTest `spec-process`、`cli-boundaries` 和 `native-ci-fingerprint`。新增 `native_ci.py` 与 `.github/workflows/native-ci.yml`，覆盖 configure→build→CTest→install、Release 源码外 smoke、无 Python 导入/模块检查和规范化源码指纹。安装副本使用中文/空格路径、空 PATH、无效 PYTHONPATH 和未激活环境。
 
 未验证：Sanitizer、其他平台、断开网卡的物理离线、缺少 VC Runtime 的干净主机和人工终端 Ctrl+C。不要把自动控制台信号测试写成人工验收。正式 N5 报告见 [n5-report](../../native_runtime/tests/n5-report.md)。
+
+## N5 最终交付复核（2026-11-21）
+
+N3/N4 前置代码和阶段证据已核对。本轮最终 Debug/Release 各83/83非空CTest、安装副本CLI83/83和spec/进程19/19、smoke9/9+文件JSON33/33+SQLite50/50通过；Release acceptance82场景（含一项预期强杀单列）。完整`.venv/Scripts/python.exe -X utf8 -m tests --report dist/native-n5/python-regression-final.json`实收2083/2083、896.648秒、失败/错误/跳过/预期失败0、退出0。`scripts.ci static --output dist/native-n5/static-delivery`和git diff --check通过。
+
+失败与复验：超时后Windows目录/文件锁释放延迟，增加Job active=0确认、显式关闭快照句柄及目录有界重试，未静默吞掉正常清理失败；夹具语法/模块导出错误按正式规则修正；门禁正确拒绝执行期间新增报告导致的源码变化，构建指纹后集中排除不参与构建的Markdown报告；旧DLL白名单按实际dumpbin加入确切UCRT filesystem API-set。Web一次503 busy保留在gate-release-final2，同断言专项及完整final3通过，未改Web实现或放宽期望。首个Python测试命令误用不存在模块/直接文件入口，正式-m unittest专项4/4通过。原始失败、最终证据与复现命令见native_runtime/tests/n5-report.md，归档benchmarks/results/native/n5-20261121。
+
+本地提交ba71ca6为CLI/spec实现，4ccf34a为发布与native CI；本次文档/证据另提交。只暂存本轮追加段落，原有应用/P12/P13及人工原件保持。requirement SHA仍b099c19fc339ce1dc1aab7e9d6c8126a9c5c9ace3d31b969a0623df90f521d2b；不推送。GitHub远端门禁、人工Ctrl+C、Sanitizer、其他平台、缺CRT干净主机与物理断网未验证；离线证据限于依赖无下载与坏代理。外部强杀仅保证Job子树结束，不能承诺被杀父进程执行目录析构。N5已完成，下一项N6-01，本轮停止。
+
+N5 最终数量门槛复核：native_ci.py 要求至少83项并点名三个新增测试，修改后 delivery-debug、delivery-release 两套完整门禁均 passed=true，安装/CLI/spec全过；仅门禁代码指纹改变，EXE哈希不变。完整Python2083/2083已完成，最终发布目录为dist/native-n5-release；源码外中文目录和过程证据见报告。

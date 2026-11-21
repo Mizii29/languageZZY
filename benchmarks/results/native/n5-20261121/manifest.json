@@ -1,0 +1,827 @@
+[
+  {
+    "source": "acceptance-release-final/loaded-modules.json",
+    "sha256": "cb8e33e81fd605bf425580328ed6359881bb64785b7a83bf0aa4df6501bd901d",
+    "bytes": 2600
+  },
+  {
+    "source": "acceptance-release-final/native-execution-tests.exe.imports.txt",
+    "sha256": "eff8ae1b5a5a614b74fc59e65d723ab6ca8cf7a377e91e68cda9f459aeb0d72b",
+    "bytes": 770
+  },
+  {
+    "source": "acceptance-release-final/native-frontend-tests.exe.imports.txt",
+    "sha256": "7f6b57176f296c23e00fe5068973d7ededd5f70bc1755deba68d738d9215b6bc",
+    "bytes": 730
+  },
+  {
+    "source": "acceptance-release-final/native-heap-tests.exe.imports.txt",
+    "sha256": "a13c273de29b2f912d096d9dd9afa175da26773acec21ac91c3bf41b0f615ab4",
+    "bytes": 726
+  },
+  {
+    "source": "acceptance-release-final/native-library-tests.exe.imports.txt",
+    "sha256": "e6b6f20c44de760479bae1bbbc84edb0709bb3cb930dcf781b3d1f7cab9ea432",
+    "bytes": 810
+  },
+  {
+    "source": "acceptance-release-final/native-lifecycle-probe.exe.imports.txt",
+    "sha256": "9a290c5a79507498dd3c3100764cf4141a14edabfd83a7d02aa6212981364114",
+    "bytes": 731
+  },
+  {
+    "source": "acceptance-release-final/native-program-tests.exe.imports.txt",
+    "sha256": "4068a8ff153531acd36c9a60e777585fbc85380fa8a4b85673e75023f2eabd8f",
+    "bytes": 768
+  },
+  {
+    "source": "acceptance-release-final/native-protocol-tests.exe.imports.txt",
+    "sha256": "4c31ce4dcf92667b374161b757a9254c842ca9dca768fa99e394df8e02e2b14f",
+    "bytes": 730
+  },
+  {
+    "source": "acceptance-release-final/native-runtime-values-tests.exe.imports.txt",
+    "sha256": "ef6b292b88dcf45afa9186255f1b51eeb7a503e0169b03ca67fa8af9d6350ecb",
+    "bytes": 736
+  },
+  {
+    "source": "acceptance-release-final/native-sqlite-tests.exe.imports.txt",
+    "sha256": "c10e897069d447c4710559047b1e5ea3460668ccce0538bb0ba3dc92e0fc43ce",
+    "bytes": 767
+  },
+  {
+    "source": "acceptance-release-final/report.json",
+    "sha256": "4e03ae57aa836d9cd1a11690ee2148d561b3b6cc7c43d1e87331704f2a79f1a0",
+    "bytes": 932006
+  },
+  {
+    "source": "acceptance-release-final/sqlite-modules.json",
+    "sha256": "550021e1cbb7ccb0965375457e5a34dfb467d51f6c2c13d2949f46354dda1aa8",
+    "bytes": 3117
+  },
+  {
+    "source": "acceptance-release-final/zzy-native.exe.imports.txt",
+    "sha256": "ac11396882a2316802724d390eef052bddd1fcf7d978c5ed690c2a9c7cf4cbae",
+    "bytes": 800
+  },
+  {
+    "source": "acceptance-release-first/loaded-modules.json",
+    "sha256": "656734e3c9568d34fd3e9ecba9de183aaf0b0e299009bfd19cc85bdf49e4ce49",
+    "bytes": 2600
+  },
+  {
+    "source": "acceptance-release-first/report.json",
+    "sha256": "10f12be127140bb98dc08c0ee8df8067ba7a8ad0c516e837dddd4b2cf8def6f6",
+    "bytes": 903973
+  },
+  {
+    "source": "acceptance-release-first/sqlite-modules.json",
+    "sha256": "6769d0076df0f4d9e1c974e098317ab719f99a806cbca99a89946d52afd61318",
+    "bytes": 3117
+  },
+  {
+    "source": "acceptance-release-first/zzy-native.exe.imports.txt",
+    "sha256": "f839fafff15b2cef0b6a3b55106e60e7c12429e2256cb2d8d8e8ef62467822dc",
+    "bytes": 800
+  },
+  {
+    "source": "delivery-debug/build.txt",
+    "sha256": "2ab2e94fcaa08476c7d9320bfdd7da45f29e089ea723c022504fefeddc0fc7c3",
+    "bytes": 3709
+  },
+  {
+    "source": "delivery-debug/configure.txt",
+    "sha256": "4fdfd3de94a28cff4252d63e9da0cc713be888b1682076322ea227d070493b3d",
+    "bytes": 266
+  },
+  {
+    "source": "delivery-debug/ctest-inventory.txt",
+    "sha256": "4c610edf67f6a343431770fcfc1d3659540696e5cc726d1c64b308d355588899",
+    "bytes": 82348
+  },
+  {
+    "source": "delivery-debug/ctest.txt",
+    "sha256": "118e179d9fe060abff20ce1a98642cb76129ee3585a53a256a706b42e0a50614",
+    "bytes": 9199
+  },
+  {
+    "source": "delivery-debug/ctest.xml",
+    "sha256": "a4d717eca66d43858597249c46871a283bbe6de71b56937eadbae6fd0be6b19b",
+    "bytes": 16704
+  },
+  {
+    "source": "delivery-debug/imports-zzy-native-gui.txt",
+    "sha256": "7ab311017785e8bf9dff61d0c7ced693816697afe1a61a47f8338b89be4747a5",
+    "bytes": 646
+  },
+  {
+    "source": "delivery-debug/imports-zzy-native-web.txt",
+    "sha256": "e0da5f7d9814a0352d21da86b5ec12a03bd06cdcc502a898f2ca1817e89bc03a",
+    "bytes": 616
+  },
+  {
+    "source": "delivery-debug/imports-zzy-native.txt",
+    "sha256": "8c3931e028f2ef833d5266e738cef627c22465ba7f692e374009b91e5607e47e",
+    "bytes": 596
+  },
+  {
+    "source": "delivery-debug/install-smoke.json",
+    "sha256": "0040066b6f16b43ebdaca48892c2bd03e5abfb930c83541b242c11ef9064b00b",
+    "bytes": 51537
+  },
+  {
+    "source": "delivery-debug/install-smoke.txt",
+    "sha256": "26c98ce7830e62c8a6363b8ad1200acb6881f636d8ea4090bf351c656884837b",
+    "bytes": 123
+  },
+  {
+    "source": "delivery-debug/install.txt",
+    "sha256": "94540742d293cba26b316fed282b1b9b222778c96df665232a1ef0eb74d499bb",
+    "bytes": 436
+  },
+  {
+    "source": "delivery-debug/installed-cli.json",
+    "sha256": "cf5fda3301ae1a108c222bd7daea0f555b59b971cb6c02df4345f7e8d3408af6",
+    "bytes": 63181
+  },
+  {
+    "source": "delivery-debug/installed-cli.txt",
+    "sha256": "5ea9408b0f2b58b5626e971154db7c50b65e11cc371bf12266d59dd155347729",
+    "bytes": 111
+  },
+  {
+    "source": "delivery-debug/installed-spec.json",
+    "sha256": "31b9352f90a5ac5583e12db803b3a4567767e12f4308fc5567a43f6ca0d1c990",
+    "bytes": 7753
+  },
+  {
+    "source": "delivery-debug/installed-spec.txt",
+    "sha256": "aac68ed1d235b1c4678bb062cf122626bd7d3a01fa929bff184113138a553fb6",
+    "bytes": 28
+  },
+  {
+    "source": "delivery-debug/report.json",
+    "sha256": "ff5e6725be3ae14bc02bb05b156e3b6619f4990d1fd42ee71e6158e88e0c398e",
+    "bytes": 6054
+  },
+  {
+    "source": "delivery-debug/source-fingerprint.json",
+    "sha256": "7e43ea7df885668b9c707f5cc6b4127fea200de1a03953babea73afb7320810b",
+    "bytes": 153631
+  },
+  {
+    "source": "delivery-release/build.txt",
+    "sha256": "45b961dbde1194eaf6c7edffcbb5169ba7cd8990698b9d29beb7528450030fa0",
+    "bytes": 3757
+  },
+  {
+    "source": "delivery-release/configure.txt",
+    "sha256": "d2ca949f06bb4942e7b3013c9f2ea4538574d4fa45e03c4a385a9c92bbe4b3e0",
+    "bytes": 268
+  },
+  {
+    "source": "delivery-release/ctest-inventory.txt",
+    "sha256": "788e441759cccf4edc05352825944105f872f43d6e0682b7ebe009eedc9e6cb3",
+    "bytes": 83006
+  },
+  {
+    "source": "delivery-release/ctest.txt",
+    "sha256": "f9a37133f9a35d8e04a4db86c902a5057aa6556fb4a9f160232695a2d010b802",
+    "bytes": 9201
+  },
+  {
+    "source": "delivery-release/ctest.xml",
+    "sha256": "b5dac5368e6b759a1ebf675917e83e5991218590fe31d855c95aecb247f89e05",
+    "bytes": 16704
+  },
+  {
+    "source": "delivery-release/imports-zzy-native-gui.txt",
+    "sha256": "1882cc223bfbf78d3575446f552e2a5b39bd6ad1d86bcf672d89edf91c310cf0",
+    "bytes": 830
+  },
+  {
+    "source": "delivery-release/imports-zzy-native-web.txt",
+    "sha256": "25f1bb08fde14d57713f00f65827d176189c0330f940d47c9be6b3ccc6838102",
+    "bytes": 874
+  },
+  {
+    "source": "delivery-release/imports-zzy-native.txt",
+    "sha256": "ae4a4684a1c2ab97e06f35be1a1a27b64119d9d0daed4156639bc8fd46aa4889",
+    "bytes": 780
+  },
+  {
+    "source": "delivery-release/install-smoke.json",
+    "sha256": "2086113a1d52722681b739e3006fd58d7a609c322dd0c9758204f717915acc0d",
+    "bytes": 51221
+  },
+  {
+    "source": "delivery-release/install-smoke.txt",
+    "sha256": "26c98ce7830e62c8a6363b8ad1200acb6881f636d8ea4090bf351c656884837b",
+    "bytes": 123
+  },
+  {
+    "source": "delivery-release/install.txt",
+    "sha256": "cce160c8ea84aa7a37b3fca6db8a495edc347f5556692d220cc48f6615e08f62",
+    "bytes": 436
+  },
+  {
+    "source": "delivery-release/installed-cli.json",
+    "sha256": "34e65853dc47c3d699e24d143aa0fa811e2a30200f2bee7a6ee07c8cc6f2c10e",
+    "bytes": 63157
+  },
+  {
+    "source": "delivery-release/installed-cli.txt",
+    "sha256": "bc2e92819d50f07d6a77bf88d9ec5657247b27f09d5b45078f997c073318cfec",
+    "bytes": 111
+  },
+  {
+    "source": "delivery-release/installed-spec.json",
+    "sha256": "3a4897d9030da3d6707b88e44b7a2583343864373944873d59854661ec0c55e0",
+    "bytes": 7745
+  },
+  {
+    "source": "delivery-release/installed-spec.txt",
+    "sha256": "aac68ed1d235b1c4678bb062cf122626bd7d3a01fa929bff184113138a553fb6",
+    "bytes": 28
+  },
+  {
+    "source": "delivery-release/report.json",
+    "sha256": "e1b6338946446c4f91da1a1fe1cc787b6784bcce949a8e3fa5b7d85433f3985a",
+    "bytes": 6082
+  },
+  {
+    "source": "delivery-release/source-fingerprint.json",
+    "sha256": "7e43ea7df885668b9c707f5cc6b4127fea200de1a03953babea73afb7320810b",
+    "bytes": 153631
+  },
+  {
+    "source": "gate-debug-1/build.txt",
+    "sha256": "b431753599d1bb6d5cd797b0c7eb18382c59b4dd37b7468a26ef8d8810be81d9",
+    "bytes": 3848
+  },
+  {
+    "source": "gate-debug-1/configure.txt",
+    "sha256": "78834d9d55522a8dc6ba355f9ff9900c6035d0cae3f73dbf9d846bc38f6273bb",
+    "bytes": 266
+  },
+  {
+    "source": "gate-debug-1/ctest-inventory.txt",
+    "sha256": "4c610edf67f6a343431770fcfc1d3659540696e5cc726d1c64b308d355588899",
+    "bytes": 82348
+  },
+  {
+    "source": "gate-debug-1/ctest.txt",
+    "sha256": "3b40aa0a80ef8a9a5f184a6e55cdefb0fe294d09e7613e11aba976a54aa954db",
+    "bytes": 9199
+  },
+  {
+    "source": "gate-debug-1/ctest.xml",
+    "sha256": "088e9650ac12f0a3158832af89e0bd1dad0dc782cdaee2310215dd68d3a4dfef",
+    "bytes": 16702
+  },
+  {
+    "source": "gate-debug-1/imports-zzy-native-gui.txt",
+    "sha256": "20a9ece02a83a1a609ad5c5004e4c88b5edcfebddb4b03fe9a2bad181be7fca7",
+    "bytes": 646
+  },
+  {
+    "source": "gate-debug-1/imports-zzy-native-web.txt",
+    "sha256": "d9d0adf00217ad1c167b3564bf38ab13aa214a9ce958b98be755b2c8f7e708e1",
+    "bytes": 616
+  },
+  {
+    "source": "gate-debug-1/imports-zzy-native.txt",
+    "sha256": "192809f703100282d63e08a3c911bb5757e35b1bca58a03b74c21ef92c2690e5",
+    "bytes": 596
+  },
+  {
+    "source": "gate-debug-1/install-smoke.json",
+    "sha256": "0265be8bcaa7ee38cd6acd8a058ec32bb32979372acfbef313fb4e91dc3bd0cd",
+    "bytes": 51537
+  },
+  {
+    "source": "gate-debug-1/install-smoke.txt",
+    "sha256": "26c98ce7830e62c8a6363b8ad1200acb6881f636d8ea4090bf351c656884837b",
+    "bytes": 123
+  },
+  {
+    "source": "gate-debug-1/install.txt",
+    "sha256": "424c08dedb71ca23ff3d16eb968c22a6ebedacede95e84e52f44564fe9682535",
+    "bytes": 436
+  },
+  {
+    "source": "gate-debug-1/installed-cli.json",
+    "sha256": "832fb634e32ef0448434ae89c9faf0c09fcd018b11fce6db67ff9327c3c10c28",
+    "bytes": 63181
+  },
+  {
+    "source": "gate-debug-1/installed-cli.txt",
+    "sha256": "5ea9408b0f2b58b5626e971154db7c50b65e11cc371bf12266d59dd155347729",
+    "bytes": 111
+  },
+  {
+    "source": "gate-debug-1/installed-spec.json",
+    "sha256": "3efbe319e38568acc31342dd2a8c4597ea932b38a1dfdc20cb8829b0ed9451a8",
+    "bytes": 7749
+  },
+  {
+    "source": "gate-debug-1/installed-spec.txt",
+    "sha256": "aac68ed1d235b1c4678bb062cf122626bd7d3a01fa929bff184113138a553fb6",
+    "bytes": 28
+  },
+  {
+    "source": "gate-debug-1/report.json",
+    "sha256": "076e12b91b393d0651d25c5a3a8e98b211b3396dfd6ac52e153e2347eeb4f70b",
+    "bytes": 6047
+  },
+  {
+    "source": "gate-debug-1/source-fingerprint.json",
+    "sha256": "ba785ce5b419bfd6090b3bececd06574a7a6624a6e2e12253b83db919928a60a",
+    "bytes": 159656
+  },
+  {
+    "source": "gate-debug-final/build.txt",
+    "sha256": "2ab2e94fcaa08476c7d9320bfdd7da45f29e089ea723c022504fefeddc0fc7c3",
+    "bytes": 3709
+  },
+  {
+    "source": "gate-debug-final/configure.txt",
+    "sha256": "78834d9d55522a8dc6ba355f9ff9900c6035d0cae3f73dbf9d846bc38f6273bb",
+    "bytes": 266
+  },
+  {
+    "source": "gate-debug-final/ctest-inventory.txt",
+    "sha256": "4c610edf67f6a343431770fcfc1d3659540696e5cc726d1c64b308d355588899",
+    "bytes": 82348
+  },
+  {
+    "source": "gate-debug-final/ctest.txt",
+    "sha256": "3e45476f57ea0df224fc94ec96cb2524f06925e25b07d48610b3393c8c182762",
+    "bytes": 9199
+  },
+  {
+    "source": "gate-debug-final/ctest.xml",
+    "sha256": "88177dcc3548be734f2d6603c80d4deaaba22849fb949024f6684cbe63693ac6",
+    "bytes": 16710
+  },
+  {
+    "source": "gate-debug-final/imports-zzy-native-gui.txt",
+    "sha256": "d77c720a7070b2a300b677c40e4bf851a2541400f4230391b703af27752d5ed6",
+    "bytes": 646
+  },
+  {
+    "source": "gate-debug-final/imports-zzy-native-web.txt",
+    "sha256": "2fa4da3c754c99d0cea5ca81c33b402df0ccda76998b2868b701b355c4b9c6ae",
+    "bytes": 616
+  },
+  {
+    "source": "gate-debug-final/imports-zzy-native.txt",
+    "sha256": "160a326c225ecd99b387ee89d51bd6eb9f6faee77e420bbe677c5b0bba17e173",
+    "bytes": 596
+  },
+  {
+    "source": "gate-debug-final/install-smoke.json",
+    "sha256": "3bd2e26ae51a41745ed8cc58306f8072caf80658f012d6d0f56ffb913a370297",
+    "bytes": 51537
+  },
+  {
+    "source": "gate-debug-final/install-smoke.txt",
+    "sha256": "26c98ce7830e62c8a6363b8ad1200acb6881f636d8ea4090bf351c656884837b",
+    "bytes": 123
+  },
+  {
+    "source": "gate-debug-final/install.txt",
+    "sha256": "6a10cca804d270da5921987e66aaca05db3d4d86dd5747d6e0450b0da1cf373e",
+    "bytes": 436
+  },
+  {
+    "source": "gate-debug-final/installed-cli.json",
+    "sha256": "45df2839fdc1f91d8e5a08b3e3278e96a947d662f1e72aba2464e4ccd2c97c3f",
+    "bytes": 63181
+  },
+  {
+    "source": "gate-debug-final/installed-cli.txt",
+    "sha256": "5ea9408b0f2b58b5626e971154db7c50b65e11cc371bf12266d59dd155347729",
+    "bytes": 111
+  },
+  {
+    "source": "gate-debug-final/installed-spec.json",
+    "sha256": "0b9375b18066638fc9b0bc7025aa0ac1f483e3922211c0161df893448b7dfa70",
+    "bytes": 7750
+  },
+  {
+    "source": "gate-debug-final/installed-spec.txt",
+    "sha256": "aac68ed1d235b1c4678bb062cf122626bd7d3a01fa929bff184113138a553fb6",
+    "bytes": 28
+  },
+  {
+    "source": "gate-debug-final/report.json",
+    "sha256": "d351e198dcfe38aa6e16b43b3c918aa619a2908ef62965e34bc97912b1d8f776",
+    "bytes": 6063
+  },
+  {
+    "source": "gate-debug-final/source-fingerprint.json",
+    "sha256": "56bfabd0bd4940eab342e15e621d46295a871682fb6dc76ec3cea16d68a682d0",
+    "bytes": 153631
+  },
+  {
+    "source": "gate-debug-final2/build.txt",
+    "sha256": "2ab2e94fcaa08476c7d9320bfdd7da45f29e089ea723c022504fefeddc0fc7c3",
+    "bytes": 3709
+  },
+  {
+    "source": "gate-debug-final2/configure.txt",
+    "sha256": "78834d9d55522a8dc6ba355f9ff9900c6035d0cae3f73dbf9d846bc38f6273bb",
+    "bytes": 266
+  },
+  {
+    "source": "gate-debug-final2/ctest-inventory.txt",
+    "sha256": "4c610edf67f6a343431770fcfc1d3659540696e5cc726d1c64b308d355588899",
+    "bytes": 82348
+  },
+  {
+    "source": "gate-debug-final2/ctest.txt",
+    "sha256": "3c9fc0d85f1129f63ebe1d9f5b6222bcc79935f86d4de50704a8296327f40654",
+    "bytes": 9199
+  },
+  {
+    "source": "gate-debug-final2/ctest.xml",
+    "sha256": "2ef6657e77efed3907c93fafa10715e984b4157ae7b2947bef31741c923e59c1",
+    "bytes": 16708
+  },
+  {
+    "source": "gate-debug-final2/imports-zzy-native-gui.txt",
+    "sha256": "d94a9a301b2d346d29c6d1e286033d19207ef8299b6989fd19667509c5ea0da6",
+    "bytes": 646
+  },
+  {
+    "source": "gate-debug-final2/imports-zzy-native-web.txt",
+    "sha256": "575dd70427535df2d1a81ee0b3b0774225e241c3f3de6d01c46555ff70659b2a",
+    "bytes": 616
+  },
+  {
+    "source": "gate-debug-final2/imports-zzy-native.txt",
+    "sha256": "a6f8c66cbf5f7859d00c72b064f6cf2bdc99bca95fb814812a0da08e6486bdf1",
+    "bytes": 596
+  },
+  {
+    "source": "gate-debug-final2/install-smoke.json",
+    "sha256": "7a211b8a59779fd1306deabf123b013d11ab70d1d6059abb9db00909d4545482",
+    "bytes": 51537
+  },
+  {
+    "source": "gate-debug-final2/install-smoke.txt",
+    "sha256": "26c98ce7830e62c8a6363b8ad1200acb6881f636d8ea4090bf351c656884837b",
+    "bytes": 123
+  },
+  {
+    "source": "gate-debug-final2/install.txt",
+    "sha256": "ab37af62c561ff30b3eb6f75df6a2c060c3e1b48ccc93c2fdb385177380b3e3e",
+    "bytes": 436
+  },
+  {
+    "source": "gate-debug-final2/installed-cli.json",
+    "sha256": "1748dcf5f77b1f3ccd7451a42389f2936ef4ea44a57af52fa7d61c82a286e15e",
+    "bytes": 63181
+  },
+  {
+    "source": "gate-debug-final2/installed-cli.txt",
+    "sha256": "5ea9408b0f2b58b5626e971154db7c50b65e11cc371bf12266d59dd155347729",
+    "bytes": 111
+  },
+  {
+    "source": "gate-debug-final2/installed-spec.json",
+    "sha256": "6cbec7ff1a4584a5330621df3447aeacdb10de761dac1cf94350833787cacf41",
+    "bytes": 7753
+  },
+  {
+    "source": "gate-debug-final2/installed-spec.txt",
+    "sha256": "aac68ed1d235b1c4678bb062cf122626bd7d3a01fa929bff184113138a553fb6",
+    "bytes": 28
+  },
+  {
+    "source": "gate-debug-final2/report.json",
+    "sha256": "153031931328473633cf4a4b77c562bb0824c15b116a9fd6ba5a1ed234c0be38",
+    "bytes": 6067
+  },
+  {
+    "source": "gate-debug-final2/source-fingerprint.json",
+    "sha256": "818d86d9f3bc70ad95a793ef28df51f47be40d86906b13134d78bc5e7b2ca0cf",
+    "bytes": 153631
+  },
+  {
+    "source": "gate-release-1/build.txt",
+    "sha256": "93c9288cc72e44804f511ccbb1207467972a75299c56e156633ba30e8043b98c",
+    "bytes": 3896
+  },
+  {
+    "source": "gate-release-1/configure.txt",
+    "sha256": "57c5485d5fc7d03ff55b7bdbb9931a77b468db31d6d3fde5c516d006b620f73c",
+    "bytes": 268
+  },
+  {
+    "source": "gate-release-1/ctest-inventory.txt",
+    "sha256": "788e441759cccf4edc05352825944105f872f43d6e0682b7ebe009eedc9e6cb3",
+    "bytes": 83006
+  },
+  {
+    "source": "gate-release-1/ctest.txt",
+    "sha256": "9585c2f2510a37b3019f106316f8fc89fff7e6ef9f802277b71fd2234292a845",
+    "bytes": 9201
+  },
+  {
+    "source": "gate-release-1/ctest.xml",
+    "sha256": "f008485ba5ebd8ff3c6cc5ba3390801a611ddb42a1230f8a54db576cb9bd3a0e",
+    "bytes": 16705
+  },
+  {
+    "source": "gate-release-1/imports-zzy-native-gui.txt",
+    "sha256": "dbb8711f07a6dd5d474e0b4887cfe94d1f5dec6e449027624086d6e681301c7a",
+    "bytes": 830
+  },
+  {
+    "source": "gate-release-1/imports-zzy-native-web.txt",
+    "sha256": "f12d9ccdc21b437c05e4c0340a3d223900f1ac4e580e70ea9b80a378b3ef456d",
+    "bytes": 874
+  },
+  {
+    "source": "gate-release-1/imports-zzy-native.txt",
+    "sha256": "f3ff90b165e9092fa9fb2e2cd63f04b1d322eb5cd58a0e40aa9a8f2ef5836e2f",
+    "bytes": 780
+  },
+  {
+    "source": "gate-release-1/install-smoke.json",
+    "sha256": "c3c85367bcd581918c3d1ee7b6007980baa3a9bc0b2f070c0dd1e3f777d83420",
+    "bytes": 51221
+  },
+  {
+    "source": "gate-release-1/install-smoke.txt",
+    "sha256": "26c98ce7830e62c8a6363b8ad1200acb6881f636d8ea4090bf351c656884837b",
+    "bytes": 123
+  },
+  {
+    "source": "gate-release-1/install.txt",
+    "sha256": "a1f73e2d880bee53dd3f9fddd06814c466676bb4d8a0ac01c608d4e6ba01f8ee",
+    "bytes": 436
+  },
+  {
+    "source": "gate-release-1/installed-cli.json",
+    "sha256": "0595edd055fbe9867f729a2d40469f10b2bc46e2b9af36664b0733e29ffef465",
+    "bytes": 63157
+  },
+  {
+    "source": "gate-release-1/installed-cli.txt",
+    "sha256": "bc2e92819d50f07d6a77bf88d9ec5657247b27f09d5b45078f997c073318cfec",
+    "bytes": 111
+  },
+  {
+    "source": "gate-release-1/installed-spec.json",
+    "sha256": "b94cc69d730e2d9c71e2cb8490d9e67878b3ae2b063e886d7a4edca6f497d518",
+    "bytes": 7740
+  },
+  {
+    "source": "gate-release-1/installed-spec.txt",
+    "sha256": "aac68ed1d235b1c4678bb062cf122626bd7d3a01fa929bff184113138a553fb6",
+    "bytes": 28
+  },
+  {
+    "source": "gate-release-1/report.json",
+    "sha256": "f6f3d63af91892ca65ceb2dd5bb81f56971aefbc32ebe24c2a848d5fa379c3e5",
+    "bytes": 6075
+  },
+  {
+    "source": "gate-release-1/source-fingerprint.json",
+    "sha256": "ba785ce5b419bfd6090b3bececd06574a7a6624a6e2e12253b83db919928a60a",
+    "bytes": 159656
+  },
+  {
+    "source": "gate-release-final/build.txt",
+    "sha256": "45b961dbde1194eaf6c7edffcbb5169ba7cd8990698b9d29beb7528450030fa0",
+    "bytes": 3757
+  },
+  {
+    "source": "gate-release-final/configure.txt",
+    "sha256": "57c5485d5fc7d03ff55b7bdbb9931a77b468db31d6d3fde5c516d006b620f73c",
+    "bytes": 268
+  },
+  {
+    "source": "gate-release-final/ctest-inventory.txt",
+    "sha256": "788e441759cccf4edc05352825944105f872f43d6e0682b7ebe009eedc9e6cb3",
+    "bytes": 83006
+  },
+  {
+    "source": "gate-release-final/ctest.txt",
+    "sha256": "f3d58b88b01f655b4bee55ad3303803fd88d696d31fa9e4544a7c84195dab498",
+    "bytes": 9201
+  },
+  {
+    "source": "gate-release-final/ctest.xml",
+    "sha256": "10e1c8df04f8509185ce310e86d0f78b5d80682880f47a34281bb6a075230cc6",
+    "bytes": 16709
+  },
+  {
+    "source": "gate-release-final/imports-zzy-native-gui.txt",
+    "sha256": "53546f2fb899ef40879255d3ee3abdb72f35be330e77f4e9e8e6eef4142e9d28",
+    "bytes": 830
+  },
+  {
+    "source": "gate-release-final/imports-zzy-native-web.txt",
+    "sha256": "6238595139a6bcf0c638093cc60d6ed5bc8f7dafbc142fa4c27559e158915697",
+    "bytes": 874
+  },
+  {
+    "source": "gate-release-final/imports-zzy-native.txt",
+    "sha256": "b2f114fc62cb5d8f410acf8ecce909e2ba6c1d7e680dfa8beea3355fd45ba515",
+    "bytes": 780
+  },
+  {
+    "source": "gate-release-final/install-smoke.json",
+    "sha256": "bb217ca9f38672455d95b98b106bbf38ac243ac17f2594bb1742abddbdb1f4f9",
+    "bytes": 51221
+  },
+  {
+    "source": "gate-release-final/install-smoke.txt",
+    "sha256": "26c98ce7830e62c8a6363b8ad1200acb6881f636d8ea4090bf351c656884837b",
+    "bytes": 123
+  },
+  {
+    "source": "gate-release-final/install.txt",
+    "sha256": "805fda1750c9e5173ca55b3a16314381dcb34658ced1793c2d9d5460945b83a5",
+    "bytes": 436
+  },
+  {
+    "source": "gate-release-final/installed-cli.json",
+    "sha256": "276343a16572acb647764d3ba07b03ff08b5493beecc57990014617ab8a607cd",
+    "bytes": 63157
+  },
+  {
+    "source": "gate-release-final/installed-cli.txt",
+    "sha256": "bc2e92819d50f07d6a77bf88d9ec5657247b27f09d5b45078f997c073318cfec",
+    "bytes": 111
+  },
+  {
+    "source": "gate-release-final/installed-spec.json",
+    "sha256": "34157d648941d3f9687cbfaeb99c101f652dcd89931d76bfdf6608f1e23b494b",
+    "bytes": 7745
+  },
+  {
+    "source": "gate-release-final/installed-spec.txt",
+    "sha256": "aac68ed1d235b1c4678bb062cf122626bd7d3a01fa929bff184113138a553fb6",
+    "bytes": 28
+  },
+  {
+    "source": "gate-release-final/report.json",
+    "sha256": "cd582582fb8a293fc43d933f9da1ec120bda44400a1657783ca5616084487d07",
+    "bytes": 6090
+  },
+  {
+    "source": "gate-release-final/source-fingerprint.json",
+    "sha256": "56bfabd0bd4940eab342e15e621d46295a871682fb6dc76ec3cea16d68a682d0",
+    "bytes": 153631
+  },
+  {
+    "source": "gate-release-final2/build.txt",
+    "sha256": "45b961dbde1194eaf6c7edffcbb5169ba7cd8990698b9d29beb7528450030fa0",
+    "bytes": 3757
+  },
+  {
+    "source": "gate-release-final2/configure.txt",
+    "sha256": "215541fe3a6f5130eadbf0ff9d06a915317cb0537374ed85c1ea2ac923020dbb",
+    "bytes": 268
+  },
+  {
+    "source": "gate-release-final2/ctest-inventory.txt",
+    "sha256": "788e441759cccf4edc05352825944105f872f43d6e0682b7ebe009eedc9e6cb3",
+    "bytes": 83006
+  },
+  {
+    "source": "gate-release-final2/ctest.txt",
+    "sha256": "f365a276b036b884a80daa928a4b53e1ff99d6f97385ad3616ebaabfe93ee824",
+    "bytes": 11039
+  },
+  {
+    "source": "gate-release-final2/ctest.xml",
+    "sha256": "9142f136c23f13ade8921b884acaa41bcd39773c94c25d875e04d29b832b9a8d",
+    "bytes": 17755
+  },
+  {
+    "source": "gate-release-final2/report.json",
+    "sha256": "67cecfbc884dad13578dafd02dfaac11cf6947f756a88cbe86eab02c3452a780",
+    "bytes": 2041
+  },
+  {
+    "source": "gate-release-final2/source-fingerprint.json",
+    "sha256": "818d86d9f3bc70ad95a793ef28df51f47be40d86906b13134d78bc5e7b2ca0cf",
+    "bytes": 153631
+  },
+  {
+    "source": "gate-release-final3/build.txt",
+    "sha256": "45b961dbde1194eaf6c7edffcbb5169ba7cd8990698b9d29beb7528450030fa0",
+    "bytes": 3757
+  },
+  {
+    "source": "gate-release-final3/configure.txt",
+    "sha256": "57c5485d5fc7d03ff55b7bdbb9931a77b468db31d6d3fde5c516d006b620f73c",
+    "bytes": 268
+  },
+  {
+    "source": "gate-release-final3/ctest-inventory.txt",
+    "sha256": "788e441759cccf4edc05352825944105f872f43d6e0682b7ebe009eedc9e6cb3",
+    "bytes": 83006
+  },
+  {
+    "source": "gate-release-final3/ctest.txt",
+    "sha256": "80c9033d747851b8d6580963dcb1879a0a4dfddd6cc09fc5478356c5aad2d849",
+    "bytes": 9201
+  },
+  {
+    "source": "gate-release-final3/ctest.xml",
+    "sha256": "f7459e6326c39dd54008a927cd5218481744fa494ba921fb110a1caddd538565",
+    "bytes": 16707
+  },
+  {
+    "source": "gate-release-final3/imports-zzy-native-gui.txt",
+    "sha256": "89087dc49d6a6f606d78085df68648f3204e0e0a60f895cf65b3db0fff9d79e6",
+    "bytes": 830
+  },
+  {
+    "source": "gate-release-final3/imports-zzy-native-web.txt",
+    "sha256": "960344f1125fc5503d5fa94d9f0fb12b76a696c9bb5c3c850d64cc48ee076d61",
+    "bytes": 874
+  },
+  {
+    "source": "gate-release-final3/imports-zzy-native.txt",
+    "sha256": "2a91d92711c4ffb81428cb9db69d28c60e645934719370700f3b619c9b1b3dbe",
+    "bytes": 780
+  },
+  {
+    "source": "gate-release-final3/install-smoke.json",
+    "sha256": "bb63cee141f88c5479bf5365d04e678a0c7c51a061763495e73c548a4d7e1303",
+    "bytes": 51221
+  },
+  {
+    "source": "gate-release-final3/install-smoke.txt",
+    "sha256": "26c98ce7830e62c8a6363b8ad1200acb6881f636d8ea4090bf351c656884837b",
+    "bytes": 123
+  },
+  {
+    "source": "gate-release-final3/install.txt",
+    "sha256": "6fc53e6803a96d096341ac8b16182adaeee51a48ef059f7fb6c923099623539d",
+    "bytes": 436
+  },
+  {
+    "source": "gate-release-final3/installed-cli.json",
+    "sha256": "8510205d2b286d61c1aec52e4ecdd916afee36e00a44278cd971ff68e02757fb",
+    "bytes": 63157
+  },
+  {
+    "source": "gate-release-final3/installed-cli.txt",
+    "sha256": "bc2e92819d50f07d6a77bf88d9ec5657247b27f09d5b45078f997c073318cfec",
+    "bytes": 111
+  },
+  {
+    "source": "gate-release-final3/installed-spec.json",
+    "sha256": "95b6576c0d3ecabf1cbf29785803d800c422b04c12d81712df41254a005f3da7",
+    "bytes": 7745
+  },
+  {
+    "source": "gate-release-final3/installed-spec.txt",
+    "sha256": "aac68ed1d235b1c4678bb062cf122626bd7d3a01fa929bff184113138a553fb6",
+    "bytes": 28
+  },
+  {
+    "source": "gate-release-final3/report.json",
+    "sha256": "8dbadfb4760833d37d0f14c3bdfd742c61a77964f5279ea1eb4c80b41c3d76fb",
+    "bytes": 6094
+  },
+  {
+    "source": "gate-release-final3/source-fingerprint.json",
+    "sha256": "818d86d9f3bc70ad95a793ef28df51f47be40d86906b13134d78bc5e7b2ca0cf",
+    "bytes": 153631
+  },
+  {
+    "source": "python-regression-final.json",
+    "sha256": "a9ee82cea07d55b2d1f0e9d0e2a1fc06c7522d3397aea082487d755565efd4de",
+    "bytes": 1332
+  },
+  {
+    "source": "release-directory-smoke.json",
+    "sha256": "deed4010d346235339f596caa4525e2841cb6fcff92bd402ac95c42f919e44b8",
+    "bytes": 51386
+  },
+  {
+    "source": "static-delivery/report.json",
+    "sha256": "7e2d69404112ae51e318e271c095bd32f261d3fada860602e0c6faaa706f77cc",
+    "bytes": 179043
+  },
+  {
+    "source": "static-final/report.json",
+    "sha256": "d38b63414c8b239b2ec23e798920b8282288505221432d99c83f9d56549c82d9",
+    "bytes": 178793
+  },
+  {
+    "source": "static-first/report.json",
+    "sha256": "f475df430282a14355b3cd2d0c8b0020d4e361abcc8f4ba44352b8b7342f5354",
+    "bytes": 180120
+  }
+]

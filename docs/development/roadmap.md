@@ -327,3 +327,7 @@ N0 只做盘点、能力/所有权冻结和堆原型，N1 才开始 Lexer。阶�
 ### N2 正式补跑闭合（2026-11-18）
 
 最新N2 CMake/MSVC Debug、Release各44/44 CTest、固定check850/850、过程58条和Release安装/源码外副本各9/9通过。N0/N1原32项历史保留，权限失败与修复见[N2报告](../../native_runtime/tests/n2-report.md)。N2-01—04静态技术出口满足，下一项N3-01；未实现求值，未进入N3，P12/P13不变。
+
+### NATIVE N5 本轮出口（2026-11-21）
+
+N5-01—05 按独立 [原生计划](native-runtime-plan.md)完成，CLI/spec/安装及 native CI 以 [N5 报告](../../native_runtime/tests/n5-report.md)和 [集中契约](native-cli-contract.md)为准。两配置各 83/83 CTest；Python 默认路线、P12/P13 和用户材料保持独立。下一阶段 N6 双实现迁移，本轮不进入。

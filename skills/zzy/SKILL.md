@@ -105,3 +105,7 @@ N2-01—04现已实现，正式静态边界读取[Program契约](../../docs/deve
 ## N4-05 和 N4-06 交付状态
 
 上段为首批历史。项目 v1、对象和 Drawing、回放及事件登记已通过 [N4-05 验收](../../native_runtime/tests/n4-05-report.md)。使用独立 Windows GUI EXE 并显式传入 `--gui`，见 [N4-06 窗口验收](../../native_runtime/tests/n4-06-report.md) 和 [原生启动指南](../../native_runtime/README.md)。下一项 N5-01。
+
+## N5 原生 CLI 与发布（2026-11-21）
+
+原生 `test FILE|DIR` 已实现，不再沿用历史 E402。先读 [CLI 契约](../../docs/development/native-cli-contract.md)、[N5 报告](../../native_runtime/tests/n5-report.md) 和原生 README；空收集/收集错误/超时/输出超额/异常退出都非成功，收集不执行业务，worker 使用固定源码快照和独立请求。Debug/Release 本机各 83/83 CTest 和安装/无 Python 证据通过，远端 GitHub CI、人工 Ctrl+C、Sanitizer 和缺 CRT 主机未验证。Python 默认入口保留；下一项 N6，按用户范围开展。

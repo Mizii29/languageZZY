@@ -194,3 +194,7 @@ CI 接入完成的标准是“真实触发、真实执行、错误能阻止通�
 每项先做适用专项与完整回归，最终冻结保留代码后确认完整核心、真实HTTP/Schema及源码外wheel安装都对应最终运行时/用例。低层优化同样要覆盖默认/shared、合约前置拒绝、SQLite/嵌入、失败/取消恢复；需要时增加安装探针而非只测源码。单项对照可用已验收相邻修订/内部参考路径，不能在共享服务中使用进程全局可变优化开关。
 
 正式性能测量在固定本机串行执行，与CI回归分开；保存单项与累计原始样本、失败及退化，CI绿色不证明提速或GUI/人工通过。最终P11结论与P12放行复用[最终测试计划](final-test-plan.md)；原始云端/人工报告只按其版本和范围引用，不改写历史编号。
+
+## 独立原生 N5 门禁
+
+`.github/workflows/native-ci.yml` 在 VS2022 Windows x64 的 Debug/Release 矩阵运行 `native_runtime/tools/native_ci.py`，依次 configure、build、非空 CTest、install、源码外 CLI/spec 与 PE/实际模块/进程树。程序不加载 Python；Python 仅作为测试编排器。完整 native 指纹覆盖源码/构建/依赖/固定夹具并在门禁前后比较，失败原件保留。Python CI 继续执行，不能用原生通过替代。远端运行未触发，本地对应入口已通过；详见 [N5 报告](../../native_runtime/tests/n5-report.md)。

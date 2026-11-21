@@ -1,6 +1,6 @@
 # 原生能力矩阵与延期协议（N0-02）
 
-2026-11-19，核心原生产物版本 0.0.0-n4-03-dev，MSVC 默认构建包含 N4-03 SQLite 和独立 N4-04 Web EXE。Python 仍是默认入口。原生 check 仅做静态准备；run 已执行核心语言及 N4-01/02 核心标准库。
+2026-11-21，核心原生产物版本 0.0.0-n5-dev，MSVC 默认构建包含 SQLite、独立 Web/GUI EXE 和原生 spec 运行器。Python 仍是默认入口。原生 check 仅做静态准备；run 执行核心语言与已验收宿主。
 逐项清单见 [capabilities.json](../../native_runtime/tests/capabilities.json)：每个 AST kind、实际 Value kind、宿主函数都有独立条目。
 `implemented=false` 表示当前原生后端未实现。[N3报告](../../native_runtime/tests/n3-report.md)保存核心运行验收范围；[N2报告](../../native_runtime/tests/n2-report.md)保存静态 Program 验收历史。
 

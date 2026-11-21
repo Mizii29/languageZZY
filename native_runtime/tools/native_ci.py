@@ -78,7 +78,7 @@ def main():
         run("build", ["cmake", "--build", build, "--config", config])
         listing = json.loads(run("ctest-inventory", ["ctest", "--test-dir", build, "-C", config, "--show-only=json-v1"]))
         names = [t["name"] for t in listing["tests"]]
-        assert len(names) >= 82 and {"spec-process", "cli-boundaries", "native-ci-fingerprint"} <= set(names), names
+        assert len(names) >= 83 and {"spec-process", "cli-boundaries", "native-ci-fingerprint"} <= set(names), names
         report["ctest_count"] = len(names)
         run("ctest", ["ctest", "--test-dir", build, "-C", config, "--output-on-failure",
                       "--no-tests=error", "--output-junit", out / "ctest.xml"])
