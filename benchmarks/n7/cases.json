@@ -1,0 +1,6 @@
+[
+  {"id": "X00", "n": null, "stdout": "314159\n", "algorithm": "Call a constant-returning function"},
+  {"id": "X01", "n": 10000, "stdout": "333283335000\n", "algorithm": "Sum squares from 0 through 9999 with a while loop"},
+  {"id": "X02", "n": 10000, "stdout": "49995000\n", "algorithm": "Call a parity-branching helper at every iteration and sum"},
+  {"id": "X03", "n": 10000, "stdout": "[10000, 49995000]\n", "algorithm": "Append 0 through 9999 to an array, iterate and sum, return length and sum"}
+]
