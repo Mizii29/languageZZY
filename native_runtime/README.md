@@ -202,3 +202,15 @@ MSVC 默认构建独立的 `zzy-native-gui.exe`。从仓库根目录启动窗口
 ```
 
 使用 Python 运行测试客户端，原生窗口及核心程序进程独立启动。[N4-06 验收](tests/n4-06-report.md)
+
+## N7 性能测量
+
+N7 已完成两轮冻结的原生 ZZY、Python 版 ZZY 与直接 Python 配对测量，包含完整 CLI、读取/准备/初始化/执行/清理、CPU、峰值工作集、Private Bytes 和逻辑资源。阶段探针为可选目标，不改变默认 CLI、check 或 headless 路径。
+
+复现命令：
+
+    cmake --preset native-release -S native_runtime -DZZY_NATIVE_BENCHMARK=ON
+    cmake --build build/native-release --config Release --target native-n7-probe
+    .\.venv\Scripts\python.exe -X utf8 -m benchmarks.n7.run freeze dist/native-n7/frozen build/native-release/Release/zzy-native.exe build/native-release/Release/native-n7-probe.exe
+
+完整轮次、环境冻结、固定答案、原始样本、剖析和候选撤回见 [N7 报告](tests/n7-report.md)、[测量方法](../benchmarks/n7/README.md) 和 [基线](../benchmarks/n7/baseline.md)。没有实现 VM、AOT、JIT 或磁盘缓存，未将候选实验产物放入发布目录。
