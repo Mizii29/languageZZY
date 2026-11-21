@@ -1,6 +1,6 @@
 #include "zzy_native/execution.hpp"
 #include "zzy_native/prepare.hpp"
-#include "vm.hpp"
+#include "zzy_native/integer_vm.hpp"
 #include <chrono>
 #include <iostream>
 #include <sstream>

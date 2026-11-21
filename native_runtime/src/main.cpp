@@ -2,6 +2,9 @@
 #include "zzy_native/program_dump.hpp"
 #include "zzy_native/execution.hpp"
 #include "zzy_native/spec_runner.hpp"
+#ifdef ZZY_NATIVE_FUNCTION_VM
+#include "zzy_native/integer_dispatch.hpp"
+#endif
 #include <iostream>
 #include <vector>
 namespace {
@@ -62,6 +65,9 @@ int cli(const std::vector<std::string>& argv,bool& json,zzy::ResourcePolicy& pol
     std::optional<std::string> limits;
     options=true;
     bool help=false,gui=false;
+#ifdef ZZY_NATIVE_FUNCTION_VM
+    std::optional<std::string> engine;
+#endif
     std::optional<double> timeout;
     for(std::size_t i=0;i<argv.size();++i) {
         const auto& arg=argv[i];
@@ -69,6 +75,14 @@ int cli(const std::vector<std::string>& argv,bool& json,zzy::ResourcePolicy& pol
         if(options && arg=="--help") {help=true;continue;}
 #ifdef ZZY_NATIVE_GUI
         if(options&&arg=="--gui") {gui=true;continue;}
+#endif
+#ifdef ZZY_NATIVE_FUNCTION_VM
+        if(options&&(arg=="--engine"||arg.find("--engine=")==0)) {
+            if(arg=="--engine"&&i+1==argv.size()) throw zzy::FrontendError("E401","missing run engine");
+            engine=arg=="--engine"?argv[++i]:arg.substr(9);
+            if(*engine!="auto" && *engine!="ast") throw zzy::FrontendError("E401","expected run engine auto or ast");
+            continue;
+        }
 #endif
         if(options&&(arg=="--timeout"||arg.find("--timeout=")==0)) {
             if(arg=="--timeout"&&i+1==argv.size())throw zzy::FrontendError("E401","missing test timeout");
@@ -103,12 +117,18 @@ int cli(const std::vector<std::string>& argv,bool& json,zzy::ResourcePolicy& pol
 #ifdef ZZY_NATIVE_GUI
         std::cout<<"Use run FILE --gui to enable Sketch windows\n";
 #endif
+#ifdef ZZY_NATIVE_FUNCTION_VM
+        std::cout<<"run accepts --engine auto|ast (default: auto)\n";
+#endif
         return 0;
     }
     if(arguments.empty())throw zzy::FrontendError("E401","missing command; use --help");
     const auto& command=arguments[0];
     if(gui&&command!="run")throw zzy::FrontendError("E401","--gui requires run");
     if(timeout&&command!="test")throw zzy::FrontendError("E401","--timeout requires test");
+#ifdef ZZY_NATIVE_FUNCTION_VM
+    if(engine&&command!="run")throw zzy::FrontendError("E401","--engine requires run");
+#endif
     if(command=="--version" && arguments.size()==1) {std::cout<<"0.0.0-n5-dev\n";return 0;}
     if(limits) policy=zzy::load_policy(zzy::widen(*limits));
     if(command=="test") {
@@ -136,11 +156,20 @@ int cli(const std::vector<std::string>& argv,bool& json,zzy::ResourcePolicy& pol
     }
     if(command=="run") {
         const auto program=zzy::prepare(zzy::widen(arguments[1]),meter);
+#ifdef ZZY_NATIVE_FUNCTION_VM
+        zzy::IntegerDispatch dispatch;
+#endif
         zzy::ExecutionContext context(program,policy,cancelled,std::cout,std::cerr,json,&std::cin);
 #ifdef ZZY_NATIVE_GUI
         if(gui)context.enable_sketch_gui();
 #endif
-        try {context.execute();return 0;}
+        try {
+#ifdef ZZY_NATIVE_FUNCTION_VM
+            if(!engine || *engine=="auto") dispatch.attach(context,policy,cancel,true);
+#endif
+            context.execute();
+            return 0;
+        }
         catch(const zzy::RuntimeError& error) {context.failure(zzy::runtime_diagnostic(program.data(),error,json));return 1;}
         catch(const std::bad_alloc&) {std::cerr<<zzy::render_frontend(zzy::FrontendError("E211","allocation failed; phase=execution"),json);return 1;}
         catch(const zzy::Cancelled&) {throw;}

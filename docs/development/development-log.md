@@ -1111,3 +1111,11 @@ N5 最终数量门槛复核：native_ci.py 要求至少83项并点名三个新�
 - 候选撤回后运行 ctest --test-dir build/native-release -C Release -E "^(external-parity|campus-parity)$" --output-on-failure --no-tests=error，84/84 通过，用时 145.27 秒。单独运行 native_runtime/tools/test-parity.py --backend native，固定清单为 1738/1738，失败/超时 0。
 
 原始样本和环境见 benchmarks/results/native-n7/baseline.tar.gz，插桩见 profile.tar.gz，候选 A/B 见 lookup.tar.gz。报告为 native_runtime/tests/n7-report.md，方法为 benchmarks/n7/README.md。已更新 todo 的 N7-01—04 并保持 N8/P12/P13 和未验证人工项目状态真实。没有实现 VM、AOT、JIT、磁盘缓存或新 build 命令。物理断网、Sanitizer、人工 Ctrl+C、其他机器/平台、缺少 VC Runtime 的干净主机、手写 C、Lua 与宿主主导负载仍未验证。
+
+## ZZY 字节码解释器实验优化（2026-11-22）
+
+核对作业要求后，在独立实验入口中让纯整数函数图共享字节码，按最大活动调用链一次预留帧预算，合并局部整数自增指令，直接在带标签整数上执行加减与比较。默认入口继续使用完整 AST 解释器。MSVC 初次构建的不可达代码警告通过拆分比较操作修复。Release 的两个实验目标构建通过，混合守卫和独立 VM 固定答案各 18/18，原生 CTest 专项 23/23，最终 A/B 共 480 个正式样本和 96 个预热样本，失败与超时均为零。平方和执行时间降 12%–19%，辅助调用和共享函数图字节码生成也在两轮加速。短调用与前端准备仍有限制。实际命令、样本目录和未测范围见 [实验报告](../../benchmarks/int_vm/README.md)。
+
+### 原生 run 接入
+
+核心 `zzy-native run` 默认选择受支持的整数循环，提供 `--engine ast` 作为同版本对照。混合探针验证 21 项，新增 CLI 黑盒验证 13 次调用。执行 `python -X utf8 native_runtime/tools/native_ci.py --configuration Release --output dist/native-ci/feature-mixed-20261122` 通过，包含非空 CTest 87/87、源码外安装、依赖和已安装 CLI/spec 检查。现有工作区的静态检查通过。选择边界见[原生 CLI 契约](native-cli-contract.md#原生-run-执行方式)。

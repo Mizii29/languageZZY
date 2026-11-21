@@ -19,6 +19,12 @@ public:
 #endif
     using Done=std::function<void(Value)>;
     using Next=std::function<void()>;
+#ifdef ZZY_NATIVE_FUNCTION_VM
+    struct FastIntegerResult {BigInt value;NodeId site;};
+    using FastIntegerCall=std::function<std::optional<FastIntegerResult>(NodeId,const std::vector<Value>&,NodeId)>;
+    void set_fast_integer_call(FastIntegerCall callback) {fast_integer_call=std::move(callback);}
+    std::size_t active_call_depth() const {return calls.size();}
+#endif
     const Program snapshot;
     const ProgramData& program;
     RuntimeHeap heap;
@@ -43,6 +49,9 @@ private:
     std::uint64_t stdout_used=0,stderr_used=0;
     std::string flow;Value returned;NodeId return_site=no_node;
     bool diagnostic_json;
+#ifdef ZZY_NATIVE_FUNCTION_VM
+    FastIntegerCall fast_integer_call;
+#endif
     friend struct ExecutionProbe;
     friend struct WebRuntime;
     const AstNode& ast(NodeId id) const {return program.nodes.at(id);}
@@ -731,6 +740,17 @@ inline void ExecutionContext::call(Value fn,std::vector<Value> args,NodeId site,
         auto next=std::make_shared<Frame>();next->function=fn;next->call=site;calls.push_back(next);
         for(std::size_t i=0;i<count;++i) typecheck(stored_type(fn,i),args[i],argument_site(i));
         const auto& plan=program.functions.at(id);next->space=Lease(heap.state,{0,plan.locals.size()+1,0},site);
+#ifdef ZZY_NATIVE_FUNCTION_VM
+        if(fast_integer_call) {
+            if(auto fast=fast_integer_call(id,args,site)) {
+                auto value=integer(std::move(fast->value),fast->site);
+                typecheck(stored_type(fn,ast(id).children.size()-1),value,fast->site);
+                next->space.release();calls.pop_back();
+                push([done,value=std::move(value)]() mutable {done(std::move(value));});
+                return;
+            }
+        }
+#endif
         next->locals.resize(plan.locals.size());next->types.resize(plan.locals.size());auto previous=frame;frame=next;
         for(std::size_t i=0;i<count;++i) define(node.children[i],args[i],stored_type(fn,i));
         const auto previous_item=current;

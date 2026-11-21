@@ -1,6 +1,6 @@
 # ZZY native runtime：核心宿主与 Sketch
 
-独立 C++17 AST 解释器。原生 `run` 执行核心 ZZY，`check` 只静态准备，`test` 收集并隔离执行 spec。命令输出严格 UTF-8；text/JSON 诊断、stdout/stderr 配额和 0/1/2/130 退出码由同一资源策略约束。MSVC 默认构建另支持 `db.transaction`、`db.query`。Python 只协调构建和黑盒客户端，原生进程不回退 Python。
+独立 C++17 解释器。原生 `run` 执行核心 ZZY，默认用 AST 与纯整数循环字节码 VM 混合执行，`--engine ast` 可选择全程 AST。 `check` 只静态准备，`test` 收集并隔离执行 spec。命令输出严格 UTF-8，text/JSON 诊断、stdout/stderr 配额和 0/1/2/130 退出码由同一资源策略约束。MSVC 默认构建另支持 `db.transaction`、`db.query`。Python 用于构建和黑盒客户端。 [执行方式与边界](../docs/development/native-cli-contract.md#原生-run-执行方式)
 
 验收范围及产物见 [N4-04报告](tests/n4-04-report.md)、[N4-03报告](tests/n4-03-report.md)、[N4-02报告](tests/n4-02-report.md)、[N4-01报告](tests/n4-01-report.md)、[N3报告](tests/n3-report.md) 与 [能力矩阵](../docs/development/native-runtime-capability.md)。前端历史保存在 [N2报告](tests/n2-report.md)；静态入口见 [Program契约](../docs/development/native-program-contract.md)。
 
@@ -213,4 +213,4 @@ N7 已完成两轮冻结的原生 ZZY、Python 版 ZZY 与直接 Python 配对�
     cmake --build build/native-release --config Release --target native-n7-probe
     .\.venv\Scripts\python.exe -X utf8 -m benchmarks.n7.run freeze dist/native-n7/frozen build/native-release/Release/zzy-native.exe build/native-release/Release/native-n7-probe.exe
 
-完整轮次、环境冻结、固定答案、原始样本、剖析和候选撤回见 [N7 报告](tests/n7-report.md)、[测量方法](../benchmarks/n7/README.md) 和 [基线](../benchmarks/n7/baseline.md)。没有实现 VM、AOT、JIT 或磁盘缓存，未将候选实验产物放入发布目录。
+完整轮次、环境冻结、固定答案、原始样本、剖析和候选撤回见 [N7 报告](tests/n7-report.md)、[测量方法](../benchmarks/n7/README.md) 和 [基线](../benchmarks/n7/baseline.md)。N7 结束后，原生 `run` 接入整数 VM。字节码生成、运行和完整进程分别报告。 [后续 VM 实测](../benchmarks/int_vm/README.md)

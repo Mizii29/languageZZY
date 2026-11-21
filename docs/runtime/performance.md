@@ -211,6 +211,10 @@ P07 使用独立的 Python 基准驱动，直接调用已有解释器内部“�
 
 ### 4.1 再进一步：字节码和可选数值库
 
+当前 C++ 原生 `run` 已采用 AST 与整数循环字节码混合模式，`--engine ast` 可用于同一二进制的对照。循环门槛来自实测。与旧混合 VM 相比，1 万次平方和执行时间低 12%–19%，1000 次纯整数辅助调用快 3.0–4.2 倍，61 函数共享图的字节码生成快 5.4–7.6 倍。共享图的完整进程仍受前端准备主导，短调用的准备成本也需单列。以上结论来自本机微基准。 [分段数据与复现](../../benchmarks/int_vm/README.md)
+
+下面保留早期设计背景。
+
 **字节码**是将语法树变成更简单的执行指令，比如“取变量、加一、存变量、跳转”。它可能减少节点遍历和层层调用；依然由解释器执行，所以不违背解释型语言的作业要求。Python 写的虚拟机是否更快仍需测量，也不意味着自动超过 CPython。参考 [Crafting Interpreters 的字节码介绍](https://github.com/munificent/craftinginterpreters/blob/master/book/chunks-of-bytecode.md)。
 
 **数值库**可以封装 NumPy，例如 `num.dot(a, b)` 做向量点积。NumPy 的批量运算可以交给已编译的代码执行，适合较大的同类型数值数组。[NumPy 官方解释](https://numpy.org/doc/stable/user/whatisnumpy.html)
