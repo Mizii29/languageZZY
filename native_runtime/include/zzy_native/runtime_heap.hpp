@@ -57,6 +57,7 @@ struct RuntimeNode {
 struct HeapState : std::enable_shared_from_this<HeapState> {
     ResourcePolicy policy;std::atomic<bool>& cancelled;Charge used{},peak{};
     std::uint64_t owner,next=1;bool closed=false,fail_allocation=false;
+    std::uint64_t next_at_collection=1;
     std::unordered_map<std::uint64_t,std::unique_ptr<RuntimeNode>> nodes;
     std::unordered_map<std::uint64_t,std::size_t> roots;
     // A published graph has no mutable nodes or root counters touched by readers.
@@ -102,6 +103,12 @@ struct HeapState : std::enable_shared_from_this<HeapState> {
         for(auto it=nodes.begin();it!=nodes.end();) {
             if(!seen.count(it->first)) {refund(it->second->charge);it=nodes.erase(it);}else ++it;
         }
+        next_at_collection=next;
+    }
+    void collect_if_due() {
+        // Reachable container children have no root counter of their own.
+        // Count allocations since the last sweep, rather than non-root nodes.
+        if(next-next_at_collection>=4096)collect();
     }
     void reserve(Charge x,NodeId site=no_node) {
         point();if(!fits(x)) collect();

@@ -31,7 +31,7 @@ def fingerprint():
                                       "--exclude-standard", "--", "native_runtime",
                                       ".github/workflows/native-ci.yml"], cwd=ROOT).decode("utf-8").split("\0")
     fixtures = subprocess.check_output(["git", "ls-files", "-z", "--", "tests", "examples", "zzy",
-                                        ".gitattributes", "pyproject.toml"], cwd=ROOT).decode("utf-8").split("\0")
+                                        "apps/zzy-campus", "pyproject.toml"], cwd=ROOT).decode("utf-8").split("\0")
     allowed = {".cpp", ".hpp", ".h", ".cmake", ".json", ".zzy", ".ps1", ".py", ".yml", ".yaml"}
     paths = [p for p in native + fixtures if p and (ROOT / p).is_file()
              and (Path(p).suffix in allowed or Path(p).name in ("CMakeLists.txt", "CMakePresets.json"))
@@ -60,8 +60,15 @@ def main():
     records = []; started = time.monotonic(); passed = False
 
     def run(label, command):
-        p = subprocess.run([str(v) for v in command], cwd=ROOT, env=env,
-                           capture_output=True, encoding="utf-8", errors="replace", timeout=900)
+        command_timeout = 2400 if label == "ctest" else 900
+        argv = [str(v) for v in command]
+        try:
+            p = subprocess.run(argv, cwd=ROOT, env=env, capture_output=True,
+                               encoding="utf-8", errors="replace", timeout=command_timeout)
+        except subprocess.TimeoutExpired as error:
+            (out / (label + ".txt")).write_bytes((error.stdout or b"") + (error.stderr or b""))
+            records.append(dict(id=label, command=argv, timed_out=True, timeout_seconds=command_timeout))
+            raise
         (out / (label + ".txt")).write_text(p.stdout + p.stderr, encoding="utf-8")
         records.append(dict(id=label, command=[str(v) for v in command], exit_code=p.returncode))
         if p.returncode: raise RuntimeError(f"{label} failed: see {out / (label + '.txt')}")
@@ -78,7 +85,8 @@ def main():
         run("build", ["cmake", "--build", build, "--config", config])
         listing = json.loads(run("ctest-inventory", ["ctest", "--test-dir", build, "-C", config, "--show-only=json-v1"]))
         names = [t["name"] for t in listing["tests"]]
-        assert len(names) >= 83 and {"spec-process", "cli-boundaries", "native-ci-fingerprint"} <= set(names), names
+        assert len(names) >= 86 and {"spec-process", "cli-boundaries", "native-ci-fingerprint",
+                                      "external-parity", "campus-parity", "persistence-parity"} <= set(names), names
         report["ctest_count"] = len(names)
         run("ctest", ["ctest", "--test-dir", build, "-C", config, "--output-on-failure",
                       "--no-tests=error", "--output-junit", out / "ctest.xml"])

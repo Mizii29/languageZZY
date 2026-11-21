@@ -25,6 +25,8 @@ class NativeFingerprintTests(unittest.TestCase):
         result=fingerprint(); files=result["files"]
         self.assertIn("native_runtime/src/main.cpp",files)
         self.assertIn("native_runtime/CMakeLists.txt",files)
+        self.assertIn("apps/zzy-campus/main.zzy",files)
+        self.assertIn("apps/zzy-campus/limits.json",files)
         self.assertIn(".github/workflows/native-ci.yml",files)
         self.assertTrue(any(p.endswith(".cmake") for p in files))
         self.assertTrue(any("third_party/" in p and p.endswith(".h") for p in files))

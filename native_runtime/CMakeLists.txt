@@ -102,6 +102,22 @@ if(BUILD_TESTING)
     -m unittest native_runtime.tests.test_native_ci)
   set_tests_properties(native-ci-fingerprint PROPERTIES
     WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/.." TIMEOUT 30)
+  add_test(NAME external-parity COMMAND "${ZZY_NATIVE_WEB_TEST_PYTHON}" -X utf8
+    "${CMAKE_CURRENT_SOURCE_DIR}/tools/test-parity.py" --backend native
+    --exe $<TARGET_FILE:zzy-native> --output "${CMAKE_CURRENT_BINARY_DIR}/n6-parity-$<CONFIG>"
+    --overwrite)
+  set_tests_properties(external-parity PROPERTIES TIMEOUT 900
+    WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/..")
+  add_test(NAME campus-parity COMMAND "${ZZY_NATIVE_WEB_TEST_PYTHON}" -X utf8
+    "${CMAKE_CURRENT_SOURCE_DIR}/tools/test-campus.py" --backend native
+    --exe $<TARGET_FILE:zzy-native> --output "${CMAKE_CURRENT_BINARY_DIR}/n6-campus-$<CONFIG>"
+    --overwrite)
+  set_tests_properties(campus-parity PROPERTIES TIMEOUT 1800
+    WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/..")
+  add_test(NAME persistence-parity COMMAND "${ZZY_NATIVE_WEB_TEST_PYTHON}" -X utf8
+    "${CMAKE_CURRENT_SOURCE_DIR}/tools/test-persistence-parity.py"
+    --exe $<TARGET_FILE:zzy-native> --sqlite ${ZZY_NATIVE_SQLITE})
+  set_tests_properties(persistence-parity PROPERTIES TIMEOUT 120)
   add_test(NAME sketch-geometry-fixed COMMAND "${NATIVE_POWERSHELL}" -NoProfile -File
     "${CMAKE_CURRENT_SOURCE_DIR}/tools/test-sketch.ps1" -Executable $<TARGET_FILE:zzy-native>)
   set_tests_properties(sketch-geometry-fixed PROPERTIES TIMEOUT 180)

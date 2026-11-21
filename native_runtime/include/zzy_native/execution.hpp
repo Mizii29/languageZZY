@@ -446,7 +446,13 @@ private:
         builtin("io",no_node);builtin("io.print",no_node);
     }
     void drain() {
-        while(!tasks.empty()) {point();auto task=std::move(tasks.back());tasks.pop_back();task.action();if(heap.state->nodes.size()>heap.state->roots.size()+4096) heap.collect();}
+        while(!tasks.empty()) {
+            point();
+            auto task=std::move(tasks.back());
+            tasks.pop_back();
+            task.action();
+            heap.state->collect_if_due();
+        }
     }
     void unwind(RuntimeError* error) noexcept {
         auto item=query_items.rbegin();
