@@ -6,14 +6,16 @@ import os
 from pathlib import Path
 import subprocess
 import tempfile
+import uuid
 
 ROOT=Path(__file__).resolve().parents[2]
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--exe',type=Path,required=True)
-    parser.add_argument('--output',type=Path,required=True)
+    parser.add_argument('--output',type=Path)
     args=parser.parse_args()
+    if args.output is None: args.output=Path(tempfile.gettempdir())/('zzy-cli-'+uuid.uuid4().hex+'.json')
     if args.output.exists(): parser.error('do not overwrite evidence')
     exe=args.exe.resolve();records=[]
     with tempfile.TemporaryDirectory(prefix='ZZY N1 CLI 中文 ') as temporary:
@@ -96,6 +98,9 @@ def main():
             run('arguments-'+str(len(records)),arguments+['--diagnostic-format','json'],2,'','E401')
         for command in ['--help','--version']:
             run('bypass-config-'+command,[command,'--limits',str(folder/'missing.json')])
+        for arguments in [['test'],['test','a','b'],['test','a','--timeout'],['run','a','--timeout=1'],
+                          *[['test','a','--timeout='+v] for v in ('0','-1','nan','inf','','1x',' 1')]]:
+            run('test-arguments-'+str(len(records)),arguments+['--diagnostic-format=json'],2,'','E401')
         run('help-subcommand',['lex','--help','--limits',str(folder/'missing.json')])
         run('missing-file',['source-info',str(folder/'missing.zzy'),'--diagnostic-format','json'],2,'','E401')
         run('directory-source',['lex',str(folder),'--diagnostic-format','json'],2,'','E401')
@@ -104,10 +109,11 @@ def main():
         run('source-info-no-effects',['source-info',str(source)])
         run('lex-no-effects',['lex',str(source)])
         run('check-no-effects',['check',str(source),'--diagnostic-format','json'],stdout='')
-        run('unsupported-test',['test',str(source),'--diagnostic-format','json'],2,'','E402')
+        run('empty-test-collection',['test',str(source),'--diagnostic-format','json'],1,
+            '{"schema_version":1,"tests":0,"passed":0,"failed":0,"timed_out":0,"collection_errors":1}\n','E401')
         assert not (folder/'side-effect.txt').exists(),'user code executed'
-        source.write_text('io.print("UNEXPECTED");sketch.color("#ff0000");',encoding='utf-8')
-        run('run-unsupported-host',['run',str(source),'--diagnostic-format','json'],1,'UNEXPECTED\n','E402')
+        source.write_text('io.print("expected");sketch.color("#ff0000");',encoding='utf-8')
+        run('run-host-arity',['run',str(source),'--diagnostic-format','json'],1,'expected\n','E202')
         # Stop-option marker permits a filename which resembles a flag.
         (folder/'--help').write_bytes(b'a')
         run('end-options',['lex','--diagnostic-format','json','--','--help'],tokens=[ident,eof])

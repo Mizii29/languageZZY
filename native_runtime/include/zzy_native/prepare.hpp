@@ -45,7 +45,9 @@ class Preparation {
         visits[index].active=false;result.graph.push_back(std::move(module));return root;
     }
 public:
-    explicit Preparation(FrontendMeter& m):meter(m),loader(m),ast(m) {}
+    explicit Preparation(FrontendMeter& m,const SourceSnapshot* frozen=nullptr,
+                         std::map<std::wstring,std::wstring>* paths=nullptr)
+        :meter(m),loader(m,frozen,paths),ast(m) {}
     Program load(const std::wstring& path) {
         result.root=visit(loader.load(path),1);result.nodes=std::move(ast.nodes);
         return Program(std::move(result));

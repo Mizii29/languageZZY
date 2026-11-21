@@ -18,9 +18,9 @@ class InventoryTests(unittest.TestCase):
         for group,key in [('ast','ast_kinds'),('value','value_kinds'),('host','native_functions')]:
             self.assertEqual({f['id'] for f in features if f['id'].startswith(group+'.')},
                              {group+'.'+name for name in inventory[key]})
-        core_ast = {'ast.' + kind for kind in inventory['ast_kinds'] if kind != 'spec'}
+        core_ast = {'ast.' + kind for kind in inventory['ast_kinds']}
         core_values = {'value.' + kind for kind in inventory['value_kinds'] if not kind.startswith('sketch.')}
-        core_cli = {'cli.' + name for name in ('source-info', 'lex', 'check', 'info', 'program-info', 'run')}
+        core_cli = {'cli.' + name for name in ('source-info', 'lex', 'check', 'info', 'program-info', 'run', 'test')}
         core_hosts = {'host.' + name for name in (
             'len', 'str', 'range', 'wake', 'io.input', 'io.print', 'array.copy', 'array.pop', 'array.push',
             'array.sum', 'array.stats', 'array.sorted', 'array.map', 'array.filter',

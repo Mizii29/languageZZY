@@ -479,9 +479,14 @@ public:
     ExecutionContext(const Program& p,const ResourcePolicy& policy,std::atomic<bool>& cancel,std::ostream& out,std::ostream& err,bool json=false,std::istream* in=nullptr)
         :snapshot(p),program(snapshot.data()),heap(policy,cancel),output(out),errors(err),input(in),diagnostic_json(json) {}
     ~ExecutionContext() {cleanup();}
-    void execute() {
+    void execute(NodeId spec=no_node) {
         try {
-            initialize();block(program.root,[]{});drain();
+            initialize();block(program.root,[]{});
+            drain();
+            if(spec!=no_node) {
+                block(ast(spec).children.at(0),[]{});
+                drain();
+            }
             cleanup();
         } catch(RuntimeError& e) {
             unwind(&e);

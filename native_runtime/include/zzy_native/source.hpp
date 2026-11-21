@@ -41,12 +41,20 @@ struct Source final {
             ",\"sha256\":"+quote(sha256(raw,safe_point))+",\"syntax_checked\":false,\"resource_fingerprint\":"+quote(policy.fingerprint())+"}\n";
     }
 };
+struct SourceSnapshot {
+    std::map<std::wstring,std::string> files;
+    std::map<std::wstring,std::wstring> aliases;
+};
 class SourceLoader {
     FrontendMeter& meter;
+    const SourceSnapshot* snapshot;
+    std::map<std::wstring,std::wstring>* observed;
     std::map<std::wstring,std::shared_ptr<const Source>> cache;
     std::uint64_t reserved_bytes=0,reserved_modules=0;
 public:
-    explicit SourceLoader(FrontendMeter& m):meter(m) {}
+    explicit SourceLoader(FrontendMeter& m,const SourceSnapshot* frozen=nullptr,
+                          std::map<std::wstring,std::wstring>* paths=nullptr)
+        :meter(m),snapshot(frozen),observed(paths) {}
     SourceLoader(const SourceLoader&)=delete;
     SourceLoader& operator=(const SourceLoader&)=delete;
     ~SourceLoader() {close();}
@@ -57,12 +65,32 @@ public:
     std::shared_ptr<const Source> load(const std::wstring& path,std::uint64_t depth=1) {
         const auto file=display_path(path);
         meter.check("import_depth",depth,file);
+        if(snapshot) {
+            const auto alias=snapshot->aliases.find(full_path(path));
+            if(alias==snapshot->aliases.end())throw FrontendError("E401","missing source alias in spec snapshot",file);
+            const auto& canonical=alias->second;
+            const auto cached=cache.find(canonical);
+            if(cached!=cache.end())return cached->second;
+            const auto& bytes=snapshot->files.at(canonical);
+            meter.check("module_count",meter.module_count+1,file);
+            meter.check("source_file_bytes",bytes.size(),file);
+            meter.check("source_total_bytes",meter.source_total+bytes.size(),file);
+            auto source=std::make_shared<const Source>(canonical,bytes,[&]{meter.safe_point();});
+            cache.emplace(canonical,source);
+            reserved_bytes+=bytes.size();++reserved_modules;
+            meter.source_total+=bytes.size();++meter.module_count;
+            return source;
+        }
         // Canonicalize through a handle (junctions and 8.3 aliases included).
         FileHandle stream(CreateFileW(extended_path(path).c_str(),GENERIC_READ,FILE_SHARE_READ|FILE_SHARE_WRITE|FILE_SHARE_DELETE,
                                      nullptr,OPEN_EXISTING,FILE_FLAG_BACKUP_SEMANTICS,nullptr));
         if(!stream) throw FrontendError("E401","cannot open source",file);
         const auto canonical=final_path(stream.get());
-        for(const auto& item:cache) if(same_path(item.first,canonical)) return item.second;
+        for(const auto& item:cache) if(same_path(item.first,canonical)) {
+            if(observed)observed->insert_or_assign(full_path(path),item.first);
+            return item.second;
+        }
+        if(observed)observed->insert_or_assign(full_path(path),canonical);
         meter.check("module_count",meter.module_count+1,file);
         BY_HANDLE_FILE_INFORMATION attributes{};
         if(!GetFileInformationByHandle(stream.get(),&attributes) || (attributes.dwFileAttributes&FILE_ATTRIBUTE_DIRECTORY))

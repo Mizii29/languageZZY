@@ -69,16 +69,21 @@ inline std::wstring final_path(HANDLE handle) {
 inline bool same_path(const std::wstring& a,const std::wstring& b) {
     return CompareStringOrdinal(a.c_str(),static_cast<int>(a.size()),b.c_str(),static_cast<int>(b.size()),TRUE)==CSTR_EQUAL;
 }
-inline std::string display_path(const std::wstring& path) {
-    auto absolute=full_path(path);
+inline std::wstring diagnostic_directory;
+inline std::wstring current_directory() {
     const auto size=GetCurrentDirectoryW(0,nullptr);
-    if(!size) return narrow(absolute);
+    if(!size) throw FrontendError("E401","cannot resolve current directory");
     std::wstring cwd(size,L'\0');const auto length=GetCurrentDirectoryW(size,cwd.data());
-    if(!length || length>=size) return narrow(absolute);
+    if(!length || length>=size) throw FrontendError("E401","cannot resolve current directory");
     cwd.resize(length);
     FileHandle directory(CreateFileW(extended_path(cwd).c_str(),0,FILE_SHARE_READ|FILE_SHARE_WRITE|FILE_SHARE_DELETE,
                                     nullptr,OPEN_EXISTING,FILE_FLAG_BACKUP_SEMANTICS,nullptr));
     if(directory) cwd=final_path(directory.get());
+    return cwd;
+}
+inline std::string display_path(const std::wstring& path) {
+    auto absolute=full_path(path);
+    const auto cwd=diagnostic_directory.empty()?current_directory():diagnostic_directory;
     const auto parts=[](const std::wstring& value) {
         std::vector<std::wstring> result;
         std::size_t begin=0;

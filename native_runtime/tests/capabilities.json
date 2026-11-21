@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "stage": "N4-05 (headless) + N4-06 (Win32 GUI)",
+  "stage": "N5 CLI, isolated spec runner and native distribution",
   "profile": "Windows MSVC default build with ZZY_NATIVE_SQLITE=ON; OFF rejects db with E402",
   "features": [
     {
@@ -329,8 +329,8 @@
       "id": "ast.spec",
       "tier": "core",
       "phase": "N5",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "ast.string",
@@ -1316,8 +1316,8 @@
       "id": "cli.test",
       "tier": "core",
       "phase": "N5",
-      "implemented": false,
-      "diagnostic": "E402"
+      "implemented": true,
+      "diagnostic": null
     },
     {
       "id": "cli.info",
