@@ -26,3 +26,29 @@ try { & $probe X01.zzy limits.json } finally { Pop-Location }
 ```
 
 [剖析原始数据](../results/native-n7/profile.tar.gz) 包含四个固定答案、本体哈希和各探针计数。首次插桩拒绝了与两个 `pin` 方法匹配的锚点。确认匹配位置后收窄到堆操作，保留第一次生成的源码副本，第二次构建及 4 项输出核对通过。
+
+## 候选结果
+
+两轮分别用种子 711 和 712，各 288 次运行，其中 48 次预热、240 次正式。全部匹配固定答案，失败和超时为 0。另有 16 次 A/B 预跑。单元格是同序号逐对比较的耗时变化中位数，负值表示更快，括号中为 MAD，单位为百分点。
+
+| 夹具 | 执行第一轮 | 执行第二轮 | CLI 第一轮 | CLI 第二轮 |
+| --- | ---: | ---: | ---: | ---: |
+| X00 | +1.69% (27.89) | −12.83% (21.39) | +2.47% (9.54) | +0.79% (6.74) |
+| X01 | −2.65% (4.29) | −7.00% (10.43) | +5.13% (7.61) | +0.07% (9.99) |
+| X02 | −1.62% (12.65) | +2.25% (10.37) | −4.88% (9.16) | −7.17% (7.92) |
+| X03 | −3.04% (9.74) | +2.36% (4.09) | +8.12% (10.95) | +7.36% (8.40) |
+
+候选未达到保留门槛。正式源码与 N6 原生 CLI 继续使用原实现。候选只在独立源码目录构建，产物 SHA-256、原始样本、CPU 和内存分布见 [A/B 归档](../results/native-n7/lookup.tar.gz)。
+
+```powershell
+$py = '.\.venv\Scripts\python.exe'
+& $py -X utf8 -m benchmarks.n7.experiment lookup dist/native-n7/lookup-src
+cmake -S dist/native-n7/lookup-src/native_runtime -B build/native-n7-lookup -G 'Visual Studio 17 2022' -A x64 -DBUILD_TESTING=OFF -DZZY_NATIVE_BENCHMARK=ON
+cmake --build build/native-n7-lookup --config Release --target zzy-native native-n7-probe
+New-Item -ItemType Directory dist/native-n7/lookup-bins
+Copy-Item build/native-n7-lookup/Release/zzy-native.exe dist/native-n7/lookup-bins/native.exe
+Copy-Item build/native-n7-lookup/Release/native-n7-probe.exe dist/native-n7/lookup-bins/probe.exe
+& $py -X utf8 -m benchmarks.n7.run run dist/native-n7/frozen dist/native-n7/lookup-replay-1 --seed 711 --candidate dist/native-n7/lookup-bins
+& $py -X utf8 -m benchmarks.n7.run run dist/native-n7/frozen dist/native-n7/lookup-replay-2 --seed 712 --candidate dist/native-n7/lookup-bins
+& $py -X utf8 -m benchmarks.n7.paired dist/native-n7/lookup-replay-1/raw.jsonl native candidate
+```

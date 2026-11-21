@@ -37,7 +37,17 @@ def command(*argv):
 
 def files_at(root):
     return {p.relative_to(root).as_posix(): digest(p) for p in sorted(root.rglob('*'))
-            if p.is_file() and p.name != 'manifest.json'}
+            if p.is_file() and p != root/'manifest.json'}
+
+
+def load_cases(path):
+    cases = json.loads(path.read_bytes())
+    if (not isinstance(cases, list) or [case['id'] for case in cases] != ['X00', 'X01', 'X02', 'X03']
+            or [case['n'] for case in cases] != [None, 10000, 10000, 10000]
+            or any(not isinstance(case['stdout'], str) or not case['stdout'].endswith('\n')
+                   for case in cases)):
+        raise ValueError('N7 requires four fixed inputs and stdout oracles')
+    return cases
 
 
 def machine():
@@ -71,7 +81,7 @@ def freeze(folder, exe, probe):
     shutil.copy2(HERE/'cases.json', folder/'cases.json')
     limits = ResourcePolicy().effective_record()
     save(folder/'limits.json', {k: limits[k] for k in ('policy_version', 'limits')})
-    for case in json.loads((folder/'cases.json').read_bytes()):
+    for case in load_cases(folder/'cases.json'):
         for ext, marker in [('zzy', '(zno) n := 10;'), ('py', 'n = 10\n')]:
             source = (ROOT/'benchmarks'/'p12'/f"{case['id']}.{ext}").read_text(encoding='utf-8')
             if case['n'] is not None:
@@ -193,12 +203,15 @@ def verify(folder):
 
 def run(folder, output, seed, candidate=None, logical=False, smoke=False):
     manifest = verify(folder)
+    cases = load_cases(folder/'cases.json')
+    candidate_hashes = files_at(candidate) if candidate else None
+    if candidate is not None and set(candidate_hashes) != {'native.exe', 'probe.exe'}:
+        raise ValueError('candidate directory must contain the CLI and stage probe')
     output.mkdir(parents=True)
     save(output/'environment.json', dict(start=datetime.now(timezone.utc).isoformat(), seed=seed,
          machine=machine(), freeze_manifest_sha256=digest(folder/'manifest.json'),
-         candidate=files_at(candidate) if candidate else None))
+         candidate=candidate_hashes))
     rng = random.Random(seed)
-    cases = json.loads((folder/'cases.json').read_bytes())
     env = environment(folder)
     rows = []
     variants = ('native', 'candidate') if candidate else ('native', 'hosted', 'direct')
@@ -212,7 +225,10 @@ def run(folder, output, seed, candidate=None, logical=False, smoke=False):
                 rng.shuffle(pair)
                 for variant in pair:
                     argv = invocation(folder, manifest['python'], case, variant, scope, candidate, logical)
-                    row = run_child(argv, folder, env)
+                    try:
+                        row = run_child(argv, folder, env)
+                    except OSError as error:
+                        row = dict(command=argv, timeout=False, exit=None, launch_error=str(error))
                     row.update(case=case['id'], scope=scope, variant=variant, sequence=index,
                                warmup=not (smoke or logical) and index < WARMUPS,
                                expected=case['stdout'], status=check(row, case, scope))
@@ -220,6 +236,8 @@ def run(folder, output, seed, candidate=None, logical=False, smoke=False):
                     stream.write(json.dumps(row, ensure_ascii=False)+'\n')
                     stream.flush()
     verify(folder)
+    if candidate is not None and files_at(candidate) != candidate_hashes:
+        raise ValueError('candidate artifacts changed during round')
     if logical or smoke:
         save(output/'summary.json', [dict(case=r['case'], variant=r['variant'], status=r['status'],
              logical_peak=r.get('stages', {}).get('logical_peak')) for r in rows])
