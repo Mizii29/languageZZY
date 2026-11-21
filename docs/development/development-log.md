@@ -1067,3 +1067,11 @@ Release install 和仓库外中文/空格路径画笔 71/71；空 PATH/无效 PY
 ## N4-06 原生 Win32 窗口（2026-11-19）
 
 在同一 CMake 工具链构建独立的 GUI EXE。Debug 与 Release 源码外副本的真实 HWND 测试各 4/4。测试含输入、定时器、绘图像素、回放、撤销、文件对话框保存和重开、繁忙回调关窗、E211 溢出以及 E214 嵌套拒绝。PE 导入和实际模块检查通过。旧式对话框改变 CWD、屏幕遮挡和对话框初始化时序问题已修复并复测。未执行人工工具全检或全量 Python 回归。[N4-06 报告](../../native_runtime/tests/n4-06-report.md)
+
+## N5 原生 CLI、spec 运行器与发布门禁（2026-11-21）
+
+从 N4-06 接续，完成 N5-01—05。`main.cpp` 新增 `test`、严格选项和 `__spec-worker` 内部入口；`spec_runner.hpp` 在收集阶段保存完整源码/别名快照，每个 spec 使用独立 Job Object、stdin=NUL、临时 cwd 和 bounded stdout/stderr，等待 Job 活跃进程归零后清理。worker 异常退出、超时、输出超额、空收集和收集错误都不能返回成功。`test-spec.py` 的固定期望包含 19 个 spec/进程场景；`test-cli.py` 为 83/83。
+
+本轮专项实际通过：Debug 原生 CLI/spec 黑盒、PE/模块/进程树探针；新增 CTest `spec-process`、`cli-boundaries` 和 `native-ci-fingerprint`。新增 `native_ci.py` 与 `.github/workflows/native-ci.yml`，覆盖 configure→build→CTest→install、Release 源码外 smoke、无 Python 导入/模块检查和规范化源码指纹。安装副本使用中文/空格路径、空 PATH、无效 PYTHONPATH 和未激活环境。
+
+未验证：Sanitizer、其他平台、断开网卡的物理离线、缺少 VC Runtime 的干净主机和人工终端 Ctrl+C。不要把自动控制台信号测试写成人工验收。正式 N5 报告见 [n5-report](../../native_runtime/tests/n5-report.md)。

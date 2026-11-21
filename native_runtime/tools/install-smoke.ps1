@@ -9,16 +9,18 @@ if([IO.Path]::GetFullPath($folder).StartsWith($repoRoot,[StringComparison]::Ordi
 New-Item -ItemType Directory -Path $folder | Out-Null
 [IO.File]::WriteAllText((Join-Path $folder '中文.zzy'),'(zno) 名 := "😀";',[Text.UTF8Encoding]::new($false))
 [IO.File]::WriteAllText((Join-Path $folder '运行 中文.zzy'),'io.print(18446744073709551616+1);',[Text.UTF8Encoding]::new($false))
+[IO.File]::WriteAllText((Join-Path $folder '规格.zzy'),'(spec)"中文"{(o_o)1==1;}',[Text.UTF8Encoding]::new($false))
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot '../tests/golden/no-execute.zzy') -Destination (Join-Path $folder 'no-execute.zzy')
 $records=[Collections.Generic.List[object]]::new();$passed=$false
 try {
     foreach($command in @('info','source-info','lex','check','run','test')) {
         $start=[Diagnostics.ProcessStartInfo]::new();$start.FileName=$exe
-        $start.Arguments=if($command -eq 'info') {'info'} elseif($command -eq 'run') {'run "运行 中文.zzy" --diagnostic-format json'} else {$command+' 中文.zzy --diagnostic-format json'}
+        $start.Arguments=if($command -eq 'info') {'info'} elseif($command -eq 'run') {'run "运行 中文.zzy" --diagnostic-format json'} elseif($command -eq 'test') {'test 规格.zzy --diagnostic-format json'} else {$command+' 中文.zzy --diagnostic-format json'}
         $start.WorkingDirectory=$folder;$start.UseShellExecute=$false;$start.CreateNoWindow=$true
         $start.RedirectStandardOutput=$true;$start.RedirectStandardError=$true
         $start.StandardOutputEncoding=[Text.UTF8Encoding]::new($false,$true);$start.StandardErrorEncoding=[Text.UTF8Encoding]::new($false,$true)
         $start.EnvironmentVariables['PATH']='';$start.EnvironmentVariables['PYTHONPATH']='unusable-smoke'
+        foreach($key in @('VIRTUAL_ENV','PYTHONHOME','CONDA_PREFIX')) {$start.EnvironmentVariables.Remove($key)}
         $process=[Diagnostics.Process]::new();$process.StartInfo=$start;$null=$process.Start()
         $stdout=$process.StandardOutput.ReadToEndAsync();$stderr=$process.StandardError.ReadToEndAsync()
         $timedOut=-not $process.WaitForExit(15000)
@@ -27,10 +29,10 @@ try {
         $records.Add($record);$process.Dispose()
         if($timedOut) {throw 'Smoke timeout'}
         if($command -eq 'test') {
-            if($record.exit_code -ne 2 -or $record.stdout -ne '' -or ($record.stderr | ConvertFrom-Json).code -ne 'E402') {throw 'Unsupported capability smoke failed'}
+            if($record.exit_code -ne 0 -or $record.stderr -ne '' -or ($record.stdout | ConvertFrom-Json).passed -ne 1) {throw 'Installed spec smoke failed'}
         } else {
             if($record.exit_code -ne 0 -or $record.stderr -ne '') {throw 'Smoke command failed'}
-            if($command -eq 'info') {$info=$record.stdout | ConvertFrom-Json;if($info.stage -ne 'N4-03') {throw 'Wrong installed stage'}}
+            if($command -eq 'info') {$info=$record.stdout | ConvertFrom-Json;if($info.stage -ne 'N5' -or -not $info.test_enabled) {throw 'Wrong installed stage'}}
             if($command -eq 'run' -and $record.stdout -cne "18446744073709551617`n") {throw 'Installed arbitrary integer run mismatch'}
             if($command -eq 'check' -and $record.stdout -ne '') {throw 'check unexpectedly printed'}
             if($command -eq 'source-info') {
@@ -50,6 +52,7 @@ try {
         $start.RedirectStandardOutput=$true;$start.RedirectStandardError=$true
         $start.StandardOutputEncoding=[Text.UTF8Encoding]::new($false,$true);$start.StandardErrorEncoding=[Text.UTF8Encoding]::new($false,$true)
         $start.EnvironmentVariables['PATH']='';$start.EnvironmentVariables['PYTHONPATH']='unusable-smoke'
+        foreach($key in @('VIRTUAL_ENV','PYTHONHOME','CONDA_PREFIX')) {$start.EnvironmentVariables.Remove($key)}
         $process=[Diagnostics.Process]::new();$process.StartInfo=$start;$null=$process.Start()
         $stdout=$process.StandardOutput.ReadToEndAsync();$stderr=$process.StandardError.ReadToEndAsync()
         if(-not $process.WaitForExit(15000)) {$process.Kill();$process.WaitForExit();throw 'No-execute smoke timeout'}
@@ -58,7 +61,7 @@ try {
         if($command -eq 'check') {
             if($record.exit_code -ne 0 -or $record.stdout -ne '' -or $record.stderr -ne '') {throw 'check did not prepare the fixed side-effect fixture'}
         } elseif($command -eq 'test') {
-            if($record.exit_code -ne 2 -or $record.stdout -ne '' -or ($record.stderr | ConvertFrom-Json).code -ne 'E402') {throw 'Unsupported test capability did not reject the fixed side-effect fixture'}
+            if($record.exit_code -ne 1 -or ($record.stdout | ConvertFrom-Json).tests -ne 0 -or ($record.stderr | ConvertFrom-Json).code -ne 'E401') {throw 'Empty collection did not fail without executing the fixed fixture'}
         } else {
             if($record.exit_code -ne 0 -or $record.stdout -ne '' -or $record.stderr -ne '' -or [IO.File]::ReadAllText((Join-Path $folder 'native-side-effect.txt')) -cne 'MUST NOT EXECUTE') {throw 'Implemented file write did not execute through run'}
         }

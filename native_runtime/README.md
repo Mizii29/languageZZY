@@ -1,6 +1,6 @@
 # ZZY native runtime：核心宿主与 Sketch
 
-独立 C++17 AST 解释器。原生 `run` 执行核心 ZZY，已接入 `io`、`array`、`text`、`math`、`data` 和 `unit` 的 35 个冻结核心接口，含 UTF-8 文件/原子保存和严格 JSON；MSVC 默认构建另支持 `db.transaction`、`db.query`。`check` 仍只静态准备。未移植的宿主能力执行时报告 E402/1；`test` 报告 E402/2，留给 N5。Python 仍为默认入口，原生进程不回退 Python。
+独立 C++17 AST 解释器。原生 `run` 执行核心 ZZY，`check` 只静态准备，`test` 收集并隔离执行 spec。命令输出严格 UTF-8；text/JSON 诊断、stdout/stderr 配额和 0/1/2/130 退出码由同一资源策略约束。MSVC 默认构建另支持 `db.transaction`、`db.query`。Python 只协调构建和黑盒客户端，原生进程不回退 Python。
 
 验收范围及产物见 [N4-04报告](tests/n4-04-report.md)、[N4-03报告](tests/n4-03-report.md)、[N4-02报告](tests/n4-02-report.md)、[N4-01报告](tests/n4-01-report.md)、[N3报告](tests/n3-report.md) 与 [能力矩阵](../docs/development/native-runtime-capability.md)。前端历史保存在 [N2报告](tests/n2-report.md)；静态入口见 [Program契约](../docs/development/native-program-contract.md)。
 
@@ -39,7 +39,18 @@ if ($LASTEXITCODE -ne 0) { throw 'Release install failed' }
 & native_runtime/tools/install-smoke.ps1 -Executable dist/native-stage/bin/zzy-native.exe -Output dist/native-installed-smoke-new.json
 ```
 
-Visual Studio 是多配置生成器。EXE 在 `build/native-debug/Debug` 和 `build/native-release/Release`。默认 CTest 清单为 80 项，包括 Sketch 的项目互读和回放。保留 `--no-tests=error`。构建和安装无需下载依赖。启用测试时，CTest 使用 Python 3.10+ 执行互读和 HTTP 探针，可用 `-DZZY_NATIVE_WEB_TEST_PYTHON=绝对路径` 指定。原生程序运行时不依赖 Python。
+Visual Studio 是多配置生成器。EXE 在 `build/native-debug/Debug` 和 `build/native-release/Release`。N5 默认 CTest 清单为 83 项，包括 Sketch、spec 进程隔离、CLI 边界和源码指纹；保留 `--no-tests=error`。构建和安装无需下载依赖。启用测试时，CTest 使用 Python 3.10+ 执行黑盒客户端，原生程序运行时不依赖 Python。
+
+### N5 测试运行器
+
+```powershell
+& build/native-release/Release/zzy-native.exe test tests/p06/specs --diagnostic-format json
+& ./.venv/Scripts/python.exe -X utf8 native_runtime/tools/test-spec.py --exe build/native-release/Release/zzy-native.exe
+```
+
+收集阶段先建立完整源码字节快照；每个 spec 使用独立 native worker、stdin=NUL、临时工作目录和 Job Object。空收集、收集错误、失败、超时、输出超额及 worker 异常都返回非零。`--timeout` 只对 `test` 有效，`--limits` 可限制源码、输出和诊断资源。
+
+`native_runtime/tools/native_ci.py` 在 Windows 上执行离线 configure→build→CTest→install smoke，保存配置、CTest 清单、安装副本、PE 导入、CLI/spec 黑盒和规范化源码指纹。`.github/workflows/native-ci.yml` 独立于 Python CI，Debug/Release 分开运行；Release 安装副本可放在中文和空格路径。它不安装编译器或下载运行时依赖，未关闭网卡，因此“离线”证据表示构建依赖已在仓库/主机，网络适配器本身未被断开。
 
 源码外专项与发布副本复现（Output和发布目录必须新建）：
 
@@ -62,7 +73,7 @@ if ($LASTEXITCODE -ne 0) { throw 'CLI boundary tests failed' }
 
 MSVC Debug /MDd仅开发机测试，不分发；Release /MD使用本机已有Microsoft VC runtime14.50.35719.0与系统UCRT。发布目录包含 Release EXE，启用 Web 时附带 MIT 许可证。未私装或附带运行库。缺CRT干净机器尚未验证，不能承诺任意Windows裸机直接运行。已有MinGW辅助preset和clang-cl没有在本轮验证。
 
-真实手动 Ctrl+C、Sanitizer、其他平台、完整 Python/GUI 回归与性能未验收。N4-01—04 已满足各自子任务；下一项为 N4-05 Sketch headless，N4-06 GUI 仍待实现。
+真实终端人工 Ctrl+C、Sanitizer、其他平台、缺少 MSVC CRT 的干净主机和完整 Python/GUI 回归仍单独标注；N5 自动进程 Ctrl+C、worker 树、空 PATH/PYTHONPATH 和安装副本已有专项证据。
 
 ## 原生 Web 演示
 
@@ -157,7 +168,7 @@ try {
 pwsh -NoProfile -File native_runtime/tools/test-sketch.ps1 -Executable build/native-release/Release/zzy-native.exe -Output dist/native-sketch-new.json
 ```
 
-原生 `check` 和 headless 绘图均无需 GUI。默认 CTest 80 项。PNG 会返回缺后端 Result。[N4-05 验收报告](tests/n4-05-report.md)
+原生 `check` 和 headless 绘图均无需 GUI。N5 默认 CTest 为 83 项。PNG 会返回缺后端 Result。[N4-05 验收报告](tests/n4-05-report.md)
 
 在新的临时目录执行独立示例，生成可用浏览器打开的 SVG：
 

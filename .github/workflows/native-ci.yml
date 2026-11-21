@@ -1,0 +1,37 @@
+name: ZZY Native CI
+on:
+  push:
+    branches: [main, test, feature, 'codex/**']
+  pull_request:
+    branches: [main, test]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: zzy-native-${{ github.event_name }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+jobs:
+  native:
+    runs-on: windows-2022
+    timeout-minutes: 40
+    strategy:
+      fail-fast: false
+      matrix:
+        configuration: [Debug, Release]
+    defaults:
+      run:
+        shell: pwsh
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Native configure, build, nonempty tests, install and no-Python probes
+        run: python -X utf8 native_runtime/tools/native_ci.py --configuration ${{ matrix.configuration }} --output dist/native-ci/${{ matrix.configuration }}
+      - name: Preserve native evidence
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: native-${{ matrix.configuration }}-${{ github.sha }}
+          path: dist/native-ci/
+          if-no-files-found: error
+          retention-days: 14

@@ -274,6 +274,15 @@ MSVC Debug/Release 各 57/57 CTest、63 个运行 golden、72/72 CLI、549/549 �
 
 见 [N4-01 报告](../../native_runtime/tests/n4-01-report.md)、[N4-02 报告](../../native_runtime/tests/n4-02-report.md)、[N4-03 报告](../../native_runtime/tests/n4-03-report.md)与 [N4-04 报告](../../native_runtime/tests/n4-04-report.md)。本轮补齐 N4-05 和 N4-06。下一项 N5-01 CLI 入口与协议。
 
+### N5 原生 CLI、spec 运行器与发布
+
+- [x] N5-01 — info/source-info/lex/run/check/test、严格参数、UTF-8 text/JSON、limits 与 0/1/2/130；Debug/Release CLI 黑盒通过。
+- [x] N5-02 — 固定字节快照、逐 spec native worker/Job/stdin/临时目录隔离；19 项 spec/进程失败清单通过。
+- [x] N5-03 — Release 安装副本和中文/空格源码外目录 smoke；空 PATH、无效 PYTHONPATH、未激活环境通过。
+- [x] N5-04 — PE 导入、实际模块、worker 树和环境清单未观察 Python；进程终止与恢复通过。
+- [x] N5-05 — 独立 native CI configure/build/CTest/install、源码指纹和原有 Python CI 并存。Sanitizer、断网网卡和人工 Ctrl+C 仍未验证。
+
+
 ### N4-05 首批交接（2026-11-19）
 
 几何、图层、分组撤销/重做和 SVG 子集已实现并通过 MSVC 两配置各 78/78 CTest、画笔固定各 71/71、后补线程探针的库回归各 11/11、Python 相关 17/17、Release 安装/源码外副本及实际模块检查。见 [首批报告](../../native_runtime/tests/n4-05-geometry-report.md)。N4-05 保持未勾选；下一批项目 v1 双向读写、对象/图案编辑、回放和事件。N4-06 GUI、完整配额边界与人工验收仍待执行，Python 默认入口及 P12/P13 不变。

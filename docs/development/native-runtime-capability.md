@@ -11,7 +11,7 @@
 | 标量、BigInt、码点 String、Array/Map/Shape、分支/循环 | 核心 | N3 | 可执行；验证大整数、身份、别名、活动遍历和浅复制 |
 | 具名/匿名函数、Cell/闭包、Lazy、Result、管道 | 核心 | N3 | 可执行；显式调用帧、捕获和请求内回收 |
 | Query/Machine/Quantity/模块 | 核心 | N3 | 可执行；查询分阶段，Quantity 用精确分数，模块按请求初始化 |
-| spec/test | 核心 | N5 | 可静态分析；run 跳过 spec 块，测试命令 E402/2 |
+| spec/test | 核心 | N5 | 收集字节快照、逐例 native worker 隔离；空收集/失败/超时/输出超额/异常退出均非成功 |
 | core/io/array/text/math/data/unit 全部登记函数 | 核心 | N4 核心 | N4-01/02 已接入 35 个冻结宿主签名；资源、取消、回调和错误清理见 [标准库契约](native-stdlib-contract.md) |
 | 文件读写与原子提交、严格 JSON | 核心 | N4-02 | 已接入四个文件和两个 JSON 接口；编码、原子提交、严格值标签和同进程恢复见 [N4-02 报告](../../native_runtime/tests/n4-02-report.md) |
 | db.transaction/db.query | 可选宿主，完整迁移必需 | N4-03 SQLite | 已接入；MSVC 默认 ON、OFF 执行 E402/1。固定系统 SQLite、参数绑定/事务/同线程连接、取消/配额归还、并发及重启持久化见 [N4-03报告](../../native_runtime/tests/n4-03-report.md) |
@@ -20,13 +20,13 @@
 | Sketch 几何、图层、历史、SVG、项目 v1、对象编辑、Drawing、回放和事件登记 | 可选宿主 | N4-05 | 已接入。Headless show 和无 PNG 后端返回明确的失败 Result。[验收报告](../../native_runtime/tests/n4-05-report.md) |
 | Sketch 窗口、事件派发和交互回放 | 可选宿主 | N4-06 | Windows x64 MSVC 独立原生窗口程序，需显式启用。真实窗口与安装副本均已验证。[验收报告](../../native_runtime/tests/n4-06-report.md) |
 | 资源/取消/JSON 诊断/0/1/2/130 | 核心 | N0 原型；N1—N5 正式接入 | 前端和核心运行配额、协作取消与恢复已验证；进程准备缓存未建立，真实终端 Ctrl+C 未验收 |
-| run/check/test 安装及无 Python 验收 | 核心 | N5—N8 | N4-03 最新两配置各 75 项 CTest、184 项库清单、SQLite 50 项与实际模块检查及安装副本已验证；不外推到其他可选宿主或 test |
+| run/check/test 安装及无 Python 验收 | 核心 | N5 | N5 native CI 的 Debug/Release configure、CTest、安装 smoke、PE/模块/进程树和空环境证据；人工终端与缺 CRT 主机仍未验证 |
 | VM/AOT/JIT/热更新/磁盘 Program 缓存 | 本项目延期/非目标 | N7 仅评估 | 不新增 build 命令、不透明选择后端；已有独立 AOT 实验不算本路线实现 |
 
 ## 未支持行为
 
 集中错误码表新增 **E402：当前后端未实现能力**，仅用于能力门禁；JSON 仍是 schema v1。
-未实现的 test 在读源码前返回 E402/2，stdout 空、file/span=null，notes 含 `capability=test`。run 遇到未移植的宿主能力报带源码位置的 E402/1，已经发生的输出保留，不回退 Python。check 执行静态准备，成功 0；不执行用户表达式或初始化宿主。
+test 收集阶段不执行用户程序；收集成功后每个 spec 使用独立 worker。spec 失败、空集合或收集错误返回 1，CLI 参数/limits 配置错误返回 2，Ctrl+C 返回 130。普通完成时 stdout 最后一行是稳定汇总；取消或汇总本身超出配额时不保证有汇总。run 遇到未移植宿主仍报带源码位置的 E402/1；check 只静态准备，成功 0。
 未知命令和非法 CLI 参数仍返回 E401/2。
 
 成功为 0；执行用户错误/测试集合失败为 1；前端或 CLI 失败为 2；取消为 130（kind=cancelled/code=null）。

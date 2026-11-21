@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.21)
 project(zzy_native VERSION 0.0.0 LANGUAGES CXX)
 include(CTest)
+include(FetchContent)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
@@ -92,6 +93,15 @@ if(BUILD_TESTING)
   find_program(NATIVE_POWERSHELL NAMES pwsh powershell REQUIRED)
   find_program(ZZY_NATIVE_WEB_TEST_PYTHON NAMES python.exe python
     HINTS "${CMAKE_CURRENT_SOURCE_DIR}/../.venv/Scripts" REQUIRED)
+  add_test(NAME spec-process COMMAND "${ZZY_NATIVE_WEB_TEST_PYTHON}" -X utf8
+    "${CMAKE_CURRENT_SOURCE_DIR}/tools/test-spec.py" --exe $<TARGET_FILE:zzy-native>)
+  add_test(NAME cli-boundaries COMMAND "${ZZY_NATIVE_WEB_TEST_PYTHON}" -X utf8
+    "${CMAKE_CURRENT_SOURCE_DIR}/tools/test-cli.py" --exe $<TARGET_FILE:zzy-native>)
+  set_tests_properties(spec-process cli-boundaries PROPERTIES TIMEOUT 120)
+  add_test(NAME native-ci-fingerprint COMMAND "${ZZY_NATIVE_WEB_TEST_PYTHON}" -X utf8
+    -m unittest native_runtime.tests.test_native_ci)
+  set_tests_properties(native-ci-fingerprint PROPERTIES
+    WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/.." TIMEOUT 30)
   add_test(NAME sketch-geometry-fixed COMMAND "${NATIVE_POWERSHELL}" -NoProfile -File
     "${CMAKE_CURRENT_SOURCE_DIR}/tools/test-sketch.ps1" -Executable $<TARGET_FILE:zzy-native>)
   set_tests_properties(sketch-geometry-fixed PROPERTIES TIMEOUT 180)

@@ -38,7 +38,7 @@ if($InstalledExecutable) {
 $out=[IO.Path]::GetFullPath((Join-Path $repoRoot $Output))
 if(Test-Path -LiteralPath $out) {throw 'Choose a new evidence directory; existing evidence is preserved.'}
 New-Item -ItemType Directory -Path $out | Out-Null
-$stage=Join-Path ([IO.Path]::GetTempPath()) ('ZZY N4-03 '+[Guid]::NewGuid().ToString('N')+'/中文 路径/bin')
+$stage=Join-Path ([IO.Path]::GetTempPath()) ('ZZY N5 '+[Guid]::NewGuid().ToString('N')+'/中文 路径/bin')
 if([IO.Path]::GetFullPath($stage).StartsWith($repoRoot,[StringComparison]::OrdinalIgnoreCase)) {
     throw 'The source-external stage must be outside the repository.'
 }
@@ -87,9 +87,9 @@ try {
         $expectedCrt=if($Configuration -eq 'Debug') {'MSVC /MDd (debug runtime, not redistributable)'} else {'MSVC /MD (VC Redistributable required)'}
         Require ($value.crt -eq $expectedCrt) 'selected configuration CRT mismatch'
     }
-    Require ($value.stage -eq 'N4-03' -and $value.pointer_bits -eq 64 -and $value.cxx_standard -eq 17) 'incorrect info'
+    Require ($value.stage -eq 'N5' -and $value.pointer_bits -eq 64 -and $value.cxx_standard -eq 17) 'incorrect info'
     Require ($value.sqlite_enabled -eq ('native-sqlite-tests.exe' -in $names)) 'SQLite test/build capabilities disagree'
-    Require ($value.python_fallback -eq $false -and @($value.supported_commands).Count -eq 6 -and $value.supported_commands[0] -eq 'info' -and 'run' -in $value.supported_commands) 'incorrect capabilities'
+    Require ($value.python_fallback -eq $false -and @($value.supported_commands).Count -eq 7 -and $value.supported_commands[0] -eq 'info' -and 'test' -in $value.supported_commands) 'incorrect capabilities'
     Require ($value.resource_policy.host_decimal_digits -eq 0 -and $value.resource_policy.effective_decimal_digits -eq 4096) 'incorrect decimal policy'
     # Fixed independently from default-v1 contract and documented native host bound.
     Require ($value.resource_fingerprint -eq 'c9a540b6ea917d42f3d6c915801dce802ee771a18b1ab6139eab2ebc8161b14d') 'incorrect policy fingerprint'
@@ -97,10 +97,9 @@ try {
     $null=Invoke-Native 'zzy-native.exe' '--version'
     $result=Invoke-Native 'zzy-native.exe' 'check no-execute.zzy --diagnostic-format json'
     Require ($result.stdout -eq '' -and $result.stderr -eq '') 'check must prepare without side effects'
-    $result=Invoke-Native 'zzy-native.exe' 'test no-execute.zzy --diagnostic-format json' 2
+    $result=Invoke-Native 'zzy-native.exe' 'test no-execute.zzy --diagnostic-format json' 1
     $errorRecord=$result.stderr | ConvertFrom-Json
-    Require ($result.stdout -eq '' -and $errorRecord.schema_version -eq 1 -and $errorRecord.code -eq 'E402' -and $errorRecord.kind -eq 'error') 'unsupported protocol mismatch'
-    Require ($null -eq $errorRecord.file -and $null -eq $errorRecord.span -and $errorRecord.notes[0] -eq 'capability=test') 'unsupported location/capability mismatch'
+    Require (($result.stdout | ConvertFrom-Json).collection_errors -eq 1 -and $errorRecord.schema_version -eq 1 -and $errorRecord.code -eq 'E401' -and $errorRecord.kind -eq 'error') 'empty collection protocol mismatch'
     Require (-not (Test-Path -LiteralPath (Join-Path $stage 'native-side-effect.txt'))) 'check/test executed source'
     [IO.File]::WriteAllText((Join-Path $stage 'unavailable.zzy'),'(?_?)sketch.load_project("unavailable.zzysketch"){(^_^)(c)=>{io.print("unexpected document");}(T_T)(m)=>{io.print("missing project");}}',[Text.UTF8Encoding]::new($false))
     $result=Invoke-Native 'zzy-native.exe' 'run unavailable.zzy --diagnostic-format json' 0
@@ -255,13 +254,13 @@ try {
     # Exact reviewed direct imports, not an arbitrary MSVC/API-set wildcard.
     $allowed=if($BuildOrigin -eq 'DirectGCC') {@('KERNEL32.dll','msvcrt.dll','USER32.dll')}
         elseif($Configuration -eq 'Debug') {@('KERNEL32.dll','MSVCP140D.dll','VCRUNTIME140D.dll','VCRUNTIME140_1D.dll','ucrtbased.dll')}
-        else {@('KERNEL32.dll','MSVCP140.dll','VCRUNTIME140.dll','VCRUNTIME140_1.dll','api-ms-win-crt-runtime-l1-1-0.dll','api-ms-win-crt-stdio-l1-1-0.dll','api-ms-win-crt-heap-l1-1-0.dll','api-ms-win-crt-math-l1-1-0.dll','api-ms-win-crt-locale-l1-1-0.dll','api-ms-win-crt-convert-l1-1-0.dll')}
+        else {@('KERNEL32.dll','MSVCP140.dll','VCRUNTIME140.dll','VCRUNTIME140_1.dll','api-ms-win-crt-runtime-l1-1-0.dll','api-ms-win-crt-stdio-l1-1-0.dll','api-ms-win-crt-heap-l1-1-0.dll','api-ms-win-crt-math-l1-1-0.dll','api-ms-win-crt-locale-l1-1-0.dll','api-ms-win-crt-convert-l1-1-0.dll','api-ms-win-crt-filesystem-l1-1-0.dll')}
     if($BuildOrigin -eq 'DirectGCC') {$objdump=(Get-Command objdump.exe -ErrorAction Stop).Source}
     $allowedByExe=[ordered]@{}
     foreach($name in $names) {
         # Reviewed /imports: this test alone uses std::ifstream/ofstream and
         # imports _lock_file and _unlock_file from Microsoft's UCRT API set.
-        # The published CLI does not receive this extra permission.
+        # This API-set is an audited UCRT filesystem dependency of all current EXEs.
         $allowedForExe=@($allowed)
         if($BuildOrigin -ne 'DirectGCC' -and $Configuration -eq 'Release' -and $name -eq 'native-library-tests.exe') {
             $allowedForExe+='api-ms-win-crt-filesystem-l1-1-0.dll'
@@ -292,8 +291,8 @@ try {
     }
     $passed=$true
 } finally {
-    $scope=if($BuildOrigin -eq 'CMakeMSVC') {'N4-03 CMake/MSVC '+$Configuration+' executable acceptance; CTest/install results are separate evidence'} elseif($BuildOrigin -eq 'DirectMSVC') {'N4-03 direct MSVC '+$Configuration+'; NOT CMake/CTest/install acceptance'} else {'N4-03 direct MinGW validation; NOT CMake/CTest/install acceptance'}
+    $scope=if($BuildOrigin -eq 'CMakeMSVC') {'N5 CMake/MSVC '+$Configuration+' executable acceptance; CTest/install results are separate evidence'} elseif($BuildOrigin -eq 'DirectMSVC') {'N5 direct MSVC '+$Configuration+'; NOT CMake/CTest/install acceptance'} else {'N5 direct MinGW validation; NOT CMake/CTest/install acceptance'}
     $report=[ordered]@{schema_version=1;passed=$passed;scope=$scope;provenance=$provenance;os=[Environment]::OSVersion.VersionString;process_bits=([IntPtr]::Size*8);cwd=$stage;path_empty=$true;pythonpath='unusable-python-path';cmake_available=([bool](Get-Command cmake -ErrorAction SilentlyContinue));ctest_available=([bool](Get-Command ctest -ErrorAction SilentlyContinue));records=@($records.ToArray());imports=$imports;allowed_direct_imports=$allowed;allowed_by_executable=$allowedByExe;artifacts=$artifacts;sources=$sources;manual_ctrl_c='not run';cmake_install=$(if($BuildOrigin -eq 'CMakeMSVC') {'see separate install log and published-copy smoke'} else {'not run'});sanitizer='not run'}
     [IO.File]::WriteAllText((Join-Path $out 'report.json'),($report | ConvertTo-Json -Depth 30),[Text.UTF8Encoding]::new($false))
 }
-Write-Output ('N4-03 native: '+$records.Count+' process cases passed; evidence='+$out)
+Write-Output ('N5 native: '+$records.Count+' process cases passed; evidence='+$out)
