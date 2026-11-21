@@ -39,7 +39,7 @@ if ($LASTEXITCODE -ne 0) { throw 'Release install failed' }
 & native_runtime/tools/install-smoke.ps1 -Executable dist/native-stage/bin/zzy-native.exe -Output dist/native-installed-smoke-new.json
 ```
 
-Visual Studio 是多配置生成器。EXE 在 `build/native-debug/Debug` 和 `build/native-release/Release`。N5 默认 CTest 清单为 83 项，包括 Sketch、spec 进程隔离、CLI 边界和源码指纹；保留 `--no-tests=error`。构建和安装无需下载依赖。启用测试时，CTest 使用 Python 3.10+ 执行黑盒客户端，原生程序运行时不依赖 Python。
+Visual Studio 是多配置生成器。EXE 在 `build/native-debug/Debug` 和 `build/native-release/Release`。保留 `--no-tests=error`。构建和安装无需下载依赖。启用测试时，CTest 使用 Python 3.10+ 执行黑盒客户端，原生程序运行时不依赖 Python。固定清单和校园、SQLite、Web、Sketch、GUI 的覆盖及复现命令见 [N6 验收](tests/n6-report.md)。
 
 ### N5 测试运行器
 
@@ -50,7 +50,7 @@ Visual Studio 是多配置生成器。EXE 在 `build/native-debug/Debug` 和 `bu
 
 收集阶段先建立完整源码字节快照；每个 spec 使用独立 native worker、stdin=NUL、临时工作目录和 Job Object。空收集、收集错误、失败、超时、输出超额及 worker 异常都返回非零。`--timeout` 只对 `test` 有效，`--limits` 可限制源码、输出和诊断资源。
 
-`native_runtime/tools/native_ci.py` 在 Windows 上执行离线 configure→build→CTest→install smoke，保存配置、CTest 清单、安装副本、PE 导入、CLI/spec 黑盒和规范化源码指纹。`.github/workflows/native-ci.yml` 独立于 Python CI，Debug/Release 分开运行；Release 安装副本可放在中文和空格路径。它不安装编译器或下载运行时依赖，未关闭网卡，因此“离线”证据表示构建依赖已在仓库/主机，网络适配器本身未被断开。
+`native_runtime/tools/native_ci.py` 在 Windows 上执行离线 configure→build→CTest→install smoke，保存配置、CTest 清单、安装副本、PE 导入、CLI/spec 黑盒和规范化源码指纹。N6 将固定清单、校园应用和持久化互读纳入 CTest，默认清单为 86 项。`.github/workflows/native-ci.yml` 独立于 Python CI，Debug/Release 分开运行；Release 安装副本可放在中文和空格路径。它不安装编译器或下载运行时依赖，未关闭网卡，因此“离线”证据表示构建依赖已在仓库/主机，网络适配器本身未被断开。
 
 源码外专项与发布副本复现（Output和发布目录必须新建）：
 

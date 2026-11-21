@@ -1,0 +1,257 @@
+[
+  {
+    "sha256": "8a8c8d1206ba57db67fedb5a28d0d45e7c72f858910cad7c1ce23ecab117dc4f",
+    "source": "parity-native-first2/native.json",
+    "bytes": 1622922
+  },
+  {
+    "sha256": "a7c5c71217406e95dadf123168b64eeca37c4f113b7645f250cd653768444265",
+    "source": "parity-fixed/native.json",
+    "bytes": 1474347
+  },
+  {
+    "sha256": "4da79ec475876fe9fc342e44f73b0b5f34a8b4f5001b15c1dac9f37f9eb456c3",
+    "source": "parity-python-strict/python.json",
+    "bytes": 1547215
+  },
+  {
+    "sha256": "37838a25fd288937eca2472e46a3524bf814aab77ebaedc168728df255389971",
+    "source": "campus-native-first2/native.json",
+    "bytes": 6407
+  },
+  {
+    "sha256": "5a6db25a0c4867038e68d90b21772e8d1904279957bf30b1395e11dca166f915",
+    "source": "campus-native-final/native.json",
+    "bytes": 6353
+  },
+  {
+    "sha256": "e62d1020667fe498cbf9c11284c0dc1b0734e09dc9e6bdb94c174758cee8ecf5",
+    "source": "campus-after-gc/native.json",
+    "bytes": 4073
+  },
+  {
+    "sha256": "80340d2ac8c953ba985d23e2fb6385860d7f00f87c86a7f5416a6172d7e0a137",
+    "source": "campus-python-expanded/python.json",
+    "bytes": 4006
+  },
+  {
+    "sha256": "19203c0b0585f9d8a5caa31d3bc70de8fab742011045811d08b28ee192b5c9f5",
+    "source": "persistence-final.json",
+    "bytes": 1020
+  },
+  {
+    "sha256": "37b79fc7e0c1cdaf62f92e375bcfc89a7f031a377c3be0eb91708d52d7aac94f",
+    "source": "gui-python.json",
+    "bytes": 266
+  },
+  {
+    "sha256": "bd3d566be3bddf00f05114ccb318684c4e20a4506db2bb3cbad05f76418d8a5a",
+    "source": "gui-installed-final.json",
+    "bytes": 6298
+  },
+  {
+    "sha256": "531af1554ebaca4b031b24d00a5d07beffa2ab75c5bf930cdd050ff798454fc2",
+    "source": "web-python.json",
+    "bytes": 446
+  },
+  {
+    "sha256": "043268f0c7349e86b69a4c253351b4d350422efe87285695803b3729eeab2f70",
+    "source": "sketch-native.json",
+    "bytes": 27291
+  },
+  {
+    "sha256": "d25e0ddff8593da7fe24e9addaac5bc1f3814ea92cb69872bdf58b7197c425f6",
+    "source": "sqlite-native.json",
+    "bytes": 27117
+  },
+  {
+    "sha256": "17840491d8113d39c257da7c74bbeaa8ee421c61ba70cfe95fe949b16cf443f3",
+    "source": "gate-debug/report.json",
+    "bytes": 1516
+  },
+  {
+    "sha256": "49d8a742ec2bfb014f1700633733eb8cb091621bd2ff82e338eb244ef70ca7c8",
+    "source": "gate-debug-final/report.json",
+    "bytes": 6063
+  },
+  {
+    "sha256": "459610d5dcf1d29c17f0dc1893fdbe4cd2f44ce91de9770930c91e3033281967",
+    "source": "gate-debug-final/ctest.txt",
+    "bytes": 9518
+  },
+  {
+    "sha256": "04a1cb76a92219076baddf6a64c8808b7a39d3a0a105f681ddac9395ffd52726",
+    "source": "static-final/report.json",
+    "bytes": 179706
+  },
+  {
+    "sha256": "2ab2e94fcaa08476c7d9320bfdd7da45f29e089ea723c022504fefeddc0fc7c3",
+    "source": "delivery-debug/build.txt",
+    "bytes": 3709
+  },
+  {
+    "sha256": "78834d9d55522a8dc6ba355f9ff9900c6035d0cae3f73dbf9d846bc38f6273bb",
+    "source": "delivery-debug/configure.txt",
+    "bytes": 266
+  },
+  {
+    "sha256": "8a123a3635778cc3ddfdf7f505743ae2137e74d6aeea21e43e7f17106d55b82c",
+    "source": "delivery-debug/ctest-inventory.txt",
+    "bytes": 86821
+  },
+  {
+    "sha256": "123c07f678706be094262fce8271bd56074558d9143a0d57594680943ea85413",
+    "source": "delivery-debug/ctest.txt",
+    "bytes": 9518
+  },
+  {
+    "sha256": "4ceed15b8cd58c157ed5b55c2d603f97678351fc59dab3c8e8ab9eeb1915eeb2",
+    "source": "delivery-debug/ctest.xml",
+    "bytes": 17688
+  },
+  {
+    "sha256": "6d720b2abb015e97c2e2ea316a15dc52d14bbf2a4ab0ee30d1163a2ecdeb52dc",
+    "source": "delivery-debug/imports-zzy-native-gui.txt",
+    "bytes": 646
+  },
+  {
+    "sha256": "cf5dce1a516fd75324b83258431ede40c135dd29daf31e2041687284a4603516",
+    "source": "delivery-debug/imports-zzy-native-web.txt",
+    "bytes": 616
+  },
+  {
+    "sha256": "241385d4e161882e23fff0f2c237c1d6c6d95cb8cc224af67f532eecfceaeadb",
+    "source": "delivery-debug/imports-zzy-native.txt",
+    "bytes": 596
+  },
+  {
+    "sha256": "7b1969046cf06f71eccbc3078c9d282e8eab1ed7b04e00eda197c73336dc954d",
+    "source": "delivery-debug/install-smoke.json",
+    "bytes": 51537
+  },
+  {
+    "sha256": "26c98ce7830e62c8a6363b8ad1200acb6881f636d8ea4090bf351c656884837b",
+    "source": "delivery-debug/install-smoke.txt",
+    "bytes": 123
+  },
+  {
+    "sha256": "6dc68efed2369f0bbc155a5a43775b1e86b3ec0534cfbbde466d808867dfc38d",
+    "source": "delivery-debug/install.txt",
+    "bytes": 436
+  },
+  {
+    "sha256": "68e5da21822aaa33314f8582f0c0454c88a5739861ed361e1b25886909d9b748",
+    "source": "delivery-debug/installed-cli.json",
+    "bytes": 63181
+  },
+  {
+    "sha256": "a637ad399aa54fbac4041978319f6cf3078b1faf1e249ca3f0337dcf2d19fc8e",
+    "source": "delivery-debug/installed-cli.txt",
+    "bytes": 111
+  },
+  {
+    "sha256": "6b9e362fd3c81c79d75b9a1932984961f519fdef1ebc1aa15c6023404c3223f9",
+    "source": "delivery-debug/installed-spec.json",
+    "bytes": 7750
+  },
+  {
+    "sha256": "aac68ed1d235b1c4678bb062cf122626bd7d3a01fa929bff184113138a553fb6",
+    "source": "delivery-debug/installed-spec.txt",
+    "bytes": 28
+  },
+  {
+    "sha256": "3f9f14f62ca33a10d9cccdfdc289bdc23583d4d3c0455c6cd71aeb2d33c5d782",
+    "source": "delivery-debug/report.json",
+    "bytes": 6054
+  },
+  {
+    "sha256": "8366f7bd60654e0420eef59660675e2ba7561a201ec26c8504c80077fc4f4d6e",
+    "source": "delivery-debug/source-fingerprint.json",
+    "bytes": 154913
+  },
+  {
+    "sha256": "45b961dbde1194eaf6c7edffcbb5169ba7cd8990698b9d29beb7528450030fa0",
+    "source": "delivery-release/build.txt",
+    "bytes": 3757
+  },
+  {
+    "sha256": "215541fe3a6f5130eadbf0ff9d06a915317cb0537374ed85c1ea2ac923020dbb",
+    "source": "delivery-release/configure.txt",
+    "bytes": 268
+  },
+  {
+    "sha256": "cc0064220d28ae2e7eb8d9d8ab0cd4fb9d03a3a4aa3fde32de7c72e2ab586f09",
+    "source": "delivery-release/ctest-inventory.txt",
+    "bytes": 87507
+  },
+  {
+    "sha256": "9a43f1fd2eb8f0e9d45312896cbae659710846039a616c828693f612743731fa",
+    "source": "delivery-release/ctest.txt",
+    "bytes": 9520
+  },
+  {
+    "sha256": "2b250326fc2dbdd3e8a5847f26132112ae4baa341b7e094da3dbeb6eeb3be820",
+    "source": "delivery-release/ctest.xml",
+    "bytes": 17691
+  },
+  {
+    "sha256": "981aa0914ad9f40cb100af33c723241185010c2c6f68fb1eba172f4c8ed0c047",
+    "source": "delivery-release/imports-zzy-native-gui.txt",
+    "bytes": 830
+  },
+  {
+    "sha256": "48dbd6113f3b28b6e4ab65ca3718e2e39fe95b73d40d305da94c5cc26f092da5",
+    "source": "delivery-release/imports-zzy-native-web.txt",
+    "bytes": 874
+  },
+  {
+    "sha256": "fcf29408c299bc92615704735983dfc7acb893aa924d34cfcaf0a2cbb86a39ef",
+    "source": "delivery-release/imports-zzy-native.txt",
+    "bytes": 780
+  },
+  {
+    "sha256": "da5c161d04daf3032a36c71f845d4fc5c5b60acdd5c2ce2c1e9eaf2523954a9c",
+    "source": "delivery-release/install-smoke.json",
+    "bytes": 51221
+  },
+  {
+    "sha256": "26c98ce7830e62c8a6363b8ad1200acb6881f636d8ea4090bf351c656884837b",
+    "source": "delivery-release/install-smoke.txt",
+    "bytes": 123
+  },
+  {
+    "sha256": "e1a4270a3b62d617e179c22d9b60b926ffa572ac0a6303efe147245fc0c3c97c",
+    "source": "delivery-release/install.txt",
+    "bytes": 436
+  },
+  {
+    "sha256": "98cf057794f5c1b657c76826053b12c6baa53133ff06760d52260619bdaea96b",
+    "source": "delivery-release/installed-cli.json",
+    "bytes": 63157
+  },
+  {
+    "sha256": "5a02019110ad337908eb54c62f9147bbf531414d562221e48ac4525eb0a9f7ad",
+    "source": "delivery-release/installed-cli.txt",
+    "bytes": 111
+  },
+  {
+    "sha256": "3b25a4cfaf98f73386d329f2245370a9dc3ec136cf8e483cbc9b4d5ba3a7eb14",
+    "source": "delivery-release/installed-spec.json",
+    "bytes": 7745
+  },
+  {
+    "sha256": "aac68ed1d235b1c4678bb062cf122626bd7d3a01fa929bff184113138a553fb6",
+    "source": "delivery-release/installed-spec.txt",
+    "bytes": 28
+  },
+  {
+    "sha256": "9b5fb12a84f81f06a3f45d9a87df010bc72969b81eeab70b43db060d8e788d8d",
+    "source": "delivery-release/report.json",
+    "bytes": 6082
+  },
+  {
+    "sha256": "8366f7bd60654e0420eef59660675e2ba7561a201ec26c8504c80077fc4f4d6e",
+    "source": "delivery-release/source-fingerprint.json",
+    "bytes": 154913
+  }
+]

@@ -36,7 +36,7 @@ N0 的 1/130 由独立生命周期探针验证，不能据此宣传 run 已实�
 ## 延期复核
 
 每个条目记录 tier/phase/status，未实现统一 E402；需要现有完整能力时仍可显式调用 `python -m zzy`。`value.NativeType` 表示已有请求内类型身份、所有权和销毁协议，不表示 Sketch 或其他扩展的构造器已移植。
-现有 1738 外部用例原地保留；N6 将全部映射为原生用例并单列延期数，绝不把未支持计作通过。
+现有 1738 外部用例原地保留。N6 在原生与 Python 后端分别对照同一固定清单，各通过 1738/1738。PNG 成功导出与 Python 公共嵌入 API 的原生等价项仍延期。PNG 不可用时的失败 Result 仍有固定负例。见 [N6 验收](../../native_runtime/tests/n6-report.md)。
 重评估按计划对应阶段；N8 前默认入口不变。P12/P13 独立进度不因本矩阵调整。
 
 N1 用户顺序例外与 N2 公开边界见 [前端集中契约](native-frontend-contract.md) 与 [Program 契约](native-program-contract.md)。N3 同进程连续核心请求、N4 文件和 SQLite 错误/取消后的恢复及原生 Web 真实交错请求已验证；完整应用对照留 N6。
